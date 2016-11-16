@@ -1,7 +1,9 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,6 +17,9 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.widget.MToast;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -142,6 +147,32 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
 
     }
 
+    // 判断权限集合
+    protected boolean needPermissions(String... permissions) {
+        boolean isNeed;
+        for (String permission : permissions) {
+            isNeed = needsPermission(permission);
+            if (isNeed) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected List<String> noPermissions(String... permissions) {
+        List<String> list = new ArrayList<>();
+        for (String permission : permissions) {
+            if (needPermissions(permission)) {
+                list.add(permission);
+            }
+        }
+        return list;
+    }
+
+    // 判断是否缺少权限
+    protected boolean needsPermission(String permission) {
+        return ContextCompat.checkSelfPermission(Appli.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
+    }
 
     /**
      * 双击退出。

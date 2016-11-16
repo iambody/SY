@@ -8,7 +8,6 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.HomePresenter;
 import com.cgbsoft.privatefund.mvp.view.HomeView;
@@ -55,12 +54,6 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
     }
-
-    @Override
-    public <T> void getDataList(RxSubscriber<T> subscriber) {
-
-    }
-
 
     private void switchFragment(Fragment to) {
         if (mContentFragment != to) {

@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.base.mvp.presenter;
 
-import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
 import rx.Observable;
@@ -19,7 +18,7 @@ public abstract class BasePresenter<V> {
         mCompositeSubscription = new CompositeSubscription();
     }
 
-    public V getView(){
+    protected V getView(){
         return view;
     }
 
@@ -31,7 +30,7 @@ public abstract class BasePresenter<V> {
 
     //订阅
     public <T> void addSubscription(Observable<T> observable, RxSubscriber<T> subscriber) {
-        mCompositeSubscription.add(observable.compose(RxSchedulersHelper.io_main()).subscribe(subscriber));
+        mCompositeSubscription.add(observable.subscribe(subscriber));
     }
 
     //RXjava取消注册，以避免内存泄露

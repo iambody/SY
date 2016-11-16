@@ -21,5 +21,8 @@ public class NetConfig {
     }
 
 
+    //登陆
     public static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
+    //App通过该接口可以欢迎图片和AppStore开关以及版本检测
+    public static final String GET_RES_URL = API_URL + "/startup/5.0";
 }

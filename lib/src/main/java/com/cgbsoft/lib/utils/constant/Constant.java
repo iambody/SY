@@ -1,5 +1,7 @@
 package com.cgbsoft.lib.utils.constant;
 
+import android.Manifest;
+
 /**
  * 用于存放静态变量 final static
  *  Created by xiaoyu.zhang on 2016/11/10 15:45
@@ -16,4 +18,22 @@ public interface Constant {
 
     // mColors用于SwipeRefreshLayout
     int[] mColors = {0xFFF8698F, 0xFFFF4081, 0xFFF5F5F5};
+
+    //----------------权限管理参数------------------
+
+    int REQUEST_CODE_ASK_PERMISSIONS = 0x0101;
+
+    String PERMISSION_CAMERA = Manifest.permission.CAMERA;
+
+    String PERMISSION_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+    String PERMISSION_AUDIO = Manifest.permission.RECORD_AUDIO;
+
+    String PERMISSION_CONTANCTS = Manifest.permission.WRITE_CONTACTS;//读取联系人
+
+    String PERMISSION_SMS = Manifest.permission.SEND_SMS;
+
+    String PERMISSION_PHONE = Manifest.permission.READ_PHONE_STATE;//读取电话的状态
+
+    String PERMISSION_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;// 允许应用访问范围性的定位
 }
