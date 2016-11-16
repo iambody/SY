@@ -1,9 +1,10 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -11,12 +12,12 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.HomePresenter;
 import com.cgbsoft.privatefund.mvp.view.HomeView;
-import com.cgbsoft.privatefund.utils.HomeTabManager;
+import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity implements HomeView, BottomNavigationBar.BottomClickListener {
+public class MainPageActivity extends BaseActivity implements HomeView, BottomNavigationBar.BottomClickListener {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
     private HomePresenter homePresenter;
@@ -24,11 +25,17 @@ public class HomeActivity extends BaseActivity implements HomeView, BottomNaviga
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
 
-    private boolean isExit;
-
     @Override
     protected int layoutID() {
-        return R.layout.activity_home;
+        return R.layout.activity_main_page;
+    }
+
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     @Override
@@ -36,7 +43,7 @@ public class HomeActivity extends BaseActivity implements HomeView, BottomNaviga
         homePresenter = new HomePresenter(this);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        mContentFragment = HomeTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
+        mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
 //        transaction.add(R.id.fl_main_content, mContentFragment);
 //        transaction.commitAllowingStateLoss();
@@ -77,17 +84,44 @@ public class HomeActivity extends BaseActivity implements HomeView, BottomNaviga
 
 
     @Override
-    public void onBottomNavClickListener(String tag) {
-        if (TextUtils.equals("call", tag)) {
+    public void onCloudMenuClick(int position) {
+        switch (position){
+            case 0://呼叫投资顾问
 
-        } else if (TextUtils.equals("meet", tag)) {
+                break;
+            case 1://对话
 
-        } else if (TextUtils.equals("live", tag)) {
+                break;
+            case 2://直播
 
-        } else if (TextUtils.equals("message", tag)) {
+                break;
+            case 3://短信
 
-        } else if (TextUtils.equals("cs", tag)) {
+                break;
+            case 4://客服
 
+                break;
+        }
+    }
+
+    @Override
+    public void onTabSelected(int position) {
+        switch (position){
+            case 0://左1
+
+                break;
+            case 1://左2
+
+                break;
+            case 2://左3
+
+                break;
+            case 3://左4
+
+                break;
+            case 4://中间
+
+                break;
         }
     }
 
@@ -95,7 +129,7 @@ public class HomeActivity extends BaseActivity implements HomeView, BottomNaviga
     protected void onDestroy() {
         super.onDestroy();
         homePresenter.detachView();
-        HomeTabManager.getInstance().destory();
+        MainTabManager.getInstance().destory();
 
     }
 

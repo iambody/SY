@@ -49,7 +49,7 @@
             android:multiprocess="true" />
 
 
-        <activity android:name="com.cgbsoft.privatefund.mvp.ui.home.HomeActivity">
+        <activity android:name="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

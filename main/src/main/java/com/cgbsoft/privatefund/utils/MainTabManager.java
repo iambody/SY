@@ -19,8 +19,8 @@ import com.cgbsoft.privatefund.mvp.ui.product.ProductFragment;
 /**
  * Created by win8 -1 on 2015/8/14.
  */
-public class HomeTabManager {
-    private static HomeTabManager mInstance;
+public class MainTabManager {
+    private static MainTabManager mInstance;
     //投资人
     private MineFragment mineFragment;//个人页
     private CloudFragment cloudFragment;//云键
@@ -37,11 +37,11 @@ public class HomeTabManager {
 
     private Bundle mBundle;
 
-    public static HomeTabManager getInstance() {
+    public static MainTabManager getInstance() {
         if (mInstance == null) {
-            synchronized (HomeTabManager.class) {
+            synchronized (MainTabManager.class) {
                 if (mInstance == null) {
-                    mInstance = new HomeTabManager();
+                    mInstance = new MainTabManager();
                 }
             }
         }
@@ -49,7 +49,7 @@ public class HomeTabManager {
     }
 
     //设置参数
-    public HomeTabManager setBundle(Bundle bundle) {
+    public MainTabManager setBundle(Bundle bundle) {
         mBundle = bundle;
         return mInstance;
     }

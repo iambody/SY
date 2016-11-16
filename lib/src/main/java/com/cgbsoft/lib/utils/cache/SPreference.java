@@ -110,9 +110,9 @@ public class SPreference implements Constant {
             if (!TextUtils.isEmpty(token))
                 UserDataProvider.updateToken(c, token);
             if (TextUtils.equals("IdentityLicaishi", identify)) {
-                UserDataProvider.updateUserIDENT(c, "2");
-            } else if (TextUtils.equals("IdentityTouziren", identify)) {
                 UserDataProvider.updateUserIDENT(c, "1");
+            } else if (TextUtils.equals("IdentityTouziren", identify)) {
+                UserDataProvider.updateUserIDENT(c, "2");
             }
         }
     }
