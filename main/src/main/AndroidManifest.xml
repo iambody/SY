@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cgbsoft.privatefund">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name="com.cgbsoft.lib.Appli"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- glide -->
+        <meta-data
+            android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
+            android:value="GlideModule" />
+        <!-- 版本号-->
+        <meta-data
+            android:name="versionCode"
+            android:value="${VERSION_CODE}" />
+        <!--版本名-->
+        <meta-data
+            android:name="versionName"
+            android:value="${VERSION_NAME}" />
+        <!--数据库名-->
+        <meta-data
+            android:name="dbName"
+            android:value="${DATABASE_NAME}" />
+        <!--数据库版本号-->
+        <meta-data
+            android:name="dbVersion"
+            android:value="${DATABASE_VER}" />
+        <provider
+            android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
+            android:authorities="com.cgbsoft.cache.user"
+            android:multiprocess="true" />
+        <provider
+            android:name="com.cgbsoft.lib.utils.cache.OtherDataProvider"
+            android:authorities="com.cgbsoft.cache.other"
+            android:multiprocess="true" />
+
+
+        <activity android:name="com.cgbsoft.privatefund.mvp.ui.home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/fl_bottom_nav_left_first"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_bottom_nav_left_first"
+                style="@style/BottomBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/ic_bottom_selector_mine"
+                android:gravity="center"
+                android:text="@string/vbnb_mine_str" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_bottom_nav_left_second"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_bottom_nav_left_second"
+                style="@style/BottomBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/ic_bottom_selector_product"
+                android:gravity="center"
+                android:text="@string/vbnb_product_str" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:id="@+id/fl_bottom_nav_right_first"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_bottom_nav_right_first"
+                style="@style/BottomBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/ic_bottom_selector_discovery"
+                android:gravity="center"
+                android:text="@string/vbnb_discovery_str" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_bottom_nav_right_second"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_bottom_nav_right_second"
+                style="@style/BottomBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/ic_bottom_selector_discovery"
+                android:gravity="center"
+                android:text="@string/vbnb_discovery_str" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_bottom_navigation_close"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7F000000"
+        android:fitsSystemWindows="true" />
+
+    <ImageView
+        android:id="@+id/iv_bottom_navigation_cloud"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"/>
+
+</FrameLayout>

@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 24
+    buildToolsVersion = "25.0.0"
+    minSdkVersion = 15
+    targetSdkVersion = 24
+    versionCode = 50009
+    versionName = "5.0.9"
+    databaseName = "privateFundDB";
+    databaseVer = 1;
+
+    support_v4_version = '24.1.0'
+    android_need_version = '25.0.0'
+    okhttp_need_version = '3.2.0'
+    retrofit_need_version = '2.0.2'
+    rxlifecycle_need_version = '0.5.0'
+    butterknife_need_version = '8.4.0'
+    okio_need_version = '1.7.0'
+    weakHandler_need_version = '1.1'
+    gson_need_version = '2.4'
+    recycleanim_need_version = '2.0.0'
+    rxandroid_need_version = '1.2.0'
+    rxjava_need_version = 'x.y.z'
+    picasso_need_version = '2.5.2'
+    glide_need_version = '3.7.0'
+    okGlide_need_version = '1.4.0@aar'
+    glideAnim_need_version = '2.0.0'
+    greenDAO_need_version = '3.2.0'
+    floatbar_need_version = '1.0.2'
+
+    testRunner = 'android.support.test.runner.AndroidJUnitRunner'
+    testC = '4.12'
+}

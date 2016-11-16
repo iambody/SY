@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">私募云</string>
+    <string name="vbnb_mine_str">我的</string>
+    <string name="vbnb_product_str">产品</string>
+    <string name="vbnb_discovery_str">发现</string>
+    <string name="vbnb_live_str">直播</string>
+    <string name="vbnb_call_str">呼叫投资顾问</string>
+    <string name="vbnb_cs_str">客服</string>
+    <string name="vbnb_message_str">短信</string>
+    <string name="vbnb_meet_str">对话</string>
+</resources>
