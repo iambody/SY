@@ -45,6 +45,7 @@ public class UserDataProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         this.dbHelper = new DBOpenHelper(this.getContext());
+        dbHelper.onCreate(dbHelper.getWritableDatabase());
         return true;
     }
 
@@ -309,7 +310,8 @@ public class UserDataProvider extends ContentProvider {
 
          ****/
         Uri uri = ContentUris.withAppendedId(UserData.user.CONTENT_URI, 1);
-        context.getContentResolver().delete(uri, null, null);
+        int i = context.getContentResolver().delete(uri, null, null);
+        Log.e("tag", "del=" + i);
     }
 
 
