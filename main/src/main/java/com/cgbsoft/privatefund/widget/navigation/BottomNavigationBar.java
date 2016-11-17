@@ -126,11 +126,11 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
     public void setActivity(Activity activity) {
         //如果是投资者
-        View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.ic_bottom_selector_call);
-        View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.ic_bottom_selector_meet);
-        View liveView = buildSubButton(activity, getResources().getString(R.string.vbnb_live_str), R.drawable.ic_bottom_selector_live);
-        View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.ic_bottom_selector_sms);
-        View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.ic_bottom_selector_cs);
+        View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call);
+        View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet);
+        View liveView = buildSubButton(activity, getResources().getString(R.string.vbnb_live_str), R.drawable.selector_bottom_live);
+        View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms);
+        View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs);
 
         floatingActionMenu = new FloatingActionMenu.Builder(activity).addSubActionView(callView)
                 .addSubActionView(meetView)

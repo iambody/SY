@@ -6,7 +6,7 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.exception.ApiException;
-import com.cgbsoft.lib.utils.tools.Util;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,8 +60,8 @@ public class OKHTTP {
             okhttp3.Request authorised = originalRequest.newBuilder()
                     .addHeader(NetConfig.DefaultParams.uid, TextUtils.isEmpty(uid) ? "" : uid)
                     .addHeader(NetConfig.DefaultParams.token, TextUtils.isEmpty(token) ? "" : token)
-                    .addHeader(NetConfig.DefaultParams.deviceId, Util.getIMEI(Appli.getContext()))
-                    .addHeader(NetConfig.DefaultParams.appVersion, Util.getVersionCode(Appli.getContext()) + "")
+                    .addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(Appli.getContext()))
+                    .addHeader(NetConfig.DefaultParams.appVersion, Utils.getVersionCode(Appli.getContext()) + "")
                     .addHeader(NetConfig.DefaultParams.appPlatform, "android")
                     .build();
 //            Utils.logJson("ApiClient", NetConfig.Login.uid + ":" + uid + "\n" +
@@ -107,7 +107,7 @@ public class OKHTTP {
         return requestManager;
     }
 
-    public RequestManager getUrlRequestManager(String serverUrl) {
+    public RequestManager getRequestManager(String serverUrl) {
         return new Retrofit.Builder()
                 .client(mClient)
                 .baseUrl(serverUrl + "/")

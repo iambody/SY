@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
+import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -23,22 +25,22 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.Subscription;
 
 /**
  * TODO 基础activity 默认开启透明导航条
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements Constant {
-    private Appli mAppli;
-    protected boolean isNeedAdapterPhone = true;
-    protected boolean isNeedGoneNavigationBar;
-    protected WeakHandler baseHandler;
-    private Subscription subscription;
+public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements Constant {
+    private Appli mAppli;//applicaiton
+    private WeakHandler mBaseHandler;//handler
+    private DaoSession mDaoSession;//数据库
+    private Unbinder mUnbinder;//用于butterKnife解绑
+    private P mPresenter;//功能调用
+    private boolean mIsNeedAdapterPhone = true;
+    private boolean mIsNeedGoneNavigationBar;
+
     private long mExitPressedTime = 0;
-    private DaoSession daoSession;
-    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +63,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
 
     protected abstract void init();
 
-    protected void after() {
-        unbinder = ButterKnife.bind(this);
-        baseHandler = new WeakHandler();
+    protected abstract P createPresenter();
 
-        if (isNeedAdapterPhone && !isNeedAdapterPhone()) {
+    protected void after() {
+        mUnbinder = ButterKnife.bind(this);
+        mBaseHandler = new WeakHandler();
+        mPresenter = createPresenter();
+
+        if (mIsNeedAdapterPhone && !isNeedAdapterPhone()) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 //透明状态栏
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -73,11 +78,11 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             }
         }
-        if (isNeedGoneNavigationBar) {
-            baseHandler.post(mHideRunnable);
+        if (mIsNeedGoneNavigationBar) {
+            mBaseHandler.post(mHideRunnable);
             final View decorView = getWindow().getDecorView();
             decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
-                baseHandler.post(mHideRunnable); // hide the navigation bar
+                mBaseHandler.post(mHideRunnable); // hide the navigation bar
             });
         }
     }
@@ -86,6 +91,29 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
 
     }
 
+    /**
+     * 设置是否需要适配手机（必须写在before里，默认为true）
+     *
+     * @return
+     */
+    protected void setIsNeedAdapterPhone(boolean b) {
+        mIsNeedAdapterPhone = b;
+    }
+
+    /**
+     * 设置是否需要不显示导航条（必须写子before里，默认为false）
+     *
+     * @return
+     */
+    protected void setIsNeedGoneNavigationBar(boolean b) {
+        mIsNeedGoneNavigationBar = b;
+    }
+
+    /**
+     * 是否需要适配手机
+     *
+     * @return
+     */
     protected boolean isNeedAdapterPhone() {
         if (Build.VERSION.SDK_INT > 21) {
             return false;
@@ -96,16 +124,43 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
         }
     }
 
-
+    /**
+     * 获取application
+     *
+     * @return
+     */
     protected Appli getAppli() {
         return mAppli;
     }
 
-    protected DaoSession getDaoSession() {
-        if (daoSession == null) {
-            daoSession = getAppli().getDaoSession();
+    /**
+     * 获取数据库
+     *
+     * @return
+     */
+    protected DaoSession getmDaoSession() {
+        if (mDaoSession == null) {
+            mDaoSession = getAppli().getDaoSession();
         }
-        return daoSession;
+        return mDaoSession;
+    }
+
+    /**
+     * 获取presenter
+     *
+     * @return
+     */
+    protected P getPresenter() {
+        return mPresenter;
+    }
+
+    /**
+     * 获取handler
+     *
+     * @return
+     */
+    protected WeakHandler getHandler() {
+        return mBaseHandler;
     }
 
     protected Runnable mHideRunnable = () -> {
@@ -131,10 +186,13 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        baseHandler.removeCallbacksAndMessages(null);
-        baseHandler = null;
-        if (unbinder != null) {
-            unbinder.unbind();
+        mBaseHandler.removeCallbacksAndMessages(null);
+        mBaseHandler = null;
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 
@@ -172,6 +230,19 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Consta
     // 判断是否缺少权限
     protected boolean needsPermission(String permission) {
         return ContextCompat.checkSelfPermission(Appli.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    protected void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(this, pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivity(intent);
     }
 
     /**

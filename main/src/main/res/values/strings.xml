@@ -23,4 +23,16 @@
     <string name="permission_contancts_str">读取联系人权限\n</string>
     <string name="permission_phone_str">读取电话的状态权限\n</string>
     <string name="permission_location_str">访问范围性的定位权限\n</string>
+    <string name="wel_cancelbtn_str">跳过</string>
+    <string name="aci_choice_ids_str">选择您的身份</string>
+    <string name="aci_right_inverstor_str">我是合格投资人</string>
+    <string name="aci_right_adviser_str">我是投资顾问</string>
+    <string name="aci_next_str">下一步</string>
+
+    <string name="web_address">www.caifuyun.cn</string>
+    <string name="company_name">北京盈泰财富云电子商务有限公司</string>
+    <string name="cia_choice_ids_str">请选择您的身份</string>
+    <string name="aa_restart_now_str">立即启动</string>
+    <string name="aa_login_str">登录</string>
+    <string name="aa_register_str">注册</string>
 </resources>

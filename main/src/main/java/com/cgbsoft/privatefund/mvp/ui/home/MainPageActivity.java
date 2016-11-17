@@ -7,19 +7,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.presenter.HomePresenter;
-import com.cgbsoft.privatefund.mvp.view.HomeView;
+import com.cgbsoft.privatefund.mvp.presenter.home.HomePresenter;
+import com.cgbsoft.privatefund.mvp.view.home.HomeView;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 
-public class MainPageActivity extends BaseActivity implements HomeView, BottomNavigationBar.BottomClickListener {
+public class MainPageActivity extends BaseActivity<HomePresenter> implements HomeView, BottomNavigationBar.BottomClickListener {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
-    private HomePresenter homePresenter;
 
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
@@ -39,7 +37,6 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
 
     @Override
     protected void init() {
-        homePresenter = new HomePresenter(this);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
@@ -49,8 +46,12 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
     }
 
     @Override
+    protected HomePresenter createPresenter() {
+        return new HomePresenter(this);
+    }
+
+    @Override
     protected void data() {
-        SPreference.toDataMigration(this);
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
     }
@@ -78,7 +79,7 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
 
     @Override
     public void onCloudMenuClick(int position) {
-        switch (position){
+        switch (position) {
             case 0://呼叫投资顾问
 
                 break;
@@ -99,7 +100,7 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
 
     @Override
     public void onTabSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0://左1
 
                 break;
@@ -121,9 +122,7 @@ public class MainPageActivity extends BaseActivity implements HomeView, BottomNa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        homePresenter.detachView();
         MainTabManager.getInstance().destory();
-
     }
 
     @Override

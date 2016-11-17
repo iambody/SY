@@ -13,7 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.utils.tools.Util;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.util.HashMap;
 
@@ -158,10 +158,10 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         context = context.getApplicationContext();
         String what = queryByTitle(context, APP_VERSION_CODE_KEY);
         if (TextUtils.isEmpty(what)) {
-            code = Util.getVersionCode(context);
+            code = Utils.getVersionCode(context);
             insertUpDate(context, APP_VERSION_CODE_KEY, String.valueOf(code));
         } else {
-            code = Util.isNumber(what) ? Integer.parseInt(what) : code;
+            code = Utils.isNumber(what) ? Integer.parseInt(what) : code;
         }
         return code;
     }
@@ -171,7 +171,7 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         context = context.getApplicationContext();
         String what = queryByTitle(context, APP_VERSION_NAME_KEY);
         if (TextUtils.isEmpty(what)) {
-            name = Util.getVersionName(context);
+            name = Utils.getVersionName(context);
             insertUpDate(context, APP_VERSION_CODE_KEY, name);
         } else {
             name = what;
@@ -195,6 +195,69 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
     }
 
     /**
+     * 是否第一次打开应用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isFirstOpenApp(Context context) {
+        String txt = queryByTitle(context, ISFIRSTOEPNAPP_KEY);
+        if (TextUtils.isEmpty(txt)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void saveFirstOpenApp(Context context) {
+        delete(context, ISFIRSTOEPNAPP_KEY);
+        insertUpDate(context, ISFIRSTOEPNAPP_KEY, "true");
+    }
+
+    /**
+     * 获取ip
+     * @param context
+     * @return
+     */
+    public static String getIP(Context context) {
+        return queryByTitle(context, NET_PHONE_IP_KEY);
+    }
+
+    public static void saveIP(Context context, String ip) {
+        delete(context, NET_PHONE_IP_KEY);
+        insertUpDate(context, NET_PHONE_IP_KEY, ip);
+    }
+
+    /**
+     * 获取city
+     * @param context
+     * @return
+     */
+    public static String getCity(Context context) {
+        return queryByTitle(context, LCAL_PHONE_CITY_KEY);
+    }
+
+    public static void saveCity(Context context, String ip) {
+        delete(context, LCAL_PHONE_CITY_KEY);
+        insertUpDate(context, LCAL_PHONE_CITY_KEY, ip);
+    }
+
+
+    /**
+     * 是否第一次启动
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isFirstLaunched(Context context) {
+        String txt = queryByTitle(context, IS_ALREADY_LAUNCH);
+        if (TextUtils.isEmpty(txt)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
      * 保存apk路径
      *
      * @param context
@@ -216,7 +279,7 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
 
     public static long getDownloadApkId(Context context) {
         String id = queryByTitle(context, DOWNLOADAPKID_KEY);
-        return Util.isNumber(id) ? Long.parseLong(id) : -1;
+        return Utils.isNumber(id) ? Long.parseLong(id) : -1;
     }
 
     public static String queryByTitle(Context context, String title) {

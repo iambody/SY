@@ -11,8 +11,11 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.Base64Util;
-import com.cgbsoft.lib.utils.tools.Util;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
+
+import static com.cgbsoft.lib.utils.cache.CPConstant.IS_PLAY_ADVISER_ANIM;
+import static com.cgbsoft.lib.utils.cache.CPConstant.IS_PLAY_INVERSTOR_ANIM;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/11 09:05
@@ -129,6 +132,34 @@ public class SPreference implements Constant {
     }
 
     /**
+     * 是否播放了投资人的动画
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isPlayInverstorAnim(Context context) {
+        return getBoolean(context, IS_PLAY_INVERSTOR_ANIM);
+    }
+
+    public static void savePlayInverstorAnim(Context context, boolean b){
+        putBoolean(context, IS_PLAY_INVERSTOR_ANIM, b);
+    }
+
+    /**
+     * 是否播放了理财师的动画
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isPlayAdviserAnim(Context context) {
+        return getBoolean(context, IS_PLAY_ADVISER_ANIM);
+    }
+
+    public static void savePlayAdviserAnim(Context context, boolean b){
+        putBoolean(context, IS_PLAY_ADVISER_ANIM, b);
+    }
+
+    /**
      * app是否升级了，通过appVersion判断
      *
      * @param context context
@@ -138,7 +169,7 @@ public class SPreference implements Constant {
     public static boolean isAppUpdate(@NonNull Context context, boolean isSave) {
         boolean b;
         int oldVersion = getInt(context, LAST_APP_VERSION);
-        int nowVersion = Util.getVersionCode(context.getApplicationContext());
+        int nowVersion = Utils.getVersionCode(context.getApplicationContext());
         if (oldVersion < 0) {
             b = true;
         } else {
@@ -155,7 +186,7 @@ public class SPreference implements Constant {
      * @param context 上下文
      */
     public static void saveIsAppUpdate(@NonNull Context context) {
-        putInt(context, LAST_APP_VERSION, Util.getVersionCode(context.getApplicationContext()));
+        putInt(context, LAST_APP_VERSION, Utils.getVersionCode(context.getApplicationContext()));
     }
 
 

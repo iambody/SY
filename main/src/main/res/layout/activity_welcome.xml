@@ -16,4 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
+
+    <Button
+        android:id="@+id/btn_wel_cancle"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_gravity="top|right"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_wel_btn"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:text="@string/wel_cancelbtn_str"
+        android:visibility="gone" />
 </FrameLayout>

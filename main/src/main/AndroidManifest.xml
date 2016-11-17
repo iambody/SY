@@ -92,7 +92,7 @@
             android:multiprocess="true" />
 
         <!--欢迎页-->
-        <activity android:name="com.cgbsoft.privatefund.mvp.ui.home.WelcomeActivity">
+        <activity android:name="com.cgbsoft.privatefund.mvp.ui.start.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -107,7 +107,27 @@
 
         <!--权限管理-->
         <activity
-            android:name=".mvp.ui.home.PermissionsActivity"
+            android:name=".mvp.ui.start.PermissionsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--选择身份-->
+        <activity
+            android:name=".mvp.ui.login.ChoiceIdentityActivity"
+            android:screenOrientation="portrait" />
+
+        <!--登陆-->
+        <activity
+            android:name=".mvp.ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <!--动画-->
+        <activity
+            android:name=".mvp.ui.login.AnimActivity"
+            android:screenOrientation="portrait" />
+
+        <!--注册-->
+        <activity
+            android:name=".mvp.ui.login.RegisterActivity"
             android:screenOrientation="portrait" />
     </application>
 

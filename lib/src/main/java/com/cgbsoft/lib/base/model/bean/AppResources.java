@@ -6,4 +6,5 @@ package com.cgbsoft.lib.base.model.bean;
  *  
  */
 public class AppResources {
+
 }

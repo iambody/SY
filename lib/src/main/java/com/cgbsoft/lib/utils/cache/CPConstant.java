@@ -13,4 +13,16 @@ public interface CPConstant {
 
     String DOWNLOADAPK_KEY = "downloadApkPath";
     String DOWNLOADAPKID_KEY = "downloadApkIdPath";
+
+    String ISFIRSTOEPNAPP_KEY = "isfirstopenapp";
+
+    String IS_ALREADY_LAUNCH = "is_already_launch";
+
+    String IS_PLAY_INVERSTOR_ANIM = "is_play_inverstor_anim";
+
+    String IS_PLAY_ADVISER_ANIM = "is_play_adviser_anim";
+
+    String NET_PHONE_IP_KEY = "net_phone_ip";
+
+    String LCAL_PHONE_CITY_KEY = "lcal_phone_city";
 }

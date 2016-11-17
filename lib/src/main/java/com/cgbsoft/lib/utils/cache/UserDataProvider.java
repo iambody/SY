@@ -311,7 +311,6 @@ public class UserDataProvider extends ContentProvider {
          ****/
         Uri uri = ContentUris.withAppendedId(UserData.user.CONTENT_URI, 1);
         int i = context.getContentResolver().delete(uri, null, null);
-        Log.e("tag", "del=" + i);
     }
 
 

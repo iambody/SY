@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
+import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.trello.rxlifecycle.components.support.RxFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,12 +21,13 @@ import butterknife.Unbinder;
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseFragment<DATA> extends RxFragment implements Constant {
+public abstract class BaseFragment<P extends BasePresenter> extends RxFragment implements Constant {
     private Appli mAppli;
-    protected List<DATA> mDataList;
-    protected View fragmentView;
-    private DaoSession daoSession;
-    private Unbinder unbinder;
+    private WeakHandler mBaseHandler;//handler
+    private View mFragmentView;
+    private DaoSession mDaoSession;//数据库
+    private Unbinder mUnbinder;//用于butterKnife解绑
+    private P mPresenter;//功能调用
 
     @Override
     public void onAttach(Activity activity) {
@@ -43,13 +43,13 @@ public abstract class BaseFragment<DATA> extends RxFragment implements Constant 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         before();
-        if (fragmentView == null && layoutID() > 0) {
-            fragmentView = inflater.inflate(layoutID(), container, false);
+        if (mFragmentView == null && layoutID() > 0) {
+            mFragmentView = inflater.inflate(layoutID(), container, false);
         }
-        after(fragmentView);
-        init(fragmentView);
+        after(mFragmentView);
+        init(mFragmentView);
         data();
-        return fragmentView;
+        return mFragmentView;
     }
 
     @Override
@@ -60,36 +60,70 @@ public abstract class BaseFragment<DATA> extends RxFragment implements Constant 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (unbinder != null) {
-            unbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 
     protected void before() {
-        mDataList = new ArrayList<>();
         mAppli = (Appli) getActivity().getApplication();
     }
 
     protected void after(View view) {
-        unbinder = ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
+        mBaseHandler = new WeakHandler();
+        mPresenter = createPresenter();
     }
 
     protected abstract int layoutID();
 
     protected abstract void init(View view);
 
+    protected abstract P createPresenter();
+
     protected void data() {
 
     }
 
+    /**
+     * 获取application
+     *
+     * @return
+     */
     protected Appli getAppli() {
         return mAppli;
     }
 
-    protected DaoSession getDaoSession() {
-        if (daoSession == null) {
-            daoSession = getAppli().getDaoSession();
+    /**
+     * 获取数据库
+     *
+     * @return
+     */
+    protected DaoSession getmDaoSession() {
+        if (mDaoSession == null) {
+            mDaoSession = getAppli().getDaoSession();
         }
-        return daoSession;
+        return mDaoSession;
+    }
+
+    /**
+     * 获取presenter
+     *
+     * @return
+     */
+    protected P getPresenter() {
+        return mPresenter;
+    }
+
+    /**
+     * 获取handler
+     *
+     * @return
+     */
+    protected WeakHandler getHandler() {
+        return mBaseHandler;
     }
 }

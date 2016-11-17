@@ -2,6 +2,7 @@ package com.cgbsoft.investor.mvp.ui.mine;
 
 import android.view.View;
 
+import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 
 /**
@@ -19,5 +20,10 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void init(View view) {
 
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 }

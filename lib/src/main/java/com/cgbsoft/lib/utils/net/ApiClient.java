@@ -4,9 +4,10 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.AppResources;
+import com.cgbsoft.lib.base.model.bean.DataStatistics;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
-import com.cgbsoft.lib.utils.tools.Util;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -28,9 +29,30 @@ public class ApiClient {
     public static Observable<AppResources> getAppResources() {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
-        params.put("version", Util.getVersionName(Appli.getContext()));
+        params.put("version", Utils.getVersionName(Appli.getContext()));
         params.put("client", SPreference.getIdtentify(Appli.getContext()) ? "1" : "2");
         return OKHTTP.getInstance().getRequestManager().getAppResource(checkNull(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 数据统计
+     * @param json
+     * @return
+     */
+    public static Observable<DataStatistics> pushDataStatistics(String json){
+        Map<String, String> map = new HashMap<>();
+        map.put("contents", json);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取ip
+     * @return
+     */
+    public static Observable<String> getIP(){
+        Map<String, String> map = new HashMap<>();
+        map.put("ie", "utf-8");
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_IP).getIP(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
 
@@ -48,7 +70,7 @@ public class ApiClient {
                 map.remove(key);
             }
             if (!map.containsKey("appVersion")) {
-                map.put("appVersion", Util.getVersionName(Appli.getContext()));
+                map.put("appVersion", Utils.getVersionName(Appli.getContext()));
             }
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");
@@ -57,7 +79,7 @@ public class ApiClient {
         } else {
             map = new HashMap<>();
             if (!map.containsKey("appVersion")) {
-                map.put("appVersion", Util.getVersionName(Appli.getContext()));
+                map.put("appVersion", Utils.getVersionName(Appli.getContext()));
             }
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");

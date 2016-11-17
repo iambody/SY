@@ -18,6 +18,13 @@ public interface Constant {
 
     // mColors用于SwipeRefreshLayout
     int[] mColors = {0xFFF8698F, 0xFFFF4081, 0xFFF5F5F5};
+    //投资人ids
+    String IDS_INVERSTOR = "1";
+    //理财师ids
+    String IDS_ADVISER = "2";
+    //身份 key
+    String IDS_KEY = "identify";
+
 
     //----------------权限管理参数------------------
 

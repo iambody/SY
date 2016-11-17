@@ -9,7 +9,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.cgbsoft.lib.base.model.bean.DaoMaster;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
-import com.cgbsoft.lib.utils.tools.Util;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -32,7 +32,7 @@ public class Appli extends MultiDexApplication {
         Glide.get(this).register(GlideUrl.class, InputStream.class,
                 new OkHttpUrlLoader.Factory(OKHTTP.getInstance().getOkClient()));
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Util.getDatabaseName(this));
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Utils.getDatabaseName(this));
         Database database = helper.getWritableDb();
         daoSession = new DaoMaster(database).newSession();
     }

@@ -29,7 +29,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_bottom_selector_mine" />
+                    android:src="@drawable/selector_bottom_mine" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_left_first"
@@ -60,7 +60,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_bottom_selector_investor_product" />
+                    android:src="@drawable/selector_bottom_investor_product" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_left_second"
@@ -95,7 +95,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_bottom_selector_inverstor_discovery" />
+                    android:src="@drawable/selector_bottom_inverstor_discovery" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_right_first"
@@ -125,7 +125,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_bottom_selector_club" />
+                    android:src="@drawable/selector_bottom_club" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_right_second"
