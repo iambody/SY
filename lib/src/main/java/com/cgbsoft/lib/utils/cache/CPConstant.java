@@ -7,6 +7,9 @@ public interface CPConstant {
     // 查询、更新条件
     int EMPLOYEE = 1;
     int EMPLOYEE_ID = 2;
+    //身份key
+    String IDENTIFY_FLAG_KEY = "IDENTIFY_FLAG";
+
     String ACTIVITY_KEY = "topActivity";
     String APP_VERSION_CODE_KEY = "app_version_code";
     String APP_VERSION_NAME_KEY = "app_version_name";

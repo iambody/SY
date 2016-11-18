@@ -101,7 +101,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         requestManager = Glide.with(context);
 
         view_bottom_navigation_close.setVisibility(GONE);
-        isIdtentifyWithInvestor = SPreference.getIdtentify(getContext().getApplicationContext());
+        isIdtentifyWithInvestor = SPreference.isIdtentifyAdviser(getContext().getApplicationContext());
         changeResWithIdtentify();
 
         changeIdtentifyObservable = RxBus.get().register(BOTTOM_CHANGE_IDTENTIFY, Boolean.class);

@@ -42,7 +42,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     @BindView(R.id.tv_webaddress)
     TextView tv_webaddress;
 
-    private String identity = "";
+    private int identity = -1;
 
     @Override
     protected void before() {

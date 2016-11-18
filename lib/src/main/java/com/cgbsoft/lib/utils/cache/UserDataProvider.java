@@ -202,15 +202,15 @@ public class UserDataProvider extends ContentProvider {
         return false;
     }
 
-    /**
+/*    *//**
      * 获取身份
      *
      * @param context
      * @return
-     */
+     *//*
     public static String queryIdentify(Context context) {
         return query(context, UserData.user.IDENTIFY);
-    }
+    }*/
 
     /**
      * 获取用户信息
@@ -232,16 +232,14 @@ public class UserDataProvider extends ContentProvider {
      * @param context
      * @param userData
      * @param token
-     * @param identify
      */
-    public static void insertUserInfo(Context context, String isLogin, String userData, String token, String identify) {
+    public static void insertUserInfo(Context context, String isLogin, String userData, String token) {
         UserDataProvider.del(context);
         ContentValues values = new ContentValues();
         values.put(UserData.user._ID, 1);
         values.put(UserData.user.LOGINFLAG, isLogin);
         values.put(UserData.user.USER, userData);
         values.put(UserData.user.TOKEN, token);
-        values.put(UserData.user.IDENTIFY, identify);
         // 插入
         context.getContentResolver().insert(UserData.user.CONTENT_URI, values);
     }
@@ -278,14 +276,13 @@ public class UserDataProvider extends ContentProvider {
         }
         return true;
     }
-
-    /**
+/*
+    *//**
      * 1为投资人2为理财师
      *
      * @param context
-     * @param identify
      * @return
-     */
+     *//*
     public static Boolean updateUserIDENT(Context context, String identify) {
         ContentValues values = new ContentValues();
         values.put(UserData.user.IDENTIFY, identify);
@@ -295,7 +292,7 @@ public class UserDataProvider extends ContentProvider {
             return false;
         }
         return true;
-    }
+    }*/
 
 
     // 删除方法

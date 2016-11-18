@@ -2,12 +2,10 @@ package com.cgbsoft.privatefund.mvp.presenter.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.cache.UserDataProvider;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
@@ -34,11 +32,11 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
         this.context = context;
     }
 
-    public void nextClick(String identity) {
+    public void nextClick(int identity) {
         //理财师处理
         Class clazz = null;
-        String value = null;
-        if (TextUtils.equals(identity, IDS_ADVISER)) {
+        int value = -1;
+        if (identity == IDS_ADVISER) {
             value = IDS_ADVISER;
             if (!SPreference.isPlayAdviserAnim(context.getApplicationContext())) {
                 clazz = LoginActivity.class;
@@ -46,7 +44,7 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
                 clazz = AnimActivity.class;
             }
             //投资人处理
-        } else if (TextUtils.equals(identity, IDS_INVERSTOR)) {
+        } else if (identity == IDS_INVERSTOR) {
             value = IDS_INVERSTOR;
             if (!SPreference.isPlayInverstorAnim(context.getApplicationContext())) {
                 clazz = LoginActivity.class;
@@ -58,8 +56,8 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
                     show(context.getString(R.string.cia_choice_ids_str), Toast.LENGTH_SHORT);
         }
 
-        if (!TextUtils.isEmpty(value)) {
-            UserDataProvider.updateUserIDENT(context.getApplicationContext(), value);
+        if (value > 0) {
+            SPreference.saveIdtentify(context, value);
         }
         if (clazz != null) {
             Intent intent = new Intent(context, AnimActivity.class);
@@ -77,6 +75,7 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
 
     /**
      * 数据统计
+     *
      * @param act
      * @param arg1
      */

@@ -91,7 +91,7 @@ public class DataStatisticsUtils {
     }
 
     private static boolean isToC(Context context) {
-        return !SPreference.getIdtentify(context.getApplicationContext());
+        return !SPreference.isIdtentifyAdviser(context.getApplicationContext());
     }
 
 

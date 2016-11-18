@@ -24,8 +24,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 + UserData.user._ID + " TEXT,"
                 + UserData.user.USER + " TEXT,"
                 + UserData.user.TOKEN + " TEXT,"
-                + UserData.user.LOGINFLAG + " TEXT,"
-                + UserData.user.IDENTIFY + " TEXT"
+                + UserData.user.LOGINFLAG + " TEXT"
                 + ");");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_OTHER + " ("

@@ -121,7 +121,7 @@ public class MainTabManager {
      * 是否为投资者
      */
     private boolean isInvestor() {
-        return !SPreference.getIdtentify(Appli.getContext());
+        return !SPreference.isIdtentifyAdviser(Appli.getContext());
     }
 
     public void destory() {

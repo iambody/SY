@@ -30,7 +30,7 @@ public class ApiClient {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(Appli.getContext()));
-        params.put("client", SPreference.getIdtentify(Appli.getContext()) ? "1" : "2");
+        params.put("client", SPreference.isIdtentifyAdviser(Appli.getContext()) ? "1" : "2");
         return OKHTTP.getInstance().getRequestManager().getAppResource(checkNull(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 

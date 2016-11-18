@@ -153,6 +153,31 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         return count;
     }
 
+    /**
+     * 获取身份 1为理财师 2为投资人
+     *
+     * @return
+     */
+    public static int getIdentify(@NonNull Context context) {
+        String what = queryByTitle(context.getApplicationContext(), IDENTIFY_FLAG_KEY);
+        if (TextUtils.equals(what, "1")) {
+            return 1;
+        }
+        return 2;
+    }
+
+    /**
+     * 保存身份信息
+     *
+     * @param context
+     * @param ids
+     */
+    public static void saveIdentify(@NonNull Context context, int ids) {
+        delete(context.getApplicationContext(), IDENTIFY_FLAG_KEY);
+        insertUpDate(context.getApplicationContext(), IDENTIFY_FLAG_KEY, ids + "");
+    }
+
+
     public static int getVersonCode(@NonNull Context context) {
         int code = 1;
         context = context.getApplicationContext();
@@ -215,6 +240,7 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
 
     /**
      * 获取ip
+     *
      * @param context
      * @return
      */
@@ -229,6 +255,7 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
 
     /**
      * 获取city
+     *
      * @param context
      * @return
      */

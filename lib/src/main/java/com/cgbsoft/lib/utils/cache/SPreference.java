@@ -104,7 +104,7 @@ public class SPreference implements Constant {
         String ui64 = Base64Util.toBase64(userInfo, Base64.DEFAULT);
 
         if (!TextUtils.isEmpty(hasUserInfo)) {
-            UserDataProvider.insertUserInfo(c, hasUserInfo, ui64, token, TextUtils.equals("IdentityLicaishi", identify) ? "2" : "1");
+            UserDataProvider.insertUserInfo(c, hasUserInfo, ui64, token);
 
             if (!TextUtils.isEmpty(ui64))
                 UserDataProvider.updateUserInfoData(c, ui64);
@@ -113,9 +113,9 @@ public class SPreference implements Constant {
             if (!TextUtils.isEmpty(token))
                 UserDataProvider.updateToken(c, token);
             if (TextUtils.equals("IdentityLicaishi", identify)) {
-                UserDataProvider.updateUserIDENT(c, "1");
+                OtherDataProvider.saveIdentify(c, 1);
             } else if (TextUtils.equals("IdentityTouziren", identify)) {
-                UserDataProvider.updateUserIDENT(c, "2");
+                OtherDataProvider.saveIdentify(c, 2);
             }
         }
     }
@@ -141,7 +141,7 @@ public class SPreference implements Constant {
         return getBoolean(context, IS_PLAY_INVERSTOR_ANIM);
     }
 
-    public static void savePlayInverstorAnim(Context context, boolean b){
+    public static void savePlayInverstorAnim(Context context, boolean b) {
         putBoolean(context, IS_PLAY_INVERSTOR_ANIM, b);
     }
 
@@ -155,7 +155,7 @@ public class SPreference implements Constant {
         return getBoolean(context, IS_PLAY_ADVISER_ANIM);
     }
 
-    public static void savePlayAdviserAnim(Context context, boolean b){
+    public static void savePlayAdviserAnim(Context context, boolean b) {
         putBoolean(context, IS_PLAY_ADVISER_ANIM, b);
     }
 
@@ -275,18 +275,18 @@ public class SPreference implements Constant {
      * @param context 上下文
      * @return true 理财师
      */
-    public static boolean getIdtentify(@NonNull Context context) {
-        return TextUtils.equals("1", UserDataProvider.queryIdentify(context));
+    public static boolean isIdtentifyAdviser(@NonNull Context context) {
+        return OtherDataProvider.getIdentify(context) == IDS_ADVISER;
     }
 
     /**
      * 保存身份信息
      *
      * @param context 上下文
-     * @param value   1，2
+     * @param value   1理财师，2投资人
      * @return 是否保存成功
      */
-    public static boolean saveIdtentify(@NonNull Context context, String value) {
-        return UserDataProvider.updateUserIDENT(context, value);
+    public static void saveIdtentify(@NonNull Context context, int value) {
+        OtherDataProvider.saveIdentify(context, value);
     }
 }

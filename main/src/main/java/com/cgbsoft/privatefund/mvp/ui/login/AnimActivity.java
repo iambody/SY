@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.login;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,7 +45,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
 
     private MediaPlayer mediaPlayer;
 
-    private String identity;
+    private int identity;
 
     @Override
     protected void before() {
@@ -61,8 +60,8 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
 
     @Override
     protected void init() {
-        identity = getIntent().getStringExtra(IDS_KEY);
-        int resID = TextUtils.equals(identity, IDS_INVERSTOR) ? R.raw.movie_toc : R.raw.movie_tob;
+        identity = getIntent().getIntExtra(IDS_KEY, -1);
+        int resID = identity == IDS_INVERSTOR ? R.raw.movie_toc : R.raw.movie_tob;
         mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
 
         SurfaceHolder surfaceHolder = sv_aa.getHolder();
@@ -73,7 +72,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
         btn_aa_start_regist.setBackgroundResource(R.drawable.select_btn_tob_cornor);
         btn_aa_start_app.setBackgroundResource(R.drawable.bg_aa_btn_login_up);
 
-        if (TextUtils.equals(identity, IDS_ADVISER)) {
+        if (identity == IDS_ADVISER) {
             SPreference.savePlayAdviserAnim(this, true);
             ll_aa_ids.setVisibility(View.VISIBLE);
         } else {
@@ -95,27 +94,30 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
 
     @OnClick(R.id.btn_aa_start_login)
     public void startLogin(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra(IDS_KEY, IDS_ADVISER);
-        startActivity(intent);
+        openActivity(LoginActivity.class, IDS_ADVISER);
         DataStatistApiParam.onStatisToBStartLogin();
     }
 
     @OnClick(R.id.btn_aa_start_regist)
     public void startRegister(){
-        Intent intent = new Intent(this, RegisterActivity.class);
-        intent.putExtra(IDS_KEY, IDS_ADVISER);
-        startActivity(intent);
+        openActivity(RegisterActivity.class, IDS_ADVISER);
         DataStatistApiParam.onStatisToBStartRegeist();
     }
 
     @OnClick(R.id.btn_aa_start_app)
     public void startApp(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra(IDS_KEY, IDS_ADVISER);
-        startActivity(intent);
+        openActivity(LoginActivity.class, IDS_INVERSTOR);
         DataStatistApiParam.onStaticToCNowStart();
     }
+
+    private void openActivity(Class clazz, int what){
+        Intent intent = new Intent(this, clazz);
+        intent.putExtra(IDS_KEY, what);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
     @Override

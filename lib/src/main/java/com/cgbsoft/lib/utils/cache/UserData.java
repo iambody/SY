@@ -29,7 +29,5 @@ public class UserData {
         public static final String USER = "userinfodata";         // 用户信息
         public static final String TOKEN= "token";                // token
         public static final String LOGINFLAG= "loginflag";        //登陆状态
-        public static final String IDENTIFY = "identify";         //身份 1理财师  2投资人
-
     }
 }
