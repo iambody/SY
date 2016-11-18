@@ -309,6 +309,43 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         return Utils.isNumber(id) ? Long.parseLong(id) : -1;
     }
 
+    //---------------融云---------------------
+
+    /**
+     * 保存融云token
+     *
+     * @param context
+     * @param token
+     */
+    public static void saveRongToken(Context context, String token) {
+        delete(context, RONGCLOUD_TOKEN_KEY);
+        insertUpDate(context, RONGCLOUD_TOKEN_KEY, token);
+    }
+
+    public static String getRongToken(Context context) {
+        return queryByTitle(context, RONGCLOUD_TOKEN_KEY);
+    }
+
+    public static void saveRongExpired(Context context, String te) {
+        delete(context, RONDCLOUD_TOKENEXPIRED_KEY);
+        insertUpDate(context, RONDCLOUD_TOKENEXPIRED_KEY, te);
+    }
+
+    public static String getRongTokenExpired(Context context) {
+        return queryByTitle(context, RONDCLOUD_TOKENEXPIRED_KEY);
+    }
+
+    public static void saveRongUid(Context context, String uid) {
+        delete(context, RONGCLOUD_UID_KEY);
+        insertUpDate(context, RONGCLOUD_UID_KEY, uid);
+    }
+
+    public static String getRongUid(Context context) {
+        return queryByTitle(context, RONGCLOUD_UID_KEY);
+    }
+
+    //---------------------------------
+
     public static String queryByTitle(Context context, String title) {
         String value = "";
 

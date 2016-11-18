@@ -37,4 +37,10 @@ public interface CPConstant {
     String NET_PHONE_IP_KEY = "net_phone_ip";
 
     String LCAL_PHONE_CITY_KEY = "lcal_phone_city";
+
+    String RONGCLOUD_TOKEN_KEY = "rongcloud_token";
+
+    String RONDCLOUD_TOKENEXPIRED_KEY = "rondcloud_tokenexpired";
+
+    String RONGCLOUD_UID_KEY = "rongcloud_uid";
 }
