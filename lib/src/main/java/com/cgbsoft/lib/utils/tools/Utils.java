@@ -13,11 +13,16 @@ import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+
+import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.net.NetConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -356,6 +361,48 @@ public class Utils {
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
         return isNum.matches();
+    }
+
+    public static boolean isDebug() {
+        if (Appli.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+            if (isCouldOpen) {
+                return true;
+            } else if (NetConfig.isLocal) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void logJson(String tag, String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            msg = "";
+        }
+        if (Appli.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+            if (isCouldOpen) {
+                Log.e(tag, msg);
+            } else if (NetConfig.isLocal) {
+                Log.e(tag, msg);
+            }
+        }
+    }
+
+    public static void logJson(String tag, String msg, String which) {
+        if (TextUtils.isEmpty(msg)) {
+            msg = "";
+        }
+        if (Appli.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+            if (isCouldOpen || NetConfig.isLocal) {
+                if (TextUtils.equals(which, "e")) {
+                    Log.e(tag, msg);
+                } else if (TextUtils.equals(which, "d")) {
+                    Log.d(tag, msg);
+                }
+            }
+        }
     }
 
 }

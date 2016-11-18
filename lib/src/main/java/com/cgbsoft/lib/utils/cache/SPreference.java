@@ -289,4 +289,13 @@ public class SPreference implements Constant {
     public static void saveIdtentify(@NonNull Context context, int value) {
         OtherDataProvider.saveIdentify(context, value);
     }
+
+
+    public static void saveOpenJsonLog(Context context, boolean b) {
+        putBoolean(context, "couldOpenJsonLog", b);
+    }
+
+    public static boolean getOpenJsonLog(Context context) {
+        return getBoolean(context, "couldOpenJsonLog");
+    }
 }

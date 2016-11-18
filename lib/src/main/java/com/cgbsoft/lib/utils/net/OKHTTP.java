@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
@@ -41,7 +42,7 @@ public class OKHTTP {
         return mInstance;
     }
 
-    public OKHTTP() {
+    private OKHTTP() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         if (NetConfig.isLocal) {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -49,24 +50,25 @@ public class OKHTTP {
             interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
         Interceptor mTokenInterceptor = chain -> {
+            Context context = Appli.getContext();
             okhttp3.Request originalRequest = chain.request();
-            if (!SPreference.isLogin(Appli.getContext())) {
+            if (!SPreference.isLogin(context) || SPreference.getUserInfoData(context) == null) {
                 return chain.proceed(originalRequest);
             }
-            UserInfo userInfoData = SPreference.getUserInfoData(Appli.getContext());
+            UserInfo userInfoData = SPreference.getUserInfoData(context);
 
             String uid = userInfoData == null ? "" : userInfoData.getId();
-            String token = SPreference.getToken(Appli.getContext());
+            String token = SPreference.getToken(context);
             okhttp3.Request authorised = originalRequest.newBuilder()
                     .addHeader(NetConfig.DefaultParams.uid, TextUtils.isEmpty(uid) ? "" : uid)
                     .addHeader(NetConfig.DefaultParams.token, TextUtils.isEmpty(token) ? "" : token)
-                    .addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(Appli.getContext()))
-                    .addHeader(NetConfig.DefaultParams.appVersion, Utils.getVersionCode(Appli.getContext()) + "")
+                    .addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context))
+                    .addHeader(NetConfig.DefaultParams.appVersion, Utils.getVersionCode(context) + "")
                     .addHeader(NetConfig.DefaultParams.appPlatform, "android")
                     .build();
-//            Utils.logJson("ApiClient", NetConfig.Login.uid + ":" + uid + "\n" +
-//                    NetConfig.Login.access_token + ":" + token + "\n" +
-//                    NetConfig.Login.deviceId + ":" + Utils.getIMEI(Appli.getContext()), "d");
+            Utils.logJson("ApiClient", "uid:" + uid + "\n" +
+                    "token:" + token + "\n" +
+                    "deviceId:" + Utils.getIMEI(Appli.getContext()), "d");
             return chain.proceed(authorised);
         };
 
@@ -77,7 +79,7 @@ public class OKHTTP {
                 } catch (ApiException e) {
                     e.printStackTrace();
                 }
-//            Utils.logJson("ApiClient", response.toString());
+            Utils.logJson("ApiClient", response.toString());
             return null;
         };
 
@@ -107,6 +109,13 @@ public class OKHTTP {
         return requestManager;
     }
 
+    public RequestManager getRequestManager(boolean isNeedReset) {
+        if (isNeedReset) {
+            mInstance = new OKHTTP();
+        }
+        return requestManager;
+    }
+
     public RequestManager getRequestManager(String serverUrl) {
         return new Retrofit.Builder()
                 .client(mClient)
@@ -115,4 +124,5 @@ public class OKHTTP {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build().create(RequestManager.class);
     }
+
 }

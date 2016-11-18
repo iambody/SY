@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
@@ -11,6 +12,11 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -34,7 +40,8 @@ public class ApiClient {
         params.put("os", "1");
         params.put("version", Utils.getVersionName(Appli.getContext()));
         params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
-        return OKHTTP.getInstance().getRequestManager().getAppResource(checkNull(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+
+        return OKHTTP.getInstance().getRequestManager().getAppResource(checkGETParam(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -62,11 +69,12 @@ public class ApiClient {
 
     /**
      * 登录
+     *
      * @param username 用户名
-     * @param pwdMD5 md5密码
+     * @param pwdMD5   md5密码
      * @return
      */
-    public static Observable<LoginBean> toLogin(String username, String pwdMD5){
+    public static Observable<LoginBean> toLogin(String username, String pwdMD5) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         map.put("password", pwdMD5);
@@ -75,13 +83,42 @@ public class ApiClient {
 
     /**
      * 获取用户信息
+     *
      * @param userid 用户id
      * @return
      */
-    public static Observable<UserInfo> getUserInfo(String userid){
+    public static Observable<UserInfo> getUserInfo(String userid) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userid);
-        return OKHTTP.getInstance().getRequestManager().getUserInfo(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager(true).getUserInfo(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 重新生成Get 方式的value值
+     *
+     * @param map
+     * @return
+     */
+    private static Map<String, String> checkGETParam(@NonNull Map<String, String> map) {
+        String paramValue = "";
+        JSONObject jsonObject = null;
+        Set<String> set = map.keySet();
+        try {
+            jsonObject = new JSONObject();
+            for (String key : set) {
+                String value = map.get(key);
+                jsonObject.put(key, value);
+            }
+            paramValue = URLEncoder.encode(jsonObject.toString(), "utf-8");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(paramValue))
+            params.put("param", paramValue);
+        return params;
     }
 
 

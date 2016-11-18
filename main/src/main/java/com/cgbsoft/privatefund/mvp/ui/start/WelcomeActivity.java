@@ -190,21 +190,20 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         iv_wel_background = ButterKnife.findById(this, R.id.iv_wel_background);
         btn_wel_cancle = ButterKnife.findById(this, R.id.btn_wel_cancle);
 
-        if (Utils.checkNetWork(this)) {
-            weakHandler.postDelayed(mWaitRunnable, waitTime);
-            welcomePersenter.getData();
-        } else {
-            weakHandler.postDelayed(mNoNetRunnable, noNetTime);
-        }
+        if (weakHandler != null)
+            if (Utils.checkNetWork(this)) {
+                weakHandler.postDelayed(mWaitRunnable, waitTime);
+                welcomePersenter.getData();
+            } else {
+                weakHandler.postDelayed(mNoNetRunnable, noNetTime);
+            }
     }
 
     //跳到home页
     private void nextPage() {
         isStop = true;
-        if (weakHandler == null) {
-            return;
-        }
-        weakHandler.removeCallbacksAndMessages(null);
+        if (weakHandler != null)
+            weakHandler.removeCallbacksAndMessages(null);
 
         iv_wel_background = null;
         btn_wel_cancle = null;
