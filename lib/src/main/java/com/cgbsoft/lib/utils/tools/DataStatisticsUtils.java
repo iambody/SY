@@ -6,6 +6,7 @@ import android.os.Build;
 import com.cgbsoft.lib.base.model.bean.DataStatistics;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
@@ -91,7 +92,7 @@ public class DataStatisticsUtils {
     }
 
     private static boolean isToC(Context context) {
-        return !SPreference.isIdtentifyAdviser(context.getApplicationContext());
+        return SPreference.getIdtentify(context.getApplicationContext()) == Constant.IDS_INVERSTOR;
     }
 
 

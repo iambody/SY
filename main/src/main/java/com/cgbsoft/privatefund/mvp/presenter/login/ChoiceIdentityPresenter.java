@@ -38,7 +38,7 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
         int value = -1;
         if (identity == IDS_ADVISER) {
             value = IDS_ADVISER;
-            if (!SPreference.isPlayAdviserAnim(context.getApplicationContext())) {
+            if (SPreference.isPlayAdviserAnim(context.getApplicationContext())) {
                 clazz = LoginActivity.class;
             } else {
                 clazz = AnimActivity.class;
@@ -46,7 +46,7 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
             //投资人处理
         } else if (identity == IDS_INVERSTOR) {
             value = IDS_INVERSTOR;
-            if (!SPreference.isPlayInverstorAnim(context.getApplicationContext())) {
+            if (SPreference.isPlayInverstorAnim(context.getApplicationContext())) {
                 clazz = LoginActivity.class;
             } else {
                 clazz = AnimActivity.class;

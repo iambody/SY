@@ -275,8 +275,8 @@ public class SPreference implements Constant {
      * @param context 上下文
      * @return true 理财师
      */
-    public static boolean isIdtentifyAdviser(@NonNull Context context) {
-        return OtherDataProvider.getIdentify(context) == IDS_ADVISER;
+    public static int getIdtentify(@NonNull Context context) {
+        return OtherDataProvider.getIdentify(context);
     }
 
     /**

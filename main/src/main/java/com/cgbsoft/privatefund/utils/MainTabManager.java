@@ -11,6 +11,7 @@ import com.cgbsoft.investor.mvp.ui.club.ClubFragment;
 import com.cgbsoft.investor.mvp.ui.mine.MineFragment;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.discovery.DiscoveryFragment;
 import com.cgbsoft.privatefund.mvp.ui.product.ProductFragment;
@@ -121,7 +122,7 @@ public class MainTabManager {
      * 是否为投资者
      */
     private boolean isInvestor() {
-        return !SPreference.isIdtentifyAdviser(Appli.getContext());
+        return SPreference.getIdtentify(Appli.getContext()) == Constant.IDS_INVERSTOR;
     }
 
     public void destory() {

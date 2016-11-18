@@ -23,6 +23,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.start.WelcomePersenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.ChoiceIdentityActivity;
+import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.mvp.view.start.WelcomeView;
 
 import butterknife.ButterKnife;
@@ -210,7 +211,11 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         weakHandler = null;
 
         if ((!SPreference.isLogin(this) || SPreference.getUserInfoData(this) == null)) {
-            openActivity(ChoiceIdentityActivity.class);
+            if (SPreference.getIdtentify(this) == -1) {
+                openActivity(ChoiceIdentityActivity.class);
+            } else {
+                openActivity(LoginActivity.class);
+            }
         } else {
             openActivity(MainPageActivity.class);
         }

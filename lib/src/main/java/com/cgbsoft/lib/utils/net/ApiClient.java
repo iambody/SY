@@ -24,22 +24,24 @@ public class ApiClient {
 
     /**
      * 获取服务器资源
+     *
      * @return
      */
     public static Observable<AppResources> getAppResources() {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(Appli.getContext()));
-        params.put("client", SPreference.isIdtentifyAdviser(Appli.getContext()) ? "1" : "2");
+        params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
         return OKHTTP.getInstance().getRequestManager().getAppResource(checkNull(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
      * 数据统计
+     *
      * @param json
      * @return
      */
-    public static Observable<DataStatistics> pushDataStatistics(String json){
+    public static Observable<DataStatistics> pushDataStatistics(String json) {
         Map<String, String> map = new HashMap<>();
         map.put("contents", json);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
@@ -47,9 +49,10 @@ public class ApiClient {
 
     /**
      * 获取ip
+     *
      * @return
      */
-    public static Observable<String> getIP(){
+    public static Observable<String> getIP() {
         Map<String, String> map = new HashMap<>();
         map.put("ie", "utf-8");
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_IP).getIP(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());

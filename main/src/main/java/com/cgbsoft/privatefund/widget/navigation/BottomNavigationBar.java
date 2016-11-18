@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -101,7 +102,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         requestManager = Glide.with(context);
 
         view_bottom_navigation_close.setVisibility(GONE);
-        isIdtentifyWithInvestor = !SPreference.isIdtentifyAdviser(getContext().getApplicationContext());
+        isIdtentifyWithInvestor = SPreference.getIdtentify(getContext().getApplicationContext()) == Constant.IDS_INVERSTOR;
         changeResWithIdtentify();
 
         changeIdtentifyObservable = RxBus.get().register(BOTTOM_CHANGE_IDTENTIFY, Boolean.class);
