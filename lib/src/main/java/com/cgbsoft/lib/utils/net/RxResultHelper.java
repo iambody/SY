@@ -34,7 +34,7 @@ public class RxResultHelper {
 //                                Toast.makeText(Appli.getContext(), !TextUtils.equals(entity.code, "400_8") ? "登录失效,请重新登录..." : "账号已被查封", Toast.LENGTH_SHORT).show();
 //                                if (!Utils.isOpenLoginPage()) {
 //                                    SettingPreference.saveUserInfoComplete(Appli.getContext(), false);
-//                                    SettingPreference.clearUserInfoData(Appli.getContext());
+//                                    SettingPreference.quitLogin(Appli.getContext());
 //                                    RxBus.get().post(CLOSE_MAIN_PAGE, true);
 //                                    RxBus.get().post(WELCOME_FINISH_OBSERVABLE, true);
 //

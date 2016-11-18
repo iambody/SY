@@ -212,8 +212,9 @@ public class SPreference implements Constant {
      *
      * @param context 上下文
      */
-    public static void clearUserInfoData(@NonNull Context context) {
+    public static void quitLogin(@NonNull Context context) {
         UserDataProvider.clear(context);
+        OtherDataProvider.clear(context);
     }
 
     /**
@@ -223,6 +224,10 @@ public class SPreference implements Constant {
      * @return 用户id
      */
     public static String getUserId(@NonNull Context context) {
+        String userId = UserDataProvider.getUserId(context);
+        if (!TextUtils.isEmpty(userId)) {
+            return userId;
+        }
         UserInfo userInfoData = getUserInfoData(context);
         if (userInfoData != null) {
             return userInfoData.getId();
@@ -250,6 +255,10 @@ public class SPreference implements Constant {
         return UserDataProvider.queryToken(context);
     }
 
+    public static void saveUserId(@NonNull Context context, @NonNull String uid) {
+        UserDataProvider.saveUserId(context, uid);
+    }
+
     /**
      * 保存登陆状态
      *
@@ -267,7 +276,7 @@ public class SPreference implements Constant {
      * @return 登陆状态
      */
     public static boolean isLogin(@NonNull Context context) {
-        return UserDataProvider.queryUserInfoData(context) != null;
+        return UserDataProvider.queryLoginFlag(context);
     }
 
     /**

@@ -205,6 +205,15 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
         return false;
     }
 
+    public static void saveUserId(Context context, String uid) {
+        delete(context, USER_ID_KEY);
+        insertUpDate(context, USER_ID_KEY, uid);
+    }
+
+    public static String getUserId(Context context) {
+        return queryByTitle(context, USER_ID_KEY);
+    }
+
     /**
      * 获取用户信息
      *
@@ -236,9 +245,7 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
 
 
     public static void clear(Context context) {
-        delete(context, USER_TOKEN_KEY);
-        delete(context, USER_INFO_KEY);
-        delete(context, USER_LOGINFLAG_KEY);
+        context.getContentResolver().delete(UserData.user.CONTENT_URI, null, null);
     }
 
 

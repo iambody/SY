@@ -38,6 +38,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         dialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
         addSubscription(ApiClient.toLogin(un, pwd).flatMap(loginBean -> {
+            SPreference.saveUserId(context.getApplicationContext(), loginBean.userId);
             SPreference.saveToken(context.getApplicationContext(), loginBean.token);
             return ApiClient.getUserInfo(loginBean.userId);
         }), new RxSubscriber<UserInfo>() {

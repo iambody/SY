@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -52,12 +51,10 @@ public class OKHTTP {
         Interceptor mTokenInterceptor = chain -> {
             Context context = Appli.getContext();
             okhttp3.Request originalRequest = chain.request();
-            if (!SPreference.isLogin(context) || SPreference.getUserInfoData(context) == null) {
+            if (!SPreference.isLogin(context)) {
                 return chain.proceed(originalRequest);
             }
-            UserInfo userInfoData = SPreference.getUserInfoData(context);
-
-            String uid = userInfoData == null ? "" : userInfoData.getId();
+            String uid = SPreference.getUserId(context);
             String token = SPreference.getToken(context);
             okhttp3.Request authorised = originalRequest.newBuilder()
                     .addHeader(NetConfig.DefaultParams.uid, TextUtils.isEmpty(uid) ? "" : uid)

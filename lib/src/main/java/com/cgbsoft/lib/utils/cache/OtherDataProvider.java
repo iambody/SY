@@ -162,8 +162,10 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         String what = queryByTitle(context.getApplicationContext(), IDENTIFY_FLAG_KEY);
         if (TextUtils.equals(what, "1")) {
             return 1;
+        } else if (TextUtils.equals(what, "2")) {
+            return 2;
         }
-        return 2;
+        return -1;
     }
 
     /**
@@ -345,6 +347,10 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
     }
 
     //---------------------------------
+
+    public static void clear(Context context) {
+        context.getContentResolver().delete(OtherData.Other.CONTENT_URI, null, null);
+    }
 
     public static String queryByTitle(Context context, String title) {
         String value = "";

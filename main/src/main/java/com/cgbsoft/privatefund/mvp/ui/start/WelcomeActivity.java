@@ -79,6 +79,8 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
             SPreference.toDataMigration(this);
         }
 
+        SPreference.quitLogin(this);
+
         // 缺少权限时, 进入权限配置页面
         if (needPermissions(PERMISSIONS)) {
             PermissionsActivity.startActivityForResult(this, REQUEST_CODE_ASK_PERMISSIONS, PERMISSIONS);
