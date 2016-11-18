@@ -2,6 +2,8 @@ package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.DataStatisticsEntity;
+import com.cgbsoft.lib.base.model.bean.LoginBean;
+import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 import java.util.Map;
@@ -43,4 +45,22 @@ public interface RequestManager {
      */
     @GET(NetConfig.GETIP_URL)
     Observable<BaseResult<String>> getIP(@QueryMap  Map<String, String> map);
+
+    /**
+     * 登录
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.LOGIN_URL)
+    Observable<BaseResult<LoginBean>> toLogin(@FieldMap() Map<String, String> paramsMap);
+
+    /**
+     * 登录
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.GET_USERINFO_URL)
+    Observable<BaseResult<UserInfo>> getUserInfo(@FieldMap() Map<String, String> paramsMap);
 }

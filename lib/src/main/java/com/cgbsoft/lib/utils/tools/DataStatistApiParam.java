@@ -10,21 +10,21 @@ import java.util.HashMap;
  */
 public class DataStatistApiParam{
 
-    public static void onStatisToBStartLogin() {
+/*    public static void onStatisToBStartLogin() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1000");
         data3.put("act", "10121");
         data3.put("arg1", "登录");
         DataStatisticsUtils.push(Appli.getContext(), data3);
-    }
+    }*/
 
-    public static void onStatisToBStartRegeist() {
+/*    public static void onStatisToBStartRegeist() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1000");
         data3.put("act", "10122");
         data3.put("arg1", "注册");
         DataStatisticsUtils.push(Appli.getContext(), data3);
-    }
+    }*/
 
     /*public static void onStatisToBPhoto() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -325,13 +325,13 @@ public class DataStatistApiParam{
         DataStatisticsUtils.push(Appli.getContext(), data3);
     }*/
 
-    public static void onStaticToCNowStart() {
+/*    public static void onStaticToCNowStart() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2001");
         data3.put("act", "20001");
         data3.put("arg1", "立即启动");
         DataStatisticsUtils.push(Appli.getContext(), data3);
-    }
+    }*/
 
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();

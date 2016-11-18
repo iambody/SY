@@ -6,14 +6,11 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.login.AnimActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.mvp.view.login.ChoiceIdentityView;
-
-import java.util.HashMap;
 
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_ADVISER;
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_INVERSTOR;
@@ -65,26 +62,6 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
             context.startActivity(intent);
             getView().finishThis();
         }
-
-        HashMap<String, String> data = new HashMap<>();
-        data.put("grp", "1001");
-        data.put("act", "10002");
-        data.put("arg1", "选择进入");
-        DataStatisticsUtils.push(context, data);
-    }
-
-    /**
-     * 数据统计
-     *
-     * @param act
-     * @param arg1
-     */
-    public void toDataStatistics(String act, String arg1) {
-        HashMap<String, String> data = new HashMap<>();
-        data.put("grp", "1001");
-        data.put("act", act);
-        data.put("arg1", arg1);
-        DataStatisticsUtils.push(context, data);
     }
 
     @Override

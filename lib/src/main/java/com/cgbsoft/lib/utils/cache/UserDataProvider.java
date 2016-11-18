@@ -9,16 +9,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
+
+import com.cgbsoft.lib.utils.tools.Base64Util;
 
 import java.util.HashMap;
 
 /**
  * Created by win8 on 2016/4/18.
  */
-public class UserDataProvider extends ContentProvider {
+public class UserDataProvider extends ContentProvider implements CPConstant {
     private DBOpenHelper dbHelper;
     // Uri工具类
     private static final UriMatcher sUriMatcher;
@@ -37,8 +41,8 @@ public class UserDataProvider extends ContentProvider {
         // 实例化查询列集合
         empProjectionMap = new HashMap<>();
         // 添加查询列
-        empProjectionMap.put(UserData.user.USER, UserData.user.USER);
-        empProjectionMap.put(UserData.user.TOKEN, UserData.user.TOKEN);
+        empProjectionMap.put(UserData.user.TITLE, UserData.user.TITLE);
+        empProjectionMap.put(UserData.user.VALUE, UserData.user.VALUE);
     }
 
 
@@ -97,7 +101,7 @@ public class UserDataProvider extends ContentProvider {
         // 获得数据库实例
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // 插入数据，返回行ID
-        long rowId = db.insert(DBOpenHelper.TABLE_NAME_USER, UserData.user.USER, values);
+        long rowId = db.insert(DBOpenHelper.TABLE_NAME_USER, UserData.user.TITLE, values);
         // 如果插入成功返回uri
         if (rowId > 0) {
             Uri empUri = ContentUris.withAppendedId(UserData.user.CONTENT_URI, rowId);
@@ -184,8 +188,7 @@ public class UserDataProvider extends ContentProvider {
      * @return
      */
     public static String queryToken(Context context) {
-        String token = query(context, UserData.user.TOKEN);
-        return token;
+        return queryByTitle(context, USER_TOKEN_KEY);
     }
 
     /**
@@ -195,22 +198,12 @@ public class UserDataProvider extends ContentProvider {
      * @return
      */
     public static Boolean queryLoginFlag(Context context) {
-        String flag = query(context, UserData.user.LOGINFLAG);
+        String flag = queryByTitle(context, USER_LOGINFLAG_KEY);
         if (flag.equals("1")) {
             return true;
         }
         return false;
     }
-
-/*    *//**
-     * 获取身份
-     *
-     * @param context
-     * @return
-     *//*
-    public static String queryIdentify(Context context) {
-        return query(context, UserData.user.IDENTIFY);
-    }*/
 
     /**
      * 获取用户信息
@@ -219,95 +212,78 @@ public class UserDataProvider extends ContentProvider {
      * @return
      */
     public static String queryUserInfoData(Context context) {
-        String json = query(context, UserData.user.USER);
+        String json = queryByTitle(context, USER_INFO_KEY);
         if (!TextUtils.isEmpty(json)) {
             return json;
         }
         return null;
     }
 
-    /**
-     * 初始化用户信息
-     *
-     * @param context
-     * @param userData
-     * @param token
-     */
-    public static void insertUserInfo(Context context, String isLogin, String userData, String token) {
-        UserDataProvider.del(context);
-        ContentValues values = new ContentValues();
-        values.put(UserData.user._ID, 1);
-        values.put(UserData.user.LOGINFLAG, isLogin);
-        values.put(UserData.user.USER, userData);
-        values.put(UserData.user.TOKEN, token);
-        // 插入
-        context.getContentResolver().insert(UserData.user.CONTENT_URI, values);
+    public static void saveToken(Context context, String token) {
+        delete(context, USER_TOKEN_KEY);
+        insertUpDate(context, USER_TOKEN_KEY, token);
     }
 
-    public static Boolean updateToken(Context context, String token) {
-        ContentValues values = new ContentValues();
-        values.put(UserData.user.TOKEN, token);
-        String[] selectValue = {"1"};
-        int status = context.getContentResolver().update(UserData.user.CONTENT_URI, values, "_id" + "=?", selectValue);
-        if (status != 1) {
-            return false;
-        }
-        return true;
+    public static void saveUserInfo(Context context, String json) {
+        delete(context, USER_INFO_KEY);
+        insertUpDate(context, USER_INFO_KEY, json);
     }
 
-    public static Boolean updateUserInfoData(Context context, String userData) {
-        ContentValues values = new ContentValues();
-        values.put(UserData.user.USER, userData);
-        String[] selectValue = {"1"};
-        int status = context.getContentResolver().update(UserData.user.CONTENT_URI, values, "_id" + "=?", selectValue);
-        if (status != 1) {
-            return false;
-        }
-        return true;
+    public static void saveLoginFlag(Context context, boolean flag) {
+        delete(context, USER_LOGINFLAG_KEY);
+        insertUpDate(context, USER_LOGINFLAG_KEY, flag ? "1" : "0");
     }
 
-    public static Boolean updateLoginFlag(Context context, boolean flag) {
-        ContentValues values = new ContentValues();
-        values.put(UserData.user.LOGINFLAG, flag ? "1" : "0");
-        String[] selectValue = {"1"};
-        int status = context.getContentResolver().update(UserData.user.CONTENT_URI, values, "_id" + "=?", selectValue);
-        if (status != 1) {
-            return false;
-        }
-        return true;
+
+    public static void clear(Context context) {
+        delete(context, USER_TOKEN_KEY);
+        delete(context, USER_INFO_KEY);
+        delete(context, USER_LOGINFLAG_KEY);
     }
-/*
-    *//**
-     * 1为投资人2为理财师
-     *
-     * @param context
-     * @return
-     *//*
-    public static Boolean updateUserIDENT(Context context, String identify) {
-        ContentValues values = new ContentValues();
-        values.put(UserData.user.IDENTIFY, identify);
-        String[] selectValue = {"1"};
-        int status = context.getContentResolver().update(UserData.user.CONTENT_URI, values, "_id" + "=?", selectValue);
-        if (status != 1) {
-            return false;
+
+
+    public static String queryByTitle(@NonNull Context context, @NonNull String title) {
+        String base64 = "";
+
+        Cursor cursor = context.getContentResolver().query(UserData.user.CONTENT_URI, null, UserData.user.TITLE + "=?", new String[]{title}, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                // 遍历游标
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    cursor.moveToPosition(i);
+                    base64 = cursor.getString(0);
+                }
+            }
+            cursor.close();
         }
-        return true;
-    }*/
+        if (!TextUtils.isEmpty(base64)) {
+            return Base64Util.fromBase64(base64, Base64.DEFAULT);
+        }
+        return base64;
+    }
 
+    public static void insertUpDate(@NonNull Context context, @NonNull String title, @NonNull String content) {
+        String base64 = Base64Util.toBase64(content, Base64.DEFAULT);
 
-    // 删除方法
-    public static void del(Context context) {
+        String value = queryByTitle(context, title);
+        ContentValues values = new ContentValues();
+        if (TextUtils.isEmpty(value)) {
+            values.put(UserData.user.TITLE, title);
+            values.put(UserData.user.VALUE, base64);
+            // 插入
+            context.getContentResolver().insert(UserData.user.CONTENT_URI, values);
+        } else {
+            //更新
+            values.put(UserData.user.VALUE, base64);
+            context.getContentResolver().update(UserData.user.CONTENT_URI, values, UserData.user.TITLE + "=?", new String[]{title});
+        }
+    }
 
-        /****  删除ID为1的记录的方法：
-
-         // 删除ID为1的记录
-         Uri uri = ContentUris.withAppendedId(Employee.CONTENT_URI, 1);
-         // 获得ContentResolver，并删除
-         getContentResolver().delete(uri, null, null);
-
-         ****/
-        Uri uri = ContentUris.withAppendedId(UserData.user.CONTENT_URI, 1);
-        int i = context.getContentResolver().delete(uri, null, null);
+    public static void delete(Context context, String title) {
+        String value = queryByTitle(context, title);
+        if (!TextUtils.isEmpty(value)) {
+            context.getContentResolver().delete(UserData.user.CONTENT_URI, UserData.user.TITLE + "=?", new String[]{title});
+        }
     }
 
 

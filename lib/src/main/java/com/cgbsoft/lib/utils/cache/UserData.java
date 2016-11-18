@@ -9,13 +9,15 @@ import android.provider.BaseColumns;
 public class UserData {
     public static final String AUTHORITY = "com.cgbsoft.cache.user";
 
-    private UserData() {}
+    private UserData() {
+    }
 
     // 内部类
     public static final class user implements BaseColumns {
 
         // 构造方法
-        private user() {}
+        private user() {
+        }
 
         // 访问Uri
         public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/user");
@@ -26,8 +28,7 @@ public class UserData {
 
         // 默认排序常量
         // 表字段常量
-        public static final String USER = "userinfodata";         // 用户信息
-        public static final String TOKEN= "token";                // token
-        public static final String LOGINFLAG= "loginflag";        //登陆状态
+        public static final String TITLE = "title";//标题
+        public static final String VALUE = "value";//内容
     }
 }

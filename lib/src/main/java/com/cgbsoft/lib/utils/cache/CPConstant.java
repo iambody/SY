@@ -7,6 +7,15 @@ public interface CPConstant {
     // 查询、更新条件
     int EMPLOYEE = 1;
     int EMPLOYEE_ID = 2;
+
+    String USER_TOKEN_KEY = "user_token";
+
+    String USER_LOGINFLAG_KEY = "user_login_flag";
+
+    String USER_INFO_KEY = "user_info";
+
+    String USER_ID_KEY = "user_id";
+
     //身份key
     String IDENTIFY_FLAG_KEY = "IDENTIFY_FLAG";
 

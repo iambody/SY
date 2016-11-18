@@ -129,6 +129,11 @@
         <activity
             android:name=".mvp.ui.login.RegisterActivity"
             android:screenOrientation="portrait" />
+
+        <!--忘记密码-->
+        <activity
+            android:name=".mvp.ui.login.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

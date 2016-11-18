@@ -17,10 +17,12 @@ import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -233,6 +235,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     }
 
 
+    /**
+     * 打开activity
+     * @param pClass
+     */
     protected void openActivity(Class<?> pClass) {
         openActivity(pClass, null);
     }
@@ -244,6 +250,22 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
         startActivity(intent);
     }
+
+    /**
+     * 统计
+     *
+     * @param grp
+     * @param act
+     * @param arg1
+     */
+    protected void toDataStatistics(int grp, int act, String arg1) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("grp", String.valueOf(grp));
+        data.put("act", String.valueOf(act));
+        data.put("arg1", arg1);
+        DataStatisticsUtils.push(getApplicationContext(), data);
+    }
+
 
     /**
      * 双击退出。

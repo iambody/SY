@@ -84,4 +84,5 @@ dependencies {
     compile "jp.wasabeef:glide-transformations:${glideAnim_need_version}"
     compile "org.greenrobot:greendao:${greenDAO_need_version}"
     compile "org.greenrobot:greendao-generator:${greenDAO_need_version}"
+    compile "com.wang.avi:library:${avilib_need_version}"
 }

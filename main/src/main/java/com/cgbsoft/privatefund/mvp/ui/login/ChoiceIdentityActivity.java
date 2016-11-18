@@ -73,6 +73,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     @OnClick(R.id.btn_aci_next)
     void nextClick() {
         getPresenter().nextClick(identity);
+        toDataStatistics(1001, 10002, "选择进入");
     }
 
     @Override
@@ -86,11 +87,11 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
         switch (checkedId) {
             case R.id.rb_aci_inverstor:
                 identity = IDS_INVERSTOR;
-                getPresenter().toDataStatistics("10000", "投资人");
+                toDataStatistics(1001, 10000, "投资人");
                 break;
             case R.id.rb_aci_adviser:
                 identity = IDS_ADVISER;
-                getPresenter().toDataStatistics("10001", "理财师");
+                toDataStatistics(1001, 10000, "理财师");
                 break;
         }
         SPreference.saveIdtentify(getApplicationContext(), identity);

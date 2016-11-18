@@ -39,13 +39,13 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
-                android:background="@color/color_bbffffff" />
+                android:background="@color/white_dark" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/aci_choice_ids_str"
-                android:textColor="@color/color_bbffffff"
+                android:textColor="@color/white_dark"
                 android:textSize="20sp" />
 
             <View
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="40dp"
                 android:layout_weight="1"
-                android:background="@color/color_bbffffff" />
+                android:background="@color/white_dark" />
         </LinearLayout>
 
         <RadioGroup

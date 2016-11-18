@@ -50,6 +50,7 @@ ext {
     glideAnim_need_version = '2.0.0'
     greenDAO_need_version = '3.2.0'
     floatbar_need_version = '1.0.2'
+    avilib_need_version = '1.0.0'
 
     testRunner = 'android.support.test.runner.AndroidJUnitRunner'
     testC = '4.12'

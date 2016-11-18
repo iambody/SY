@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.AppResources;
 import com.cgbsoft.lib.base.model.bean.DataStatistics;
+import com.cgbsoft.lib.base.model.bean.LoginBean;
+import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -56,6 +58,30 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("ie", "utf-8");
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_IP).getIP(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 登录
+     * @param username 用户名
+     * @param pwdMD5 md5密码
+     * @return
+     */
+    public static Observable<LoginBean> toLogin(String username, String pwdMD5){
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        map.put("password", pwdMD5);
+        return OKHTTP.getInstance().getRequestManager().toLogin(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取用户信息
+     * @param userid 用户id
+     * @return
+     */
+    public static Observable<UserInfo> getUserInfo(String userid){
+        Map<String, String> map = new HashMap<>();
+        map.put("adviserId", userid);
+        return OKHTTP.getInstance().getRequestManager().getUserInfo(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
 

@@ -35,4 +35,14 @@
     <string name="aa_restart_now_str">立即启动</string>
     <string name="aa_login_str">登录</string>
     <string name="aa_register_str">注册</string>
+    <string name="al_username_str">请输入账号</string>
+    <string name="al_password_str">请输入密码</string>
+    <string name="al_login_str">登录</string>
+    <string name="al_register_str">注册新用户</string>
+    <string name="al_forget_str">忘记密码?</string>
+    <string name="al_wx_login_str">微信登录</string>
+    <string name="la_un_null_str">账号不能为空</string>
+    <string name="la_pw_null_str">密码不能为空</string>
+    <string name="la_login_loading_str">登录中……</string>
+    <string name="la_getinfo_error_str">获取用户信息失败</string>
 </resources>

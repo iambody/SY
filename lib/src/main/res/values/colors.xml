@@ -8,6 +8,9 @@
 
     <color name="color_f47900">#f47900</color>
     <color name="color_636571">#636571</color>
-    <color name="color_ccffffff">#ccffffff</color>
-    <color name="color_bbffffff">#bbffffff</color>
+    <color name="white_light">#ccffffff</color>
+    <color name="white_dark">#bbffffff</color>
+
+    <color name="orange_light">#88f47900</color>
+    <color name="orange_dark">#aaf47900</color>
 </resources>

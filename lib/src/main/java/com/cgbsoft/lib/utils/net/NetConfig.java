@@ -31,13 +31,15 @@ public class NetConfig {
 
 
     //登陆
-    public static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
+    static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
+    //获取用户信息
+    static final String GET_USERINFO_URL = AUTH_URL + "/user/userInfo";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    public static final String GET_RES_URL = API_URL + "/startup/5.0";
+    static final String GET_RES_URL = API_URL + "/startup/5.0";
     //数据统计埋点
-    public static final String DATASTATISTICS_URL = "simuyun-munin/training";
+    static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
-    public static final String GETIP_URL = "cityjson";
+    static final String GETIP_URL = "cityjson";
 
 
 }

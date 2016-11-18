@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_round_loading">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/layout_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loading_bar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:indicator="BallPulse"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/img_success"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/icon_toast_succeed"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_fail"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/icon_toast_error"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="3"
+            android:text="请稍等..."
+            android:textColor="#ffffffff"
+            android:textSize="16dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

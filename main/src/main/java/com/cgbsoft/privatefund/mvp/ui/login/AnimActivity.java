@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.login.AnimPresenter;
 import com.cgbsoft.privatefund.mvp.view.login.AnimView;
@@ -68,8 +67,8 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        btn_aa_start_login.setBackgroundResource(R.drawable.select_btn_tob_cornor);
-        btn_aa_start_regist.setBackgroundResource(R.drawable.select_btn_tob_cornor);
+        btn_aa_start_login.setBackgroundResource(R.drawable.select_btn_advister);
+        btn_aa_start_regist.setBackgroundResource(R.drawable.select_btn_advister);
         btn_aa_start_app.setBackgroundResource(R.drawable.bg_aa_btn_login_up);
 
         if (identity == IDS_ADVISER) {
@@ -81,10 +80,10 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
         }
 
         btn_aa_start_app.setOnTouchListener((v, event) -> {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 //更改为按下时的背景图片
                 v.setBackgroundResource(R.drawable.bg_aa_btn_login_down);
-            }else if(event.getAction() == MotionEvent.ACTION_UP){
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 //改为抬起时的图片
                 v.setBackgroundResource(R.drawable.bg_aa_btn_login_up);
             }
@@ -93,31 +92,29 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
     }
 
     @OnClick(R.id.btn_aa_start_login)
-    public void startLogin(){
+    public void startLogin() {
         openActivity(LoginActivity.class, IDS_ADVISER);
-        DataStatistApiParam.onStatisToBStartLogin();
+        toDataStatistics(1000, 10121, "登录");
     }
 
     @OnClick(R.id.btn_aa_start_regist)
-    public void startRegister(){
+    public void startRegister() {
         openActivity(RegisterActivity.class, IDS_ADVISER);
-        DataStatistApiParam.onStatisToBStartRegeist();
+        toDataStatistics(1000, 10122, "注册");
     }
 
     @OnClick(R.id.btn_aa_start_app)
-    public void startApp(){
+    public void startApp() {
         openActivity(LoginActivity.class, IDS_INVERSTOR);
-        DataStatistApiParam.onStaticToCNowStart();
+        toDataStatistics(2001, 20001, "立即启动");
     }
 
-    private void openActivity(Class clazz, int what){
+    private void openActivity(Class clazz, int what) {
         Intent intent = new Intent(this, clazz);
         intent.putExtra(IDS_KEY, what);
         startActivity(intent);
         finish();
     }
-
-
 
 
     @Override

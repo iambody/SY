@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,10 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.trello.rxlifecycle.components.support.RxFragment;
+
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -125,5 +129,39 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
      */
     protected WeakHandler getHandler() {
         return mBaseHandler;
+    }
+
+
+    /**
+     * 统计
+     *
+     * @param grp
+     * @param act
+     * @param arg1
+     */
+    protected void toDataStatistics(int grp, int act, String arg1) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("grp", String.valueOf(grp));
+        data.put("act", String.valueOf(act));
+        data.put("arg1", arg1);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data);
+    }
+
+
+    /**
+     * 打开activity
+     *
+     * @param pClass
+     */
+    protected void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(getContext(), pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivity(intent);
     }
 }

@@ -62,6 +62,16 @@ public class Base64Util {
     }
 
     /**
+     * 将base64字符串转换成string
+     * @param value
+     * @param flag
+     * @return
+     */
+    public static String fromBase64(@NonNull String value, int flag) {
+        return Arrays.toString(android.util.Base64.decode(value, flag));
+    }
+
+    /**
      * 将obj转换成base64字符串
      *
      * @param value

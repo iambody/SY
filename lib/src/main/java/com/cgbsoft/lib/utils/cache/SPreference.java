@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Base64;
 
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
@@ -100,23 +99,17 @@ public class SPreference implements Constant {
         String userBase64 = old2Sp.getString("userInfo", "");
         com.cgbsoft.privatefund.bean.UserInfo userInfo = Base64Util.getEntityByOIS(userBase64);
         String json = new Gson().toJson(userInfo);
-        UserInfo ui = new Gson().fromJson(json, UserInfo.class);
-        String ui64 = Base64Util.toBase64(userInfo, Base64.DEFAULT);
 
-        if (!TextUtils.isEmpty(hasUserInfo)) {
-            UserDataProvider.insertUserInfo(c, hasUserInfo, ui64, token);
-
-            if (!TextUtils.isEmpty(ui64))
-                UserDataProvider.updateUserInfoData(c, ui64);
-            if (!TextUtils.isEmpty(hasUserInfo))
-                UserDataProvider.updateLoginFlag(c, TextUtils.equals("1", hasUserInfo));
-            if (!TextUtils.isEmpty(token))
-                UserDataProvider.updateToken(c, token);
-            if (TextUtils.equals("IdentityLicaishi", identify)) {
-                OtherDataProvider.saveIdentify(c, 1);
-            } else if (TextUtils.equals("IdentityTouziren", identify)) {
-                OtherDataProvider.saveIdentify(c, 2);
-            }
+        if (!TextUtils.isEmpty(json))
+            UserDataProvider.saveUserInfo(c, json);
+        if (!TextUtils.isEmpty(hasUserInfo))
+            UserDataProvider.saveLoginFlag(c, TextUtils.equals("1", hasUserInfo));
+        if (!TextUtils.isEmpty(token))
+            UserDataProvider.saveToken(c, token);
+        if (TextUtils.equals("IdentityLicaishi", identify)) {
+            OtherDataProvider.saveIdentify(c, 1);
+        } else if (TextUtils.equals("IdentityTouziren", identify)) {
+            OtherDataProvider.saveIdentify(c, 2);
         }
     }
 
@@ -205,12 +198,22 @@ public class SPreference implements Constant {
     }
 
     /**
+     * 保存用户信息
+     *
+     * @param context
+     * @param json
+     */
+    public static void saveUserInfoData(@NonNull Context context, String json) {
+        UserDataProvider.saveUserInfo(context, json);
+    }
+
+    /**
      * 清理用户信息
      *
      * @param context 上下文
      */
     public static void clearUserInfoData(@NonNull Context context) {
-        UserDataProvider.del(context);
+        UserDataProvider.clear(context);
     }
 
     /**
@@ -232,10 +235,9 @@ public class SPreference implements Constant {
      *
      * @param context 上下文
      * @param token   token
-     * @return 是否保存成功
      */
-    public static boolean saveToken(@NonNull Context context, @NonNull String token) {
-        return UserDataProvider.updateToken(context, token);
+    public static void saveToken(@NonNull Context context, @NonNull String token) {
+        UserDataProvider.saveToken(context, token);
     }
 
     /**
@@ -253,10 +255,9 @@ public class SPreference implements Constant {
      *
      * @param context 上下文
      * @param flag    是否成功
-     * @return 是否保存成功
      */
-    public static boolean saveLoginFlag(@NonNull Context context, boolean flag) {
-        return UserDataProvider.updateLoginFlag(context, flag);
+    public static void saveLoginFlag(@NonNull Context context, boolean flag) {
+        UserDataProvider.saveLoginFlag(context, flag);
     }
 
     /**
@@ -284,7 +285,6 @@ public class SPreference implements Constant {
      *
      * @param context 上下文
      * @param value   1理财师，2投资人
-     * @return 是否保存成功
      */
     public static void saveIdtentify(@NonNull Context context, int value) {
         OtherDataProvider.saveIdentify(context, value);
