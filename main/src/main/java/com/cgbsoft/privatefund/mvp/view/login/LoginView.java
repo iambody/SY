@@ -9,4 +9,6 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  */
 public interface LoginView extends BaseView {
     void loginSuccess();
+
+    void loginFail();
 }

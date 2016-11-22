@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.AppCompat.DayNight" parent="Theme.AppCompat" tools:ignore="PrivateResource">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--导航栏底色-->
+        <item name="colorPrimary">@color/colorPrimaryAdv</item>
+        <!--状态栏底色-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAdv</item>
+        <item name="colorAccent">@color/colorAccentAdv</item>
+        <!--导航栏上的标题颜色-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:actionMenuTextAppearance">@style/BaseActionBar.MenuTextStyle</item>
+        <item name="android:windowAnimationStyle">@style/BaseAnimation</item>
+        <!--Activity窗口的颜色-->
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+</resources>

@@ -61,7 +61,7 @@
         android:largeHeap="true"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.DayNight">
 
         <!-- glide -->
         <meta-data

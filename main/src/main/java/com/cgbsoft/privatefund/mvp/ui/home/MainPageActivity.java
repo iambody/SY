@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -41,8 +42,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
-//        transaction.add(R.id.fl_main_content, mContentFragment);
-//        transaction.commitAllowingStateLoss();
+        transaction.add(R.id.fl_main_content, mContentFragment);
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
-    protected void data() {
+    protected void data(Bundle savedInstanceState) {
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
     }
@@ -100,23 +101,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void onTabSelected(int position) {
+        int switchID = -1;
         switch (position) {
             case 0://左1
-
+                switchID = R.id.nav_left_first;
                 break;
             case 1://左2
-
+                switchID = R.id.nav_left_second;
                 break;
             case 2://左3
-
+                switchID = R.id.nav_right_first;
                 break;
             case 3://左4
-
+                switchID = R.id.nav_right_second;
                 break;
             case 4://中间
-
+                switchID = R.id.nav_center;
                 break;
         }
+        switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
     }
 
     @Override

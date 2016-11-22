@@ -51,13 +51,11 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 if (loginBean.userInfo != null)
                     SPreference.saveUserInfoData(context, new Gson().toJson(loginBean.userInfo));
                 loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
-
-                getView().loginSuccess();
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000);
+                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
     }
@@ -92,13 +90,12 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(context.getApplicationContext(), new Gson().toJson(result.userInfo));
                     loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
-                    getView().loginSuccess();
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000);
+                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
 

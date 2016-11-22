@@ -214,6 +214,7 @@ public class SPreference implements Constant {
     public static void quitLogin(@NonNull Context context) {
         UserDataProvider.clear(context);
         OtherDataProvider.clear(context);
+
     }
 
     /**

@@ -177,17 +177,6 @@ public class ApiClient {
     }
 
 
-/*    private static String toEncode(String str) {
-        String value = "";
-        try {
-            value = URLEncoder.encode(str, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return value;
-    }*/
-
-
     private static Map<String, String> checkNull(Map<String, String> map) {
         if (map != null) {
             Set<String> set = map.keySet();

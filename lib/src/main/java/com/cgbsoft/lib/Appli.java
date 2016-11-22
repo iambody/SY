@@ -27,7 +27,7 @@ public class Appli extends MultiDexApplication {
     private static Context context;
     private DaoSession daoSession;
 
-    {
+    static {
         //设置umeng分享 微信
         PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
     }

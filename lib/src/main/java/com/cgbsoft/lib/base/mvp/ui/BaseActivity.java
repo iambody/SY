@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
             setContentView(layoutID());
         after();
         init();
-        data();
+        data(savedInstanceState);
     }
 
     protected void before() {
@@ -89,8 +90,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
     }
 
-    protected void data() {
-
+    protected void data(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        }
     }
 
     /**
@@ -210,7 +218,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     // 判断权限集合
     protected boolean needPermissions(String... permissions) {
         //判断版本是否兼容
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false;
         }
         boolean isNeed;
@@ -241,6 +249,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
 
     /**
      * 打开activity
+     *
      * @param pClass
      */
     protected void openActivity(Class<?> pClass) {

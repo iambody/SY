@@ -189,6 +189,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    @Override
+    public void loginFail() {
+        //todo 测试用
+        openActivity(MainPageActivity.class);
+        finish();
+    }
+
 
     private void toWxLogin() {
         mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
