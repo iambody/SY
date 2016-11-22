@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -47,7 +48,7 @@ interface RequestManager {
      * @return
      */
     @GET(NetConfig.GETIP_URL)
-    Observable<BaseResult<String>> getIP(@QueryMap Map<String, String> map);
+    Observable<ResponseBody> getIP(@QueryMap Map<String, String> map);
 
     /**
      * 登录
@@ -95,4 +96,13 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.WX_LOGIN_URL)
     Observable<BaseResult<LoginEntity.Result>> toWxLogin(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 获取协议
+     * @return
+     */
+    @GET(NetConfig.USERAGENT_URL)
+    Observable<ResponseBody> getProtocol();
+
+
 }

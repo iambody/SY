@@ -1,7 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +37,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init() {
+        if (setNetMode())
+            recreate();
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
@@ -52,7 +53,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
-    protected void data(Bundle savedInstanceState) {
+    protected void data() {
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
     }

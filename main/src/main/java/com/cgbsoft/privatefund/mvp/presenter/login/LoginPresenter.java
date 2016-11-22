@@ -10,6 +10,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.view.login.LoginView;
@@ -69,7 +70,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * @param nickName
      * @param headimgurl
      */
-    public void toWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
+    public void toWxLogin(@NonNull LoadingDialog loadingDialog, @NonNull CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl) {
         addSubscription(ApiClient.wxUnioIDCheck(unionid).flatMap(result -> {
             if (TextUtils.equals(result.isExist, "0")) {
                 LoginEntity.Result r = new LoginEntity.Result();
@@ -82,7 +83,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             @Override
             protected void onEvent(LoginEntity.Result result) {
                 if (TextUtils.equals(result.token, "-1")) {
-                    //todo
+                    loadingDialog.dismiss();
+                    builder.setMessage(context.getString(R.string.la_cd_content_str, nickName));
+                    builder.create().show();
                 } else {
                     SPreference.saveToken(context.getApplicationContext(), result.token);
                     SPreference.saveUserId(context.getApplicationContext(), result.userId);
@@ -98,7 +101,35 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
+    }
 
+    /**
+     * 微信登陆
+     * @param loadingDialog
+     * @param unionid
+     * @param sex
+     * @param nickName
+     * @param headimgurl
+     */
+    public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
+        loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
+        loadingDialog.show();
+        addSubscription(ApiClient.toWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<LoginEntity.Result>() {
+            @Override
+            protected void onEvent(LoginEntity.Result result) {
+                SPreference.saveToken(context.getApplicationContext(), result.token);
+                SPreference.saveUserId(context.getApplicationContext(), result.userId);
+                SPreference.saveLoginFlag(context, true);
+                if (result.userInfo != null)
+                    SPreference.saveUserInfoData(context.getApplicationContext(), new Gson().toJson(result.userInfo));
+                loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+            }
+        }));
     }
 
     @Override

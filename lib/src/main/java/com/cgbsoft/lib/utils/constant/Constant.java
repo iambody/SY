@@ -28,6 +28,8 @@ public interface Constant {
     String WEIXIN_APPID = "wx7259d65d4382e566";
     String WEIXIN_APPSECRET = "6e1deaa7b9a8c1380bd69e3de47fcc21";
 
+    String NIGHT_MODE = "appcompat_night_mode";
+
 
     //----------------权限管理参数(危险权限)------------------
 

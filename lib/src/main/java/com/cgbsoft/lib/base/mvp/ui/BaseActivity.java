@@ -53,7 +53,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
             setContentView(layoutID());
         after();
         init();
-        data(savedInstanceState);
+        data();
     }
 
     protected void before() {
@@ -90,15 +90,24 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
     }
 
-    protected void data(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            recreate();
+    protected void data() {
+
+    }
+
+    protected boolean setNetMode() {
+        int mode;
+        boolean isChange = false;
+        if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
+            mode = AppCompatDelegate.MODE_NIGHT_YES;
+        } else {
+            mode = AppCompatDelegate.MODE_NIGHT_NO;
         }
+        if (SPreference.getNightMode(this) != mode) {
+            getDelegate().setLocalNightMode(mode);
+            SPreference.saveNightMode(this, mode);
+            isChange = true;
+        }
+        return isChange;
     }
 
     /**

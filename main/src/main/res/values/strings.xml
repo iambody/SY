@@ -49,4 +49,7 @@
     <string name="la_no_install_wx_str">未安装微信</string>
     <string name="author_error_str">授权失败</string>
     <string name="author_cancel_str">授权取消</string>
+    <string name="la_wxlogin_str">微信登录</string>
+    <string name="la_cd_content_str">您将使用微信号%1$s创建私募云账号</string>
+    <string name="enter_str">确认</string>
 </resources>

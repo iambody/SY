@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="447dp"
+        android:background="@drawable/shape_f6f6f6">
+
+        <TextView
+            android:id="@+id/protocol_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/color_red_up"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/protocol_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/protocol_confirm"
+                style="@style/btn_red_bg_style"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/protocal_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/protocol_bottom_layout"
+            android:layout_below="@id/protocol_title"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:gravity="left"
+            android:lineSpacingExtra="10dp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textColor="@color/color_333333"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

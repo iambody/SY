@@ -63,7 +63,7 @@ public class ApiClient {
     public static Observable<String> getIP() {
         Map<String, String> map = new HashMap<>();
         map.put("ie", "utf-8");
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_IP).getIP(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_IP, false).getIP(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -110,6 +110,7 @@ public class ApiClient {
 
     /**
      * 微信 unioid 验证
+     *
      * @param unionid
      * @return
      */
@@ -121,13 +122,14 @@ public class ApiClient {
 
     /**
      * 微信登录
+     *
      * @param sex
      * @param nickName
      * @param unionid
      * @param headimgurl
      * @return
      */
-    public static Observable<LoginEntity.Result> toWxLogin(String sex, String nickName, String unionid, String headimgurl){
+    public static Observable<LoginEntity.Result> toWxLogin(String sex, String nickName, String unionid, String headimgurl) {
         Map<String, String> map = new HashMap<>();
         map.put("sex", sex);
         map.put("nickName", nickName);
@@ -136,6 +138,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    /**
+     * 获取协议
+     *
+     * @return
+     */
+    public static Observable<String> getProtocol() {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_WWW, false).getProtocol().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 

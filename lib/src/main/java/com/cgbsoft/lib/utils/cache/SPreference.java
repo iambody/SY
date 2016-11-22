@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.bean.UserInfo;
@@ -14,6 +15,8 @@ import com.google.gson.Gson;
 
 import static com.cgbsoft.lib.utils.cache.CPConstant.IS_PLAY_ADVISER_ANIM;
 import static com.cgbsoft.lib.utils.cache.CPConstant.IS_PLAY_INVERSTOR_ANIM;
+import static com.cgbsoft.lib.utils.cache.CPConstant.IS_VISABLE_MESSAGE_LOGIN;
+import static com.cgbsoft.lib.utils.cache.CPConstant.IS_VISABLE_PROTOCOL_LOGIN;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/11 09:05
@@ -136,6 +139,23 @@ public class SPreference implements Constant {
     public static void savePlayInverstorAnim(Context context, boolean b) {
         putBoolean(context, IS_PLAY_INVERSTOR_ANIM, b);
     }
+
+    public static boolean isVisableProtocol(Context context) {
+        return getBoolean(context, IS_VISABLE_PROTOCOL_LOGIN);
+    }
+
+    public static void saveVisableProtocol(Context context) {
+        putBoolean(context, IS_VISABLE_PROTOCOL_LOGIN, true);
+    }
+
+    public static boolean isVisableMessage(Context context) {
+        return getBoolean(context, IS_VISABLE_MESSAGE_LOGIN);
+    }
+
+    public static void saveVisableMessage(Context context) {
+        putBoolean(context, IS_VISABLE_MESSAGE_LOGIN, true);
+    }
+
 
     /**
      * 是否播放了理财师的动画
@@ -287,6 +307,18 @@ public class SPreference implements Constant {
      */
     public static int getIdtentify(@NonNull Context context) {
         return OtherDataProvider.getIdentify(context);
+    }
+
+    public static int getNightMode(@NonNull Context context) {
+        int i = getInt(context, NIGHT_MODE);
+        if (i == -1) {
+            return AppCompatDelegate.MODE_NIGHT_YES;
+        }
+        return i;
+    }
+
+    public static void saveNightMode(@NonNull Context context, int mode) {
+        putInt(context, NIGHT_MODE, mode);
     }
 
     /**

@@ -9,10 +9,12 @@ public class NetConfig {
 
     private static final String START_APP = "https://app";
     private static final String START_DS = "http://muninubc";
+    private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
 
     public static final String SERVER_ADD = START_APP + BASE;
     public static final String SERVER_DS = START_DS + BASE;
+    public static final String SERVER_WWW = START_WWW + BASE;
 
     public static final String SERVER_IP = "http://pv.sohu.com";
 
@@ -40,9 +42,12 @@ public class NetConfig {
     static final String GETIP_URL = "cityjson";
     //获取容云token
     static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+    //客户风险评测提交接口
+    public static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
+
 
     //用户相关
-    static class USER{
+    static class USER {
         //获取用户信息
         static final String GET_USERINFO_URL = AUTH_URL + "/user/userInfo";
         //验证微信验证unionid是否已存在

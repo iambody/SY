@@ -2,6 +2,9 @@ package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -13,9 +16,25 @@ import rx.functions.Func1;
  * FIXME
  * Rx处理服务器返回
  */
-public class RxResultHelper {
+class RxResultHelper {
+    static Observable.Transformer<ResponseBody, String> filterResultToString() {
+        return tObservabe -> tObservabe.flatMap(new Func1<ResponseBody, Observable<String>>() {
+            @Override
+            public Observable<String> call(ResponseBody responseBody) {
+                String string = "";
+                try {
+                    string = responseBody.string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-    public static <T> Observable.Transformer<BaseResult<T>, T> handleResult() {
+                return createData(string);
+            }
+        });
+    }
+
+
+    static <T> Observable.Transformer<BaseResult<T>, T> handleResult() {
         return tObservable -> tObservable.flatMap(
                 new Func1<BaseResult<T>, Observable<T>>() {
                     @Override

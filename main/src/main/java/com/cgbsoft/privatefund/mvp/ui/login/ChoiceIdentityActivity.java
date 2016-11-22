@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
-import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -62,7 +61,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     }
 
     @Override
-    protected void data(Bundle savedInstanceState) {
+    protected void data() {
         rg_aci.setOnCheckedChangeListener(this);
     }
 

@@ -114,11 +114,24 @@ public class OKHTTP {
     }
 
     public RequestManager getRequestManager(boolean isNeedReset) {
-        if(isNeedReset){
+        if (isNeedReset) {
             mInstance = new OKHTTP();
         }
         return requestManager;
     }
+
+    public RequestManager getRequestManager(String serverUrl, boolean isNeedGson) {
+        if (isNeedGson) {
+            return getRequestManager(serverUrl);
+        } else {
+            return new Retrofit.Builder()
+                    .client(mClient)
+                    .baseUrl(serverUrl + "/")
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build().create(RequestManager.class);
+        }
+    }
+
 
     public RequestManager getRequestManager(String serverUrl) {
         return new Retrofit.Builder()
@@ -128,5 +141,4 @@ public class OKHTTP {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build().create(RequestManager.class);
     }
-
 }

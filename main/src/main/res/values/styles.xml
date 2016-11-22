@@ -3,7 +3,7 @@
         <item name="android:paddingTop">3dp</item>
         <item name="android:paddingBottom">3dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/size_11</item>
+        <item name="android:textSize">@dimen/dimens_sp_11</item>
         <item name="android:textColor">@color/ic_color_text_bottom_bar</item>
     </style>
 </resources>

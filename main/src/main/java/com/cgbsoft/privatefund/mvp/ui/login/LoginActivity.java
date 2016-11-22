@@ -15,8 +15,10 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.login.LoginPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
@@ -71,6 +73,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
+    private CustomDialog.Builder mCustomBuilder;
 
     @Override
     protected void before() {
@@ -82,6 +85,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
@@ -109,6 +118,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
         mUMShareAPI = UMShareAPI.get(this);
+
+        CustomDialog mCustomDialog = new CustomDialog(this);
+        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
+                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+//        if (!SPreference.isVisableProtocol(getApplicationContext()))
+            new ProtocolDialog(this, 0, null);
     }
 
     @Override
@@ -254,7 +271,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private class MUMAuthListener implements UMAuthListener {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            getPresenter().toWxLogin(mLoadingDialog, map.get("unionid"), map.get("sex"), map.get("nickname"), map.get("headimgurl"));
+            String unionid = map.get("unionid");
+            String sex = map.get("sex");
+            String nickname = map.get("nickname");
+            String headimgurl = map.get("headimgurl");
+
+            if (!mCustomBuilder.isSetPositiveListener()) {
+                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
+                    dialog.dismiss();
+                });
+            }
+
+            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
         }
 
         @Override
