@@ -13,7 +13,7 @@
     <string name="vbnb_msg_str">消息</string>
 
     <string name="permission_help">帮助</string>
-    <string name="permission_help_text">LIVE缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
+    <string name="permission_help_text">私募云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
     <string name="permission_quit">退出</string>
     <string name="permission_setting">设置</string>
     <string name="permission_audio_str">音频录制权限\n</string>
@@ -41,8 +41,12 @@
     <string name="al_register_str">注册新用户</string>
     <string name="al_forget_str">忘记密码?</string>
     <string name="al_wx_login_str">微信登录</string>
-    <string name="la_un_null_str">账号不能为空</string>
-    <string name="la_pw_null_str">密码不能为空</string>
+    <string name="la_un_null_str">请输入您的账号</string>
+    <string name="la_pw_null_str">请输入您的密码</string>
     <string name="la_login_loading_str">登录中……</string>
     <string name="la_getinfo_error_str">获取用户信息失败</string>
+    <string name="la_login_succ_str">登录成功</string>
+    <string name="la_no_install_wx_str">未安装微信</string>
+    <string name="author_error_str">授权失败</string>
+    <string name="author_cancel_str">授权取消</string>
 </resources>

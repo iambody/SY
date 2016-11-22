@@ -13,7 +13,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.cgbsoft.lib.base.model.bean.AppResources;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 public class WelcomeActivity extends BaseActivity implements WelcomeView {
     private boolean isLaunched;
     private RequestManager requestManager;
-    private String[] PERMISSIONS = new String[]{PERMISSION_AUDIO, PERMISSION_CAMERA, PERMISSION_STORAGE, PERMISSION_PHONE, PERMISSION_LOCATION};
+    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE};
 
     private WelcomePersenter welcomePersenter;
 
@@ -76,10 +76,10 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
         } else {
-            SPreference.toDataMigration(this);
+//            SPreference.toDataMigration(this);
         }
 
-        SPreference.quitLogin(this);
+//        SPreference.quitLogin(this);
 
         // 缺少权限时, 进入权限配置页面
         if (needPermissions(PERMISSIONS)) {
@@ -119,10 +119,9 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     }
 
     @Override
-    public void getDataSucc(AppResources result) {
+    public void getDataSucc(AppResourcesEntity.Result result) {
         //todo 需要拿到显示的图片的url
-        String imgUrl = "";
-        requestManager.load(imgUrl).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
+        requestManager.load(result.img916).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 if (weakHandler != null) {

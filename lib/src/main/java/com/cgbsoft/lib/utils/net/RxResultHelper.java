@@ -20,7 +20,6 @@ public class RxResultHelper {
                 new Func1<BaseResult<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(BaseResult<T> entity) {
-
 //                        if (entity.isOk()) {
 //                            return createData(entity.result);
 //                        } else {
@@ -87,7 +86,8 @@ public class RxResultHelper {
 //                                    Observable.error(new ApiException(entity.code, entity.message));
 //                            }
 //                        }
-                        return Observable.empty();
+//                        return Observable.empty();
+                        return createData(entity.result);
                     }
                 }
 

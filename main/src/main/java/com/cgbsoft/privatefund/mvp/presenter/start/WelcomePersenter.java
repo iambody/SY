@@ -2,7 +2,7 @@ package com.cgbsoft.privatefund.mvp.presenter.start;
 
 import android.content.Context;
 
-import com.cgbsoft.lib.base.model.bean.AppResources;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -31,9 +31,9 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
     }
 
     public void getData() {
-        addSubscription(ApiClient.getAppResources(), new RxSubscriber<AppResources>() {
+        addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
             @Override
-            protected void onEvent(AppResources appResources) {
+            protected void onEvent(AppResourcesEntity.Result appResources) {
                 getView().getDataSucc(appResources);
             }
 
@@ -41,7 +41,7 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
             protected void onRxError(Throwable error) {
                 getView().getDataError(error);
             }
-        });
+        }));
     }
 
     public void createFinishObservable() {
@@ -62,10 +62,11 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
 
     /**
      * 初始化一些信息
+     *
      * @param context
      */
     public void toInitInfo(Context context) {
-        addSubscription(ApiClient.getIP(), new RxSubscriber<String>() {
+        addSubscription(ApiClient.getIP().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String json) {
                 if (json.contains("var returnCitySN")) {
@@ -85,9 +86,9 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
-        });
+        }));
+
     }
 
 }

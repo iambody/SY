@@ -1,6 +1,6 @@
 package com.cgbsoft.privatefund.mvp.view.start;
 
-import com.cgbsoft.lib.base.model.bean.AppResources;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
 /**
@@ -10,7 +10,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  *  
  */
 public interface WelcomeView extends BaseView {
-    void getDataSucc(AppResources result);
+    void getDataSucc(AppResourcesEntity.Result result);
     void getDataError(Throwable error);
 
     void finishThis();

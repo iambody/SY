@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Authenticator;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -41,6 +42,9 @@ public class OKHTTP {
         return mInstance;
     }
 
+    /**
+     * 初始化
+     */
     private OKHTTP() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         if (NetConfig.isLocal) {
@@ -51,18 +55,21 @@ public class OKHTTP {
         Interceptor mTokenInterceptor = chain -> {
             Context context = Appli.getContext();
             okhttp3.Request originalRequest = chain.request();
-            if (!SPreference.isLogin(context)) {
-                return chain.proceed(originalRequest);
-            }
+
             String uid = SPreference.getUserId(context);
             String token = SPreference.getToken(context);
-            okhttp3.Request authorised = originalRequest.newBuilder()
-                    .addHeader(NetConfig.DefaultParams.uid, TextUtils.isEmpty(uid) ? "" : uid)
-                    .addHeader(NetConfig.DefaultParams.token, TextUtils.isEmpty(token) ? "" : token)
-                    .addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context))
+
+            Request.Builder builder = originalRequest.newBuilder();
+            if (!TextUtils.isEmpty(uid)) {
+                builder.addHeader(NetConfig.DefaultParams.uid, uid);
+            }
+            if (!TextUtils.isEmpty(token)) {
+                builder.addHeader(NetConfig.DefaultParams.token, token);
+            }
+            builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context))
                     .addHeader(NetConfig.DefaultParams.appVersion, Utils.getVersionCode(context) + "")
-                    .addHeader(NetConfig.DefaultParams.appPlatform, "android")
-                    .build();
+                    .addHeader(NetConfig.DefaultParams.appPlatform, "android");
+            okhttp3.Request authorised = builder.build();
             Utils.logJson("ApiClient", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
                     "deviceId:" + Utils.getIMEI(Appli.getContext()), "d");
@@ -107,7 +114,7 @@ public class OKHTTP {
     }
 
     public RequestManager getRequestManager(boolean isNeedReset) {
-        if (isNeedReset) {
+        if(isNeedReset){
             mInstance = new OKHTTP();
         }
         return requestManager;

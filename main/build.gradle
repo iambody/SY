@@ -42,10 +42,54 @@ android {
             jumboMode = true
         }
     }
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            storeFile file("D:\\develop\\key\\privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
         release {
+            storeFile file("D:\\develop\\key\\privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+    }
+
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "-debug"
+            //签名配置
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            // 是否进行混淆
             minifyEnabled false
+            //是否zip对齐
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名配置
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "shimuyun_release_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
     }
 

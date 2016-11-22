@@ -4,9 +4,10 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
-import com.cgbsoft.lib.base.model.bean.AppResources;
-import com.cgbsoft.lib.base.model.bean.DataStatistics;
-import com.cgbsoft.lib.base.model.bean.LoginBean;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.LoginEntity;
+import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
@@ -15,8 +16,6 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -35,13 +34,13 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<AppResources> getAppResources() {
+    public static Observable<AppResourcesEntity.Result> getAppResources() {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(Appli.getContext()));
         params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
 
-        return OKHTTP.getInstance().getRequestManager().getAppResource(checkGETParam(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -50,7 +49,7 @@ public class ApiClient {
      * @param json
      * @return
      */
-    public static Observable<DataStatistics> pushDataStatistics(String json) {
+    public static Observable<String> pushDataStatistics(String json) {
         Map<String, String> map = new HashMap<>();
         map.put("contents", json);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
@@ -74,11 +73,11 @@ public class ApiClient {
      * @param pwdMD5   md5密码
      * @return
      */
-    public static Observable<LoginBean> toLogin(String username, String pwdMD5) {
+    public static Observable<LoginEntity.Result> toLogin(String username, String pwdMD5) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         map.put("password", pwdMD5);
-        return OKHTTP.getInstance().getRequestManager().toLogin(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().toLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -90,8 +89,55 @@ public class ApiClient {
     public static Observable<UserInfo> getUserInfo(String userid) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userid);
-        return OKHTTP.getInstance().getRequestManager(true).getUserInfo(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager(true).getUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
+
+    /**
+     * 获取容云token
+     *
+     * @param rongExpired
+     * @param rongUID
+     * @return
+     */
+    public static Observable<RongTokenEntity.Result> getRongToken(String rongExpired, String rongUID) {
+        Map<String, String> map = new HashMap<>();
+        if (rongExpired != null)
+            map.put("tokenExpired", rongExpired);
+        map.put("uid", rongUID);
+        return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+
+    /**
+     * 微信 unioid 验证
+     * @param unionid
+     * @return
+     */
+    public static Observable<WXUnionIDCheckEntity.Result> wxUnioIDCheck(String unionid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("unionid", unionid);
+        return OKHTTP.getInstance().getRequestManager().wxUnioIDCheck(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 微信登录
+     * @param sex
+     * @param nickName
+     * @param unionid
+     * @param headimgurl
+     * @return
+     */
+    public static Observable<LoginEntity.Result> toWxLogin(String sex, String nickName, String unionid, String headimgurl){
+        Map<String, String> map = new HashMap<>();
+        map.put("sex", sex);
+        map.put("nickName", nickName);
+        map.put("unionid", unionid);
+        map.put("headImageUrl", headimgurl);
+        return OKHTTP.getInstance().getRequestManager().toWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+
+    //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     /**
      * 重新生成Get 方式的value值
@@ -99,7 +145,21 @@ public class ApiClient {
      * @param map
      * @return
      */
-    private static Map<String, String> checkGETParam(@NonNull Map<String, String> map) {
+    private static Map<String, String> createProgram(@NonNull Map<String, String> map) {
+        String paramValue = getParamJSON(map);
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(paramValue))
+            params.put("param", paramValue);
+        return params;
+    }
+
+    /**
+     * 生成json
+     *
+     * @param map
+     * @return
+     */
+    private static String getParamJSON(@NonNull Map<String, String> map) {
         String paramValue = "";
         JSONObject jsonObject = null;
         Set<String> set = map.keySet();
@@ -109,17 +169,23 @@ public class ApiClient {
                 String value = map.get(key);
                 jsonObject.put(key, value);
             }
-            paramValue = URLEncoder.encode(jsonObject.toString(), "utf-8");
+            paramValue = jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        return paramValue;
+    }
+
+
+/*    private static String toEncode(String str) {
+        String value = "";
+        try {
+            value = URLEncoder.encode(str, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(paramValue))
-            params.put("param", paramValue);
-        return params;
-    }
+        return value;
+    }*/
 
 
     private static Map<String, String> checkNull(Map<String, String> map) {

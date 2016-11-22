@@ -8,14 +8,14 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.presenter.home.HomePresenter;
+import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.mvp.view.home.HomeView;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 
-public class MainPageActivity extends BaseActivity<HomePresenter> implements HomeView, BottomNavigationBar.BottomClickListener {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements HomeView, BottomNavigationBar.BottomClickListener {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -46,8 +46,8 @@ public class MainPageActivity extends BaseActivity<HomePresenter> implements Hom
     }
 
     @Override
-    protected HomePresenter createPresenter() {
-        return new HomePresenter(this);
+    protected MainPagePresenter createPresenter() {
+        return new MainPagePresenter(this);
     }
 
     @Override
@@ -127,12 +127,6 @@ public class MainPageActivity extends BaseActivity<HomePresenter> implements Hom
 
     @Override
     public void onBackPressed() {
-//        boolean isInstanceof = mContentFragment instanceof MainLiveFragment;
-//        if (!isInstanceof) {
-//            bottomNavigationBar.fl_bottom_navigation_live.performClick();
-//        } else {
-//            exitBy2Click();
-//        }
         exitBy2Click();
     }
 }

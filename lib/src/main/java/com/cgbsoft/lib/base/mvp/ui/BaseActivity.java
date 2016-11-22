@@ -209,6 +209,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
 
     // 判断权限集合
     protected boolean needPermissions(String... permissions) {
+        //判断版本是否兼容
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            return false;
+        }
         boolean isNeed;
         for (String permission : permissions) {
             isNeed = needsPermission(permission);

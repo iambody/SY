@@ -96,4 +96,9 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
         }
         SPreference.saveIdtentify(getApplicationContext(), identity);
     }
+
+    @Override
+    public void onBackPressed() {
+        exitBy2Click();
+    }
 }

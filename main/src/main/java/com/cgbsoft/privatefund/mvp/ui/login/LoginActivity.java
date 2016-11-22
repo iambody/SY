@@ -14,11 +14,18 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.login.LoginPresenter;
+import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
 import com.cgbsoft.privatefund.mvp.view.login.LoginView;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -63,6 +70,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
+    private UMShareAPI mUMShareAPI;
 
     @Override
     protected void before() {
@@ -99,7 +107,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
-        mLoadingDialog = LoadingDialog.getLoadingDialog(this.getApplicationContext(), getString(R.string.la_login_loading_str), false, false);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
+        mUMShareAPI = UMShareAPI.get(this);
     }
 
     @Override
@@ -125,7 +134,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R.id.iv_al_del_pw)
     void delPasswordClick() {//删除密码
         if (et_al_password.getText().toString().length() > 0) {
-            et_al_username.setText("");
+            et_al_password.setText("");
         }
         iv_al_del_pw.setVisibility(View.GONE);
         toDataStatistics(1002, 10004, "登录密码");
@@ -142,7 +151,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         toDataStatistics(1002, 10005, "登录");
-        getPresenter().toLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
+        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
 
@@ -170,10 +179,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R.id.iv_al_wx)
     void weixinClick() {//微信登陆
-
+        toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
 
+    @Override
+    public void loginSuccess() {
+        openActivity(MainPageActivity.class);
+        finish();
+    }
+
+
+    private void toWxLogin() {
+        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+        mLoadingDialog.show();
+
+        if (!Utils.isWeixinAvilible(this)) {
+            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
+            return;
+        }
+        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
+            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+        } else {
+            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+        }
+    }
 
     private class LoginTextWatcher implements TextWatcher {
         private int which;
@@ -205,6 +235,29 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void afterTextChanged(Editable s) {
 
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        openActivity(ChoiceIdentityActivity.class);
+        finish();
+    }
+
+    private class MUMAuthListener implements UMAuthListener {
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+            getPresenter().toWxLogin(mLoadingDialog, map.get("unionid"), map.get("sex"), map.get("nickname"), map.get("headimgurl"));
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+            mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
         }
     }
 }

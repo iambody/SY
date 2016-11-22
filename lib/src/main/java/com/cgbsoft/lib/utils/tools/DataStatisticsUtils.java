@@ -3,7 +3,6 @@ package com.cgbsoft.lib.utils.tools;
 import android.content.Context;
 import android.os.Build;
 
-import com.cgbsoft.lib.base.model.bean.DataStatistics;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -60,9 +59,9 @@ public class DataStatisticsUtils {
         }
         jsonArray.put(js);
 
-        subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<DataStatistics>() {
+        subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(DataStatistics dataStatistics) {
+            protected void onEvent(String string) {
                 subscription.unsubscribe();
             }
 

@@ -32,14 +32,24 @@ public class NetConfig {
 
     //登陆
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
-    //获取用户信息
-    static final String GET_USERINFO_URL = AUTH_URL + "/user/userInfo";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
     static final String GET_RES_URL = API_URL + "/startup/5.0";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
+    //获取容云token
+    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+
+    //用户相关
+    static class USER{
+        //获取用户信息
+        static final String GET_USERINFO_URL = AUTH_URL + "/user/userInfo";
+        //验证微信验证unionid是否已存在
+        static final String WX_UNIONID_CHECK = AUTH_URL + "/user/weChatUnionId";
+        // 微信登陆
+        static final String WX_LOGIN_URL = AUTH_URL + "/user/weChatLogin";
+    }
 
 
 }

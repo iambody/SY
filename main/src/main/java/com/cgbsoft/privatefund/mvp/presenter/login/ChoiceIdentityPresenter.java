@@ -57,7 +57,7 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
             SPreference.saveIdtentify(context, value);
         }
         if (clazz != null) {
-            Intent intent = new Intent(context, AnimActivity.class);
+            Intent intent = new Intent(context, clazz);
             intent.putExtra(IDS_KEY, value);
             context.startActivity(intent);
             getView().finishThis();

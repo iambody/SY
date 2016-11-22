@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.tools.Base64Util;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
@@ -85,7 +84,7 @@ public class SPreference implements Constant {
     /**
      * 对原来保存在sp里的数据进行迁移
      */
-    public static void toDataMigration(@NonNull Context context) {
+    /*public static void toDataMigration(@NonNull Context context) {
         Context c = context.getApplicationContext();
         SharedPreferences old1Sp = getBase(c, "simuyun");
         // 1理财师  2投资人
@@ -111,7 +110,7 @@ public class SPreference implements Constant {
         } else if (TextUtils.equals("IdentityTouziren", identify)) {
             OtherDataProvider.saveIdentify(c, 2);
         }
-    }
+    }*/
 
     /**
      * 用于判断应用后台到前台

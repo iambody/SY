@@ -85,4 +85,10 @@ dependencies {
     compile "org.greenrobot:greendao:${greenDAO_need_version}"
     compile "org.greenrobot:greendao-generator:${greenDAO_need_version}"
     compile "com.wang.avi:library:${avilib_need_version}"
+
+    //https://github.com/dinuscxj/RecyclerRefreshLayout
+    compile "com.dinuscxj:recyclerrefreshlayout:${recRefLayout_need_version}"
+
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

@@ -8,9 +8,9 @@ import com.cgbsoft.privatefund.mvp.view.home.HomeView;
  * Created by xiaoyu.zhang on 2016/11/10 16:18
  *  
  */
-public class HomePresenter extends BasePresenter<HomeView> {
+public class MainPagePresenter extends BasePresenter<HomeView> {
 
-    public HomePresenter(HomeView view) {
+    public MainPagePresenter(HomeView view) {
         super(view);
     }
 
@@ -18,4 +18,6 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public void getDataList(){
 
     }
+
+    //todo 开启容云
 }

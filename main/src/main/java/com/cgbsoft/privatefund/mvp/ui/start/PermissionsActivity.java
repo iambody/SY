@@ -179,13 +179,13 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
                 insertStr += getString(R.string.permission_audio_str);
             } else if (TextUtils.equals(str, PERMISSION_CAMERA)) {
                 insertStr += getString(R.string.permission_camera_str);
-            } else if (TextUtils.equals(str, PERMISSION_CONTANCTS)) {
+            } else if (TextUtils.equals(str, PERMISSION_WRITE_CONTANCTS)) {
                 insertStr += getString(R.string.permission_contancts_str);
-            } else if (TextUtils.equals(str, PERMISSION_SMS)) {
+            } else if (TextUtils.equals(str, PERMISSION_SEND_SMS)) {
                 insertStr += getString(R.string.permission_sms_str);
-            } else if (TextUtils.equals(str, PERMISSION_STORAGE)) {
+            } else if (TextUtils.equals(str, PERMISSION_WRITE_STORAGE)) {
                 insertStr += getString(R.string.permission_sdcard_str);
-            } else if (TextUtils.equals(str, PERMISSION_PHONE)) {
+            } else if (TextUtils.equals(str, PERMISSION_READ_PHONE_STATE)) {
                 insertStr += getString(R.string.permission_phone_str);
             } else if (TextUtils.equals(str, PERMISSION_LOCATION)) {
                 insertStr += getString(R.string.permission_location_str);

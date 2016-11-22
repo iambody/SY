@@ -90,6 +90,9 @@ public class LoadingDialog extends Dialog {
         imgFail.setVisibility(View.GONE);
     }
 
+    public void setResult(boolean isSucc, String text) {
+        setResult(isSucc, text, 0, null);
+    }
 
     public void setResult(boolean isSucc, String text, int duration) {
         setResult(isSucc, text, duration, null);
@@ -105,13 +108,14 @@ public class LoadingDialog extends Dialog {
             imgFail.setVisibility(isSucc ? View.GONE : View.VISIBLE);
             setLoadText(text);
 
-            new Handler().postDelayed(() -> {
-                if (isShowing())
-                    dismiss();
-                if (onDismissListener != null) {
-                    onDismissListener.dissComplete();
-                }
-            }, duration);
+            if (duration > 0)
+                new Handler().postDelayed(() -> {
+                    if (isShowing())
+                        dismiss();
+                    if (onDismissListener != null) {
+                        onDismissListener.dissComplete();
+                    }
+                }, duration);
         } catch (Exception e) {
             e.printStackTrace();
         }

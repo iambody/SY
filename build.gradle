@@ -51,6 +51,7 @@ ext {
     greenDAO_need_version = '3.2.0'
     floatbar_need_version = '1.0.2'
     avilib_need_version = '1.0.0'
+    recRefLayout_need_version = '2.0.3'
 
     testRunner = 'android.support.test.runner.AndroidJUnitRunner'
     testC = '4.12'

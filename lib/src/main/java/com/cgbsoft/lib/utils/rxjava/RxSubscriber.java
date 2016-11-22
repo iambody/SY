@@ -31,7 +31,6 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onCompleted() {
-        onComplete();
     }
 
     @Override
@@ -44,10 +43,6 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
     protected abstract void onEvent(T t);
 
     protected abstract void onRxError(Throwable error);
-
-    protected void onComplete() {
-
-    }
 
     //重新注册
     protected void toReRxRegister() {
