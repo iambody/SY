@@ -36,6 +36,7 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
+
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -141,6 +142,11 @@
             android:name=".mvp.ui.login.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
 
+        <!--重新设置密码-->
+        <activity
+            android:name=".mvp.ui.login.SetPasswordActivity"
+            android:screenOrientation="portrait" />
+
         <!--umeng-->
         <!--微信-->
         <activity
@@ -153,8 +159,8 @@
         <!--分享编辑页-->
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
-            android:theme="@style/Theme.UMDefault"
-            android:excludeFromRecents="true"/>
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
     </application>
 
 </manifest>

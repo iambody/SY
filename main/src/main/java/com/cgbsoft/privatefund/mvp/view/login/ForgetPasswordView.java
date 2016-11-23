@@ -9,4 +9,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  *  
  */
 public interface ForgetPasswordView extends BaseView {
+    void sendSucc();
+
+    void checkSucc();
 }

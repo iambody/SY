@@ -48,16 +48,21 @@ public class NetConfig {
 
     //用户相关
     static class USER {
+        private static final String user = "/user";
         //获取用户信息
-        static final String GET_USERINFO_URL = AUTH_URL + "/user/userInfo";
+        static final String GET_USERINFO_URL = AUTH_URL + user + "/userInfo";
         //验证微信验证unionid是否已存在
-        static final String WX_UNIONID_CHECK = AUTH_URL + "/user/weChatUnionId";
+        static final String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
         // 微信登陆
-        static final String WX_LOGIN_URL = AUTH_URL + "/user/weChatLogin";
+        static final String WX_LOGIN_URL = AUTH_URL + user + "/weChatLogin";
         //注册
-        static final String REGISTER_URL = AUTH_URL + "/user/register";
+        static final String REGISTER_URL = AUTH_URL + user + "/register";
         //发送验证码
-        static final String SENDCODE_URL = AUTH_URL + "/user/voiceCaptcha";
+        static final String SENDCODE_URL = AUTH_URL + user + "/voiceCaptcha";
+        //验证手机号
+        static final String CHECKCODE_URL = AUTH_URL + user + "/checkCaptcha";
+        //重置密码
+        static final String RESETPWD_URL = AUTH_URL + user + "/resetPassword";
     }
 
 

@@ -52,7 +52,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
     public void sendCode(@NonNull LoadingDialog loadingDialog, String un) {
         loadingDialog.setLoading(context.getString(R.string.sending_str));
         loadingDialog.show();
-        addSubscription(ApiClient.sendCode(un).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.sendCode(un, 1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.setResult(true, context.getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());

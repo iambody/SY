@@ -113,8 +113,31 @@ interface RequestManager {
     @POST(NetConfig.USER.REGISTER_URL)
     Observable<BaseResult<UserInfoDataEntity.Result>> toRegister(@FieldMap Map<String, String> paramsMap);
 
+    /**
+     * 发送验证码
+     * @param paramsMap
+     * @return
+     */
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
     Observable<BaseResult<String>>sendCode(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 验证验证码
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.CHECKCODE_URL)
+    Observable<BaseResult<String>>checkCode(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 重置密码
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.RESETPWD_URL)
+    Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
 
 }

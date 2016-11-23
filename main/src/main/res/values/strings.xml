@@ -65,4 +65,8 @@
     <string name="sending_succ_str">发送成功</string>
     <string name="sending_fail_str">发送失败</string>
     <string name="ra_code_resend_str">重新发送</string>
+    <string name="checking_str">验证中……</string>
+    <string name="checking_fail_str">验证失败</string>
+    <string name="reseting_str">重置中……</string>
+    <string name="as_nosame_str">请输入相同的密码</string>
 </resources>

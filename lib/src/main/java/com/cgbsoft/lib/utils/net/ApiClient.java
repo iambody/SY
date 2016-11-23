@@ -167,11 +167,39 @@ public class ApiClient {
      * @param phone
      * @return
      */
-    public static Observable<String> sendCode(String phone){
+    public static Observable<String> sendCode(String phone, int which){
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
-        map.put("checkPhoneDuplicate", "1");
+        map.put("checkPhoneDuplicate", String.valueOf(which));
         return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 验证验证码
+     * @param phone
+     * @param code
+     * @return
+     */
+    public static Observable<String> checkCode(String phone, String code){
+        Map<String, String> map = new HashMap<>();
+        map.put("phoneNum", phone);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager().checkCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 重置密码
+     * @param un
+     * @param pwdMd5
+     * @param code
+     * @return
+     */
+    public static Observable<String> resetPwd(String un, String pwdMd5, String code){
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", un);
+        map.put("newPassword", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager().resetPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
 

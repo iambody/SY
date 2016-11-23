@@ -71,13 +71,19 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     TextView tv_ar_proto;
 
     private LoadingDialog mLoadingDialog;
-    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel;
+    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
     private iOSDialog miOSDialog;
     private int countDownTime = COOL_DOWN_TIME;
     private Subscription countDownSub;
+
+    @Override
+    public void onBackPressed() {
+        openActivity(LoginActivity.class);
+        finish();
+    }
 
     @Override
     protected void before() {
@@ -123,10 +129,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             @Override
             public void right() {
                 this.dismiss();
-                if (!isUsernameInput) {
-                    MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
-                    return;
-                }
                 toDataStatistics(1002, 10010, "注册验证码获取");
                 getPresenter().sendCode(mLoadingDialog, et_ar_username.getText().toString());
             }
@@ -170,6 +172,10 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @OnClick(R.id.btn_ar_check)
     void checkClick() {
         toUmengStatistics(UMENG_KEY, "按钮", "发送验证码");
+        if (!isUsernameInput) {
+            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
+            return;
+        }
         miOSDialog.show();
     }
 
@@ -220,18 +226,14 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     public void regFail() {
-        //todo 测试用
-        openActivity(MainPageActivity.class);
-        finish();
     }
 
     @Override
     public void sendSucc() {
-        //todo 开始倒计时
         btn_ar_check.setEnabled(false);
         btn_ar_check.setBackgroundResource(R.drawable.bg_write_down);
         btn_ar_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
-        countDownSub = Observable.interval(1000, TimeUnit.MILLISECONDS).compose(bindToLifecycle())
+        countDownSub = Observable.interval(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscriber<Long>() {
                     @Override
                     protected void onEvent(Long aLong) {
