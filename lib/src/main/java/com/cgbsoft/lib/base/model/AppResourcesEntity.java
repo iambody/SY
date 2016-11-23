@@ -9,7 +9,6 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
  *  
  */
 public class AppResourcesEntity extends BaseResult<AppResourcesEntity.Result> {
-    public Result result;
 
     public static class Result {
 

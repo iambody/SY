@@ -1,8 +1,8 @@
 package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.model.LoginEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
@@ -58,7 +58,7 @@ interface RequestManager {
      */
     @FormUrlEncoded
     @POST(NetConfig.LOGIN_URL)
-    Observable<BaseResult<LoginEntity.Result>> toLogin(@FieldMap() Map<String, String> paramsMap);
+    Observable<BaseResult<UserInfoDataEntity.Result>> toLogin(@FieldMap() Map<String, String> paramsMap);
 
     /**
      * 获取用户信息
@@ -95,7 +95,7 @@ interface RequestManager {
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.WX_LOGIN_URL)
-    Observable<BaseResult<LoginEntity.Result>> toWxLogin(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<UserInfoDataEntity.Result>> toWxLogin(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 获取协议
@@ -104,5 +104,17 @@ interface RequestManager {
     @GET(NetConfig.USERAGENT_URL)
     Observable<ResponseBody> getProtocol();
 
+    /**
+     * 注册
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.REGISTER_URL)
+    Observable<BaseResult<UserInfoDataEntity.Result>> toRegister(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.SENDCODE_URL)
+    Observable<BaseResult<String>>sendCode(@FieldMap Map<String, String> paramsMap);
 
 }

@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                android:drawableLeft="@drawable/ic_al_username"
+                android:drawableLeft="@drawable/ic_et_username"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -70,11 +70,11 @@
                 android:layout_alignTop="@id/et_al_username"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/ic_al_del"
+                android:background="@drawable/ic_et_del"
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <View style="@style/login_line" />
+        <View style="@style/normal_line" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 style="@style/normal_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_al_password"
+                android:drawableLeft="@drawable/ic_et_password"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -106,7 +106,7 @@
                 android:layout_alignTop="@id/et_al_password"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="13dp"
-                android:background="@drawable/ic_al_del"
+                android:background="@drawable/ic_et_del"
                 android:visibility="invisible" />
         </RelativeLayout>
 
@@ -128,7 +128,8 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

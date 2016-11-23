@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.base.model.LoginEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -42,9 +42,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
-        addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<LoginEntity.Result>() {
+        addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
-            protected void onEvent(LoginEntity.Result loginBean) {
+            protected void onEvent(UserInfoDataEntity.Result loginBean) {
                 SPreference.saveUserId(context.getApplicationContext(), loginBean.userId);
                 SPreference.saveToken(context.getApplicationContext(), loginBean.token);
 
@@ -73,15 +73,15 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void toWxLogin(@NonNull LoadingDialog loadingDialog, @NonNull CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl) {
         addSubscription(ApiClient.wxUnioIDCheck(unionid).flatMap(result -> {
             if (TextUtils.equals(result.isExist, "0")) {
-                LoginEntity.Result r = new LoginEntity.Result();
+                UserInfoDataEntity.Result r = new UserInfoDataEntity.Result();
                 r.token = "-1";
                 return Observable.just(r);
             } else {
                 return ApiClient.toWxLogin(sex, nickName, unionid, headimgurl);
             }
-        }).subscribe(new RxSubscriber<LoginEntity.Result>() {
+        }).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
-            protected void onEvent(LoginEntity.Result result) {
+            protected void onEvent(UserInfoDataEntity.Result result) {
                 if (TextUtils.equals(result.token, "-1")) {
                     loadingDialog.dismiss();
                     builder.setMessage(context.getString(R.string.la_cd_content_str, nickName));
@@ -114,9 +114,9 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
         loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
         loadingDialog.show();
-        addSubscription(ApiClient.toWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<LoginEntity.Result>() {
+        addSubscription(ApiClient.toWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
-            protected void onEvent(LoginEntity.Result result) {
+            protected void onEvent(UserInfoDataEntity.Result result) {
                 SPreference.saveToken(context.getApplicationContext(), result.token);
                 SPreference.saveUserId(context.getApplicationContext(), result.userId);
                 SPreference.saveLoginFlag(context, true);

@@ -21,10 +21,12 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -286,6 +288,18 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
         DataStatisticsUtils.push(getApplicationContext(), data);
+    }
+
+    /**
+     * umeng 统计
+     * @param umengKey
+     * @param mapKey
+     * @param mapValue
+     */
+    protected void toUmengStatistics(String umengKey, String mapKey, String mapValue) {
+        Map<String, String> map = new HashMap<>();
+        map.put(mapKey, mapValue);
+        MobclickAgent.onEvent(getApplicationContext(), umengKey, map);
     }
 
 

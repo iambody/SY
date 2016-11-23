@@ -18,8 +18,10 @@
     <color name="color_636571">#636571</color>
     <color name="color_f6f6f6">#f6f6f6</color>
     <color name="color_333333">#333333</color>
-    <color name="white_light">#ccffffff</color>
-    <color name="white_dark">#bbffffff</color>
+    <color name="color_10f2f2f2">#10f2f2f2</color>
+    <color name="color_22222222">#22222222</color>
+    <color name="white_dark">#ccffffff</color>
+    <color name="white_light">#bbffffff</color>
 
     <color name="orange_light">#88f47900</color>
     <color name="orange_dark">#aaf47900</color>

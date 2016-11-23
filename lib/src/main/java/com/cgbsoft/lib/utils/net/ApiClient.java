@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.model.LoginEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -73,7 +73,7 @@ public class ApiClient {
      * @param pwdMD5   md5密码
      * @return
      */
-    public static Observable<LoginEntity.Result> toLogin(String username, String pwdMD5) {
+    public static Observable<UserInfoDataEntity.Result> toLogin(String username, String pwdMD5) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", username);
         map.put("password", pwdMD5);
@@ -129,7 +129,7 @@ public class ApiClient {
      * @param headimgurl
      * @return
      */
-    public static Observable<LoginEntity.Result> toWxLogin(String sex, String nickName, String unionid, String headimgurl) {
+    public static Observable<UserInfoDataEntity.Result> toWxLogin(String sex, String nickName, String unionid, String headimgurl) {
         Map<String, String> map = new HashMap<>();
         map.put("sex", sex);
         map.put("nickName", nickName);
@@ -146,6 +146,34 @@ public class ApiClient {
     public static Observable<String> getProtocol() {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_WWW, false).getProtocol().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /**
+     * 注册
+     * @param userName
+     * @param pwdMd5
+     * @param code
+     * @return
+     */
+    public static Observable<UserInfoDataEntity.Result> toRegister(String userName, String pwdMd5, String code){
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("password", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager().toRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
+    public static Observable<String> sendCode(String phone){
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("checkPhoneDuplicate", "1");
+        return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
 
     //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 

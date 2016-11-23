@@ -8,8 +8,6 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
  *  
  */
 public class WXUnionIDCheckEntity extends BaseResult<WXUnionIDCheckEntity.Result> {
-    public Result result;
-
     public static class Result {
         /**
          * isExist : 1

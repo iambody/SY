@@ -102,9 +102,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         switch (identity) {
             case IDS_ADVISER:
                 iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+                btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
+                btn_al_login.setTextColor(0xff666666);
                 break;
             case IDS_INVERSTOR:
                 iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+                btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
+                btn_al_login.setTextColor(0xffffffff);
                 break;
         }
 
@@ -124,7 +128,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
                     dialog.dismiss();
                 });
-//        if (!SPreference.isVisableProtocol(getApplicationContext()))
+        if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
     }
 
@@ -160,11 +164,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R.id.btn_al_login)
     void loginClick() {//登陆
         if (!isUsernameInput) {
-            MToast.makeText(getApplicationContext(), getString(R.string.la_un_null_str), Toast.LENGTH_SHORT);
+            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
         if (!isPasswordInput) {
-            MToast.makeText(getApplicationContext(), getString(R.string.la_pw_null_str), Toast.LENGTH_SHORT);
+            MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
             return;
         }
         toDataStatistics(1002, 10005, "登录");

@@ -30,6 +30,8 @@ public interface Constant {
 
     String NIGHT_MODE = "appcompat_night_mode";
 
+    String VOICE_PHONE = "125909888848";
+
 
     //----------------权限管理参数(危险权限)------------------
 

@@ -70,7 +70,7 @@ public class OKHTTP {
                     .addHeader(NetConfig.DefaultParams.appVersion, Utils.getVersionCode(context) + "")
                     .addHeader(NetConfig.DefaultParams.appPlatform, "android");
             okhttp3.Request authorised = builder.build();
-            Utils.logJson("ApiClient", "uid:" + uid + "\n" +
+            Utils.log("ApiClient", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
                     "deviceId:" + Utils.getIMEI(Appli.getContext()), "d");
             return chain.proceed(authorised);
@@ -83,7 +83,7 @@ public class OKHTTP {
                 } catch (ApiException e) {
                     e.printStackTrace();
                 }
-            Utils.logJson("ApiClient", response.toString());
+            Utils.log("ApiClient", response.toString());
             return null;
         };
 

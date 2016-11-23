@@ -9,4 +9,8 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  *  
  */
 public interface RegisterView extends BaseView {
+    void regSucc();
+    void regFail();
+
+    void sendSucc();
 }

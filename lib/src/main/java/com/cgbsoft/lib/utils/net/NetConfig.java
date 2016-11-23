@@ -54,6 +54,10 @@ public class NetConfig {
         static final String WX_UNIONID_CHECK = AUTH_URL + "/user/weChatUnionId";
         // 微信登陆
         static final String WX_LOGIN_URL = AUTH_URL + "/user/weChatLogin";
+        //注册
+        static final String REGISTER_URL = AUTH_URL + "/user/register";
+        //发送验证码
+        static final String SENDCODE_URL = AUTH_URL + "/user/voiceCaptcha";
     }
 
 

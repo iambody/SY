@@ -377,7 +377,7 @@ public class Utils {
         return false;
     }
 
-    public static void logJson(String tag, String msg) {
+    public static void log(String tag, String msg) {
         if (TextUtils.isEmpty(msg)) {
             msg = "";
         }
@@ -391,7 +391,7 @@ public class Utils {
         }
     }
 
-    public static void logJson(String tag, String msg, String which) {
+    public static void log(String tag, String msg, String which) {
         if (TextUtils.isEmpty(msg)) {
             msg = "";
         }
