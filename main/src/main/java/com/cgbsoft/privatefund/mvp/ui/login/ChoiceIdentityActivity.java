@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -43,12 +42,6 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     TextView tv_webaddress;
 
     private int identity = -1;
-
-    @Override
-    protected void before() {
-        super.before();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
 
     @Override
     protected int layoutID() {

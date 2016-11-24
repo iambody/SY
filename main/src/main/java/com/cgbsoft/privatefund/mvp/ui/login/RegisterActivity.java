@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.login;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -83,12 +82,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     public void onBackPressed() {
         openActivity(LoginActivity.class);
         finish();
-    }
-
-    @Override
-    protected void before() {
-        super.before();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override

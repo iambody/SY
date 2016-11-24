@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,13 +73,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
     private CustomDialog.Builder mCustomBuilder;
-
-    @Override
-    protected void before() {
-        super.before();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
 
     @Override
     protected int layoutID() {

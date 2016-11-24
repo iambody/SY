@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.start;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -16,9 +15,12 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.start.WelcomePersenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
@@ -26,7 +28,12 @@ import com.cgbsoft.privatefund.mvp.ui.login.ChoiceIdentityActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.mvp.view.start.WelcomeView;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * 欢迎页
@@ -71,7 +78,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         setIsNeedGoneNavigationBar(true);
         isLaunched = false;//OtherDataProvider.isFirstLaunched(getApplicationContext());
         weakHandler = new WeakHandler();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
@@ -110,6 +116,24 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         welcomePersenter = new WelcomePersenter(this);
         welcomePersenter.createFinishObservable();
         welcomePersenter.toInitInfo(this);
+
+        Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                String path = CacheManager.getCachePath(getApplicationContext(), CacheManager.RES);
+                InputStream is = getResources().openRawResource(integer);
+                try {
+                    ZipUtils.unZip(is, path, false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
 
         if (isLaunched) {
             //TODO

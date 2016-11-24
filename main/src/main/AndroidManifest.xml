@@ -99,7 +99,9 @@
             android:multiprocess="true" />
 
         <!--欢迎页-->
-        <activity android:name="com.cgbsoft.privatefund.mvp.ui.start.WelcomeActivity">
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.start.WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -115,37 +117,44 @@
         <!--权限管理-->
         <activity
             android:name=".mvp.ui.start.PermissionsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--选择身份-->
         <activity
             android:name=".mvp.ui.login.ChoiceIdentityActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--登陆-->
         <activity
             android:name=".mvp.ui.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--动画-->
         <activity
             android:name=".mvp.ui.login.AnimActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--注册-->
         <activity
             android:name=".mvp.ui.login.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--忘记密码-->
         <activity
             android:name=".mvp.ui.login.ForgetPasswordActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--重新设置密码-->
         <activity
             android:name=".mvp.ui.login.SetPasswordActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
         <!--umeng-->
         <!--微信-->

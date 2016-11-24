@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -45,12 +44,6 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
     private MediaPlayer mediaPlayer;
 
     private int identity;
-
-    @Override
-    protected void before() {
-        super.before();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
 
     @Override
     protected int layoutID() {

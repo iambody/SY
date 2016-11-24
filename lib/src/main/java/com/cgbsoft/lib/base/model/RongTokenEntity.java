@@ -10,6 +10,6 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
  */
 public class RongTokenEntity extends BaseResult<RongTokenEntity.Result> {
     public static class Result{
-
+        public String rcToken;
     }
 }

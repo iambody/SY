@@ -26,6 +26,7 @@ public class CacheManager {
     public static final int CRASH = 0x01100;
     public static final int SMILEY = 0x01200;
     public static final int FILE = 0x01300;
+    public static final int RES = 0x01400;
 
     private static final String NOMEDIA = ".nomedia";
 
@@ -105,6 +106,8 @@ public class CacheManager {
             savePath += "smiley";
         }else if(which == FILE){
             savePath += "file";
+        }else if(which == RES){
+            savePath +="res";
         }
         savePath += File.separator;
         String nomediaPath = savePath + NOMEDIA;

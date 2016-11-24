@@ -4,7 +4,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,13 +55,6 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         openActivity(ForgetPasswordActivity.class);
         finish();
     }
-
-    @Override
-    protected void before() {
-        super.before();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
 
     @Override
     protected int layoutID() {
