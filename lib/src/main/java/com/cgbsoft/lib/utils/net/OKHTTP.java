@@ -109,18 +109,18 @@ public class OKHTTP {
         return mClient;
     }
 
-    public RequestManager getRequestManager() {
+    RequestManager getRequestManager() {
         return requestManager;
     }
 
-    public RequestManager getRequestManager(boolean isNeedReset) {
+    RequestManager getRequestManager(boolean isNeedReset) {
         if (isNeedReset) {
             mInstance = new OKHTTP();
         }
         return requestManager;
     }
 
-    public RequestManager getRequestManager(String serverUrl, boolean isNeedGson) {
+    RequestManager getRequestManager(String serverUrl, boolean isNeedGson) {
         if (isNeedGson) {
             return getRequestManager(serverUrl);
         } else {
@@ -133,7 +133,7 @@ public class OKHTTP {
     }
 
 
-    public RequestManager getRequestManager(String serverUrl) {
+    RequestManager getRequestManager(String serverUrl) {
         return new Retrofit.Builder()
                 .client(mClient)
                 .baseUrl(serverUrl + "/")

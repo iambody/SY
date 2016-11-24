@@ -202,7 +202,6 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().resetPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-
     //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     /**

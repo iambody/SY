@@ -4,18 +4,17 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_wel_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:src="@drawable/bg_bottom_welcome" />
-
-    <ImageView
         android:id="@+id/iv_wel_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/iv_wel_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:src="@drawable/bg_bottom_welcome" />
 
     <Button
         android:id="@+id/btn_wel_cancle"
@@ -25,8 +24,8 @@
         android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_wel_btn"
+        android:text="@string/wel_cancelbtn_str"
         android:textColor="#333333"
         android:textSize="18sp"
-        android:text="@string/wel_cancelbtn_str"
         android:visibility="gone" />
 </FrameLayout>

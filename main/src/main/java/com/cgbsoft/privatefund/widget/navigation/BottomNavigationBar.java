@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +14,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.FestivalUtils;
 import com.cgbsoft.privatefund.R;
 import com.jakewharton.rxbinding.view.RxView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,8 +83,9 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private RequestManager requestManager;
     private boolean isIdtentifyWithInvestor;
 
-    private int nowPosition = 0;
+    private int nowPosition = 0, doubleClickTime = 200;
     private long nowSystemTime;
+    private boolean isSpringFestival;//是否春节
 
     public BottomNavigationBar(Context context) {
         super(context);
@@ -100,6 +106,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         LayoutInflater.from(context).inflate(R.layout.view_bottom_navigation_bar, this);
         ButterKnife.bind(this);
         requestManager = Glide.with(context);
+        isSpringFestival = checkSpringFestival();
 
         view_bottom_navigation_close.setVisibility(GONE);
         isIdtentifyWithInvestor = SPreference.getIdtentify(getContext().getApplicationContext()) == Constant.IDS_INVERSTOR;
@@ -146,7 +153,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
         view_bottom_navigation_close.setOnClickListener(v -> {
             long toTime = System.currentTimeMillis() - nowSystemTime;
-            if (toTime > 400 && floatingActionMenu.isOpen()) {
+            if (toTime > doubleClickTime * 4 && floatingActionMenu.isOpen()) {
                 floatingActionMenu.close(true);
                 view_bottom_navigation_close.setVisibility(GONE);
                 iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
@@ -174,11 +181,15 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 bottomClickListener.onCloudMenuClick(4);
         });
 
-        doubleClickDetect(200, fl_bottom_nav_left_first);
-        doubleClickDetect(200, fl_bottom_nav_left_second);
-        doubleClickDetect(200, fl_bottom_nav_right_first);
-        doubleClickDetect(200, fl_bottom_nav_right_second);
-        doubleClickDetect(400, iv_bottom_navigation_cloud);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_left_first);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_left_second);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
+        if (SPreference.getIdtentify(getContext()) == Constant.IDS_INVERSTOR) {
+            doubleClickDetect(doubleClickTime * 4, iv_bottom_navigation_cloud);
+        } else {
+            doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
+        }
     }
 
 
@@ -204,25 +215,33 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     }
 
     private void changeResWithIdtentify() {
-        int centerRes, leftFirstRes, leftSecRes, rightFirstRes, rightSecRes;
+        int centerRes = 0, leftFirstRes = 0, leftSecRes = 0, rightFirstRes = 0, rightSecRes = 0;
         int leftFirstStr, leftSecStr, rightFirstStr, rightSecStr;
         if (isIdtentifyWithInvestor) {
-            centerRes = R.drawable.ic_bottom_cloud_investor;
-            leftFirstRes = nowPosition == 0 ? R.drawable.ic_bottom_select_mine_down : R.drawable.ic_bottom_select_mine_up;
-            leftSecRes = nowPosition == 1 ? R.drawable.ic_bottom_select_investor_product_down : R.drawable.ic_bottom_select_investor_product_up;
-            rightFirstRes = nowPosition == 2 ? R.drawable.ic_bottom_select_inverstor_discovery_down : R.drawable.ic_bottom_select_inverstor_discovery_up;
-            rightSecRes = nowPosition == 3 ? R.drawable.ic_bottom_club_down : R.drawable.ic_bottom_club_up;
+            if (!isSpringFestival) {
+                centerRes = R.drawable.ic_bottom_cloud_investor;
+                leftFirstRes = nowPosition == 0 ? R.drawable.ic_bottom_select_mine_down : R.drawable.ic_bottom_select_mine_up;
+                leftSecRes = nowPosition == 1 ? R.drawable.ic_bottom_select_investor_product_down : R.drawable.ic_bottom_select_investor_product_up;
+                rightFirstRes = nowPosition == 2 ? R.drawable.ic_bottom_select_inverstor_discovery_down : R.drawable.ic_bottom_select_inverstor_discovery_up;
+                rightSecRes = nowPosition == 3 ? R.drawable.ic_bottom_club_down : R.drawable.ic_bottom_club_up;
+            } else {
+                //todo 春节时候的样式
+            }
 
             leftFirstStr = R.string.vbnb_mine_str;
             leftSecStr = R.string.vbnb_product_str;
             rightFirstStr = R.string.vbnb_product_str;
             rightSecStr = R.string.vbnb_club_str;
         } else {
-            centerRes = R.drawable.ic_bottom_cloud_adviser;
-            leftFirstRes = nowPosition == 0 ? R.drawable.ic_bottom_select_msg_down : R.drawable.ic_bottom_select_msg_up;
-            leftSecRes = nowPosition == 1 ? R.drawable.ic_bottom_select_adviser_product_down : R.drawable.ic_bottom_select_adviser_product_up;
-            rightFirstRes = nowPosition == 2 ? R.drawable.ic_bottom_select_adviser_discovery_down : R.drawable.ic_bottom_select_adviser_discovery_up;
-            rightSecRes = nowPosition == 3 ? R.drawable.ic_bottom_select_college_down : R.drawable.ic_bottom_select_college_up;
+            if (!isSpringFestival) {
+                centerRes = R.drawable.ic_bottom_cloud_adviser;
+                leftFirstRes = nowPosition == 0 ? R.drawable.ic_bottom_select_msg_down : R.drawable.ic_bottom_select_msg_up;
+                leftSecRes = nowPosition == 1 ? R.drawable.ic_bottom_select_adviser_product_down : R.drawable.ic_bottom_select_adviser_product_up;
+                rightFirstRes = nowPosition == 2 ? R.drawable.ic_bottom_select_adviser_discovery_down : R.drawable.ic_bottom_select_adviser_discovery_up;
+                rightSecRes = nowPosition == 3 ? R.drawable.ic_bottom_select_college_down : R.drawable.ic_bottom_select_college_up;
+            } else {
+                //todo  春节时候的样式
+            }
 
             leftFirstStr = R.string.vbnb_msg_str;
             leftSecStr = R.string.vbnb_product_str;
@@ -231,11 +250,11 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
         }
 
-        requestManager.load(centerRes).placeholder(centerRes).into(iv_bottom_navigation_cloud);
-        requestManager.load(leftFirstRes).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
-        requestManager.load(leftSecRes).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
-        requestManager.load(rightFirstRes).placeholder(rightFirstRes).into(iv_bottom_nav_right_first);
-        requestManager.load(rightSecRes).placeholder(rightSecRes).into(iv_bottom_nav_right_second);
+        requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_navigation_cloud);
+        requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
+        requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
+        requestManager.load(rightFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightFirstRes).into(iv_bottom_nav_right_first);
+        requestManager.load(rightSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightSecRes).into(iv_bottom_nav_right_second);
 
         tv_bottom_nav_left_first.setText(leftFirstStr);
         tv_bottom_nav_left_second.setText(leftSecStr);
@@ -329,7 +348,26 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
                     }
                 });
+    }
 
+    /**
+     * 判断是否为春节，需要产品定制什么范围为春节前后
+     *
+     * @return
+     */
+    private boolean checkSpringFestival() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        FestivalUtils festivalUtils = new FestivalUtils(year, month, day);
+        ArrayList<String> list = festivalUtils.getFestVals();
+        for (String s : list) {
+            if (TextUtils.equals(s, "春节")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

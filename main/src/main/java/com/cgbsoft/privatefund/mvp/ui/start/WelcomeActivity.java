@@ -1,7 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.start;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -113,7 +112,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     private void beforeInit() {
         requestManager = Glide.with(this);
 
-        welcomePersenter = new WelcomePersenter(this);
+        welcomePersenter = new WelcomePersenter(this, this);
         welcomePersenter.createFinishObservable();
         welcomePersenter.toInitInfo(this);
 
@@ -172,8 +171,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Override
     public void getDataError(Throwable error) {
-        Log.e("error", error.getMessage());
-
         if (weakHandler != null)
             weakHandler.postDelayed(mNoNetRunnable, noNetTime);
         else nextPage();
@@ -187,7 +184,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (welcomePersenter != null)
             welcomePersenter.detachView();
     }

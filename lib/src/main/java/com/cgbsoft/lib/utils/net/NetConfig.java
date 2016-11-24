@@ -43,8 +43,9 @@ public class NetConfig {
     //获取容云token
     static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
     //客户风险评测提交接口
-    public static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
+    static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
+    static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
     //用户相关
     static class USER {

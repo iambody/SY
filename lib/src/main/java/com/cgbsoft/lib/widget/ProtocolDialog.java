@@ -13,25 +13,23 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.ProtocolEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
-import com.cgbsoft.lib.base.model.bean.OtherInfoDao;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.db.DBConstant;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import butterknife.ButterKnife;
-import rx.Subscription;
 
 import static com.cgbsoft.lib.utils.cache.CacheManager.FILE;
 import static com.umeng.socialize.utils.DeviceConfig.context;
@@ -42,15 +40,13 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  * Email:zhangxyfs@126.com
  *  
  */
-public class ProtocolDialog {
+public class ProtocolDialog implements DBConstant{
     private TextView mConfirmTv, titleTv, mContentTv;
     private int type;
     private BaseDialog dialog;
     private String filePath = CacheManager.getCachePath(Appli.getContext(), FILE) + "pro.tp";
-    private final String TITLE = "proto_title";
 
-    private Subscription subscription;
-    private OtherInfoDao dao;
+    private DaoUtils daoUtils;
 
     public ProtocolDialog(Context context, int type, Handler handler) {
         this.type = type;
@@ -58,7 +54,7 @@ public class ProtocolDialog {
     }
 
     private void init(Context context) {
-        dao = ((Appli) context.getApplicationContext()).getDaoSession().getOtherInfoDao();
+        daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
 
         dialog = new BaseDialog(context, R.style.CenterCompatDialogTheme);
         dialog.setContentView(R.layout.view_protocol_dialog);
@@ -92,6 +88,8 @@ public class ProtocolDialog {
             } else if (type == 2) {
 
             }
+            daoUtils.destory();
+            daoUtils = null;
             dialog.dismiss();
         });
         dialog.show();
@@ -110,12 +108,6 @@ public class ProtocolDialog {
                 confirmStr = context.getString(R.string.protocol_agree);
                 getProtocolData();
             } else if (type == 1) {
-//                InputStream in = context.getResources().openRawResource(R.raw.message);
-//                int lenght = in.available();
-//                byte[] buffer = new byte[lenght];
-//                in.read(buffer);
-//                in.close();
-//                result = new String(buffer, "UTF-8");
                 displayLocalTxt(context, "message.txt");
 
                 titlestr = context.getString(R.string.protocol_dialog_message);
@@ -125,13 +117,6 @@ public class ProtocolDialog {
                 titlestr = "资产证明资料";
                 confirmStr = context.getString(R.string.protocol_know);
 
-//                InputStream in = context.getResources().openRawResource(R.raw.asset);
-//                int lenght = in.available();
-//                byte[] buffer = new byte[lenght];
-//                in.read(buffer);
-//                in.close();
-//                result = new String(buffer, "UTF-8");
-//                mContentTv.setText(result);
                 displayLocalTxt(context, "asset.txt");
             }
 
@@ -152,7 +137,7 @@ public class ProtocolDialog {
                     return;
                 }
                 mContentTv.setText(result.userAgree);
-                saveOrUpdata(result.userAgree);
+                daoUtils.saveOrUpdataOther(PROTO_TITLE, result.userAgree);
             }
 
             @Override
@@ -163,22 +148,9 @@ public class ProtocolDialog {
         });
     }
 
-    private void saveOrUpdata(String value) {
-        OtherInfo info = getInfo();
-        if (info != null) {
-            info.setContent(value);
-            dao.update(info);
-        } else
-            dao.insert(new OtherInfo(null, TITLE, value));
-    }
-
-    private OtherInfo getInfo() {
-        return dao.queryBuilder().where(OtherInfoDao.Properties.Title.eq(TITLE)).build().unique();
-    }
-
     //协议加载失败，从本地加载一个
     private void getLocalTxtProtocol(Context context) {
-        OtherInfo info = getInfo();
+        OtherInfo info = daoUtils.getOtherInfo(PROTO_TITLE);
         if (info != null) {
             mContentTv.setText(info.getContent());
         } else {
@@ -201,34 +173,6 @@ public class ProtocolDialog {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    //获取网络协议成功，写入SD
-    private void writeSDProtocol(String protocol) {
-        FileOutputStream fos = null;
-        DataOutputStream dos = null;
-        try {
-            File file = new File(filePath);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            fos = new FileOutputStream(filePath);
-            dos = new DataOutputStream(fos);
-            dos.writeBytes(protocol);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (null != fos) {
-                    fos.close();
-                }
-                if (null != dos) {
-                    dos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

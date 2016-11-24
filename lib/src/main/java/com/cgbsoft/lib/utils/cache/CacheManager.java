@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.Appli;
+
 import java.io.File;
 
 /**
@@ -194,5 +196,18 @@ public class CacheManager {
             }
         }
         return rootPath;
+    }
+
+    public static String getDownloadFile(String downloadUrl, int which) {
+        String[] strs = downloadUrl.split("/");
+        String fileName = strs[strs.length - 1];
+        if (fileName.split("\\.").length > 1) {
+            String filePath = getCachePath(Appli.getContext(), which) + fileName;
+            File file = new File(filePath);
+            if (file.isFile()) {
+                return filePath;
+            }
+        }
+        return "";
     }
 }

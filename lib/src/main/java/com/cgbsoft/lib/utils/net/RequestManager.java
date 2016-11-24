@@ -139,5 +139,4 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
-
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.mvp.view.home.HomeView;
@@ -56,6 +57,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void data() {
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
+
+        new DownloadDialog(this, true);
     }
 
     private void switchFragment(Fragment to) {

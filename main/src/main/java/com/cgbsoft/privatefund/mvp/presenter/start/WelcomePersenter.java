@@ -3,13 +3,17 @@ package com.cgbsoft.privatefund.mvp.presenter.start;
 import android.content.Context;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.db.DBConstant;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.view.start.WelcomeView;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,21 +29,40 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxConstant {
     private Observable<Boolean> welcomeFinishObservable;
+    private DaoUtils daoUtils;
 
-    public WelcomePersenter(WelcomeView view) {
+    public WelcomePersenter(Context context, WelcomeView view) {
         super(view);
+        daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
     }
 
     public void getData() {
         addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
             @Override
             protected void onEvent(AppResourcesEntity.Result appResources) {
+                if (appResources != null) {
+                    daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
+                }
+
                 getView().getDataSucc(appResources);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().getDataError(error);
+                OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
+                if (otherInfo != null) {
+                    getView().getDataSucc(new Gson().fromJson(otherInfo.getContent(), AppResourcesEntity.Result.class));
+                } else {
+                    getView().getDataError(error);
+                    //todo test
+                    AppResourcesEntity.Result result = new AppResourcesEntity.Result();
+                    result.img916 = "https://upload.simuyun.com/live/b0926657-6b81-4599-b2ed-de32ecd396c2.jpg";
+                    result.version = "5.1.0";
+                    result.adverts = "5.1.0更新内容：\n【新增】意见反馈\n【新增】会话页面可直接发送产品\n【新增】PDF分享给联系人\n【新增】资讯分享给联系人";
+                    result.downUrl = "https://upload.simuyun.com/android/2d0b8355-4f83-46a9-b8f3-aa1758abee14.apk";
+                    result.isMustUpdate = "n";
+                    daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(result));
+                }
             }
         }));
     }
@@ -88,7 +111,12 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
             protected void onRxError(Throwable error) {
             }
         }));
-
     }
 
+    @Override
+    public void detachView() {
+        super.detachView();
+        daoUtils.destory();
+        daoUtils = null;
+    }
 }
