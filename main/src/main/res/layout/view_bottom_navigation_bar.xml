@@ -40,6 +40,18 @@
                     android:textColor="@color/ic_color_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_bottom_nav_msgnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/shape_round_msg"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_8"
+                android:visibility="gone" />
         </FrameLayout>
 
         <FrameLayout

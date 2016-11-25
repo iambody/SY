@@ -78,6 +78,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     View view_bottom_navigation_close;
     @BindView(R.id.iv_bottom_navigation_cloud)
     ImageView iv_bottom_navigation_cloud;
+    @BindView(R.id.tv_bottom_nav_msgnum)
+    TextView tv_bottom_nav_msgnum;
 
     private Observable<Boolean> changeIdtentifyObservable;
     private RequestManager requestManager;
@@ -232,6 +234,9 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             leftSecStr = R.string.vbnb_product_str;
             rightFirstStr = R.string.vbnb_product_str;
             rightSecStr = R.string.vbnb_club_str;
+
+            if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)
+                tv_bottom_nav_msgnum.setVisibility(GONE);
         } else {
             if (!isSpringFestival) {
                 centerRes = R.drawable.ic_bottom_cloud_adviser;
@@ -248,6 +253,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             rightFirstStr = R.string.vbnb_discovery_str;
             rightSecStr = R.string.vbnb_college_str;
 
+            if (tv_bottom_nav_msgnum.getVisibility() == GONE)
+                tv_bottom_nav_msgnum.setVisibility(VISIBLE);
         }
 
         requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_navigation_cloud);

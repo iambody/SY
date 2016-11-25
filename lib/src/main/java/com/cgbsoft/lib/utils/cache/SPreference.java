@@ -47,6 +47,7 @@ public class SPreference implements Constant {
         edit.apply();
     }
 
+
     /**
      * 默认值为-1
      *
@@ -338,5 +339,13 @@ public class SPreference implements Constant {
 
     public static boolean getOpenJsonLog(Context context) {
         return getBoolean(context, "couldOpenJsonLog");
+    }
+
+    public static void saveHasPushMsg(Context context, boolean b){
+        putBoolean(context, HAS_PUSH_MESSAGE, b);
+    }
+
+    public static boolean getHasPushMsg(Context context){
+        return getBoolean(context, HAS_PUSH_MESSAGE);
     }
 }
