@@ -36,6 +36,9 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
     }
 
+    /**
+     * 获取首页背景图片，应用升级信息。
+     */
     public void getData() {
         addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
             @Override
@@ -67,12 +70,16 @@ public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxCo
         }));
     }
 
+    /**
+     * 关闭当前页面
+     */
     public void createFinishObservable() {
         welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
         welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
                 .filter(b -> b).subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean aBoolean) {
+                RxBus.get().unregister(WELCOME_FINISH_OBSERVABLE, welcomeFinishObservable);
                 getView().finishThis();
             }
 

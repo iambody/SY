@@ -39,24 +39,24 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R.id.iv_af_back)
-    ImageView iv_af_back;
+    ImageView iv_af_back;//返回按钮
 
     @BindView(R.id.et_af_username)
-    EditText et_af_username;
+    EditText et_af_username;//用户名
 
     @BindView(R.id.iv_af_del_un)
-    ImageView iv_af_del_un;
+    ImageView iv_af_del_un;//删除用户名
 
     @BindView(R.id.et_af_check)
-    EditText et_af_check;
+    EditText et_af_check;//验证码
 
     @BindView(R.id.btn_af_check)
-    Button btn_af_check;
+    Button btn_af_check;//验证码按钮
 
     @BindView(R.id.btn_af_next)
-    Button btn_af_next;
+    Button btn_af_next;//下一步按钮
 
-    private LoadingDialog mLoadingDialog;
+    private LoadingDialog mLoadingDialog;//等待弹窗
     private boolean isUsernameInput, isCheckInput;
     private final int USERNAME_KEY = 1, CHECK_KEY = 3;
     private int identity;
@@ -114,12 +114,18 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
         };
     }
 
+    /**
+     * 返回按钮点击
+     */
     @OnClick(R.id.iv_af_back)
     void backClick() {
         openActivity(LoginActivity.class);
         finish();
     }
 
+    /**
+     * 删除用户名按钮点击
+     */
     @OnClick(R.id.iv_af_del_un)
     void delUsernameClick() {
         if (et_af_username.getText().toString().length() > 0) {
@@ -128,6 +134,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
         iv_af_del_un.setVisibility(View.GONE);
     }
 
+    /**
+     * 验证码按钮点击
+     */
     @OnClick(R.id.btn_af_check)
     void checkClick() {
         if (!isUsernameInput) {
@@ -137,10 +146,21 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
         miOSDialog.show();
     }
 
+    /**
+     * 下一步按钮点击
+     */
     @OnClick(R.id.btn_af_next)
     void nextClick() {
         String userName = et_af_username.getText().toString();
         String code = et_af_check.getText().toString();
+        if(!isUsernameInput){
+            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
+            return;
+        }
+        if(!isCheckInput){
+            MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
+            return;
+        }
         if (!TextUtils.equals(userName, lastInputPhoneNum)) {
             MToast.makeText(this, "手机号码与验证码不匹配", Toast.LENGTH_SHORT).show();
             return;
@@ -158,6 +178,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
         return new ForgetPasswordPresenter(this, this);
     }
 
+    /**
+     * 验证码发送成功，开始倒计时
+     */
     @Override
     public void sendSucc() {
         btn_af_check.setEnabled(false);
@@ -182,6 +205,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
                 });
     }
 
+    /**
+     * 验证通过，跳转到设置密码页
+     */
     @Override
     public void checkSucc() {
         Intent intent = new Intent(this, SetPasswordActivity.class);
@@ -191,6 +217,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
         finish();
     }
 
+    /**
+     * 验证码按钮可以重新点击
+     */
     private void reSetVerificationState() {
         btn_af_check.setEnabled(true);
         countDownTime = COOL_DOWN_TIME;

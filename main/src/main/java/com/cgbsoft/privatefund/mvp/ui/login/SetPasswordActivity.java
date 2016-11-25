@@ -27,21 +27,39 @@ import butterknife.OnClick;
  *  
  */
 public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordView {
+    /**
+     * 返回按钮
+     */
     @BindView(R.id.iv_as_back)
     ImageView iv_as_back;
 
+    /**
+     * 第一次输入密码
+     */
     @BindView(R.id.et_as_password1)
     EditText et_as_password1;
 
+    /**
+     * 删除第一次输入的密码
+     */
     @BindView(R.id.iv_as_del_pw1)
     ImageView iv_as_del_pw1;
 
+    /**
+     * 第二次输入密码
+     */
     @BindView(R.id.et_as_password2)
     EditText et_as_password2;
 
+    /**
+     * 删除第二次输入的密码
+     */
     @BindView(R.id.iv_as_del_pw2)
     ImageView iv_as_del_pw2;
 
+    /**
+     * 完成
+     */
     @BindView(R.id.btn_as_ok)
     Button btn_as_ok;
 
@@ -85,13 +103,13 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.iv_as_back)
-    void backClick(){
+    void backClick() {
         openActivity(ForgetPasswordActivity.class);
         finish();
     }
 
     @OnClick(R.id.iv_as_del_pw1)
-    void delPwd1Click(){
+    void delPwd1Click() {
         if (et_as_password1.getText().toString().length() > 0) {
             et_as_password1.setText("");
         }
@@ -99,7 +117,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.iv_as_del_pw2)
-    void delPwd2Click(){
+    void delPwd2Click() {
         if (et_as_password2.getText().toString().length() > 0) {
             et_as_password2.setText("");
         }
@@ -107,14 +125,14 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.btn_as_ok)
-    void okClick(){
+    void okClick() {
         String pwd1 = et_as_password1.getText().toString();
         String pwd2 = et_as_password2.getText().toString();
-        if(!isPassword1Input || isPassword2Input){
+        if (!isPassword1Input || isPassword2Input) {
             MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!TextUtils.equals(pwd1, pwd2)){
+        if (!TextUtils.equals(pwd1, pwd2)) {
             MToast.makeText(getApplicationContext(), getString(R.string.as_nosame_str), Toast.LENGTH_SHORT);
             return;
         }

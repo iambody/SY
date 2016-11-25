@@ -17,6 +17,7 @@ import static com.cgbsoft.lib.utils.constant.Constant.IDS_INVERSTOR;
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_KEY;
 
 /**
+ * 选择身份Presenter
  * Created by xiaoyu.zhang on 2016/11/17 13:55
  * Email:zhangxyfs@126.com
  *  
@@ -29,6 +30,10 @@ public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
         this.context = context;
     }
 
+    /**
+     * 页面跳转功能
+     * @param identity 身份
+     */
     public void nextClick(int identity) {
         //理财师处理
         Class clazz = null;

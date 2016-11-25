@@ -55,7 +55,7 @@
     <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。", "取消", "确认接收</string>
     <string name="btn_cancel_str">取消</string>
     <string name="ra_enter_code_str">确认接收</string>
-    <string name="code_null_str">请输入验证码</string>
+    <string name="code_null_str">请输入您的验证码</string>
     <string name="pwd_noright_str">请输入6-16位密码</string>
     <string name="proto_notread_str">请阅读私募云使用协议并确认</string>
     <string name="ra_register_success_str">注册成功</string>

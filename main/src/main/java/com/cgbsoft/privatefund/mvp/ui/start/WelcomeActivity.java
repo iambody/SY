@@ -41,25 +41,22 @@ import rx.schedulers.Schedulers;
  *  
  */
 public class WelcomeActivity extends BaseActivity implements WelcomeView {
-    private boolean isLaunched;
+    //glide
     private RequestManager requestManager;
+    //权限（存储）
     private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE};
-
+    //欢迎页的
     private WelcomePersenter welcomePersenter;
-
-    private WelcomeRunnable mBtnRunnable;
-    private WelcomeRunnable mDefaultRunnable;
-    private WelcomeRunnable mWaitRunnable;
-    private WelcomeRunnable mNoNetRunnable;
-    private WelcomeRunnable mTimeOutRunnable;
+    //一大坨runnable，作用：英文直译就好
+    private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
-    private int defaultTime = 7000;
-    private int visableBtnTime = 2000;
-    private int waitTime = 5000;
-    private int noNetTime = 3000;
-    private int outOfTime = 2000;
+    private final int defaultTime = 7000;
+    private final int visableBtnTime = 2000;
+    private final int waitTime = 5000;
+    private final int noNetTime = 3000;
+    private final int outOfTime = 2000;
 
     private final int BUTTON_WAIT = 0;
     private final int DEFAULT_WAIT = 1;
@@ -67,24 +64,23 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     private final int NO_NET = 3;
     private final int OUT_TIME = 4;
 
+    //背景图片
     private ImageView iv_wel_background;
+    //背景底部图片
     private ImageView iv_wel_bottom;
+    //跳过按钮
     private Button btn_wel_cancle;
 
     @Override
     public void before() {
         super.before();
-        setIsNeedGoneNavigationBar(true);
-        isLaunched = false;//OtherDataProvider.isFirstLaunched(getApplicationContext());
+        setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
         } else {
-//            SPreference.toDataMigration(this);
         }
-
-//        SPreference.quitLogin(this);
 
         // 缺少权限时, 进入权限配置页面
         if (needPermissions(PERMISSIONS)) {
@@ -116,6 +112,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         welcomePersenter.createFinishObservable();
         welcomePersenter.toInitInfo(this);
 
+        //解压一些资源
         Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -133,12 +130,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
             }
         });
-
-        if (isLaunched) {
-            //TODO
-        } else {
-            welecomePage();
-        }
+        welecomePage();
     }
 
     @Override
@@ -211,6 +203,8 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
         iv_wel_background = ButterKnife.findById(this, R.id.iv_wel_background);
         btn_wel_cancle = ButterKnife.findById(this, R.id.btn_wel_cancle);
 
+        btn_wel_cancle.setOnClickListener(v -> nextPage());
+
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);
@@ -246,7 +240,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     class WelcomeRunnable implements Runnable {
         private int which;
 
-        public WelcomeRunnable(int which) {
+        WelcomeRunnable(int which) {
             this.which = which;
         }
 

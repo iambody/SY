@@ -73,7 +73,6 @@ dependencies {
     compile  "jp.wasabeef:recyclerview-animators:${recycleanim_need_version}"
     compile  "io.reactivex:rxandroid:${rxandroid_need_version}"
     compile  "io.reactivex:rxjava:${rxjava_need_version}"
-    compile  "com.squareup.picasso:picasso:${picasso_need_version}"
 
     provided project(':lib')
 }
