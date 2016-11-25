@@ -47,12 +47,16 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
     private BottomClickListener bottomClickListener;
 
+    //左面第一个按钮
     @BindView(R.id.fl_bottom_nav_left_first)
     FrameLayout fl_bottom_nav_left_first;
+    //左面第二个按钮
     @BindView(R.id.fl_bottom_nav_left_second)
     FrameLayout fl_bottom_nav_left_second;
+    //右面第一个按钮
     @BindView(R.id.fl_bottom_nav_right_first)
     FrameLayout fl_bottom_nav_right_first;
+    //右面第二个按钮
     @BindView(R.id.fl_bottom_nav_right_second)
     FrameLayout fl_bottom_nav_right_second;
 
@@ -74,10 +78,13 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
+    //关闭背景
     @BindView(R.id.view_bottom_navigation_close)
     View view_bottom_navigation_close;
+    //中间的按钮
     @BindView(R.id.iv_bottom_navigation_cloud)
     ImageView iv_bottom_navigation_cloud;
+    //消息文本
     @BindView(R.id.tv_bottom_nav_msgnum)
     TextView tv_bottom_nav_msgnum;
 
@@ -253,8 +260,10 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             rightFirstStr = R.string.vbnb_discovery_str;
             rightSecStr = R.string.vbnb_college_str;
 
-            if (tv_bottom_nav_msgnum.getVisibility() == GONE)
+            if (tv_bottom_nav_msgnum.getVisibility() == GONE) {
                 tv_bottom_nav_msgnum.setVisibility(VISIBLE);
+                tv_bottom_nav_msgnum.setText("123");
+            }
         }
 
         requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_navigation_cloud);
@@ -269,7 +278,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         tv_bottom_nav_right_second.setText(rightSecStr);
     }
 
-    //双击处理
+    //双击后发送消息，单击后跳转页面
     private void doubleClickDetect(int time, View view) {
         Observable<Void> observable = RxView.clicks(view).share();
         observable.buffer(observable.debounce(time, TimeUnit.MILLISECONDS))
