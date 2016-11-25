@@ -24,7 +24,7 @@ public class RongUtils {
 //        RongIM.getInstance().registerMessageTemplate(new PdfMessageItemProvider());
 //        RongIM.getInstance().registerMessageTemplate(new NewMessageItemProvider());
         RongIM.setOnReceiveMessageListener(new RongRMListener());
-        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
-        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
+//        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
+//        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
     }
 }
