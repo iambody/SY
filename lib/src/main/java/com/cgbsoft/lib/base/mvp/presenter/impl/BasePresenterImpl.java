@@ -1,5 +1,8 @@
 package com.cgbsoft.lib.base.mvp.presenter.impl;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 
@@ -12,10 +15,13 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BasePresenterImpl<V extends BaseView> implements RxConstant {
     private V view;
+
+    private Context mContext;
     private CompositeSubscription mCompositeSubscription;
 
-    public BasePresenterImpl(V view) {
+    public BasePresenterImpl(@NonNull Context context, @NonNull V view) {
         this.view = view;
+        this.mContext = context;
         mCompositeSubscription = new CompositeSubscription();
     }
 
@@ -23,11 +29,14 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
         return view;
     }
 
+    protected Context getContext() {
+        return mContext;
+    }
+
     public void detachView() {
         this.view = null;
         onUnsubscribe();
     }
-
 
     //订阅
     protected void addSubscription(Subscription subscription) {
@@ -40,6 +49,7 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
             mCompositeSubscription.unsubscribe();
         }
         mCompositeSubscription = null;
+        mContext = null;
     }
 
 

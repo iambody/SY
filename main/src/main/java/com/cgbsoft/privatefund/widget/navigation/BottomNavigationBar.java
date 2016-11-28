@@ -265,7 +265,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 tv_bottom_nav_msgnum.setText("123");
             }
         }
-
         requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_navigation_cloud);
         requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
         requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);

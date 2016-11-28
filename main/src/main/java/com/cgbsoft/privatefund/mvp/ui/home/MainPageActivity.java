@@ -7,16 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, BaseView {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -38,8 +38,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init() {
-        if (setNetMode())
-            recreate();
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
@@ -50,7 +48,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected MainPagePresenter createPresenter() {
-        return new MainPagePresenter(this);
+        return new MainPagePresenter(this, this);
     }
 
     @Override
@@ -130,6 +128,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onDestroy() {
         super.onDestroy();
         MainTabManager.getInstance().destory();
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     @Override

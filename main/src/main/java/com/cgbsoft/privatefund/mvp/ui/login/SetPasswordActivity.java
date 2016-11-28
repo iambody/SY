@@ -67,6 +67,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     private boolean isPassword1Input, isPassword2Input;
     private final int PASSWORD1_KEY = 1, PASSWORD2_KEY = 2;
     private int identity;
+    private String userName, code;
 
     @Override
     public void onBackPressed() {
@@ -81,6 +82,8 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @Override
     protected void init() {
+        userName = getIntent().getStringExtra("userName");
+        code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());
@@ -136,6 +139,8 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
             MToast.makeText(getApplicationContext(), getString(R.string.as_nosame_str), Toast.LENGTH_SHORT);
             return;
         }
+
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code);
 
     }
 

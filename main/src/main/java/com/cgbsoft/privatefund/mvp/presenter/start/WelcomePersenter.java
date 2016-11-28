@@ -1,9 +1,9 @@
 package com.cgbsoft.privatefund.mvp.presenter.start;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.db.DBConstant;
@@ -31,29 +31,34 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
     private DaoUtils daoUtils;
 
     public WelcomePersenter(Context context, WelcomeContract.View view) {
-        super(view);
+        super(context, view);
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
     }
 
     /**
      * 获取首页背景图片，应用升级信息。
      */
+    @Override
     public void getData() {
         addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
             @Override
             protected void onEvent(AppResourcesEntity.Result appResources) {
                 if (appResources != null) {
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
+                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
+
+                    getView().getDataSucc(appResources.img916);
+                }else {
+                    getView().getDataSucc("");
                 }
 
-                getView().getDataSucc(appResources);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
-                if (otherInfo != null) {
-                    getView().getDataSucc(new Gson().fromJson(otherInfo.getContent(), AppResourcesEntity.Result.class));
+                String url = OtherDataProvider.getWelcomeImgUrl(getContext().getApplicationContext());
+                if (!TextUtils.isEmpty(url)) {
+                    getView().getDataSucc(url);
                 } else {
                     getView().getDataError(error);
                     //todo test
@@ -64,6 +69,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     result.downUrl = "https://upload.simuyun.com/android/2d0b8355-4f83-46a9-b8f3-aa1758abee14.apk";
                     result.isMustUpdate = "n";
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(result));
+                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), result.img916);
                 }
             }
         }));
@@ -72,6 +78,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
     /**
      * 关闭当前页面
      */
+    @Override
     public void createFinishObservable() {
         welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
         welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
@@ -91,10 +98,9 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 
     /**
      * 初始化一些信息
-     *
-     * @param context
      */
-    public void toInitInfo(Context context) {
+    @Override
+    public void toInitInfo() {
         addSubscription(ApiClient.getIP().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String json) {
@@ -105,8 +111,8 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                         jsonObject = new JSONObject(substring);
                         String cip = jsonObject.getString("cip");
                         String cname = jsonObject.getString("cname");
-                        OtherDataProvider.saveCity(context.getApplicationContext(), cname);
-                        OtherDataProvider.saveIP(context.getApplicationContext(), cip);
+                        OtherDataProvider.saveCity(getContext().getApplicationContext(), cname);
+                        OtherDataProvider.saveIP(getContext().getApplicationContext(), cip);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

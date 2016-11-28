@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.presenter.home;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
@@ -16,10 +17,10 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
  * Created by xiaoyu.zhang on 2016/11/10 16:18
  *  
  */
-public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> implements MainPageContract.Presenter{
+public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> implements MainPageContract.Presenter {
 
-    public MainPagePresenter(MainPageContract.View view) {
-        super(view);
+    public MainPagePresenter(Context context, MainPageContract.View view) {
+        super(context, view);
     }
 
 
@@ -28,7 +29,8 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     }
 
 
-    private void getRongToken() {
+    @Override
+    public void getRongToken() {
         String rongExpired = OtherDataProvider.getRongTokenExpired(Appli.getContext());
         String rongUID = OtherDataProvider.getRongUid(Appli.getContext());
         String rongToken = OtherDataProvider.getRongToken(Appli.getContext());

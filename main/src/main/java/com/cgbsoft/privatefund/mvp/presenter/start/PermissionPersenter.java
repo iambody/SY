@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.mvp.presenter.start;
 
+import android.content.Context;
+
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.privatefund.mvp.contract.start.PermissionContract;
 
@@ -11,7 +13,7 @@ import com.cgbsoft.privatefund.mvp.contract.start.PermissionContract;
  */
 public class PermissionPersenter extends BasePresenterImpl<PermissionContract.View> implements PermissionContract.Persenter {
 
-    public PermissionPersenter(PermissionContract.View view) {
-        super(view);
+    public PermissionPersenter(Context context, PermissionContract.View view) {
+        super(context, view);
     }
 }

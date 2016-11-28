@@ -47,4 +47,6 @@ public interface CPConstant {
     String RONDCLOUD_TOKENEXPIRED_KEY = "rondcloud_tokenexpired";
 
     String RONGCLOUD_UID_KEY = "rongcloud_uid";
+
+    String WELCOME_IMG_KEY = "welcome_img_path";
 }

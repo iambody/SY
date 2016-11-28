@@ -110,7 +110,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimCon
 
     @Override
     protected AnimPresenter createPresenter() {
-        return new AnimPresenter(this);
+        return new AnimPresenter(this, this);
     }
 
     @Override

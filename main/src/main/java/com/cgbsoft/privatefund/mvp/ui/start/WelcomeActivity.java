@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.start;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,7 +12,6 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.CacheManager;
@@ -110,7 +110,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
 
         welcomePersenter = new WelcomePersenter(this, this);
         welcomePersenter.createFinishObservable();
-        welcomePersenter.toInitInfo(this);
+        welcomePersenter.toInitInfo();
 
         //解压一些资源
         Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
@@ -134,30 +134,39 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     }
 
     @Override
-    public void getDataSucc(AppResourcesEntity.Result result) {
-        requestManager.load(result.img916).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                if (weakHandler != null) {
-                    weakHandler.postDelayed(mTimeOutRunnable, outOfTime);
-                } else {
-                    nextPage();
+    public void getDataSucc(String url) {
+        if (!TextUtils.isEmpty(url))
+            requestManager.load(url).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    if (weakHandler != null) {
+                        weakHandler.postDelayed(mTimeOutRunnable, outOfTime);
+                    } else {
+                        nextPage();
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                if (weakHandler != null) {
-                    weakHandler.postDelayed(mBtnRunnable, visableBtnTime);
-                    weakHandler.removeCallbacks(mWaitRunnable);
-                    weakHandler.postDelayed(mDefaultRunnable, defaultTime);
-                } else {
-                    nextPage();
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    if (weakHandler != null) {
+                        weakHandler.postDelayed(mBtnRunnable, visableBtnTime);
+                        weakHandler.removeCallbacks(mWaitRunnable);
+                        weakHandler.postDelayed(mDefaultRunnable, defaultTime);
+                    } else {
+                        nextPage();
+                    }
+                    return false;
                 }
-                return false;
+            }).into(iv_wel_background);
+        else {
+            if (weakHandler != null) {
+                weakHandler.postDelayed(mTimeOutRunnable, outOfTime);
+            } else {
+                nextPage();
             }
-        }).into(iv_wel_background);
+        }
+
     }
 
     @Override
@@ -193,6 +202,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     //不论是否下载或显示都不能超过7秒
     private void welecomePage() {
         setContentView(R.layout.activity_welcome);
+
         mBtnRunnable = new WelcomeRunnable(BUTTON_WAIT);
         mDefaultRunnable = new WelcomeRunnable(DEFAULT_WAIT);
         mWaitRunnable = new WelcomeRunnable(WAIT);

@@ -10,6 +10,7 @@ import com.cgbsoft.lib.widget.ScrollingImageView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.login.ChoiceIdentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.ChoiceIdentityPresenter;
+import com.cgbsoft.privatefund.utils.MainTabManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -90,5 +91,14 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     @Override
     public void onBackPressed() {
         exitBy2Click();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainTabManager.getInstance().destory();
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 }

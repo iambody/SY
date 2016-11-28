@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.mvp.presenter.discovery;
 
+import android.content.Context;
+
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.privatefund.mvp.contract.discovery.DiscoveryContract;
 
@@ -10,7 +12,7 @@ import com.cgbsoft.privatefund.mvp.contract.discovery.DiscoveryContract;
  */
 public class DiscoveryPresenter extends BasePresenterImpl<DiscoveryContract.View> implements DiscoveryContract.Presenter {
 
-    public DiscoveryPresenter(DiscoveryContract.View view) {
-        super(view);
+    public DiscoveryPresenter(Context context, DiscoveryContract.View view) {
+        super(context, view);
     }
 }

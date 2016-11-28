@@ -315,4 +315,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             finish();
         }
     }
+
+
 }

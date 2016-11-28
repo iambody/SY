@@ -3,7 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.discovery;
 import android.view.View;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.mvp.contract.discovery.DiscoveryContract;
 import com.cgbsoft.privatefund.mvp.presenter.discovery.DiscoveryPresenter;
 
 /**
@@ -12,7 +12,7 @@ import com.cgbsoft.privatefund.mvp.presenter.discovery.DiscoveryPresenter;
  * Email:zhangxyfs@126.com
  *  
  */
-public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements BaseView {
+public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements DiscoveryContract.View {
     @Override
     protected int layoutID() {
         return 0;
@@ -25,6 +25,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     protected DiscoveryPresenter createPresenter() {
-        return new DiscoveryPresenter(this);
+        return new DiscoveryPresenter(getContext(), this);
     }
 }

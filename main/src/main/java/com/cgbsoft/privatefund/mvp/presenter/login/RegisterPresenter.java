@@ -20,47 +20,47 @@ import com.google.gson.Gson;
  *  
  */
 public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> implements RegisterContract.Presenter {
-    private Context context;
 
     public RegisterPresenter(Context context, RegisterContract.View view) {
-        super(view);
-        this.context = context;
+        super(context, view);
     }
 
+    @Override
     public void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code) {
-        loadingDialog.setLoading(context.getString(R.string.ra_register_loading_str));
+        loadingDialog.setLoading(getContext().getString(R.string.ra_register_loading_str));
         loadingDialog.show();
         addSubscription(ApiClient.toRegister(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
             protected void onEvent(UserInfoDataEntity.Result result) {
-                SPreference.saveUserId(context.getApplicationContext(), result.userId);
-                SPreference.saveToken(context.getApplicationContext(), result.token);
+                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
+                SPreference.saveToken(getContext().getApplicationContext(), result.token);
 
-                SPreference.saveLoginFlag(context, true);
+                SPreference.saveLoginFlag(getContext(), true);
                 if (result.userInfo != null)
-                    SPreference.saveUserInfoData(context, new Gson().toJson(result.userInfo));
-                loadingDialog.setResult(true, context.getString(R.string.ra_register_success_str), 1000, () -> getView().regSucc());
+                    SPreference.saveUserInfoData(getContext(), new Gson().toJson(result.userInfo));
+                loadingDialog.setResult(true, getContext().getString(R.string.ra_register_success_str), 1000, () -> getView().regSucc());
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.ra_register_fail_str), 1000, () -> getView().regFail());
+                loadingDialog.setResult(false, getContext().getString(R.string.ra_register_fail_str), 1000, () -> getView().regFail());
             }
         }));
     }
 
+    @Override
     public void sendCode(@NonNull LoadingDialog loadingDialog, String un) {
-        loadingDialog.setLoading(context.getString(R.string.sending_str));
+        loadingDialog.setLoading(getContext().getString(R.string.sending_str));
         loadingDialog.show();
         addSubscription(ApiClient.sendCode(un, 1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                loadingDialog.setResult(true, context.getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
+                loadingDialog.setResult(true, getContext().getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.sending_fail_str), 1000);
+                loadingDialog.setResult(false, getContext().getString(R.string.sending_fail_str), 1000);
             }
         }));
     }
@@ -68,6 +68,5 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
     @Override
     public void detachView() {
         super.detachView();
-        context = null;
     }
 }

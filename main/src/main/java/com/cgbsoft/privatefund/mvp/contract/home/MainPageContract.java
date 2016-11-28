@@ -12,7 +12,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 public interface MainPageContract {
 
     interface Presenter extends BasePresenter{
-
+        void getRongToken();
     }
 
     interface View extends BaseView{

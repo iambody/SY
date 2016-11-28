@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
+import com.cgbsoft.lib.utils.exception.ApiException;
 
 import java.io.IOException;
 
@@ -39,6 +40,12 @@ class RxResultHelper {
                 new Func1<BaseResult<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(BaseResult<T> entity) {
+                        if(entity != null && entity.isOk()){
+                            return createData(entity.result);
+                        }else {
+                            //todo 测试用
+                           return Observable.error(new ApiException("5000", "error"));
+                        }
 //                        if (entity.isOk()) {
 //                            return createData(entity.result);
 //                        } else {
@@ -106,7 +113,7 @@ class RxResultHelper {
 //                            }
 //                        }
 //                        return Observable.empty();
-                        return createData(entity.result);
+//                        return createData(entity.result);
                     }
                 }
 

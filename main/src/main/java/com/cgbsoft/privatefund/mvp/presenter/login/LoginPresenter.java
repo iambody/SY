@@ -24,11 +24,9 @@ import rx.Observable;
  *  
  */
 public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implements LoginContract.Presenter {
-    private Context context;
 
     public LoginPresenter(Context context, LoginContract.View view) {
-        super(view);
-        this.context = context;
+        super(context, view);
     }
 
     /**
@@ -38,25 +36,26 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param pwd  密码
      * @param isWx 是否微信登录
      */
+    @Override
     public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx) {
-        loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
+        loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
         addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
             protected void onEvent(UserInfoDataEntity.Result loginBean) {
-                SPreference.saveUserId(context.getApplicationContext(), loginBean.userId);
-                SPreference.saveToken(context.getApplicationContext(), loginBean.token);
+                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
+                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
 
-                SPreference.saveLoginFlag(context, true);
+                SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null)
-                    SPreference.saveUserInfoData(context, new Gson().toJson(loginBean.userInfo));
-                loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                    SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
+                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
     }
@@ -70,6 +69,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param nickName
      * @param headimgurl
      */
+    @Override
     public void toWxLogin(@NonNull LoadingDialog loadingDialog, @NonNull CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl) {
         addSubscription(ApiClient.wxUnioIDCheck(unionid).flatMap(result -> {
             if (TextUtils.equals(result.isExist, "0")) {
@@ -84,21 +84,21 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onEvent(UserInfoDataEntity.Result result) {
                 if (TextUtils.equals(result.token, "-1")) {
                     loadingDialog.dismiss();
-                    builder.setMessage(context.getString(R.string.la_cd_content_str, nickName));
+                    builder.setMessage(getContext().getString(R.string.la_cd_content_str, nickName));
                     builder.create().show();
                 } else {
-                    SPreference.saveToken(context.getApplicationContext(), result.token);
-                    SPreference.saveUserId(context.getApplicationContext(), result.userId);
-                    SPreference.saveLoginFlag(context, true);
+                    SPreference.saveToken(getContext().getApplicationContext(), result.token);
+                    SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
+                    SPreference.saveLoginFlag(getContext(), true);
                     if (result.userInfo != null)
-                        SPreference.saveUserInfoData(context.getApplicationContext(), new Gson().toJson(result.userInfo));
-                    loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                        SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
+                    loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
     }
@@ -111,30 +111,25 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param nickName
      * @param headimgurl
      */
+    @Override
     public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
-        loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
+        loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         addSubscription(ApiClient.toWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
             protected void onEvent(UserInfoDataEntity.Result result) {
-                SPreference.saveToken(context.getApplicationContext(), result.token);
-                SPreference.saveUserId(context.getApplicationContext(), result.userId);
-                SPreference.saveLoginFlag(context, true);
+                SPreference.saveToken(getContext().getApplicationContext(), result.token);
+                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
+                SPreference.saveLoginFlag(getContext(), true);
                 if (result.userInfo != null)
-                    SPreference.saveUserInfoData(context.getApplicationContext(), new Gson().toJson(result.userInfo));
-                loadingDialog.setResult(true, context.getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                    SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
+                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, context.getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
-    }
-
-    @Override
-    public void detachView() {
-        super.detachView();
-        context = null;
     }
 }

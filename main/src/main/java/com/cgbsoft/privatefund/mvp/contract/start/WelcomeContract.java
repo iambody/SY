@@ -1,8 +1,5 @@
 package com.cgbsoft.privatefund.mvp.contract.start;
 
-import android.content.Context;
-
-import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
@@ -19,13 +16,12 @@ public interface WelcomeContract {
 
         void createFinishObservable();
 
-        void toInitInfo(Context context);
+        void toInitInfo();
     }
 
     interface View extends BaseView {
-        void getDataSucc(AppResourcesEntity.Result result);
+        void getDataSucc(String url);
         void getDataError(Throwable error);
-
         void finishThis();
     }
 }
