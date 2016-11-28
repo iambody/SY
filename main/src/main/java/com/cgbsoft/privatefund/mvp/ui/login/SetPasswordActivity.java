@@ -14,8 +14,8 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.SetPasswordContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.SetPasswordPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.SetPasswordView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordView {
+public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordContract.View {
     /**
      * 返回按钮
      */

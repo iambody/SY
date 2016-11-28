@@ -1,7 +1,7 @@
 package com.cgbsoft.privatefund.mvp.presenter.start;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
-import com.cgbsoft.privatefund.mvp.view.start.PermissionView;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.privatefund.mvp.contract.start.PermissionContract;
 
 /**
  * 权限管理页面功能实现，数据调用
@@ -9,9 +9,9 @@ import com.cgbsoft.privatefund.mvp.view.start.PermissionView;
  * Email:zhangxyfs@126.com
  *  
  */
-public class PermissionPersenter extends BasePresenter<PermissionView> {
+public class PermissionPersenter extends BasePresenterImpl<PermissionContract.View> implements PermissionContract.Persenter {
 
-    public PermissionPersenter(PermissionView view) {
+    public PermissionPersenter(PermissionContract.View view) {
         super(view);
     }
 }

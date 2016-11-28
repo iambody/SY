@@ -2,7 +2,7 @@ package com.cgbsoft.investor.mvp.ui.club;
 
 import android.view.View;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 
 /**
@@ -23,7 +23,7 @@ public class ClubFragment extends BaseFragment {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected BasePresenterImpl createPresenter() {
         return null;
     }
 }

@@ -17,8 +17,8 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.iOSDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.ForgetPasswordContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.ForgetPasswordPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.ForgetPasswordView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +35,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter> implements ForgetPasswordView {
+public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View {
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R.id.iv_af_back)

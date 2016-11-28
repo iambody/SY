@@ -4,14 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.view.login.RegisterView;
+import com.cgbsoft.privatefund.mvp.contract.login.RegisterContract;
 import com.google.gson.Gson;
 
 /**
@@ -19,10 +19,10 @@ import com.google.gson.Gson;
  * Email:zhangxyfs@126.com
  *  
  */
-public class RegisterPresenter extends BasePresenter<RegisterView> {
+public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> implements RegisterContract.Presenter {
     private Context context;
 
-    public RegisterPresenter(Context context, RegisterView view) {
+    public RegisterPresenter(Context context, RegisterContract.View view) {
         super(view);
         this.context = context;
     }

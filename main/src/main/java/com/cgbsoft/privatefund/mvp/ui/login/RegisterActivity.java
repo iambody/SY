@@ -18,9 +18,9 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.cgbsoft.lib.widget.iOSDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.RegisterContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.RegisterPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
-import com.cgbsoft.privatefund.mvp.view.login.RegisterView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +36,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterView {
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterContract.View {
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R.id.iv_ar_back)

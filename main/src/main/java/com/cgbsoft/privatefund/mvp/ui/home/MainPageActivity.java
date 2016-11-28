@@ -7,16 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
-import com.cgbsoft.privatefund.mvp.view.home.HomeView;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements HomeView, BottomNavigationBar.BottomClickListener {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, BaseView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 

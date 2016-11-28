@@ -19,9 +19,9 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.LoginContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.LoginPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
-import com.cgbsoft.privatefund.mvp.view.login.LoginView;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R.id.iv_al_back)
     ImageView iv_al_back;//返回按钮

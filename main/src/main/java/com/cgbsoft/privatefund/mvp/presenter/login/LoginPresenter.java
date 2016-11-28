@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -13,7 +13,7 @@ import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.view.login.LoginView;
+import com.cgbsoft.privatefund.mvp.contract.login.LoginContract;
 import com.google.gson.Gson;
 
 import rx.Observable;
@@ -23,10 +23,10 @@ import rx.Observable;
  * Email:zhangxyfs@126.com
  *  
  */
-public class LoginPresenter extends BasePresenter<LoginView> {
+public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implements LoginContract.Presenter {
     private Context context;
 
-    public LoginPresenter(Context context, LoginView view) {
+    public LoginPresenter(Context context, LoginContract.View view) {
         super(view);
         this.context = context;
     }

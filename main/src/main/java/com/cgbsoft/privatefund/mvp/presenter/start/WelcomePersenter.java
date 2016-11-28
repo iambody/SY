@@ -4,15 +4,14 @@ import android.content.Context;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
-import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.mvp.view.start.WelcomeView;
+import com.cgbsoft.privatefund.mvp.contract.start.WelcomeContract;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -27,11 +26,11 @@ import rx.android.schedulers.AndroidSchedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class WelcomePersenter extends BasePresenter<WelcomeView> implements RxConstant {
+public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> implements WelcomeContract.Persenter {
     private Observable<Boolean> welcomeFinishObservable;
     private DaoUtils daoUtils;
 
-    public WelcomePersenter(Context context, WelcomeView view) {
+    public WelcomePersenter(Context context, WelcomeContract.View view) {
         super(view);
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
     }

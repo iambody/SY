@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -21,11 +21,11 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.start.WelcomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.start.WelcomePersenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.ChoiceIdentityActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
-import com.cgbsoft.privatefund.mvp.view.start.WelcomeView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class WelcomeActivity extends BaseActivity implements WelcomeView {
+public class WelcomeActivity extends BaseActivity implements WelcomeContract.View {
     //glide
     private RequestManager requestManager;
     //权限（存储）
@@ -101,7 +101,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected BasePresenterImpl createPresenter() {
         return null;
     }
 
@@ -135,7 +135,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Override
     public void getDataSucc(AppResourcesEntity.Result result) {
-        //todo 需要拿到显示的图片的url
         requestManager.load(result.img916).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

@@ -8,8 +8,8 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.ScrollingImageView;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.ChoiceIdentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.ChoiceIdentityPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.ChoiceIdentityView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
  *  
  */
 public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter>
-        implements ChoiceIdentityView, RadioGroup.OnCheckedChangeListener {
+        implements ChoiceIdentityContract.View, RadioGroup.OnCheckedChangeListener {
     @BindView(R.id.siv_aci_bg)
     ScrollingImageView siv_aci_bg;//背景滚动图
 

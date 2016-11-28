@@ -14,7 +14,7 @@ import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -36,7 +36,7 @@ import butterknife.Unbinder;
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements Constant {
+public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCompatActivity implements Constant {
     private Appli mAppli;//applicaiton
     private WeakHandler mBaseHandler;//handler
     private DaoSession mDaoSession;//数据库

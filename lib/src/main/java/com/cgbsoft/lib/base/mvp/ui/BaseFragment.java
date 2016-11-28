@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.trello.rxlifecycle.components.support.RxFragment;
@@ -25,7 +25,7 @@ import butterknife.Unbinder;
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends RxFragment implements Constant {
+public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
     private Appli mAppli;
     private WeakHandler mBaseHandler;//handler
     private View mFragmentView;

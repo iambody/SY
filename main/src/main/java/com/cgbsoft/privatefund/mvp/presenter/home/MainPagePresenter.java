@@ -4,21 +4,21 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.mvp.view.home.HomeView;
+import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 
 /**
  * 首页功能实现，数据调用
  * Created by xiaoyu.zhang on 2016/11/10 16:18
  *  
  */
-public class MainPagePresenter extends BasePresenter<HomeView> {
+public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> implements MainPageContract.Presenter{
 
-    public MainPagePresenter(HomeView view) {
+    public MainPagePresenter(MainPageContract.View view) {
         super(view);
     }
 

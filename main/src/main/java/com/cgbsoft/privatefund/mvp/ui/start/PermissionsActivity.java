@@ -14,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.presenter.start.PermissionPersenter;
-import com.cgbsoft.privatefund.mvp.view.start.PermissionView;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ import butterknife.BindView;
  * Created by xiaoyu.zhang on 2016/5/17.
  * Email:zhangxyfs@126.com
  */
-public class PermissionsActivity extends BaseActivity<PermissionPersenter> implements PermissionView{
+public class PermissionsActivity extends BaseActivity<PermissionPersenter> implements BaseView {
     @BindView(R.id.ap_bottom_iv)
     ImageView ap_bottom_iv;
 

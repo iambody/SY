@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.AnimContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.AnimPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.AnimView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimView, SurfaceHolder.Callback {
+public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimContract.View, SurfaceHolder.Callback {
     @BindView(R.id.sv_aa)
     SurfaceView sv_aa;//影片显示的view
 

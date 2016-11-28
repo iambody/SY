@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.ChoiceIdentityContract;
 import com.cgbsoft.privatefund.mvp.ui.login.AnimActivity;
 import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
-import com.cgbsoft.privatefund.mvp.view.login.ChoiceIdentityView;
 
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_ADVISER;
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_INVERSTOR;
@@ -22,10 +22,10 @@ import static com.cgbsoft.lib.utils.constant.Constant.IDS_KEY;
  * Email:zhangxyfs@126.com
  *  
  */
-public class ChoiceIdentityPresenter extends BasePresenter<ChoiceIdentityView> {
+public class ChoiceIdentityPresenter extends BasePresenterImpl<ChoiceIdentityContract.View> implements ChoiceIdentityContract.Presenter {
     private Context context;
 
-    public ChoiceIdentityPresenter(Context context, ChoiceIdentityView view) {
+    public ChoiceIdentityPresenter(Context context, ChoiceIdentityContract.View view) {
         super(view);
         this.context = context;
     }

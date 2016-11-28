@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.SetPasswordContract;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
-import com.cgbsoft.privatefund.mvp.view.login.SetPasswordView;
 import com.google.gson.Gson;
 
 /**
@@ -21,10 +21,10 @@ import com.google.gson.Gson;
  * Email:zhangxyfs@126.com
  *  
  */
-public class SetPasswordPresenter extends BasePresenter<SetPasswordView> {
+public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.View> implements SetPasswordContract.Presenter {
     private Context context;
 
-    public SetPasswordPresenter(Context context, SetPasswordView view) {
+    public SetPasswordPresenter(Context context, SetPasswordContract.View view) {
         super(view);
         this.context = context;
     }
@@ -52,7 +52,7 @@ public class SetPasswordPresenter extends BasePresenter<SetPasswordView> {
      * @param pwd  密码
      * @param isWx 是否微信登录
      */
-    private void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx) {
+    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx) {
         loadingDialog.setLoading(context.getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);

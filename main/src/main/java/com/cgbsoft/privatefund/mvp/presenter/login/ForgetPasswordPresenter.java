@@ -3,22 +3,22 @@ package com.cgbsoft.privatefund.mvp.presenter.login;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.view.login.ForgetPasswordView;
+import com.cgbsoft.privatefund.mvp.contract.login.ForgetPasswordContract;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/18 14:51
  * Email:zhangxyfs@126.com
  *  
  */
-public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordView> {
+public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPasswordContract.View> implements ForgetPasswordContract.Presenter {
     private Context context;
 
-    public ForgetPasswordPresenter(Context context, ForgetPasswordView view) {
+    public ForgetPasswordPresenter(Context context, ForgetPasswordContract.View view) {
         super(view);
         this.context = context;
     }
