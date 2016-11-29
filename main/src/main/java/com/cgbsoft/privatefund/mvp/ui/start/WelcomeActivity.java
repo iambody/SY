@@ -45,7 +45,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE};
+    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION};
     //欢迎页的
     private WelcomePersenter welcomePersenter;
     //一大坨runnable，作用：英文直译就好
@@ -117,6 +117,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
         welcomePersenter = new WelcomePersenter(this, this);
         welcomePersenter.createFinishObservable();
         welcomePersenter.toInitInfo();
+        welcomePersenter.getMyLocation();
 
         //解压一些资源
         Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {

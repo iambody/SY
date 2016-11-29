@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 
 /**
@@ -27,7 +28,18 @@ public interface LoginContract {
         /**
          * 微信登陆
          */
-        void toWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
+        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl);
+
+        /**
+         * 微信登陆
+         *
+         * @param loadingDialog
+         * @param unionid
+         * @param sex
+         * @param nickName
+         * @param headimgurl
+         */
+        void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
     }
 
     interface View extends BaseView {

@@ -15,17 +15,17 @@ import com.cgbsoft.lib.utils.constant.Constant;
 /**
  * 防IOS对话框
  */
-public abstract class iOSDialog extends BaseDialog {
+public abstract class IOSDialog extends BaseDialog {
     private String title, content, left, right;
     private boolean showTitle = false;
     private CharSequence charSequence;
     private boolean hasChar = false;
 
-    public iOSDialog(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+    public IOSDialog(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
-    public iOSDialog(Context context, int theme) {
+    public IOSDialog(Context context, int theme) {
         super(context, theme);
     }
 
@@ -38,7 +38,7 @@ public abstract class iOSDialog extends BaseDialog {
      * @param left    左按钮显示内容
      * @param right   右按钮显示内容
      */
-    public iOSDialog(Context context, String title, String content, String left, String right) {
+    public IOSDialog(Context context, String title, String content, String left, String right) {
         this(context, R.style.ios_dialog_alpha);
         this.title = title;
         this.content = content;
@@ -47,7 +47,7 @@ public abstract class iOSDialog extends BaseDialog {
         hasChar = false;
     }
 
-    public iOSDialog(Context context, String title, String content, String left, String right, boolean showTitle) {
+    public IOSDialog(Context context, String title, String content, String left, String right, boolean showTitle) {
         this(context, R.style.ios_dialog_alpha);
         this.showTitle = showTitle;
         this.title = title;
@@ -57,7 +57,7 @@ public abstract class iOSDialog extends BaseDialog {
         hasChar = false;
     }
 
-    public iOSDialog(Context context, String title, CharSequence charSequence, String left, String right, boolean showTitle) {
+    public IOSDialog(Context context, String title, CharSequence charSequence, String left, String right, boolean showTitle) {
         this(context, R.style.ios_dialog_alpha);
         this.showTitle = showTitle;
         this.title = title;
@@ -124,6 +124,11 @@ public abstract class iOSDialog extends BaseDialog {
         } else {
             mTitle.setVisibility(View.GONE);
         }
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+        mContent.setText(content);
     }
 
 

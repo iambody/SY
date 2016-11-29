@@ -14,6 +14,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
     public static class Result {
         public String token;
         public String userId;
+        public String isBind;
         public UserInfo userInfo;
     }
 }

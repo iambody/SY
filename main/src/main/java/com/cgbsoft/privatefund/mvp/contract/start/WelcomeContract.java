@@ -17,6 +17,8 @@ public interface WelcomeContract {
         void createFinishObservable();
 
         void toInitInfo();
+
+        void getMyLocation();
     }
 
     interface View extends BaseView {

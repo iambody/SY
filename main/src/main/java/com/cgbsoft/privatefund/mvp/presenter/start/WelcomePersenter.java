@@ -1,6 +1,15 @@
 package com.cgbsoft.privatefund.mvp.presenter.start;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
@@ -17,8 +26,13 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+
+import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * 欢迎页功能实现，数据调用
@@ -48,7 +62,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
 
                     getView().getDataSucc(appResources.img916);
-                }else {
+                } else {
                     getView().getDataSucc("");
                 }
 
@@ -123,6 +137,69 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             protected void onRxError(Throwable error) {
             }
         }));
+    }
+
+    @Override
+    public void getMyLocation() {
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+//        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+//            return;
+//        }
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location curLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (null == curLoc) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    String strAddr = getAddressFromLocation(context, location);
+                    //todo
+                    if (TextUtils.isEmpty(strAddr)) {
+//                        view.onLocationChanged(-1, 0, 0, strAddr);
+                    } else {
+//                        view.onLocationChanged(0, location.getLatitude(), location.getLongitude(), strAddr);
+                    }
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+            });
+        } else {
+            String strAddr = getAddressFromLocation(context, curLoc);
+            //todo
+            if (TextUtils.isEmpty(strAddr)) {
+//                view.onLocationChanged(-1, 0, 0, strAddr);
+            } else {
+//                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
+            }
+        }
+    }
+
+    private String getAddressFromLocation(Context context, Location location) {
+        Geocoder geocoder = new Geocoder(context);
+
+        try {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+            if (list.size() > 0) {
+                Address address = list.get(0);
+                return address.getAddressLine(0);
+            }
+        } catch (IOException e) {
+        }
+
+        return "";
     }
 
     @Override

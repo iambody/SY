@@ -16,6 +16,7 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
@@ -73,7 +74,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
-    private String isExist;
+    private CustomDialog.Builder mCustomBuilder;
 
     @Override
     protected int layoutID() {
@@ -124,6 +125,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
         mUMShareAPI = UMShareAPI.get(this);
+
+        CustomDialog mCustomDialog = new CustomDialog(this);
+        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
+                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
+                    dialog.dismiss();
+                });
 
         if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
@@ -293,7 +300,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             String nickname = map.get("nickname");
             String headimgurl = map.get("headimgurl");
 
-            getPresenter().toWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
+            if (!mCustomBuilder.isSetPositiveListener()) {
+                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
+                    dialog.dismiss();
+                });
+            }
+            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
         }
 
         @Override
