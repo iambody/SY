@@ -64,6 +64,10 @@ public class NetConfig {
         static final String CHECKCODE_URL = AUTH_URL + user + "/checkCaptcha";
         //重置密码
         static final String RESETPWD_URL = AUTH_URL + user + "/resetPassword";
+        //合并帐号--验证手机
+        static final String WXMERGECHECK_URL = AUTH_URL + user + "/wxMergePhone";
+        // 合并手机账户－－确认合并
+        static final String WXMARGECONFIRM_URL = AUTH_URL + user + "/confirmMerge";
     }
 
 

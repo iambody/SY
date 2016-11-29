@@ -139,4 +139,21 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 合并帐号--验证手机
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.WXMERGECHECK_URL)
+    Observable<BaseResult<String>>wxMergePhone(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 合并帐号--确认合并
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.WXMARGECONFIRM_URL)
+    Observable<BaseResult<String>>wxMergeConfirm();
 }

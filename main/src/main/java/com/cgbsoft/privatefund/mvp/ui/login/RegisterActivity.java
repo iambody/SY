@@ -17,7 +17,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
-import com.cgbsoft.lib.widget.iOSDialog;
+import com.cgbsoft.lib.widget.IOSDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.login.RegisterContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.RegisterPresenter;
@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
-    private iOSDialog miOSDialog;
+    private IOSDialog miOSDialog;
     private int countDownTime = COOL_DOWN_TIME;
     private Subscription countDownSub;
 
@@ -114,7 +114,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         et_ar_check.addTextChangedListener(new RegisterTextWatcher(CHECK_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.ra_register_loading_str), false, false);
-        miOSDialog = new iOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
+        miOSDialog = new IOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
             public void left() {
                 this.dismiss();

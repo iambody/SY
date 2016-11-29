@@ -185,6 +185,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
+        <!--合并手机号-->
+        <activity
+            android:name=".mvp.ui.login.BindPhoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
+
         <!--===================umeng========================-->
         <!--微信-->
         <activity

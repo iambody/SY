@@ -39,7 +39,7 @@
     <string name="al_login_str">登录</string>
     <string name="al_register_str">注册新用户</string>
     <string name="al_forget_str">忘记密码?</string>
-    <string name="al_wx_login_str">微信登录</string>
+    <string name="al_wx_login_str">选择用其他方式登录</string>
     <string name="un_null_str">请输入您的账号</string>
     <string name="pw_null_str">请输入您的密码</string>
     <string name="la_login_loading_str">登录中……</string>
@@ -68,4 +68,14 @@
     <string name="checking_fail_str">验证失败</string>
     <string name="reseting_str">重置中……</string>
     <string name="as_nosame_str">请输入相同的密码</string>
+    <string name="enter_phone_hint_str">请输入手机号</string>
+    <string name="enter_code_hint_str">请输入验证码</string>
+    <string name="send_code_str">发送验证码</string>
+    <string name="ab_jump_next_str"><![CDATA[跳过>]]></string>
+    <string name="al_need_bind_phone_str">您需要绑定手机号</string>
+    <string name="account_merge_str">您的手机号%1$s在此之前已经注册过私募云App的帐号，为保障您的信息安全和提供一致的在线服务，私募云需要您将手机帐号与微信帐号进行合并操作，届时您将可以通过微信号或手机号登录使用App。选择“我要合并”，客服人员将会在48小时内与您电话确认合并需求并告知您合并之后的相关使用事项，在此期间您可以正常使用App（不会受影响）。如果您不需要合并帐号，请选择“继续使用”。如有疑问，请拨打400-188-8848咨询</string>
+    <string name="bpna_marge_str">账号合并</string>
+    <string name="bpna_marge_no_str">继续使用</string>
+    <string name="bpna_marge_yes_str">我要合并</string>
+    <string name="bpna_start_marge_str">开始合并账号</string>
 </resources>

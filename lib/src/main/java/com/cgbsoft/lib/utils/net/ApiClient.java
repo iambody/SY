@@ -202,6 +202,27 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().resetPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    /**
+     * 合并帐号--验证手机
+     * @param un
+     * @param code
+     * @return
+     */
+    public static Observable<String> wxMergePhone(String un, String code){
+        Map<String, String> map = new HashMap<>();
+        map.put("mergePhone", un);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager().wxMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 合并手机账户－－确认合并
+     * @return
+     */
+    public static Observable<String> wxMergeConfirm(){
+        return OKHTTP.getInstance().getRequestManager().wxMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
     //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     /**

@@ -16,7 +16,6 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
@@ -65,8 +64,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.tv_al_forget)
     TextView tv_al_forget;//忘记密码
 
-    @BindView(R.id.iv_al_wx)
-    ImageView iv_al_wx;//微信登陆
+    @BindView(R.id.weixin_text)
+    TextView weixin_text;//微信登陆
 
 
     private LoadingDialog mLoadingDialog;
@@ -74,7 +73,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
-    private CustomDialog.Builder mCustomBuilder;
+    private String isExist;
 
     @Override
     protected int layoutID() {
@@ -126,11 +125,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
         mUMShareAPI = UMShareAPI.get(this);
 
-        CustomDialog mCustomDialog = new CustomDialog(this);
-        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
-                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
-                    dialog.dismiss();
-                });
         if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
     }
@@ -201,7 +195,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
-    @OnClick(R.id.iv_al_wx)
+    @OnClick(R.id.weixin_text)
     void weixinClick() {//微信登陆
         toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
@@ -217,6 +211,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginFail() {
         //todo 测试用
         openActivity(MainPageActivity.class);
+        finish();
+    }
+
+    @Override
+    public void toBindActivity() {
+        Intent intent = new Intent(this, BindPhoneActivity.class);
+        intent.putExtra(IDS_KEY, identity);
+        startActivity(intent);
         finish();
     }
 
@@ -275,6 +277,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    @Override
+    public void finish() {
+        if (identity == IDS_INVERSTOR) {
+            toDataStatistics(2002, 20006, "返回");
+        }
+        super.finish();
+    }
+
     private class MUMAuthListener implements UMAuthListener {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
@@ -283,14 +293,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             String nickname = map.get("nickname");
             String headimgurl = map.get("headimgurl");
 
-            if (!mCustomBuilder.isSetPositiveListener()) {
-                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
-                    dialog.dismiss();
-                });
-            }
-
-            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
+            getPresenter().toWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
         }
 
         @Override

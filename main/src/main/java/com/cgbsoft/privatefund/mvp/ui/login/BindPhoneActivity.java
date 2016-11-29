@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -18,8 +18,9 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.IOSDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.contract.login.ForgetPasswordContract;
-import com.cgbsoft.privatefund.mvp.presenter.login.ForgetPasswordPresenter;
+import com.cgbsoft.privatefund.mvp.contract.login.BindPhoneContract;
+import com.cgbsoft.privatefund.mvp.presenter.login.BindPhonePresenter;
+import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,38 +30,39 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
-
 /**
- * 忘记密码
- * Created by xiaoyu.zhang on 2016/11/18 14:50
+ * 绑定手机号
+ * Created by xiaoyu.zhang on 2016/11/29 14:21
  * Email:zhangxyfs@126.com
  *  
  */
-public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View {
+public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implements BindPhoneContract.View {
     private final int COOL_DOWN_TIME = 60;
+    @BindView(R.id.iv_ab_back)
+    ImageView iv_ab_back;//返回
 
-    @BindView(R.id.iv_af_back)
-    ImageView iv_af_back;//返回按钮
+    @BindView(R.id.tv_ab_next)
+    TextView tv_ab_next;//跳过
 
-    @BindView(R.id.et_af_username)
-    EditText et_af_username;//用户名
+    @BindView(R.id.et_ab_username)
+    EditText et_ab_username;//用户名
 
-    @BindView(R.id.iv_af_del_un)
-    ImageView iv_af_del_un;//删除用户名
+    @BindView(R.id.iv_ab_del_un)
+    ImageView iv_ab_del_un;//删除用户名
 
-    @BindView(R.id.et_af_check)
-    EditText et_af_check;//验证码
+    @BindView(R.id.et_ab_check)
+    EditText et_ab_check;//code
 
-    @BindView(R.id.btn_af_check)
-    Button btn_af_check;//验证码按钮
+    @BindView(R.id.btn_ab_check)
+    Button btn_ab_check;//code按钮
 
-    @BindView(R.id.btn_af_next)
-    Button btn_af_next;//下一步按钮
+    @BindView(R.id.btn_ab_ok)
+    Button btn_ab_ok;//完成
 
     private LoadingDialog mLoadingDialog;//等待弹窗
     private boolean isUsernameInput, isCheckInput;
     private final int USERNAME_KEY = 1, CHECK_KEY = 3;
-    private int identity;
+    private int identify = -1;
     private IOSDialog miOSDialog;
     private int countDownTime = COOL_DOWN_TIME;
     private Subscription countDownSub;
@@ -69,36 +71,34 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     private String lastInputPhoneNum;//刚才输入的手机号
 
     @Override
-    public void onBackPressed() {
-        openActivity(LoginActivity.class);
-        finish();
-    }
-
-    @Override
     protected int layoutID() {
-        return R.layout.activity_forgetpwd;
+        return R.layout.activity_bindphone;
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identity < 0) {
-            identity = SPreference.getIdtentify(getApplicationContext());
+        identify = getIntent().getIntExtra(IDS_KEY, -1);
+        if (identify < 0) {
+            identify = SPreference.getIdtentify(getApplicationContext());
         }
-        switch (identity) {
+        switch (identify) {
             case IDS_ADVISER:
-                iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_af_next.setTextColor(0xff666666);
+                iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+                btn_ab_ok.setBackgroundResource(R.drawable.select_btn_advister);
+                btn_ab_ok.setTextColor(0xff666666);
+                tv_ab_next.setBackgroundResource(R.drawable.select_btn_advister);
+                tv_ab_next.setTextColor(0xff666666);
                 break;
             case IDS_INVERSTOR:
-                iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_af_next.setTextColor(0xffffffff);
+                iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+                btn_ab_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
+                btn_ab_ok.setTextColor(0xffffffff);
+                tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
+                tv_ab_next.setTextColor(0xffffffff);
                 break;
         }
-        et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
-        et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
+        et_ab_username.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
+        et_ab_check.addTextChangedListener(new BindTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
         miOSDialog = new IOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
@@ -109,8 +109,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
             @Override
             public void right() {
                 this.dismiss();
-                toDataStatistics(1002, 10014, "忘记验证码");
-                getPresenter().sendCode(mLoadingDialog, et_af_username.getText().toString());
+                getPresenter().sendCode(mLoadingDialog, et_ab_username.getText().toString());
             }
         };
     }
@@ -118,7 +117,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     /**
      * 返回按钮点击
      */
-    @OnClick(R.id.iv_af_back)
+    @OnClick(R.id.iv_ab_back)
     void backClick() {
         openActivity(LoginActivity.class);
         finish();
@@ -127,18 +126,18 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     /**
      * 删除用户名按钮点击
      */
-    @OnClick(R.id.iv_af_del_un)
+    @OnClick(R.id.iv_ab_del_un)
     void delUsernameClick() {
-        if (et_af_username.getText().toString().length() > 0) {
-            et_af_username.setText("");
+        if (et_ab_username.getText().toString().length() > 0) {
+            et_ab_username.setText("");
         }
-        iv_af_del_un.setVisibility(View.GONE);
+        iv_ab_del_un.setVisibility(View.GONE);
     }
 
     /**
      * 验证码按钮点击
      */
-    @OnClick(R.id.btn_af_check)
+    @OnClick(R.id.btn_ab_check)
     void checkClick() {
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
@@ -148,17 +147,17 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     }
 
     /**
-     * 下一步按钮点击
+     * 完成按钮点击
      */
-    @OnClick(R.id.btn_af_next)
-    void nextClick() {
-        String userName = et_af_username.getText().toString();
-        String code = et_af_check.getText().toString();
-        if(!isUsernameInput){
+    @OnClick(R.id.btn_ab_ok)
+    void okClick() {
+        String userName = et_ab_username.getText().toString();
+        String code = et_ab_check.getText().toString();
+        if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!isCheckInput){
+        if (!isCheckInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }
@@ -166,17 +165,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
             MToast.makeText(this, "手机号码与验证码不匹配", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
-            toUmengStatistics(UMENG_KEY, "按钮", "找回下一步");
-        } else {
-            toDataStatistics(2005, 20011, "下一步");
-        }
-        getPresenter().checkCode(mLoadingDialog, userName, code);
-    }
-
-    @Override
-    protected ForgetPasswordPresenter createPresenter() {
-        return new ForgetPasswordPresenter(this, this);
+        getPresenter().wxMergePhone(mLoadingDialog, userName, code);
     }
 
     /**
@@ -184,10 +173,10 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
      */
     @Override
     public void sendSucc() {
-        btn_af_check.setEnabled(false);
-        btn_af_check.setBackgroundResource(R.drawable.bg_write_down);
-        btn_af_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
-        lastInputPhoneNum = et_af_username.getText().toString();
+        btn_ab_check.setEnabled(false);
+        btn_ab_check.setBackgroundResource(R.drawable.bg_write_down);
+        btn_ab_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
+        lastInputPhoneNum = et_ab_username.getText().toString();
         countDownSub = Observable.interval(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscriber<Long>() {
                     @Override
@@ -195,7 +184,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
                         if (countDownTime < 0) {
                             reSetVerificationState();
                         } else {
-                            btn_af_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
+                            btn_ab_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
                         }
                     }
 
@@ -206,15 +195,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
                 });
     }
 
-    /**
-     * 验证通过，跳转到设置密码页
-     */
     @Override
-    public void checkSucc() {
-        Intent intent = new Intent(this, SetPasswordActivity.class);
-        intent.putExtra("userName", et_af_username.getText().toString());
-        intent.putExtra("code", et_af_check.getText().toString());
-        startActivity(intent);
+    public void margeSucc() {
+        openActivity(MainPageActivity.class);
         finish();
     }
 
@@ -222,19 +205,24 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
      * 验证码按钮可以重新点击
      */
     private void reSetVerificationState() {
-        btn_af_check.setEnabled(true);
+        btn_ab_check.setEnabled(true);
         countDownTime = COOL_DOWN_TIME;
         countDownSub.unsubscribe();
-        btn_af_check.setBackgroundResource(R.drawable.shape_red_line);
-        btn_af_check.setTextColor(getResources().getColor(R.color.white));
-        btn_af_check.setText(R.string.ra_code_resend_str);
+        btn_ab_check.setBackgroundResource(R.drawable.shape_red_line);
+        btn_ab_check.setTextColor(getResources().getColor(R.color.white));
+        btn_ab_check.setText(R.string.ra_code_resend_str);
+    }
+
+    @Override
+    protected BindPhonePresenter createPresenter() {
+        return new BindPhonePresenter(this, this);
     }
 
 
-    private class ForgetTextWatcher implements TextWatcher {
+    private class BindTextWatcher implements TextWatcher {
         private int which;
 
-        ForgetTextWatcher(int which) {
+        BindTextWatcher(int which) {
             this.which = which;
         }
 
@@ -249,7 +237,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
             switch (which) {
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
-                    iv_af_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
+                    iv_ab_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
                 case CHECK_KEY:
                     isCheckInput = isTextHasLength;
@@ -262,5 +250,4 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
 
         }
     }
-
 }

@@ -42,7 +42,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPasswordCon
 
     @Override
     public void checkCode(@NonNull LoadingDialog loadingDialog, String un, String code) {
-        loadingDialog.setLoading(context.getString(R.string.checking_str));
+        loadingDialog.setLoading(getContext().getString(R.string.checking_str));
         loadingDialog.show();
         addSubscription(ApiClient.checkCode(un, code).subscribe(new RxSubscriber<String>() {
             @Override
