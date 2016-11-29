@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -81,7 +82,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         userName = getIntent().getStringExtra("userName");
         code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);

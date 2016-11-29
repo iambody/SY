@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -79,7 +80,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());

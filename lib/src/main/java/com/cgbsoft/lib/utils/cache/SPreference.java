@@ -310,18 +310,6 @@ public class SPreference implements Constant {
         return OtherDataProvider.getIdentify(context);
     }
 
-    public static int getNightMode(@NonNull Context context) {
-        int i = getInt(context, NIGHT_MODE);
-        if (i == -1) {
-            return AppCompatDelegate.MODE_NIGHT_YES;
-        }
-        return i;
-    }
-
-    public static void saveNightMode(@NonNull Context context, int mode) {
-        putInt(context, NIGHT_MODE, mode);
-    }
-
     /**
      * 保存身份信息
      *

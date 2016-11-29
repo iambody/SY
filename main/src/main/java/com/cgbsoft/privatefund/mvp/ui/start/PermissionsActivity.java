@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -65,7 +66,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
     }
 
     @Override
-    public void init() {
+    public void init(Bundle savedInstanceState) {
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ap_bottom_iv.getLayoutParams();
         lp.width = Utils.getScreenWidth(this);
         lp.height = Utils.getScreenWidth(this) * 464 / 1242;

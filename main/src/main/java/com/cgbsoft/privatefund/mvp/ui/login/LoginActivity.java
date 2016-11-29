@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -86,7 +88,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());
@@ -103,6 +105,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 btn_al_login.setTextColor(0xffffffff);
                 break;
         }
+        if (savedInstanceState == null) {
+            if (identity == IDS_ADVISER) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        }
+
 
         UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         if (userInfo != null) {

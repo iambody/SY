@@ -44,18 +44,33 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     private P mPresenter;//功能调用
     private boolean mIsNeedAdapterPhone = true;
     private boolean mIsNeedGoneNavigationBar;
+    private boolean mIsNightTheme;
 
     private long mExitPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        before();
-        if (layoutID() > 0)
-            setContentView(layoutID());
-        after();
-        init();
-        data();
+        start();
+        if (mIsNightTheme && savedInstanceState == null) {
+            if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        }else {
+            before();
+            if (layoutID() > 0)
+                setContentView(layoutID());
+            after();
+            init(savedInstanceState);
+            data();
+        }
+    }
+
+    protected void start() {
+
     }
 
     protected void before() {
@@ -66,7 +81,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     protected abstract int layoutID();
 
-    protected abstract void init();
+    protected abstract void init(Bundle savedInstanceState);
 
     protected abstract P createPresenter();
 
@@ -96,22 +111,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     }
 
-    protected boolean setNetMode() {
-        int mode;
-        boolean isChange = false;
-        if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
-            mode = AppCompatDelegate.MODE_NIGHT_YES;
-        } else {
-            mode = AppCompatDelegate.MODE_NIGHT_NO;
-        }
-        if (SPreference.getNightMode(this) != mode) {
-            getDelegate().setLocalNightMode(mode);
-            SPreference.saveNightMode(this, mode);
-            isChange = true;
-        }
-        return isChange;
-    }
-
     /**
      * 设置是否需要适配手机（必须写在before里，默认为true）
      *
@@ -128,6 +127,15 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
      */
     protected void setIsNeedGoneNavigationBar(boolean b) {
         mIsNeedGoneNavigationBar = b;
+    }
+
+    /**
+     * 是否设置夜间模式
+     *
+     * @param b
+     */
+    protected void setIsNightTheme(boolean b) {
+        mIsNightTheme = b;
     }
 
     /**
@@ -207,8 +215,10 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBaseHandler.removeCallbacksAndMessages(null);
-        mBaseHandler = null;
+        if (mBaseHandler != null) {
+            mBaseHandler.removeCallbacksAndMessages(null);
+            mBaseHandler = null;
+        }
         if (mUnbinder != null) {
             mUnbinder.unbind();
         }
@@ -292,6 +302,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     /**
      * umeng 统计
+     *
      * @param umengKey
      * @param mapKey
      * @param mapValue
@@ -306,14 +317,16 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     /**
      * 双击退出。
      */
-    protected void exitBy2Click() {
+    protected boolean exitBy2Click() {
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间
         if ((mNowTime - mExitPressedTime) > 2000) {//比较两次按键时间差
             MToast.makeText(this, getString(R.string.nav_back_again_finish), Toast.LENGTH_SHORT);
             mExitPressedTime = mNowTime;
         } else {
             finish();
+            return true;
         }
+        return false;
     }
 
 

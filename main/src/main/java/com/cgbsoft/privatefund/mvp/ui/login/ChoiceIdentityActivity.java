@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,13 +41,15 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
 
     private int identity = -1;
 
+    private boolean isExit;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_choice_identity;
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
 
     }
 
@@ -90,7 +93,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
 
     @Override
     public void onBackPressed() {
-        exitBy2Click();
+        isExit = exitBy2Click();
     }
 
     @Override
@@ -98,7 +101,9 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
         super.onDestroy();
         MainTabManager.getInstance().destory();
 
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        if(isExit) {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
     }
 }

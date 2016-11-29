@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.start;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +73,11 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     private Button btn_wel_cancle;
 
     @Override
+    protected void start() {
+        setIsNeedAdapterPhone(true);
+    }
+
+    @Override
     public void before() {
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
@@ -96,7 +102,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
 
     }
 

@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.login;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -49,7 +50,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimCon
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         int identity = getIntent().getIntExtra(IDS_KEY, -1);
         int resID = identity == IDS_INVERSTOR ? R.raw.movie_toc : R.raw.movie_tob;
         mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
@@ -131,6 +132,12 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimCon
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        openActivity(ChoiceIdentityActivity.class);
+        finish();
     }
 
     @Override

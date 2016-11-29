@@ -2,14 +2,12 @@ package com.cgbsoft.lib;
 
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.cgbsoft.lib.base.model.bean.DaoMaster;
 import com.cgbsoft.lib.base.model.bean.DaoSession;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -51,18 +49,6 @@ public class Appli extends MultiDexApplication {
         Config.IsToastTip = false;//关闭umeng toast
         Config.dialogSwitch = false;//不使用默认的dialog
 
-
-        setTheme();
-    }
-
-    private void setTheme(){
-        int mode;
-        if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
-            mode = AppCompatDelegate.MODE_NIGHT_YES;
-        } else {
-            mode = AppCompatDelegate.MODE_NIGHT_NO;
-        }
-        AppCompatDelegate.setDefaultNightMode(mode);
     }
 
     public static Context getContext() {
