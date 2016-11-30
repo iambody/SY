@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 
 import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
-import com.cgbsoft.lib.base.model.bean.DaoSession;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.trello.rxlifecycle.components.support.RxFragment;
 

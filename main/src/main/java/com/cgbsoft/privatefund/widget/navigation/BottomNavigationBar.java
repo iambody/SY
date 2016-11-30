@@ -239,7 +239,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
             leftFirstStr = R.string.vbnb_mine_str;
             leftSecStr = R.string.vbnb_product_str;
-            rightFirstStr = R.string.vbnb_product_str;
+            rightFirstStr = R.string.vbnb_discovery_str;
             rightSecStr = R.string.vbnb_club_str;
 
             if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)

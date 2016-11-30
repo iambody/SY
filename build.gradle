@@ -29,7 +29,7 @@ ext {
     targetSdkVersion = 24
     versionCode = 50009
     versionName = "5.0.9"
-    databaseName = "privateFundDB";
+    databaseName = "privateFundDB.db";
     databaseVer = 1;
 
     support_v4_version = '24.1.0'

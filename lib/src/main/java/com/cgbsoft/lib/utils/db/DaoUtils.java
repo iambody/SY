@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
-import com.cgbsoft.lib.base.model.bean.OtherInfoDao;
-import com.cgbsoft.lib.base.model.bean.UserInfoDao;
+import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
+import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 
 /**
  * 数据库工具

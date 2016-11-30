@@ -5,6 +5,10 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
+import com.cgbsoft.lib.utils.db.dao.DaoSession;
+import com.cgbsoft.lib.utils.db.dao.ToBBeanDao;
+import com.cgbsoft.lib.utils.db.dao.ToCBeanDao;
+import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 
 /**
  *  用户信息

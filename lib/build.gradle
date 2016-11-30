@@ -10,6 +10,8 @@ android {
 
     greendao {
         schemaVersion 1
+        targetGenDir 'src/main/java'
+        daoPackage 'com.cgbsoft.lib.utils.db.dao'
     }
 
     sourceSets {

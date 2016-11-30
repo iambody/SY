@@ -319,6 +319,7 @@ public class Utils {
 
     /**
      * 获取数据库名字
+     *
      * @param context
      * @return
      */
@@ -326,16 +327,21 @@ public class Utils {
         String dbName;
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            dbName = info.metaData.getString("databaseName");
+            dbName = info.metaData.getString("dbName");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             dbName = "privateFundDB";
         }
+        if (TextUtils.isEmpty(dbName)) {
+            dbName = "privateFundDB";
+        }
+
         return dbName;
     }
 
     /**
      * 数据库版本号
+     *
      * @param context
      * @return
      */
@@ -411,6 +417,7 @@ public class Utils {
 
     /**
      * 是否微信安装了
+     *
      * @param context
      * @return
      */
