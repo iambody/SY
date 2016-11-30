@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".mvp.ui.login.ForgetPasswordActivity">
+    tools:context=".mvp.ui.login.ResetPasswordActivity">
 
     <com.cgbsoft.lib.widget.ScrollingImageView
         android:id="@+id/siv_af_bg"

@@ -175,7 +175,7 @@
 
         <!--忘记密码-->
         <activity
-            android:name=".mvp.ui.login.ForgetPasswordActivity"
+            android:name=".mvp.ui.login.ResetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 

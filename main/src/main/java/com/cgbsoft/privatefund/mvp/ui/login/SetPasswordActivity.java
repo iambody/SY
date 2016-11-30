@@ -72,7 +72,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @Override
     public void onBackPressed() {
-        openActivity(ForgetPasswordActivity.class);
+        openActivity(ResetPasswordActivity.class);
         finish();
     }
 
@@ -108,7 +108,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @OnClick(R.id.iv_as_back)
     void backClick() {
-        openActivity(ForgetPasswordActivity.class);
+        openActivity(ResetPasswordActivity.class);
         finish();
     }
 

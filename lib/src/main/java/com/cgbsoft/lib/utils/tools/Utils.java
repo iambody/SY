@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -254,7 +255,7 @@ public class Utils {
      */
     public static String getIMEI(Context context) {
         TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = mTelephonyManager.getDeviceId();
+        @SuppressLint("HardwareIds") String imei = mTelephonyManager.getDeviceId();
         if (TextUtils.isEmpty(imei)) {
             imei = String.valueOf(System.currentTimeMillis());
         }

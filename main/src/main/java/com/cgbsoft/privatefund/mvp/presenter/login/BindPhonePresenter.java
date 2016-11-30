@@ -44,14 +44,14 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
 
     @Override
     public void wxMergePhone(@NonNull LoadingDialog loadingDialog, String un, String code) {
-        loadingDialog.setLoading(getContext().getString(R.string.checking_str));
+        loadingDialog.setLoading(getContext().getString(R.string.bind_phone_str));
         loadingDialog.show();
         addSubscription(ApiClient.wxMergePhone(un, code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                if (TextUtils.equals(s, "1")) {//不需要确认
-                    loadingDialog.setResult(true, "验证成功", 1000, () -> getView().margeSucc());
-                } else if (TextUtils.equals(s, "2")) {//需要确认
+                if (TextUtils.equals(s, "1")) {//之前没有手机号账号，不需要合并数据。
+                    loadingDialog.setResult(true, getContext().getString(R.string.bing_phone_succ_str), 1000, () -> getView().margeSucc());
+                } else if (TextUtils.equals(s, "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);
                     loadingDialog.dismiss();
                     new IOSDialog(getContext(), getContext().getString(R.string.bpna_marge_str), vas,
@@ -70,8 +70,11 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                             wxMergeConfirm(loadingDialog);
                         }
                     };
+                } else if (TextUtils.equals(s, "3")) {//绑定中
+                    loadingDialog.dismiss();
+                    showToast(R.string.bind_phone_not_repeat_str);
                 } else {
-                    loadingDialog.setResult(false, "验证失败", 1000);
+                    loadingDialog.setResult(false, getContext().getString(R.string.bing_phone_fail_str), 1000);
                 }
             }
 

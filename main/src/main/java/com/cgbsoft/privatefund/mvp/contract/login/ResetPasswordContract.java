@@ -11,7 +11,7 @@ import com.cgbsoft.lib.widget.LoadingDialog;
  * Email:zhangxyfs@126.com
  *  
  */
-public interface ForgetPasswordContract {
+public interface ResetPasswordContract {
 
     interface Presenter extends BasePresenter {
         /**

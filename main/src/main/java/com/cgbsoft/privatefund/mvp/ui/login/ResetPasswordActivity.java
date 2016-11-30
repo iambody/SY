@@ -18,8 +18,8 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.IOSDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.contract.login.ForgetPasswordContract;
-import com.cgbsoft.privatefund.mvp.presenter.login.ForgetPasswordPresenter;
+import com.cgbsoft.privatefund.mvp.contract.login.ResetPasswordContract;
+import com.cgbsoft.privatefund.mvp.presenter.login.ResetPasswordPresenter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +31,12 @@ import rx.android.schedulers.AndroidSchedulers;
 
 
 /**
- * 忘记密码
+ * 重置密码
  * Created by xiaoyu.zhang on 2016/11/18 14:50
  * Email:zhangxyfs@126.com
  *  
  */
-public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter> implements ForgetPasswordContract.View {
+public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> implements ResetPasswordContract.View {
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R.id.iv_af_back)
@@ -76,7 +76,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
 
     @Override
     protected int layoutID() {
-        return R.layout.activity_forgetpwd;
+        return R.layout.activity_resetpwd;
     }
 
     @Override
@@ -175,8 +175,8 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordPresenter
     }
 
     @Override
-    protected ForgetPasswordPresenter createPresenter() {
-        return new ForgetPasswordPresenter(this, this);
+    protected ResetPasswordPresenter createPresenter() {
+        return new ResetPasswordPresenter(this, this);
     }
 
     /**

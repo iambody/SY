@@ -44,15 +44,13 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     private P mPresenter;//功能调用
     private boolean mIsNeedAdapterPhone = true;
     private boolean mIsNeedGoneNavigationBar;
-    private boolean mIsNightTheme;
 
     private long mExitPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        start();
-        if (mIsNightTheme && savedInstanceState == null) {
+        if (getIsNightTheme() && savedInstanceState == null) {
             if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
@@ -67,10 +65,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             init(savedInstanceState);
             data();
         }
-    }
-
-    protected void start() {
-
     }
 
     protected void before() {
@@ -130,12 +124,11 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     }
 
     /**
-     * 是否设置夜间模式
+     * 获取夜间模式状态
      *
-     * @param b
      */
-    protected void setIsNightTheme(boolean b) {
-        mIsNightTheme = b;
+    protected boolean getIsNightTheme() {
+        return false;
     }
 
     /**

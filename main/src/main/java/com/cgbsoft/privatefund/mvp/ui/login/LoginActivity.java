@@ -74,6 +74,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
+    private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
 
     @Override
@@ -82,9 +83,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
+    protected boolean getIsNightTheme(){
+        return true;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
         mUMShareAPI = UMShareAPI.get(this);
 
-        CustomDialog mCustomDialog = new CustomDialog(this);
+        mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
                     dialog.dismiss();
@@ -196,7 +196,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         toDataStatistics(1002, 10006, "忘记密码");
         toDataStatistics(1002, 10018, "选择登录");
 
-        Intent intent = new Intent(this, ForgetPasswordActivity.class);
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
         finish();

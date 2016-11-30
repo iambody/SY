@@ -78,4 +78,8 @@
     <string name="bpna_marge_no_str">继续使用</string>
     <string name="bpna_marge_yes_str">我要合并</string>
     <string name="bpna_start_marge_str">开始合并账号</string>
+    <string name="bind_phone_str">绑定中……</string>
+    <string name="bing_phone_succ_str">绑定成功</string>
+    <string name="bing_phone_fail_str">绑定失败</string>
+    <string name="bind_phone_not_repeat_str">您的手机号正在绑定中，不用重复绑定</string>
 </resources>

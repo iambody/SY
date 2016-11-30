@@ -2,6 +2,8 @@ package com.cgbsoft.lib.base.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -15,8 +17,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BasePresenterImpl<V extends BaseView> implements RxConstant {
     private V view;
-
     private Context mContext;
+    private Toast toast = null;
+    private long oneTime;
+    private String oldMsg;
+
     private CompositeSubscription mCompositeSubscription;
 
     public BasePresenterImpl(@NonNull Context context, @NonNull V view) {
@@ -52,5 +57,36 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
         mContext = null;
     }
 
+    protected void showToast(int resId) {
+        if (getContext() == null) {
+            return;
+        }
+        String s = getContext().getResources().getString(resId);
+        showToast(s);
+    }
+
+    protected void showToast(String s) {
+        if (s == null || TextUtils.isEmpty(s) || getContext() == null)
+            return;
+        if (s.contains("failed to connect to") || s.contains("502") || s.contains("404") || s.contains("failed to connect to"))
+            s = "网络不给力，请重新尝试";
+        if (toast == null) {
+            toast = Toast.makeText(getContext(), s, Toast.LENGTH_SHORT);
+            toast.show();
+            oneTime = System.currentTimeMillis();
+        } else {
+            long twoTime = System.currentTimeMillis();
+            if (s.equals(oldMsg)) {
+                if (twoTime - oneTime > Toast.LENGTH_SHORT) {
+                    toast.show();
+                }
+            } else {
+                oldMsg = s;
+                toast.setText(s);
+                toast.show();
+            }
+            oneTime = twoTime;
+        }
+    }
 
 }

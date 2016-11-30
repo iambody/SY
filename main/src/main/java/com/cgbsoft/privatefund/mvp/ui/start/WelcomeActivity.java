@@ -45,7 +45,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION};
+    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE};
     //欢迎页的
     private WelcomePersenter welcomePersenter;
     //一大坨runnable，作用：英文直译就好
@@ -73,8 +73,8 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     private Button btn_wel_cancle;
 
     @Override
-    protected void start() {
-        setIsNeedAdapterPhone(true);
+    protected boolean getIsNightTheme(){
+        return true;
     }
 
     @Override

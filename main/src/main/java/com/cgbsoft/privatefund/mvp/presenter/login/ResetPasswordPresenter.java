@@ -8,7 +8,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.contract.login.ForgetPasswordContract;
+import com.cgbsoft.privatefund.mvp.contract.login.ResetPasswordContract;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
 
@@ -17,9 +17,9 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  * Email:zhangxyfs@126.com
  *  
  */
-public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPasswordContract.View> implements ForgetPasswordContract.Presenter {
+public class ResetPasswordPresenter extends BasePresenterImpl<ResetPasswordContract.View> implements ResetPasswordContract.Presenter {
 
-    public ForgetPasswordPresenter(Context context, ForgetPasswordContract.View view) {
+    public ResetPasswordPresenter(Context context, ResetPasswordContract.View view) {
         super(context, view);
     }
 
