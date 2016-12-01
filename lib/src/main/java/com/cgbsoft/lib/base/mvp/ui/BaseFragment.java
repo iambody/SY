@@ -51,7 +51,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
             mFragmentView = inflater.inflate(layoutID(), container, false);
         }
         after(mFragmentView);
-        init(mFragmentView);
+        init(mFragmentView, savedInstanceState);
         data();
         return mFragmentView;
     }
@@ -84,7 +84,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
 
     protected abstract int layoutID();
 
-    protected abstract void init(View view);
+    protected abstract void init(View view, Bundle savedInstanceState);
 
     protected abstract P createPresenter();
 

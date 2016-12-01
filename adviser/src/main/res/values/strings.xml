@@ -1,2 +1,8 @@
 <resources>
+    <string name="fc_college_title_str">学院</string>
+    <string name="product_training_str">产品培训</string>
+    <string name="wealth_forefront_str">财富前沿</string>
+    <string name="manager_training_str">管理培训</string>
+    <string name="wealth_knowledge_str">金融知识</string>
+    <string name="recommend_video_str">推荐视频</string>
 </resources>

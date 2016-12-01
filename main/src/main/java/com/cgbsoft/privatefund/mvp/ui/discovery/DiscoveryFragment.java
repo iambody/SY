@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.discovery;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -19,7 +20,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     }
 
     @Override
-    protected void init(View view) {
+    protected void init(View view, Bundle savedInstanceState) {
 
     }
 

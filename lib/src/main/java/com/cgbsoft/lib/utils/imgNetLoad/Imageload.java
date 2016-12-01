@@ -4,11 +4,17 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.DrawableTypeRequest;
+import com.bumptech.glide.GifRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.io.File;
 
@@ -99,5 +105,54 @@ public class Imageload {
                 requestCreator.placeholder((Integer) holdId);
             }
         base(requestCreator, imageView);
+    }
+
+    public static void display(Context context, @NonNull Object url, int dp, @NonNull ImageView imageView, Object holderId, Object errorId) {
+        DrawableTypeRequest requestCreator = getDrawableTypeRequest(imageWith(context), url);
+        if (requestCreator == null) {
+            return;
+        }
+
+        int size = Utils.convertDipOrPx(context, dp);
+
+        boolean isGif = false;
+        if (url instanceof String) {
+            if (TextUtils.equals(MimeTypeMap.getFileExtensionFromUrl(url.toString()).toLowerCase(), "gif")) {
+                isGif = true;
+            }
+        }
+        if (!isGif) {
+            BitmapRequestBuilder brb = requestCreator.asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL);
+            if (errorId != null)
+                if (errorId instanceof Drawable) {
+                    requestCreator.error((Drawable) errorId);
+                } else if (errorId instanceof Integer) {
+                    requestCreator.error((Integer) errorId);
+                }
+            if (holderId != null)
+                if (holderId instanceof Drawable) {
+                    requestCreator.placeholder((Drawable) holderId);
+                } else if (errorId instanceof Integer) {
+                    requestCreator.placeholder((Integer) holderId);
+                }
+            brb.transform(new GlideCircleTransform(context)).override(size, size).into(imageView);
+        } else {
+            GifRequestBuilder grb = requestCreator.asGif().diskCacheStrategy(DiskCacheStrategy.ALL);
+            if (errorId != null)
+                if (errorId instanceof Drawable) {
+                    requestCreator.error((Drawable) errorId);
+                } else if (errorId instanceof Integer) {
+                    requestCreator.error((Integer) errorId);
+                }
+            if (holderId != null)
+                if (holderId instanceof Drawable) {
+                    requestCreator.placeholder((Drawable) holderId);
+                } else if (errorId instanceof Integer) {
+                    requestCreator.placeholder((Integer) holderId);
+                }
+            grb.transformFrame(new GlideCircleTransform(context)).override(size, size).into(imageView);
+        }
+
+
     }
 }

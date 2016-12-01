@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
@@ -221,6 +222,22 @@ public class ApiClient {
      */
     public static Observable<String> wxMergeConfirm(){
         return OKHTTP.getInstance().getRequestManager().wxMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取学院头部数据
+     * @return
+     */
+    public static Observable<CollegeVideoEntity.Result> getCollegeHeadList(){
+        return OKHTTP.getInstance().getRequestManager().getCollegeHeadList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取学院其他数据
+     * @return
+     */
+    public static Observable<CollegeVideoEntity.Result> getCollegeOtherList(){
+        return OKHTTP.getInstance().getRequestManager().getCollegeOtherList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());

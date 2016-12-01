@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
@@ -156,4 +157,20 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
     Observable<BaseResult<String>>wxMergeConfirm();
+
+    /**
+     * 获取学院推荐数据
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
+    Observable<BaseResult<CollegeVideoEntity.Result>> getCollegeHeadList();
+
+    /**
+     * 获取学院其他数据
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
+    Observable<BaseResult<CollegeVideoEntity.Result>> getCollegeOtherList();
 }

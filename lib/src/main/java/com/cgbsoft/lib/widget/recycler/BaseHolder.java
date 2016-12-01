@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.cgbsoft.lib.utils.tools.Utils;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by xiaoyu.zhang on 2016/6/28.
  */
@@ -20,5 +22,6 @@ public abstract class BaseHolder extends RecyclerView.ViewHolder {
         super(itemView);
         context = itemView.getContext();
         screenWidth = Utils.getScreenWidth(context);
+        ButterKnife.bind(this, itemView);
     }
 }

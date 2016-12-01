@@ -338,6 +338,11 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                     }
                                     break;
                                 case R.id.iv_bottom_navigation_cloud:
+                                    if (nowPosition != 4) {
+                                        nowPosition = 4;
+                                        changeResWithIdtentify();
+                                    }
+
                                     if (isIdtentifyWithInvestor) {
                                         if (floatingActionMenu.isOpen()) {
                                             floatingActionMenu.close(true);

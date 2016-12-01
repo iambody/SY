@@ -1,5 +1,6 @@
 package com.cgbsoft.adviser.mvp.ui.setting;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -18,7 +19,7 @@ public class SettingFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View view) {
+    protected void init(View view, Bundle savedInstanceState) {
 
     }
 

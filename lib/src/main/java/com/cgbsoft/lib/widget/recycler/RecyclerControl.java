@@ -1,0 +1,153 @@
+package com.cgbsoft.lib.widget.recycler;
+
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+
+/**
+ * Created by xiaoyu.zhang on 2016/6/30.
+ */
+
+public class RecyclerControl {
+    private boolean isRefComplete = true, isLoadMoreComplete = true;
+    private RecyclerRefreshLayout recyclerRefreshLayout;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private OnControlGetDataListListener onControlGetDataListListener;
+    private OnScrollListener onScrollListener;
+    private Subscription delay1Subscribe, delay2Subscribe, delay3Subscribe;
+
+    /**
+     * @param recyclerRefreshLayout
+     * @param linearLayoutManager
+     * @param onControlGetDataListListener
+     */
+    public RecyclerControl(RecyclerRefreshLayout recyclerRefreshLayout,
+                           LinearLayoutManager linearLayoutManager, OnControlGetDataListListener onControlGetDataListListener) {
+        this.recyclerRefreshLayout = recyclerRefreshLayout;
+        this.linearLayoutManager = linearLayoutManager;
+        this.onControlGetDataListListener = onControlGetDataListListener;
+
+        onScrollListener = new OnScrollListener();
+    }
+
+    public RecyclerControl(RecyclerRefreshLayout recyclerRefreshLayout,
+                           GridLayoutManager gridLayoutManager, OnControlGetDataListListener onControlGetDataListListener) {
+        this.recyclerRefreshLayout = recyclerRefreshLayout;
+        this.gridLayoutManager = gridLayoutManager;
+        this.onControlGetDataListListener = onControlGetDataListListener;
+
+        onScrollListener = new OnScrollListener();
+    }
+
+    public void onRefresh() {
+        if (isRefComplete) {
+            isRefComplete = false;
+            delayGetData(true);
+        }
+    }
+
+    public void getDataComplete(boolean isRef) {
+        if (isRef) {
+            isRefComplete = true;
+        } else {
+            isLoadMoreComplete = true;
+        }
+        delayComplete();
+    }
+
+    public OnScrollListener getOnScrollListener() {
+        return onScrollListener;
+    }
+
+    public void destory() {
+        if (delay1Subscribe != null && !delay1Subscribe.isUnsubscribed()) {
+            delay1Subscribe.unsubscribe();
+            delay1Subscribe = null;
+        }
+        if (delay2Subscribe != null && !delay2Subscribe.isUnsubscribed()) {
+            delay2Subscribe.unsubscribe();
+            delay2Subscribe = null;
+        }
+        if (delay3Subscribe != null && !delay3Subscribe.isUnsubscribed()) {
+            delay3Subscribe.unsubscribe();
+            delay3Subscribe = null;
+        }
+
+        recyclerRefreshLayout = null;
+        linearLayoutManager = null;
+        gridLayoutManager = null;
+        onControlGetDataListListener = null;
+        onScrollListener = null;
+    }
+
+    private void delayGetData(boolean isRef) {
+        delay1Subscribe = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    recyclerRefreshLayout.setEnabled(false);
+                    recyclerRefreshLayout.setRefreshing(true);
+                    delay2Subscribe = Observable.just(1).delay(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(aLong2 -> {
+                                onControlGetDataListListener.onControlGetDataList(isRef);
+                            }, error -> {
+                            });
+                }, error -> {
+                });
+    }
+
+    private void delayComplete() {
+        delay3Subscribe = Observable.just(1).delay(300, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    recyclerRefreshLayout.setEnabled(true);
+                    recyclerRefreshLayout.setRefreshing(false);
+                }, error -> {
+                });
+    }
+
+    private class OnScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+
+            if (isLoadMoreComplete) {
+                int lastViewPos = -1;
+                if (linearLayoutManager != null)
+                    lastViewPos = linearLayoutManager.findLastVisibleItemPosition();
+                if (gridLayoutManager != null)
+                    lastViewPos = gridLayoutManager.findLastVisibleItemPosition();
+
+                if (lastViewPos >= (recyclerView.getAdapter().getItemCount() - 1)) {
+
+                    if (isLoadMoreComplete) {
+                        isLoadMoreComplete = false;
+                        delayGetData(false);
+                    }
+                }
+            }
+            onControlGetDataListListener.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            onControlGetDataListListener.onScrolled(recyclerView, dx, dy);
+        }
+    }
+
+    public interface OnControlGetDataListListener {
+        void onControlGetDataList(boolean isRef);
+
+        void onScrollStateChanged(RecyclerView recyclerView, int newState);
+
+        void onScrolled(RecyclerView recyclerView, int dx, int dy);
+    }
+
+}

@@ -33,4 +33,6 @@
         <!--Activity窗口的颜色-->
         <item name="android:windowBackground">@color/white</item>
     </style>
+
+    <style name="Theme.AppCompat.DayNight.PopupOverlay" parent="Theme.AppCompat.DayNight" />
 </resources>
