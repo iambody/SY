@@ -82,8 +82,6 @@ dependencies {
     //rxjava的生命周期和activity或者fragment绑定
     compile "com.trello:rxlifecycle:${rxlifecycle_need_version}"
     compile "com.trello:rxlifecycle-components:${rxlifecycle_need_version}"
-    //使用了弱引用的handler正常是不会内存泄露的
-    compile "com.badoo.mobile:android-weak-handler:${weakHandler_need_version}"
     //json和类互相转换工具
     compile "com.google.code.gson:gson:${gson_need_version}"
     //和lambda配合可以有效的减少代码量，也有EventBus类似功能，现阶段网络请求返回的都是Observable

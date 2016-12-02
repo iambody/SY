@@ -39,7 +39,6 @@ ext {
     rxlifecycle_need_version = '0.5.0'
     butterknife_need_version = '8.4.0'
     okio_need_version = '1.7.0'
-    weakHandler_need_version = '1.1'
     gson_need_version = '2.4'
     recycleanim_need_version = '2.0.0'
     rxandroid_need_version = '1.2.0'

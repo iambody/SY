@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -20,6 +19,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.umeng.analytics.MobclickAgent;
 

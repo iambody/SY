@@ -126,7 +126,6 @@ dependencies {
     compile "com.trello:rxlifecycle:${rxlifecycle_need_version}"
     compile "com.trello:rxlifecycle-components:${rxlifecycle_need_version}"
     compile "com.squareup.okio:okio:${okio_need_version}"
-    compile "com.badoo.mobile:android-weak-handler:${weakHandler_need_version}"
     compile "com.google.code.gson:gson:${gson_need_version}"
     compile "jp.wasabeef:recyclerview-animators:${recycleanim_need_version}"
     compile "io.reactivex:rxandroid:${rxandroid_need_version}"
