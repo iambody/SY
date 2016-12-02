@@ -61,7 +61,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return position == 0 ? 2 : 1;
+                return position == 0 || position == 6 ? 2 : 1;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);
