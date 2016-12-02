@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.badoo.mobile.util.WeakHandler;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -21,6 +20,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
+import com.cgbsoft.lib.widget.WeakHandler;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.start.WelcomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.start.WelcomePersenter;
