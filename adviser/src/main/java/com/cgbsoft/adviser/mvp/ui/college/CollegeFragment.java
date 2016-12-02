@@ -16,10 +16,10 @@ import com.cgbsoft.adviser.mvp.ui.college.adapter.CollegeAdapter;
 import com.cgbsoft.adviser.mvp.ui.college.listener.CollegeListener;
 import com.cgbsoft.adviser.mvp.ui.college.model.CollegeModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -88,7 +88,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
 
     @Override
     public void onErrorClickListener() {
-
+        onRefresh();
     }
 
     @Override
@@ -116,14 +116,45 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
 
     }
 
-    @Override
-    public void getCollegeHeadDataSucc(List<CollegeModel> modelList, boolean isRef) {
-
-    }
 
     @Override
-    public void getCollegeHeadDataFail(boolean isRef) {
+    public void getCollegeDataSucc(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
+        setError(false);
     }
 
+    @Override
+    public void getCollegeDataFail(boolean isRef) {
+        recyclerControl.getDataComplete(isRef);
+        setError(true);
+    }
+
+    //是无数据还是网络加载错误
+    private void setError(boolean isError) {
+        int listSize = 0;
+
+        if (collegeAdapter != null) {
+            listSize = collegeAdapter.getList().size();
+        }
+
+        CollegeModel model = new CollegeModel();
+        model.isError = isError;
+        if (listSize == 0) {
+            if (!isError) {
+                model.noDataIvSize = Utils.convertDipOrPx(getContext(), 100);
+                //todo 看需求是什么样子的
+//                model.noDataIvResId = R.mipmap.no_video;
+//                model.noDataTvStr = getString(R.string.person_home_no_blive);
+                model.noDataBtnWidth = 0;
+                model.noDataBtnHeight = 0;
+                model.noDataBtnStr = "";
+                model.type = CollegeModel.ERROR;
+            } else {
+                model.errorStatus = ErrorDataView.ERROR_NET;
+            }
+            collegeAdapter.appendError(model, 0);
+        } else {
+            collegeAdapter.removeError();
+        }
+    }
 }

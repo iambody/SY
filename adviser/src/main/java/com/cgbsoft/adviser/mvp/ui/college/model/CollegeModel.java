@@ -21,4 +21,14 @@ public class CollegeModel extends BaseModel {
     public String videoPlayUrl;
     public String bottomVideoImgUrl;//下方视频图片地址
     public String bottomVideoContent;//下方视频内容
+
+    public boolean isVisable = true;
+
+    public CollegeModel() {
+
+    }
+
+    public CollegeModel(int type) {
+        this.type = type;
+    }
 }
