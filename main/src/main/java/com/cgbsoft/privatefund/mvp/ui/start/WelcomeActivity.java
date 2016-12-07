@@ -30,7 +30,6 @@ import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import java.io.IOException;
 import java.io.InputStream;
 
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -142,7 +141,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     @Override
     public void getDataSucc(String url) {
-        if (!TextUtils.isEmpty(url))
+        if (!TextUtils.isEmpty(url) && iv_wel_background != null)
             requestManager.load(url).skipMemoryCache(true).centerCrop().listener(new RequestListener<String, GlideDrawable>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -210,8 +209,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         mNoNetRunnable = new WelcomeRunnable(NO_NET);
         mTimeOutRunnable = new WelcomeRunnable(OUT_TIME);
 
-        iv_wel_background = ButterKnife.findById(this, R.id.iv_wel_background);
-        btn_wel_cancle = ButterKnife.findById(this, R.id.btn_wel_cancle);
+        iv_wel_background = (ImageView) findViewById(R.id.iv_wel_background);
+        btn_wel_cancle = (Button) findViewById(R.id.btn_wel_cancle);
 
         btn_wel_cancle.setOnClickListener(v -> nextPage());
 
