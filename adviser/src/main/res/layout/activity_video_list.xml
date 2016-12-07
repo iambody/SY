@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context=".mvp.ui.college.CollegeFragment">
+    tools:context=".mvp.ui.college.VideoListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,17 +17,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back_white_24dp"
             app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay"
             app:titleTextColor="@color/white">
 
             <TextView
+                android:id="@+id/tv_avl_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/fc_college_title_str"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dimens_sp_18" />
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

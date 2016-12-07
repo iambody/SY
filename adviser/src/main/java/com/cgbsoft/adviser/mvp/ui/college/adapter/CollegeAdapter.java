@@ -33,11 +33,11 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
             case CollegeModel.HEAD:
                 return new CollegeHeadHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_head, null), listener);
             case CollegeModel.COMM_HEAD:
-                return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null));
+                return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null), listener);
             case CollegeModel.COMM:
                 return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max);
             case CollegeModel.OHTER_HEAD:
-                return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null));
+                return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null), listener);
             case CollegeModel.OTHER:
                 return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max);
             default:
@@ -58,6 +58,7 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
             case CollegeModel.COMM_HEAD:
                 CollegeTitleHolder ch = (CollegeTitleHolder) holder;
                 ch.tv_ict_title.setText("推荐视频");
+                ch.iv_ict_arrow.setVisibility(View.GONE);
                 break;
             case CollegeModel.COMM:
                 CollegeGridHolder cgh = (CollegeGridHolder) holder;
@@ -72,6 +73,7 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
             case CollegeModel.OHTER_HEAD:
                 CollegeTitleHolder oh = (CollegeTitleHolder) holder;
                 oh.tv_ict_title.setText("其他视频");
+                oh.iv_ict_arrow.setVisibility(View.VISIBLE);
                 break;
             case CollegeModel.OTHER:
                 CollegeGridHolder co = (CollegeGridHolder) holder;

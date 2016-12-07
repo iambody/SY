@@ -147,6 +147,16 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         DataStatisticsUtils.push(getContext().getApplicationContext(), data);
     }
 
+    protected void toDataStatistics(int grp, int act, String[] args){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("grp", String.valueOf(grp));
+        data.put("act", String.valueOf(act));
+        for (int i = 1; i <= args.length; i++) {
+            data.put("arg" + i, args[i - 1]);
+        }
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data);
+    }
+
 
     /**
      * 打开activity

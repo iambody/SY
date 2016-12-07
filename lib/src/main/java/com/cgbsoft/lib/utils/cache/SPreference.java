@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -209,12 +208,29 @@ public class SPreference implements Constant {
      * @param context 上下文
      * @return 用户信息类
      */
-    public static UserInfo getUserInfoData(@NonNull Context context) {
+    public static UserInfoDataEntity.UserInfo getUserInfoData(@NonNull Context context) {
         String userInfoDataJson = UserDataProvider.queryUserInfoData(context);
         if (TextUtils.isEmpty(userInfoDataJson)) {
             return null;
         }
-        return new Gson().fromJson(userInfoDataJson, UserInfo.class);
+        return new Gson().fromJson(userInfoDataJson, UserInfoDataEntity.UserInfo.class);
+    }
+
+    public static UserInfoDataEntity.ToBBean getToBBean(@NonNull Context context) {
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null) {
+            return userInfo.toB;
+        }
+        return null;
+    }
+
+    public static String isColorCloud(@NonNull Context context) {
+        String category = "0";
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null && userInfo.toB != null) {
+            category = userInfo.toB.category;
+        }
+        return TextUtils.equals(category, "3") ? "1" : "0";
     }
 
     /**
@@ -249,9 +265,9 @@ public class SPreference implements Constant {
         if (!TextUtils.isEmpty(userId)) {
             return userId;
         }
-        UserInfo userInfoData = getUserInfoData(context);
+        UserInfoDataEntity.UserInfo userInfoData = getUserInfoData(context);
         if (userInfoData != null) {
-            return userInfoData.getId();
+            return userInfoData.id;
         }
         return "";
     }
@@ -329,11 +345,11 @@ public class SPreference implements Constant {
         return getBoolean(context, "couldOpenJsonLog");
     }
 
-    public static void saveHasPushMsg(Context context, boolean b){
+    public static void saveHasPushMsg(Context context, boolean b) {
         putBoolean(context, HAS_PUSH_MESSAGE, b);
     }
 
-    public static boolean getHasPushMsg(Context context){
+    public static boolean getHasPushMsg(Context context) {
         return getBoolean(context, HAS_PUSH_MESSAGE);
     }
 }

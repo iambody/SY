@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    protected boolean getIsNightTheme(){
+    protected boolean getIsNightTheme() {
         return true;
     }
 
@@ -115,9 +115,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
 
 
-        UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
+        UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         if (userInfo != null) {
-            et_al_username.setText(userInfo.getUserName());
+            et_al_username.setText(userInfo.userName);
         }
 
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));

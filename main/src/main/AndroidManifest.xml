@@ -191,6 +191,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
+        <!--视频列表-->
+        <activity
+            android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"
+            android:screenOrientation="portrait" />
+
         <!--===================umeng========================-->
         <!--微信-->
         <activity

@@ -77,7 +77,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                         dataList.add(model);
                     }
                 }
-                return ApiClient.getTestCollegeOtherList(0);
+                return ApiClient.getTestVideoOtherList(0, "");
             }).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
@@ -106,7 +106,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                 }
             }));
         } else {
-            addSubscription(ApiClient.getTestCollegeOtherList(index).subscribe(new RxSubscriber<String>() {
+            addSubscription(ApiClient.getTestVideoOtherList(index, "").subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
                     List<CollegeVideoEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<CollegeVideoEntity.Row>>() {
@@ -171,7 +171,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
             }
             adapter.appendToList(list);
 
-            return ApiClient.getCollegeOtherList();
+            return ApiClient.getVideoOtherList();
         }).subscribe(new RxSubscriber<CollegeVideoEntity.Result>() {
             @Override
             protected void onEvent(CollegeVideoEntity.Result result) {

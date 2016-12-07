@@ -1,5 +1,6 @@
 package com.cgbsoft.adviser.mvp.ui.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,9 +14,12 @@ import com.cgbsoft.adviser.R2;
 import com.cgbsoft.adviser.mvp.contract.CollegeContract;
 import com.cgbsoft.adviser.mvp.presenter.CollegePresenter;
 import com.cgbsoft.adviser.mvp.ui.college.adapter.CollegeAdapter;
+import com.cgbsoft.adviser.mvp.ui.college.holder.CollegeHeadHolder;
 import com.cgbsoft.adviser.mvp.ui.college.listener.CollegeListener;
 import com.cgbsoft.adviser.mvp.ui.college.model.CollegeModel;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
@@ -45,6 +49,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
     private CollegeAdapter collegeAdapter;
     private GridLayoutManager gridLayoutManager;
     private RecyclerControl recyclerControl;
+    private String isColorCloud, organizationName;
 
 
     @Override
@@ -54,8 +59,11 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        toolbar.setOnMenuItemClickListener(this);
+        isColorCloud = SPreference.isColorCloud(getContext().getApplicationContext());
+        UserInfoDataEntity.ToBBean toBBean = SPreference.getToBBean(getContext().getApplicationContext());
+        organizationName = toBBean == null ? "" : toBBean.organizationName;
 
+        toolbar.setOnMenuItemClickListener(this);
         collegeAdapter = new CollegeAdapter(this);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -83,7 +91,38 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
 
     @Override
     public void onHeadBtnClick(int which) {
+        String[] param = new String[3];
+        param[1] = isColorCloud;
+        param[2] = organizationName;
 
+        Intent intent = new Intent(getContext(), VideoListActivity.class);
+        switch (which) {
+            case CollegeHeadHolder.PRODUCT://产品培训
+                param[0] = "产品培训";
+                toDataStatistics(1019, 10097, param);
+                break;
+            case CollegeHeadHolder.FOREFRONT://财富前沿
+                param[0] = "财富前沿";
+                toDataStatistics(1019, 10098, param);
+                break;
+            case CollegeHeadHolder.MANAGER://管理培训
+                param[0] = "管理培训";
+                toDataStatistics(1019, 10099, param);
+                break;
+            case CollegeHeadHolder.KNOWLEDGE://金融知识
+                param[0] = "金融知识";
+                toDataStatistics(1019, 10100, param);
+                break;
+        }
+        intent.putExtra("title", param[0]);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTitleClick() {
+        Intent intent = new Intent(getContext(), VideoListActivity.class);
+        intent.putExtra("title", "视频列表");
+        startActivity(intent);
     }
 
     @Override

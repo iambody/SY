@@ -10,5 +10,7 @@ import com.cgbsoft.lib.widget.recycler.OnBaseListener;
  */
 public interface CollegeListener extends OnBaseListener {
 
-    public void onHeadBtnClick(int which);
+    void onHeadBtnClick(int which);
+
+    void onTitleClick();
 }

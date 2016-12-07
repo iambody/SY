@@ -256,15 +256,19 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<CollegeVideoEntity.Result> getCollegeOtherList(int offset) {
+    public static Observable<CollegeVideoEntity.Result> getVideoOtherList(int offset, String type) {
         Map<String, String> map = new HashMap<>();
+        if (!TextUtils.isEmpty(type))
+            map.put("type", type);
         map.put("offset", String.valueOf(offset));
         map.put("limit", "20");
         return OKHTTP.getInstance().getRequestManager().getCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> getTestCollegeOtherList(int offset) {
+    public static Observable<String> getTestVideoOtherList(int offset, String type) {
         Map<String, String> map = new HashMap<>();
+        if (!TextUtils.isEmpty(type))
+            map.put("type", type);
         map.put("offset", String.valueOf(offset));
         map.put("limit", "20");
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
