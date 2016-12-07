@@ -11,15 +11,15 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back_white_24dp"
-            app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay"
-            app:titleTextColor="@color/white">
+            app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
             <TextView
                 android:id="@+id/tv_avl_title"
@@ -27,9 +27,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/dimens_sp_18" />
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

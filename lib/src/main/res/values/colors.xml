@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryAdv">#d73a2e</color>
-    <color name="colorPrimaryDarkAdv">#900</color>
+    <color name="colorPrimaryAdv">#ffffffff</color>
+    <color name="colorPrimaryDarkAdv">#ffffffff</color>
     <color name="colorAccentAdv">#f23f36</color>
     
     <color name="colorPrimaryInv">#f49f00</color>
@@ -13,6 +13,9 @@
     <color name="font_grey_up">#ef999999</color>
     <color name="color_red_down">#D22315</color>
     <color name="color_red_up">#D73A2E</color>
+
+    <color name="color_red_light">#d73a2e</color>
+    <color name="color_red_dark">#900</color>
 
     <color name="color_f47900">#f47900</color>
     <color name="color_636571">#636571</color>

@@ -11,14 +11,14 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay"
-            app:titleTextColor="@color/white">
+            app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,9 +26,14 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/fc_college_title_str"
-                android:textColor="@color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/dimens_sp_18" />
         </android.support.v7.widget.Toolbar>
+<!--        <View
+            android:id="@+id/toolbar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/toolbar_dropshadow" />-->
     </android.support.design.widget.AppBarLayout>
 
 
