@@ -75,6 +75,20 @@ public abstract class BaseAdapter<MODEL extends BaseModel, LISTENER extends OnBa
         notifyItemRangeInserted(oldListSize, this.list.size());
     }
 
+    /**
+     * 完全刷新
+     *
+     * @param dataList
+     */
+    public void refAllData(List<MODEL> dataList) {
+        if (dataList.size() == 0) {
+            return;
+        }
+        int oldListSize = this.list.size();
+        this.list.addAll(dataList);
+        notifyDataSetChanged();
+    }
+
     public void addOne(MODEL model) {
         list.add(model);
         notifyItemInserted(list.size() - 1);
@@ -157,6 +171,15 @@ public abstract class BaseAdapter<MODEL extends BaseModel, LISTENER extends OnBa
             list.clear();
             list.add(model);
             notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 只删除数据不做刷新
+     */
+    public void deleteAllData() {
+        if (list.size() > 0) {
+            list.clear();
         }
     }
 }

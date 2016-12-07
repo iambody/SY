@@ -10,6 +10,8 @@ import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.List;
 /**
  * Created by xiaoyu.zhang on 2016/12/1 13:43
  * Email:zhangxyfs@126.com
- *  
  */
 public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> implements CollegeContract.Presenter {
+    private int index = 0;
 
     public CollegePresenter(@NonNull Context context, @NonNull CollegeContract.View view) {
         super(context, view);
@@ -29,9 +31,110 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
     @Override
     public void getCollegeData(CollegeAdapter adapter, boolean isRef) {
         if (isRef) {
-            adapter.clear();
+            index = 0;
+        } else {
+            index++;
         }
-        addSubscription(ApiClient.getCollegeHeadList().flatMap(base -> {
+
+        List<CollegeModel> dataList = new ArrayList<>();
+        if (isRef) {
+            //todo 测试代码，服务器改变接口后需要使用下面的代码
+            addSubscription(ApiClient.getTestCollegeHeadList().flatMap(s -> {
+                List<CollegeVideoEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<CollegeVideoEntity.Row>>() {
+                }.getType());
+
+                int dataSize = rows.size();
+                //第一个
+                if (dataSize > 0) {
+                    CollegeModel model = new CollegeModel();
+                    model.type = CollegeModel.HEAD;
+                    model.headBgUrl = rows.get(0).coverImageUrl;
+                    model.headBgContent = rows.get(0).shortName;
+                    dataList.add(model);
+                }
+                //推荐title item
+                dataList.add(new CollegeModel(CollegeModel.COMM_HEAD));
+                if (dataSize >= 5) {
+                    for (int i = 1; i < 5; i++) {
+                        CollegeModel model = new CollegeModel();
+                        model.type = CollegeModel.COMM;
+                        model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
+                        model.bottomVideoTitle = rows.get(i).videoName;
+                        model.bottomVideoContent = rows.get(i).shortName;
+                        dataList.add(model);
+                    }
+                } else if (dataSize > 1 && dataSize < 5) {
+                    for (int i = 1; i < 5; i++) {
+                        CollegeModel model = new CollegeModel();
+                        model.type = CollegeModel.COMM;
+                        if (i < dataSize) {
+                            model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
+                            model.bottomVideoTitle = rows.get(i).videoName;
+                            model.bottomVideoContent = rows.get(i).shortName;
+                        } else {
+                            model.isVisable = false;
+                        }
+                        dataList.add(model);
+                    }
+                }
+                return ApiClient.getTestCollegeOtherList(0);
+            }).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String s) {
+                    List<CollegeVideoEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<CollegeVideoEntity.Row>>() {
+                    }.getType());
+                    dataList.add(new CollegeModel(CollegeModel.OHTER_HEAD));
+                    int dataSize = rows.size();
+                    for (int i = 1; i < dataSize; i++) {
+                        CollegeModel model = new CollegeModel();
+                        model.type = CollegeModel.OTHER;
+                        model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
+                        model.bottomVideoTitle = rows.get(i).videoName;
+                        model.bottomVideoContent = rows.get(i).shortName;
+                        model.videoId = rows.get(i).videoId;
+                        model.videoPlayUrl = rows.get(i).sdvideoUrl;
+                        dataList.add(model);
+                    }
+                    adapter.deleteAllData();
+                    adapter.refAllData(dataList);
+                    getView().getCollegeDataSucc(isRef);
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    getView().getCollegeDataFail(isRef);
+                }
+            }));
+        } else {
+            addSubscription(ApiClient.getTestCollegeOtherList(index).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String s) {
+                    List<CollegeVideoEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<CollegeVideoEntity.Row>>() {
+                    }.getType());
+                    List<CollegeModel> list = new ArrayList<>();
+                    int dataSize = rows.size();
+                    for (int i = 1; i < dataSize; i++) {
+                        CollegeModel model = new CollegeModel();
+                        model.type = CollegeModel.OTHER;
+                        model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
+                        model.bottomVideoTitle = rows.get(i).videoName;
+                        model.bottomVideoContent = rows.get(i).shortName;
+                        model.videoId = rows.get(i).videoId;
+                        model.videoPlayUrl = rows.get(i).sdvideoUrl;
+                        list.add(model);
+                    }
+                    adapter.appendToList(list);
+                    getView().getCollegeDataSucc(isRef);
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    getView().getCollegeDataFail(isRef);
+                }
+            }));
+        }
+
+        /*addSubscription(ApiClient.getCollegeHeadList().flatMap(base -> {
             int dataSize = base.rows.size();
             //第一个
             if (dataSize > 0) {
@@ -77,9 +180,12 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                 int dataSize = result.rows.size();
                 for (int i = 1; i < dataSize; i++) {
                     CollegeModel model = new CollegeModel();
-                    model.type = CollegeModel.COMM;
-                    model.headBgUrl = result.rows.get(i).coverImageUrl;
-                    model.headBgContent = result.rows.get(i).shortName;
+                    model.type = CollegeModel.OTHER;
+                    model.bottomVideoImgUrl = result.rows.get(i).coverImageUrl;
+                    model.bottomVideoTitle = result.rows.get(i).videoName;
+                    model.bottomVideoContent = result.rows.get(i).shortName;
+                    model.videoId = result.rows.get(i).videoId;
+                    model.videoPlayUrl = result.rows.get(i).sdvideoUrl;
                     list.add(model);
                 }
                 adapter.appendToList(list);
@@ -90,6 +196,6 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
             protected void onRxError(Throwable error) {
                 getView().getCollegeDataFail(isRef);
             }
-        }));
+        }));*/
     }
 }

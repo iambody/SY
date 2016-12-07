@@ -31,7 +31,7 @@ public class GlideCircleTransform extends BitmapTransformation {
         if (source == null) return null;
         int size = Math.min(source.getWidth(), source.getHeight());
         int x, y;
-        if (radius == 0) {
+        if (radius < 0) {
             x = (source.getWidth() - size) / 2;
             y = (source.getHeight() - size) / 2;
         } else {

@@ -1,11 +1,13 @@
 package com.cgbsoft.adviser.mvp.ui.college.holder;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.adviser.R2;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 
 import butterknife.BindView;
@@ -30,6 +32,14 @@ public class CollegeGridHolder extends BaseHolder {
 
     public CollegeGridHolder(View itemView, int max) {
         super(itemView);
+        int width = Utils.getScreenWidth(context) / 2 - Utils.convertDipOrPx(context, 16);
+        int height = width * 829 / 1479;
+
+
+        ViewGroup.LayoutParams lp = iv_icb_bg.getLayoutParams();
+        lp.width = width;
+        lp.height = height;
+        iv_icb_bg.setLayoutParams(lp);
 
         if (getAdapterPosition() % 2 == 0) {
             ll_icb.setPadding(max, max / 2, max / 2, max / 2);

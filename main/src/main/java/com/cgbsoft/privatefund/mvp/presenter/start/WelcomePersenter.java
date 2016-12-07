@@ -32,8 +32,6 @@ import java.util.List;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
-
 /**
  * 欢迎页功能实现，数据调用
  * Created by xiaoyu.zhang on 2016/11/16 09:04
@@ -60,10 +58,11 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                 if (appResources != null) {
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
                     OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
-
-                    getView().getDataSucc(appResources.img916);
+                    if (getView() != null)
+                        getView().getDataSucc(appResources.img916);
                 } else {
-                    getView().getDataSucc("");
+                    if (getView() != null)
+                        getView().getDataSucc("");
                 }
 
             }
@@ -72,9 +71,11 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             protected void onRxError(Throwable error) {
                 String url = OtherDataProvider.getWelcomeImgUrl(getContext().getApplicationContext());
                 if (!TextUtils.isEmpty(url)) {
-                    getView().getDataSucc(url);
+                    if (getView() != null)
+                        getView().getDataSucc(url);
                 } else {
-                    getView().getDataError(error);
+                    if (getView() != null)
+                        getView().getDataError(error);
                     //todo test
                     AppResourcesEntity.Result result = new AppResourcesEntity.Result();
                     result.img916 = "https://upload.simuyun.com/live/b0926657-6b81-4599-b2ed-de32ecd396c2.jpg";
@@ -84,6 +85,10 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     result.isMustUpdate = "n";
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(result));
                     OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), result.img916);
+                }
+
+                if(getView() == null){
+
                 }
             }
         }));
@@ -153,7 +158,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    String strAddr = getAddressFromLocation(context, location);
+                    String strAddr = getAddressFromLocation(location);
                     //todo
                     if (TextUtils.isEmpty(strAddr)) {
 //                        view.onLocationChanged(-1, 0, 0, strAddr);
@@ -175,7 +180,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                 }
             });
         } else {
-            String strAddr = getAddressFromLocation(context, curLoc);
+            String strAddr = getAddressFromLocation(curLoc);
             //todo
             if (TextUtils.isEmpty(strAddr)) {
 //                view.onLocationChanged(-1, 0, 0, strAddr);
@@ -185,8 +190,8 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         }
     }
 
-    private String getAddressFromLocation(Context context, Location location) {
-        Geocoder geocoder = new Geocoder(context);
+    private String getAddressFromLocation(Location location) {
+        Geocoder geocoder = new Geocoder(getContext());
 
         try {
             double latitude = location.getLatitude();

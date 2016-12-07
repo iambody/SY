@@ -81,6 +81,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    //todo 测试时候调用该接口
+    public static Observable<String> toTestLogin(String username, String pwdMD5) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        map.put("password", pwdMD5);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 获取用户信息
      *
@@ -150,12 +158,13 @@ public class ApiClient {
 
     /**
      * 注册
+     *
      * @param userName
      * @param pwdMd5
      * @param code
      * @return
      */
-    public static Observable<UserInfoDataEntity.Result> toRegister(String userName, String pwdMd5, String code){
+    public static Observable<UserInfoDataEntity.Result> toRegister(String userName, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("password", pwdMd5);
@@ -165,10 +174,11 @@ public class ApiClient {
 
     /**
      * 发送验证码
+     *
      * @param phone
      * @return
      */
-    public static Observable<String> sendCode(String phone, int which){
+    public static Observable<String> sendCode(String phone, int which) {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("checkPhoneDuplicate", String.valueOf(which));
@@ -177,11 +187,12 @@ public class ApiClient {
 
     /**
      * 验证验证码
+     *
      * @param phone
      * @param code
      * @return
      */
-    public static Observable<String> checkCode(String phone, String code){
+    public static Observable<String> checkCode(String phone, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("phoneNum", phone);
         map.put("captcha", code);
@@ -190,12 +201,13 @@ public class ApiClient {
 
     /**
      * 重置密码
+     *
      * @param un
      * @param pwdMd5
      * @param code
      * @return
      */
-    public static Observable<String> resetPwd(String un, String pwdMd5, String code){
+    public static Observable<String> resetPwd(String un, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", un);
         map.put("newPassword", pwdMd5);
@@ -205,11 +217,12 @@ public class ApiClient {
 
     /**
      * 合并帐号--验证手机
+     *
      * @param un
      * @param code
      * @return
      */
-    public static Observable<String> wxMergePhone(String un, String code){
+    public static Observable<String> wxMergePhone(String un, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("mergePhone", un);
         map.put("captcha", code);
@@ -218,29 +231,44 @@ public class ApiClient {
 
     /**
      * 合并手机账户－－确认合并
+     *
      * @return
      */
-    public static Observable<String> wxMergeConfirm(){
+    public static Observable<String> wxMergeConfirm() {
         return OKHTTP.getInstance().getRequestManager().wxMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
      * 获取学院头部数据
+     *
      * @return
      */
-    public static Observable<CollegeVideoEntity.Result> getCollegeHeadList(){
+    public static Observable<CollegeVideoEntity.Result> getCollegeHeadList() {
         return OKHTTP.getInstance().getRequestManager().getCollegeHeadList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestCollegeHeadList() {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeHeadList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
      * 获取学院其他数据
+     *
      * @return
      */
-    public static Observable<CollegeVideoEntity.Result> getCollegeOtherList(){
-        return OKHTTP.getInstance().getRequestManager().getCollegeOtherList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<CollegeVideoEntity.Result> getCollegeOtherList(int offset) {
+        Map<String, String> map = new HashMap<>();
+        map.put("offset", String.valueOf(offset));
+        map.put("limit", "20");
+        return OKHTTP.getInstance().getRequestManager().getCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<String> getTestCollegeOtherList(int offset) {
+        Map<String, String> map = new HashMap<>();
+        map.put("offset", String.valueOf(offset));
+        map.put("limit", "20");
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     /**
      * 重新生成Get 方式的value值

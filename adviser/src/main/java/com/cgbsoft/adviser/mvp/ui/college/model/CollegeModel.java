@@ -20,6 +20,7 @@ public class CollegeModel extends BaseModel {
     public String videoId;
     public String videoPlayUrl;
     public String bottomVideoImgUrl;//下方视频图片地址
+    public String bottomVideoTitle;//下发视频title
     public String bottomVideoContent;//下方视频内容
 
     public boolean isVisable = true;

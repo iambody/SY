@@ -47,12 +47,12 @@ public class NetConfig {
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
-    static class INFORMATION{
+    static class INFORMATION {
         private static final String information = "/information";
         //获取学院推荐视频
-        static final String GET_COLLEGE_RECOMMEND_VIDEO = information + "/video/recommend/5.0";
+        static final String GET_COLLEGE_RECOMMEND_VIDEO = API_URL + information + "/video/recommend/5.0";
         //获取学院其他视频
-        static final String GET_COLLEGE_OTHER_VIDEO = information + "/videos/5.0";
+        static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
     }
 
     //用户相关

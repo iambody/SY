@@ -57,7 +57,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
             recreate();
-        }else {
+        } else {
             before();
             if (layoutID() > 0)
                 setContentView(layoutID());
@@ -82,7 +82,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void after() {
         mUnbinder = ButterKnife.bind(this);
         mBaseHandler = new WeakHandler();
-        mPresenter = createPresenter();
+        if (mPresenter == null)
+            mPresenter = createPresenter();
 
         if (mIsNeedAdapterPhone && !isNeedAdapterPhone()) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -125,7 +126,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     /**
      * 获取夜间模式状态
-     *
      */
     protected boolean getIsNightTheme() {
         return false;
@@ -174,6 +174,11 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
      */
     protected P getPresenter() {
         return mPresenter;
+    }
+
+    protected void setPresenter() {
+        if (mPresenter == null)
+            mPresenter = createPresenter();
     }
 
     /**

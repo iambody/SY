@@ -61,6 +61,10 @@ interface RequestManager {
     @POST(NetConfig.LOGIN_URL)
     Observable<BaseResult<UserInfoDataEntity.Result>> toLogin(@FieldMap() Map<String, String> paramsMap);
 
+
+    @FormUrlEncoded
+    @POST(NetConfig.LOGIN_URL)
+    Observable<ResponseBody> toTestLogin(@FieldMap() Map<String, String> paramsMap);
     /**
      * 获取用户信息
      *
@@ -162,15 +166,19 @@ interface RequestManager {
      * 获取学院推荐数据
      * @return
      */
-    @FormUrlEncoded
-    @POST(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
+    @GET(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
     Observable<BaseResult<CollegeVideoEntity.Result>> getCollegeHeadList();
+
+    @GET(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
+    Observable<ResponseBody> getTestCollegeHeadList();
 
     /**
      * 获取学院其他数据
      * @return
      */
-    @FormUrlEncoded
-    @POST(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
-    Observable<BaseResult<CollegeVideoEntity.Result>> getCollegeOtherList();
+    @GET(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
+    Observable<BaseResult<CollegeVideoEntity.Result>> getCollegeOtherList(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
+    Observable<ResponseBody> getTestCollegeOtherList(@QueryMap Map<String, String> map);
 }

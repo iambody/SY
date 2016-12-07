@@ -90,13 +90,13 @@ public class MainTabManager {
                     fragment = settingFragment;
                 }
                 break;
-            case R.id.nav_right_second:
+            case R.id.nav_right_first:
                 if (discoveryFragment == null) {
                     discoveryFragment = new DiscoveryFragment();
                 }
                 fragment = discoveryFragment;
                 break;
-            case R.id.nav_right_first:
+            case R.id.nav_right_second:
                 if (isInvestor()) {
                     if (clubFragment == null) {
                         clubFragment = new ClubFragment();

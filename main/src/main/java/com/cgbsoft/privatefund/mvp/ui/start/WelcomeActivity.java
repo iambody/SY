@@ -12,7 +12,6 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -41,13 +40,11 @@ import rx.schedulers.Schedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class WelcomeActivity extends BaseActivity implements WelcomeContract.View {
+public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements WelcomeContract.View {
     //glide
     private RequestManager requestManager;
     //权限（存储）
     private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE};
-    //欢迎页的
-    private WelcomePersenter welcomePersenter;
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
@@ -73,7 +70,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     private Button btn_wel_cancle;
 
     @Override
-    protected boolean getIsNightTheme(){
+    protected boolean getIsNightTheme() {
         return true;
     }
 
@@ -107,17 +104,20 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
     }
 
     @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
+    protected WelcomePersenter createPresenter() {
+        return new WelcomePersenter(this, this);
     }
 
     private void beforeInit() {
         requestManager = Glide.with(this);
 
-        welcomePersenter = new WelcomePersenter(this, this);
-        welcomePersenter.createFinishObservable();
-        welcomePersenter.toInitInfo();
-        welcomePersenter.getMyLocation();
+        if (getPresenter() == null) {
+            setPresenter();
+        }
+
+        getPresenter().createFinishObservable();
+        getPresenter().toInitInfo();
+        getPresenter().getMyLocation();
 
         //解压一些资源
         Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
@@ -188,12 +188,6 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (welcomePersenter != null)
-            welcomePersenter.detachView();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,7 +218,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);
-                welcomePersenter.getData();
+                getPresenter().getData();
             } else {
                 weakHandler.postDelayed(mNoNetRunnable, noNetTime);
             }

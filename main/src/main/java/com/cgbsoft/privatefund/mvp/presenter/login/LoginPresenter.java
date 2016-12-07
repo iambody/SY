@@ -40,7 +40,28 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
-        addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
+
+        //todo 测试时候调用该接口，
+        addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
+                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
+                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
+
+                SPreference.saveLoginFlag(getContext(), true);
+                if (loginBean.userInfo != null)
+                    SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
+                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+            }
+        }));
+
+        /*addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
             protected void onEvent(UserInfoDataEntity.Result loginBean) {
                 SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
@@ -56,7 +77,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onRxError(Throwable error) {
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
-        }));
+        }));*/
     }
 
     /**

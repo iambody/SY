@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -61,7 +62,32 @@ public class RecyclerControl {
         } else {
             isLoadMoreComplete = true;
         }
-        delayComplete();
+        recyclerRefreshLayout.setEnabled(true);
+        if (isRef)
+            recyclerRefreshLayout.setRefreshing(false);
+    }
+
+    private void delayComplete(boolean isRef) {
+        delay3Subscribe = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    recyclerRefreshLayout.setEnabled(true);
+                    if (isRef)
+                        recyclerRefreshLayout.setRefreshing(false);
+                }, error -> {
+                });
+    }
+
+    private boolean isAnimStart() {
+        try {
+            Field filed = recyclerRefreshLayout.getClass().getDeclaredField("mIsAnimatingToStart");
+            filed.setAccessible(true);
+            return filed.getBoolean(recyclerRefreshLayout);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public OnScrollListener getOnScrollListener() {
@@ -93,21 +119,13 @@ public class RecyclerControl {
         delay1Subscribe = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
                     recyclerRefreshLayout.setEnabled(false);
-                    recyclerRefreshLayout.setRefreshing(true);
+                    if (isRef)
+                        recyclerRefreshLayout.setRefreshing(true);
                     delay2Subscribe = Observable.just(1).delay(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                             .subscribe(aLong2 -> {
                                 onControlGetDataListListener.onControlGetDataList(isRef);
                             }, error -> {
                             });
-                }, error -> {
-                });
-    }
-
-    private void delayComplete() {
-        delay3Subscribe = Observable.just(1).delay(300, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                    recyclerRefreshLayout.setEnabled(true);
-                    recyclerRefreshLayout.setRefreshing(false);
                 }, error -> {
                 });
     }

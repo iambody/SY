@@ -2,6 +2,7 @@ package com.cgbsoft.adviser.mvp.ui.college.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.cgbsoft.adviser.R;
@@ -51,7 +52,7 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
         switch (model.type) {
             case CollegeModel.HEAD:
                 CollegeHeadHolder chh = (CollegeHeadHolder) holder;
-                Imageload.display(chh.context, model.headBgUrl, 4, chh.iv_ich_bg, null, null);
+                Imageload.display(chh.context, model.headBgUrl, 0, 0, 0, chh.iv_ich_bg, null, null);
                 chh.tv_ich_content.setText(model.headBgContent);
                 break;
             case CollegeModel.COMM_HEAD:
@@ -59,14 +60,24 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
                 ch.tv_ict_title.setText("推荐视频");
                 break;
             case CollegeModel.COMM:
-
+                CollegeGridHolder cgh = (CollegeGridHolder) holder;
+                if (!model.isVisable) {
+                    cgh.ll_icb.setVisibility(View.GONE);
+                } else {
+                    Imageload.display(cgh.context, model.bottomVideoImgUrl, 0, 0, 8, cgh.iv_icb_bg, null, null);
+                    cgh.tv_icb_title.setText(model.bottomVideoTitle);
+                    cgh.tv_icb_content.setText(model.bottomVideoTitle);
+                }
                 break;
             case CollegeModel.OHTER_HEAD:
                 CollegeTitleHolder oh = (CollegeTitleHolder) holder;
                 oh.tv_ict_title.setText("其他视频");
                 break;
             case CollegeModel.OTHER:
-
+                CollegeGridHolder co = (CollegeGridHolder) holder;
+                Imageload.display(co.context, model.bottomVideoImgUrl, 0, 0, 8, co.iv_icb_bg, null, null);
+                co.tv_icb_title.setText(model.bottomVideoTitle);
+                co.tv_icb_content.setText(model.bottomVideoTitle);
                 break;
             default:
                 bindErrorHolder(model, holder);
