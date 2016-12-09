@@ -8,6 +8,8 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
+import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -42,6 +44,16 @@ public class ApiClient {
         params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
 
         return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestAppResources() {
+        Map<String, String> params = new HashMap<>();
+        params.put("os", "1");
+        params.put("version", Utils.getVersionName(Appli.getContext()));
+        params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
     }
 
     /**
@@ -272,6 +284,41 @@ public class ApiClient {
         map.put("offset", String.valueOf(offset));
         map.put("limit", "20");
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取视频详情
+     *
+     * @param videoId
+     * @return
+     */
+    public static Observable<VideoInfoEntity.Result> getVideoInfo(String videoId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager().getVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestVideoInfo(String videoId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 视频点赞
+     * @param videoId
+     * @return
+     */
+    public static Observable<VideoLikeEntity.Result> toVideoLike(String videoId){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager().toVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestVideoLike(String videoId){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

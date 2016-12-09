@@ -19,4 +19,6 @@ public interface RxConstant {
     String MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_SEC = "main_bottom_navigation_double_click_right_sec";
 
     String WELCOME_FINISH_OBSERVABLE = "welcome_finish_observable";
+
+    String VIDEO_PLAY5MINUTES_OBSERVABLE = "video_play5minutes_observable";
 }

@@ -35,11 +35,11 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
             case CollegeModel.COMM_HEAD:
                 return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null), listener);
             case CollegeModel.COMM:
-                return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max);
+                return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max, listener);
             case CollegeModel.OHTER_HEAD:
                 return new CollegeTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_title, null), listener);
             case CollegeModel.OTHER:
-                return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max);
+                return new CollegeGridHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_bottom, null), max, listener);
             default:
                 return onCreateErrorViewHolder(parent);
         }

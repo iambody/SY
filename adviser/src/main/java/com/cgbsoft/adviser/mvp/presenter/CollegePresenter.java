@@ -50,6 +50,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                     model.type = CollegeModel.HEAD;
                     model.headBgUrl = rows.get(0).coverImageUrl;
                     model.headBgContent = rows.get(0).shortName;
+                    model.videoId = rows.get(0).videoId;
                     dataList.add(model);
                 }
                 //推荐title item
@@ -61,6 +62,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                         model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
                         model.bottomVideoTitle = rows.get(i).videoName;
                         model.bottomVideoContent = rows.get(i).shortName;
+                        model.videoId = rows.get(i).videoId;
                         dataList.add(model);
                     }
                 } else if (dataSize > 1 && dataSize < 5) {
@@ -71,6 +73,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
                             model.bottomVideoImgUrl = rows.get(i).coverImageUrl;
                             model.bottomVideoTitle = rows.get(i).videoName;
                             model.bottomVideoContent = rows.get(i).shortName;
+                            model.videoId = rows.get(i).videoId;
                         } else {
                             model.isVisable = false;
                         }

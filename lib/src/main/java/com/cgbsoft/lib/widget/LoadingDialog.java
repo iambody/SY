@@ -30,8 +30,16 @@ public class LoadingDialog extends Dialog {
     private ImageView imgSuccess;
     private ImageView imgFail;
 
+
     public static LoadingDialog getLoadingDialog(Context context, String loadingText) {
         return getLoadingDialog(context, loadingText, true, true);
+    }
+
+    public static LoadingDialog getLoadingDialog(Context context, boolean cancelable, boolean outeSiteCanceled) {
+        LoadingDialog dialog = new LoadingDialog(context);
+        dialog.setCanceledOnTouchOutside(outeSiteCanceled);
+        dialog.setCancelable(cancelable);
+        return dialog;
     }
 
     public static LoadingDialog getLoadingDialog(Context context, String loadingText, boolean cancelable, boolean outeSiteCanceled) {

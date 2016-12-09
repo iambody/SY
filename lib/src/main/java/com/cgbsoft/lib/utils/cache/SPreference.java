@@ -233,6 +233,15 @@ public class SPreference implements Constant {
         return TextUtils.equals(category, "3") ? "1" : "0";
     }
 
+    public static String getOrganizationName(@NonNull Context context) {
+        String name = "";
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null && userInfo.toB != null) {
+            name = userInfo.toB.organizationName;
+        }
+        return name;
+    }
+
     /**
      * 保存用户信息
      *

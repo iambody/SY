@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.cgbsoft.adviser.R;
 import com.cgbsoft.adviser.R2;
@@ -19,11 +20,13 @@ import com.cgbsoft.adviser.mvp.ui.college.listener.CollegeListener;
 import com.cgbsoft.adviser.mvp.ui.college.model.CollegeModel;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 
 import butterknife.BindView;
 
@@ -123,6 +126,34 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         Intent intent = new Intent(getContext(), VideoListActivity.class);
         intent.putExtra("title", "视频列表");
         startActivity(intent);
+    }
+
+    @Override
+    public void onFirstVideoClick(ImageView iv_ich_bg) {
+        if (collegeAdapter.getList().size() == 0) {
+            return;
+        }
+        CollegeModel model = collegeAdapter.getList().get(0);
+        if (model != null) {
+            Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+            intent.putExtra("videoId", model.videoId);
+            intent.putExtra("videoCoverUrl", model.headBgUrl);
+            ActivityTransitionLauncher.with(getActivity()).from(iv_ich_bg).launch(intent);
+        }
+    }
+
+    @Override
+    public void onGridItemClick(int position) {
+        if (collegeAdapter.getList().size() == 0) {
+            return;
+        }
+        CollegeModel model = collegeAdapter.getList().get(position);
+        if (model != null) {
+            Intent intent = new Intent(getContext(), VideoDetailActivity.class);
+            intent.putExtra("videoId", model.videoId);
+            intent.putExtra("videoCoverUrl", model.bottomVideoImgUrl);
+            startActivity(intent);
+        }
     }
 
     @Override

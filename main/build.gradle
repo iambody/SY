@@ -63,6 +63,8 @@ android {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             versionNameSuffix "-debug"
+            // 是否进行混淆
+            minifyEnabled false
             //签名配置
             signingConfig signingConfigs.debug
         }

@@ -4,6 +4,8 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
+import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
@@ -31,6 +33,10 @@ interface RequestManager {
      */
     @GET(NetConfig.GET_RES_URL)
     Observable<BaseResult<AppResourcesEntity.Result>> getAppResource(@QueryMap Map<String, String> map);
+
+
+    @GET(NetConfig.GET_RES_URL)
+    Observable<ResponseBody> getTestAppResource(@QueryMap Map<String, String> map);
 
     /**
      * 数据统计
@@ -181,4 +187,28 @@ interface RequestManager {
 
     @GET(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
     Observable<ResponseBody> getTestCollegeOtherList(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取视频详情
+     * @param map
+     * @return
+     */
+    @GET(NetConfig.INFORMATION.GET_VIDEO_INFO)
+    Observable<BaseResult<VideoInfoEntity.Result>> getVideoInfo(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.INFORMATION.GET_VIDEO_INFO)
+    Observable<ResponseBody> getTestVideoInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 点赞
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.INFORMATION.TO_LIKE_VIDEO)
+    Observable<BaseResult<VideoLikeEntity.Result>> toVideoLike(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.INFORMATION.TO_LIKE_VIDEO)
+    Observable<ResponseBody> toTestVideoLike(@FieldMap Map<String, String> paramsMap);
 }

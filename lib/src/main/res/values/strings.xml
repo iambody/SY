@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">私募云</string>
     <string name="nav_back_again_finish">再按一次退出程序</string>
+    <string name="avd_no_wifi_str">您正在使用非WIFI网络，播放将产生费用...</string>
+    <string name="avd_rich_go_str">土豪请继续</string>
+    <string name="no_videoid_str">你播放的视频不存在</string>
+    <string name="avd_no_net_str">网络未连接，请检查网络设置</string>
+    <string name="avd_ref_str">刷新重试</string>
+    <string name="avd_play_error_str">播放失败</string>
+    <string name="avd_try_again_str">请重新尝试</string>
+    <string name="cache_str">缓存</string>
+    <string name="avd_please_choise_str">请选择缓存清晰度</string>
+    <string name="hd_str">高清</string>
+    <string name="sd_str">标清</string>
+    <string name="avd_look_cache_str">查看缓存视频</string>
 </resources>

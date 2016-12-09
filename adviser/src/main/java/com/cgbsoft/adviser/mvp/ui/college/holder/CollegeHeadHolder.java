@@ -1,11 +1,13 @@
 package com.cgbsoft.adviser.mvp.ui.college.holder;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.adviser.R2;
 import com.cgbsoft.adviser.mvp.ui.college.listener.CollegeListener;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 
 import butterknife.BindView;
@@ -42,6 +44,13 @@ public class CollegeHeadHolder extends BaseHolder {
 
     public CollegeHeadHolder(View itemView, CollegeListener listener) {
         super(itemView);
+
+        ViewGroup.LayoutParams lp = iv_ich_bg.getLayoutParams();
+        lp.width = Utils.getScreenWidth(context);
+        lp.height = lp.width * 9 / 16;
+        iv_ich_bg.setLayoutParams(lp);
+
+        iv_ich_bg.setOnClickListener(v -> listener.onFirstVideoClick(iv_ich_bg));
         tv_ich_product_train.setOnClickListener(v -> listener.onHeadBtnClick(PRODUCT));
         tv_ich_forefront.setOnClickListener(v -> listener.onHeadBtnClick(FOREFRONT));
         tv_ich_manager_train.setOnClickListener(v -> listener.onHeadBtnClick(MANAGER));

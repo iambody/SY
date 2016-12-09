@@ -1,5 +1,6 @@
 package com.cgbsoft.adviser.mvp.ui.college;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,6 +17,7 @@ import com.cgbsoft.adviser.mvp.presenter.VideoListPresenter;
 import com.cgbsoft.adviser.mvp.ui.college.adapter.VideoListAdapter;
 import com.cgbsoft.adviser.mvp.ui.college.listener.VideoListListener;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
@@ -98,7 +100,10 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
 
     @Override
     public void onVideoListItemClick(int position) {
-
+        Intent intent = new Intent(this, VideoDetailActivity.class);
+        intent.putExtra("videoId", videoListAdapter.getList().get(position).videoId);
+        intent.putExtra("videoCoverUrl", videoListAdapter.getList().get(position).leftImgUrl);
+        startActivity(intent);
     }
 
     @Override

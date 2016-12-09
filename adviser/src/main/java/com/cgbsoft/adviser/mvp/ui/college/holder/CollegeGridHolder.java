@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.adviser.R2;
+import com.cgbsoft.adviser.mvp.ui.college.listener.CollegeListener;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 
@@ -30,11 +31,10 @@ public class CollegeGridHolder extends BaseHolder {
     @BindView(R2.id.tv_icb_content)
     public TextView tv_icb_content;
 
-    public CollegeGridHolder(View itemView, int max) {
+    public CollegeGridHolder(View itemView, int max, CollegeListener listener) {
         super(itemView);
         int width = Utils.getScreenWidth(context) / 2 - Utils.convertDipOrPx(context, 16);
         int height = width * 829 / 1479;
-
 
         ViewGroup.LayoutParams lp = iv_icb_bg.getLayoutParams();
         lp.width = width;
@@ -46,5 +46,7 @@ public class CollegeGridHolder extends BaseHolder {
         } else {
             ll_icb.setPadding(max / 2, max / 2, max, max / 2);
         }
+
+        ll_icb.setOnClickListener(v -> listener.onGridItemClick(getAdapterPosition()));
     }
 }

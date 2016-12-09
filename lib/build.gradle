@@ -75,6 +75,11 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp-urlconnection:${okhttp_need_version}"
     compile "com.squareup.okhttp3:logging-interceptor:${okhttp_need_version}"
     compile "com.squareup.okio:okio:${okio_need_version}"
+    //第三方okhttp封装库 https://github.com/jeasonlzy/okhttp-OkGo
+    compile "com.lzy.net:okgo:${okGo_need_version}"
+    compile "com.lzy.net:okserver:${okGoServer_need_version}"//上传下载
+
+
     //和okhttp一起使用，可以减少代码量
     compile "com.squareup.retrofit2:retrofit:${retrofit_need_version}"
     compile "com.squareup.retrofit2:adapter-rxjava:${retrofit_need_version}"
@@ -97,6 +102,10 @@ dependencies {
     compile "com.wang.avi:library:${avilib_need_version}"
     //带下拉刷新的recyclerView https://github.com/dinuscxj/RecyclerRefreshLayout
     compile "com.dinuscxj:recyclerrefreshlayout:${recRefLayout_need_version}"
+    //facebook 动画
+    compile "com.facebook.rebound:rebound:${fbRebound_need_version}"
+    //页面跳转 图片移动动画
+    compile "com.kogitune:pre-lollipop-activity-transition:${actvityTr_need_version}"
     //umeng统计
     compile 'com.umeng.analytics:analytics:latest.integration'
 }

@@ -25,6 +25,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ToBBeanDao.createTable(db, ifNotExists);
         ToCBeanDao.createTable(db, ifNotExists);
         UserInfoDao.createTable(db, ifNotExists);
+        VideoInfoDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -33,6 +34,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ToBBeanDao.dropTable(db, ifExists);
         ToCBeanDao.dropTable(db, ifExists);
         UserInfoDao.dropTable(db, ifExists);
+        VideoInfoDao.dropTable(db, ifExists);
     }
 
     /**
@@ -55,6 +57,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ToBBeanDao.class);
         registerDaoClass(ToCBeanDao.class);
         registerDaoClass(UserInfoDao.class);
+        registerDaoClass(VideoInfoDao.class);
     }
 
     public DaoSession newSession() {

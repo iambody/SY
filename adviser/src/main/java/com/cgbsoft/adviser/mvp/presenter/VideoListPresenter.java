@@ -55,6 +55,7 @@ public class VideoListPresenter extends BasePresenterImpl<VideoListContract.View
                     model.content = rows.get(i).shortName;
                     model.title = rows.get(i).videoName;
                     model.heartNum = rows.get(i).likes;
+                    model.videoId = rows.get(i).videoId;
                     list.add(model);
                 }
                 if (isRef) {

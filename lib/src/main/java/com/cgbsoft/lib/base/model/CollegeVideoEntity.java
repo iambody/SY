@@ -10,12 +10,12 @@ import java.util.List;
  * Email:zhangxyfs@126.com
  *  
  */
-public class CollegeVideoEntity extends BaseResult {
+public class CollegeVideoEntity extends BaseResult<CollegeVideoEntity.Result> {
     public static class Result {
         public List<Row> rows;
     }
 
-    public static class Row{
+    public static class Row {
         public String sdvideoUrl;
         public String hdvideoUrl;
         public String likes;

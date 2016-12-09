@@ -52,7 +52,35 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
      */
     @Override
     public void getData() {
-        addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
+        addSubscription(ApiClient.getTestAppResources().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                AppResourcesEntity.Result appResources = new Gson().fromJson(s, AppResourcesEntity.Result.class);
+                if (appResources != null) {
+                    daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
+                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
+                    if (getView() != null)
+                        getView().getDataSucc(appResources.img916);
+                } else {
+                    if (getView() != null)
+                        getView().getDataSucc("");
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                String url = OtherDataProvider.getWelcomeImgUrl(getContext().getApplicationContext());
+                if (!TextUtils.isEmpty(url)) {
+                    if (getView() != null)
+                        getView().getDataSucc(url);
+                } else {
+                    if (getView() != null)
+                        getView().getDataError(error);
+                }
+            }
+        }));
+
+        /*addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
             @Override
             protected void onEvent(AppResourcesEntity.Result appResources) {
                 if (appResources != null) {
@@ -76,22 +104,9 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                 } else {
                     if (getView() != null)
                         getView().getDataError(error);
-                    //todo test
-                    AppResourcesEntity.Result result = new AppResourcesEntity.Result();
-                    result.img916 = "https://upload.simuyun.com/live/b0926657-6b81-4599-b2ed-de32ecd396c2.jpg";
-                    result.version = "5.1.0";
-                    result.adverts = "5.1.0更新内容：\n【新增】意见反馈\n【新增】会话页面可直接发送产品\n【新增】PDF分享给联系人\n【新增】资讯分享给联系人";
-                    result.downUrl = "https://upload.simuyun.com/android/2d0b8355-4f83-46a9-b8f3-aa1758abee14.apk";
-                    result.isMustUpdate = "n";
-                    daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(result));
-                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), result.img916);
-                }
-
-                if(getView() == null){
-
                 }
             }
-        }));
+        }));*/
     }
 
     /**
