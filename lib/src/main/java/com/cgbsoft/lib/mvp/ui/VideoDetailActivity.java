@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -45,6 +44,7 @@ import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -142,10 +142,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private long startPlayTime;//当前播放时间,用于做任务
     private long allPlayTime;//一共播放时间
     private long fiveMinutes = 5 * 60 * 1000;
+    private boolean isSetFullscreenHandler;
 
     private ConnectionChangeReceiver connectionChangeReceiver;
     private ExitActivityTransition exitTransition;
     private Subscription delaySub, delaySub2;
+    private boolean isFullscreen;
+    private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
 
     @Override
     protected void after() {
@@ -167,7 +170,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
-        changeVideoViewSize();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         if (iv_mvv_cover.getVisibility() == View.VISIBLE) {
             Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
         }
@@ -181,18 +185,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         vrf_avd.setListener(this);
         getPresenter().getVideoDetailInfo(videoId);
-
-        vrf_avd.setToggleFullScreenHandler(() -> {
-            if (vrf_avd.isFullScreen()) { // 竖屏
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//                scrollView.setVisibility(View.VISIBLE);
-                iv_avd_back.setVisibility(View.VISIBLE);
-            } else { // 横屏
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//                scrollView.setVisibility(View.GONE);
-                iv_avd_back.setVisibility(View.INVISIBLE);
-            }
-        });
         pw_mvv_wait.setVisibility(View.VISIBLE);
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -202,6 +194,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
 
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+    }
+
+    @Override
+    protected void data() {
+        super.data();
+        initAnim();
     }
 
     @OnClick(R2.id.iv_avd_back)
@@ -216,12 +214,33 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @OnClick(R2.id.ll_avd_cache)
     void cacheOpenClick() {
+        toDataStatistics(1021, 10103, new String[]{"下载", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         openCacheView();
     }
 
     @OnClick(R2.id.iv_avd_close)
     void cacheCloseClick() {
         closeCacheView();
+    }
+
+    @OnClick(R2.id.tv_avd_sd)
+    void sdClick() {
+        tv_avd_hd.setEnabled(false);
+        tv_avd_sd.setEnabled(false);
+        tv_avd_sd.startAnimation(sdAnimationSet);
+
+        //todo 开始后台下载
+        getPresenter().updataDownloadType(1);
+    }
+
+    @OnClick(R2.id.tv_avd_hd)
+    void hdClick() {
+        tv_avd_hd.setEnabled(false);
+        tv_avd_sd.setEnabled(false);
+        tv_avd_hd.startAnimation(hdAnimationSet);
+
+        //todo 开始后台下载
+        getPresenter().updataDownloadType(0);
     }
 
     @Override
@@ -231,19 +250,29 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
 
     private void toFinish() {
-        sv_avd.setVisibility(View.GONE);
-        delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<Integer>() {
-                    @Override
-                    protected void onEvent(Integer integer) {
-                        exitTransition.exit(VideoDetailActivity.this);
-                    }
+        if (isFullscreen) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            sv_avd.setVisibility(View.VISIBLE);
+            iv_avd_back.setVisibility(View.VISIBLE);
+        } else {
+            if (isPlayAnim) {
+                sv_avd.setVisibility(View.GONE);
+                delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new RxSubscriber<Integer>() {
+                            @Override
+                            protected void onEvent(Integer integer) {
+                                exitTransition.exit(VideoDetailActivity.this);
+                            }
 
-                    @Override
-                    protected void onRxError(Throwable error) {
+                            @Override
+                            protected void onRxError(Throwable error) {
 
-                    }
-                });
+                            }
+                        });
+            } else {
+                finish();
+            }
+        }
     }
 
     @Override
@@ -256,7 +285,40 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoInfoModel = model;
         playerCurrentTime = videoInfoModel.currentTime;
         setData();
-        delayPlay(true);
+        if (isPlayAnim)
+            delayPlay(true);
+        else
+            play(true);
+
+        switch (videoInfoModel.status) {
+            case 1:
+                tv_avd_cache.setText(R.string.caching_str);
+                iv_avd_cache.setImageResource(R.drawable.ic_caching);
+
+                if (videoInfoModel.downloadtype == 1) {
+                    setSdTvBlue();
+                } else {
+                    setHdTvBlue();
+                }
+                tv_avd_hd.setEnabled(false);
+                tv_avd_sd.setEnabled(false);
+                break;
+            case 2:
+                if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+                    File file = new File(videoInfoModel.localVideoPath);
+                    if (file.isFile() && file.exists()) {
+                        tv_avd_cache.setText(R.string.cached_str);
+                        iv_avd_cache.setImageResource(R.drawable.ic_cached);
+                        tv_avd_hd.setEnabled(false);
+                        tv_avd_sd.setEnabled(false);
+                        break;
+                    }
+                }
+            case 0:
+                tv_avd_cache.setText(R.string.cache_str);
+                iv_avd_cache.setImageResource(R.drawable.ic_cache);
+                break;
+        }
     }
 
     @Override
@@ -264,7 +326,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoInfoModel = model;
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
-        delayPlay(true);
+        if (isPlayAnim)
+            delayPlay(true);
+        else
+            play(true);
     }
 
     @Override
@@ -330,6 +395,20 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         pw_mvv_wait.setVisibility(View.GONE);
         isSetDataSource = true;
 
+        if (!isSetFullscreenHandler) {
+            isSetFullscreenHandler = true;
+            vrf_avd.setToggleFullScreenHandler(() -> {
+                if (vrf_avd.isFullScreen()) { // 竖屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    sv_avd.setVisibility(View.VISIBLE);
+                    iv_avd_back.setVisibility(View.VISIBLE);
+                } else { // 横屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    sv_avd.setVisibility(View.GONE);
+                    iv_avd_back.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
     }
 
     @Override
@@ -340,7 +419,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 				 * 的原因有很多，但常见的是播放器需要缓冲更多数据才能开始播放 4 STATE_PAUSE 播放器准备好并可以立即播放当前位置
 				 * 5 STATE_PLAY 播放器正在播放中 6 STATE_ENDED 播放已完毕
 				 */
-        Log.e("tag", arg0 + "");
         switch (arg0) {
             case 5://播放中
                 startPlayTime = System.currentTimeMillis();
@@ -369,44 +447,110 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         seekFlag = false;
     }
 
-    private void changeVideoViewSize() {
+    private void changeVideoViewSize(int orientation) {
         ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
-        lp.width = Utils.getScreenWidth(this);
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            lp.width = Utils.getRealScreenWidth(this);
+        } else {
+            lp.width = Utils.getScreenWidth(this);
+        }
         lp.height = lp.width * 9 / 16;
         rl_avd_head.setLayoutParams(lp);
     }
 
     private void openCacheView() {
-        if (ll_avd_cache_open.getVisibility() == View.VISIBLE) {
+        if (rl_avd_download.getVisibility() == View.VISIBLE) {
             return;
         }
-        AnimationSet animationSet = new AnimationSet(true);
-        TranslateAnimation translateAnimation = new TranslateAnimation(
+        rl_avd_download.setVisibility(View.VISIBLE);
+        rl_avd_download.startAnimation(openAnimationSet);
+    }
+
+    private void closeCacheView() {
+        if (rl_avd_download.getVisibility() == View.GONE) {
+            return;
+        }
+        rl_avd_download.setVisibility(View.GONE);
+        rl_avd_download.startAnimation(closeAnimationSet);
+    }
+
+    private void initAnim() {
+        hdAnimationSet = new AnimationSet(true);
+        TranslateAnimation hdTranslationAnim_1 = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, -0.5f);
+        hdTranslationAnim_1.setDuration(300);
+        TranslateAnimation hdTranslationAnim_2 = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, -0.5f,
+                Animation.RELATIVE_TO_PARENT, 1f);
+        hdTranslationAnim_2.setStartOffset(300);
+        hdTranslationAnim_2.setDuration(500);
+        hdAnimationSet.addAnimation(hdTranslationAnim_1);
+        hdAnimationSet.addAnimation(hdTranslationAnim_2);
+        hdAnimationSet.setAnimationListener(new AnimListener(2));
+
+        sdAnimationSet = new AnimationSet(true);
+        TranslateAnimation sdTranslationAnim_1 = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, -0.5f);
+        sdTranslationAnim_1.setDuration(300);
+        TranslateAnimation sdTranslationAnim_2 = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, 0f,
+                Animation.RELATIVE_TO_SELF, -0.5f,
+                Animation.RELATIVE_TO_PARENT, 1f);
+        sdTranslationAnim_2.setStartOffset(300);
+        sdTranslationAnim_2.setDuration(500);
+        sdAnimationSet.addAnimation(sdTranslationAnim_1);
+        sdAnimationSet.addAnimation(sdTranslationAnim_2);
+        sdAnimationSet.setAnimationListener(new AnimListener(1));
+
+        openAnimationSet = new AnimationSet(true);
+        TranslateAnimation openTranslateAnim = new TranslateAnimation(
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 1f,
                 Animation.RELATIVE_TO_SELF, 0f);
-        translateAnimation.setDuration(800);
-        animationSet.addAnimation(translateAnimation);
-        ll_avd_cache_open.setVisibility(View.VISIBLE);
-        ll_avd_cache_open.startAnimation(animationSet);
-    }
+        openTranslateAnim.setDuration(800);
+        openAnimationSet.addAnimation(openTranslateAnim);
 
-    private void closeCacheView() {
-        if (ll_avd_cache_open.getVisibility() == View.GONE) {
-            return;
-        }
 
-        AnimationSet animationSet = new AnimationSet(true);
-        TranslateAnimation translateAnimation = new TranslateAnimation(
+        closeAnimationSet = new AnimationSet(true);
+        TranslateAnimation closeTranslateAnim = new TranslateAnimation(
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 0f,
                 Animation.RELATIVE_TO_SELF, 1f);
-        translateAnimation.setDuration(800);
-        animationSet.addAnimation(translateAnimation);
-        ll_avd_cache_open.setVisibility(View.GONE);
-        ll_avd_cache_open.startAnimation(animationSet);
+        closeTranslateAnim.setDuration(800);
+        closeAnimationSet.addAnimation(closeTranslateAnim);
+    }
+
+    private void hdAnim() {
+        tv_avd_hd.startAnimation(hdAnimationSet);
+    }
+
+
+    private void sdAnim() {
+        tv_avd_sd.startAnimation(sdAnimationSet);
+    }
+
+    //高清文字颜色
+    private void setHdTvBlue() {
+        tv_avd_hd.setBackgroundColor(0x00ffffff);
+        tv_avd_hd.setTextColor(0xff5ba8f3);
+        tv_avd_sd.setTextColor(0xffe6e6e6);
+    }
+
+    private void setSdTvBlue() {
+        tv_avd_sd.setBackgroundColor(0x00ffffff);
+        tv_avd_sd.setTextColor(0xff5ba8f3);
+        tv_avd_hd.setTextColor(0xffe6e6e6);
     }
 
     @Override
@@ -453,6 +597,37 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
     }
 
+    class AnimListener implements Animation.AnimationListener {
+        int which;
+
+        public AnimListener(int which) {
+            this.which = which;
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            if (which == 1) {
+                tv_avd_sd.setBackgroundColor(0x99999999);
+            } else {
+                tv_avd_hd.setBackgroundColor(0x99999999);
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if (which == 1) {
+                setSdTvBlue();
+            } else {
+                setHdTvBlue();
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    }
+
     class ConnectionChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -489,9 +664,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             sv_avd.setVisibility(View.GONE);
+            isFullscreen = true;
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             sv_avd.setVisibility(View.VISIBLE);
+            isFullscreen = false;
         }
-        changeVideoViewSize();
+        changeVideoViewSize(newConfig.orientation);
     }
 }

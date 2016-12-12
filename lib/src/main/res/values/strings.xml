@@ -13,4 +13,6 @@
     <string name="hd_str">高清</string>
     <string name="sd_str">标清</string>
     <string name="avd_look_cache_str">查看缓存视频</string>
+    <string name="caching_str">缓存中</string>
+    <string name="cached_str">已缓存</string>
 </resources>

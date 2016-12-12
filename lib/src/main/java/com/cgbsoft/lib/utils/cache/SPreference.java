@@ -361,4 +361,20 @@ public class SPreference implements Constant {
     public static boolean getHasPushMsg(Context context) {
         return getBoolean(context, HAS_PUSH_MESSAGE);
     }
+
+    public static boolean isThisRunOpenDownload(Context context) {
+        boolean b = getBoolean(context, ISTHISRUN_OPENDOWNLOAD);
+        saveThisRunOpenDownload(context, true);
+        return b;
+    }
+
+    /**
+     * 重置每次打开应用时显示下载框
+     *
+     * @param context
+     * @param b
+     */
+    public static void saveThisRunOpenDownload(Context context, boolean b) {
+        putBoolean(context, ISTHISRUN_OPENDOWNLOAD, b);
+    }
 }

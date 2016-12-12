@@ -18,5 +18,5 @@ public interface CollegeListener extends OnBaseListener {
 
     void onFirstVideoClick(ImageView iv_ich_bg);
 
-    void onGridItemClick(int position);
+    void onGridItemClick(int position, ImageView iv_icb_bg);
 }

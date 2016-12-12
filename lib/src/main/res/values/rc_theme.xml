@@ -49,7 +49,7 @@
     </style>
 
     <!--
-    size:24px color:#ffffff
+    size_sd:24px color:#ffffff
     1、会话页面时间 字体
     2、InformationNotificationMessage 字体
     3、DiscussionNotificationMessage 字体
@@ -72,7 +72,7 @@
         <item name="android:textColor">@color/rc_text_color_primary_inverse</item>
     </style>
     <!--
-    size:32px color:#353535
+    size_sd:32px color:#353535
     1、TextMessage 字体
     2、RichContentMessage 标题字体
     3、会话列表 title
@@ -82,7 +82,7 @@
         <item name="android:textColor">@color/rc_text_color_primary</item>
     </style>
     <!--
-    size:24px color:#838383
+    size_sd:24px color:#838383
     消息的用户名
     -->
     <style name="RCTheme.Message.Username.TextView" parent="RCTheme.TextView">
@@ -91,7 +91,7 @@
         <item name="android:paddingLeft">8dp</item>
     </style>
     <!--
-    size:28px color:#999999
+    size_sd:28px color:#999999
     1、RichContentMessage content 字体
     2、会话列表 item message 字体
     3、异常弹出条 字体

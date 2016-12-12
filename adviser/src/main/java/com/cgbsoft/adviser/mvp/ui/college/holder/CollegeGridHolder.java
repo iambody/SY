@@ -47,6 +47,6 @@ public class CollegeGridHolder extends BaseHolder {
             ll_icb.setPadding(max / 2, max / 2, max, max / 2);
         }
 
-        ll_icb.setOnClickListener(v -> listener.onGridItemClick(getAdapterPosition()));
+        ll_icb.setOnClickListener(v -> listener.onGridItemClick(getAdapterPosition(), iv_icb_bg));
     }
 }

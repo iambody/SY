@@ -138,7 +138,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
         }
 
         /*addSubscription(ApiClient.getCollegeHeadList().flatMap(base -> {
-            int dataSize = base.rows.size();
+            int dataSize = base.rows.size_sd();
             //第一个
             if (dataSize > 0) {
                 CollegeModel model = new CollegeModel();
@@ -180,7 +180,7 @@ public class CollegePresenter extends BasePresenterImpl<CollegeContract.View> im
             protected void onEvent(CollegeVideoEntity.Result result) {
                 adapter.addOne(new CollegeModel(CollegeModel.OHTER_HEAD));
                 List<CollegeModel> list = new ArrayList<>();
-                int dataSize = result.rows.size();
+                int dataSize = result.rows.size_sd();
                 for (int i = 1; i < dataSize; i++) {
                     CollegeModel model = new CollegeModel();
                     model.type = CollegeModel.OTHER;

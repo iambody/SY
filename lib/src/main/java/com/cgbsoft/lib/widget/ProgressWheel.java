@@ -120,7 +120,7 @@ public class ProgressWheel extends View {
   
         //Measure Width  
         if (widthMode == MeasureSpec.EXACTLY) {
-            //Must be this size  
+            //Must be this size_sd
             width = widthSize;  
         } else if (widthMode == MeasureSpec.AT_MOST) {
             //Can't be bigger than...  
@@ -132,7 +132,7 @@ public class ProgressWheel extends View {
   
         //Measure Height  
         if (heightMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.EXACTLY) {
-            //Must be this size  
+            //Must be this size_sd
             height = heightSize;  
         } else if (heightMode == MeasureSpec.AT_MOST) {
             //Can't be bigger than...  
@@ -347,7 +347,7 @@ public class ProgressWheel extends View {
             timeStartGrowing += deltaTimeInMilliSeconds;  
   
             if (timeStartGrowing > barSpinCycleTime) {  
-                // We completed a size change cycle  
+                // We completed a size_sd change cycle
                 // (growing or shrinking)  
                 timeStartGrowing -= barSpinCycleTime;  
                 //if(barGrowingFromFront) {  

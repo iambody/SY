@@ -78,6 +78,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
+        SPreference.saveThisRunOpenDownload(this,  false);
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事

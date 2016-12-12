@@ -94,11 +94,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             }
         }
         if (mIsNeedGoneNavigationBar) {
-            mBaseHandler.post(mHideRunnable);
-            final View decorView = getWindow().getDecorView();
-            decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
-                mBaseHandler.post(mHideRunnable); // hide the navigation bar
-            });
+            toHideNav();
         }
     }
 
@@ -190,7 +186,27 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         return mBaseHandler;
     }
 
+
+    protected void toHideNav() {
+        mBaseHandler.post(mHideRunnable);
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            mBaseHandler.post(mHideRunnable); // hide the navigation bar
+        });
+    }
+
+    protected void toShowNav() {
+        mBaseHandler.removeCallbacks(mHideRunnable);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    }
+
     protected Runnable mHideRunnable = () -> {
+        // must be executed in main thread :)
+        getWindow().getDecorView().setSystemUiVisibility(getHideFlags());
+    };
+
+    private int getHideFlags() {
         int flags;
         int curApiVersion = Build.VERSION.SDK_INT;
         // This work only for android 4.4+
@@ -205,10 +221,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             // touch the screen, the navigation bar will show
             flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         }
-
-        // must be executed in main thread :)
-        getWindow().getDecorView().setSystemUiVisibility(flags);
-    };
+        return flags;
+    }
 
     @Override
     protected void onDestroy() {
@@ -298,7 +312,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         DataStatisticsUtils.push(getApplicationContext(), data);
     }
 
-    protected void toDataStatistics(int grp, int act, String[] args){
+    protected void toDataStatistics(int grp, int act, String[] args) {
         HashMap<String, String> data = new HashMap<>();
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));

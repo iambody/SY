@@ -151,7 +151,7 @@ public class AsyncStartDownload extends Thread{
             task.chunks = 1;
         }else {
             // resumable
-            // depend on file size assign number of chunks; up to Maximum user
+            // depend on file size_sd assign number of chunks; up to Maximum user
             task.resumable = true;
             int MaximumUserCHUNKS = task.chunks/2;
             task.chunks = 1;

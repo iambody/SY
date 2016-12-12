@@ -143,7 +143,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
     }
 
     @Override
-    public void onGridItemClick(int position) {
+    public void onGridItemClick(int position, ImageView iv_icb_bg) {
         if (collegeAdapter.getList().size() == 0) {
             return;
         }
@@ -152,7 +152,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
             Intent intent = new Intent(getContext(), VideoDetailActivity.class);
             intent.putExtra("videoId", model.videoId);
             intent.putExtra("videoCoverUrl", model.bottomVideoImgUrl);
-            startActivity(intent);
+            ActivityTransitionLauncher.with(getActivity()).from(iv_icb_bg).launch(intent);
         }
     }
 

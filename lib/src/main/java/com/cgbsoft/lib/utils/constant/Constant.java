@@ -57,6 +57,8 @@ public interface Constant {
 
     String HAS_PUSH_MESSAGE = "push_message_come_in";
 
+    String ISTHISRUN_OPENDOWNLOAD = "isthisrun_opendownload";
+
     int RECEIVER_SEND_CODE = 99;
 
     String RONG_SERVICE_RECEIVER = "rong_service_receiver";

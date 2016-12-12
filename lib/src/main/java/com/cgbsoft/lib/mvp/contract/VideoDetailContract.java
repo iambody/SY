@@ -13,6 +13,7 @@ public interface VideoDetailContract {
     interface Presenter extends BasePresenter {
         void getVideoDetailInfo(String videoId);
         void updataNowPlayTime(int playTime);
+        void updataDownloadType(int type);
         void toVideoLike();
         long getCacheVideoNum();
     }

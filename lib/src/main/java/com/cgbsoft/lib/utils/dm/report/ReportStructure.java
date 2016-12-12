@@ -58,7 +58,7 @@ public class ReportStructure {
         return this;
     }
 
-    /** calculate download percent from compare chunks size with real file size **/
+    /** calculate download percent_sd from compare chunks size_sd with real file size_sd **/
     private double calculatePercent(Task task, List<Chunk> chunks){
     	// initialize report
     	double report = 0;
@@ -93,7 +93,7 @@ public class ReportStructure {
                     .put("url", url)
                     .put("type", type)
                     .put("chunks", chunks)
-                    .put("percent", percent)
+                    .put("percent_sd", percent)
                     .put("downloadLength", downloadLength)
                     .put("saveAddress", saveAddress)
                     .put("priority", priority);

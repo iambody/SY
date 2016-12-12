@@ -85,6 +85,29 @@ public class Utils {
         return ctx.getApplicationContext().getResources().getDisplayMetrics().heightPixels;
     }
 
+
+    public static int getRealScreenWidth(Activity activity) {
+        int widthPixels;
+        WindowManager w = activity.getWindowManager();
+        Display d = w.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        widthPixels = metrics.widthPixels;
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
+            try {
+                widthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
+            } catch (Exception ignored) {
+            }
+        else if (Build.VERSION.SDK_INT >= 17)
+            try {
+                android.graphics.Point realSize = new android.graphics.Point();
+                Display.class.getMethod("getRealSize", android.graphics.Point.class).invoke(d, realSize);
+                widthPixels = realSize.x;
+            } catch (Exception ignored) {
+            }
+        return widthPixels;
+    }
+
     /**
      * 获取真正的屏幕高度
      *

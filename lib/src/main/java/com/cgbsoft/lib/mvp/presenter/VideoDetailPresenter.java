@@ -78,6 +78,14 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     @Override
+    public void updataDownloadType(int type){
+        if(viModel == null)
+            return;
+        viModel.downloadtype = type;
+        updataLocalVideoInfo();
+    }
+
+    @Override
     public void toVideoLike() {
         if (viModel.isLike) {
             return;
