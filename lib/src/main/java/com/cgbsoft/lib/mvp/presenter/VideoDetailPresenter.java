@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.View> implements VideoDetailContract.Presenter {
     private DaoUtils daoUtils;
     private VideoInfoModel viModel;
+    private boolean isInitData;
 
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
         super(context, view);
@@ -37,6 +38,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             getView().getLocalVideoInfoSucc(viModel);
         } else {
             viModel = new VideoInfoModel();
+            isInitData = true;
         }
 
         addSubscription(ApiClient.getTestVideoInfo(videoId).subscribe(new RxSubscriber<String>() {
@@ -55,6 +57,9 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.likeNum = Integer.parseInt(result.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
                 viModel.hasRecord = 1;
+                if (isInitData) {
+                    viModel.status = 1;
+                }
 
                 updataLocalVideoInfo();
 
@@ -79,8 +84,8 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     @Override
-    public void updataDownloadType(int type){
-        if(viModel == null)
+    public void updataDownloadType(int type) {
+        if (viModel == null)
             return;
         viModel.downloadtype = type;
         updataLocalVideoInfo();
@@ -88,7 +93,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
     @Override
     public void updataFinalWatchTime() {
-        if(viModel == null)
+        if (viModel == null)
             return;
         viModel.finalPlayTime = System.currentTimeMillis();
         updataLocalVideoInfo();

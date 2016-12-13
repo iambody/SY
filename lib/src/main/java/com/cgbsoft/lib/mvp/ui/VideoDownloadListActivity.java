@@ -184,8 +184,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            if (videoDownloadListAdapter.getList().size() == 0) {
-                return false;
+            if (videoDownloadListAdapter.getList().size() == 1) {
+                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+                    return false;
             }
             videoDownloadListAdapter.changeCheck();
 

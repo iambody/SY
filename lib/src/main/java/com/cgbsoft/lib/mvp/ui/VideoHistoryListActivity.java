@@ -206,8 +206,9 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            if (videoHistoryAdapter.getList().size() == 0) {
-                return false;
+            if (videoHistoryAdapter.getList().size() == 1) {
+                if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+                    return false;
             }
             videoHistoryAdapter.changeCheck();
 
