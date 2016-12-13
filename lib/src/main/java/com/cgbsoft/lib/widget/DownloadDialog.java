@@ -112,6 +112,10 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             String json = otherInfo.getContent();
             AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
             if (result != null && !TextUtils.equals(result.version, _verName)) {
+                if (TextUtils.isEmpty(result.adverts)) {
+                    return;
+                }
+
                 if (TextUtils.equals(result.isMustUpdate, "y")) {//强制更新
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.setCancelable(false);

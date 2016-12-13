@@ -229,8 +229,7 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         if (listSize == 0) {
             if (!isError) {
                 model.noDataIvSize = Utils.convertDipOrPx(getContext(), 100);
-                //todo 看需求是什么样子的
-//                model.noDataIvResId = R.mipmap.no_video;
+                model.noDataIvResId = R.drawable.bg_no_data;
 //                model.noDataTvStr = getString(R.string.person_home_no_blive);
                 model.noDataBtnWidth = 0;
                 model.noDataBtnHeight = 0;

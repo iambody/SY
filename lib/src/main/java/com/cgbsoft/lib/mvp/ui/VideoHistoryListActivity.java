@@ -206,6 +206,9 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
+            if (videoHistoryAdapter.getList().size() == 0) {
+                return false;
+            }
             videoHistoryAdapter.changeCheck();
 
             if (videoHistoryAdapter.getCheckStatus()) {
@@ -305,8 +308,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         if (listSize == 0) {
             if (!isError) {
                 model.noDataIvSize = Utils.convertDipOrPx(this, 100);
-                //todo 看需求是什么样子的
-//                model.noDataIvResId = R.mipmap.no_video;
+                model.noDataIvResId = R.drawable.bg_no_video;
 //                model.noDataTvStr = getString(R.string.person_home_no_blive);
                 model.noDataBtnWidth = 0;
                 model.noDataBtnHeight = 0;

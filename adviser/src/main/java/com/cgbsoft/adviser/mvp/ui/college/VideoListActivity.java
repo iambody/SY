@@ -153,9 +153,7 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
         if (listSize == 0) {
             if (!isError) {
                 model.noDataIvSize = Utils.convertDipOrPx(this, 100);
-                //todo 看需求是什么样子的
-//                model.noDataIvResId = R.mipmap.no_video;
-//                model.noDataTvStr = getString(R.string.person_home_no_blive);
+                model.noDataIvResId = R.drawable.bg_no_data;
                 model.noDataBtnWidth = 0;
                 model.noDataBtnHeight = 0;
                 model.noDataBtnStr = "";
