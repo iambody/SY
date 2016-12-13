@@ -21,7 +21,7 @@ public class VideoInfoModel {
     public String localVideoPath;
 
     public int currentTime;  //增加当前播放时间
-    public int status;       //下载完成:2 / 下载中：1  / 未下载：0
+    public int status;       //下载完成:2 / 下载中：0  / 未下载：1
     public long finalPlayTime;  //最后一次播放时间
     public long size;          //下载文件大小
     public double percent;       //下载百分百

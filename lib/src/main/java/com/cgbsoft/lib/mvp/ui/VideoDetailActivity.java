@@ -315,7 +315,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         play(true);
 
         switch (videoInfoModel.status) {
-            case 1:
+            case 0:
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
@@ -326,6 +326,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
                 tv_avd_hd.setEnabled(false);
                 tv_avd_sd.setEnabled(false);
+                break;
+            case 1:
+                tv_avd_cache.setText(R.string.cache_str);
+                iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 break;
             case 2:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
@@ -338,10 +342,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                         break;
                     }
                 }
-            case 0:
-                tv_avd_cache.setText(R.string.cache_str);
-                iv_avd_cache.setImageResource(R.drawable.ic_cache);
-                break;
         }
     }
 

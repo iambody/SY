@@ -24,4 +24,6 @@
     <string name="choice_all_str">全选</string>
     <string name="cancel_str">取消</string>
     <string name="cancel_choice_all_str">取消全选</string>
+    <string name="paused_str">已暂停</string>
+    <string name="local_video_str">本地视频</string>
 </resources>

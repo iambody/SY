@@ -125,6 +125,16 @@ public class DaoUtils {
     }
 
     /**
+     * 删除视频
+     * @param videoId
+     */
+    public void delteVideoInfo(String videoId) {
+        VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+        if (videoInfo != null)
+            videoInfoDao.delete(videoInfo);
+    }
+
+    /**
      * 已经下载完成的视频数量
      *
      * @return
