@@ -57,6 +57,8 @@ public class VideoHistoryAdapter extends BaseAdapter<VideoHistoryModel, VideoHis
             }
 
             vhh.cb_avh.setChecked(model.isCheck);
+        } else {
+            bindErrorHolder(model, holder);
         }
     }
 }

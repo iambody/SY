@@ -31,7 +31,7 @@ public class VideoHistoryListPresenter extends BasePresenterImpl<VideoHistoryLis
     public void getLocalVideoInfoList(boolean isRef) {
         List<VideoInfoModel> list = daoUtils.getAllVideoInfoHistory();
         List<VideoHistoryModel> dataList = new ArrayList<>();
-        if (list != null && list.size() > 0) {
+        if (list != null && list.size() >= 0) {
             for (int i = 0; i < list.size(); i++) {
                 VideoHistoryModel model = new VideoHistoryModel();
                 model.type = VideoHistoryModel.LIST;

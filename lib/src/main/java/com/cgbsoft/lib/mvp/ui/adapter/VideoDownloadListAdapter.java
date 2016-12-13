@@ -59,6 +59,8 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             }
 
             vdlh.cb_avd.setChecked(model.isCheck);
+        }else {
+            bindErrorHolder(model, holder);
         }
     }
 }
