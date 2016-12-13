@@ -174,7 +174,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         if (iv_mvv_cover.getVisibility() == View.VISIBLE && videoCoverUrl != null && !TextUtils.isEmpty(videoCoverUrl)) {
-            Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
+            Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, R.drawable.bg_default, R.drawable.bg_default);
             isDisplayCover = true;
         }
         if (isPlayAnim)

@@ -35,7 +35,7 @@ public class VideoListAdapter extends BaseAdapter<VideoListModel, VideoListListe
         VideoListModel model = list.get(position);
         if (model.type == VideoListModel.BOTTOM) {
             VideoListHolder vlh = (VideoListHolder) holder;
-            Imageload.display(vlh.context, model.leftImgUrl, 0, 0, 8, vlh.iv_ivl_img, null, null);
+            Imageload.display(vlh.context, model.leftImgUrl, 0, 0, 8, vlh.iv_ivl_img, R.drawable.bg_default, R.drawable.bg_default);
             vlh.tv_ivl_title.setText(model.title);
             vlh.tv_ivl_heart.setText(String.valueOf(model.heartNum));
             vlh.tv_ivl_content.setText(model.content);

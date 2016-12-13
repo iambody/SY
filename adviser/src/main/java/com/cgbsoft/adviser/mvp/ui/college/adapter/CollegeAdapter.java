@@ -52,7 +52,7 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
         switch (model.type) {
             case CollegeModel.HEAD:
                 CollegeHeadHolder chh = (CollegeHeadHolder) holder;
-                Imageload.display(chh.context, model.headBgUrl, 0, 0, 0, chh.iv_ich_bg, null, null);
+                Imageload.display(chh.context, model.headBgUrl, 0, 0, 0, chh.iv_ich_bg, R.drawable.bg_default, R.drawable.bg_default);
                 chh.tv_ich_content.setText(model.headBgContent);
                 break;
             case CollegeModel.COMM_HEAD:
@@ -65,9 +65,9 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
                 if (!model.isVisable) {
                     cgh.ll_icb.setVisibility(View.GONE);
                 } else {
-                    Imageload.display(cgh.context, model.bottomVideoImgUrl, 0, 0, 8, cgh.iv_icb_bg, null, null);
+                    Imageload.display(cgh.context, model.bottomVideoImgUrl, 0, 0, 8, cgh.iv_icb_bg, R.drawable.bg_default, R.drawable.bg_default);
                     cgh.tv_icb_title.setText(model.bottomVideoTitle);
-                    cgh.tv_icb_content.setText(model.bottomVideoTitle);
+                    cgh.tv_icb_content.setText(model.bottomVideoContent);
                 }
                 break;
             case CollegeModel.OHTER_HEAD:
@@ -77,9 +77,9 @@ public class CollegeAdapter extends BaseAdapter<CollegeModel, CollegeListener, R
                 break;
             case CollegeModel.OTHER:
                 CollegeGridHolder co = (CollegeGridHolder) holder;
-                Imageload.display(co.context, model.bottomVideoImgUrl, 0, 0, 8, co.iv_icb_bg, null, null);
+                Imageload.display(co.context, model.bottomVideoImgUrl, 0, 0, 8, co.iv_icb_bg, R.drawable.bg_default, R.drawable.bg_default);
                 co.tv_icb_title.setText(model.bottomVideoTitle);
-                co.tv_icb_content.setText(model.bottomVideoTitle);
+                co.tv_icb_content.setText(model.bottomVideoContent);
                 break;
             default:
                 bindErrorHolder(model, holder);
