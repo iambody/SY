@@ -171,7 +171,7 @@ public class ErrorDataView {
         if (imageResId == 0) {
             noDataIv.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(text)) {
+        if (text != null) {
             noDataTv.setText(text);
         }
     }

@@ -309,7 +309,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             if (!isError) {
                 model.noDataIvSize = Utils.convertDipOrPx(this, 100);
                 model.noDataIvResId = R.drawable.bg_no_video;
-//                model.noDataTvStr = getString(R.string.person_home_no_blive);
+                model.noDataTvStr = "";
                 model.noDataBtnWidth = 0;
                 model.noDataBtnHeight = 0;
                 model.noDataBtnStr = "";

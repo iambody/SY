@@ -154,6 +154,7 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
             if (!isError) {
                 model.noDataIvSize = Utils.convertDipOrPx(this, 100);
                 model.noDataIvResId = R.drawable.bg_no_data;
+                model.noDataTvStr = "";
                 model.noDataBtnWidth = 0;
                 model.noDataBtnHeight = 0;
                 model.noDataBtnStr = "";
