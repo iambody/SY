@@ -98,10 +98,38 @@ public class DaoUtils {
     }
 
     /**
-     * 已经下载完成的视频数量
+     * 查找所有的播放历史视频
+     *
      * @return
      */
-    public long getCacheVideoNum(){
+    public List<VideoInfoModel> getAllVideoInfoHistory() {
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.HasRecord.eq(1)).orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
+        List<VideoInfoModel> results = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            results.add(getVideoInfoModel(list.get(i)));
+        }
+        return results;
+    }
+
+    /**
+     * 播放历史是否显示
+     *
+     * @param videoId
+     */
+    public void deleteVideoInfoHistory(String videoId) {
+        VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+        if (videoInfo != null) {
+            videoInfo.setHasRecord(0);
+            videoInfoDao.update(videoInfo);
+        }
+    }
+
+    /**
+     * 已经下载完成的视频数量
+     *
+     * @return
+     */
+    public long getCacheVideoNum() {
         return videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.Status.eq(2)).buildCount().count();
     }
 

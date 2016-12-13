@@ -6,6 +6,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,12 +23,15 @@ import com.cgbsoft.adviser.mvp.ui.college.model.CollegeModel;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
+import com.cgbsoft.lib.mvp.ui.VideoDownloadListActivity;
+import com.cgbsoft.lib.mvp.ui.VideoHistoryListActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.BindView;
 
@@ -65,8 +70,11 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         isColorCloud = SPreference.isColorCloud(getContext().getApplicationContext());
         UserInfoDataEntity.ToBBean toBBean = SPreference.getToBBean(getContext().getApplicationContext());
         organizationName = toBBean == null ? "" : toBBean.organizationName;
-
+        setHasOptionsMenu(true);
+        ((RxAppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
+        toolbar.setTitle(null);
+
         collegeAdapter = new CollegeAdapter(this);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -168,6 +176,15 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Class clazz = null;
+        int id = item.getItemId();
+        if (id == R.id.firstBtn) {
+            clazz = VideoHistoryListActivity.class;
+        } else if (id == R.id.secondBtn) {
+            clazz = VideoDownloadListActivity.class;
+        }
+        if (clazz != null)
+            openActivity(clazz);
         return false;
     }
 
@@ -226,6 +243,22 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         } else {
             collegeAdapter.removeError();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
+        if (getChildFragmentManager().getBackStackEntryCount() == 0) {
+            inflater.inflate(R.menu.page_menu, menu);
+            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            MenuItem secItem = menu.findItem(R.id.secondBtn);
+            firstItem.setTitle(R.string.menu_play_history_str);
+            secItem.setTitle(R.string.menu_download_video_str);
+            firstItem.setIcon(R.drawable.ic_cache_list);
+            secItem.setIcon(R.drawable.ic_download);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

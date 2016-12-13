@@ -7,10 +7,12 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.exception.ApiException;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +31,8 @@ import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.cgbsoft.lib.utils.constant.RxConstant.RE_LOGIN_OBSERVABLE;
 
 /**
  * 网络请求基础类
@@ -98,30 +102,16 @@ public class OKHTTP {
             Charset UTF8 = Charset.forName("UTF-8");
 
             Utils.log(TAG, response.request().url().toString() + " " + response.code(), "d");
-            if (response.code() == 500) {
-                BufferedSource source = responseBody.source();
-                source.request(Long.MAX_VALUE); // Buffer the entire body.
-                Buffer buffer = source.buffer();
-
-                Charset charset = UTF8;
-                MediaType contentType = responseBody.contentType();
-                if (contentType != null) {
-                    try {
-                        charset = contentType.charset(UTF8);
-                    } catch (UnsupportedCharsetException e) {
-                        throw new ApiException(String.valueOf(response.code()), response.message());
-                    }
-
-                    if (responseBody.contentLength() != 0) {
-                        String msg = "请求错误";
-                        BaseResult result = new Gson().fromJson(buffer.clone().readString(charset), BaseResult.class);
-                        if (result != null && !TextUtils.isEmpty(result.message)) {
-                            msg = result.message;
-                        }
-                        throw new ApiException(String.valueOf(response.code()), msg);
-                    }
+            String message = "";
+            if (response.code() != 200) {
+                if (response.code() == 500) {
+                    message = "请求错误";
+                } else if (response.code() == 511) {
+                    message = "token失效";
+                    SPreference.quitLogin(Appli.getContext());
+                    RxBus.get().post(RE_LOGIN_OBSERVABLE, true);
                 }
-                throw new ApiException(String.valueOf(response.code()), response.message());
+                httpCodeInterceptor(responseBody, UTF8, response, message);
             }
             return response;
         };
@@ -216,6 +206,31 @@ public class OKHTTP {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build().create(RequestManager.class);
+    }
+
+    private void httpCodeInterceptor(ResponseBody responseBody, Charset UTF8, Response response, String msg) throws IOException {
+        BufferedSource source = responseBody.source();
+        source.request(Long.MAX_VALUE); // Buffer the entire body.
+        Buffer buffer = source.buffer();
+
+        Charset charset = UTF8;
+        MediaType contentType = responseBody.contentType();
+        if (contentType != null) {
+            try {
+                charset = contentType.charset(UTF8);
+            } catch (UnsupportedCharsetException e) {
+                throw new ApiException(String.valueOf(response.code()), response.message());
+            }
+
+            if (responseBody.contentLength() != 0) {
+                BaseResult result = new Gson().fromJson(buffer.clone().readString(charset), BaseResult.class);
+                if (result != null && !TextUtils.isEmpty(result.message)) {
+                    msg = result.message;
+                }
+                throw new ApiException(String.valueOf(response.code()), msg);
+            }
+        }
+        throw new ApiException(String.valueOf(response.code()), response.message());
     }
 
 }

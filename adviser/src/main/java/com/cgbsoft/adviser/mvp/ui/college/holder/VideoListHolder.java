@@ -37,6 +37,6 @@ public class VideoListHolder extends BaseHolder {
 
     public VideoListHolder(View itemView, VideoListListener listener) {
         super(itemView);
-        ll_ivl_item.setOnClickListener(v -> listener.onVideoListItemClick(getAdapterPosition()));
+        ll_ivl_item.setOnClickListener(v -> listener.onVideoListItemClick(getAdapterPosition(), iv_ivl_img));
     }
 }

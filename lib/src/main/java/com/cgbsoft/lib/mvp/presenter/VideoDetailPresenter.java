@@ -54,6 +54,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.content = result.videoSummary;
                 viModel.likeNum = Integer.parseInt(result.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
+                viModel.hasRecord = 1;
 
                 updataLocalVideoInfo();
 
@@ -82,6 +83,14 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         if(viModel == null)
             return;
         viModel.downloadtype = type;
+        updataLocalVideoInfo();
+    }
+
+    @Override
+    public void updataFinalWatchTime() {
+        if(viModel == null)
+            return;
+        viModel.finalPlayTime = System.currentTimeMillis();
         updataLocalVideoInfo();
     }
 

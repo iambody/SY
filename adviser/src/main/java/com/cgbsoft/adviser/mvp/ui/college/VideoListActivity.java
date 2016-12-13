@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.adviser.R;
@@ -16,10 +17,15 @@ import com.cgbsoft.adviser.mvp.contract.VideoListContract;
 import com.cgbsoft.adviser.mvp.presenter.VideoListPresenter;
 import com.cgbsoft.adviser.mvp.ui.college.adapter.VideoListAdapter;
 import com.cgbsoft.adviser.mvp.ui.college.listener.VideoListListener;
+import com.cgbsoft.adviser.mvp.ui.college.model.VideoListModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
+import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 
 import butterknife.BindView;
 
@@ -62,11 +68,13 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     @Override
     public void getVideoListDataSucc(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
+        setError(false);
     }
 
     @Override
     public void getVideoListDataFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
+        setError(true);
     }
 
     @Override
@@ -99,11 +107,11 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     }
 
     @Override
-    public void onVideoListItemClick(int position) {
+    public void onVideoListItemClick(int position, ImageView iv_ivl_img) {
         Intent intent = new Intent(this, VideoDetailActivity.class);
         intent.putExtra("videoId", videoListAdapter.getList().get(position).videoId);
         intent.putExtra("videoCoverUrl", videoListAdapter.getList().get(position).leftImgUrl);
-        startActivity(intent);
+        ActivityTransitionLauncher.with(this).from(iv_ivl_img).launch(intent);
     }
 
     @Override
@@ -129,5 +137,35 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     @Override
     public void onRefresh() {
         recyclerControl.onRefresh();
+    }
+
+
+    //是无数据还是网络加载错误
+    private void setError(boolean isError) {
+        int listSize = 0;
+
+        if (videoListAdapter != null) {
+            listSize = videoListAdapter.getList().size();
+        }
+
+        VideoListModel model = new VideoListModel();
+        model.isError = isError;
+        if (listSize == 0) {
+            if (!isError) {
+                model.noDataIvSize = Utils.convertDipOrPx(this, 100);
+                //todo 看需求是什么样子的
+//                model.noDataIvResId = R.mipmap.no_video;
+//                model.noDataTvStr = getString(R.string.person_home_no_blive);
+                model.noDataBtnWidth = 0;
+                model.noDataBtnHeight = 0;
+                model.noDataBtnStr = "";
+                model.type = VideoHistoryModel.ERROR;
+            } else {
+                model.errorStatus = ErrorDataView.ERROR_NET;
+            }
+            videoListAdapter.appendError(model, 0);
+        } else {
+            videoListAdapter.removeError();
+        }
     }
 }

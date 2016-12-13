@@ -141,6 +141,7 @@
         <!--主页-->
         <activity
             android:name=".mvp.ui.home.MainPageActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--权限管理-->
@@ -194,6 +195,15 @@
         <!--视频列表-->
         <activity
             android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"
+            android:screenOrientation="portrait" />
+        <!--视频下载列表-->
+        <activity
+            android:name="com.cgbsoft.lib.mvp.ui.VideoDownloadListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--视频播放历史列表-->
+        <activity
+            android:name="com.cgbsoft.lib.mvp.ui.VideoHistoryListActivity"
             android:screenOrientation="portrait" />
 
         <!--视频详情-->

@@ -14,6 +14,7 @@ public interface VideoDetailContract {
         void getVideoDetailInfo(String videoId);
         void updataNowPlayTime(int playTime);
         void updataDownloadType(int type);
+        void updataFinalWatchTime();
         void toVideoLike();
         long getCacheVideoNum();
     }

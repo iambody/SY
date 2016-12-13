@@ -21,4 +21,8 @@ public interface RxConstant {
     String WELCOME_FINISH_OBSERVABLE = "welcome_finish_observable";
 
     String VIDEO_PLAY5MINUTES_OBSERVABLE = "video_play5minutes_observable";
+
+    String VIDEO_LOCAL_REF_ONE_OBSERVABLE = "video_local_ref_one_observable";
+
+    String RE_LOGIN_OBSERVABLE = "re_login_observable";
 }

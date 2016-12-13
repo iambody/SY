@@ -55,6 +55,7 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSERVABLE;
 
 /**
@@ -147,7 +148,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private ConnectionChangeReceiver connectionChangeReceiver;
     private ExitActivityTransition exitTransition;
     private Subscription delaySub, delaySub2;
-    private boolean isFullscreen;
+    private boolean isFullscreen, isDisplayCover;
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
 
     @Override
@@ -172,8 +173,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-        if (iv_mvv_cover.getVisibility() == View.VISIBLE) {
+        if (iv_mvv_cover.getVisibility() == View.VISIBLE && videoCoverUrl != null && !TextUtils.isEmpty(videoCoverUrl)) {
             Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
+            isDisplayCover = true;
         }
         if (isPlayAnim)
             exitTransition = ActivityTransition.with(getIntent()).duration(200).to(rl_avd_head).start(savedInstanceState);
@@ -184,7 +186,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
 
         vrf_avd.setListener(this);
-        getPresenter().getVideoDetailInfo(videoId);
+//        getPresenter().getVideoDetailInfo(videoId);
+        getVideoDetailInfo();
         pw_mvv_wait.setVisibility(View.VISIBLE);
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -275,6 +278,30 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
     }
 
+    private void getVideoDetailInfo() {
+        if (isPlayAnim) {
+            if (delaySub != null && !delaySub.isUnsubscribed()) {
+                return;
+            }
+
+            delaySub = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RxSubscriber<Integer>() {
+                        @Override
+                        protected void onEvent(Integer integer) {
+                            getPresenter().getVideoDetailInfo(videoId);
+                            sv_avd.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        protected void onRxError(Throwable error) {
+
+                        }
+                    });
+        } else {
+            getPresenter().getVideoDetailInfo(videoId);
+        }
+    }
+
     @Override
     protected VideoDetailPresenter createPresenter() {
         return new VideoDetailPresenter(this, this);
@@ -285,10 +312,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoInfoModel = model;
         playerCurrentTime = videoInfoModel.currentTime;
         setData();
-        if (isPlayAnim)
-            delayPlay(true);
-        else
-            play(true);
+        play(true);
 
         switch (videoInfoModel.status) {
             case 1:
@@ -326,10 +350,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoInfoModel = model;
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
-        if (isPlayAnim)
-            delayPlay(true);
-        else
-            play(true);
+        play(true);
     }
 
     @Override
@@ -348,26 +369,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         pw_mvv_wait.setVisibility(View.GONE);
     }
 
-
-    private void delayPlay(boolean isCheckNet) {
-        if (delaySub != null && !delaySub.isUnsubscribed()) {
-            return;
-        }
-
-        delaySub = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<Integer>() {
-                    @Override
-                    protected void onEvent(Integer integer) {
-                        play(isCheckNet);
-                        sv_avd.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    protected void onRxError(Throwable error) {
-
-                    }
-                });
-    }
 
     private void play(boolean isCheckNet) {
         if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI && isCheckNet) {
@@ -557,9 +558,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     protected void onDestroy() {
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
+            RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
             vrf_avd.release();
             vrf_avd = null;
         }
+        getPresenter().updataFinalWatchTime();
+
         if (connectionChangeReceiver != null)
             unregisterReceiver(connectionChangeReceiver);
 
@@ -581,7 +585,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             delaySub2.unsubscribe();
             delaySub2 = null;
         }
-
         super.onDestroy();
     }
 
@@ -595,12 +598,16 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             iv_avd_like.setImageResource(R.drawable.ic_like_down);
             iv_avd_like.setEnabled(false);
         }
+        if (!isDisplayCover && videoInfoModel.videoCoverUrl != null && !TextUtils.isEmpty(videoInfoModel.videoCoverUrl)) {
+            isDisplayCover = true;
+            Imageload.display(this, videoInfoModel.videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
+        }
     }
 
     class AnimListener implements Animation.AnimationListener {
         int which;
 
-        public AnimListener(int which) {
+        AnimListener(int which) {
             this.which = which;
         }
 

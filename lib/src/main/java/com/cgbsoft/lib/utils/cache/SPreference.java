@@ -258,9 +258,7 @@ public class SPreference implements Constant {
      * @param context 上下文
      */
     public static void quitLogin(@NonNull Context context) {
-        UserDataProvider.clear(context);
-        OtherDataProvider.clear(context);
-
+        UserDataProvider.quitLogin(context);
     }
 
     /**

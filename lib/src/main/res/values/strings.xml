@@ -15,4 +15,13 @@
     <string name="avd_look_cache_str">查看缓存视频</string>
     <string name="caching_str">缓存中</string>
     <string name="cached_str">已缓存</string>
+    <string name="menu_play_history_str">播放历史</string>
+    <string name="menu_download_video_str">下载视频</string>
+    <string name="delete_str">删除</string>
+    <string name="delete_1_str">删除(%s)</string>
+    <string name="played_str">" 已播放 %s"</string>
+    <string name="play_history_str">播放记录</string>
+    <string name="choice_all_str">全选</string>
+    <string name="cancel_str">取消</string>
+    <string name="cancel_choice_all_str">取消全选</string>
 </resources>

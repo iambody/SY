@@ -9,14 +9,20 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
+import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
+import rx.Observable;
+
+import static com.cgbsoft.lib.utils.constant.RxConstant.RE_LOGIN_OBSERVABLE;
 
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
@@ -24,6 +30,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
+
+    private Observable<Boolean> reLoginObservable;
+    private boolean isReLogin;
 
     @Override
     protected int layoutID() {
@@ -46,6 +55,23 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         transaction.add(R.id.fl_main_content, mContentFragment);
         transaction.commitAllowingStateLoss();
+
+        reLoginObservable = RxBus.get().register(RE_LOGIN_OBSERVABLE, Boolean.class);
+        reLoginObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                isReLogin = aBoolean;
+                if (isReLogin) {
+                    openActivity(LoginActivity.class);
+                    finish();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     @Override
@@ -131,7 +157,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onDestroy() {
         super.onDestroy();
         MainTabManager.getInstance().destory();
-
+        if (reLoginObservable != null) {
+            RxBus.get().unregister(RE_LOGIN_OBSERVABLE, reLoginObservable);
+        }
+        if (isReLogin)
+            return;
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }
