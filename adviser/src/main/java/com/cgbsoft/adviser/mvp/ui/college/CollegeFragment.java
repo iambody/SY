@@ -26,8 +26,6 @@ import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
 import com.cgbsoft.lib.mvp.ui.VideoDownloadListActivity;
 import com.cgbsoft.lib.mvp.ui.VideoHistoryListActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
@@ -72,8 +70,10 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
         organizationName = toBBean == null ? "" : toBBean.organizationName;
         setHasOptionsMenu(true);
         ((RxAppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        if (((RxAppCompatActivity) getActivity()).getSupportActionBar() != null) {
+            ((RxAppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+        }
         toolbar.setOnMenuItemClickListener(this);
-        toolbar.setTitle(null);
 
         collegeAdapter = new CollegeAdapter(this);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -207,41 +207,13 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
     @Override
     public void getCollegeDataSucc(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
-        setError(false);
+        recyclerControl.setError(getContext(), false, collegeAdapter, new CollegeModel(), "", R.drawable.bg_no_data);
     }
 
     @Override
     public void getCollegeDataFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
-        setError(true);
-    }
-
-    //是无数据还是网络加载错误
-    private void setError(boolean isError) {
-        int listSize = 0;
-
-        if (collegeAdapter != null) {
-            listSize = collegeAdapter.getList().size();
-        }
-
-        CollegeModel model = new CollegeModel();
-        model.isError = isError;
-        if (listSize == 0) {
-            if (!isError) {
-                model.noDataIvSize = Utils.convertDipOrPx(getContext(), 100);
-                model.noDataIvResId = R.drawable.bg_no_data;
-//                model.noDataTvStr = getString(R.string.person_home_no_blive);
-                model.noDataBtnWidth = 0;
-                model.noDataBtnHeight = 0;
-                model.noDataBtnStr = "";
-                model.type = CollegeModel.ERROR;
-            } else {
-                model.errorStatus = ErrorDataView.ERROR_NET;
-            }
-            collegeAdapter.appendError(model, 0);
-        } else {
-            collegeAdapter.removeError();
-        }
+        recyclerControl.setError(getContext(), true, collegeAdapter, new CollegeModel());
     }
 
     @Override

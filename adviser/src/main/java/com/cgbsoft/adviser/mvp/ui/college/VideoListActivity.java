@@ -20,9 +20,6 @@ import com.cgbsoft.adviser.mvp.ui.college.listener.VideoListListener;
 import com.cgbsoft.adviser.mvp.ui.college.model.VideoListModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
-import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
@@ -68,13 +65,13 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     @Override
     public void getVideoListDataSucc(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
-        setError(false);
+        recyclerControl.setError(this, false, videoListAdapter, new VideoListModel(), "", R.drawable.bg_no_data);
     }
 
     @Override
     public void getVideoListDataFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
-        setError(true);
+        recyclerControl.setError(this, true, videoListAdapter, new VideoListModel());
     }
 
     @Override
@@ -140,31 +137,9 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     }
 
 
-    //是无数据还是网络加载错误
-    private void setError(boolean isError) {
-        int listSize = 0;
-
-        if (videoListAdapter != null) {
-            listSize = videoListAdapter.getList().size();
-        }
-
-        VideoListModel model = new VideoListModel();
-        model.isError = isError;
-        if (listSize == 0) {
-            if (!isError) {
-                model.noDataIvSize = Utils.convertDipOrPx(this, 100);
-                model.noDataIvResId = R.drawable.bg_no_data;
-                model.noDataTvStr = "";
-                model.noDataBtnWidth = 0;
-                model.noDataBtnHeight = 0;
-                model.noDataBtnStr = "";
-                model.type = VideoHistoryModel.ERROR;
-            } else {
-                model.errorStatus = ErrorDataView.ERROR_NET;
-            }
-            videoListAdapter.appendError(model, 0);
-        } else {
-            videoListAdapter.removeError();
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recyclerControl.destory();
     }
 }

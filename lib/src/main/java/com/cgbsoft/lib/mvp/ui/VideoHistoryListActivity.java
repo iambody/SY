@@ -26,7 +26,6 @@ import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.recycler.ErrorDataView;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
@@ -166,6 +165,9 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
 
     @Override
     public void getLocalListSucc(List<VideoHistoryModel> dataList, boolean isRef) {
+        if (dataList.size() == 0) {//没做分页所以直接判断就行
+            unVisableBottomLayout();
+        }
         if (isRef) {
             videoHistoryAdapter.deleteAllData();
             videoHistoryAdapter.refAllData(dataList);
@@ -174,13 +176,13 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
 
         recyclerControl.getDataComplete(isRef);
-        setError(false);
+        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.bg_no_video);
     }
 
     @Override
     public void getLocalListFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
-        setError(true);
+        recyclerControl.setError(this, true, videoHistoryAdapter, new VideoHistoryModel());
     }
 
     @Override
@@ -294,34 +296,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) recyclerRefreshLayout.getLayoutParams();
         lp.setMargins(0, 0, 0, Utils.convertDipOrPx(this, dp));
         recyclerRefreshLayout.setLayoutParams(lp);
-    }
-
-    //是无数据还是网络加载错误
-    private void setError(boolean isError) {
-        int listSize = 0;
-
-        if (videoHistoryAdapter != null) {
-            listSize = videoHistoryAdapter.getList().size();
-        }
-
-        VideoHistoryModel model = new VideoHistoryModel();
-        model.isError = isError;
-        if (listSize == 0) {
-            if (!isError) {
-                model.noDataIvSize = Utils.convertDipOrPx(this, 100);
-                model.noDataIvResId = R.drawable.bg_no_video;
-                model.noDataTvStr = "";
-                model.noDataBtnWidth = 0;
-                model.noDataBtnHeight = 0;
-                model.noDataBtnStr = "";
-                model.type = VideoHistoryModel.ERROR;
-            } else {
-                model.errorStatus = ErrorDataView.ERROR_NET;
-            }
-            videoHistoryAdapter.appendError(model, 0);
-        } else {
-            videoHistoryAdapter.removeError();
-        }
     }
 
     private void choiceChangeText(int num) {

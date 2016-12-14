@@ -1,9 +1,12 @@
 package com.cgbsoft.lib.widget.recycler;
 
+import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import java.lang.reflect.Field;
@@ -92,6 +95,38 @@ public class RecyclerControl {
 
     public OnScrollListener getOnScrollListener() {
         return onScrollListener;
+    }
+
+
+    public <A extends BaseAdapter, M extends BaseModel> void setError(Context context, boolean isError, A adpater, M model){
+        setError(context, isError, adpater, model, null, 0);
+    }
+
+    //是无数据还是网络加载错误
+    public  <A extends BaseAdapter, M extends BaseModel> void setError(Context context, boolean isError, A adapter,  M model, String noDataStr, int noDataResId) {
+        int listSize = 0;
+
+        if (adapter != null) {
+            listSize = adapter.getList().size();
+        }
+
+        model.isError = isError;
+        if (listSize == 0) {
+            if (!isError) {
+                model.noDataIvSize = Utils.convertDipOrPx(context, 100);
+                model.noDataIvResId = noDataResId;
+                model.noDataTvStr = noDataStr;
+                model.noDataBtnWidth = 0;
+                model.noDataBtnHeight = 0;
+                model.noDataBtnStr = "";
+                model.type = VideoHistoryModel.ERROR;
+            } else {
+                model.errorStatus = ErrorDataView.ERROR_NET;
+            }
+            adapter.appendError(model, 0);
+        } else {
+            adapter.removeError();
+        }
     }
 
     public void destory() {
