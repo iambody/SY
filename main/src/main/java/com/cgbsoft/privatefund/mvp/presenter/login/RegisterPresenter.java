@@ -36,8 +36,10 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
                 SPreference.saveToken(getContext().getApplicationContext(), result.token);
 
                 SPreference.saveLoginFlag(getContext(), true);
-                if (result.userInfo != null)
+                if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(result.userInfo));
+                    SPreference.saveLoginName(getContext(), un);
+                }
                 loadingDialog.setResult(true, getContext().getString(R.string.ra_register_success_str), 1000, () -> getView().regSucc());
             }
 

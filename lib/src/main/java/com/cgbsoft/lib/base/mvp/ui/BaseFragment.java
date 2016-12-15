@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
@@ -70,6 +71,12 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        OtherDataProvider.addTopActivity(getContext().getApplicationContext(), getClass().getName());
     }
 
     protected void before() {

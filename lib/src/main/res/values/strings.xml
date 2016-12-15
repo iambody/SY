@@ -15,6 +15,7 @@
     <string name="avd_look_cache_str">查看缓存视频</string>
     <string name="caching_str">缓存中</string>
     <string name="cached_str">已缓存</string>
+    <string name="paused_str">已暂停</string>
     <string name="menu_play_history_str">播放历史</string>
     <string name="menu_download_video_str">下载视频</string>
     <string name="delete_str">删除</string>
@@ -23,7 +24,12 @@
     <string name="play_history_str">播放记录</string>
     <string name="choice_all_str">全选</string>
     <string name="cancel_str">取消</string>
+    <string name="enter_str">确认</string>
     <string name="cancel_choice_all_str">取消全选</string>
-    <string name="paused_str">已暂停</string>
     <string name="local_video_str">本地视频</string>
+    <string name="avd_start_all">全部开始</string>
+    <string name="avd_all_space_str">总空间</string>
+    <string name="avd_free_space_str">剩余</string>
+    <string name="vdla_is_sure_delete_str">是否要删除正在播放的视频文件？</string>
+    <string name="vdla_stop_all_str">全部停止</string>
 </resources>

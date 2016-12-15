@@ -7,10 +7,12 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,12 +91,15 @@ public class DaoUtils {
      */
     public List<VideoInfoModel> getAllVideoInfo() {
         //根据最后播放时间倒叙排列
-        List<VideoInfo> list = videoInfoDao.queryBuilder().orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
         List<VideoInfoModel> results = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            results.add(getVideoInfoModel(list.get(i)));
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                results.add(getVideoInfoModel(list.get(i)));
+            }
+            return results;
         }
-        return results;
+        return null;
     }
 
     /**
@@ -103,7 +108,7 @@ public class DaoUtils {
      * @return
      */
     public List<VideoInfoModel> getAllVideoInfoHistory() {
-        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.HasRecord.eq(1)).orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.HasRecord.eq(VideoStatus.RECORD), VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
         List<VideoInfoModel> results = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             results.add(getVideoInfoModel(list.get(i)));
@@ -126,12 +131,30 @@ public class DaoUtils {
 
     /**
      * 删除视频
+     *
      * @param videoId
      */
-    public void delteVideoInfo(String videoId) {
+    public void deleteVideoInfo(String videoId) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
-        if (videoInfo != null)
-            videoInfoDao.delete(videoInfo);
+        String localPath = null;
+        if (videoInfo != null) {
+            localPath = videoInfo.getLocalVideoPath();
+            videoInfo.setIsDelete(VideoStatus.DELETE);
+            videoInfo.setStatus(VideoStatus.NONE);
+            videoInfo.setFinalPlayTime(0);
+            videoInfo.setSize(0);
+            videoInfo.setLocalVideoPath("");
+            videoInfo.setPercent(0);
+            videoInfo.setDownloadtype(-1);
+            videoInfo.setDownloadTime(0);
+            videoInfoDao.update(videoInfo);
+        }
+        if (localPath != null) {
+            File file = new File(localPath);
+            if (file.isFile() && file.exists()) {
+                file.delete();
+            }
+        }
     }
 
     /**
@@ -140,7 +163,7 @@ public class DaoUtils {
      * @return
      */
     public long getCacheVideoNum() {
-        return videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.Status.eq(2)).buildCount().count();
+        return videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.Status.eq(VideoStatus.FINISH), VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).buildCount().count();
     }
 
     /**
@@ -156,6 +179,7 @@ public class DaoUtils {
         } else
             videoInfoDao.insert(getVideoInfo(model));
     }
+
 
     private VideoInfo getVideoInfo(VideoInfo videoInfo, VideoInfoModel model) {
         videoInfo.setCurrentTime(model.currentTime);
@@ -178,6 +202,7 @@ public class DaoUtils {
         videoInfo.setVideoCoverUrl(model.videoCoverUrl);
         videoInfo.setVideoName(model.videoName);
         videoInfo.setVideoId(model.videoId);
+        videoInfo.setIsDelete(model.isDelete);
         return videoInfo;
     }
 
@@ -203,6 +228,7 @@ public class DaoUtils {
         videoInfo.setVideoCoverUrl(model.videoCoverUrl);
         videoInfo.setVideoName(model.videoName);
         videoInfo.setVideoId(model.videoId);
+        videoInfo.setIsDelete(model.isDelete);
         return videoInfo;
     }
 
@@ -227,6 +253,7 @@ public class DaoUtils {
         model.status = videoInfo.getStatus();
         model.videoCoverUrl = videoInfo.getVideoCoverUrl();
         model.videoId = videoInfo.getVideoId();
+        model.isDelete = videoInfo.getIsDelete();
         return model;
     }
 

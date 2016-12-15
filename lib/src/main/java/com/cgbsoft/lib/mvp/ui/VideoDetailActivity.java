@@ -29,6 +29,7 @@ import com.cgbsoft.lib.mvp.contract.VideoDetailContract;
 import com.cgbsoft.lib.mvp.model.VideoInfoModel;
 import com.cgbsoft.lib.mvp.presenter.VideoDetailPresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -55,6 +56,8 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static com.cgbsoft.lib.utils.constant.RxConstant.IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE;
+import static com.cgbsoft.lib.utils.constant.RxConstant.NOW_PLAY_VIDEOID_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSERVABLE;
 
@@ -150,6 +153,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private Subscription delaySub, delaySub2;
     private boolean isFullscreen, isDisplayCover;
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
+    private Observable<Boolean> isPlayVideoLocalDeleteObservable;
+
+    private boolean isOnPause;
+    private int onPausePlayStauts = -1;//默认为-1，没在播放为0 在播放为1
 
     @Override
     protected void after() {
@@ -203,6 +210,40 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     protected void data() {
         super.data();
         initAnim();
+        isPlayVideoLocalDeleteObservable = RxBus.get().register(IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE, Boolean.class);
+        isPlayVideoLocalDeleteObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (aBoolean) {
+                    if (onPausePlayStauts > 0) {
+                        vrf_avd.release();
+                        playNetData();
+                    }
+                    if (onPausePlayStauts == 0) {
+                        vrf_avd.pause();
+                    }
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnPause = true;
+        onPausePlayStauts = 0;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnPause = false;
+        onPausePlayStauts = -1;
     }
 
     @OnClick(R2.id.iv_avd_back)
@@ -246,11 +287,18 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         getPresenter().updataDownloadType(0);
     }
 
+    //打开下载列表页面
+    @OnClick(R2.id.ll_avd_cache_open)
+    void videoDownloadListOpenClick() {
+        RxBus.get().post(NOW_PLAY_VIDEOID_OBSERVABLE, videoId);//发送消息，当前正在播放的视频id
+        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());//更新当前播放视频的位置
+        openActivity(VideoDownloadListActivity.class);
+    }
+
     @Override
     public void onBackPressed() {
         toFinish();
     }
-
 
     private void toFinish() {
         if (isFullscreen) {
@@ -315,7 +363,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         play(true);
 
         switch (videoInfoModel.status) {
-            case 0:
+            case VideoStatus.DOWNLOADING:
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
@@ -327,11 +375,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_hd.setEnabled(false);
                 tv_avd_sd.setEnabled(false);
                 break;
-            case 1:
+            case VideoStatus.NONE:
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 break;
-            case 2:
+            case VideoStatus.FINISH:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
                     File file = new File(videoInfoModel.localVideoPath);
                     if (file.isFile() && file.exists()) {
@@ -370,27 +418,89 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
 
-    private void play(boolean isCheckNet) {
-        if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI && isCheckNet) {
+    private void playNetData() {
+        if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI) {
             ll_mvv_nowifi.setVisibility(View.VISIBLE);
-            return;
-        } else {
-            ll_mvv_nowifi.setVisibility(View.GONE);
-        }
-        if (isPlaying) {
             return;
         }
         List<VideoInfo> videos = new ArrayList<>();
         VideoInfo v1 = new VideoInfo();
+        VideoInfo v2 = new VideoInfo();
         v1.description = "标清";
         v1.type = VideoInfo.VideoType.MP4;
-        v1.url = videoInfoModel.sdUrl;
-        videos.add(v1);
-        VideoInfo v2 = new VideoInfo();
         v2.description = "高清";
         v2.type = VideoInfo.VideoType.MP4;
+        v1.url = videoInfoModel.sdUrl;
         v2.url = videoInfoModel.hdUrl;
+        videos.add(v1);
         videos.add(v2);
+
+        vrf_avd.play(videos);
+        ll_mvv_nowifi.setVisibility(View.GONE);
+        pw_mvv_wait.setVisibility(View.GONE);
+        isSetDataSource = true;
+
+        if (!isSetFullscreenHandler) {
+            isSetFullscreenHandler = true;
+            vrf_avd.setToggleFullScreenHandler(() -> {
+                if (vrf_avd.isFullScreen()) { // 竖屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    sv_avd.setVisibility(View.VISIBLE);
+                    iv_avd_back.setVisibility(View.VISIBLE);
+                } else { // 横屏
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    sv_avd.setVisibility(View.GONE);
+                    iv_avd_back.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
+    }
+
+    private void play(boolean isCheckNet) {
+        if (!isVideoDownload())
+            if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI && isCheckNet) {
+                ll_mvv_nowifi.setVisibility(View.VISIBLE);
+                return;
+            } else {
+                ll_mvv_nowifi.setVisibility(View.GONE);
+            }
+        if (isPlaying) {
+            return;
+        }
+
+        int isLocalType = -1;
+        boolean isCouldLocalPlay = false;
+
+        if (videoInfoModel.status == VideoStatus.FINISH) {
+            File file = new File(videoInfoModel.localVideoPath);
+            if (file.isFile() && file.exists()) {
+                isLocalType = videoInfoModel.downloadtype;
+                isCouldLocalPlay = true;
+            }
+        }
+        List<VideoInfo> videos = new ArrayList<>();
+        VideoInfo v1 = new VideoInfo();
+        VideoInfo v2 = new VideoInfo();
+        v1.description = "标清";
+        v1.type = VideoInfo.VideoType.MP4;
+        v2.description = "高清";
+        v2.type = VideoInfo.VideoType.MP4;
+
+        if (isCouldLocalPlay) {
+            if (isLocalType == 0) {//高清
+                v2.url = videoInfoModel.localVideoPath;
+                videos.add(v2);
+            } else if (isLocalType == 1) {//标清
+                v1.url = videoInfoModel.localVideoPath;
+                videos.add(v1);
+            }
+        } else {
+            v1.url = videoInfoModel.sdUrl;
+            v2.url = videoInfoModel.hdUrl;
+            videos.add(v1);
+            videos.add(v2);
+        }
+
         vrf_avd.play(videos);
         ll_mvv_nowifi.setVisibility(View.GONE);
         pw_mvv_wait.setVisibility(View.GONE);
@@ -429,6 +539,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 isPlaying = true;
                 break;
             case 4:
+                if (isOnPause) {
+                    onPausePlayStauts = 1;
+                }
+
                 allPlayTime += System.currentTimeMillis() - startPlayTime;
                 if (allPlayTime > fiveMinutes) {
                     RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
@@ -532,15 +646,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         closeAnimationSet.addAnimation(closeTranslateAnim);
     }
 
-    private void hdAnim() {
-        tv_avd_hd.startAnimation(hdAnimationSet);
-    }
-
-
-    private void sdAnim() {
-        tv_avd_sd.startAnimation(sdAnimationSet);
-    }
-
     //高清文字颜色
     private void setHdTvBlue() {
         tv_avd_hd.setBackgroundColor(0x00ffffff);
@@ -553,6 +658,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_sd.setTextColor(0xff5ba8f3);
         tv_avd_hd.setTextColor(0xffe6e6e6);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -585,6 +691,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             delaySub2.unsubscribe();
             delaySub2 = null;
         }
+
+        if (isPlayVideoLocalDeleteObservable != null) {
+            RxBus.get().unregister(IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE, isPlayVideoLocalDeleteObservable);
+        }
+
         super.onDestroy();
     }
 
@@ -602,6 +713,16 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             isDisplayCover = true;
             Imageload.display(this, videoInfoModel.videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
         }
+    }
+
+    private boolean isVideoDownload() {
+        if (videoInfoModel.status == VideoStatus.FINISH) {
+            File file = new File(videoInfoModel.localVideoPath);
+            if (file.isFile() && file.exists()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     class AnimListener implements Animation.AnimationListener {
@@ -636,14 +757,38 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     class ConnectionChangeReceiver extends BroadcastReceiver {
+
+        private boolean isVideoDownload() {
+            if (videoInfoModel == null) {
+                VideoInfoModel model = getPresenter().getVideoInfo(videoId);
+                if (model != null && model.status == VideoStatus.FINISH) {
+                    File file = new File(model.localVideoPath);
+                    if (file.isFile() && file.exists()) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                if (videoInfoModel.status == VideoStatus.FINISH) {
+                    File file = new File(videoInfoModel.localVideoPath);
+                    if (file.isFile() && file.exists()) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
             NetUtils.NetState netStatus = NetUtils.getNetState();
             if (netStatus == NetUtils.NetState.NET_NO) {   //无网络
-                ll_mvv_nowifi.setVisibility(View.VISIBLE);
-                tv_mvv_no_wifi.setText(R.string.avd_no_net_str);
-                tv_mvv_rich_go.setText(R.string.avd_ref_str);
+                if (!isVideoDownload()) {
+                    ll_mvv_nowifi.setVisibility(View.VISIBLE);
+                    tv_mvv_no_wifi.setText(R.string.avd_no_net_str);
+                    tv_mvv_rich_go.setText(R.string.avd_ref_str);
+                }
                 getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
 
             } else if (netStatus == NetUtils.NetState.NET_WIFI) {   //wifi

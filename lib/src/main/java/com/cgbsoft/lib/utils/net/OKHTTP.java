@@ -106,10 +106,10 @@ public class OKHTTP {
             if (response.code() != 200) {
                 if (response.code() == 500) {
                     message = "请求错误";
-                } else if (response.code() == 511) {
+                } else if (response.code() == 511 || response.code() == 510) {
                     message = "token失效";
                     SPreference.quitLogin(Appli.getContext());
-                    RxBus.get().post(RE_LOGIN_OBSERVABLE, true);
+                    RxBus.get().post(RE_LOGIN_OBSERVABLE, response.code());
                 }
                 httpCodeInterceptor(responseBody, UTF8, response, message);
             }

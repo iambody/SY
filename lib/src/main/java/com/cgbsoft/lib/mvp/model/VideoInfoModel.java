@@ -21,7 +21,7 @@ public class VideoInfoModel {
     public String localVideoPath;
 
     public int currentTime;  //增加当前播放时间
-    public int status;       //下载完成:2 / 下载中：0  / 未下载：1
+    public int status;
     public long finalPlayTime;  //最后一次播放时间
     public long size;          //下载文件大小
     public double percent;       //下载百分百
@@ -29,5 +29,6 @@ public class VideoInfoModel {
     public long downloadTime;   //下载时间
     public int encrypt;          //1:没有加密 2：加密
     public int hasRecord = 1;    //是否在播放列表中显示   1显示 0不显示
+    public int isDelete = 0;//是否删除了
 
 }

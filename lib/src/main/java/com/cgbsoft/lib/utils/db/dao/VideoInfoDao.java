@@ -44,6 +44,7 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
         public final static Property DownloadTime = new Property(17, long.class, "downloadTime", false, "DOWNLOAD_TIME");
         public final static Property Encrypt = new Property(18, int.class, "encrypt", false, "ENCRYPT");
         public final static Property HasRecord = new Property(19, int.class, "hasRecord", false, "HAS_RECORD");
+        public final static Property IsDelete = new Property(20, int.class, "isDelete", false, "IS_DELETE");
     }
 
 
@@ -78,7 +79,8 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
                 "\"DOWNLOADTYPE\" INTEGER NOT NULL ," + // 16: downloadtype
                 "\"DOWNLOAD_TIME\" INTEGER NOT NULL ," + // 17: downloadTime
                 "\"ENCRYPT\" INTEGER NOT NULL ," + // 18: encrypt
-                "\"HAS_RECORD\" INTEGER NOT NULL );"); // 19: hasRecord
+                "\"HAS_RECORD\" INTEGER NOT NULL ," + // 19: hasRecord
+                "\"IS_DELETE\" INTEGER NOT NULL );"); // 20: isDelete
     }
 
     /** Drops the underlying database table. */
@@ -146,6 +148,7 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
         stmt.bindLong(18, entity.getDownloadTime());
         stmt.bindLong(19, entity.getEncrypt());
         stmt.bindLong(20, entity.getHasRecord());
+        stmt.bindLong(21, entity.getIsDelete());
     }
 
     @Override
@@ -207,6 +210,7 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
         stmt.bindLong(18, entity.getDownloadTime());
         stmt.bindLong(19, entity.getEncrypt());
         stmt.bindLong(20, entity.getHasRecord());
+        stmt.bindLong(21, entity.getIsDelete());
     }
 
     @Override
@@ -236,7 +240,8 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
             cursor.getInt(offset + 16), // downloadtype
             cursor.getLong(offset + 17), // downloadTime
             cursor.getInt(offset + 18), // encrypt
-            cursor.getInt(offset + 19) // hasRecord
+            cursor.getInt(offset + 19), // hasRecord
+            cursor.getInt(offset + 20) // isDelete
         );
         return entity;
     }
@@ -263,6 +268,7 @@ public class VideoInfoDao extends AbstractDao<VideoInfo, Long> {
         entity.setDownloadTime(cursor.getLong(offset + 17));
         entity.setEncrypt(cursor.getInt(offset + 18));
         entity.setHasRecord(cursor.getInt(offset + 19));
+        entity.setIsDelete(cursor.getInt(offset + 20));
      }
     
     @Override

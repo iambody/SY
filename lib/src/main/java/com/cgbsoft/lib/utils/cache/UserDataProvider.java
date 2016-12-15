@@ -221,6 +221,15 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
         return queryByTitle(context, USER_ID_KEY);
     }
 
+    public static void saveLoginName(Context context, String loginName){
+        delete(context, USER_LOGIN_NAME);
+        insertUpDate(context, USER_LOGIN_NAME, loginName);
+    }
+
+    public static String getLoginName(Context context){
+        return queryByTitle(context, USER_LOGIN_NAME);
+    }
+
     /**
      * 获取用户信息
      *

@@ -10,6 +10,7 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.contract.VideoDetailContract;
 import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -28,6 +29,12 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
         super(context, view);
         daoUtils = new DaoUtils(context, DaoUtils.W_VIDEO);
+    }
+
+
+    public void getLocalVideoDetailInfo(String videoId) {
+        getVideoDetailInfo(videoId);
+        getView().getLocalVideoInfoSucc(viModel);
     }
 
     @Override
@@ -56,9 +63,11 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.content = result.videoSummary;
                 viModel.likeNum = Integer.parseInt(result.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
-                viModel.hasRecord = 1;
+                viModel.hasRecord = VideoStatus.RECORD;
+                viModel.encrypt = 1;
+                viModel.isDelete = VideoStatus.UNDELETE;
                 if (isInitData) {
-                    viModel.status = 1;
+                    viModel.status = VideoStatus.NONE;
                 }
 
                 updataLocalVideoInfo();
@@ -135,6 +144,12 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         return daoUtils.getCacheVideoNum();
     }
 
+    @Override
+    public VideoInfoModel getVideoInfo(String videoId) {
+        return daoUtils.getVideoInfoModel(videoId);
+    }
+
+
     /**
      * 获取本地数据
      *
@@ -144,6 +159,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     private void getLocalVideoInfo(String videoId) {
         viModel = daoUtils.getVideoInfoModel(videoId);
     }
+
 
     /**
      * 保存到本地

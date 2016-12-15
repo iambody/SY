@@ -11,6 +11,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
@@ -31,8 +32,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
 
-    private Observable<Boolean> reLoginObservable;
+    private Observable<Integer> reLoginObservable;
     private boolean isReLogin;
+
+    private CustomDialog mCustomDialog;
+    private CustomDialog.Builder mCustomBuilder;
+
 
     @Override
     protected int layoutID() {
@@ -56,22 +61,16 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         transaction.add(R.id.fl_main_content, mContentFragment);
         transaction.commitAllowingStateLoss();
 
-        reLoginObservable = RxBus.get().register(RE_LOGIN_OBSERVABLE, Boolean.class);
-        reLoginObservable.subscribe(new RxSubscriber<Boolean>() {
-            @Override
-            protected void onEvent(Boolean aBoolean) {
-                isReLogin = aBoolean;
-                if (isReLogin) {
-                    openActivity(LoginActivity.class);
-                    finish();
-                }
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-
+        mCustomDialog = new CustomDialog(this);
+        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true);
+        mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+            dialog.dismiss();
+            if (isReLogin) {
+                openActivity(LoginActivity.class);
+                finish();
             }
         });
+        initReLoginObservable();
     }
 
     @Override
@@ -169,5 +168,30 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void onBackPressed() {
         exitBy2Click();
+    }
+
+
+    private void initReLoginObservable(){
+        reLoginObservable = RxBus.get().register(RE_LOGIN_OBSERVABLE, Integer.class);
+        reLoginObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer code) {
+                isReLogin = true;
+                String msg = "";
+                if (code == 510) {
+                    msg = getString(R.string.token_error_510_str);
+                } else if (code == 511) {
+                    msg = getString(R.string.token_error_511_str);
+                }
+
+                mCustomBuilder.setMessage(msg);
+                mCustomBuilder.create().show();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 }

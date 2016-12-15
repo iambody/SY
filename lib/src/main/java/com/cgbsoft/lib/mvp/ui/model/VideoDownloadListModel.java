@@ -16,6 +16,13 @@ public class VideoDownloadListModel extends BaseModel {
     public String videoTitle;
     public String progressStr;
     public String speedStr;
+    public int status; //下载完成:2 / 下载中：0  / 未下载：1
+    public int downloadtype;
+    public long downloadTime;
+    public String localPath;
+
+    public int max;
+    public int progress;
 
     public boolean isCheck;
 }

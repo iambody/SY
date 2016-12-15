@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
@@ -22,6 +23,8 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.start.WelcomeContract;
 import com.google.gson.Gson;
+import com.lzy.okserver.download.DownloadManager;
+import com.lzy.okserver.download.DownloadService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +48,10 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
     public WelcomePersenter(Context context, WelcomeContract.View view) {
         super(context, view);
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
+        DownloadManager downloadManager = DownloadService.getDownloadManager();
+        downloadManager.getThreadPool().setCorePoolSize(1);
+        downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
+        downloadManager.stopAllTask();
     }
 
     /**

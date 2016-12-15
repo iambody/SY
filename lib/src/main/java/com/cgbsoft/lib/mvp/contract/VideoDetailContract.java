@@ -17,6 +17,7 @@ public interface VideoDetailContract {
         void updataFinalWatchTime();
         void toVideoLike();
         long getCacheVideoNum();
+        VideoInfoModel getVideoInfo(String videoId);
     }
 
     interface View extends BaseView {

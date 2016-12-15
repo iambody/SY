@@ -16,6 +16,8 @@ public interface CPConstant {
 
     String USER_ID_KEY = "user_id";
 
+    String USER_LOGIN_NAME = "user_name";
+
     //身份key
     String IDENTIFY_FLAG_KEY = "IDENTIFY_FLAG";
 

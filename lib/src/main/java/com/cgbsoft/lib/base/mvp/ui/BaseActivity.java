@@ -67,10 +67,16 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
+    }
+
+
     protected void before() {
         mAppli = (Appli) getApplication();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
     }
 
     protected abstract int layoutID();

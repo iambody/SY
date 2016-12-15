@@ -50,8 +50,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
 
                 SPreference.saveLoginFlag(getContext(), true);
-                if (loginBean.userInfo != null)
+                if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
+                    SPreference.saveLoginName(getContext(), un);
+                }
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
 

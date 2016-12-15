@@ -1,5 +1,8 @@
 package com.cgbsoft.lib.mvp.ui.listener;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.cgbsoft.lib.widget.recycler.OnBaseListener;
 
 /**
@@ -10,7 +13,7 @@ import com.cgbsoft.lib.widget.recycler.OnBaseListener;
  */
 public interface VideoDownloadListListener extends OnBaseListener{
 
-    void onItemClick(int position);
+    void onItemClick(int position, ImageView iv_avd_cover, ImageView iv_avd_pause, TextView tv_avd_pause);
 
     void onCheck(int position, boolean isCheck);
 }

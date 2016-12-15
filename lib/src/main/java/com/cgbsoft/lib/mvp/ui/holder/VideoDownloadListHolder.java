@@ -22,8 +22,8 @@ import butterknife.BindView;
  *  
  */
 public class VideoDownloadListHolder extends BaseHolder {
-    @BindView(R2.id.v_avd_line)
-    public View v_avd_line;
+    @BindView(R2.id.tv_avd_id)
+    public TextView tv_avd_id;
 
     @BindView(R2.id.ll_avd)
     public LinearLayout ll_avd;
@@ -34,8 +34,17 @@ public class VideoDownloadListHolder extends BaseHolder {
     @BindView(R2.id.cb_avd)
     public CheckBox cb_avd;
 
+    @BindView(R2.id.fl_avd_cover)
+    public FrameLayout fl_avd_cover;
+
     @BindView(R2.id.iv_avd_cover)
     public ImageView iv_avd_cover;
+
+    @BindView(R2.id.ll_avd_pause)
+    public LinearLayout ll_avd_pause;
+
+    @BindView(R2.id.iv_avd_pause)
+    public ImageView iv_avd_pause;
 
     @BindView(R2.id.tv_avd_pause)
     public TextView tv_avd_pause;
@@ -57,16 +66,12 @@ public class VideoDownloadListHolder extends BaseHolder {
         int width = Utils.convertDipOrPx(context, 150);
         int height = width * 9 / 16;
 
-        ViewGroup.LayoutParams lp = iv_avd_cover.getLayoutParams();
+        ViewGroup.LayoutParams lp = fl_avd_cover.getLayoutParams();
         lp.width = width;
         lp.height = height;
-        iv_avd_cover.setLayoutParams(lp);
+        fl_avd_cover.setLayoutParams(lp);
 
-        if (getAdapterPosition() == 0) {
-            v_avd_line.setVisibility(View.VISIBLE);
-        }
-
-        ll_avd.setOnClickListener(v -> listListener.onItemClick(getAdapterPosition()));
+        ll_avd.setOnClickListener(v -> listListener.onItemClick(getAdapterPosition(), iv_avd_cover, iv_avd_pause, tv_avd_pause));
         cb_avd.setOnCheckedChangeListener((buttonView, isChecked) -> listListener.onCheck(getAdapterPosition(), isChecked));
         fl_avd_check.setOnClickListener(v -> {
             boolean isCheck = !cb_avd.isChecked();

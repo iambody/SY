@@ -253,6 +253,19 @@ public class SPreference implements Constant {
     }
 
     /**
+     * 保存登录名
+     * @param context
+     * @param loginName
+     */
+    public static void saveLoginName(@NonNull Context context, String loginName){
+        UserDataProvider.saveLoginName(context, loginName);
+    }
+
+    public static String getLoginName(@NonNull Context context){
+        return UserDataProvider.getLoginName(context);
+    }
+
+    /**
      * 清理用户信息
      *
      * @param context 上下文
@@ -260,6 +273,7 @@ public class SPreference implements Constant {
     public static void quitLogin(@NonNull Context context) {
         UserDataProvider.quitLogin(context);
     }
+
 
     /**
      * 获取用户id

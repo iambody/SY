@@ -9,6 +9,7 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.mvp.ui.holder.VideoDownloadListHolder;
 import com.cgbsoft.lib.mvp.ui.listener.VideoDownloadListListener;
 import com.cgbsoft.lib.mvp.ui.model.VideoDownloadListModel;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
 
@@ -51,6 +52,7 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.tv_avd_title.setText(model.videoTitle);
             vdlh.tv_avd_progress.setText(model.progressStr);
             vdlh.tv_avd_speed.setText(model.speedStr);
+            vdlh.tv_avd_id.setText(model.videoId);
 
             if (openCheck) {
                 vdlh.cb_avd.setVisibility(View.VISIBLE);
@@ -58,8 +60,24 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
                 vdlh.cb_avd.setVisibility(View.GONE);
             }
 
+            vdlh.pb_avd.setMax(model.max);
+            vdlh.pb_avd.setProgress(model.progress);
+            vdlh.pb_avd.setVisibility(View.VISIBLE);
+            vdlh.ll_avd_pause.setVisibility(View.VISIBLE);
+
+            if (model.status == VideoStatus.DOWNLOADING || model.status == VideoStatus.WAIT) {//正在下载
+                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_start);
+                vdlh.tv_avd_pause.setText(R.string.caching_str);
+            } else if (model.status == VideoStatus.NONE) {//未下载
+                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
+                vdlh.tv_avd_pause.setText(R.string.paused_str);
+            } else if (model.status == VideoStatus.FINISH) {
+                vdlh.ll_avd_pause.setVisibility(View.GONE);
+                vdlh.pb_avd.setVisibility(View.GONE);
+            }
+
             vdlh.cb_avd.setChecked(model.isCheck);
-        }else {
+        } else {
             bindErrorHolder(model, holder);
         }
     }

@@ -26,5 +26,9 @@ public interface RxConstant {
 
     String VIDEO_DOWNLOAD_REF_ONE_OBSERVABE = "video_download_ref_one_observabe";
 
+    String NOW_PLAY_VIDEOID_OBSERVABLE = "now_play_videoid_observable";
+
+    String IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE = "is_play_video_local_delete_observable";
+
     String RE_LOGIN_OBSERVABLE = "re_login_observable";
 }

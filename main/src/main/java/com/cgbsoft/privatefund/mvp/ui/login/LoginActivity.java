@@ -116,8 +116,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
+        String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
             et_al_username.setText(userInfo.userName);
+        } else if (loginName != null) {
+            et_al_username.setText(loginName);
         }
 
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
@@ -128,9 +131,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
-                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
-                    dialog.dismiss();
-                });
+                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
 
         if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
