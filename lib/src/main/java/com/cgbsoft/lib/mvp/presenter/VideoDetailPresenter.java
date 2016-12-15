@@ -10,11 +10,18 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.contract.VideoDetailContract;
 import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.listener.VideoDownloadCallback;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okserver.download.DownloadInfo;
+import com.lzy.okserver.download.DownloadManager;
+import com.lzy.okserver.download.DownloadService;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:09
@@ -25,16 +32,50 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     private DaoUtils daoUtils;
     private VideoInfoModel viModel;
     private boolean isInitData;
+    private DownloadManager downloadManager;
+    private VideoDownloadCallback videoDownloadCallback;
 
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
         super(context, view);
         daoUtils = new DaoUtils(context, DaoUtils.W_VIDEO);
+        downloadManager = DownloadService.getDownloadManager();
+        downloadManager.getThreadPool().setCorePoolSize(1);
+        downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
     }
 
 
     public void getLocalVideoDetailInfo(String videoId) {
         getVideoDetailInfo(videoId);
         getView().getLocalVideoInfoSucc(viModel);
+    }
+
+
+    @Override
+    public void toDownload(String videoId) {
+        viModel = getVideoInfo(videoId);
+        String videoUrl;
+        if (viModel.downloadtype == VideoStatus.HD) {//高清
+            videoUrl = viModel.hdUrl;
+        } else {
+            videoUrl = viModel.sdUrl;
+        }
+        if (getDownloadManager() == null) {
+            return;
+        }
+        DownloadInfo info = getDownloadManager().getDownloadInfo(videoId);
+        videoDownloadCallback = new VideoDownloadCallback(videoId);
+        GetRequest getRequest = OkGo.get(videoUrl);
+        if (info == null) {
+            getDownloadManager().addTask(videoId, getRequest, videoDownloadCallback);
+        } else {
+            switch (info.getState()) {
+                case DownloadManager.PAUSE:
+                case DownloadManager.NONE:
+                case DownloadManager.ERROR:
+                    getDownloadManager().addTask(videoId, getRequest, videoDownloadCallback);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -160,6 +201,9 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         viModel = daoUtils.getVideoInfoModel(videoId);
     }
 
+    private DownloadManager getDownloadManager() {
+        return downloadManager;
+    }
 
     /**
      * 保存到本地
@@ -181,6 +225,10 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         if (daoUtils != null) {
             daoUtils.destory();
             daoUtils = null;
+        }
+        if (videoDownloadCallback != null) {
+            videoDownloadCallback.destory();
+            videoDownloadCallback = null;
         }
     }
 }

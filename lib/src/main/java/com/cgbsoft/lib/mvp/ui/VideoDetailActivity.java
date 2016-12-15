@@ -274,7 +274,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_sd.startAnimation(sdAnimationSet);
 
         //todo 开始后台下载
-        getPresenter().updataDownloadType(1);
+        getPresenter().updataDownloadType(VideoStatus.SD);
+        getPresenter().toDownload(videoId);
     }
 
     @OnClick(R2.id.tv_avd_hd)
@@ -284,7 +285,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.startAnimation(hdAnimationSet);
 
         //todo 开始后台下载
-        getPresenter().updataDownloadType(0);
+        getPresenter().updataDownloadType(VideoStatus.HD);
+        getPresenter().toDownload(videoId);
     }
 
     //打开下载列表页面
@@ -385,6 +387,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     if (file.isFile() && file.exists()) {
                         tv_avd_cache.setText(R.string.cached_str);
                         iv_avd_cache.setImageResource(R.drawable.ic_cached);
+
+                        if (videoInfoModel.downloadtype == 1) {
+                            setSdTvBlue();
+                        } else {
+                            setHdTvBlue();
+                        }
+
                         tv_avd_hd.setEnabled(false);
                         tv_avd_sd.setEnabled(false);
                         break;

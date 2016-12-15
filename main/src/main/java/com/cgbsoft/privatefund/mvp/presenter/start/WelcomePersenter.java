@@ -14,8 +14,10 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.mvp.model.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -43,15 +45,26 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> implements WelcomeContract.Persenter {
     private Observable<Boolean> welcomeFinishObservable;
-    private DaoUtils daoUtils;
+    private DaoUtils daoUtils, daoVideoUtils;
 
     public WelcomePersenter(Context context, WelcomeContract.View view) {
         super(context, view);
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
+        daoVideoUtils = new DaoUtils(context, DaoUtils.W_VIDEO);
         DownloadManager downloadManager = DownloadService.getDownloadManager();
         downloadManager.getThreadPool().setCorePoolSize(1);
         downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
         downloadManager.stopAllTask();
+        List<VideoInfoModel> list = daoVideoUtils.getAllVideoInfo();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                VideoInfoModel vim = list.get(i);
+                if (vim.status == VideoStatus.WAIT) {
+                    vim.status = VideoStatus.NONE;
+                    daoVideoUtils.saveOrUpdateVideoInfo(vim);
+                }
+            }
+        }
     }
 
     /**
@@ -234,5 +247,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         super.detachView();
         daoUtils.destory();
         daoUtils = null;
+        daoVideoUtils.destory();
+        daoVideoUtils = null;
     }
 }

@@ -189,10 +189,15 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (list.size() > 0 && list.get(0).type == VideoDownloadListModel.ERROR) {
             return;
         }
+        if (isAllDownloadStart) {
+            getPresenter().stopAllDownload();
+        } else {
+            getPresenter().startAllDownload(list);
+        }
+
         isAllDownloadStart = !isAllDownloadStart;
         changeAllStart();
 
-        getPresenter().startAllDownload(list);
     }
 
     @OnClick(R2.id.tv_avd_choiceAll)
@@ -532,8 +537,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         pb_avd.setVisibility(View.VISIBLE);
         tv_avd_speed.setVisibility(View.VISIBLE);
         changeStart(true, iv_avd_pause, tv_avd_pause);
-        pb_avd.setMax(100);
-        pb_avd.setProgress((int) progress * 100);
+        if (pb_avd.getMax() != totalSize) {
+            pb_avd.setMax((int) totalSize);
+        }
+        pb_avd.setProgress((int) currentSize);
 
         String downloadLength = Formatter.formatFileSize(this, currentSize);
         String totalLength = Formatter.formatFileSize(this, totalSize);

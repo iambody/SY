@@ -93,6 +93,7 @@
                     android:layout_height="5dp"
                     android:layout_gravity="center"
                     android:indeterminate="false"
+                    android:max="100"
                     android:indeterminateOnly="false" />
             </FrameLayout>
 

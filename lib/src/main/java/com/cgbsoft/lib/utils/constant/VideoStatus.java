@@ -17,4 +17,7 @@ public class VideoStatus {
 
     public static final int RECORD = 1;
     public static final int UNRECORD = 0;
+
+    public static final int HD = 0;
+    public static final int SD = 1;
 }

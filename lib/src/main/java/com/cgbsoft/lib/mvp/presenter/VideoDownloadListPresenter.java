@@ -3,6 +3,7 @@ package com.cgbsoft.lib.mvp.presenter;
 import android.content.Context;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -166,6 +167,12 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
     }
 
     @Override
+    public void stopAllDownload() {
+        if (getDownloadManager() != null)
+            getDownloadManager().stopAllTask();
+    }
+
+    @Override
     public void removeTask(String videoId) {
         if (getDownloadManager() == null || daoUtils == null)
             return;
@@ -274,9 +281,9 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         model.max = 100;
         model.progress = (int) (videoInfoModel.percent * 100);
 
-        if (videoInfoModel.downloadtype == 1) {//标清
+        if (videoInfoModel.downloadtype == VideoStatus.SD) {//标清
             model.videoUrl = videoInfoModel.sdUrl;
-        } else if (videoInfoModel.downloadtype == 0) {//高清
+        } else if (videoInfoModel.downloadtype == VideoStatus.HD) {//高清
             model.videoUrl = videoInfoModel.hdUrl;
         }
         if (model.status != VideoStatus.FINISH) {
@@ -320,7 +327,12 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
         @Override
         public void onAdd(DownloadInfo downloadInfo) {
-            videoInfoModel.status = VideoStatus.DOWNLOADING;
+            String videoId = isHasDownloading();
+            if(TextUtils.equals(videoId, downloadInfo.getTaskKey())) {
+                videoInfoModel.status = VideoStatus.DOWNLOADING;
+            }else {
+                videoInfoModel.status = VideoStatus.WAIT;
+            }
             videoInfoModel.downloadTime = System.currentTimeMillis();
             saveOrUpdateVideoInfo(videoInfoModel);
         }

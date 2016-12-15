@@ -264,8 +264,8 @@
                             android:layout_gravity="right"
                             android:background="@drawable/shape_round_msg"
                             android:gravity="center"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimens_sp_6" />

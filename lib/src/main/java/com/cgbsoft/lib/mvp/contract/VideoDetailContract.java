@@ -18,6 +18,7 @@ public interface VideoDetailContract {
         void toVideoLike();
         long getCacheVideoNum();
         VideoInfoModel getVideoInfo(String videoId);
+        void toDownload(String videoId);
     }
 
     interface View extends BaseView {

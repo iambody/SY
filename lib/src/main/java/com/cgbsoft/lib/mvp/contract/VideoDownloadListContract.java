@@ -110,6 +110,11 @@ public interface VideoDownloadListContract {
          */
         void updateStatus(String videoId, int status);
 
+        /**
+         * 停止所有下载
+         */
+        void stopAllDownload();
+
     }
 
     interface View extends BaseView {
