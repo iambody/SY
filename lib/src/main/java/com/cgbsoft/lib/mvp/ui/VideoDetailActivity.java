@@ -189,6 +189,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         if (isPlayAnim)
             exitTransition = ActivityTransition.with(getIntent()).duration(200).to(rl_avd_head).start(savedInstanceState);
+        else
+            sv_avd.setVisibility(View.VISIBLE);
 
         if (comeFrom == 1)
             FloatVideoService.stopService();
