@@ -209,6 +209,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+
+        FloatVideoService.stopService();
     }
 
     @Override

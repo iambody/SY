@@ -184,14 +184,15 @@ public class FloatView extends LinearLayout {
                 mTouchStartX = (int) event.getRawX() - this.getMeasuredWidth() / 2;
                 mTouchStartY = (int) event.getRawY() - this.getMeasuredHeight() / 2 - 25;
 
-                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
                 wmParams.x = (int) event.getRawX() - this.getMeasuredWidth() / 2;
                 // 减25为状态栏的高度
                 wmParams.y = (int) event.getRawY() - this.getMeasuredHeight() / 2 - 25;
                 // 刷新
                 wm.updateViewLayout(this, wmParams);
-                break;
+
+                return true;
             case MotionEvent.ACTION_UP:
                 y = (int) event.getRawY() - this.getMeasuredHeight() / 2 - 25;
                 x = (int) event.getRawX() - this.getMeasuredWidth() / 2;
@@ -203,11 +204,11 @@ public class FloatView extends LinearLayout {
                     }
 
                 }
-                break;
+                return true;
             default:
                 break;
         }
-        return super.onTouchEvent(event);
+        return false;
 
     }
 

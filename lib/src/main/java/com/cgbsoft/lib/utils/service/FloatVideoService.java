@@ -72,7 +72,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         initMediaPlayer();
 
         floatView.addToWindow();
-        floatView.setOnClickListener(v -> {
+        floatView.setFloatViewClickListener(() -> {
             Intent intent = new Intent(getApplicationContext(), VideoDetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("videoId", mVideoId);
