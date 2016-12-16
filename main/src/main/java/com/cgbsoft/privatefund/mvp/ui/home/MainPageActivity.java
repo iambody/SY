@@ -1,27 +1,44 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.service.FloatVideoService;
+import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
-import com.cgbsoft.privatefund.mvp.view.home.HomeView;
+import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
+import rx.Observable;
 
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements HomeView, BottomNavigationBar.BottomClickListener {
+import static com.cgbsoft.lib.utils.constant.RxConstant.RE_LOGIN_OBSERVABLE;
+
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
+
+    private Observable<Integer> reLoginObservable;
+    private boolean isReLogin;
+
+    private CustomDialog mCustomDialog;
+    private CustomDialog.Builder mCustomBuilder;
+
 
     @Override
     protected int layoutID() {
@@ -37,20 +54,29 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
-    protected void init() {
-        if (setNetMode())
-            recreate();
+    protected void init(Bundle savedInstanceState) {
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
         transaction.add(R.id.fl_main_content, mContentFragment);
         transaction.commitAllowingStateLoss();
+
+        mCustomDialog = new CustomDialog(this);
+        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true);
+        mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+            dialog.dismiss();
+            if (isReLogin) {
+                openActivity(LoginActivity.class);
+                finish();
+            }
+        });
+        initReLoginObservable();
     }
 
     @Override
     protected MainPagePresenter createPresenter() {
-        return new MainPagePresenter(this);
+        return new MainPagePresenter(this, this);
     }
 
     @Override
@@ -58,7 +84,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
 
-        new DownloadDialog(this, true);
+        if (!SPreference.isThisRunOpenDownload(this))
+            new DownloadDialog(this, true);
     }
 
     private void switchFragment(Fragment to) {
@@ -130,10 +157,43 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onDestroy() {
         super.onDestroy();
         MainTabManager.getInstance().destory();
+        if (reLoginObservable != null) {
+            RxBus.get().unregister(RE_LOGIN_OBSERVABLE, reLoginObservable);
+        }
+        FloatVideoService.stopService();
+        if (isReLogin)
+            return;
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     @Override
     public void onBackPressed() {
         exitBy2Click();
+    }
+
+
+    private void initReLoginObservable(){
+        reLoginObservable = RxBus.get().register(RE_LOGIN_OBSERVABLE, Integer.class);
+        reLoginObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer code) {
+                isReLogin = true;
+                String msg = "";
+                if (code == 510) {
+                    msg = getString(R.string.token_error_510_str);
+                } else if (code == 511) {
+                    msg = getString(R.string.token_error_511_str);
+                }
+
+                mCustomBuilder.setMessage(msg);
+                mCustomBuilder.create().show();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 }

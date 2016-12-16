@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.login;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,8 +14,8 @@ import android.widget.LinearLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.AnimContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.AnimPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.AnimView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,25 +26,23 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimView, SurfaceHolder.Callback {
+public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimContract.View, SurfaceHolder.Callback {
     @BindView(R.id.sv_aa)
-    SurfaceView sv_aa;
+    SurfaceView sv_aa;//影片显示的view
 
     @BindView(R.id.btn_aa_start_app)
-    Button btn_aa_start_app;
+    Button btn_aa_start_app;//立即启动按钮
 
     @BindView(R.id.ll_aa_ids)
     LinearLayout ll_aa_ids;
 
     @BindView(R.id.btn_aa_start_login)
-    Button btn_aa_start_login;
+    Button btn_aa_start_login;//登录按钮，和立即启动按钮功能一样
 
     @BindView(R.id.btn_aa_start_regist)
-    Button btn_aa_start_regist;
+    Button btn_aa_start_regist;//注册按钮.
 
-    private MediaPlayer mediaPlayer;
-
-    private int identity;
+    private MediaPlayer mediaPlayer;//播放器
 
     @Override
     protected int layoutID() {
@@ -51,8 +50,8 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
     }
 
     @Override
-    protected void init() {
-        identity = getIntent().getIntExtra(IDS_KEY, -1);
+    protected void init(Bundle savedInstanceState) {
+        int identity = getIntent().getIntExtra(IDS_KEY, -1);
         int resID = identity == IDS_INVERSTOR ? R.raw.movie_toc : R.raw.movie_tob;
         mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
 
@@ -112,7 +111,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
 
     @Override
     protected AnimPresenter createPresenter() {
-        return new AnimPresenter(this);
+        return new AnimPresenter(this, this);
     }
 
     @Override
@@ -133,6 +132,12 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimVie
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        openActivity(ChoiceIdentityActivity.class);
+        finish();
     }
 
     @Override

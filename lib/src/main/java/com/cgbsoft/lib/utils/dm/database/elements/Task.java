@@ -124,10 +124,10 @@ public class Task {
         try {
             json.put("id", id)
                     .put("name", name)
-                    .put("size", size)
+                    .put("size_sd", size)
                     .put("state", state)
                     .put("url", url)
-                    .put("percent", percent)
+                    .put("percent_sd", percent)
                     .put("chunks", chunks)
                     .put("notify", notify)
                     .put("resumable", resumable)

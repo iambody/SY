@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,11 +17,11 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
-import com.cgbsoft.lib.widget.iOSDialog;
+import com.cgbsoft.lib.widget.IOSDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.RegisterContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.RegisterPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
-import com.cgbsoft.privatefund.mvp.view.login.RegisterView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +37,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterView {
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterContract.View {
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R.id.iv_ar_back)
@@ -74,7 +75,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
-    private iOSDialog miOSDialog;
+    private IOSDialog miOSDialog;
     private int countDownTime = COOL_DOWN_TIME;
     private Subscription countDownSub;
 
@@ -90,7 +91,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());
@@ -113,7 +114,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         et_ar_check.addTextChangedListener(new RegisterTextWatcher(CHECK_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.ra_register_loading_str), false, false);
-        miOSDialog = new iOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
+        miOSDialog = new IOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
             public void left() {
                 this.dismiss();

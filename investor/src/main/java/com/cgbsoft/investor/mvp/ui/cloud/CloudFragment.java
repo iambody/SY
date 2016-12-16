@@ -1,8 +1,9 @@
 package com.cgbsoft.investor.mvp.ui.cloud;
 
+import android.os.Bundle;
 import android.view.View;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 
 /**
@@ -18,12 +19,12 @@ public class CloudFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View view) {
+    protected void init(View view, Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected BasePresenterImpl createPresenter() {
         return null;
     }
 }

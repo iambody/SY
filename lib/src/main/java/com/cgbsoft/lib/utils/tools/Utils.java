@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -82,6 +83,29 @@ public class Utils {
      */
     public static int getScreenHeight(@NonNull Context ctx) {
         return ctx.getApplicationContext().getResources().getDisplayMetrics().heightPixels;
+    }
+
+
+    public static int getRealScreenWidth(Activity activity) {
+        int widthPixels;
+        WindowManager w = activity.getWindowManager();
+        Display d = w.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        widthPixels = metrics.widthPixels;
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
+            try {
+                widthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
+            } catch (Exception ignored) {
+            }
+        else if (Build.VERSION.SDK_INT >= 17)
+            try {
+                android.graphics.Point realSize = new android.graphics.Point();
+                Display.class.getMethod("getRealSize", android.graphics.Point.class).invoke(d, realSize);
+                widthPixels = realSize.x;
+            } catch (Exception ignored) {
+            }
+        return widthPixels;
     }
 
     /**
@@ -254,7 +278,7 @@ public class Utils {
      */
     public static String getIMEI(Context context) {
         TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = mTelephonyManager.getDeviceId();
+        @SuppressLint("HardwareIds") String imei = mTelephonyManager.getDeviceId();
         if (TextUtils.isEmpty(imei)) {
             imei = String.valueOf(System.currentTimeMillis());
         }
@@ -318,6 +342,7 @@ public class Utils {
 
     /**
      * 获取数据库名字
+     *
      * @param context
      * @return
      */
@@ -325,16 +350,21 @@ public class Utils {
         String dbName;
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            dbName = info.metaData.getString("databaseName");
+            dbName = info.metaData.getString("dbName");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             dbName = "privateFundDB";
         }
+        if (TextUtils.isEmpty(dbName)) {
+            dbName = "privateFundDB";
+        }
+
         return dbName;
     }
 
     /**
      * 数据库版本号
+     *
      * @param context
      * @return
      */
@@ -410,6 +440,7 @@ public class Utils {
 
     /**
      * 是否微信安装了
+     *
      * @param context
      * @return
      */

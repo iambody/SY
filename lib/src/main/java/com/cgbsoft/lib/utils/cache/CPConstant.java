@@ -16,6 +16,8 @@ public interface CPConstant {
 
     String USER_ID_KEY = "user_id";
 
+    String USER_LOGIN_NAME = "user_name";
+
     //身份key
     String IDENTIFY_FLAG_KEY = "IDENTIFY_FLAG";
 
@@ -47,4 +49,6 @@ public interface CPConstant {
     String RONDCLOUD_TOKENEXPIRED_KEY = "rondcloud_tokenexpired";
 
     String RONGCLOUD_UID_KEY = "rongcloud_uid";
+
+    String WELCOME_IMG_KEY = "welcome_img_path";
 }

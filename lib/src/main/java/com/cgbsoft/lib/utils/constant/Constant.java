@@ -32,6 +32,41 @@ public interface Constant {
 
     String VOICE_PHONE = "125909888848";
 
+    String ACTION_LIVE_SEND_MSG = "ACTION_LIVE_SEND_MSG";
+    String ACTION_LIVE_SEND_CONTENT = "ACTION_LIVE_SEND_CONTENT";
+
+    //消息模块特殊处理的ID
+    //平台客服
+    String msgCustomerService = "dd0cc61140504258ab474b8f0a38bb56";
+    //直播动态
+    String msgLiveStatus = "INTIME40001";
+    //产品动态
+    String msgProductStatus = "INTIME40002";
+    //营销喜报
+    String MSG_MARKETING_STATUS = "INTIME40003";
+    //运营公告
+    String MSG_OPERATION_STATUS = "INTIME40004";
+    //系统公告
+    String MSG_SYSTEM_STATUS = "INTIME40005";
+    //小秘书
+    String MSG_SECRETARY = "INTIME40006";
+    //交易信息
+    String MSG_TRADE_INFORMATION = "INTIME40007";
+    //特殊消息
+    String MSG_NOKNOW_INFORMATION = "INTIME49999";
+
+    String HAS_PUSH_MESSAGE = "push_message_come_in";
+
+    String ISTHISRUN_OPENDOWNLOAD = "isthisrun_opendownload";
+
+    int RECEIVER_SEND_CODE = 99;
+
+    String RONG_SERVICE_RECEIVER = "rong_service_receiver";
+
+    String FLOAT_POSITION_X = "float_position_x";
+
+    String FLOAT_POSITION_Y = "float_position_y";
+
 
     //----------------权限管理参数(危险权限)------------------
 

@@ -2,10 +2,14 @@
 <resources>
 
     <style name="BaseAnimation">
-        <item name="android:activityOpenEnterAnimation">@null</item>
-        <item name="android:activityOpenExitAnimation">@null</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@null</item>
+        <!--第一次创建新Activity是调用的动画-->
+        <item name="android:activityOpenEnterAnimation">@anim/home_fade_in</item>
+        <!--调用finish关闭该Activity是调用的动画-->
+        <item name="android:activityCloseExitAnimation">@anim/home_fade_out</item>
+        <!--activity还没有finish()下退出效果 -->
+        <item name="android:activityOpenExitAnimation">@anim/home_fade_out</item>
+        <!--上一个activity返回进入效果  -->
+        <item name="android:activityCloseEnterAnimation">@anim/home_fade_in</item>
         <item name="android:taskOpenEnterAnimation">@null</item>
         <item name="android:taskOpenExitAnimation">@null</item>
         <item name="android:taskCloseEnterAnimation">@null</item>
@@ -70,10 +74,17 @@
         <item name="android:maxHeight">10dip</item>
     </style>
 
+    <style name="video_download_horizontal_style">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/video_progress_bar</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:maxHeight">5dip</item>
+    </style>
+
 
     <style name="btn_red_line_bg_style">
         <item name="android:padding">5dp</item>
-        <item name="android:textColor">@color/colorPrimaryDarkAdv</item>
+        <item name="android:textColor">@color/color_red_dark</item>
         <item name="android:background">@drawable/shape_red_line</item>
         <item name="android:textSize">12sp</item>
         <item name="android:layout_marginLeft">20dp</item>
@@ -124,5 +135,9 @@
     <style name="AnimBottom" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <style name="CustomCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/select_checkbox</item>
     </style>
 </resources>

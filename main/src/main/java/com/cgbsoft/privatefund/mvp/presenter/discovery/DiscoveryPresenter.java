@@ -1,17 +1,18 @@
 package com.cgbsoft.privatefund.mvp.presenter.discovery;
 
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
-import com.cgbsoft.privatefund.mvp.view.discovery.DiscoveryView;
+import android.content.Context;
+
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.privatefund.mvp.contract.discovery.DiscoveryContract;
 
 /**
- * 
- *  Created by xiaoyu.zhang on 2016/11/17 09:33
- *  Email:zhangxyfs@126.com
+ * Created by xiaoyu.zhang on 2016/11/17 09:33
+ * Email:zhangxyfs@126.com
  *  
  */
-public class DiscoveryPresenter extends BasePresenter<DiscoveryView> {
+public class DiscoveryPresenter extends BasePresenterImpl<DiscoveryContract.View> implements DiscoveryContract.Presenter {
 
-    public DiscoveryPresenter(DiscoveryView view) {
-        super(view);
+    public DiscoveryPresenter(Context context, DiscoveryContract.View view) {
+        super(context, view);
     }
 }

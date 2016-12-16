@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pro="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_mvv_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.tencent.qcload.playersdk.ui.VideoRootFrame
+            android:id="@+id/vrf_mvv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_mvv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.cgbsoft.lib.widget.ProgressWheel
+            android:id="@+id/pw_mvv_wait"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="70dp"
+            pro:matProg_barColor="#a3a3a3"
+            pro:matProg_progressIndeterminate="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_mvv_nowifi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_333333"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_mvv_no_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:text="@string/avd_no_wifi_str"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_mvv_rich_go"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/avd_rich_go_str"
+                android:textColor="#5ba8f3"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_mvv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_play_back" />
+
+        <ImageView
+            android:id="@+id/iv_mvv_back_play"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_back_play" />
+    </RelativeLayout>
+
+</RelativeLayout>

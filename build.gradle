@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
@@ -27,24 +27,22 @@ ext {
     buildToolsVersion = "25.0.0"
     minSdkVersion = 17
     targetSdkVersion = 24
-    versionCode = 50009
+    versionCode = 55100
     versionName = "5.0.9"
-    databaseName = "privateFundDB";
+    databaseName = "privateFundDB.db";
     databaseVer = 1;
 
     support_v4_version = '24.1.0'
     android_need_version = '25.0.0'
-    okhttp_need_version = '3.2.0'
-    retrofit_need_version = '2.0.2'
-    rxlifecycle_need_version = '0.5.0'
+    okhttp_need_version = '3.5.0'
+    okio_need_version = '1.11.0'
+    retrofit_need_version = '2.1.0'
+    rxlifecycle_need_version = '1.0'
     butterknife_need_version = '8.4.0'
-    okio_need_version = '1.7.0'
-    weakHandler_need_version = '1.1'
     gson_need_version = '2.4'
     recycleanim_need_version = '2.0.0'
     rxandroid_need_version = '1.2.0'
     rxjava_need_version = 'x.y.z'
-    picasso_need_version = '2.5.2'
     glide_need_version = '3.7.0'
     okGlide_need_version = '1.4.0@aar'
     glideAnim_need_version = '2.0.0'
@@ -52,6 +50,12 @@ ext {
     floatbar_need_version = '1.0.2'
     avilib_need_version = '1.0.0'
     recRefLayout_need_version = '2.0.3'
+    okGo_need_version = '2.1.4'
+    okGoRx_need_version = '0.1.2'
+    okGoServer_need_version = '1.1.3'
+    fbRebound_need_version = '0.3.8'
+    actvityTr_need_version = '1.3.2'
+    robolectric_need_version = '3.1.4'
 
     testRunner = 'android.support.test.runner.AndroidJUnitRunner'
     testC = '4.12'

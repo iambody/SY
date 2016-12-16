@@ -1,7 +1,10 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -19,9 +22,9 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.LoginContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.LoginPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
-import com.cgbsoft.privatefund.mvp.view.login.LoginView;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R.id.iv_al_back)
     ImageView iv_al_back;//返回按钮
@@ -63,8 +66,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.tv_al_forget)
     TextView tv_al_forget;//忘记密码
 
-    @BindView(R.id.iv_al_wx)
-    ImageView iv_al_wx;//微信登陆
+    @BindView(R.id.weixin_text)
+    TextView weixin_text;//微信登陆
 
 
     private LoadingDialog mLoadingDialog;
@@ -72,6 +75,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     private UMShareAPI mUMShareAPI;
+    private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
 
     @Override
@@ -80,13 +84,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
+    protected boolean getIsNightTheme() {
+        return true;
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());
@@ -103,10 +106,26 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 btn_al_login.setTextColor(0xffffffff);
                 break;
         }
+        if (savedInstanceState == null) {
+            if (identity == IDS_ADVISER) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        }
 
-        UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
+
+        UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
+        String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
-            et_al_username.setText(userInfo.getUserName());
+            et_al_username.setText(userInfo.userName);
+        } else if (loginName != null) {
+            et_al_username.setText(loginName);
+        }
+        if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
+            iv_al_del_un.setVisibility(View.VISIBLE);
+            isUsernameInput = true;
         }
 
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
@@ -115,11 +134,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
         mUMShareAPI = UMShareAPI.get(this);
 
-        CustomDialog mCustomDialog = new CustomDialog(this);
+        mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
-                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> {
-                    dialog.dismiss();
-                });
+                .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
+
         if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
     }
@@ -184,13 +202,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         toDataStatistics(1002, 10006, "忘记密码");
         toDataStatistics(1002, 10018, "选择登录");
 
-        Intent intent = new Intent(this, ForgetPasswordActivity.class);
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
         finish();
     }
 
-    @OnClick(R.id.iv_al_wx)
+    @OnClick(R.id.weixin_text)
     void weixinClick() {//微信登陆
         toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
@@ -206,6 +224,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginFail() {
         //todo 测试用
         openActivity(MainPageActivity.class);
+        finish();
+    }
+
+    @Override
+    public void toBindActivity() {
+        Intent intent = new Intent(this, BindPhoneActivity.class);
+        intent.putExtra(IDS_KEY, identity);
+        startActivity(intent);
         finish();
     }
 
@@ -264,6 +290,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    @Override
+    public void finish() {
+        if (identity == IDS_INVERSTOR) {
+            toDataStatistics(2002, 20006, "返回");
+        }
+        super.finish();
+    }
+
     private class MUMAuthListener implements UMAuthListener {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
@@ -278,7 +312,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                     dialog.dismiss();
                 });
             }
-
             getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
         }
 

@@ -1,12 +1,10 @@
 package com.cgbsoft.lib.utils.rxjava;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.net.SocketTimeoutException;
 
 import rx.Subscriber;
-import rx.exceptions.OnErrorFailedException;
 
 /**
  * Created by xiaoyu.zhang on 2016/8/8.
@@ -14,6 +12,7 @@ import rx.exceptions.OnErrorFailedException;
 
 public abstract class RxSubscriber<T> extends Subscriber<T> {
     private static final String TAG = "RxSubscriber";
+
     @Override
     public void onNext(T t) {
         try {
@@ -21,11 +20,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, t.getClass().toString() + "\n" + e.getMessage());
-            //不知道这儿快是否会被调用
-            if (e instanceof OnErrorFailedException && e.getMessage() != null
-                    && TextUtils.equals(e.getMessage(), "Error occurred when trying to propagate error to Observer.onError")) {
-                toReRxRegister();
-            }
+            toReRxRegister();
         }
     }
 

@@ -47,6 +47,18 @@ public class NetConfig {
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
+    static class INFORMATION {
+        private static final String information = "/information";
+        //获取学院推荐视频
+        static final String GET_COLLEGE_RECOMMEND_VIDEO = API_URL + information + "/video/recommend/5.0";
+        //获取学院其他视频
+        static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
+        //获取视频详情
+        static final String GET_VIDEO_INFO = API_URL + information + "/video/5.0";
+        //点赞
+        static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+    }
+
     //用户相关
     static class USER {
         private static final String user = "/user";
@@ -64,6 +76,10 @@ public class NetConfig {
         static final String CHECKCODE_URL = AUTH_URL + user + "/checkCaptcha";
         //重置密码
         static final String RESETPWD_URL = AUTH_URL + user + "/resetPassword";
+        //合并帐号--验证手机
+        static final String WXMERGECHECK_URL = AUTH_URL + user + "/wxMergePhone";
+        // 合并手机账户－－确认合并
+        static final String WXMARGECONFIRM_URL = AUTH_URL + user + "/confirmMerge";
     }
 
 

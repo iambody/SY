@@ -1,12 +1,14 @@
 package com.cgbsoft.lib.utils.exception;
 
+import java.io.IOException;
+
 /**
  * User: Axl_Jacobs(Axl.Jacobs@gmail.com)
  * Date: 2016-05-06
  * Time: 15:37
  * FIXME
  */
-public class ApiException extends Exception {
+public class ApiException extends IOException {
     String ResultMessage;
     String ResultCode;
 

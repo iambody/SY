@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
-import com.cgbsoft.lib.base.model.bean.DaoSession;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
+import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import butterknife.Unbinder;
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends RxFragment implements Constant {
+public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
     private Appli mAppli;
     private WeakHandler mBaseHandler;//handler
     private View mFragmentView;
@@ -51,7 +52,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
             mFragmentView = inflater.inflate(layoutID(), container, false);
         }
         after(mFragmentView);
-        init(mFragmentView);
+        init(mFragmentView, savedInstanceState);
         data();
         return mFragmentView;
     }
@@ -72,6 +73,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        OtherDataProvider.addTopActivity(getContext().getApplicationContext(), getClass().getName());
+    }
+
     protected void before() {
         mAppli = (Appli) getActivity().getApplication();
     }
@@ -84,7 +91,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
 
     protected abstract int layoutID();
 
-    protected abstract void init(View view);
+    protected abstract void init(View view, Bundle savedInstanceState);
 
     protected abstract P createPresenter();
 
@@ -144,6 +151,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment i
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data);
+    }
+
+    protected void toDataStatistics(int grp, int act, String[] args){
+        HashMap<String, String> data = new HashMap<>();
+        data.put("grp", String.valueOf(grp));
+        data.put("act", String.valueOf(act));
+        for (int i = 1; i <= args.length; i++) {
+            data.put("arg" + i, args[i - 1]);
+        }
         DataStatisticsUtils.push(getContext().getApplicationContext(), data);
     }
 

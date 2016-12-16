@@ -188,14 +188,6 @@
                 android:layout_toRightOf="@+id/weixin_text"
                 android:background="#d0d0d0" />
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/iv_al_wx"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="19dp"
-            android:background="@drawable/ic_weixin" />
     </LinearLayout>
 
 

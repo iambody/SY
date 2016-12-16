@@ -1,16 +1,17 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.ScrollingImageView;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.ChoiceIdentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.ChoiceIdentityPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.ChoiceIdentityView;
+import com.cgbsoft.privatefund.utils.MainTabManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,26 +23,25 @@ import butterknife.OnClick;
  *  
  */
 public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter>
-        implements ChoiceIdentityView, RadioGroup.OnCheckedChangeListener {
+        implements ChoiceIdentityContract.View, RadioGroup.OnCheckedChangeListener {
     @BindView(R.id.siv_aci_bg)
     ScrollingImageView siv_aci_bg;//背景滚动图
 
     @BindView(R.id.rg_aci)
-    RadioGroup rg_aci;
+    RadioGroup rg_aci;//单选按钮组
 
     @BindView(R.id.rb_aci_inverstor)
-    RadioButton rb_aci_inverstor;
+    RadioButton rb_aci_inverstor;//投资人按钮
 
     @BindView(R.id.rb_aci_adviser)
-    RadioButton rb_aci_adviser;
+    RadioButton rb_aci_adviser;//理财师按钮
 
     @BindView(R.id.btn_aci_next)
-    Button btn_aci_next;
-
-    @BindView(R.id.tv_webaddress)
-    TextView tv_webaddress;
+    Button btn_aci_next;//下一步按钮
 
     private int identity = -1;
+
+    private boolean isExit;
 
     @Override
     protected int layoutID() {
@@ -49,7 +49,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
 
     }
 
@@ -87,11 +87,23 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
                 toDataStatistics(1001, 10000, "理财师");
                 break;
         }
+        //保存身份状态
         SPreference.saveIdtentify(getApplicationContext(), identity);
     }
 
     @Override
     public void onBackPressed() {
-        exitBy2Click();
+        isExit = exitBy2Click();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainTabManager.getInstance().destory();
+
+        if(isExit) {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
     }
 }

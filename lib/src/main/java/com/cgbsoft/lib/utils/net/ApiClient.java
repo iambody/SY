@@ -5,8 +5,11 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
+import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -41,6 +44,16 @@ public class ApiClient {
         params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
 
         return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestAppResources() {
+        Map<String, String> params = new HashMap<>();
+        params.put("os", "1");
+        params.put("version", Utils.getVersionName(Appli.getContext()));
+        params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
     }
 
     /**
@@ -80,6 +93,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    //todo 测试时候调用该接口
+    public static Observable<String> toTestLogin(String username, String pwdMD5) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", username);
+        map.put("password", pwdMD5);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 获取用户信息
      *
@@ -90,6 +111,12 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userid);
         return OKHTTP.getInstance().getRequestManager(true).getUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestUserInfo(String userid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("adviserId", userid);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -107,6 +134,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> getTestRongToken(String rongExpired, String rongUID) {
+        Map<String, String> map = new HashMap<>();
+        if (rongExpired != null)
+            map.put("tokenExpired", rongExpired);
+        map.put("uid", rongUID);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 
     /**
      * 微信 unioid 验证
@@ -118,6 +153,12 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("unionid", unionid);
         return OKHTTP.getInstance().getRequestManager().wxUnioIDCheck(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> wxTestUnioIDCheck(String unionid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("unionid", unionid);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestUnioIDCheck(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -138,6 +179,15 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> toTestWxLogin(String sex, String nickName, String unionid, String headimgurl) {
+        Map<String, String> map = new HashMap<>();
+        map.put("sex", sex);
+        map.put("nickName", nickName);
+        map.put("unionid", unionid);
+        map.put("headImageUrl", headimgurl);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 获取协议
      *
@@ -149,12 +199,13 @@ public class ApiClient {
 
     /**
      * 注册
+     *
      * @param userName
      * @param pwdMd5
      * @param code
      * @return
      */
-    public static Observable<UserInfoDataEntity.Result> toRegister(String userName, String pwdMd5, String code){
+    public static Observable<UserInfoDataEntity.Result> toRegister(String userName, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("password", pwdMd5);
@@ -162,39 +213,64 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("password", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 发送验证码
+     *
      * @param phone
      * @return
      */
-    public static Observable<String> sendCode(String phone, int which){
+    public static Observable<String> sendCode(String phone, int which) {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("checkPhoneDuplicate", String.valueOf(which));
         return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> sendTestCode(String phone, int which) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("checkPhoneDuplicate", String.valueOf(which));
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).sendTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 验证验证码
+     *
      * @param phone
      * @param code
      * @return
      */
-    public static Observable<String> checkCode(String phone, String code){
+    public static Observable<String> checkCode(String phone, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("phoneNum", phone);
         map.put("captcha", code);
         return OKHTTP.getInstance().getRequestManager().checkCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> checkTestCode(String phone, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phoneNum", phone);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 重置密码
+     *
      * @param un
      * @param pwdMd5
      * @param code
      * @return
      */
-    public static Observable<String> resetPwd(String un, String pwdMd5, String code){
+    public static Observable<String> resetPwd(String un, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", un);
         map.put("newPassword", pwdMd5);
@@ -202,7 +278,119 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().resetPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    //.compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<String> resetTestPwd(String un, String pwdMd5, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", un);
+        map.put("newPassword", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetTestPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 合并帐号--验证手机
+     *
+     * @param un
+     * @param code
+     * @return
+     */
+    public static Observable<String> wxMergePhone(String un, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mergePhone", un);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager().wxMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> wxTestMergePhone(String un, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mergePhone", un);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 合并手机账户－－确认合并
+     *
+     * @return
+     */
+    public static Observable<String> wxMergeConfirm() {
+        return OKHTTP.getInstance().getRequestManager().wxMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> wxTestMergeConfirm() {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 获取学院头部数据
+     *
+     * @return
+     */
+    public static Observable<CollegeVideoEntity.Result> getCollegeHeadList() {
+        return OKHTTP.getInstance().getRequestManager().getCollegeHeadList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestCollegeHeadList() {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeHeadList().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取学院其他数据
+     *
+     * @return
+     */
+    public static Observable<CollegeVideoEntity.Result> getVideoOtherList(int offset, String type) {
+        Map<String, String> map = new HashMap<>();
+        if (!TextUtils.isEmpty(type))
+            map.put("type", type);
+        map.put("offset", String.valueOf(offset));
+        map.put("limit", "20");
+        return OKHTTP.getInstance().getRequestManager().getCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestVideoOtherList(int offset, String type) {
+        Map<String, String> map = new HashMap<>();
+        if (!TextUtils.isEmpty(type))
+            map.put("type", type);
+        map.put("offset", String.valueOf(offset));
+        map.put("limit", "20");
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestCollegeOtherList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取视频详情
+     *
+     * @param videoId
+     * @return
+     */
+    public static Observable<VideoInfoEntity.Result> getVideoInfo(String videoId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager().getVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestVideoInfo(String videoId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 视频点赞
+     * @param videoId
+     * @return
+     */
+    public static Observable<VideoLikeEntity.Result> toVideoLike(String videoId){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager().toVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestVideoLike(String videoId){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     /**
      * 重新生成Get 方式的value值

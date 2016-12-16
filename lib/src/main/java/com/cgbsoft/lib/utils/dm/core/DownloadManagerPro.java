@@ -223,7 +223,7 @@ public class DownloadManagerPro {
     //-----------Reports
 
     /**
-     * report task download status in "ReportStructure" style
+     * report task download status_sd in "ReportStructure" style
      *
      * @param token
      *              when you add a new download task it's return to you

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -16,8 +17,8 @@ import android.widget.RelativeLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.start.PermissionContract;
 import com.cgbsoft.privatefund.mvp.presenter.start.PermissionPersenter;
-import com.cgbsoft.privatefund.mvp.view.start.PermissionView;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import butterknife.BindView;
  * Created by xiaoyu.zhang on 2016/5/17.
  * Email:zhangxyfs@126.com
  */
-public class PermissionsActivity extends BaseActivity<PermissionPersenter> implements PermissionView{
+public class PermissionsActivity extends BaseActivity<PermissionPersenter> implements PermissionContract.View {
     @BindView(R.id.ap_bottom_iv)
     ImageView ap_bottom_iv;
 
@@ -65,7 +66,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
     }
 
     @Override
-    public void init() {
+    public void init(Bundle savedInstanceState) {
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ap_bottom_iv.getLayoutParams();
         lp.width = Utils.getScreenWidth(this);
         lp.height = Utils.getScreenWidth(this) * 464 / 1242;
@@ -101,7 +102,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
 
     @Override
     protected PermissionPersenter createPresenter() {
-        return new PermissionPersenter(this);
+        return new PermissionPersenter(this, this);
     }
 
     @Override

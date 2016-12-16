@@ -12,9 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 /**
- * TODO
- * TODO Created by xiaoyu.zhang on 2016/11/11 13:50
- * TODO Email:zhangxyfs@126.com
+ * Created by xiaoyu.zhang on 2016/11/11 13:50
+ * Email:zhangxyfs@126.com
  *  
  */
 public class Base64Util {
@@ -63,24 +62,30 @@ public class Base64Util {
 
     /**
      * 将base64字符串转换成string
-     * @param value
-     * @param flag
-     * @return
-     */
-    public static String fromBase64(@NonNull String value, int flag) {
-        return Arrays.toString(android.util.Base64.decode(value, flag));
-    }
-
-    /**
-     * 将obj转换成base64字符串
      *
      * @param value
      * @param flag
      * @return
      */
-    public static String toBase64(Object value, int flag) {
+    public static String fromBase64(@NonNull String value, int flag) {
+        String result = "";
+        try {
+            result = new String(android.util.Base64.decode(value, flag), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 将obj转换成base64字符串
+     *
+     * @param json
+     * @param flag
+     * @return
+     */
+    public static String toBase64(String json, int flag) {
         String base64Str = null;
-        String json = new Gson().toJson(value);
         byte[] bytes = null;
         try {
             bytes = json.getBytes("utf-8");

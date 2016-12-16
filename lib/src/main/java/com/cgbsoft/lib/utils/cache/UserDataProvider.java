@@ -205,6 +205,13 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
         return false;
     }
 
+    public static void quitLogin(Context context){
+        delete(context, USER_LOGINFLAG_KEY);
+        delete(context, USER_TOKEN_KEY);
+        delete(context, USER_ID_KEY);
+        delete(context, USER_INFO_KEY);
+    }
+
     public static void saveUserId(Context context, String uid) {
         delete(context, USER_ID_KEY);
         insertUpDate(context, USER_ID_KEY, uid);
@@ -212,6 +219,15 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
 
     public static String getUserId(Context context) {
         return queryByTitle(context, USER_ID_KEY);
+    }
+
+    public static void saveLoginName(Context context, String loginName){
+        delete(context, USER_LOGIN_NAME);
+        insertUpDate(context, USER_LOGIN_NAME, loginName);
+    }
+
+    public static String getLoginName(Context context){
+        return queryByTitle(context, USER_LOGIN_NAME);
     }
 
     /**

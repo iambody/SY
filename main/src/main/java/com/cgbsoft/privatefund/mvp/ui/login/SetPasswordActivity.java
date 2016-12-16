@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,8 +15,8 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.login.SetPasswordContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.SetPasswordPresenter;
-import com.cgbsoft.privatefund.mvp.view.login.SetPasswordView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,22 +27,40 @@ import butterknife.OnClick;
  * Email:zhangxyfs@126.com
  *  
  */
-public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordView {
+public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordContract.View {
+    /**
+     * 返回按钮
+     */
     @BindView(R.id.iv_as_back)
     ImageView iv_as_back;
 
+    /**
+     * 第一次输入密码
+     */
     @BindView(R.id.et_as_password1)
     EditText et_as_password1;
 
+    /**
+     * 删除第一次输入的密码
+     */
     @BindView(R.id.iv_as_del_pw1)
     ImageView iv_as_del_pw1;
 
+    /**
+     * 第二次输入密码
+     */
     @BindView(R.id.et_as_password2)
     EditText et_as_password2;
 
+    /**
+     * 删除第二次输入的密码
+     */
     @BindView(R.id.iv_as_del_pw2)
     ImageView iv_as_del_pw2;
 
+    /**
+     * 完成
+     */
     @BindView(R.id.btn_as_ok)
     Button btn_as_ok;
 
@@ -49,10 +68,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     private boolean isPassword1Input, isPassword2Input;
     private final int PASSWORD1_KEY = 1, PASSWORD2_KEY = 2;
     private int identity;
+    private String userName, code;
 
     @Override
     public void onBackPressed() {
-        openActivity(ForgetPasswordActivity.class);
+        openActivity(ResetPasswordActivity.class);
         finish();
     }
 
@@ -62,7 +82,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
+        userName = getIntent().getStringExtra("userName");
+        code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (identity < 0) {
             identity = SPreference.getIdtentify(getApplicationContext());
@@ -85,13 +107,13 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.iv_as_back)
-    void backClick(){
-        openActivity(ForgetPasswordActivity.class);
+    void backClick() {
+        openActivity(ResetPasswordActivity.class);
         finish();
     }
 
     @OnClick(R.id.iv_as_del_pw1)
-    void delPwd1Click(){
+    void delPwd1Click() {
         if (et_as_password1.getText().toString().length() > 0) {
             et_as_password1.setText("");
         }
@@ -99,7 +121,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.iv_as_del_pw2)
-    void delPwd2Click(){
+    void delPwd2Click() {
         if (et_as_password2.getText().toString().length() > 0) {
             et_as_password2.setText("");
         }
@@ -107,17 +129,19 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     }
 
     @OnClick(R.id.btn_as_ok)
-    void okClick(){
+    void okClick() {
         String pwd1 = et_as_password1.getText().toString();
         String pwd2 = et_as_password2.getText().toString();
-        if(!isPassword1Input || isPassword2Input){
+        if (!isPassword1Input || isPassword2Input) {
             MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!TextUtils.equals(pwd1, pwd2)){
+        if (!TextUtils.equals(pwd1, pwd2)) {
             MToast.makeText(getApplicationContext(), getString(R.string.as_nosame_str), Toast.LENGTH_SHORT);
             return;
         }
+
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code);
 
     }
 

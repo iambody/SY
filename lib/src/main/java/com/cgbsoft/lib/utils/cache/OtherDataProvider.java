@@ -311,6 +311,15 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         return Utils.isNumber(id) ? Long.parseLong(id) : -1;
     }
 
+    public static void saveWelcomeImgUrl(Context context, String path) {
+        delete(context, WELCOME_IMG_KEY);
+        insertUpDate(context, WELCOME_IMG_KEY, path);
+    }
+
+    public static String getWelcomeImgUrl(Context context) {
+        return queryByTitle(context, WELCOME_IMG_KEY);
+    }
+
     //---------------融云---------------------
 
     /**

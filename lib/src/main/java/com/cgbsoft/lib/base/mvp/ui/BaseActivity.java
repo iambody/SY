@@ -10,16 +10,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.badoo.mobile.util.WeakHandler;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.base.model.bean.DaoSession;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -36,7 +36,7 @@ import butterknife.Unbinder;
  * Created by user on 2016/11/4.
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements Constant {
+public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCompatActivity implements Constant {
     private Appli mAppli;//applicaiton
     private WeakHandler mBaseHandler;//handler
     private DaoSession mDaoSession;//数据库
@@ -50,30 +50,46 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        before();
-        if (layoutID() > 0)
-            setContentView(layoutID());
-        after();
-        init();
-        data();
+        if (getIsNightTheme() && savedInstanceState == null) {
+            if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        } else {
+            before();
+            if (layoutID() > 0)
+                setContentView(layoutID());
+            after();
+            init(savedInstanceState);
+            data();
+        }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
+    }
+
 
     protected void before() {
         mAppli = (Appli) getApplication();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
     }
 
     protected abstract int layoutID();
 
-    protected abstract void init();
+    protected abstract void init(Bundle savedInstanceState);
 
     protected abstract P createPresenter();
 
     protected void after() {
         mUnbinder = ButterKnife.bind(this);
         mBaseHandler = new WeakHandler();
-        mPresenter = createPresenter();
+        if (mPresenter == null)
+            mPresenter = createPresenter();
 
         if (mIsNeedAdapterPhone && !isNeedAdapterPhone()) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -84,32 +100,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
             }
         }
         if (mIsNeedGoneNavigationBar) {
-            mBaseHandler.post(mHideRunnable);
-            final View decorView = getWindow().getDecorView();
-            decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
-                mBaseHandler.post(mHideRunnable); // hide the navigation bar
-            });
+            toHideNav();
         }
     }
 
     protected void data() {
 
-    }
-
-    protected boolean setNetMode() {
-        int mode;
-        boolean isChange = false;
-        if (SPreference.getIdtentify(this) == Constant.IDS_ADVISER) {
-            mode = AppCompatDelegate.MODE_NIGHT_YES;
-        } else {
-            mode = AppCompatDelegate.MODE_NIGHT_NO;
-        }
-        if (SPreference.getNightMode(this) != mode) {
-            getDelegate().setLocalNightMode(mode);
-            SPreference.saveNightMode(this, mode);
-            isChange = true;
-        }
-        return isChange;
     }
 
     /**
@@ -128,6 +124,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
      */
     protected void setIsNeedGoneNavigationBar(boolean b) {
         mIsNeedGoneNavigationBar = b;
+    }
+
+    /**
+     * 获取夜间模式状态
+     */
+    protected boolean getIsNightTheme() {
+        return false;
     }
 
     /**
@@ -175,6 +178,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         return mPresenter;
     }
 
+    protected void setPresenter() {
+        if (mPresenter == null)
+            mPresenter = createPresenter();
+    }
+
     /**
      * 获取handler
      *
@@ -184,7 +192,27 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         return mBaseHandler;
     }
 
+
+    protected void toHideNav() {
+        mBaseHandler.post(mHideRunnable);
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            mBaseHandler.post(mHideRunnable); // hide the navigation bar
+        });
+    }
+
+    protected void toShowNav() {
+        mBaseHandler.removeCallbacks(mHideRunnable);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    }
+
     protected Runnable mHideRunnable = () -> {
+        // must be executed in main thread :)
+        getWindow().getDecorView().setSystemUiVisibility(getHideFlags());
+    };
+
+    private int getHideFlags() {
         int flags;
         int curApiVersion = Build.VERSION.SDK_INT;
         // This work only for android 4.4+
@@ -199,16 +227,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
             // touch the screen, the navigation bar will show
             flags = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         }
-
-        // must be executed in main thread :)
-        getWindow().getDecorView().setSystemUiVisibility(flags);
-    };
+        return flags;
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBaseHandler.removeCallbacksAndMessages(null);
-        mBaseHandler = null;
+        if (mBaseHandler != null) {
+            mBaseHandler.removeCallbacksAndMessages(null);
+            mBaseHandler = null;
+        }
         if (mUnbinder != null) {
             mUnbinder.unbind();
         }
@@ -290,8 +318,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         DataStatisticsUtils.push(getApplicationContext(), data);
     }
 
+    protected void toDataStatistics(int grp, int act, String[] args) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("grp", String.valueOf(grp));
+        data.put("act", String.valueOf(act));
+        for (int i = 1; i <= args.length; i++) {
+            data.put("arg" + i, args[i - 1]);
+        }
+        DataStatisticsUtils.push(getApplicationContext().getApplicationContext(), data);
+    }
+
     /**
      * umeng 统计
+     *
      * @param umengKey
      * @param mapKey
      * @param mapValue
@@ -306,13 +345,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     /**
      * 双击退出。
      */
-    protected void exitBy2Click() {
+    protected boolean exitBy2Click() {
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间
         if ((mNowTime - mExitPressedTime) > 2000) {//比较两次按键时间差
             MToast.makeText(this, getString(R.string.nav_back_again_finish), Toast.LENGTH_SHORT);
             mExitPressedTime = mNowTime;
         } else {
             finish();
+            return true;
         }
+        return false;
     }
+
+
 }

@@ -2,32 +2,49 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cgbsoft.privatefund">
 
-    <!-- Required -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <!--唤醒锁定-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 读取电话状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--使用振动-->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!--挂载文件系统-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!--获取网络状态-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--显示系统窗口-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--读写系统设置-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <!-- Optional. Required for location feature -->
+    <!--获取错略位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <!--获取WiFi状态-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--改变WiFi状态-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--获取精确位置-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--访问定位额外命令-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--改变网络状态-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!--访问网络-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--写入外部存储-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--拍照权限-->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <!--读取联系人-->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--发送短信-->
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <!--改变配置-->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!--结束后台进程-->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
@@ -36,16 +53,28 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
+    <!--读取系统日志-->
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--写入联系人-->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--获取任务信息-->
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--管理账户-->
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <!--访问账户Gmail列表-->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!--拨打电话-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--设置调试程序-->
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <!--使用证书-->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!--修改声音设置-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!--处理拨出电话-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <supports-screens
         android:anyDensity="true"
@@ -112,6 +141,7 @@
         <!--主页-->
         <activity
             android:name=".mvp.ui.home.MainPageActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--权限管理-->
@@ -146,7 +176,7 @@
 
         <!--忘记密码-->
         <activity
-            android:name=".mvp.ui.login.ForgetPasswordActivity"
+            android:name=".mvp.ui.login.ResetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
@@ -156,7 +186,48 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
-        <!--umeng-->
+        <!--合并手机号-->
+        <activity
+            android:name=".mvp.ui.login.BindPhoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
+
+        <!--视频列表-->
+        <activity
+            android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"
+            android:screenOrientation="portrait" />
+        <!--视频下载列表-->
+        <activity
+            android:name="com.cgbsoft.lib.mvp.ui.VideoDownloadListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--视频播放历史列表-->
+        <activity
+            android:name="com.cgbsoft.lib.mvp.ui.VideoHistoryListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--视频详情-->
+        <activity
+            android:name="com.cgbsoft.lib.mvp.ui.VideoDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+
+        <service android:name="com.cgbsoft.lib.utils.service.FloatVideoService">
+            <intent-filter>
+                <action android:name="com.cgbsoft.privatefund.service.player" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+
+        <!-- 监听网路状态 -->
+        <receiver android:name="com.cgbsoft.lib.utils.receiver.NetListenerReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!--===================umeng========================-->
         <!--微信-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -170,6 +241,7 @@
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.UMDefault" />
+        <!--=================================================-->
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ public class Moderator {
     public DownloadManagerListenerModerator downloadManagerListener;
 
     private HashMap<Integer, Thread> workerList;          // chunk downloader list
-    private HashMap<Integer, ReportStructure> processReports;  // to save download percent
+    private HashMap<Integer, ReportStructure> processReports;  // to save download percent_sd
 
     private QueueModerator finishedDownloadQueueObserver;
 
@@ -49,7 +49,7 @@ public class Moderator {
         downloadManagerListener = listener;
         // fetch task chunk info
         // set task state to Downloading
-        // get any chunk file size calculate where it has to begin
+        // get any chunk file size_sd calculate where it has to begin
         // start any of them as AsyncTask
 
         // fetch task chunk info
@@ -67,7 +67,7 @@ public class Moderator {
             task.state = TaskStates.DOWNLOADING;
             tasksDataSource.update(task);
 
-            // get any chunk file size calculate
+            // get any chunk file size_sd calculate
             for (Chunk chunk : taskChunks) {
 
                 downloaded = new Long(FileUtils
@@ -143,7 +143,7 @@ public class Moderator {
 
     /*
     to calculate download percentage
-    if download task is un resumable it return -1 as percent
+    if download task is un resumable it return -1 as percent_sd
      */
     private int downloadByteThreshold = 0;
     private final int THRESHOLD = 1024 * 20;

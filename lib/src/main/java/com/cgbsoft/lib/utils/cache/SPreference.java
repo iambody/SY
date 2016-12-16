@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -46,6 +45,7 @@ public class SPreference implements Constant {
         edit.putInt(key, value);
         edit.apply();
     }
+
 
     /**
      * 默认值为-1
@@ -208,12 +208,38 @@ public class SPreference implements Constant {
      * @param context 上下文
      * @return 用户信息类
      */
-    public static UserInfo getUserInfoData(@NonNull Context context) {
+    public static UserInfoDataEntity.UserInfo getUserInfoData(@NonNull Context context) {
         String userInfoDataJson = UserDataProvider.queryUserInfoData(context);
         if (TextUtils.isEmpty(userInfoDataJson)) {
             return null;
         }
-        return new Gson().fromJson(userInfoDataJson, UserInfo.class);
+        return new Gson().fromJson(userInfoDataJson, UserInfoDataEntity.UserInfo.class);
+    }
+
+    public static UserInfoDataEntity.ToBBean getToBBean(@NonNull Context context) {
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null) {
+            return userInfo.toB;
+        }
+        return null;
+    }
+
+    public static String isColorCloud(@NonNull Context context) {
+        String category = "0";
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null && userInfo.toB != null) {
+            category = userInfo.toB.category;
+        }
+        return TextUtils.equals(category, "3") ? "1" : "0";
+    }
+
+    public static String getOrganizationName(@NonNull Context context) {
+        String name = "";
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null && userInfo.toB != null) {
+            name = userInfo.toB.organizationName;
+        }
+        return name;
     }
 
     /**
@@ -227,15 +253,28 @@ public class SPreference implements Constant {
     }
 
     /**
+     * 保存登录名
+     *
+     * @param context
+     * @param loginName
+     */
+    public static void saveLoginName(@NonNull Context context, String loginName) {
+        UserDataProvider.saveLoginName(context, loginName);
+    }
+
+    public static String getLoginName(@NonNull Context context) {
+        return UserDataProvider.getLoginName(context);
+    }
+
+    /**
      * 清理用户信息
      *
      * @param context 上下文
      */
     public static void quitLogin(@NonNull Context context) {
-        UserDataProvider.clear(context);
-        OtherDataProvider.clear(context);
-
+        UserDataProvider.quitLogin(context);
     }
+
 
     /**
      * 获取用户id
@@ -248,9 +287,9 @@ public class SPreference implements Constant {
         if (!TextUtils.isEmpty(userId)) {
             return userId;
         }
-        UserInfo userInfoData = getUserInfoData(context);
+        UserInfoDataEntity.UserInfo userInfoData = getUserInfoData(context);
         if (userInfoData != null) {
-            return userInfoData.getId();
+            return userInfoData.id;
         }
         return "";
     }
@@ -309,18 +348,6 @@ public class SPreference implements Constant {
         return OtherDataProvider.getIdentify(context);
     }
 
-    public static int getNightMode(@NonNull Context context) {
-        int i = getInt(context, NIGHT_MODE);
-        if (i == -1) {
-            return AppCompatDelegate.MODE_NIGHT_YES;
-        }
-        return i;
-    }
-
-    public static void saveNightMode(@NonNull Context context, int mode) {
-        putInt(context, NIGHT_MODE, mode);
-    }
-
     /**
      * 保存身份信息
      *
@@ -338,5 +365,45 @@ public class SPreference implements Constant {
 
     public static boolean getOpenJsonLog(Context context) {
         return getBoolean(context, "couldOpenJsonLog");
+    }
+
+    public static void saveHasPushMsg(Context context, boolean b) {
+        putBoolean(context, HAS_PUSH_MESSAGE, b);
+    }
+
+    public static boolean getHasPushMsg(Context context) {
+        return getBoolean(context, HAS_PUSH_MESSAGE);
+    }
+
+    public static boolean isThisRunOpenDownload(Context context) {
+        boolean b = getBoolean(context, ISTHISRUN_OPENDOWNLOAD);
+        saveThisRunOpenDownload(context, true);
+        return b;
+    }
+
+    /**
+     * 重置每次打开应用时显示下载框
+     *
+     * @param context
+     * @param b
+     */
+    public static void saveThisRunOpenDownload(Context context, boolean b) {
+        putBoolean(context, ISTHISRUN_OPENDOWNLOAD, b);
+    }
+
+    public static void saveFloatViewX(Context context, int x) {
+        putInt(context, FLOAT_POSITION_X, x);
+    }
+
+    public static void saveFloatViewY(Context context, int y) {
+        putInt(context, FLOAT_POSITION_Y, y);
+    }
+
+    public static int getFloatViewX(Context context) {
+        return getInt(context, FLOAT_POSITION_X);
+    }
+
+    public static int getFloatViewY(Context context) {
+        return getInt(context, FLOAT_POSITION_Y);
     }
 }
