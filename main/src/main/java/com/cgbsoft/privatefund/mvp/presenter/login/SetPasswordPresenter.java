@@ -33,7 +33,7 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
     public void resetPwd(LoadingDialog loadingDialog, String un, String pwd, String code) {
         loadingDialog.setLoading(getContext().getString(R.string.reseting_str));
         loadingDialog.show();
-        addSubscription(ApiClient.resetPwd(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.resetTestPwd(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false));

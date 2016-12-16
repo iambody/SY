@@ -27,7 +27,7 @@ public class ResetPasswordPresenter extends BasePresenterImpl<ResetPasswordContr
     public void sendCode(@NonNull LoadingDialog loadingDialog, String un) {
         loadingDialog.setLoading(context.getString(R.string.sending_str));
         loadingDialog.show();
-        addSubscription(ApiClient.sendCode(un, 0).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.sendTestCode(un, 0).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.setResult(true, context.getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
@@ -44,7 +44,7 @@ public class ResetPasswordPresenter extends BasePresenterImpl<ResetPasswordContr
     public void checkCode(@NonNull LoadingDialog loadingDialog, String un, String code) {
         loadingDialog.setLoading(getContext().getString(R.string.checking_str));
         loadingDialog.show();
-        addSubscription(ApiClient.checkCode(un, code).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.checkTestCode(un, code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.dismiss();

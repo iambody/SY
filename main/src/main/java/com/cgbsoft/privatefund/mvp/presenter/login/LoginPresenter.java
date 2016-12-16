@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -93,17 +94,19 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      */
     @Override
     public void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl) {
-        addSubscription(ApiClient.wxUnioIDCheck(unionid).flatMap(result -> {
+        addSubscription(ApiClient.wxTestUnioIDCheck(unionid).flatMap(s -> {
+            WXUnionIDCheckEntity.Result result = new Gson().fromJson(s, WXUnionIDCheckEntity.Result.class);
             if (TextUtils.equals(result.isExist, "0")) {
                 UserInfoDataEntity.Result r = new UserInfoDataEntity.Result();
                 r.token = "-1";
-                return Observable.just(r);
+                return Observable.just(new Gson().toJson(r));
             } else {
-                return ApiClient.toWxLogin(sex, nickName, unionid, headimgurl);
+                return ApiClient.toTestWxLogin(sex, nickName, unionid, headimgurl);
             }
-        }).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
+        }).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(UserInfoDataEntity.Result result) {
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 if (TextUtils.equals(result.token, "-1")) {
                     loadingDialog.dismiss();
                     builder.setMessage(getContext().getString(R.string.la_cd_content_str, nickName));
@@ -142,9 +145,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
     public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
-        addSubscription(ApiClient.toWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
+        addSubscription(ApiClient.toTestWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(UserInfoDataEntity.Result result) {
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 SPreference.saveToken(getContext().getApplicationContext(), result.token);
                 SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
                 SPreference.saveLoginFlag(getContext(), true);

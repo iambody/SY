@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
+import com.google.gson.Gson;
 
 /**
  * 首页功能实现，数据调用
@@ -42,9 +43,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             OtherDataProvider.saveRongExpired(Appli.getContext(), "2");
 
             String needExpired = TextUtils.equals(rongExpired, "1") ? "1" : null;
-            ApiClient.getRongToken(needExpired, userId).subscribe(new RxSubscriber<RongTokenEntity.Result>() {
+            ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
                 @Override
-                protected void onEvent(RongTokenEntity.Result result) {
+                protected void onEvent(String s) {
+                    RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
                     OtherDataProvider.saveRongToken(Appli.getContext(), result.rcToken);
                 }
 

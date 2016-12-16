@@ -113,6 +113,12 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(true).getUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> getTestUserInfo(String userid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("adviserId", userid);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 获取容云token
      *
@@ -128,6 +134,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> getTestRongToken(String rongExpired, String rongUID) {
+        Map<String, String> map = new HashMap<>();
+        if (rongExpired != null)
+            map.put("tokenExpired", rongExpired);
+        map.put("uid", rongUID);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 
     /**
      * 微信 unioid 验证
@@ -139,6 +153,12 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("unionid", unionid);
         return OKHTTP.getInstance().getRequestManager().wxUnioIDCheck(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> wxTestUnioIDCheck(String unionid) {
+        Map<String, String> map = new HashMap<>();
+        map.put("unionid", unionid);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestUnioIDCheck(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -157,6 +177,15 @@ public class ApiClient {
         map.put("unionid", unionid);
         map.put("headImageUrl", headimgurl);
         return OKHTTP.getInstance().getRequestManager().toWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestWxLogin(String sex, String nickName, String unionid, String headimgurl) {
+        Map<String, String> map = new HashMap<>();
+        map.put("sex", sex);
+        map.put("nickName", nickName);
+        map.put("unionid", unionid);
+        map.put("headImageUrl", headimgurl);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -184,6 +213,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("password", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 发送验证码
      *
@@ -195,6 +232,13 @@ public class ApiClient {
         map.put("phone", phone);
         map.put("checkPhoneDuplicate", String.valueOf(which));
         return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> sendTestCode(String phone, int which) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("checkPhoneDuplicate", String.valueOf(which));
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).sendTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -209,6 +253,13 @@ public class ApiClient {
         map.put("phoneNum", phone);
         map.put("captcha", code);
         return OKHTTP.getInstance().getRequestManager().checkCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> checkTestCode(String phone, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phoneNum", phone);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -227,6 +278,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().resetPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> resetTestPwd(String un, String pwdMd5, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", un);
+        map.put("newPassword", pwdMd5);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetTestPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 合并帐号--验证手机
      *
@@ -241,6 +300,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().wxMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    public static Observable<String> wxTestMergePhone(String un, String code) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mergePhone", un);
+        map.put("captcha", code);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 合并手机账户－－确认合并
      *
@@ -249,6 +315,11 @@ public class ApiClient {
     public static Observable<String> wxMergeConfirm() {
         return OKHTTP.getInstance().getRequestManager().wxMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
+
+    public static Observable<String> wxTestMergeConfirm() {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 
     /**
      * 获取学院头部数据

@@ -81,6 +81,10 @@ interface RequestManager {
     @POST(NetConfig.USER.GET_USERINFO_URL)
     Observable<BaseResult<UserInfo>> getUserInfo(@FieldMap() Map<String, String> paramsMap);
 
+    @FormUrlEncoded
+    @POST(NetConfig.USER.GET_USERINFO_URL)
+    Observable<ResponseBody> getTestUserInfo(@FieldMap() Map<String, String> paramsMap);
+
     /**
      * 获取融云token
      *
@@ -89,6 +93,9 @@ interface RequestManager {
      */
     @GET(NetConfig.GET_RONG_TOKEN)
     Observable<BaseResult<RongTokenEntity.Result>> getRongToken(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.GET_RONG_TOKEN)
+    Observable<ResponseBody> getTestRongToken(@QueryMap Map<String, String> map);
 
     /**
      * 微信 unioid 验证
@@ -99,6 +106,9 @@ interface RequestManager {
     @GET(NetConfig.USER.WX_UNIONID_CHECK)
     Observable<BaseResult<WXUnionIDCheckEntity.Result>> wxUnioIDCheck(@QueryMap Map<String, String> map);
 
+    @GET(NetConfig.USER.WX_UNIONID_CHECK)
+    Observable<ResponseBody> wxTestUnioIDCheck(@QueryMap Map<String, String> map);
+
     /**
      * 微信登陆
      * @param paramsMap
@@ -107,6 +117,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.WX_LOGIN_URL)
     Observable<BaseResult<UserInfoDataEntity.Result>> toWxLogin(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.WX_LOGIN_URL)
+    Observable<ResponseBody> toTestWxLogin(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 获取协议
@@ -124,6 +138,10 @@ interface RequestManager {
     @POST(NetConfig.USER.REGISTER_URL)
     Observable<BaseResult<UserInfoDataEntity.Result>> toRegister(@FieldMap Map<String, String> paramsMap);
 
+    @FormUrlEncoded
+    @POST(NetConfig.USER.REGISTER_URL)
+    Observable<ResponseBody> toTestRegister(@FieldMap Map<String, String> paramsMap);
+
     /**
      * 发送验证码
      * @param paramsMap
@@ -132,6 +150,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
     Observable<BaseResult<String>>sendCode(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.SENDCODE_URL)
+    Observable<ResponseBody>sendTestCode(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 验证验证码
@@ -142,6 +164,10 @@ interface RequestManager {
     @POST(NetConfig.USER.CHECKCODE_URL)
     Observable<BaseResult<String>>checkCode(@FieldMap Map<String, String> paramsMap);
 
+    @FormUrlEncoded
+    @POST(NetConfig.USER.CHECKCODE_URL)
+    Observable<ResponseBody>checkTestCode(@FieldMap Map<String, String> paramsMap);
+
     /**
      * 重置密码
      * @param paramsMap
@@ -150,6 +176,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.RESETPWD_URL)
+    Observable<ResponseBody>resetTestPwd(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--验证手机
@@ -160,6 +190,10 @@ interface RequestManager {
     @POST(NetConfig.USER.WXMERGECHECK_URL)
     Observable<BaseResult<String>>wxMergePhone(@FieldMap Map<String, String> paramsMap);
 
+    @FormUrlEncoded
+    @POST(NetConfig.USER.WXMERGECHECK_URL)
+    Observable<ResponseBody>wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
+
     /**
      * 合并帐号--确认合并
      * @return
@@ -167,6 +201,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
     Observable<BaseResult<String>>wxMergeConfirm();
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.WXMARGECONFIRM_URL)
+    Observable<ResponseBody>wxTestMergeConfirm();
 
     /**
      * 获取学院推荐数据

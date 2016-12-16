@@ -29,9 +29,10 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
     public void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code) {
         loadingDialog.setLoading(getContext().getString(R.string.ra_register_loading_str));
         loadingDialog.show();
-        addSubscription(ApiClient.toRegister(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
+        addSubscription(ApiClient.toTestRegister(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(UserInfoDataEntity.Result result) {
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
                 SPreference.saveToken(getContext().getApplicationContext(), result.token);
 
@@ -54,7 +55,7 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
     public void sendCode(@NonNull LoadingDialog loadingDialog, String un) {
         loadingDialog.setLoading(getContext().getString(R.string.sending_str));
         loadingDialog.show();
-        addSubscription(ApiClient.sendCode(un, 1).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.sendTestCode(un, 1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.setResult(true, getContext().getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());

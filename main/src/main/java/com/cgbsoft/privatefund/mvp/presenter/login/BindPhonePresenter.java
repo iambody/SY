@@ -29,7 +29,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
     public void sendCode(@NonNull LoadingDialog loadingDialog, String un) {
         loadingDialog.setLoading(getContext().getString(R.string.sending_str));
         loadingDialog.show();
-        addSubscription(ApiClient.sendCode(un, 3).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.sendTestCode(un, 3).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 loadingDialog.setResult(true, getContext().getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
@@ -46,7 +46,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
     public void wxMergePhone(@NonNull LoadingDialog loadingDialog, String un, String code) {
         loadingDialog.setLoading(getContext().getString(R.string.bind_phone_str));
         loadingDialog.show();
-        addSubscription(ApiClient.wxMergePhone(un, code).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.wxTestMergePhone(un, code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 if (TextUtils.equals(s, "1")) {//之前没有手机号账号，不需要合并数据。
@@ -87,7 +87,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
 
     @Override
     public void wxMergeConfirm(@NonNull LoadingDialog loadingDialog) {
-        addSubscription(ApiClient.wxMergeConfirm().subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.wxTestMergeConfirm().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 if (TextUtils.equals(s, "suc")) {
