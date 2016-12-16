@@ -212,6 +212,14 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
+        <service android:name="com.cgbsoft.lib.utils.service.FloatVideoService">
+            <intent-filter>
+                <action android:name="com.cgbsoft.privatefund.service.player" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+
         <!--===================umeng========================-->
         <!--微信-->
         <activity

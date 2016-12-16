@@ -19,6 +19,7 @@ public interface VideoDetailContract {
         long getCacheVideoNum();
         VideoInfoModel getVideoInfo(String videoId);
         void toDownload(String videoId);
+        void bindDownloadCallback(String videoId);
     }
 
     interface View extends BaseView {
@@ -27,5 +28,7 @@ public interface VideoDetailContract {
         void getNetVideoInfoSucc(VideoInfoModel model);
 
         void toVideoLikeSucc(int likeRes, int likeNum);
+
+        void onDownloadFinish(VideoInfoModel model);
     }
 }

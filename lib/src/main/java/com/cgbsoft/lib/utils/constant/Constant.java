@@ -63,6 +63,10 @@ public interface Constant {
 
     String RONG_SERVICE_RECEIVER = "rong_service_receiver";
 
+    String FLOAT_POSITION_X = "float_position_x";
+
+    String FLOAT_POSITION_Y = "float_position_y";
+
 
     //----------------权限管理参数(危险权限)------------------
 

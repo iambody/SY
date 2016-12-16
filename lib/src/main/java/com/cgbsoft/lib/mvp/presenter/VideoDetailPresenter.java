@@ -13,7 +13,6 @@ import com.cgbsoft.lib.mvp.model.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
-import com.cgbsoft.lib.utils.listener.VideoDownloadCallback;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.google.gson.Gson;
@@ -22,6 +21,9 @@ import com.lzy.okgo.request.GetRequest;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
+import com.lzy.okserver.listener.DownloadListener;
+
+import java.util.List;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:09
@@ -33,7 +35,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     private VideoInfoModel viModel;
     private boolean isInitData;
     private DownloadManager downloadManager;
-    private VideoDownloadCallback videoDownloadCallback;
 
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
         super(context, view);
@@ -63,16 +64,15 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             return;
         }
         DownloadInfo info = getDownloadManager().getDownloadInfo(videoId);
-        videoDownloadCallback = new VideoDownloadCallback(videoId);
         GetRequest getRequest = OkGo.get(videoUrl);
         if (info == null) {
-            getDownloadManager().addTask(videoId, getRequest, videoDownloadCallback);
+            getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback());
         } else {
             switch (info.getState()) {
                 case DownloadManager.PAUSE:
                 case DownloadManager.NONE:
                 case DownloadManager.ERROR:
-                    getDownloadManager().addTask(videoId, getRequest, videoDownloadCallback);
+                    getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback());
                     break;
             }
         }
@@ -190,6 +190,22 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         return daoUtils.getVideoInfoModel(videoId);
     }
 
+    @Override
+    public void bindDownloadCallback(String videoId) {
+        List<DownloadInfo> list = downloadManager.getAllTask();
+        DownloadInfo downloadInfo = null;
+        for (DownloadInfo info : list) {
+            if (info.getState() == DownloadManager.DOWNLOADING) {
+                if (TextUtils.equals(info.getTaskKey(), videoId)) {
+                    downloadInfo = info;
+                    break;
+                }
+            }
+        }
+        if (downloadInfo != null)
+            downloadInfo.setListener(new VideoDownloadCallback());
+    }
+
 
     /**
      * 获取本地数据
@@ -219,16 +235,68 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }
     }
 
+    private String isHasDownloading() {
+        if (getDownloadManager() == null)
+            return null;
+        List<DownloadInfo> list = getDownloadManager().getAllTask();
+        for (DownloadInfo info : list) {
+            if (info.getState() == DownloadManager.DOWNLOADING) {
+                return info.getTaskKey();
+            }
+        }
+        return null;
+    }
+
+    private class VideoDownloadCallback extends DownloadListener {
+        @Override
+        public void onAdd(DownloadInfo downloadInfo) {
+            String videoId = isHasDownloading();
+            if (TextUtils.equals(videoId, downloadInfo.getTaskKey())) {
+                viModel.status = VideoStatus.DOWNLOADING;
+            } else {
+                viModel.status = VideoStatus.WAIT;
+            }
+            viModel.downloadTime = System.currentTimeMillis();
+            updataLocalVideoInfo();
+        }
+
+        @Override
+        public void onProgress(DownloadInfo downloadInfo) {
+            long totalSize = downloadInfo.getTotalLength();
+            float progress = downloadInfo.getProgress();
+
+            viModel.percent = progress;
+            viModel.size = totalSize;
+            if (downloadInfo.getState() == DownloadManager.DOWNLOADING) {
+                viModel.status = VideoStatus.DOWNLOADING;
+            } else if (downloadInfo.getState() == DownloadManager.PAUSE || downloadInfo.getState() == DownloadManager.NONE) {
+                viModel.status = VideoStatus.NONE;
+            }
+            updataLocalVideoInfo();
+        }
+
+        @Override
+        public void onFinish(DownloadInfo downloadInfo) {
+            viModel.status = VideoStatus.FINISH;
+            viModel.localVideoPath = downloadInfo.getTargetPath();
+            updataLocalVideoInfo();
+
+            getView().onDownloadFinish(viModel);
+        }
+
+        @Override
+        public void onError(DownloadInfo downloadInfo, String errorMsg, Exception e) {
+            viModel.status = VideoStatus.NONE;
+            updataLocalVideoInfo();
+        }
+    }
+
     @Override
     public void detachView() {
         super.detachView();
         if (daoUtils != null) {
             daoUtils.destory();
             daoUtils = null;
-        }
-        if (videoDownloadCallback != null) {
-            videoDownloadCallback.destory();
-            videoDownloadCallback = null;
         }
     }
 }

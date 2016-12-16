@@ -59,7 +59,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 VideoInfoModel vim = list.get(i);
-                if (vim.status == VideoStatus.WAIT) {
+                if (vim.status == VideoStatus.WAIT || vim.status == VideoStatus.DOWNLOADING) {
                     vim.status = VideoStatus.NONE;
                     daoVideoUtils.saveOrUpdateVideoInfo(vim);
                 }

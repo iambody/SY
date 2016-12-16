@@ -34,6 +34,7 @@ import com.cgbsoft.lib.utils.damp.SpringEffect;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
@@ -139,6 +140,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private String videoId, videoCoverUrl;
     private boolean isPlayAnim;
+    private int comeFrom;
     private LoadingDialog loadingDialog;
     private boolean seekFlag = true, isPlaying, isSetDataSource;//是否播放器设置了数据;
     private int playerCurrentTime;
@@ -177,6 +179,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         videoId = getIntent().getStringExtra("videoId");
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
+        comeFrom = getIntent().getIntExtra("comeFrom", -1);
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
@@ -187,22 +190,24 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (isPlayAnim)
             exitTransition = ActivityTransition.with(getIntent()).duration(200).to(rl_avd_head).start(savedInstanceState);
 
+        if (comeFrom == 1)
+            FloatVideoService.stopService();
+
         if (TextUtils.isEmpty(videoId)) {
             loadingDialog.setResult(false, getString(R.string.no_videoid_str), 1000, this::finish);
             return;
         }
 
         vrf_avd.setListener(this);
-//        getPresenter().getVideoDetailInfo(videoId);
         getVideoDetailInfo();
         pw_mvv_wait.setVisibility(View.VISIBLE);
+        getPresenter().bindDownloadCallback(videoId);
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         connectionChangeReceiver = new ConnectionChangeReceiver();
         this.registerReceiver(connectionChangeReceiver, filter);
 
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
-
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
     }
 
@@ -249,6 +254,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @OnClick(R2.id.iv_avd_back)
     void backClick() {
         toFinish();
+    }
+
+    @OnClick(R2.id.iv_avd_back_play)
+    void iv_avd_back_play() {
+        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+        FloatVideoService.startService(videoId);
+        finish();
     }
 
     @OnClick(R2.id.ll_mvv_nowifi)
@@ -333,7 +345,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             if (delaySub != null && !delaySub.isUnsubscribed()) {
                 return;
             }
-
             delaySub = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RxSubscriber<Integer>() {
                         @Override
@@ -415,6 +426,27 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         iv_avd_like.setImageResource(likeRes);
         tv_avd_like_num.setText(String.valueOf(likeNum));
         toDataStatistics(1021, 10104, new String[]{videoInfoModel.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+    }
+
+    @Override
+    public void onDownloadFinish(VideoInfoModel model) {
+        videoInfoModel = model;
+        if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+            File file = new File(videoInfoModel.localVideoPath);
+            if (file.isFile() && file.exists()) {
+                tv_avd_cache.setText(R.string.cached_str);
+                iv_avd_cache.setImageResource(R.drawable.ic_cached);
+
+                if (videoInfoModel.downloadtype == 1) {
+                    setSdTvBlue();
+                } else {
+                    setHdTvBlue();
+                }
+
+                tv_avd_hd.setEnabled(false);
+                tv_avd_sd.setEnabled(false);
+            }
+        }
     }
 
 

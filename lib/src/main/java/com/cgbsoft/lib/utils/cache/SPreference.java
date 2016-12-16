@@ -254,14 +254,15 @@ public class SPreference implements Constant {
 
     /**
      * 保存登录名
+     *
      * @param context
      * @param loginName
      */
-    public static void saveLoginName(@NonNull Context context, String loginName){
+    public static void saveLoginName(@NonNull Context context, String loginName) {
         UserDataProvider.saveLoginName(context, loginName);
     }
 
-    public static String getLoginName(@NonNull Context context){
+    public static String getLoginName(@NonNull Context context) {
         return UserDataProvider.getLoginName(context);
     }
 
@@ -388,5 +389,21 @@ public class SPreference implements Constant {
      */
     public static void saveThisRunOpenDownload(Context context, boolean b) {
         putBoolean(context, ISTHISRUN_OPENDOWNLOAD, b);
+    }
+
+    public static void saveFloatViewX(Context context, int x) {
+        putInt(context, FLOAT_POSITION_X, x);
+    }
+
+    public static void saveFloatViewY(Context context, int y) {
+        putInt(context, FLOAT_POSITION_Y, y);
+    }
+
+    public static int getFloatViewX(Context context) {
+        return getInt(context, FLOAT_POSITION_X);
+    }
+
+    public static int getFloatViewY(Context context) {
+        return getInt(context, FLOAT_POSITION_Y);
     }
 }

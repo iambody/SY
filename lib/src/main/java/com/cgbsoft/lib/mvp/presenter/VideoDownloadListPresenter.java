@@ -195,7 +195,6 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                 info.setListener(new VideoDownloadCallback(info.getTaskKey()));
             }
         }
-
     }
 
     @Override
@@ -328,9 +327,9 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         @Override
         public void onAdd(DownloadInfo downloadInfo) {
             String videoId = isHasDownloading();
-            if(TextUtils.equals(videoId, downloadInfo.getTaskKey())) {
+            if (TextUtils.equals(videoId, downloadInfo.getTaskKey())) {
                 videoInfoModel.status = VideoStatus.DOWNLOADING;
-            }else {
+            } else {
                 videoInfoModel.status = VideoStatus.WAIT;
             }
             videoInfoModel.downloadTime = System.currentTimeMillis();
@@ -346,6 +345,11 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
             videoInfoModel.percent = progress;
             videoInfoModel.size = totalSize;
+            if (downloadInfo.getState() == DownloadManager.DOWNLOADING) {
+                videoInfoModel.status = VideoStatus.DOWNLOADING;
+            } else if (downloadInfo.getState() == DownloadManager.PAUSE || downloadInfo.getState() == DownloadManager.NONE) {
+                videoInfoModel.status = VideoStatus.NONE;
+            }
             saveOrUpdateVideoInfo(videoInfoModel);
 
             if (getView() != null)

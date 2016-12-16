@@ -11,6 +11,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
@@ -159,6 +160,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (reLoginObservable != null) {
             RxBus.get().unregister(RE_LOGIN_OBSERVABLE, reLoginObservable);
         }
+        FloatVideoService.stopService();
         if (isReLogin)
             return;
         android.os.Process.killProcess(android.os.Process.myPid());
