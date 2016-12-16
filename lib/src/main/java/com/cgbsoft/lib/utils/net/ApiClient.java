@@ -7,6 +7,7 @@ import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
@@ -390,6 +391,23 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("id", videoId);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 签到
+     * @param userId
+     * @return
+     */
+    public static Observable<SignInEntity.Result> signIn(String userId){
+        Map<String, String> map = new HashMap<>();
+        map.put("adviserId", userId);
+        return OKHTTP.getInstance().getRequestManager().signIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> testSignIn(String userId){
+        Map<String, String> map = new HashMap<>();
+        map.put("adviserId", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
