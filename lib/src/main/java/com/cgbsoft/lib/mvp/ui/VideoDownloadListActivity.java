@@ -558,7 +558,12 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         ll_avd_pause.setVisibility(View.VISIBLE);
         pb_avd.setVisibility(View.VISIBLE);
         tv_avd_speed.setVisibility(View.VISIBLE);
-        changeStart(true, iv_avd_pause, tv_avd_pause);
+
+        if (downloadState == DownloadManager.DOWNLOADING || downloadState == DownloadManager.WAITING) {
+            changeStart(true, iv_avd_pause, tv_avd_pause);
+        } else if (downloadState == DownloadManager.PAUSE) {
+            changeStart(false, iv_avd_pause, tv_avd_pause);
+        }
         if (pb_avd.getMax() != totalSize) {
             pb_avd.setMax((int) totalSize);
         }
