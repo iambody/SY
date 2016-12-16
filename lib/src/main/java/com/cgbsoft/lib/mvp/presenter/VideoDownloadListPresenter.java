@@ -50,7 +50,13 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         if (list != null) {
             List<VideoDownloadListModel> dataList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
-                dataList.add(createModel(list.get(i)));
+                VideoInfoModel model = list.get(i);
+                DownloadInfo info = getDownloadManager().getDownloadInfo(model.videoId);
+                if (info != null && info.getState() == DownloadManager.FINISH && model.status != VideoStatus.FINISH) {
+                    model.status = VideoStatus.FINISH;
+                    saveOrUpdateVideoInfo(model);
+                }
+                dataList.add(createModel(model));
             }
             getView().getLocalListSucc(dataList, isRef);
         } else
