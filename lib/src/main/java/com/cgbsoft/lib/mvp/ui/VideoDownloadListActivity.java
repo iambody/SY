@@ -45,6 +45,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
+import static com.cgbsoft.lib.utils.constant.RxConstant.DOWNLOAD_TO_LIST_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.NOW_PLAY_VIDEOID_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_OBSERVABE;
@@ -99,6 +100,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private Observable<Integer> refItemObservable;
     private Observable<String> nowPlayVideoIdObservable;
+    private Observable<Boolean> downloadToListObservable;
     private boolean isChoiceAll, isAllDownloadStart;
     private MenuItem deleteItem;
     private IOSDialog iosDialog;
@@ -172,6 +174,23 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             @Override
             protected void onEvent(String s) {
                 nowPlayVideoId = s;
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+        downloadToListObservable = RxBus.get().register(DOWNLOAD_TO_LIST_OBSERVABLE, Boolean.class);
+        downloadToListObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (aBoolean) {
+                    if (isAllDownloadStart) {
+                        startDownloadAllClick();
+                    }
+                }
             }
 
             @Override
@@ -428,6 +447,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         if (nowPlayVideoIdObservable != null)
             RxBus.get().unregister(NOW_PLAY_VIDEOID_OBSERVABLE, nowPlayVideoIdObservable);
+
+        if (downloadToListObservable != null)
+            RxBus.get().unregister(DOWNLOAD_TO_LIST_OBSERVABLE, downloadToListObservable);
     }
 
 

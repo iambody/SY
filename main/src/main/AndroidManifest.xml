@@ -220,6 +220,13 @@
             </intent-filter>
         </service>
 
+        <!-- 监听网路状态 -->
+        <receiver android:name="com.cgbsoft.lib.utils.receiver.NetListenerReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <!--===================umeng========================-->
         <!--微信-->
         <activity

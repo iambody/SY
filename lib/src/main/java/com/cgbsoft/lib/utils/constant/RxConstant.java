@@ -31,4 +31,7 @@ public interface RxConstant {
     String IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE = "is_play_video_local_delete_observable";
 
     String RE_LOGIN_OBSERVABLE = "re_login_observable";
+
+    String DOWNLOAD_TO_LIST_OBSERVABLE = "download_to_list_observable";
+
 }
