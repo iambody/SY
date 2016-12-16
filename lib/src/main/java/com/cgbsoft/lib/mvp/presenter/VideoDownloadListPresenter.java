@@ -178,7 +178,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             return;
         List<DownloadInfo> list = getAllDownloadTask();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getState() == DownloadManager.DOWNLOADING)
+            if (list.get(i).getState() == DownloadManager.DOWNLOADING || list.get(i).getState() == DownloadManager.WAITING)
                 getDownloadManager().stopTask(list.get(i).getTaskKey());
         }
     }
