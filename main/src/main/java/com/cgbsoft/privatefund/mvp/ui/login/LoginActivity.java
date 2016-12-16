@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -121,6 +122,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             et_al_username.setText(userInfo.userName);
         } else if (loginName != null) {
             et_al_username.setText(loginName);
+        }
+        if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
+            iv_al_del_un.setVisibility(View.VISIBLE);
+            isUsernameInput = true;
         }
 
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
