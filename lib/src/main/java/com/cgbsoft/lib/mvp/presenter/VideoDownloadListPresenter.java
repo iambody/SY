@@ -174,8 +174,13 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
     @Override
     public void stopAllDownload() {
-        if (getDownloadManager() != null)
-            getDownloadManager().stopAllTask();
+        if (getDownloadManager() == null)
+            return;
+        List<DownloadInfo> list = getAllDownloadTask();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getState() == DownloadManager.DOWNLOADING)
+                getDownloadManager().stopTask(list.get(i).getTaskKey());
+        }
     }
 
     @Override
