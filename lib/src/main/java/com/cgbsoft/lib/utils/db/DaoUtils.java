@@ -158,12 +158,12 @@ public class DaoUtils {
     }
 
     /**
-     * 已经下载完成的视频数量
+     * 除了没下载以外的视频数量
      *
      * @return
      */
     public long getCacheVideoNum() {
-        return videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.Status.eq(VideoStatus.FINISH), VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).buildCount().count();
+        return videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.Status.notEq(VideoStatus.NONE), VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).buildCount().count();
     }
 
     /**

@@ -64,6 +64,9 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSER
 
 /**
  * 视频详情
+ * 简述：首先获取本地数据（有：判断视频是否下载，如果下载则播放本地视频，否则播放网络视频），然后在获取网络数据（成功：更新本地数据）
+ * 推出时候会保存当前视频的播放进度。
+ * 如果希望视频在下载列表中出现那么起码得进一次视频详情。
  * Created by xiaoyu.zhang on 2016/12/7 18:07
  * Email:zhangxyfs@126.com
  *  
@@ -451,6 +454,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_sd.setEnabled(false);
             }
         }
+    }
+
+    @Override
+    public void onDownloadVideoAdd() {
+        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+        tv_avd_cache.setText(R.string.caching_str);
+        iv_avd_cache.setImageResource(R.drawable.ic_caching);
     }
 
 

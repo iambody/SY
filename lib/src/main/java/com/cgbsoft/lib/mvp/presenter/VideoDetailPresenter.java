@@ -66,13 +66,13 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         DownloadInfo info = getDownloadManager().getDownloadInfo(videoId);
         GetRequest getRequest = OkGo.get(videoUrl);
         if (info == null) {
-            getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback());
+            getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback(videoId));
         } else {
             switch (info.getState()) {
                 case DownloadManager.PAUSE:
                 case DownloadManager.NONE:
                 case DownloadManager.ERROR:
-                    getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback());
+                    getDownloadManager().addTask(videoId, getRequest, new VideoDownloadCallback(videoId));
                     break;
             }
         }
@@ -203,7 +203,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             }
         }
         if (downloadInfo != null)
-            downloadInfo.setListener(new VideoDownloadCallback());
+            downloadInfo.setListener(new VideoDownloadCallback(videoId));
     }
 
 
@@ -248,6 +248,11 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     private class VideoDownloadCallback extends DownloadListener {
+        private VideoDownloadCallback(String videoId) {
+            if (viModel == null)
+                viModel = getVideoInfo(videoId);
+        }
+
         @Override
         public void onAdd(DownloadInfo downloadInfo) {
             String videoId = isHasDownloading();
@@ -258,6 +263,9 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             }
             viModel.downloadTime = System.currentTimeMillis();
             updataLocalVideoInfo();
+
+            if (getView() != null)
+                getView().onDownloadVideoAdd();
         }
 
         @Override
