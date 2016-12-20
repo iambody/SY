@@ -147,6 +147,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 switchID = R.id.nav_right_second;
                 break;
             case 4://中间
+                getPresenter().toSignIn();
                 switchID = R.id.nav_center;
                 break;
         }
