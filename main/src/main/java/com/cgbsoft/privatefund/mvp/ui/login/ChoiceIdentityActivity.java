@@ -7,6 +7,8 @@ import android.widget.RadioGroup;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.widget.ScrollingImageView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.login.ChoiceIdentityContract;
@@ -96,12 +98,13 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
         isExit = exitBy2Click();
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         MainTabManager.getInstance().destory();
 
-        if(isExit) {
+        if (isExit) {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
         }

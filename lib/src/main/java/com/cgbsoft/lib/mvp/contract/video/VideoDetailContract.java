@@ -1,8 +1,8 @@
-package com.cgbsoft.lib.mvp.contract;
+package com.cgbsoft.lib.mvp.contract.video;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:08

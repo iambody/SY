@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.adapter;
+package com.cgbsoft.lib.mvp.ui.video.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.mvp.ui.holder.VideoHistoryHolder;
-import com.cgbsoft.lib.mvp.ui.listener.VideoHistoryListener;
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.mvp.ui.video.holder.VideoHistoryHolder;
+import com.cgbsoft.lib.mvp.ui.video.listener.VideoHistoryListener;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
 

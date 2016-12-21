@@ -355,6 +355,15 @@ public class OtherDataProvider extends ContentProvider implements CPConstant {
         return queryByTitle(context, RONGCLOUD_UID_KEY);
     }
 
+    public static void saveErrorMessage(Context context, String msg){
+        delete(context, ERROR_MSG_KEY);
+        insertUpDate(context, ERROR_MSG_KEY, msg);
+    }
+
+    public static String getErrorMessage(Context c){
+        return queryByTitle(c, ERROR_MSG_KEY);
+    }
+
     //---------------------------------
 
     public static void clear(Context context) {

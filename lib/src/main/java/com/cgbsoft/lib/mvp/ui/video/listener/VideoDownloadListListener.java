@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.listener;
+package com.cgbsoft.lib.mvp.ui.video.listener;
 
 import android.widget.ImageView;
 import android.widget.TextView;

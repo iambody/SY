@@ -1,8 +1,6 @@
 package com.cgbsoft.lib.utils.service;
 
-import android.app.ActivityManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -17,14 +15,13 @@ import android.widget.ImageView;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 后台播放视频
@@ -110,31 +107,16 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
     }
 
     public static void startService(String videoId) {
-        if (!isServiceRunning(Appli.getContext())) {
+        if (!Utils.isServiceRunning(Appli.getContext(), FloatVideoService.class.getName())) {
             Appli.getContext().startService(new Intent(Appli.getContext(), FloatVideoService.class));
         }
         mVideoId = videoId;
     }
 
     public static void stopService() {
-        if (isServiceRunning(Appli.getContext())) {
+        if (Utils.isServiceRunning(Appli.getContext(), FloatVideoService.class.getName())) {
             Appli.getContext().stopService(new Intent(Appli.getContext(), FloatVideoService.class));
         }
-    }
-
-
-    public static boolean isServiceRunning(Context context) {
-        boolean isRunning = false;
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(Integer.MAX_VALUE);
-        if (serviceList == null || serviceList.size() == 0) return false;
-        for (int i = 0; i < serviceList.size(); i++) {
-            if (serviceList.get(i).service.getClassName().equals(FloatVideoService.class.getName())) {
-                isRunning = true;
-                break;
-            }
-        }
-        return isRunning;
     }
 
 

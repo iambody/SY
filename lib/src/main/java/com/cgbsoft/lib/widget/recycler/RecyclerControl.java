@@ -5,7 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 

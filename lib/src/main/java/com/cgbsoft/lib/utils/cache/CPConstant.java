@@ -51,4 +51,6 @@ public interface CPConstant {
     String RONGCLOUD_UID_KEY = "rongcloud_uid";
 
     String WELCOME_IMG_KEY = "welcome_img_path";
+
+    String ERROR_MSG_KEY = "error_msg";
 }

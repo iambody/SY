@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui;
+package com.cgbsoft.lib.mvp.ui.video;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,9 +25,9 @@ import android.widget.TextView;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.contract.VideoDetailContract;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
-import com.cgbsoft.lib.mvp.presenter.VideoDetailPresenter;
+import com.cgbsoft.lib.mvp.contract.video.VideoDetailContract;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.mvp.presenter.video.VideoDetailPresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;

@@ -198,19 +198,25 @@
             android:screenOrientation="portrait" />
         <!--视频下载列表-->
         <activity
-            android:name="com.cgbsoft.lib.mvp.ui.VideoDownloadListActivity"
+            android:name="com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity"
             android:screenOrientation="portrait" />
 
         <!--视频播放历史列表-->
         <activity
-            android:name="com.cgbsoft.lib.mvp.ui.VideoHistoryListActivity"
+            android:name="com.cgbsoft.lib.mvp.ui.video.VideoHistoryListActivity"
             android:screenOrientation="portrait" />
 
         <!--视频详情-->
         <activity
-            android:name="com.cgbsoft.lib.mvp.ui.VideoDetailActivity"
+            android:name="com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
+
+        <receiver android:name=".utils.receiver.ExitLoginReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="com.privateFund.exitLogin" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.cgbsoft.lib.utils.service.FloatVideoService">
             <intent-filter>
@@ -220,8 +226,16 @@
             </intent-filter>
         </service>
 
+        <service android:name=".utils.service.ExitLoginService">
+            <intent-filter>
+                <action android:name="com.cgbsoft.privatefund.service.exitLogin" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+
         <!-- 监听网路状态 -->
-        <receiver android:name="com.cgbsoft.lib.utils.receiver.NetListenerReceiver" >
+        <receiver android:name="com.cgbsoft.lib.utils.receiver.NetListenerReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

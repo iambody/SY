@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:clipChildren="false"
     android:fitsSystemWindows="true"
-    tools:context=".mvp.ui.VideoDetailActivity">
+    tools:context=".mvp.ui.video.VideoDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

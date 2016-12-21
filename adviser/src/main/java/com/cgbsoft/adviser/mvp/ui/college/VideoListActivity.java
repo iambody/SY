@@ -19,7 +19,7 @@ import com.cgbsoft.adviser.mvp.ui.college.adapter.VideoListAdapter;
 import com.cgbsoft.adviser.mvp.ui.college.listener.VideoListListener;
 import com.cgbsoft.adviser.mvp.ui.college.model.VideoListModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.ui.VideoDetailActivity;
+import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;

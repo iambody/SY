@@ -1,9 +1,9 @@
-package com.cgbsoft.lib.mvp.contract;
+package com.cgbsoft.lib.mvp.contract.video;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.model.VideoDownloadListModel;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoDownloadListModel;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 

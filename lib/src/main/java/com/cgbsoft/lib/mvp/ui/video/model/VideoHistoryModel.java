@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.model;
+package com.cgbsoft.lib.mvp.ui.video.model;
 
 import com.cgbsoft.lib.widget.recycler.BaseModel;
 

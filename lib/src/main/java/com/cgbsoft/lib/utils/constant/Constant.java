@@ -67,6 +67,9 @@ public interface Constant {
 
     String FLOAT_POSITION_Y = "float_position_y";
 
+    String RECEIVER_EXIT_ACTION = "com.privateFund.exitLogin";
+    String RECEIVER_ERRORCODE = "errorCode";
+
 
     //----------------权限管理参数(危险权限)------------------
 

@@ -9,22 +9,19 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
-import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
-import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 
 import butterknife.BindView;
 import rx.Observable;
-
-import static com.cgbsoft.lib.utils.constant.RxConstant.RE_LOGIN_OBSERVABLE;
 
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
@@ -33,12 +30,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar bottomNavigationBar;
 
-    private Observable<Integer> reLoginObservable;
-    private boolean isReLogin;
-
-    private CustomDialog mCustomDialog;
-    private CustomDialog.Builder mCustomBuilder;
-
+    private Observable<Boolean> closeMainObservable;
+    private boolean isOnlyClose;
 
     @Override
     protected int layoutID() {
@@ -62,16 +55,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         transaction.add(R.id.fl_main_content, mContentFragment);
         transaction.commitAllowingStateLoss();
 
-        mCustomDialog = new CustomDialog(this);
-        mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true);
-        mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-            dialog.dismiss();
-            if (isReLogin) {
-                openActivity(LoginActivity.class);
-                finish();
-            }
-        });
-        initReLoginObservable();
+        initRxObservable();
     }
 
     @Override
@@ -153,41 +137,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        MainTabManager.getInstance().destory();
-        if (reLoginObservable != null) {
-            RxBus.get().unregister(RE_LOGIN_OBSERVABLE, reLoginObservable);
-        }
-        FloatVideoService.stopService();
-        if (isReLogin)
-            return;
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
-    }
-
-    @Override
-    public void onBackPressed() {
-        exitBy2Click();
-    }
-
-
-    private void initReLoginObservable(){
-        reLoginObservable = RxBus.get().register(RE_LOGIN_OBSERVABLE, Integer.class);
-        reLoginObservable.subscribe(new RxSubscriber<Integer>() {
+    private void initRxObservable() {
+        closeMainObservable = RxBus.get().register(RxConstant.CLOSE_MAIN_OBSERVABLE, Boolean.class);
+        closeMainObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
-            protected void onEvent(Integer code) {
-                isReLogin = true;
-                String msg = "";
-                if (code == 510) {
-                    msg = getString(R.string.token_error_510_str);
-                } else if (code == 511) {
-                    msg = getString(R.string.token_error_511_str);
-                }
-
-                mCustomBuilder.setMessage(msg);
-                mCustomBuilder.create().show();
+            protected void onEvent(Boolean aBoolean) {
+                isOnlyClose = aBoolean;
+                finish();
             }
 
             @Override
@@ -195,5 +151,28 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (closeMainObservable != null) {
+            RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, closeMainObservable);
+        }
+
+        super.onDestroy();
+        MainTabManager.getInstance().destory();
+        FloatVideoService.stopService();
+
+        if (isOnlyClose) {
+            return;
+        }
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitBy2Click();
     }
 }

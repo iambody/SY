@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.holder;
+package com.cgbsoft.lib.mvp.ui.video.holder;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R2;
-import com.cgbsoft.lib.mvp.ui.listener.VideoDownloadListListener;
+import com.cgbsoft.lib.mvp.ui.video.listener.VideoDownloadListListener;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 

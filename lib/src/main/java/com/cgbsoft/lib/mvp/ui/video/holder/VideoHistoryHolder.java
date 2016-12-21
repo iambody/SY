@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.holder;
+package com.cgbsoft.lib.mvp.ui.video.holder;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R2;
-import com.cgbsoft.lib.mvp.ui.listener.VideoHistoryListener;
+import com.cgbsoft.lib.mvp.ui.video.listener.VideoHistoryListener;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 

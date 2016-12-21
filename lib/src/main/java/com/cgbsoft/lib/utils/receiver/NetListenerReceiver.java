@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.cgbsoft.lib.Appli;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;

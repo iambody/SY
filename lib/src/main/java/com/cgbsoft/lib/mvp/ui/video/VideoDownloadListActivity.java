@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui;
+package com.cgbsoft.lib.mvp.ui.video;
 
 import android.content.Intent;
 import android.os.Build;
@@ -22,12 +22,12 @@ import android.widget.TextView;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.contract.VideoDownloadListContract;
-import com.cgbsoft.lib.mvp.presenter.VideoDownloadListPresenter;
-import com.cgbsoft.lib.mvp.ui.adapter.VideoDownloadListAdapter;
-import com.cgbsoft.lib.mvp.ui.listener.VideoDownloadListListener;
-import com.cgbsoft.lib.mvp.ui.model.VideoDownloadListModel;
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.mvp.contract.video.VideoDownloadListContract;
+import com.cgbsoft.lib.mvp.presenter.video.VideoDownloadListPresenter;
+import com.cgbsoft.lib.mvp.ui.video.adapter.VideoDownloadListAdapter;
+import com.cgbsoft.lib.mvp.ui.video.listener.VideoDownloadListListener;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoDownloadListModel;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;

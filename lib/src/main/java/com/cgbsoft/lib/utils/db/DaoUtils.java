@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;

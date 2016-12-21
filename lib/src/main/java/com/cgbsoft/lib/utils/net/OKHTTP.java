@@ -1,13 +1,14 @@
 package com.cgbsoft.lib.utils.net;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.exception.ApiException;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
@@ -31,8 +32,6 @@ import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.cgbsoft.lib.utils.constant.RxConstant.RE_LOGIN_OBSERVABLE;
 
 /**
  * 网络请求基础类
@@ -108,8 +107,11 @@ public class OKHTTP {
                     message = "请求错误";
                 } else if (response.code() == 511 || response.code() == 510) {
                     message = "token失效";
-                    SPreference.quitLogin(Appli.getContext());
-                    RxBus.get().post(RE_LOGIN_OBSERVABLE, response.code());
+                    Intent intent = new Intent();
+                    intent.setAction(Constant.RECEIVER_EXIT_ACTION);
+                    intent.putExtra(Constant.RECEIVER_ERRORCODE, response.code());
+
+                    Appli.getContext().sendBroadcast(intent);
                 }
                 httpCodeInterceptor(responseBody, UTF8, response, message);
             }

@@ -1,13 +1,13 @@
-package com.cgbsoft.lib.mvp.presenter;
+package com.cgbsoft.lib.mvp.presenter.video;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.mvp.contract.VideoHistoryListContract;
-import com.cgbsoft.lib.mvp.model.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.mvp.contract.video.VideoHistoryListContract;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.tools.DataUtils;
 

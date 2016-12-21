@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.model;
+package com.cgbsoft.lib.mvp.model.video;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/8 11:55

@@ -1,8 +1,8 @@
-package com.cgbsoft.lib.mvp.contract;
+package com.cgbsoft.lib.mvp.contract.video;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.lib.mvp.ui.model.VideoHistoryModel;
+import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 
 import java.util.List;
 
