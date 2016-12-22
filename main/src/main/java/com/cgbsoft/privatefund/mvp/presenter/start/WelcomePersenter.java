@@ -78,9 +78,14 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                 AppResourcesEntity.Result appResources = new Gson().fromJson(s, AppResourcesEntity.Result.class);
                 if (appResources != null) {
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
-                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
+                    String imgUrl = appResources.img916;
+                    if (!TextUtils.isEmpty(appResources.img916)) {
+                        OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
+                    } else {
+                        imgUrl = OtherDataProvider.getWelcomeImgUrl(getContext().getApplicationContext());
+                    }
                     if (getView() != null)
-                        getView().getDataSucc(appResources.img916);
+                        getView().getDataSucc(imgUrl);
                 } else {
                     if (getView() != null)
                         getView().getDataSucc("");

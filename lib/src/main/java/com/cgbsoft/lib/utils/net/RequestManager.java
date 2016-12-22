@@ -3,6 +3,7 @@ package com.cgbsoft.lib.utils.net;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
@@ -249,4 +250,17 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.INFORMATION.TO_LIKE_VIDEO)
     Observable<ResponseBody> toTestVideoLike(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 签到
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.SIGNIN_URL)
+    Observable<BaseResult<SignInEntity.Result>> signIn(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.SIGNIN_URL)
+    Observable<ResponseBody> testSignIn(@FieldMap Map<String, String> paramsMap);
 }

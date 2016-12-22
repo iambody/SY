@@ -76,16 +76,15 @@ public class OKHTTP {
             String uid = SPreference.getUserId(context);
             String token = SPreference.getToken(context);
 
+            uid = TextUtils.isEmpty(uid) ? "" : uid;
+            token = TextUtils.isEmpty(token) ? "" : token;
+
             Request.Builder builder = originalRequest.newBuilder();
-            if (!TextUtils.isEmpty(uid)) {
-                builder.addHeader(NetConfig.DefaultParams.uid, uid);
-            }
-            if (!TextUtils.isEmpty(token)) {
-                builder.addHeader(NetConfig.DefaultParams.token, token);
-            }
-            builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context))
-                    .addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)))
-                    .addHeader(NetConfig.DefaultParams.appPlatform, "android");
+            builder.addHeader(NetConfig.DefaultParams.uid, uid);
+            builder.addHeader(NetConfig.DefaultParams.token, token);
+            builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
+            builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
+            builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
             okhttp3.Request authorised = builder.build();
             Utils.log("ApiClient", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
