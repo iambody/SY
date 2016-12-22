@@ -80,6 +80,8 @@ public class NetConfig {
         static final String WXMERGECHECK_URL = AUTH_URL + user + "/wxMergePhone";
         // 合并手机账户－－确认合并
         static final String WXMARGECONFIRM_URL = AUTH_URL + user + "/confirmMerge";
+        //签到
+        static final String SIGNIN_URL = AUTH_URL + user + "/signIn";
     }
 
 

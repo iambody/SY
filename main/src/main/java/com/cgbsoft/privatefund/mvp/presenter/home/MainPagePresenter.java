@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -60,5 +61,22 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
             }
         }
+    }
+
+    //todo 测试用
+    public void toSignIn(){
+        String uid = SPreference.getUserId(Appli.getContext());
+        ApiClient.testSignIn(uid).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                SignInEntity.Result result = new Gson().fromJson(s, SignInEntity.Result.class);
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 }
