@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-
+apply plugin: 'com.chenenyu.router'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -46,21 +46,21 @@ android {
             jumboMode = true
         }
     }
-
-    signingConfigs {
-        debug {
-            storeFile file("E:\\develop\\key\\privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
-        }
-        release {
-            storeFile file("E:\\develop\\key\\privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
-        }
-    }
+//
+//    signingConfigs {
+//        debug {
+//            storeFile file("E:\\develop\\key\\privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//        }
+//        release {
+//            storeFile file("E:\\develop\\key\\privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//        }
+//    }
 
     buildTypes {
         debug {
@@ -85,7 +85,7 @@ android {
             //混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -115,7 +115,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${testC}"
-
     apt "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile "com.android.support:appcompat-v7:${android_need_version}"
@@ -138,7 +137,9 @@ dependencies {
     compile "io.reactivex:rxjava:${rxjava_need_version}"
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
-
     compile project(':adviser')
     compile project(':investor')
+    compile project(':share')
+    compile project(':order')
+    compile project(':share')
 }

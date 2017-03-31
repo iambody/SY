@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
@@ -37,6 +38,7 @@ public class Appli extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Router.initialize(this);
 
         context = getApplicationContext();
         //设置glide使用okhttp

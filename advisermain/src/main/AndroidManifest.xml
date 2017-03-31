@@ -1,0 +1,150 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="app.privatefund.adviser">
+
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <!--唤醒锁定-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 读取电话状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--使用振动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--挂载文件系统-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!--获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--显示系统窗口-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--读写系统设置-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--获取错略位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <!--获取WiFi状态-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--改变WiFi状态-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--获取精确位置-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--访问定位额外命令-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--改变网络状态-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!--访问网络-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--写入外部存储-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--拍照权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <!--读取联系人-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--发送短信-->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!--改变配置-->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!--结束后台进程-->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <!--读取系统日志-->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--写入联系人-->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--获取任务信息-->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--管理账户-->
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <!--访问账户Gmail列表-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!--拨打电话-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--设置调试程序-->
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <!--使用证书-->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!--修改声音设置-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!--处理拨出电话-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name="com.cgbsoft.lib.Appli"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:screenOrientation="portrait"
+        tools:replace="android:name,android:icon, android:label, android:theme"
+        android:theme="@style/Theme.AppCompat.DayNight"
+        android:supportsRtl="true"
+         >
+        <activity android:name=".mvp.ui.AdviserTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+<!-- 三方的配置-->
+        <!-- glide -->
+       <!-- <meta-data
+            android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
+            android:value="GlideModule" />
+        &lt;!&ndash; 版本号&ndash;&gt;
+        <meta-data
+            android:name="versionCode"
+            android:value="${VERSION_CODE}" />
+        &lt;!&ndash;版本名&ndash;&gt;
+        <meta-data
+            android:name="versionName"
+            android:value="${VERSION_NAME}" />
+        &lt;!&ndash;数据库名&ndash;&gt;
+        <meta-data
+            android:name="dbName"
+            android:value="${DATABASE_NAME}" />
+        &lt;!&ndash;数据库版本号&ndash;&gt;
+        -->
+        <!--<meta-data
+            android:name="dbVersion"
+            android:value="${DATABASE_VER}" />-->
+        <!--umeng key-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54583d07fd98c52c6e000a1c" />
+
+
+        <!--===================umeng========================-->
+        <!--微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--分享编辑页-->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
+        <!--=================================================-->
+    </application>
+
+</manifest>

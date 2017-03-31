@@ -1,1 +1,1 @@
-include ':main', ':investor', ':adviser', ':lib'
+include ':main', ':investor', ':adviser', ':lib', ':order', ':share', ':share', ':advisermain'

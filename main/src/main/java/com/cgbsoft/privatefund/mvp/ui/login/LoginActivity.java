@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -25,12 +26,16 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.login.LoginContract;
 import com.cgbsoft.privatefund.mvp.presenter.login.LoginPresenter;
 import com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity;
+import com.chenenyu.router.RouteTable;
+import com.chenenyu.router.Router;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
 
+import app.privatefund.com.order.ui.Order_InItActivity;
+import app.privatefund.com.share.ui.Share_InitActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -182,8 +187,37 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         toDataStatistics(1002, 10005, "登录");
+//        Router.addRouteTable(new RouteTable() {
+//            @Override
+//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+//                map.put("order", Order_InItActivity.class);
+//            }
+//        });
+//        Router.addRouteTable(new RouteTable() {
+//            @Override
+//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+//                map.put("share", Share_InitActivity.class);
+//            }
+//        });
+//        Router.addRouteTable(new RouteTable() {
+//            @Override
+//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+//                map.put("login", LoginActivity.class);
+//            }
+//        });
+//        Router.build("order").go(LoginActivity.this);
+LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
+
+
+        if(true)return;
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.tv_al_register)
