@@ -187,26 +187,28 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         toDataStatistics(1002, 10005, "登录");
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("order", Order_InItActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("share", Share_InitActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("login", LoginActivity.class);
-//            }
-//        });
-//        Router.build("order").go(LoginActivity.this);
-LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
+        Router.addRouteTable(new RouteTable() {
+            @Override
+            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+                map.put("order", Order_InItActivity.class);
+            }
+        });
+        Router.addRouteTable(new RouteTable() {
+            @Override
+            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+                map.put("share", Share_InitActivity.class);
+            }
+        });
+        Router.addRouteTable(new RouteTable() {
+            @Override
+            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
+                map.put("login", LoginActivity.class);
+            }
+        });
+        Bundle Mybud=new Bundle();
+//        Mybud.putBundle();
+        Router.build("order").go(LoginActivity.this);
+//LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
 
 
         if(true)return;
