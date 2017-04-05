@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="common_share_kuan_height">120dp</dimen>
+    <dimen name="ui_30_dip">30dp</dimen>
+    <dimen name="ui_40_dip">40dp</dimen>
+    <dimen name="ui_34_dip">34dp</dimen>
+    <dimen name="ui_28_dip">28dp</dimen>
+    <dimen name="ui_20_dip">20dp</dimen>
+    <dimen name="ui_25_dip">25dp</dimen>
+    <dimen name="ui_35_dip">35dp</dimen>
+    <dimen name="ui_43_dip">43dp</dimen>
+    <dimen name="common_share_cadr_title_size">16sp</dimen>
+    <dimen name="ui_60_dip">60dp</dimen>
+    <dimen name="ui_70_dip">70dp</dimen>
+    <dimen name="ui_50_dip">50dp</dimen>
+    <dimen name="ui_120_dip">120dp</dimen>
+    <dimen name="common_share_card_name_size">16sp</dimen>
+    <dimen name="common_share_card_add_size">11sp</dimen>
+    <dimen name="ui_52_dip">52dp</dimen>
+    <dimen name="ui_51_dip">51dp</dimen>
+    <dimen name="ui_42_dip">42dp</dimen>
+    <dimen name="ui_45_dip">45dp</dimen>
+    <dimen name="ui_44_dip">44dp</dimen>
+    <dimen name="ui_10_dip">10dp</dimen>
+
+
+
+
+</resources>

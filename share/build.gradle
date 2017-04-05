@@ -7,10 +7,11 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -32,12 +33,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:${android_need_version}"
+    testCompile "junit:junit:${testC}"
     compile files('libs/MobCommons-2017.0322.0931.jar')
     compile files('libs/MobTools-2017.0322.0931.jar')
     compile files('libs/ShareSDK-Core-2.8.2.jar')
     compile files('libs/ShareSDK-Wechat-2.8.2.jar')
     compile files('libs/ShareSDK-Wechat-Core-2.8.2.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.8.2.jar')
+    compile project(':lib')
 }

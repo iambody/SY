@@ -1,1 +1,1 @@
-include ':main', ':investor', ':adviser', ':lib', ':order', ':share', ':share', ':advisermain'
+include ':main', ':investor', ':adviser', ':lib', ':order', ':share', ':share', ':advisermain', ':cmmonui', ':live'
