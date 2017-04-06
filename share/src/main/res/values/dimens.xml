@@ -23,8 +23,8 @@
     <dimen name="ui_45_dip">45dp</dimen>
     <dimen name="ui_44_dip">44dp</dimen>
     <dimen name="ui_10_dip">10dp</dimen>
-
-
+    <dimen name="ui_100_dip">100dp</dimen>
+    <dimen name="ui_90_dip">90dp</dimen>
 
 
 </resources>

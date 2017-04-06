@@ -3,8 +3,9 @@ apply plugin: 'com.chenenyu.router'
 
 apply plugin: 'me.tatarka.retrolambda'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion

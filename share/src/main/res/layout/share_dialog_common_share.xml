@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
 
-    <com.cgbsoft.lib.widget.view_common.View_FlowLayout
+    <com.cgbsoft.lib.widget.View_FlowLayout
         android:id="@+id/comment_share_flowlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/ui_20_dip"
         android:layout_centerInParent="true" />
     <!--上层名片 -->
     <RelativeLayout
@@ -48,7 +48,7 @@
                 android:layout_below="@id/commont_card_title_t"
                 android:layout_marginTop="@dimen/ui_10_dip">
 
-                <com.cgbsoft.privatefund.view.RoundImageView
+                <com.cgbsoft.lib.widget.RoundImageView
                     android:id="@+id/comment_share_card_iv"
                     android:layout_width="@dimen/ui_70_dip"
                     android:layout_height="@dimen/ui_70_dip"
@@ -114,9 +114,8 @@
             android:id="@+id/common_card_select_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/ui_43_dip"
+            android:layout_marginTop="@dimen/ui_90_dip"
 
             android:layout_marginRight="@dimen/ui_25_dip"
             android:clickable="true"

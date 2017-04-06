@@ -4,4 +4,13 @@
     <string name="copyscuuced">复制成功</string>
     <string name="no_weixin">未安装微信</string>
     <string name="nulll">--</string>
+
+
+    <string name="lianxiren">联系人</string>
+    <string name="weixin">微信</string>
+    <string name="pengyouquan">朋友圈</string>
+    <string name="youjian">邮件</string>
+    <string name="duanxin">短信</string>
+    <string name="fuzhilianjie">复制链接</string>
+    <string name="pleaseinstanllweixin">请安装微信</string>
 </resources>

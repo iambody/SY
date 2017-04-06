@@ -27,8 +27,8 @@ import java.util.logging.Level;
  *  
  */
 public class Appli extends MultiDexApplication {
-    private static Context context;
-    private DaoSession daoSession;
+    protected static Context context;
+    protected DaoSession daoSession;
 
     static {
         //设置umeng分享 微信
