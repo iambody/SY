@@ -27,6 +27,8 @@ import java.io.InputStream;
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
+import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -233,9 +235,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if ((!SPreference.isLogin(this) || SPreference.getUserInfoData(this) == null)) {
             if (SPreference.getIdtentify(this) == -1) {
-//                openActivity(ChoiceIdentityActivity.class);
+                openActivity(ChoiceIdentityActivity.class);
             } else {
-//                openActivity(LoginActivity.class);
+                openActivity(LoginActivity.class);
             }
         } else {
 //            openActivity(MainPageActivity.class);

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="transparent">#00000000</color>
-    sources>
     <color name="share_transparent_bg">#80000000</color>
     <!--文字白色-->
     <color name="colorTextWhite">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

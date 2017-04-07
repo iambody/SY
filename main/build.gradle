@@ -142,4 +142,5 @@ dependencies {
     compile project(':share')
     compile project(':order')
     compile project(':share')
+    compile project(':enter')
 }

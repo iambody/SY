@@ -3,7 +3,7 @@ package com.cgbsoft.lib;
 import android.content.Context;
 
 /**
- * desc  进行不同application的管理
+ * desc  进行不同application的管理 注意 防止误操作无修改 此处只能取状态不能村状态
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 17/4/5-17:32
  */

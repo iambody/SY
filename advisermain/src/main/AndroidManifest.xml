@@ -94,7 +94,7 @@
         android:theme="@style/Theme.AppCompat.DayNight"
         android:supportsRtl="true"
          >
-        <activity android:name=".mvp.ui.AdviserTestActivity">
+        <activity android:name="app.ndk.com.enter.mvp.ui.Load.LoadAdviserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

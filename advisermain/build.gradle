@@ -60,4 +60,5 @@ dependencies {
     compile project(':share')
     compile project(':share')
     compile project(':cmmonui')
+    compile project(':enter')
 }
