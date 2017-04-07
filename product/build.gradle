@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.chenenyu.router'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.chenenyu.router'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -23,11 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -37,4 +32,5 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
     testCompile "junit:junit:${testC}"
+
 }
