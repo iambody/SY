@@ -5,8 +5,10 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 
 import app.ndk.com.enter.R;
+import app.ndk.com.enter.mvp.ui.start.WelcomeActivity;
 
 /**
  * desc  B端的启动页 需要进行文件配置
@@ -17,7 +19,8 @@ public class LoadAdviserActivity extends BaseActivity {
     @Override
     protected void configApp() {
         AppInfStore.Save_IsAdviser(baseActivity,true);
-
+        UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
+        baseActivity.finish();
     }
 
     @Override

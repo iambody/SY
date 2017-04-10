@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  */
 public class UserData {
     public static final String AUTHORITY = "com.cgbsoft.cache.user";
-
+    public static final String AUTHORITY1 = "com.cgbsoft.cache.user.a";
     private UserData() {
     }
 

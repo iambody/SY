@@ -1,10 +1,12 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.ScrollingImageView;
@@ -50,6 +52,11 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        if (AppManager.IsAdViser(baseContext)) {
+            rb_aci_inverstor.setVisibility(View.GONE);
+        } else {
+            rb_aci_adviser.setVisibility(View.GONE);
+        }
 
     }
 

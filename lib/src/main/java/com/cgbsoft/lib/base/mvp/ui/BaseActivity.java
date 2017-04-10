@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -37,6 +38,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCompatActivity implements Constant {
+    protected Activity baseContext;
     private Appli mAppli;//applicaiton
     private WeakHandler mBaseHandler;//handler
     private DaoSession mDaoSession;//数据库
@@ -50,6 +52,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.baseContext=BaseActivity.this;
         if (getIsNightTheme() && savedInstanceState == null) {
             if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);

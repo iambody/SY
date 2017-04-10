@@ -12,7 +12,22 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
+        manifestPlaceholders = [VERSION_CODE : rootProject.ext.versionCode,
+                                VERSION_NAME : rootProject.ext.versionName,
+                                DATABASE_NAME: rootProject.ext.databaseName,
+                                DATABASE_VER : rootProject.ext.databaseVer]
+        testInstrumentationRunner rootProject.ext.testRunner
+        //排除某个间接依赖
+        packagingOptions {
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/notice.txt'
+            exclude 'META-INF/license.txt'
+        }
 
+        //忽略方法数限制的检查
+        dexOptions {
+            jumboMode = true
+        }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -33,7 +48,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.android.support:appcompat-v7:${android_need_version}"
+    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
     compile project(':lib')
 }

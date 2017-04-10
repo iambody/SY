@@ -10,13 +10,19 @@ android {
     }
     defaultConfig {
 
-
+        applicationId "app.privatefund.adviser"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        multiDexEnabled false
+//        multiDexEnabled false
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        manifestPlaceholders = [VERSION_CODE : rootProject.ext.versionCode,
+                                VERSION_NAME : rootProject.ext.versionName,
+                                DATABASE_NAME: rootProject.ext.databaseName,
+                                DATABASE_VER : rootProject.ext.databaseVer]
+        testInstrumentationRunner rootProject.ext.testRunner
         //排除某个间接依赖
         packagingOptions {
             exclude 'META-INF/LICENSE'

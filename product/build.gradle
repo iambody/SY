@@ -33,7 +33,7 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
     testCompile "junit:junit:${testC}"
-
+    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
 }

@@ -30,5 +30,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
+    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
 }

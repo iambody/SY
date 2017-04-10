@@ -35,6 +35,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
+    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
     compile files('libs/MobCommons-2017.0322.0931.jar')
     compile files('libs/MobTools-2017.0322.0931.jar')

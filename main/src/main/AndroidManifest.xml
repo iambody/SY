@@ -95,27 +95,27 @@
         tools:replace="android:label,android:icon, android:theme"
         android:theme="@style/Theme.AppCompat.DayNight">
 
-        <!-- glide -->
+      <!--  &lt;!&ndash; glide &ndash;&gt;
         <meta-data
             android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
             android:value="GlideModule" />
-        <!-- 版本号-->
+        &lt;!&ndash; 版本号&ndash;&gt;
         <meta-data
             android:name="versionCode"
             android:value="${VERSION_CODE}" />
-        <!--版本名-->
+        &lt;!&ndash;版本名&ndash;&gt;
         <meta-data
             android:name="versionName"
             android:value="${VERSION_NAME}" />
-        <!--数据库名-->
+        &lt;!&ndash;数据库名&ndash;&gt;
         <meta-data
             android:name="dbName"
             android:value="${DATABASE_NAME}" />
-        <!--数据库版本号-->
+        &lt;!&ndash;数据库版本号&ndash;&gt;
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
-        <!--umeng key-->
+        &lt;!&ndash;umeng key&ndash;&gt;
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="54583d07fd98c52c6e000a1c" />
@@ -123,12 +123,14 @@
         <provider
             android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
             android:authorities="com.cgbsoft.cache.user"
-            android:multiprocess="true" />
+            android:multiprocess="true"
+            android:exported="true"/>
         <provider
             android:name="com.cgbsoft.lib.utils.cache.OtherDataProvider"
             android:authorities="com.cgbsoft.cache.other"
-            android:multiprocess="true" />
-
+            android:multiprocess="true"
+            android:exported="true"/>
+-->
         <!--欢迎页-->
         <activity
             android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"

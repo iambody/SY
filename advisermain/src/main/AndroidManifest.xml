@@ -125,10 +125,38 @@
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />-->
         <!--umeng key-->
+
+        <!-- 版本号-->
+       <!-- <meta-data
+            android:name="versionCode"
+            android:value="${VERSION_CODE}" />
+        &lt;!&ndash;版本名&ndash;&gt;
+        <meta-data
+            android:name="versionName"
+            android:value="${VERSION_NAME}" />
+        &lt;!&ndash;数据库名&ndash;&gt;
+        <meta-data
+            android:name="dbName"
+            android:value="${DATABASE_NAME}" />
+        &lt;!&ndash;数据库版本号&ndash;&gt;
+        <meta-data
+            android:name="dbVersion"
+            android:value="${DATABASE_VER}" />
+        &lt;!&ndash;umeng key&ndash;&gt;
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="54583d07fd98c52c6e000a1c" />
+            android:value="54583d07fd98c52c6e000a1c" />-->
 
+       <!-- <provider
+            android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
+            android:authorities="com.cgbsoft.cache.user"
+            android:multiprocess="true"
+            android:exported="true"/>
+        <provider
+            android:name="com.cgbsoft.lib.utils.cache.OtherDataProvider"
+            android:authorities="com.cgbsoft.cache.other"
+            android:multiprocess="true"
+            android:exported="true"/>-->
 
         <!--===================umeng========================-->
         <!--微信-->
