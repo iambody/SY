@@ -109,12 +109,12 @@
             android:value="54583d07fd98c52c6e000a1c" />
 
          <provider
-            android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
+            android:name="com.cgbsoft.lib.utils.cache.adviser.BUserDataProvider"
             android:authorities="com.cgbsoft.cache.user"
             android:exported="true"
             android:multiprocess="true" />
         <provider
-            android:name="com.cgbsoft.lib.utils.cache.OtherDataProvider"
+            android:name="com.cgbsoft.lib.utils.cache.adviser.BOtherDataProvider"
             android:authorities="com.cgbsoft.cache.other"
             android:exported="true"
             android:multiprocess="true" />

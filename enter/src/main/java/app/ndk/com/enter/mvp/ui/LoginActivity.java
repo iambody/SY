@@ -45,8 +45,8 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
-    @BindView(R2.id.iv_al_back)
-    ImageView iv_al_back;//返回按钮
+//    @BindView(R2.id.iv_al_back)
+//    ImageView iv_al_back;//返回按钮
 
     @BindView(R2.id.et_al_username)
     EditText et_al_username;//用户名
@@ -99,12 +99,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         switch (identity) {
             case IDS_ADVISER:
-                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+//                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
                 btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
                 btn_al_login.setTextColor(0xff666666);
                 break;
             case IDS_INVERSTOR:
-                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+//                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
                 btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
                 btn_al_login.setTextColor(0xffffffff);
                 break;

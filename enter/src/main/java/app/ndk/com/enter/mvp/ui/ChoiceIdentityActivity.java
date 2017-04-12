@@ -55,9 +55,11 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
         if (AppManager.IsAdViser(baseContext)) {
             rb_aci_inverstor.setVisibility(View.GONE);
             identity=IDS_ADVISER;
+            rb_aci_adviser.setChecked(true);
         } else {
             rb_aci_adviser.setVisibility(View.GONE);
             identity=IDS_INVERSTOR;
+            rb_aci_inverstor.setChecked(true);
         }
 
     }

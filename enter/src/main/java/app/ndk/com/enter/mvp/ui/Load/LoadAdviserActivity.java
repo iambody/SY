@@ -19,14 +19,15 @@ public class LoadAdviserActivity extends BaseActivity {
     @Override
     protected void configApp() {
         baseActivity.finish();
-        AppInfStore.Save_IsAdviser(baseActivity,true);
+        AppInfStore.Save_IsAdviser(baseActivity, true);
         UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
 
     }
 
     @Override
     protected void initView(Bundle state) {
-        setContentView(R.layout.activity_adviser_loadadviser);
+//        setContentView(R.layout.activity_adviser_loadadviser);
+
     }
 
 }
