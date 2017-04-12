@@ -108,16 +108,16 @@
             android:name="UMENG_APPKEY"
             android:value="54583d07fd98c52c6e000a1c" />
 
-         <provider
-            android:name="com.cgbsoft.lib.utils.cache.adviser.BUserDataProvider"
+        <!-- <provider
+            android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
             android:authorities="com.cgbsoft.cache.user"
             android:exported="true"
             android:multiprocess="true" />
         <provider
-            android:name="com.cgbsoft.lib.utils.cache.adviser.BOtherDataProvider"
+            android:name="com.cgbsoft.lib.utils.cache.OtherDataProvider"
             android:authorities="com.cgbsoft.cache.other"
             android:exported="true"
-            android:multiprocess="true" />
+            android:multiprocess="true" />-->
 
         <activity android:name=".mvp.ui.Load.LoadAdviserActivity"  ></activity>
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>

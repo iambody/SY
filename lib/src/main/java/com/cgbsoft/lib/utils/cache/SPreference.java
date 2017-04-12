@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
@@ -250,6 +251,7 @@ public class SPreference implements Constant {
      */
     public static void saveUserInfoData(@NonNull Context context, String json) {
         UserDataProvider.saveUserInfo(context, json);
+        LogUtils.Log("ta","操作");
     }
 
     /**
@@ -260,9 +262,11 @@ public class SPreference implements Constant {
      */
     public static void saveLoginName(@NonNull Context context, String loginName) {
         UserDataProvider.saveLoginName(context, loginName);
+        LogUtils.Log("ta","操作");
     }
 
     public static String getLoginName(@NonNull Context context) {
+        LogUtils.Log("ta","操作");
         return UserDataProvider.getLoginName(context);
     }
 
@@ -302,6 +306,7 @@ public class SPreference implements Constant {
      */
     public static void saveToken(@NonNull Context context, @NonNull String token) {
         UserDataProvider.saveToken(context, token);
+        LogUtils.Log("ta","操作");
     }
 
     /**
@@ -311,11 +316,13 @@ public class SPreference implements Constant {
      * @return 用户token
      */
     public static String getToken(@NonNull Context context) {
+        LogUtils.Log("ta","操作");
         return UserDataProvider.queryToken(context);
     }
 
     public static void saveUserId(@NonNull Context context, @NonNull String uid) {
         UserDataProvider.saveUserId(context, uid);
+        LogUtils.Log("ta","操作");
     }
 
     /**
@@ -326,6 +333,7 @@ public class SPreference implements Constant {
      */
     public static void saveLoginFlag(@NonNull Context context, boolean flag) {
         UserDataProvider.saveLoginFlag(context, flag);
+        LogUtils.Log("ta","操作");
     }
 
     /**
@@ -335,7 +343,9 @@ public class SPreference implements Constant {
      * @return 登陆状态
      */
     public static boolean isLogin(@NonNull Context context) {
+        LogUtils.Log("ta","操作");
         return UserDataProvider.queryLoginFlag(context);
+
     }
 
     /**
@@ -356,6 +366,7 @@ public class SPreference implements Constant {
      */
     public static void saveIdtentify(@NonNull Context context, int value) {
         OtherDataProvider.saveIdentify(context, value);
+        LogUtils.Log("ta","操作");
     }
 
 

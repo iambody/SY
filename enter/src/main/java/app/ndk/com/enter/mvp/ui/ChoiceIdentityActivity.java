@@ -61,7 +61,8 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
             identity=IDS_INVERSTOR;
             rb_aci_inverstor.setChecked(true);
         }
-
+        getPresenter().nextClick(identity);
+        finish();
     }
 
     @Override
