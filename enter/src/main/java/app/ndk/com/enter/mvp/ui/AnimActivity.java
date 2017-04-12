@@ -137,7 +137,7 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimCon
 
     @Override
     public void onBackPressed() {
-        openActivity(ChoiceIdentityActivity.class);
+//        openActivity(ChoiceIdentityActivity.class);
         finish();
     }
 

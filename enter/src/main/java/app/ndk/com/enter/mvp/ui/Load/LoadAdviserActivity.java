@@ -18,9 +18,10 @@ import app.ndk.com.enter.mvp.ui.start.WelcomeActivity;
 public class LoadAdviserActivity extends BaseActivity {
     @Override
     protected void configApp() {
+        baseActivity.finish();
         AppInfStore.Save_IsAdviser(baseActivity,true);
         UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
-        baseActivity.finish();
+
     }
 
     @Override

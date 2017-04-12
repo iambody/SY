@@ -25,7 +25,7 @@ import butterknife.OnClick;
  *  
  */
 public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter>
-        implements ChoiceIdentityContract.View, RadioGroup.OnCheckedChangeListener {
+        implements ChoiceIdentityContract.View  {
     @BindView(R2.id.siv_aci_bg)
     ScrollingImageView siv_aci_bg;//背景滚动图
 
@@ -54,15 +54,17 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     protected void init(Bundle savedInstanceState) {
         if (AppManager.IsAdViser(baseContext)) {
             rb_aci_inverstor.setVisibility(View.GONE);
+            identity=IDS_ADVISER;
         } else {
             rb_aci_adviser.setVisibility(View.GONE);
+            identity=IDS_INVERSTOR;
         }
 
     }
 
     @Override
     protected void data() {
-        rg_aci.setOnCheckedChangeListener(this);
+
     }
 
     @Override
@@ -72,6 +74,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
 
     @OnClick(R2.id.btn_aci_next)
     void nextClick() {
+        baseContext.finish();
         getPresenter().nextClick(identity);
         toDataStatistics(1001, 10002, "选择进入");
     }
@@ -82,21 +85,21 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
     }
 
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R2.id.rb_aci_inverstor:
-                identity = IDS_INVERSTOR;
-                toDataStatistics(1001, 10000, "投资人");
-                break;
-            case R2.id.rb_aci_adviser:
-                identity = IDS_ADVISER;
-                toDataStatistics(1001, 10000, "理财师");
-                break;
-        }
-        //保存身份状态
-        SPreference.saveIdtentify(getApplicationContext(), identity);
-    }
+//    @Override
+//    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//        switch (checkedId) {
+//            case R2.id.rb_aci_inverstor:
+//                identity = IDS_INVERSTOR;
+//                toDataStatistics(1001, 10000, "投资人");
+//                break;
+//            case R2.id.rb_aci_adviser:
+//                identity = IDS_ADVISER;
+//                toDataStatistics(1001, 10000, "理财师");
+//                break;
+//        }
+//        //保存身份状态
+////        SPreference.saveIdtentify(getApplicationContext(), identity);
+//    }
 
     @Override
     public void onBackPressed() {

@@ -10,6 +10,8 @@ import com.cgbsoft.lib.widget.MToast;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.ChoiceIdentityContract;
+import app.ndk.com.enter.mvp.ui.AnimActivity;
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_ADVISER;
 import static com.cgbsoft.lib.utils.constant.Constant.IDS_INVERSTOR;
@@ -40,17 +42,17 @@ public class ChoiceIdentityPresenter extends BasePresenterImpl<ChoiceIdentityCon
         if (identity == IDS_ADVISER) {
             value = IDS_ADVISER;
             if (SPreference.isPlayAdviserAnim(getContext().getApplicationContext())) {
-//                clazz = LoginActivity.class;
+                clazz = LoginActivity.class;
             } else {
-//                clazz = AnimActivity.class;
+                clazz = AnimActivity.class;
             }
             //投资人处理
         } else if (identity == IDS_INVERSTOR) {
             value = IDS_INVERSTOR;
             if (SPreference.isPlayInverstorAnim(getContext().getApplicationContext())) {
-//                clazz = LoginActivity.class;
+                clazz = LoginActivity.class;
             } else {
-//                clazz = AnimActivity.class;
+                clazz = AnimActivity.class;
             }
         } else {
             new MToast(getContext().getApplicationContext()).

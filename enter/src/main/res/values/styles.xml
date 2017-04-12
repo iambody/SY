@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppBaseTheme"></style>
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.NoActionBar"></style>
 
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">false</item>
+<item name="android:windowFullscreen">true</item>
     </style>
 </resources>

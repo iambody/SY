@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 17/4/7-16:59
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends  Activity {
     /**
      * 配置B&C
      **/
@@ -29,7 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         baseActivity = BaseActivity.this;
         initView(savedInstanceState);
         configApp();

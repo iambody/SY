@@ -152,7 +152,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.iv_al_back)
     void backClick() {//返回到选择身份页面
-        openActivity(ChoiceIdentityActivity.class);
+//        openActivity(ChoiceIdentityActivity.class);
         finish();
     }
 
@@ -320,7 +320,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressed() {
-        openActivity(ChoiceIdentityActivity.class);
+//        openActivity(ChoiceIdentityActivity.class);
         finish();
     }
 
