@@ -18,6 +18,7 @@ public class LoadCustomerActivity extends BaseActivity {
 
     @Override
     protected void configApp() {
+        //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
         AppInfStore.Save_IsAdviser(baseActivity,false);
         UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
         baseActivity.finish();
