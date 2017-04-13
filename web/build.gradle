@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.chenenyu.router'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -14,6 +14,7 @@ android {
         versionName rootProject.ext.versionName
         multiDexEnabled true
 
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -23,11 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -36,8 +32,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
-    compile project(':lib')
 }
