@@ -11,7 +11,6 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 
-
 /**
  * 防IOS对话框
  */
