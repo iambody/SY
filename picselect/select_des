@@ -1,0 +1,19 @@
+ImageSelector selector = ImageSelector.create();
+    // selector.single();  // single mode
+    selector.multi();  // multi mode, default mode;
+    selector.origin(mSelectPath) // original select data set, used width #.multi()
+            .showCamera(showCamera)   // show camera or not. true by default
+            .count(maxNum)   // max select image size, 9 by default. used width #.multi()
+            .spanCount(imageSpanCount)  // image span count ，default is 3.
+            .start(MainActivity.this, REQUEST_IMAGE);
+            //
+	    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+               // data  ..
+            }
+        }
+    }
