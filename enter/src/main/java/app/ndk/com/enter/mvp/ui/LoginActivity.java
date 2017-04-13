@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
@@ -27,6 +29,7 @@ import com.chenenyu.router.Router;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import java.util.Map;
 
@@ -176,6 +179,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
+        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+        if(true){return;}
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -357,6 +362,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void onCancel(SHARE_MEDIA share_media, int i) {
             mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
+        }
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String result = data.getExtras().getString("result");
+            PromptManager.ShowCustomToast(LoginActivity.this,result);
+            LogUtils.Log("daa",result);
         }
     }
 }

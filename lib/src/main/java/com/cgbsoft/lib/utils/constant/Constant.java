@@ -92,6 +92,8 @@ public interface Constant {
     String PERMISSION_WRITE_CALENDAR = Manifest.permission.WRITE_CALENDAR;
     // 相机 
     String PERMISSION_CAMERA = Manifest.permission.CAMERA;
+    //震动
+    String PERMISSION_VIBRATE =Manifest.permission.VIBRATE;
     //传感器
     String PERMISSION_BODY_SENSORS = Manifest.permission.BODY_SENSORS;
     //定位

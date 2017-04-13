@@ -1,4 +1,5 @@
 首先加上权限：
+//注意在使用时候先判断是否具备权限 如果不具备权限 不能startActivityForResult！！！！！
 
  <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" />

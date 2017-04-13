@@ -360,5 +360,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         return false;
     }
 
-
+/**
+ * 判断是否拥有运时权限
+ */
 }
+
