@@ -1,1 +1,86 @@
 //webview module 需要注意的事项
+
+
+
+ <com.github.lzyzsd.jsbridge.BridgeWebView
+        android:id="@+id/test_bridge_webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+
+Js调用Java方法并传递数据:***********************************************************************************
+通过registerHandler（）用来注册一个java函数，来实现js回调的handler
+//必须和js同名函数，注册具体执行函数，类似java实现类。
+        //第一参数是订阅的java本地函数名字 第二个参数是回调Handler , 参数返回js请求的resqustData,function.onCallBack（）回调到js，调用function(responseData)
+        mBridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
+
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                Log.e(TAG, "指定Handler接收来自web的数据：" + data);
+                function.onCallBack("指定Handler收到Web发来的数据，回传数据给你");
+            }
+        });
+
+
+            //****可以暂不考虑********************也可以mBridgeWebView.setDefaultHandler()设置DefaultHandler，这样可以接收Js通过window.WebViewJavascriptBridge通过send的所有数据
+             mBridgeWebView.setDefaultHandler(new BridgeHandler() {
+                   @Override
+                   public void handler(String data, CallBackFunction function) {
+                       Log.e(TAG, "DefaultHandler接收全部来自web的数据："+data);
+                       function.onCallBack("DefaultHandler收到Web发来的数据，回传数据给你");
+                   }
+               });
+           function testClick() {
+            //****可以暂不考虑********************发送消息给java代码
+            var data = '发送消息给java代码全局接收';
+
+            window.WebViewJavascriptBridge.send(
+                data
+                , function(responseData) {
+                   bridgeLog('来自Java的回传数据： ' +responseData);
+                }
+            );
+        }
+
+
+
+
+
+
+
+Java调用Js方法并传递参数*******************************************************************************************************
+
+mBridgeWebView.callHandler("functionInJs","发送数据给web指定接收",new CallBackFunction(){
+                    @Override
+                    public void onCallBack(String data) {
+                        Log.e(TAG, "来自web的回传数据：" + data);
+                    }
+                });
+
+
+
+
+ /**
+ *举例说明
+ **/
+ mBridgeWebView.loadUrl("file:///android_asset/wx.html");
+
+ /必须和js同名函数，注册具体执行函数，类似java实现类。
+         //第一参数是订阅的java本地函数名字 第二个参数是回调Handler , 参数返回js请求的resqustData,function.onCallBack（）回调到js，调用function(responseData)
+         mBridgeWebView.registerHandler("submitFromWeb", new BridgeHandler() {
+
+             @Override
+             public void handler(String data, CallBackFunction function) {
+                 Log.e(TAG, "指定Handler接收来自web的数据：" + data);
+                 function.onCallBack("指定Handler收到Web发来的数据，回传数据给你");
+             }
+         });
+
+         mBridgeWebView.callHandler("functionInJs","发送数据给web指定接收",new CallBackFunction(){
+                             @Override
+                             public void onCallBack(String data) {
+                                 Log.e(TAG, "来自web的回传数据：" + data);
+                             }
+                         });
