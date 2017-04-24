@@ -53,6 +53,6 @@ dependencies {
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
     compile project(':lib')
-    compile project(':libzxing')
     compile project(':picselect')
+    compile project(':libzxing')
 }
