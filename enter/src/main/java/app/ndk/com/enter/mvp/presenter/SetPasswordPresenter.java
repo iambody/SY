@@ -1,7 +1,6 @@
 package app.ndk.com.enter.mvp.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
