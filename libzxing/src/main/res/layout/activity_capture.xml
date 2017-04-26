@@ -10,6 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!--<com.cn.hugo.android.scanner.view.ViewfinderView-->
+        <!--android:id="@+id/capture_viewfinder_view"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@android:color/transparent" />-->
+
     <RelativeLayout
         android:id="@+id/capture_container"
         android:layout_width="match_parent"

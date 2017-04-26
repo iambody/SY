@@ -18,6 +18,7 @@ package com.xys.libzxing.zxing.camera;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Handler;
@@ -42,6 +43,10 @@ public class CameraManager {
     private final Context context;
     private final CameraConfigurationManager configManager;
     private static CameraManager cameraManager;
+
+    private static final int MIN_FRAME_WIDTH = 240;
+    private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
+
     /**
      * Preview frames are delivered here, which we pass on to the registered
      * handler. Make sure to clear the handler so it will only receive one
@@ -53,6 +58,9 @@ public class CameraManager {
     private boolean initialized;
     private boolean previewing;
     private int requestedCameraId = -1;
+
+    private Rect framingRect;
+    private Rect framingRectInPreview;
 
     public CameraManager(Context context) {
         this.context = context;
@@ -113,15 +121,6 @@ public class CameraManager {
             }
         }
 
-    }
-
-    /**
-     * Gets the CameraManager singleton instance.
-     *
-     * @return A reference to the CameraManager singleton.
-     */
-    public static CameraManager get() {
-        return cameraManager;
     }
 
     public synchronized boolean isOpen() {
@@ -193,6 +192,70 @@ public class CameraManager {
      */
     public synchronized void setManualCameraId(int cameraId) {
         requestedCameraId = cameraId;
+    }
+
+    public void closeCarmera(){
+//		camera.cancelAutoFocus();
+        stopPreview();
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
+    }
+
+    /**
+     * Calculates the framing rect which the UI should draw to show the user
+     * where to place the barcode. This target helps with alignment as well as
+     * forces the user to hold the device far enough away to ensure the image
+     * will be in focus.
+     *
+     * @return The rectangle to draw on screen in window coordinates.
+     */
+    public synchronized Rect getFramingRect() {
+        if (framingRect == null) {
+            if (camera == null) {
+                return null;
+            }
+            Point screenResolution = configManager.getScreenResolution();
+            if (screenResolution == null) {
+                // Called early, before init even finished
+                return null;
+            }
+
+            int width = findDesiredDimensionInRange(screenResolution.x,
+                    MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
+            // 将扫描框设置成一个正方形
+            int height = width;
+
+            int leftOffset = (screenResolution.x - width) / 3;
+            int topOffset = (screenResolution.y - height) / 3;
+            framingRect = new Rect(leftOffset, topOffset, screenResolution.x-leftOffset,screenResolution.y-topOffset);//leftOffset + width,topOffset + height);
+
+            Log.d(TAG, "Calculated framing rect: " + framingRect);
+        }
+
+        return framingRect;
+    }
+
+    /**
+     * Target 5/8 of each dimension<br/>
+     * 计算结果在hardMin~hardMax之间
+     *
+     * @param resolution
+     * @param hardMin
+     * @param hardMax
+     * @return
+     */
+    private static int findDesiredDimensionInRange(int resolution, int hardMin,
+                                                   int hardMax) {
+        int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+        if (dim < hardMin) {
+            return hardMin;
+        }
+        if (dim > hardMax) {
+            return hardMax;
+        }
+        return dim;
     }
 
     /**

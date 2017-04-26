@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -40,6 +41,7 @@ import com.xys.libzxing.zxing.decode.DecodeThread;
 import com.xys.libzxing.zxing.utils.BeepManager;
 import com.xys.libzxing.zxing.utils.CaptureActivityHandler;
 import com.xys.libzxing.zxing.utils.InactivityTimer;
+import com.xys.libzxing.zxing.view.ViewfinderView;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -67,6 +69,11 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
     private RelativeLayout scanCropView;
     private ImageView scanLine;
 
+    /**
+     * 扫描区域
+     */
+    private static ViewfinderView viewfinderView;
+
     private Rect mCropRect = null;
     private boolean isHasSurface = false;
 
@@ -90,6 +97,15 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
         scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
         scanLine = (ImageView) findViewById(R.id.capture_scan_line);
+        viewfinderView = (ViewfinderView) findViewById(R.id.capture_viewfinder_view);
+
+        findViewById(R.id.qr_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewfinderView.closeCamera();
+                CaptureActivity.this.finish();
+            }
+        });
 
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
