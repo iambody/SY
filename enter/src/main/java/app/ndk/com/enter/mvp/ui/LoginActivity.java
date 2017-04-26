@@ -29,7 +29,6 @@ import com.chenenyu.router.Router;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import java.util.Map;
 
