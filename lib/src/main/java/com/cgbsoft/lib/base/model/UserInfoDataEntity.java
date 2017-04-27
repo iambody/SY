@@ -16,8 +16,8 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String isBind;
         public UserInfo userInfo;
     }
-    
-    
+
+
     public static class UserInfo{
         public String birthday;
         public String sex;
@@ -45,7 +45,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String lastLogStringime;
         public String memoToFather;
     }
-    
+
     public static class ToBBean{
         public String organizationName;
         public String preparedforNum;
@@ -73,7 +73,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String completedOrderAmountCount;
         public String isExtension;
     }
-    
+
     public static class ToCBean{
         public String customerName;
         public String customerType;

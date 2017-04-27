@@ -1,5 +1,7 @@
 package app.ndk.com.enter.mvp.ui.Load;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 

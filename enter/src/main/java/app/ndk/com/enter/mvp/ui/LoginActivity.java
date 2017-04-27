@@ -26,10 +26,13 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
+import com.jhworks.library.ImageSelector;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import app.ndk.com.enter.R;
@@ -178,8 +181,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
-        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
-        if(true){return;}
+//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+//testSelectPic();
+//        if(true){return;}
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -215,6 +219,18 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //
 //        if(true)return;
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
+
+    }
+private ArrayList<String>picLs=new ArrayList<>();
+    private int REQUEST_CODE=20;
+
+    private void testSelectPic() {
+        ImageSelector imageSelector=ImageSelector.create();
+
+        imageSelector.single();
+        imageSelector.origin(picLs);
+        imageSelector.openCameraOnly(false);
+        imageSelector.start(LoginActivity.this,REQUEST_CODE);
 
     }
 
@@ -370,10 +386,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+        if(REQUEST_CODE==requestCode){
+            picLs=data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+        }
         if (resultCode == RESULT_OK) {
             String result = data.getExtras().getString("result");
             PromptManager.ShowCustomToast(LoginActivity.this,result);
             LogUtils.Log("daa",result);
         }
+
     }
 }

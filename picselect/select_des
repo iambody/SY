@@ -1,0 +1,41 @@
+   要使用图片选择 需要
+   新建一个ImageSelector selector
+  selector.single();  // 选择一张图片
+   selector.multi();  // 选择多张图片
+selector.openCameraOnly(false)//就是选择图片
+   初始化一个ArrayList<String>mSelectPath
+   调用
+   selector.origin(mSelectPath)
+   开启选择图片activity   REQUEST_IMAGE 设置请求code
+   .start(MainActivity.this, REQUEST_IMAGE);
+
+
+   在返回数据界面
+     mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+
+     设置头像的话剪裁的话可以直接使用选择单个头像
+
+如果是要打开相机拍照
+selector.openCameraOnly(true) 就是打开相机
+
+
+
+   ImageSelector selector = ImageSelector.create();
+    // selector.single();  // 选择一张图片
+    selector.multi();  // 选择多张图片
+    selector.origin(mSelectPath) // mSelectPath 数组
+            .showCamera(showCamera)   // show camera or not. true by default
+            .count(maxNum)   // max select image size, 9 by default. used width #.multi()
+            .spanCount(imageSpanCount)  // image span count ，default is 3.
+            .start(MainActivity.this, REQUEST_IMAGE);
+            //
+	    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+               // data  ..
+            }
+        }
+    }

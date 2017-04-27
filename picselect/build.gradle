@@ -1,18 +1,17 @@
 apply plugin: 'com.android.library'
 
+
 android {
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -24,12 +23,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile  "com.android.support:appcompat-v7:${android_need_version}"
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile "junit:junit:${testC}"
-    compile 'com.google.zxing:core:3.0.1'
+    compile "com.android.support:appcompat-v7:${android_need_version}"
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile "com.android.support:recyclerview-v7:${recyclerview_version}"
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }

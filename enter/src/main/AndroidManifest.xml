@@ -122,7 +122,9 @@
             android:exported="true"
             android:multiprocess="true" />
 
-        <activity android:name=".mvp.ui.Load.LoadAdviserActivity"  ></activity>
+        <activity android:name=".mvp.ui.Load.LoadAdviserActivity"  >
+            <meta-data android:name="isadviser" android:value="0"></meta-data>
+        </activity>
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
         <activity android:name=".mvp.ui.start.WelcomeActivity"></activity>
         <activity android:name=".mvp.ui.LoginActivity"></activity>
