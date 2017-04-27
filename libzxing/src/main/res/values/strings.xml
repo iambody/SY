@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">libzxing</string>
+    <string name="top_hint">将取景器对准二维码即可自动扫描</string>
+
+</resources>

@@ -33,6 +33,7 @@ android {
         //忽略方法数限制的检查
         dexOptions {
             jumboMode = true
+            javaMaxHeapSize = "8g"
         }
     }
     buildTypes {
