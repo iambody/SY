@@ -162,7 +162,7 @@ public final class CaptureActivity extends Activity implements
  ;
 
                 case PARSE_BARCODE_FAIL:// 解析图片失败
-                    new MToast(activityReference.get()).show("解析图片失败", 0);
+                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
 
                     restartPreviewAfterDelay(0L);
                     break;
@@ -199,7 +199,6 @@ public final class CaptureActivity extends Activity implements
             @Override
             public void onClick(View v) {
                 qr_codeswipe.closeCamera();
-                DataStatistApiParam.lookToLookFromBack();
                 CaptureActivity.this.finish();
             }
         });
