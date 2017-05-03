@@ -43,6 +43,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
 
+
 /**
  * This activity opens the camera and does the actual scanning on a background
  * thread. It draws a viewfinder to help the user place the barcode correctly,
@@ -178,7 +179,7 @@ public final class CaptureActivity extends Activity implements
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R2.layout.capture);
+        setContentView(R.layout.capture);
 
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
