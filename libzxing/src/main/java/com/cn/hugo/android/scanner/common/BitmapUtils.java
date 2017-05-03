@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 /**
  * chenlong
+ *
  */
 public class BitmapUtils {
 
