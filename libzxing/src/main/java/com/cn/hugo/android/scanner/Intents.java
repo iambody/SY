@@ -21,6 +21,7 @@ package com.cn.hugo.android.scanner;
  * These strings are effectively API and cannot be changed.
  *
  * @author dswitkin@google.com (Daniel Switkin)
+ * chenlong
  */
 public final class Intents {
   private Intents() {

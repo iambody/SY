@@ -30,7 +30,7 @@ import com.cn.hugo.android.scanner.camera.FrontLightMode;
 /**
  * Detects ambient light and switches on the front light when very dark, and off
  * again when sufficiently light.
- * 
+ * chenlong
  * @author Sean Owen
  * @author Nikolaus Huber
  */

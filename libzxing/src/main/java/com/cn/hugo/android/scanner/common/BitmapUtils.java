@@ -4,6 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+/**
+ * chenlong
+ */
 public class BitmapUtils {
 
 	public static Bitmap decodeSampledBitmapFromResource(Resources res,

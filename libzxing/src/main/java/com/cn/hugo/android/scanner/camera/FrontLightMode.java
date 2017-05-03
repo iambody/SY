@@ -21,6 +21,7 @@ import com.cn.hugo.android.scanner.config.Config;
 
 /**
  * Enumerates settings of the prefernce controlling the front light.
+ * chenlong
  */
 public enum FrontLightMode {
 

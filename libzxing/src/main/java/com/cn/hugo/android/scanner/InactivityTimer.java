@@ -30,7 +30,7 @@ import com.cn.hugo.android.scanner.common.Runnable;
  * Finishes an activity after a period of inactivity if the device is on battery
  * power. <br/>
  * <br/>
- * 
+ * chenlong
  * 该活动监控器全程监控扫描活跃状态，与CaptureActivity生命周期相同
  */
 final class InactivityTimer {

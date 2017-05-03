@@ -28,6 +28,9 @@ import com.cn.hugo.android.scanner.Intents;
 
 import com.google.zxing.BarcodeFormat;
 
+/**
+ * chenlong
+ */
 final class DecodeFormatManager {
 
 	private static final Pattern COMMA_PATTERN = Pattern.compile(",");

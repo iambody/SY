@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 /**
  * http://blog.csdn.net/lmj623565791/article/details/39761281
  * @author zhy
+ * chenlong
  *
  */
 public class ClipImageLayout extends RelativeLayout
