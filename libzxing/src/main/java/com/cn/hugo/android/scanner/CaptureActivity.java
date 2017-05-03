@@ -485,8 +485,6 @@ public final class CaptureActivity extends Activity implements
 //        });
     }
 
-
-
     public static void restartPreviewAfterDelay(long delayMS) {
         if (handler != null) {
             handler.sendEmptyMessageDelayed(R.id.restart_preview, delayMS);

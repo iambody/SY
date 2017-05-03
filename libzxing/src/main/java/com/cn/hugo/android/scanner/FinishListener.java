@@ -22,7 +22,7 @@ import android.content.DialogInterface;
 /**
  * Simple listener used to exit the app in a few cases.
  *
- * @author Sean Owen
+ * @author chenlong
  */
 public final class FinishListener implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
 

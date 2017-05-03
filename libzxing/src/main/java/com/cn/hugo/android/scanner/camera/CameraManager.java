@@ -70,6 +70,7 @@ public final class CameraManager {
 	 * Preview frames are delivered here, which we pass on to the registered
 	 * handler. Make sure to clear the handler so it will only receive one
 	 * message.
+	 * chenlong
 	 */
 	private final PreviewCallback previewCallback;
 
