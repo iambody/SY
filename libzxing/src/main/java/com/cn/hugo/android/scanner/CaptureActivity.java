@@ -50,12 +50,9 @@ import java.util.Map;
  * shows feedback as the image processing is happening, and then overlays the
  * results when a scan is successful.
  * <p/>
- * chenlong
+ * @author chenlong
  * 此Activity所做的事： 1.开启camera，在后台独立线程中完成扫描任务；
  * 2.绘制了一个扫描区（viewfinder）来帮助用户将条码置于其中以准确扫描； 3.扫描成功后会将扫描结果展示在界面上。
- *
- * @author dswitkin@google.com (Daniel Switkin)
- * @author Sean Owen
  */
 public final class CaptureActivity extends Activity implements
         SurfaceHolder.Callback, View.OnClickListener {

@@ -24,7 +24,7 @@ import android.util.Log;
 
 /**
  * 该类的作用是在预览界面加载好后向ui线程发消息
- * chenlong
+ * @author chenlong
  */
 final class PreviewCallback implements Camera.PreviewCallback {
 

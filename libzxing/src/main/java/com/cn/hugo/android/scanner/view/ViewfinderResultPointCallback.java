@@ -20,7 +20,7 @@ import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;
 
 /**
- * chenlong
+ * @author chenlong
  */
 public final class ViewfinderResultPointCallback implements ResultPointCallback {
 

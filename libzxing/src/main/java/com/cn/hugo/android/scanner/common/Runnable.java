@@ -8,7 +8,6 @@ import android.os.Build;
  * 兼容低版本的子线程开启任务
  * 
  * @author chenlong
- * 
  */
 public class Runnable {
 

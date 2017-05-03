@@ -46,7 +46,7 @@ import com.google.zxing.Result;
  * This class handles all the messaging which comprises the state machine for
  * capture.
  *
- * @author dswitkin@google.com (Daniel Switkin)
+ * @author chenlong
  */
 public final class CaptureActivityHandler extends Handler {
 

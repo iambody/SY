@@ -17,7 +17,7 @@
 package com.cn.hugo.android.scanner;
 
 /**
- * chenlong
+ * @author chenlong
  */
 enum IntentSource {
 

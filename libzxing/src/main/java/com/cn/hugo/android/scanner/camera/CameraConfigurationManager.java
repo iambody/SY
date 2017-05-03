@@ -37,7 +37,7 @@ import com.cn.hugo.android.scanner.config.Config;
 /**
  * A class which deals with reading, parsing, and setting the camera parameters
  * which are used to configure the camera hardware.
- * chenlong
+ * @author chenlong
  * <br/>
  * 
  * 摄像头参数的设置类

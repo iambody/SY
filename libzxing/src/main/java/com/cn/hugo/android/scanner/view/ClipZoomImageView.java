@@ -20,9 +20,7 @@ import android.widget.ImageView;
 
 /**
  * http://blog.csdn.net/lmj623565791/article/details/39761281
- * 
  * @author chenlong
- * 
  */
 public class ClipZoomImageView extends ImageView implements
 		OnScaleGestureListener, OnTouchListener,

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 /**
- * chenlong
+ * @author chenlong
  *
  */
 public class BitmapUtils {

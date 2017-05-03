@@ -10,9 +10,8 @@ import android.util.TypedValue;
 import android.view.View;
 
 /**
- * @author zhy
  * http://blog.csdn.net/lmj623565791/article/details/39761281
- * chenlong
+ * @author chenlong
  */
 public class ClipImageBorderView extends View
 {

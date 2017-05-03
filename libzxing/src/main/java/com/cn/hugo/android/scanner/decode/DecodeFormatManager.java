@@ -29,7 +29,7 @@ import com.cn.hugo.android.scanner.Intents;
 import com.google.zxing.BarcodeFormat;
 
 /**
- * chenlong
+ * @author chenlong
  */
 final class DecodeFormatManager {
 
