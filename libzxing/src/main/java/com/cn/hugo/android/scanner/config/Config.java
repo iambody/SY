@@ -23,6 +23,10 @@ package com.cn.hugo.android.scanner.config;
  * @author Sean Owen
  */
 public final class Config {
+
+	//二维码显示的地址
+	public static final String qr_codeUrl = "http://www.simuyun.com/?";
+
 	public static final String KEY_DECODE_1D = "preferences_decode_1D";
 	public static final String KEY_DECODE_1D_PRODUCT = "preferences_decode_1D_product";
 	public static final String KEY_DECODE_1D_INDUSTRIAL = "preferences_decode_1D_industrial";

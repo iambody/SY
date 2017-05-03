@@ -20,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 /**
  * 定义了子View的布局的RecyclerView.Adapter扩展类
  *

@@ -3,4 +3,8 @@
 
     <color name="capture_text_cover_bg">#66000000</color>
     <color name="white">#ffffff</color>
+    <color name="viewfinder_mask">#00000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+
 </resources>

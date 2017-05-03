@@ -33,6 +33,7 @@ import android.os.Message;
 import android.provider.Browser;
 import android.util.Log;
 
+import com.cgbsoft.lib.R2;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.cn.hugo.android.scanner.R;
 import com.cn.hugo.android.scanner.camera.CameraManager;
@@ -98,21 +99,19 @@ public final class CaptureActivityHandler extends Handler {
 
 		// Start ourselves capturing previews and decoding.
 		this.cameraManager = cameraManager;
-
 		// 开启相机预览界面
 		cameraManager.startPreview();
-
 		restartPreviewAndDecode();
 	}
 
 	@Override
 	public void handleMessage(Message message) {
 		switch (message.what) {
-			case R.id.restart_preview: // 准备进行下一次扫描
+			case R2.id.restart_preview: // 准备进行下一次扫描
 				Log.d(TAG, "Got restart preview message");
 				restartPreviewAndDecode();
 				break;
-			case R.id.decode_succeeded:
+			case R2.id.decode_succeeded:
 				Log.d(TAG, "Got decode succeeded message");
 				state = State.SUCCESS;
 				Bundle bundle = message.getData();
@@ -134,22 +133,21 @@ public final class CaptureActivityHandler extends Handler {
 				activity.handleDecode((Result) message.obj, barcode,
 						scaleFactor);
 				break;
-			case R.id.decode_failed:
+			case R2.id.decode_failed:
 				// We're decoding as fast as possible, so when one decode fails,
 				// start another.
 				state = State.PREVIEW;
 				cameraManager.requestPreviewFrame(decodeThread.getHandler(),
-						R.id.decode);
+						R2.id.decode);
 				break;
-			case R.id.return_scan_result:
+			case R2.id.return_scan_result:
 				Log.d(TAG, "Got return scan result message");
 				activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
 				activity.finish();
 				break;
-			case R.id.launch_product_query:
+			case R2.id.launch_product_query:
 				Log.d(TAG, "Got product query message");
 				String url = (String) message.obj;
-
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 				intent.setData(Uri.parse(url));
@@ -202,8 +200,8 @@ public final class CaptureActivityHandler extends Handler {
 		}
 
 		// Be absolutely sure we don't send any queued up messages
-		removeMessages(R.id.decode_succeeded);
-		removeMessages(R.id.decode_failed);
+		removeMessages(R2.id.decode_succeeded);
+		removeMessages(R2.id.decode_failed);
 	}
 
 	/**
@@ -215,7 +213,7 @@ public final class CaptureActivityHandler extends Handler {
 
 			// 向decodeThread绑定的handler（DecodeHandler)发送解码消息
 			cameraManager.requestPreviewFrame(decodeThread.getHandler(),
-					R.id.decode);
+					R2.id.decode);
 			activity.drawViewfinder();
 		}
 	}

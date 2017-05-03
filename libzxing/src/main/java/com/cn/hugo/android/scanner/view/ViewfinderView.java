@@ -16,6 +16,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.cn.hugo.android.scanner.R;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.google.zxing.ResultPoint;
 

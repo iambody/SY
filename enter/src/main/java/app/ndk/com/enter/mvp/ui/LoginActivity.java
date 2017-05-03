@@ -26,6 +26,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
+import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -181,9 +182,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
-//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
-//testSelectPic();
-//        if(true){return;}
+        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+//testSelectPic();／／
+        if(true){return;}
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;

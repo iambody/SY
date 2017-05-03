@@ -358,6 +358,10 @@ public class SPreference implements Constant {
         return OtherDataProvider.getIdentify(context);
     }
 
+    public static boolean isVisitorRole(Context context) {
+        return 2 == getIdtentify(context);
+    }
+
     /**
      * 保存身份信息
      *

@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,8 +35,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.DataUtil;
+import com.cgbsoft.lib.utils.tools.Des3;
+import com.cgbsoft.lib.widget.MToast;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.cn.hugo.android.scanner.common.BitmapUtils;
+import com.cn.hugo.android.scanner.config.Config;
 import com.cn.hugo.android.scanner.decode.BitmapDecoder;
 import com.cn.hugo.android.scanner.decode.CaptureActivityHandler;
 import com.cn.hugo.android.scanner.view.ViewfinderView;
@@ -46,6 +53,8 @@ import com.google.zxing.client.result.ResultParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.rong.eventbus.EventBus;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -63,6 +72,7 @@ public final class CaptureActivity extends Activity implements
         SurfaceHolder.Callback, View.OnClickListener {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
+    public static final int shuhui_result = 103;
 
     private static final int REQUEST_CODE = 100;
 
@@ -162,8 +172,7 @@ public final class CaptureActivity extends Activity implements
  ;
 
                 case PARSE_BARCODE_FAIL:// 解析图片失败
-                    new MToast(activityReference.get()).show("解析图片失败", 0);
-
+                    Toast.makeText(activityReference.get(), "解析图片失败", Toast.LENGTH_SHORT).show();
                     restartPreviewAfterDelay(0L);
                     break;
 
@@ -199,7 +208,6 @@ public final class CaptureActivity extends Activity implements
             @Override
             public void onClick(View v) {
                 qr_codeswipe.closeCamera();
-                DataStatistApiParam.lookToLookFromBack();
                 CaptureActivity.this.finish();
             }
         });
@@ -324,21 +332,21 @@ public final class CaptureActivity extends Activity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == Contant.shuhui_result) {
+        if (requestCode == shuhui_result) {
             if (resultCode == RESULT_OK) {
-                List<String> mSelectPath = intent.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
 
-                if (mSelectPath != null && mSelectPath.size() > 0) {
-
-                    Intent intent1 = new Intent(this, ClipQrCodeActivity.class);
-                    intent1.putExtra("mSelectPath", mSelectPath.get(0));
-                    startActivity(intent1);
-                }
+                //TODO twocode
+//                List<String> mSelectPath = intent.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+//
+//                if (mSelectPath != null && mSelectPath.size() > 0) {
+//
+//                    Intent intent1 = new Intent(this, ClipQrCodeActivity.class);
+//                    intent1.putExtra("mSelectPath", mSelectPath.get(0));
+//                    startActivity(intent1);
+//                }
             }
 
         }
-
-//
     }
 
     @Override
@@ -389,6 +397,104 @@ public final class CaptureActivity extends Activity implements
         parser(result);
     }
 
+    public void parser(String result) {
+        if (result.contains(Config.qr_codeUrl)) {
+            try {
+                String aa = result.substring(result.indexOf("?") + 1);
+                String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
+//                new MToast(this).show(deresult,0);
+                JSONObject j = new JSONObject(deresult);
+                String party_id = j.getString("party_id");
+                String party_name = j.getString("party_name");
+                String father_id = j.getString("uid");
+                String deadline = j.getString("deadline");
+                String father_name = j.getString("nickName");
+                if (deadline.equals(DataUtil.getDay1()) || (DataUtil.compareNow(deadline) != -1)) {
+                    if (!SPreference.isVisitorRole(getApplicationContext())) {
+                        upload(party_id, party_name, father_id, father_name);
+                    } else {
+                        // toJumpTouziren(result);
+                    }
+                } else {
+                    new MToast(this).show("该二维码已过期", 0);
+                    restartPreviewAfterDelay(0L);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            new MToast(this).show("不是有效的推荐人二维码", 0);
+            restartPreviewAfterDelay(0L);
+        }
+    }
+
+//    private void toJumpTouziren(String result) {
+//        try {
+//            String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
+//            JSONObject j = new JSONObject(deresult);
+//            String father_id = j.getString("uid");
+//            Intent intent = new Intent(this, InvestorCentifyActivity.class);
+//            intent.putExtra(InvestorCentifyActivity.INVISTOR_PARAM, father_id);
+//            startActivity(intent);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private static void upload(String party_id, final String party_name, String father_id, final String father_name) {
+        JSONObject j = new JSONObject();
+        String name = nickname;
+        try {
+            j.put("advisersId", SPreference.getUserId(Appli.getContext()));
+            if ((!TextUtils.isEmpty(name)) && (!name.equals(""))) {
+                j.put("realName", name);
+            }
+            j.put("orgId", party_id);
+            if ((!TextUtils.isEmpty(phoneNum)) && (!phoneNum.equals(""))) {
+                j.put("phoneNum", phoneNum);
+            }
+            j.put("fatherId", father_id);
+            j.put("authenticationType", "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        new RenzhengLicaishiTask(Appli.getContext()).start(j.toString(), new HttpResponseListener() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+////                new MyDogDialog(CaptureActivity.this, "", "成功认证到" + party_name + ",邀请人" + father_name, "", "确定") {
+////                    @Override
+////                    public void left() {
+////                        restartPreviewAfterDelay(0L);
+////                        EventBus.getDefault().post(new RefreshUserinfo());
+////                    }
+////
+////                    @Override
+////                    public void right() {
+////                        restartPreviewAfterDelay(0L);
+////                        EventBus.getDefault().post(new RefreshUserinfo());
+////                    }
+////                }.show();
+//                new MToast(MApplication.mContext).show("成功认证到" + party_name + ",邀请人" + father_name, Toast.LENGTH_LONG);
+//                restartPreviewAfterDelay(0L);
+//                EventBus.getDefault().post(new RefreshUserinfo());
+//            }
+
+//            @Override
+//            public void onErrorResponse(String error, int statueCode) {
+//                try {
+//                    JSONObject j = new JSONObject(error);
+//                    String msg = j.getString("message");
+//                    new MToast(MApplication.mContext).show(msg, 0);
+//                    restartPreviewAfterDelay(0L);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+    }
 
 
 
@@ -484,44 +590,79 @@ public final class CaptureActivity extends Activity implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.capture_scan_photo: // 图片识别
+        if (v.getId() == R.id.capture_scan_photo) {
+                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
+                innerIntent.setType("image/*");
+                Intent wrapperIntent = Intent.createChooser(innerIntent,
+                        "选择二维码图片");
+                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
+
+//            // TODO 图片选择
+//                Intent ii = new Intent(this, MultiImageSelectorActivity.class);
+//                // 是否显示拍摄图片
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//                // 最大可选择图片数量
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//                ii.putExtra("clear", 1);
+//                // 选择模式
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
+//                // 设置是否可预览
+//                ii.putExtra(MultiImageSelectorActivity.PREVIEW_MODE, 0);
+//                startActivityForResult(ii, Contant.shuhui_result);
+//                if (Utils.isVisteRole(this)) {
+//                    DataStatistApiParam.lookToLookFromXiangCe();
+//                }
+        } else if (v.getId() == R.id.capture_flashlight) {
+            if (isFlashlightOpen) {
+                cameraManager.setTorch(false); // 关闭闪光灯
+                isFlashlightOpen = false;
+                light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_nor);
+            } else {
+                cameraManager.setTorch(true); // 打开闪光灯
+                isFlashlightOpen = true;
+                light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_down);
+            }
+        }
+//        switch (v.getId()) {
+//            case R.id.capture_scan_photo: // 图片识别
                 // 打开手机中的相册
 //                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
 //                innerIntent.setType("image/*");
 //                Intent wrapperIntent = Intent.createChooser(innerIntent,
 //                        "选择二维码图片");
 //                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
-                Intent ii = new Intent(this, MultiImageSelectorActivity.class);
-                // 是否显示拍摄图片
-                ii.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-                // 最大可选择图片数量
-                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
-                ii.putExtra("clear", 1);
-                // 选择模式
-                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
-                // 设置是否可预览
-                ii.putExtra(MultiImageSelectorActivity.PREVIEW_MODE, 0);
-                startActivityForResult(ii, Contant.shuhui_result);
-                if (Utils.isVisteRole(this)) {
-                    DataStatistApiParam.lookToLookFromXiangCe();
-                }
-                break;
 
-            case R.id.capture_flashlight:
-                if (isFlashlightOpen) {
-                    cameraManager.setTorch(false); // 关闭闪光灯
-                    isFlashlightOpen = false;
-                    light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_nor);
-                } else {
-                    cameraManager.setTorch(true); // 打开闪光灯
-                    isFlashlightOpen = true;
-                    light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_down);
-                }
-                break;
-            default:
-                break;
-        }
+                // TODO 图片选择
+//                Intent ii = new Intent(this, MultiImageSelectorActivity.class);
+//                // 是否显示拍摄图片
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+//                // 最大可选择图片数量
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+//                ii.putExtra("clear", 1);
+//                // 选择模式
+//                ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
+//                // 设置是否可预览
+//                ii.putExtra(MultiImageSelectorActivity.PREVIEW_MODE, 0);
+//                startActivityForResult(ii, Contant.shuhui_result);
+//                if (Utils.isVisteRole(this)) {
+//                    DataStatistApiParam.lookToLookFromXiangCe();
+//                }
+//                break;
+//            break;
+//            case R.id.capture_flashlight:
+//                if (isFlashlightOpen) {
+//                    cameraManager.setTorch(false); // 关闭闪光灯
+//                    isFlashlightOpen = false;
+//                    light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_nor);
+//                } else {
+//                    cameraManager.setTorch(true); // 打开闪光灯
+//                    isFlashlightOpen = true;
+//                    light.setBackgroundResource(R.drawable.qrcode_scan_btn_flash_down);
+//                }
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     public void onEventMainThread(EventBusQRcodeImg event) {
