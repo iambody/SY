@@ -1,29 +1,13 @@
 package com.cn.hugo.android.scanner;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.provider.SyncStateContract;
-import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -54,7 +38,10 @@ import com.google.zxing.client.result.ResultParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.rong.eventbus.EventBus;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -191,7 +178,7 @@ public final class CaptureActivity extends Activity implements
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.capture);
+        setContentView(R2.layout.capture);
 
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);

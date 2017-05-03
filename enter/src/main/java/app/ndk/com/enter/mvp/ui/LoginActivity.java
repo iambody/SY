@@ -182,7 +182,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
-        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
 //testSelectPic();／／
         if(true){return;}
         if (!isUsernameInput) {
