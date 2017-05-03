@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 
 /**
  * 防IOS对话框
+ * @author chenlong
  */
 public abstract class IOSDialog extends BaseDialog {
     private String title, content, left, right;
