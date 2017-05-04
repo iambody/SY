@@ -33,10 +33,9 @@ import com.google.zxing.PlanarYUVLuminanceSource;
  * talking to it. The implementation encapsulates the steps needed to take
  * preview-sized images, which are used for both preview and decoding. <br/>
  * <br/>
- * 
  * 该类封装了相机的所有服务并且是该app中唯一与相机打交道的类
  * 
- * @author dswitkin@google.com (Daniel Switkin)
+ * @author chenlong
  */
 public final class CameraManager {
 
@@ -70,6 +69,7 @@ public final class CameraManager {
 	 * Preview frames are delivered here, which we pass on to the registered
 	 * handler. Make sure to clear the handler so it will only receive one
 	 * message.
+	 * chenlong
 	 */
 	private final PreviewCallback previewCallback;
 

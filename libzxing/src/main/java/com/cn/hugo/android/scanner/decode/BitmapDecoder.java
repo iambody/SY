@@ -17,8 +17,8 @@ import com.google.zxing.common.HybridBinarizer;
 /**
  * 从bitmap解码
  * 
- * @author hugo
- * 
+ * @author chenlong
+ *
  */
 public class BitmapDecoder {
 

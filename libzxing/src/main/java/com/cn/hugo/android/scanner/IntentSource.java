@@ -16,6 +16,9 @@
 
 package com.cn.hugo.android.scanner;
 
+/**
+ * @author chenlong
+ */
 enum IntentSource {
 
   NATIVE_APP_INTENT,

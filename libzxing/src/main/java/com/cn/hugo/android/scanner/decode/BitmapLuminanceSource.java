@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 
 import com.google.zxing.LuminanceSource;
 
+/**
+ * @author chenlong
+ */
 public class BitmapLuminanceSource extends LuminanceSource {
 
 	private byte bitmapPixels[];

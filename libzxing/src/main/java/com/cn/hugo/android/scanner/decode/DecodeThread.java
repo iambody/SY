@@ -36,7 +36,7 @@ import com.google.zxing.ResultPointCallback;
 
 /**
  * This thread does all the heavy lifting of decoding the images.
- * 
+ * chenlong
  * @author dswitkin@google.com (Daniel Switkin)
  */
 final class DecodeThread extends Thread {

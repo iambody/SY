@@ -32,6 +32,7 @@ import com.cn.hugo.android.scanner.config.Config;
 
 /**
  * Manages beeps and vibrations for {@link CaptureActivity}.
+ * @author chenlong
  */
 final class BeepManager implements MediaPlayer.OnCompletionListener,
 		MediaPlayer.OnErrorListener {

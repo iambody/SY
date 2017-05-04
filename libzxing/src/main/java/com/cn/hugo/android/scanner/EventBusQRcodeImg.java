@@ -2,6 +2,7 @@ package com.cn.hugo.android.scanner;
 
 /**
  * Created by lee on 2016/4/26.
+ * @author chenlong
  */
 public class EventBusQRcodeImg {
     public String fileDir;

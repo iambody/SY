@@ -14,6 +14,8 @@ import com.cgbsoft.lib.utils.constant.Constant;
 
 /**
  * 防IOS对话框
+ *
+ * @author chenlong
  */
 public abstract class IOSDialog extends BaseDialog {
     private String title, content, left, right;
@@ -21,7 +23,7 @@ public abstract class IOSDialog extends BaseDialog {
     private CharSequence charSequence;
     private boolean hasChar = false;
 
-    public IOSDialog(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+    public IOSDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 

@@ -19,6 +19,9 @@ package com.cn.hugo.android.scanner.view;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;
 
+/**
+ * @author chenlong
+ */
 public final class ViewfinderResultPointCallback implements ResultPointCallback {
 
 	private final ViewfinderView viewfinderView;

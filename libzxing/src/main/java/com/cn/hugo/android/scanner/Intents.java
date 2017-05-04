@@ -19,8 +19,7 @@ package com.cn.hugo.android.scanner;
 /**
  * This class provides the constants to use when sending an Intent to Barcode Scanner.
  * These strings are effectively API and cannot be changed.
- *
- * @author dswitkin@google.com (Daniel Switkin)
+ * @author chenlong
  */
 public final class Intents {
   private Intents() {

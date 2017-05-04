@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">libzxing</string>
 
-    <string name="top_hint">将取景器对准二维码即可自动扫描</string>
     <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
+    <string name="top_hint">将取景器对准二维码即可自动扫描</string>
     <string name="button_ok">确定</string>
 
 </resources>
