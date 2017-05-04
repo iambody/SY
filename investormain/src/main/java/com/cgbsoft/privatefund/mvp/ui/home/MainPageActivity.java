@@ -53,6 +53,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
         transaction.add(R.id.fl_main_content, mContentFragment);
+
         transaction.commitAllowingStateLoss();
 
         initRxObservable();

@@ -6,14 +6,14 @@ import android.support.v4.app.Fragment;
 import com.cgbsoft.adviser.mvp.ui.message.MessageFragment;
 import com.cgbsoft.adviser.mvp.ui.college.CollegeFragment;
 import com.cgbsoft.adviser.mvp.ui.setting.SettingFragment;
-import com.cgbsoft.investor.mvp.ui.cloud.CloudFragment;
-import com.cgbsoft.investor.mvp.ui.club.ClubFragment;
-import com.cgbsoft.investor.mvp.ui.mine.MineFragment;
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.discovery.DiscoveryFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.mvp.ui.product.ProductFragment;
 
 
