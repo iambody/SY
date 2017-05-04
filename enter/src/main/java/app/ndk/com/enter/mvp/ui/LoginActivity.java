@@ -184,11 +184,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     void loginClick() {//登录
 //        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
 //testSelectPic();／／
-
+PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
 //        Router.build("aks").go(LoginActivity.this);
-        Router.build("aks").go(LoginActivity.this);
+        Router.build("ssvvv").go(LoginActivity.this);
 //testSelectPic();／／
-        if(true){return;}
+        if (true) {
+            return;
+        }
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -226,16 +228,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
-private ArrayList<String>picLs=new ArrayList<>();
-    private int REQUEST_CODE=20;
+
+    private ArrayList<String> picLs = new ArrayList<>();
+    private int REQUEST_CODE = 20;
 
     private void testSelectPic() {
-        ImageSelector imageSelector=ImageSelector.create();
+        ImageSelector imageSelector = ImageSelector.create();
 
         imageSelector.single();
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
-        imageSelector.start(LoginActivity.this,REQUEST_CODE);
+        imageSelector.start(LoginActivity.this, REQUEST_CODE);
 
     }
 
@@ -386,18 +389,17 @@ private ArrayList<String>picLs=new ArrayList<>();
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        if(REQUEST_CODE==requestCode){
-            picLs=data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+        if (REQUEST_CODE == requestCode) {
+            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
         }
         if (resultCode == RESULT_OK) {
             String result = data.getExtras().getString("result");
-            PromptManager.ShowCustomToast(LoginActivity.this,result);
-            LogUtils.Log("daa",result);
+            PromptManager.ShowCustomToast(LoginActivity.this, result);
+            LogUtils.Log("daa", result);
         }
 
     }

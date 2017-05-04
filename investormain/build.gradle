@@ -116,7 +116,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${testC}"
-//    classpath 'com.android.tools.build:gradle:2.1.0'
+    //    classpath 'com.android.tools.build:gradle:2.1.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile "com.android.support:appcompat-v7:${android_need_version}"
@@ -140,8 +140,7 @@ dependencies {
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':adviser')
-    compile project(':share')
     compile project(':order')
-    compile project(':share')
     compile project(':enter')
+    compile project(':share')
 }

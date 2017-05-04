@@ -23,7 +23,7 @@ import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
 import rx.Observable;
-@Route("aks")
+@Route("bva")
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;

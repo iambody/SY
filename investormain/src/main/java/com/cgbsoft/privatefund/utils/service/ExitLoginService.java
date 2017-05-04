@@ -22,7 +22,8 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
-import com.cgbsoft.privatefund.mvp.ui.login.LoginActivity;
+
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/21.
