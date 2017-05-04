@@ -82,6 +82,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
 
+
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
