@@ -32,7 +32,7 @@ public class NetConfig {
     }
 
 
-    //登陆
+    //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
     static final String GET_RES_URL = API_URL + "/startup/5.0";
@@ -66,7 +66,7 @@ public class NetConfig {
         static final String GET_USERINFO_URL = AUTH_URL + user + "/userInfo";
         //验证微信验证unionid是否已存在
         static final String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
-        // 微信登陆
+        // 微信登录
         static final String WX_LOGIN_URL = AUTH_URL + user + "/weChatLogin";
         //注册
         static final String REGISTER_URL = AUTH_URL + user + "/register";

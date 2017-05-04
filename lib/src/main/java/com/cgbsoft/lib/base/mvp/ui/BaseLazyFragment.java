@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -64,7 +64,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
     protected abstract P createPresenter();
 
 
-    private Appli mAppli;
+    private BaseApplication mBaseApplication;
     private WeakHandler mBaseHandler;//handler
     private View mFragmentView;
     private DaoSession mDaoSession;//数据库
@@ -113,7 +113,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
 
     private synchronized void initPrepare() {
         if (isPrepared) {
-            mAppli = (Appli) getActivity().getApplication();
+            mBaseApplication = (BaseApplication) getActivity().getApplication();
             mBaseHandler = new WeakHandler();
             mPresenter = createPresenter();
             mUnbinder = ButterKnife.bind(this, FBaseView);

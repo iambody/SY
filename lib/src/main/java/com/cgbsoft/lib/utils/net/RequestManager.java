@@ -111,7 +111,7 @@ interface RequestManager {
     Observable<ResponseBody> wxTestUnioIDCheck(@QueryMap Map<String, String> map);
 
     /**
-     * 微信登陆
+     * 微信登录
      * @param paramsMap
      * @return
      */

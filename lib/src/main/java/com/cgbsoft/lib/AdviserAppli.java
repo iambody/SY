@@ -27,7 +27,7 @@ import java.util.logging.Level;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 17/4/5-17:30
  */
-public class AdviserAppli extends Appli {
+public class AdviserAppli extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();

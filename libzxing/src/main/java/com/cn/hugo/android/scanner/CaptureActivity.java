@@ -19,7 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -425,7 +425,7 @@ public final class CaptureActivity extends Activity implements
         JSONObject j = new JSONObject();
         String name = nickname;
         try {
-            j.put("advisersId", SPreference.getUserId(Appli.getContext()));
+            j.put("advisersId", SPreference.getUserId(BaseApplication.getContext()));
             if ((!TextUtils.isEmpty(name)) && (!name.equals(""))) {
                 j.put("realName", name);
             }
@@ -438,7 +438,7 @@ public final class CaptureActivity extends Activity implements
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        new RenzhengLicaishiTask(Appli.getContext()).start(j.toString(), new HttpResponseListener() {
+//        new RenzhengLicaishiTask(BaseApplication.getContext()).start(j.toString(), new HttpResponseListener() {
 //            @Override
 //            public void onResponse(JSONObject response) {
 ////                new MyDogDialog(CaptureActivity.this, "", "成功认证到" + party_name + ",邀请人" + father_name, "", "确定") {

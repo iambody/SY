@@ -22,7 +22,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.cgbsoft.privatefund"
+        applicationId "com.cgbsoft.privatefund1"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -47,21 +47,21 @@ android {
             javaMaxHeapSize = "8g"
         }
     }
-//
-//    signingConfigs {
-//        debug {
-//            storeFile file("E:\\develop\\key\\privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//        }
-//        release {
-//            storeFile file("E:\\develop\\key\\privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//        }
-//    }
+
+    signingConfigs {
+        debug {
+            storeFile file("D:\\develop\\key\\privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+        release {
+            storeFile file("D:\\develop\\key\\privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+    }
 
     buildTypes {
         debug {
@@ -86,7 +86,7 @@ android {
             //混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -116,6 +116,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${testC}"
+
     apt "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile "com.android.support:appcompat-v7:${android_need_version}"

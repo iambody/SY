@@ -79,7 +79,6 @@ dependencies {
     compile "com.lzy.net:okgo:${okGo_need_version}"
     compile "com.lzy.net:okserver:${okGoServer_need_version}"//上传下载
 
-
     //和okhttp一起使用，可以减少代码量
     compile "com.squareup.retrofit2:retrofit:${retrofit_need_version}"
     compile "com.squareup.retrofit2:adapter-rxjava:${retrofit_need_version}"

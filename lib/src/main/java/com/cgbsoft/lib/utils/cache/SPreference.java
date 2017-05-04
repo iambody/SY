@@ -93,7 +93,7 @@ public class SPreference implements Constant {
         SharedPreferences old1Sp = getBase(c, "simuyun");
         // 1理财师  2投资人
         String identify = old1Sp.getString("identify", "");
-        //是否登陆
+        //是否登录
         String hasUserInfo = old1Sp.getString("hasUserInfo", "");
         //token
         String token = old1Sp.getString("token", "");
@@ -204,7 +204,7 @@ public class SPreference implements Constant {
 
 
     /**
-     * 获取登陆用户信息。
+     * 获取登录用户信息。
      *
      * @param context 上下文
      * @return 用户信息类
@@ -299,7 +299,7 @@ public class SPreference implements Constant {
     }
 
     /**
-     * 保存登陆用户token信息。
+     * 保存登录用户token信息。
      *
      * @param context 上下文
      * @param token   token
@@ -310,7 +310,7 @@ public class SPreference implements Constant {
     }
 
     /**
-     * 获取登陆用户token信息。
+     * 获取登录用户token信息。
      *
      * @param context 上下文
      * @return 用户token
@@ -326,7 +326,7 @@ public class SPreference implements Constant {
     }
 
     /**
-     * 保存登陆状态
+     * 保存登录状态
      *
      * @param context 上下文
      * @param flag    是否成功
@@ -337,10 +337,10 @@ public class SPreference implements Constant {
     }
 
     /**
-     * 是否登陆
+     * 是否登录
      *
      * @param context 上下文
-     * @return 登陆状态
+     * @return 登录状态
      */
     public static boolean isLogin(@NonNull Context context) {
         LogUtils.Log("ta","操作");

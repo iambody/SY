@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -27,7 +27,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
-    private Appli mAppli;
+    private BaseApplication mBaseApplication;
     private WeakHandler mBaseHandler;//handler
     private View mFragmentView;
     private DaoSession mDaoSession;//数据库
@@ -80,7 +80,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     }
 
     protected void before() {
-        mAppli = (Appli) getActivity().getApplication();
+        mBaseApplication = (BaseApplication) getActivity().getApplication();
     }
 
     protected void after(View view) {
@@ -104,8 +104,8 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
      *
      * @return
      */
-    protected Appli getAppli() {
-        return mAppli;
+    protected BaseApplication getAppli() {
+        return mBaseApplication;
     }
 
     /**

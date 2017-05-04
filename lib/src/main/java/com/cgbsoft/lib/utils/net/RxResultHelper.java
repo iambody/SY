@@ -49,24 +49,24 @@ class RxResultHelper {
 //                        if (entity.isOk()) {
 //                            return createData(entity.result);
 //                        } else {
-//                            if (SettingPreference.isLogin(Appli.getContext())
-//                                    && SettingPreference.getUserInfoData(Appli.getContext()) != null) {
-//                                SettingPreference.setRecommendState(Appli.getContext(), SettingPreference.getUserInfoData(Appli.getContext()).getId(), false);
+//                            if (SettingPreference.isLogin(BaseApplication.getContext())
+//                                    && SettingPreference.getUserInfoData(BaseApplication.getContext()) != null) {
+//                                SettingPreference.setRecommendState(BaseApplication.getContext(), SettingPreference.getUserInfoData(BaseApplication.getContext()).getId(), false);
 //                            }
 //
 //                            if (TextUtils.equals(entity.code, "400_8") || TextUtils.equals(entity.code, "400_5") || TextUtils.equals(entity.code, "401")
 //                                    || TextUtils.equals(entity.code, "503")) {
-//                                Toast.makeText(Appli.getContext(), !TextUtils.equals(entity.code, "400_8") ? "登录失效,请重新登录..." : "账号已被查封", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(BaseApplication.getContext(), !TextUtils.equals(entity.code, "400_8") ? "登录失效,请重新登录..." : "账号已被查封", Toast.LENGTH_SHORT).show();
 //                                if (!Utils.isOpenLoginPage()) {
-//                                    SettingPreference.saveUserInfoComplete(Appli.getContext(), false);
-//                                    SettingPreference.quitLogin(Appli.getContext());
+//                                    SettingPreference.saveUserInfoComplete(BaseApplication.getContext(), false);
+//                                    SettingPreference.quitLogin(BaseApplication.getContext());
 //                                    RxBus.get().post(CLOSE_MAIN_PAGE, true);
 //                                    RxBus.get().post(WELCOME_FINISH_OBSERVABLE, true);
 //
-//                                    Intent intent = new Intent(Appli.getContext(), LoginBaseActivity.class);
+//                                    Intent intent = new Intent(BaseApplication.getContext(), LoginBaseActivity.class);
 //                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                                    intent.putExtra("isStartOpen", true);
-//                                    Appli.getContext().startActivity(intent);
+//                                    BaseApplication.getContext().startActivity(intent);
 //                                }
 //                                Observable.error(new ApiException(entity.code, "登录失效,请重新登录..."));
 //                            } else if (entity.code.equals("301")) {

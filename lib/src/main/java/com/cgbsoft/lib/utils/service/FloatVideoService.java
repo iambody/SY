@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
@@ -107,15 +107,15 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
     }
 
     public static void startService(String videoId) {
-        if (!Utils.isServiceRunning(Appli.getContext(), FloatVideoService.class.getName())) {
-            Appli.getContext().startService(new Intent(Appli.getContext(), FloatVideoService.class));
+        if (!Utils.isServiceRunning(BaseApplication.getContext(), FloatVideoService.class.getName())) {
+            BaseApplication.getContext().startService(new Intent(BaseApplication.getContext(), FloatVideoService.class));
         }
         mVideoId = videoId;
     }
 
     public static void stopService() {
-        if (Utils.isServiceRunning(Appli.getContext(), FloatVideoService.class.getName())) {
-            Appli.getContext().stopService(new Intent(Appli.getContext(), FloatVideoService.class));
+        if (Utils.isServiceRunning(BaseApplication.getContext(), FloatVideoService.class.getName())) {
+            BaseApplication.getContext().stopService(new Intent(BaseApplication.getContext(), FloatVideoService.class));
         }
     }
 

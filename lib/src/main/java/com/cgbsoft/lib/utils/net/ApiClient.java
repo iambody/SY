@@ -3,7 +3,7 @@ package com.cgbsoft.lib.utils.net;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -41,8 +41,8 @@ public class ApiClient {
     public static Observable<AppResourcesEntity.Result> getAppResources() {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
-        params.put("version", Utils.getVersionName(Appli.getContext()));
-        params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
+        params.put("version", Utils.getVersionName(BaseApplication.getContext()));
+        params.put("client", SPreference.getIdtentify(BaseApplication.getContext()) + "");
 
         return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
@@ -50,8 +50,8 @@ public class ApiClient {
     public static Observable<String> getTestAppResources() {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
-        params.put("version", Utils.getVersionName(Appli.getContext()));
-        params.put("client", SPreference.getIdtentify(Appli.getContext()) + "");
+        params.put("version", Utils.getVersionName(BaseApplication.getContext()));
+        params.put("client", SPreference.getIdtentify(BaseApplication.getContext()) + "");
 
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
@@ -462,7 +462,7 @@ public class ApiClient {
                 map.remove(key);
             }
             if (!map.containsKey("appVersion")) {
-                map.put("appVersion", Utils.getVersionName(Appli.getContext()));
+                map.put("appVersion", Utils.getVersionName(BaseApplication.getContext()));
             }
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");
@@ -471,7 +471,7 @@ public class ApiClient {
         } else {
             map = new HashMap<>();
             if (!map.containsKey("appVersion")) {
-                map.put("appVersion", Utils.getVersionName(Appli.getContext()));
+                map.put("appVersion", Utils.getVersionName(BaseApplication.getContext()));
             }
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");

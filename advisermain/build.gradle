@@ -30,6 +30,7 @@ android {
             exclude 'META-INF/license.txt'
         }
 
+        multiDexEnabled true
         //忽略方法数限制的检查
         dexOptions {
             jumboMode = true

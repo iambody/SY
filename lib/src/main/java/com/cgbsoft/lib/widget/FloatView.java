@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 
 /**
@@ -68,8 +68,8 @@ public class FloatView extends LinearLayout {
         wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        int posX = SPreference.getFloatViewX(Appli.getContext());
-        int posY = SPreference.getFloatViewY(Appli.getContext());
+        int posX = SPreference.getFloatViewX(BaseApplication.getContext());
+        int posY = SPreference.getFloatViewY(BaseApplication.getContext());
 
         wmParams.x = posX > 0 ? posX : x;
         wmParams.y = posY > 0 ? posY : y;
@@ -136,8 +136,8 @@ public class FloatView extends LinearLayout {
      */
     public boolean removeFromWindow() {
         if (wmParams != null) {
-            SPreference.saveFloatViewX(Appli.getContext(), wmParams.x);
-            SPreference.saveFloatViewY(Appli.getContext(), wmParams.y);
+            SPreference.saveFloatViewX(BaseApplication.getContext(), wmParams.x);
+            SPreference.saveFloatViewY(BaseApplication.getContext(), wmParams.y);
         }
 
         if (wm != null) {

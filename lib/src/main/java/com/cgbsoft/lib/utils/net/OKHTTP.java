@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -70,7 +70,7 @@ public class OKHTTP {
         }
         //添加head 的拦截器
         Interceptor headInterceptor = chain -> {
-            Context context = Appli.getContext();
+            Context context = BaseApplication.getContext();
             okhttp3.Request originalRequest = chain.request();
 
             String uid = SPreference.getUserId(context);
@@ -88,7 +88,7 @@ public class OKHTTP {
             okhttp3.Request authorised = builder.build();
             Utils.log("ApiClient", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
-                    "deviceId:" + Utils.getIMEI(Appli.getContext()) + "\n" +
+                    "deviceId:" + Utils.getIMEI(BaseApplication.getContext()) + "\n" +
                     "version:" + Utils.getVersionCode(context), "d");
             return chain.proceed(authorised);
         };
@@ -110,7 +110,7 @@ public class OKHTTP {
                     intent.setAction(Constant.RECEIVER_EXIT_ACTION);
                     intent.putExtra(Constant.RECEIVER_ERRORCODE, response.code());
 
-                    Appli.getContext().sendBroadcast(intent);
+                    BaseApplication.getContext().sendBroadcast(intent);
                 }
                 httpCodeInterceptor(responseBody, UTF8, response, message);
             }

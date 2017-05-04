@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 
 /**
  * 获取网络连接状态
@@ -17,7 +17,7 @@ public class NetUtils {
 
     public static NetState getNetState() {
         NetState stateCode = NetState.NET_NO;
-        ConnectivityManager cm = (ConnectivityManager) Appli.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) BaseApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if (ni != null && ni.isConnectedOrConnecting()) {
             switch (ni.getType()) {

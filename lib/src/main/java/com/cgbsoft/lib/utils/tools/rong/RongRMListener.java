@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -36,7 +36,7 @@ public class RongRMListener implements RongIMClient.OnReceiveMessageListener, Ro
      */
     @Override
     public boolean onReceived(Message message, int left) {
-        Context context = Appli.getContext();
+        Context context = BaseApplication.getContext();
         Log.i(this.getClass().getName(), "extra = " + message.getExtra() + "---content=" + message.getContent().toString());
         //开发者根据自己需求自行处理
         if (TextUtils.equals("0003fce75cd122ceaf1ac2d721a5f78e", message.getSenderUserId())) {

@@ -3,7 +3,7 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -33,22 +33,22 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     @Override
     public void getRongToken() {
-        String rongExpired = OtherDataProvider.getRongTokenExpired(Appli.getContext());
-        String rongUID = OtherDataProvider.getRongUid(Appli.getContext());
-        String rongToken = OtherDataProvider.getRongToken(Appli.getContext());
+        String rongExpired = OtherDataProvider.getRongTokenExpired(BaseApplication.getContext());
+        String rongUID = OtherDataProvider.getRongUid(BaseApplication.getContext());
+        String rongToken = OtherDataProvider.getRongToken(BaseApplication.getContext());
 
-        String userId = SPreference.getUserId(Appli.getContext());
+        String userId = SPreference.getUserId(BaseApplication.getContext());
 
         if (!TextUtils.equals(rongUID, userId) || !TextUtils.equals("2", rongExpired)) {
-            OtherDataProvider.saveRongUid(Appli.getContext(), userId);
-            OtherDataProvider.saveRongExpired(Appli.getContext(), "2");
+            OtherDataProvider.saveRongUid(BaseApplication.getContext(), userId);
+            OtherDataProvider.saveRongExpired(BaseApplication.getContext(), "2");
 
             String needExpired = TextUtils.equals(rongExpired, "1") ? "1" : null;
             ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
                     RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
-                    OtherDataProvider.saveRongToken(Appli.getContext(), result.rcToken);
+                    OtherDataProvider.saveRongToken(BaseApplication.getContext(), result.rcToken);
                 }
 
                 @Override
@@ -57,7 +57,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 }
             });
         } else {
-            if (SPreference.getUserInfoData(Appli.getContext()) != null) {
+            if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
 
             }
         }
@@ -65,7 +65,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     //todo 测试用
     public void toSignIn(){
-        String uid = SPreference.getUserId(Appli.getContext());
+        String uid = SPreference.getUserId(BaseApplication.getContext());
         ApiClient.testSignIn(uid).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

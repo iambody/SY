@@ -192,7 +192,7 @@ public class UserDataProvider extends ContentProvider implements CPConstant {
     }
 
     /**
-     * 获取是否登陆
+     * 获取是否登录
      *
      * @param context
      * @return

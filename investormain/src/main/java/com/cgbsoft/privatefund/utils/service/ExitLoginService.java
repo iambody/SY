@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -88,7 +88,7 @@ public class ExitLoginService extends Service {
         intent.setClass(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        SPreference.quitLogin(Appli.getContext());
+        SPreference.quitLogin(BaseApplication.getContext());
 
         RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
 
@@ -96,15 +96,15 @@ public class ExitLoginService extends Service {
     }
 
     public static void startService(int code) {
-        if (!Utils.isServiceRunning(Appli.getContext(), ExitLoginService.class.getName())) {
+        if (!Utils.isServiceRunning(BaseApplication.getContext(), ExitLoginService.class.getName())) {
             mCode = code;
-            Appli.getContext().startService(new Intent(Appli.getContext(), ExitLoginService.class));
+            BaseApplication.getContext().startService(new Intent(BaseApplication.getContext(), ExitLoginService.class));
         }
     }
 
     public static void stopService() {
-        if (Utils.isServiceRunning(Appli.getContext(), ExitLoginService.class.getName())) {
-            Appli.getContext().stopService(new Intent(Appli.getContext(), ExitLoginService.class));
+        if (Utils.isServiceRunning(BaseApplication.getContext(), ExitLoginService.class.getName())) {
+            BaseApplication.getContext().stopService(new Intent(BaseApplication.getContext(), ExitLoginService.class));
         }
     }
 }

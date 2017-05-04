@@ -23,10 +23,12 @@ import java.io.InputStream;
 import java.util.logging.Level;
 
 /**
- *  Created by xiaoyu.zhang on 2016/11/7 13:28
+ * desc  基类Application
+ * Created by yangzonghui on 2017/5/4 11:37
+ * Email:yangzonghui@simuyun.com
  *  
  */
-public class Appli extends MultiDexApplication {
+public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
 
