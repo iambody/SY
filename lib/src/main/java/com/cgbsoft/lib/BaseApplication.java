@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -56,7 +57,7 @@ public class BaseApplication extends MultiDexApplication {
         Config.dialogSwitch = false;//不使用默认的dialog
 
         initLearCanary();
-
+        initX5Webview();
         //初始化 okGo 用于下载
         OkGo.init(this);
         try {
@@ -80,6 +81,25 @@ public class BaseApplication extends MultiDexApplication {
             return;
         }
         LeakCanary.install(this);
+    }
+
+    /**
+     *初始化x5的浏览器内核
+     * @return
+     */
+    private void initX5Webview(){
+        //x5内核初始化接口
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+
+            }
+        });
     }
 
     public static Context getContext() {

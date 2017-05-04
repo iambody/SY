@@ -131,7 +131,7 @@
         <activity android:name=".mvp.ui.AnimActivity"></activity>
         <activity android:name=".mvp.ui.ChoiceIdentityActivity" />
         <activity android:name=".mvp.ui.start.PermissionsActivity" />
-
+<activity android:name=".test.TestWebview"/>
     </application>
 
 
