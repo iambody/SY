@@ -22,8 +22,8 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.FestivalUtils;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.FloatingActionMenu;
 import com.jakewharton.rxbinding.view.RxView;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
@@ -135,7 +135,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             }
         });
     }
-
 
     public void setOnClickListener(BottomClickListener bottomClickListener) {
         this.bottomClickListener = bottomClickListener;
