@@ -10,7 +10,7 @@ public class LogUtils {
     public static final String TestTage = "wang";
 
     public static void Log(String Tag, String Inf) {
-        if (IsShowTage)
+        if (IsShowTage&&!BStrUtils.isEmpty(Inf))
             android.util.Log.i(Tag, Inf);
     }
 }

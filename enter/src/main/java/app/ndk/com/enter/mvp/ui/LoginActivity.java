@@ -183,49 +183,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
-//testSelectPic();／／
-//PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
-//        Router.build("aks").go(LoginActivity.this);
-        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
-//testSelectPic();／／
-        if (true) {
-            return;
-        }
-        if (!isUsernameInput) {
-            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
-            return;
-        }
-        if (!isPasswordInput) {
-            MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
-            return;
-        }
-        toDataStatistics(1002, 10005, "登录");
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("order", Order_InItActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("share", Share_InitActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("login", LoginActivity.class);
-//            }
-//        });
-//        Bundle Mybud=new Bundle();
-////        Mybud.putBundle();
-//        Router.build("order").go(LoginActivity.this);
-////LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
-//
-//
-//        if(true)return;
+//        toDataStatistics(1002, 10005, "登录");
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
@@ -273,7 +231,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.weixin_text)
     void weixinClick() {//微信登录
-        toWxLogin();
+//        toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
 
@@ -299,20 +257,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
-    private void toWxLogin() {
-        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-        mLoadingDialog.show();
-
-        if (!Utils.isWeixinAvilible(this)) {
-            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
-            return;
-        }
-        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
-            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-        } else {
-            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-        }
-    }
+//    private void toWxLogin() {
+//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+//        mLoadingDialog.show();
+//
+//        if (!Utils.isWeixinAvilible(this)) {
+//            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
+//            return;
+//        }
+//        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
+//            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+//        } else {
+//            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+//        }
+//    }
 
     private class LoginTextWatcher implements TextWatcher {
         private int which;
@@ -360,34 +318,34 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         super.finish();
     }
-
-    private class MUMAuthListener implements UMAuthListener {
-        @Override
-        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            String unionid = map.get("unionid");
-            String sex = map.get("sex");
-            String nickname = map.get("nickname");
-            String headimgurl = map.get("headimgurl");
-
-            if (!mCustomBuilder.isSetPositiveListener()) {
-                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
-                    dialog.dismiss();
-                });
-            }
-            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media, int i) {
-            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
-        }
-    }
+//
+//    private class MUMAuthListener implements UMAuthListener {
+//        @Override
+//        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+//            String unionid = map.get("unionid");
+//            String sex = map.get("sex");
+//            String nickname = map.get("nickname");
+//            String headimgurl = map.get("headimgurl");
+//
+//            if (!mCustomBuilder.isSetPositiveListener()) {
+//                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+//                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
+//                    dialog.dismiss();
+//                });
+//            }
+//            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
+//        }
+//
+//        @Override
+//        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+//            mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+//        }
+//
+//        @Override
+//        public void onCancel(SHARE_MEDIA share_media, int i) {
+//            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
+//        }
+//    }
 
 
     @Override
