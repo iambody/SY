@@ -187,11 +187,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //testSelectPic();／／
 //PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
 //        Router.build("aks").go(LoginActivity.this);
-        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
+//        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
 //testSelectPic();／／
-        if (true) {
-            return;
-        }
+//        if (true) {
+//            return;
+//        }
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -227,7 +227,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //
 //        if(true)return;
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
-
     }
 
     private ArrayList<String> picLs = new ArrayList<>();
@@ -240,7 +239,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
         imageSelector.start(LoginActivity.this, REQUEST_CODE);
-
     }
 
     @Override
@@ -279,7 +277,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
-//        openActivity(MainPageActivity.class);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }
 

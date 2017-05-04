@@ -240,7 +240,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
                 openActivity(LoginActivity.class);
             }
         } else {
-//            openActivity(MainPageActivity.class);
+            openActivity(LoginActivity.class);
         }
         finish();
     }

@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import rx.Observable;
 
 /**
@@ -46,6 +47,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                System.out.println("---------longs=" + s);
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
                 SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
