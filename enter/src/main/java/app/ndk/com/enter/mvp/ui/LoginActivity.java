@@ -44,7 +44,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 登陆
+ * 登录
  * Created by xiaoyu.zhang on 2016/11/17 11:42
  * Email:zhangxyfs@126.com
  *  
@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     ImageView iv_al_del_pw;//密码清除
 
     @BindView(R2.id.btn_al_login)
-    Button btn_al_login;//登陆按钮
+    Button btn_al_login;//登录按钮
 
     @BindView(R2.id.tv_al_register)
     TextView tv_al_register;//注册按钮
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     TextView tv_al_forget;//忘记密码
 
     @BindView(R2.id.weixin_text)
-    TextView weixin_text;//微信登陆
+    TextView weixin_text;//微信登录
 
 
     private LoadingDialog mLoadingDialog;
@@ -181,7 +181,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @OnClick(R2.id.btn_al_login)
-    void loginClick() {//登陆
+    void loginClick() {//登录
         startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
 //testSelectPic();／／
         if(true){return;}
@@ -264,7 +264,7 @@ private ArrayList<String>picLs=new ArrayList<>();
     }
 
     @OnClick(R2.id.weixin_text)
-    void weixinClick() {//微信登陆
+    void weixinClick() {//微信登录
         toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }

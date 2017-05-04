@@ -26,12 +26,12 @@ public interface LoginContract {
         void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
 
         /**
-         * 微信登陆
+         * 微信登录
          */
         void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl);
 
         /**
-         * 微信登陆
+         * 微信登录
          *
          * @param loadingDialog
          * @param unionid

@@ -84,7 +84,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
     }
 
     /**
-     * 微信登陆
+     * 微信登录
      *
      * @param loadingDialog
      * @param unionid
@@ -133,7 +133,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
     }
 
     /**
-     * 微信登陆
+     * 微信登录
      *
      * @param loadingDialog
      * @param unionid
