@@ -1,6 +1,7 @@
 package com.cgbsoft.lib;
 
 import com.cgbsoft.lib.BaseApplication;
+import com.chenenyu.router.Router;
 
 /**
  * desc  用户端的application

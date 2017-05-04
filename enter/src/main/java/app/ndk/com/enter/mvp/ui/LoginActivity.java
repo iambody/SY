@@ -185,6 +185,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
 //testSelectPic();／／
 
+//        Router.build("aks").go(LoginActivity.this);
         Router.build("aks").go(LoginActivity.this);
 //testSelectPic();／／
         if(true){return;}
