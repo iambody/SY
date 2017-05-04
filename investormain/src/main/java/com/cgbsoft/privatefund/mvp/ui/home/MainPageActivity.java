@@ -19,10 +19,11 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
+import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
 import rx.Observable;
-
+@Route("aks")
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;

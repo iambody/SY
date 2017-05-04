@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.cgbsoft.adviser.mvp.ui.message.MessageFragment;
 import com.cgbsoft.adviser.mvp.ui.college.CollegeFragment;
 import com.cgbsoft.adviser.mvp.ui.setting.SettingFragment;
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.privatefund.R;
@@ -122,7 +122,7 @@ public class MainTabManager {
      * 是否为投资者
      */
     private boolean isInvestor() {
-        return SPreference.getIdtentify(Appli.getContext()) == Constant.IDS_INVERSTOR;
+        return SPreference.getIdtentify(BaseApplication.getContext()) == Constant.IDS_INVERSTOR;
     }
 
     public void destory() {

@@ -44,7 +44,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 登录
+ * 登陆
  * Created by xiaoyu.zhang on 2016/11/17 11:42
  * Email:zhangxyfs@126.com
  *  
@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     ImageView iv_al_del_pw;//密码清除
 
     @BindView(R2.id.btn_al_login)
-    Button btn_al_login;//登录按钮
+    Button btn_al_login;//登陆按钮
 
     @BindView(R2.id.tv_al_register)
     TextView tv_al_register;//注册按钮
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     TextView tv_al_forget;//忘记密码
 
     @BindView(R2.id.weixin_text)
-    TextView weixin_text;//微信登录
+    TextView weixin_text;//微信登陆
 
 
     private LoadingDialog mLoadingDialog;
@@ -181,10 +181,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @OnClick(R2.id.btn_al_login)
-    void loginClick() {//登录
-        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+    void loginClick() {//登陆
+//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
+
+        Router.build("aks").go(LoginActivity.this);
 //testSelectPic();／／
-        if(true){return;}
+        if (true) {
+            return;
+        }
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -214,7 +218,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        });
 //        Bundle Mybud=new Bundle();
 ////        Mybud.putBundle();
-//        Router.build("order").go(LoginActivity.this);
+
 ////LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
 //
 //
@@ -222,23 +226,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
-private ArrayList<String>picLs=new ArrayList<>();
-    private int REQUEST_CODE=20;
+
+    private ArrayList<String> picLs = new ArrayList<>();
+    private int REQUEST_CODE = 20;
 
     private void testSelectPic() {
-        ImageSelector imageSelector=ImageSelector.create();
+        ImageSelector imageSelector = ImageSelector.create();
 
         imageSelector.single();
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
-        imageSelector.start(LoginActivity.this,REQUEST_CODE);
+        imageSelector.start(LoginActivity.this, REQUEST_CODE);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
+        Toast.makeText(LoginActivity.this, "返回来了", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R2.id.tv_al_register)
@@ -264,7 +269,7 @@ private ArrayList<String>picLs=new ArrayList<>();
     }
 
     @OnClick(R2.id.weixin_text)
-    void weixinClick() {//微信登录
+    void weixinClick() {//微信登陆
         toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
@@ -382,18 +387,17 @@ private ArrayList<String>picLs=new ArrayList<>();
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        if(REQUEST_CODE==requestCode){
-            picLs=data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+        if (REQUEST_CODE == requestCode) {
+            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
         }
         if (resultCode == RESULT_OK) {
             String result = data.getExtras().getString("result");
-            PromptManager.ShowCustomToast(LoginActivity.this,result);
-            LogUtils.Log("daa",result);
+            PromptManager.ShowCustomToast(LoginActivity.this, result);
+            LogUtils.Log("daa", result);
         }
 
     }

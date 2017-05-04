@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-
-apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.chenenyu.router'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -30,7 +30,6 @@ android {
             exclude 'META-INF/license.txt'
         }
 
-        multiDexEnabled true
         //忽略方法数限制的检查
         dexOptions {
             jumboMode = true

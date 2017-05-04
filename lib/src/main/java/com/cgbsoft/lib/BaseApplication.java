@@ -40,7 +40,6 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Router.initialize(this);
 
         context = getApplicationContext();
         //设置glide使用okhttp

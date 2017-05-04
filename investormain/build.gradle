@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+//apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
 android {
@@ -49,18 +49,18 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("D:\\develop\\key\\privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
-        }
-        release {
-            storeFile file("D:\\develop\\key\\privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
-        }
+//        debug {
+//            storeFile file("D:\\develop\\key\\privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//        }
+//        release {
+//            storeFile file("D:\\develop\\key\\privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//        }
     }
 
     buildTypes {
@@ -86,7 +86,7 @@ android {
             //混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -116,8 +116,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${testC}"
-
-    apt "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
+//    classpath 'com.android.tools.build:gradle:2.1.0'
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile "com.android.support:appcompat-v7:${android_need_version}"
     compile "com.android.support:design:${android_need_version}"
