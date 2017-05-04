@@ -23,7 +23,7 @@ import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
@@ -398,8 +398,8 @@ public class Utils {
     }
 
     public static boolean isDebug() {
-        if (Appli.getContext() != null) {
-            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+        if (BaseApplication.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(BaseApplication.getContext());
             if (isCouldOpen) {
                 return true;
             } else if (NetConfig.isLocal) {
@@ -413,8 +413,8 @@ public class Utils {
         if (TextUtils.isEmpty(msg)) {
             msg = "";
         }
-        if (Appli.getContext() != null) {
-            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+        if (BaseApplication.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(BaseApplication.getContext());
             if (isCouldOpen) {
                 Log.e(tag, msg);
             } else if (NetConfig.isLocal) {
@@ -427,8 +427,8 @@ public class Utils {
         if (TextUtils.isEmpty(msg)) {
             msg = "";
         }
-        if (Appli.getContext() != null) {
-            boolean isCouldOpen = SPreference.getOpenJsonLog(Appli.getContext());
+        if (BaseApplication.getContext() != null) {
+            boolean isCouldOpen = SPreference.getOpenJsonLog(BaseApplication.getContext());
             if (isCouldOpen || NetConfig.isLocal) {
                 if (TextUtils.equals(which, "e")) {
                     Log.e(tag, msg);

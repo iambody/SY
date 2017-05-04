@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.ProtocolEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
@@ -44,7 +44,7 @@ public class ProtocolDialog implements DBConstant{
     private TextView mConfirmTv, titleTv, mContentTv;
     private int type;
     private BaseDialog dialog;
-    private String filePath = CacheManager.getCachePath(Appli.getContext(), FILE) + "pro.tp";
+    private String filePath = CacheManager.getCachePath(BaseApplication.getContext(), FILE) + "pro.tp";
 
     private DaoUtils daoUtils;
 

@@ -5,7 +5,7 @@ import android.content.ContextWrapper;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class GreenDaoContext extends ContextWrapper {
     @Override
     public File getDatabasePath(String dbName) {
         StringBuilder sb = new StringBuilder();
-        String path = CacheManager.getCachePath(Appli.getContext(), CacheManager.DB);
+        String path = CacheManager.getCachePath(BaseApplication.getContext(), CacheManager.DB);
         sb.append(path);
         sb.append(dbName);
         return new File(sb.toString());

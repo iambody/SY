@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -39,7 +39,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCompatActivity implements Constant {
     protected Activity baseContext;
-    private Appli mAppli;//applicaiton
+    private BaseApplication mBaseApplication;//applicaiton
     private WeakHandler mBaseHandler;//handler
     private DaoSession mDaoSession;//数据库
     private Unbinder mUnbinder;//用于butterKnife解绑
@@ -78,7 +78,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
 
     protected void before() {
-        mAppli = (Appli) getApplication();
+        mBaseApplication = (BaseApplication) getApplication();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -156,8 +156,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
      *
      * @return
      */
-    protected Appli getAppli() {
-        return mAppli;
+    protected BaseApplication getAppli() {
+        return mBaseApplication;
     }
 
     /**
@@ -285,7 +285,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     // 判断是否缺少权限
     protected boolean needsPermission(String permission) {
-        return ContextCompat.checkSelfPermission(Appli.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
     }
 
 

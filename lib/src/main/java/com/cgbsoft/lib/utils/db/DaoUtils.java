@@ -3,7 +3,7 @@ package com.cgbsoft.lib.utils.db;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -34,13 +34,13 @@ public class DaoUtils {
     public DaoUtils(Context context, int which) {
         switch (which) {
             case W_OTHER:
-                otherInfoDao = ((Appli) context.getApplicationContext()).getDaoSession().getOtherInfoDao();
+                otherInfoDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getOtherInfoDao();
                 break;
             case W_USER:
-                userInfoDao = ((Appli) context.getApplicationContext()).getDaoSession().getUserInfoDao();
+                userInfoDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getUserInfoDao();
                 break;
             case W_VIDEO:
-                videoInfoDao = ((Appli) context.getApplicationContext()).getDaoSession().getVideoInfoDao();
+                videoInfoDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getVideoInfoDao();
                 break;
         }
     }

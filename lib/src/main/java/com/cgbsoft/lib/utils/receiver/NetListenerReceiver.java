@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.cgbsoft.lib.Appli;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
@@ -24,7 +24,7 @@ public class NetListenerReceiver extends BroadcastReceiver implements RxConstant
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        DaoUtils daoUtils = new DaoUtils(Appli.getContext(), DaoUtils.W_VIDEO);
+        DaoUtils daoUtils = new DaoUtils(BaseApplication.getContext(), DaoUtils.W_VIDEO);
         if (downloadManager == null) {
             downloadManager = DownloadService.getDownloadManager();
         }
