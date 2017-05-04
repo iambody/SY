@@ -178,7 +178,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
 

@@ -34,4 +34,6 @@ public interface RxConstant {
 
     String CLOSE_MAIN_OBSERVABLE = "close_main_observable";
 
+    String LOOK_TWO_CODE_OBSERVABLE = "twocode_look_observable";
+
 }

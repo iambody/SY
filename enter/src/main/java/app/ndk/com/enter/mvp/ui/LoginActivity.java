@@ -18,14 +18,13 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
-import com.chenenyu.router.RouteTable;
-import com.chenenyu.router.Router;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
 import com.umeng.socialize.UMAuthListener;
@@ -78,7 +77,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R2.id.weixin_text)
     TextView weixin_text;//微信登陆
 
-
     private LoadingDialog mLoadingDialog;
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
@@ -123,7 +121,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             }
             recreate();
         }
-
 
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = SPreference.getLoginName(getApplicationContext());
@@ -182,8 +179,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
-        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
-//testSelectPic();／／
+        NavigationUtils.startActivityForResult(this, CaptureActivity.class, 0);
         if(true){return;}
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
@@ -216,8 +212,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 ////        Mybud.putBundle();
 //        Router.build("order").go(LoginActivity.this);
 ////LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
-//
-//
 //        if(true)return;
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
@@ -290,7 +284,6 @@ private ArrayList<String>picLs=new ArrayList<>();
         finish();
     }
 
-
     private void toWxLogin() {
         mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
         mLoadingDialog.show();
@@ -315,7 +308,6 @@ private ArrayList<String>picLs=new ArrayList<>();
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         @Override
@@ -380,8 +372,6 @@ private ArrayList<String>picLs=new ArrayList<>();
             mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
         }
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

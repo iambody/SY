@@ -1,0 +1,23 @@
+ 其他模块需要使用二维码模块使用方式
+
+ 1. 需要引入libzxing 模块
+ 2. 启动二维码模块  NavigationUtils.startActivityForResult(this, CaptureActivity.class, RequestCode);
+ 3. 在data方法里面调用下面代码，在onEvent方法执行具体业务逻辑代码
+  downloadToListObservable = RxBus.get().register(LOOK_TWO_CODE_OBSERVABLE, QrCodeBean.class);
+  downloadToListObservable.subscribe(new RxSubscriber<QrCodeBean>() {
+    @Override
+    protected void onEvent(QrCodeBean qrCodeBean) {
+
+    }
+
+    @Override
+    protected void onRxError(Throwable error) {
+
+    }
+});
+
+4. 在onDestroy方法里面执行
+        if (downloadToListObservable != null)
+            RxBus.get().unregister(LOOK_TWO_CODE_OBSERVABLE, downloadToListObservable);
+
+5.根据需要可以在onActivityResult()方法执行关闭后的逻辑处理

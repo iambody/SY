@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.Appli;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataUtil;
 import com.cgbsoft.lib.utils.tools.Des3;
 import com.cgbsoft.lib.widget.MToast;
@@ -42,6 +44,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
+
+import io.rong.eventbus.EventBus;
 
 
 /**
@@ -174,7 +178,6 @@ public final class CaptureActivity extends Activity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.capture);
@@ -204,7 +207,6 @@ public final class CaptureActivity extends Activity implements
 //        EventBus.getDefault().register(this);
 
     }
-
 
     @Override
     protected void onResume() {
@@ -320,26 +322,21 @@ public final class CaptureActivity extends Activity implements
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == shuhui_result) {
             if (resultCode == RESULT_OK) {
-
                 //TODO twocode
 //                List<String> mSelectPath = intent.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-//
 //                if (mSelectPath != null && mSelectPath.size() > 0) {
-//
 //                    Intent intent1 = new Intent(this, ClipQrCodeActivity.class);
 //                    intent1.putExtra("mSelectPath", mSelectPath.get(0));
 //                    startActivity(intent1);
 //                }
             }
-
         }
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (holder == null) {
-            Log.e(TAG,
-                    "*** WARNING *** surfaceCreated() gave us a null surface!");
+            Log.e(TAG, "*** WARNING *** surfaceCreated() gave us a null surface!");
         }
         if (!hasSurface) {
             hasSurface = true;
@@ -367,17 +364,12 @@ public final class CaptureActivity extends Activity implements
      * @param barcode     A greyscale bitmap of the camera data which was decoded.
      */
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
-
         // 重新计时
         inactivityTimer.onActivity();
-
         lastResult = rawResult;
-
         // 把图片画到扫描框
         viewfinderView.drawResultBitmap(barcode);
-
         beepManager.playBeepSoundAndVibrate();
-
 //        new MToast(this).show("识别结果:" + ResultParser.parseResult(rawResult).toString(),0);
         String result = ResultParser.parseResult(rawResult).toString();
         parser(result);
@@ -388,7 +380,6 @@ public final class CaptureActivity extends Activity implements
             try {
                 String aa = result.substring(result.indexOf("?") + 1);
                 String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
-//                new MToast(this).show(deresult,0);
                 JSONObject j = new JSONObject(deresult);
                 String party_id = j.getString("party_id");
                 String party_name = j.getString("party_name");
@@ -396,16 +387,16 @@ public final class CaptureActivity extends Activity implements
                 String deadline = j.getString("deadline");
                 String father_name = j.getString("nickName");
                 if (deadline.equals(DataUtil.getDay1()) || (DataUtil.compareNow(deadline) != -1)) {
-                    if (!SPreference.isVisitorRole(getApplicationContext())) {
-                        upload(party_id, party_name, father_id, father_name);
-                    } else {
-                        // toJumpTouziren(result);
-                    }
+                    RxBus.get().post(RxConstant.LOOK_TWO_CODE_OBSERVABLE, new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
+//                    if (!SPreference.isVisitorRole(getApplicationContext())) {
+//                        upload(party_id, party_name, father_id, father_name);
+//                    } else {
+//                        // toJumpTouziren(result);
+//                    }
                 } else {
                     new MToast(this).show("该二维码已过期", 0);
                     restartPreviewAfterDelay(0L);
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {
