@@ -161,7 +161,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
 
-        <!--登陆-->
+        <!--登录-->
         <activity
             android:name=".mvp.ui.login.LoginActivity"
             android:screenOrientation="portrait"
