@@ -179,8 +179,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登陆
-        NavigationUtils.startActivityForResult(this, CaptureActivity.class, 0);
-        if(true){return;}
+//        NavigationUtils.startActivityForResult(this, CaptureActivity.class, 0);
+//        if(true){return;}
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
