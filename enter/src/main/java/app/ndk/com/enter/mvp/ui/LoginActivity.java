@@ -242,7 +242,7 @@ private ArrayList<String>picLs=new ArrayList<>();
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
+//        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R2.id.tv_al_register)
