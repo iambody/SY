@@ -139,7 +139,6 @@ dependencies {
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':adviser')
-    compile project(':investor')
     compile project(':share')
     compile project(':order')
     compile project(':share')
