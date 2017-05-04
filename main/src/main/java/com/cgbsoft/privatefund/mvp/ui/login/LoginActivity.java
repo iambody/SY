@@ -74,7 +74,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.weixin_text)
     TextView weixin_text;//微信登录
 
-
     private LoadingDialog mLoadingDialog;
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
