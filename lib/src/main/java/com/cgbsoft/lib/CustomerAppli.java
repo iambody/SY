@@ -1,8 +1,6 @@
 package com.cgbsoft.lib;
 
 import com.cgbsoft.lib.BaseApplication;
-import com.chenenyu.router.Router;
-
 
 /**
  * desc  用户端的application
@@ -14,6 +12,5 @@ public class CustomerAppli extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         Router.initialize(this,true);
-//        Router.setDebuggable(true);
     }
 }

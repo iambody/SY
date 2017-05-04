@@ -17,6 +17,4 @@ public class AppManager {
         return AppInfStore.Get_IsAdviser(PcContext);
     }
 
-//    public static boolean IsAdViser
-
 }
