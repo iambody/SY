@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -184,9 +185,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     void loginClick() {//登录
 //        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
 //testSelectPic();／／
-PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
+//PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
 //        Router.build("aks").go(LoginActivity.this);
-        Router.build("ssvvv").go(LoginActivity.this);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
 //testSelectPic();／／
         if (true) {
             return;
