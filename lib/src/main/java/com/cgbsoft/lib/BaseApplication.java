@@ -13,6 +13,7 @@ import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -54,6 +55,8 @@ public class BaseApplication extends MultiDexApplication {
         Config.IsToastTip = false;//关闭umeng toast
         Config.dialogSwitch = false;//不使用默认的dialog
 
+        initLearCanary();
+
         //初始化 okGo 用于下载
         OkGo.init(this);
         try {
@@ -65,7 +68,18 @@ public class BaseApplication extends MultiDexApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 初始化内存检测LeakCanary
+     */
+    private void initLearCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     public static Context getContext() {
