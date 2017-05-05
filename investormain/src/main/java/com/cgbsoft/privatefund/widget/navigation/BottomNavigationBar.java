@@ -343,16 +343,18 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                     }
 
                                     if (isIdtentifyWithInvestor) {
+                                        boolean needOpen;
                                         if (floatingActionMenu.isOpen()) {
-                                            floatingActionMenu.close(true);
+                                            needOpen = false;
                                             view_bottom_navigation_close.setVisibility(GONE);
                                             iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
                                         } else {
+                                            needOpen = true;
                                             nowSystemTime = System.currentTimeMillis();
-                                            floatingActionMenu.open(true);
                                             view_bottom_navigation_close.setVisibility(VISIBLE);
                                             iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
                                         }
+                                        floatingActionMenu.toggle(needOpen);
                                     } else {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4);
@@ -364,7 +366,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
                     @Override
                     protected void onRxError(Throwable error) {
-
                     }
                 });
     }

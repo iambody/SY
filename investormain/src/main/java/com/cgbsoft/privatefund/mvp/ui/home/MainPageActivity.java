@@ -94,7 +94,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        }
     }
 
-
     @Override
     public void onCloudMenuClick(int position) {
         switch (position) {
@@ -133,7 +132,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 switchID = R.id.nav_right_second;
                 break;
             case 4://中间
-                getPresenter().toSignIn();
+                // getPresenter().toSignIn();
                 switchID = R.id.nav_center;
                 break;
         }
