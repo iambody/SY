@@ -29,20 +29,18 @@ import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
+import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 登录
@@ -84,7 +82,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
-    private UMShareAPI mUMShareAPI;
+//    private UMShareAPI mUMShareAPI;
     private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
 
@@ -125,7 +123,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             recreate();
         }
 
-
+        ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
@@ -142,7 +140,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
-        mUMShareAPI = UMShareAPI.get(this);
+//        mUMShareAPI = UMShareAPI.get(this);
 
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
@@ -184,6 +182,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
 //        toDataStatistics(1002, 10005, "登录");
+
+        WxAuthorManger authorUtils =WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
+            @Override
+            public void getAuthorResult(int type, Platform platform) {
+
+            }
+        });
+        authorUtils.WxAuth();
+        if(true){return;}
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
