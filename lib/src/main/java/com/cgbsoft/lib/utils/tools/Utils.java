@@ -363,7 +363,23 @@ public class Utils {
 
         return dbName;
     }
+    /**
+     * 获取屏幕宽高
+     *
+     * @param c
+     * @return
+     */
+    public static int[] getWidthHeight(Context c) {
+        WindowManager wm = ((Activity) c).getWindowManager();
 
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
+
+        int[] s = new int[2];
+        s[0] = width;
+        s[1] = height;
+        return s;
+    }
     /**
      * 数据库版本号
      *

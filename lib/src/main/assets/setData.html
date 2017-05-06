@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=640, target-densitydpi=device-dpi, user-scalable=no">
+    <title>设置数据</title>
+    <!--<script src="scripts/common.js"></script>-->
+    <script>
+
+
+        //--------------------------------------------------[setData]
+        function setData(token, uid, version, role) {
+
+            alert(token);
+            alert(uid);
+          
+        }
+
+
+        function getData() {
+            var data = window.simuyun.getData();
+
+            if (data) {
+                data = data.split(':');
+
+            }
+
+            var token = data[0];
+            var uid = data[1];
+            var version = data[2];
+            var role = data[3];
+
+            setData(token, uid, version, role);
+        }
+
+        (function () {
+            if (window.simuyun) {
+                getData();
+            }
+        })();
+
+    </script>
+</head>
+<body>
+</body>
+</html>
