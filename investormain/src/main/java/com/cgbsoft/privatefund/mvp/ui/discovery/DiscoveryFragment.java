@@ -3,9 +3,15 @@ package com.cgbsoft.privatefund.mvp.ui.discovery;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.discovery.DiscoveryContract;
 import com.cgbsoft.privatefund.mvp.presenter.discovery.DiscoveryPresenter;
+
+import butterknife.BindView;
 
 /**
  * 发现
@@ -14,9 +20,19 @@ import com.cgbsoft.privatefund.mvp.presenter.discovery.DiscoveryPresenter;
  *  
  */
 public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements DiscoveryContract.View {
+
+    @BindView(R2.id.webView)
+    BaseWebview baseWebview;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        baseWebview.loadUrls(CwebNetConfig.discoverPage);
+    }
+
     @Override
     protected int layoutID() {
-        return 0;
+        return R.layout.fragment_webview_common;
     }
 
     @Override

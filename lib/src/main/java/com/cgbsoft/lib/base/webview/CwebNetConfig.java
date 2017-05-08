@@ -9,6 +9,12 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     // toc 我的首页
     public static String minePgge;
+    // 产品
+    public static String productPage;
+    // 发现
+    public static String discoverPage;
+    // 俱乐部
+    public static String clubPgge;
 
     static {
         initApi();
@@ -16,6 +22,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     public static void initApi() {
         // toc 我的首页
-        minePgge = baseWebsite + "/index.html";
+        minePgge = baseParentUrl + "/index.html";
+        productPage = baseParentUrl + "/apptie/productlist.html";
+        discoverPage = baseParentUrl + "/discover/index.html";
+        clubPgge = baseParentUrl + "/bank/default.html;";
     }
 }

@@ -2,10 +2,6 @@ package com.cgbsoft.privatefund.utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import com.cgbsoft.adviser.mvp.ui.message.MessageFragment;
-import com.cgbsoft.adviser.mvp.ui.college.CollegeFragment;
-import com.cgbsoft.adviser.mvp.ui.setting.SettingFragment;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -15,7 +11,6 @@ import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.mvp.ui.product.ProductFragment;
-
 
 /**
  * Created by win8 -1 on 2015/8/14.
@@ -28,9 +23,9 @@ public class MainTabManager {
     private ClubFragment clubFragment;//俱乐部
 
     //理财师
-    private MessageFragment messageFragment;//消息
-    private SettingFragment settingFragment;//设置
-    private CollegeFragment collegeFragment;//学院
+//    private MessageFragment messageFragment;//消息
+//    private SettingFragment settingFragment;//设置
+//    private CollegeFragment collegeFragment;//学院
 
     private DiscoveryFragment discoveryFragment;//发现
     private ProductFragment productFragment;//产品
@@ -65,10 +60,10 @@ public class MainTabManager {
                     }
                     fragment = mineFragment;
                 } else {
-                    if (messageFragment == null) {
-                        messageFragment = new MessageFragment();
-                    }
-                    fragment = messageFragment;
+//                    if (messageFragment == null) {
+//                        messageFragment = new MessageFragment();
+//                    }
+//                    fragment = messageFragment;
                 }
                 break;
             case R.id.nav_left_second:
@@ -84,10 +79,10 @@ public class MainTabManager {
                     }
                     fragment = cloudFragment;
                 } else {
-                    if (settingFragment == null) {
-                        settingFragment = new SettingFragment();
-                    }
-                    fragment = settingFragment;
+//                    if (settingFragment == null) {
+//                        settingFragment = new SettingFragment();
+//                    }
+//                    fragment = settingFragment;
                 }
                 break;
             case R.id.nav_right_first:
@@ -103,10 +98,10 @@ public class MainTabManager {
                     }
                     fragment = clubFragment;
                 } else {
-                    if (collegeFragment == null) {
-                        collegeFragment = new CollegeFragment();
-                    }
-                    fragment = collegeFragment;
+//                    if (collegeFragment == null) {
+//                        collegeFragment = new CollegeFragment();
+//                    }
+//                    fragment = collegeFragment;
                 }
                 break;
         }
@@ -130,9 +125,9 @@ public class MainTabManager {
         cloudFragment = null;
         clubFragment = null;
 
-        messageFragment = null;
-        settingFragment = null;
-        collegeFragment = null;
+//        messageFragment = null;
+//        settingFragment = null;
+//        collegeFragment = null;
 
         discoveryFragment = null;
         productFragment = null;

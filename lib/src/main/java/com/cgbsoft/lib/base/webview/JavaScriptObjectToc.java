@@ -5,8 +5,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 
 /**
  * desc  ${DESC}
@@ -31,14 +34,11 @@ public class JavaScriptObjectToc {
 
     @JavascriptInterface
     public String getData() {
-//        System.out.println("-------token=" + MApplication.getToken() + "------version=" + AppInfo.versionCode(context));
-//        String token = TextUtils.isEmpty(MApplication.getToken()) ? SPSave.getInstance(MApplication.getInstance().getApplicationContext()).getString(Contant.token) : MApplication.getToken();
-//        String userId = TextUtils.isEmpty(MApplication.getUserid()) ? SPSave.getInstance(MApplication.getInstance().getApplicationContext()).getString(Contant.userid) : MApplication.getUserid();
-//        String identify = SPSave.getInstance(context).getString(Contant.identify);
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(token).append(":").append(userId).append(":").append(AppInfo.versionCode(context)).append(":").append(identify.equals(Contant.IdentityLicaishi) ? "2" : "1");
-//        return sb.toString();
-        return "";
+        String token = SPreference.getToken(context);
+        String userId = SPreference.getUserId(context);
+        StringBuffer sb = new StringBuffer();
+        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionName(BaseApplication.getContext())).append(":").append("1");
+        return sb.toString();
     }
 
     @JavascriptInterface

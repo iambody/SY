@@ -59,10 +59,8 @@ public class BaseWebview extends WebView {
     }
 
     private void initView(Context context) {
-
         //开启js脚本支持
         getSettings().setJavaScriptEnabled(true);
-
 
         //适配手机大小
         getSettings().setUseWideViewPort(true);
@@ -82,8 +80,6 @@ public class BaseWebview extends WebView {
 
     //进度显示
     private class WVChromeClient extends WebChromeClient {
-
-
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
 

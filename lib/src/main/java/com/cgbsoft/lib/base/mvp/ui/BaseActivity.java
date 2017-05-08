@@ -195,7 +195,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         return mBaseHandler;
     }
 
-
     protected void toHideNav() {
         mBaseHandler.post(mHideRunnable);
         final View decorView = getWindow().getDecorView();

@@ -139,7 +139,7 @@ dependencies {
     compile "io.reactivex:rxjava:${rxjava_need_version}"
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
-    compile project(':adviser')
+//    compile project(':adviser')
     compile project(':order')
     compile project(':enter')
     compile project(':share')

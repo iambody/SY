@@ -76,7 +76,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void switchFragment(Fragment to) {
         if (mContentFragment != to) {
-            FragmentTransaction transaction = mFragmentManager.beginTransaction().setCustomAnimations(
+            FragmentTransaction transaction = mFragmentManager.beginTransaction().setCustomAnimations (
                     R.anim.home_fade_in, R.anim.home_fade_out);
             if (!to.isAdded()) {    // 先判断是否被add过
                 transaction.hide(mContentFragment).add(R.id.fl_main_content, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
