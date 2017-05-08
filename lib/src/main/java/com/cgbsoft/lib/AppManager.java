@@ -13,8 +13,15 @@ public class AppManager {
      * @param PcContext
      * @return
      */
-    public static boolean IsAdViser(Context PcContext) {
-        return AppInfStore.Get_IsAdviser(PcContext);
+//    public static boolean isAdViser(Context PcContext) {
+//        return AppInfStore.Get_IsAdviser(PcContext);
+//    }
+    /**
+     * 获取是否是理财师的标识
+     * @param PcContext
+     * @return
+     */
+    public static boolean isInvestor(Context PcContext) {
+        return !AppInfStore.Get_IsAdviser(PcContext);
     }
-
 }

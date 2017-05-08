@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="c_divide">#d0d0d0</color>
+    <color name="product_sort_txt_color">#222222</color>
+    <color name="main_list_bg">#f6f6f6</color>
+    <color name="c_low_black">#999999</color>
+    <color name="text_line">#d0d0d0</color>
+    <color name="c_background">#e9e9e9</color>
+
+
+    <color name="c_high_black">#333333</color>
+
+    <color name="messge_title_normal">#666666</color>
+
+    <color name="product_item_title">#333333</color>
+
+    <color name="c_btn_circle_nor">#f47900</color>
+    <color name="c_btn__circle_press">#ff9019</color>
+
+    <color name="list_decoration">#E4E4E4</color>
+    <color name="item_more_color">#556385</color>
+</resources>

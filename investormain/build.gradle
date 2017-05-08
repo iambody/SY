@@ -143,4 +143,5 @@ dependencies {
     compile project(':order')
     compile project(':enter')
     compile project(':share')
+    compile project(':product')
 }

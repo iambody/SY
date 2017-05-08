@@ -3,6 +3,7 @@ package com.cgbsoft.lib.utils.tools;
  * Created by datutu on 17/3/20.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -55,7 +56,13 @@ public class DimensionPixelUtil {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return (int) (value * metrics.density);
     }
-
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dp2px(Context context,float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
     /**
      * 根据手机的屏幕属性从 px(像素) 的单位 转成为 dip
      *
@@ -91,5 +98,15 @@ public class DimensionPixelUtil {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return value / metrics.scaledDensity;
     }
-
+    /**
+     * 获取手机的宽度
+     * @return
+     */
+    public static int getDisplayWidth(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        // 获取屏幕信息
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenWidth = dm.widthPixels;
+        return screenWidth;
+    }
 }

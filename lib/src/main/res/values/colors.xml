@@ -36,4 +36,30 @@
 
     <color name="orange_light">#88f47900</color>
     <color name="orange_dark">#aaf47900</color>
+
+
+    <color name="gray_font">#bebebe</color> <!-- 字体灰 -->
+
+    <color name="tv_gray">#666666</color>
+    <color name="tv_blue">#308BE9</color>     //蓝色
+    <color name="divider_gray">#d9d9d9</color>//细分割线颜色
+    <color name="orange">#f47900</color>
+
+    <color name="color1">#ff8836</color>
+    <color name="color2">#e84c1a</color>
+    <color name="color3">#ff1602</color>
+    <color name="color4">#e8144f</color>
+    <color name="color5">#ea1202</color>
+
+    <color name="mred">#ea1202</color>
+
+    <color name="c_high_black">#333333</color>
+    <color name="c_mid_black">#666666</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="messge_list_item_cornor">#ececec</color>
+    <color name="red_new">#ea1202</color> <!-- 5.0红 -->
+    <color name="red_new_select">#be0f02</color> <!-- 5.0红 -->
+
 </resources>

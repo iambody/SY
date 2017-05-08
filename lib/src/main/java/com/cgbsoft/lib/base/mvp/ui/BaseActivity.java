@@ -22,7 +22,6 @@ import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -341,7 +340,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void toUmengStatistics(String umengKey, String mapKey, String mapValue) {
         Map<String, String> map = new HashMap<>();
         map.put(mapKey, mapValue);
-        MobclickAgent.onEvent(getApplicationContext(), umengKey, map);
+//        MobclickAgent.onEvent(getApplicationContext(), umengKey, map);
     }
 
 

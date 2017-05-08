@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
-
 /**
  * Created by xiaoyu.zhang on 2016/11/22 12:19
  * Email:zhangxyfs@126.com
@@ -22,9 +20,10 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  */
 public class CustomDialog extends Dialog {
     private View parent;
-
+private Context context;
     public CustomDialog(Context context) {
         super(context);
+        this.context=context;
     }
 
     public CustomDialog(Context context, int themeResId) {

@@ -18,14 +18,13 @@ import app.privatefund.com.share.R;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 17/3/31-11:55
  */
-@Route("ssvvv")
+
 public class Share_InitActivity extends AppCompatActivity {
     private Button btt1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_init);
-        PromptManager.ShowCustomToast(this,"分享收拾收拾");
         btt1= (Button) findViewById(R.id.share_to_order);
         btt1.setOnClickListener(new View.OnClickListener() {
             @Override

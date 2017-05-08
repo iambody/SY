@@ -5,6 +5,9 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.content.Context;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * desc UI中用到的Bean需要进行数据二次操作的方法 &&和context相关的操作处理
@@ -13,7 +16,16 @@ import android.content.Context;
  */
 public class BStrUtils {
 
-
+    /**
+     * 过滤掉特色字符
+     * @return
+     */
+    public static String replaceSpeialStr(String resouceStr) {
+        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(resouceStr);
+        return m.replaceAll("").trim();
+    }
 
     /**
      * 判断给定字符串是否空白串 空白串是指由空格、制表符、回车符、换行符组成的字符串 若输入字符串为null或空字符串，返回true

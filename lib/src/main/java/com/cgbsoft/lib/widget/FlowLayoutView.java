@@ -14,18 +14,18 @@ import java.util.List;
  * 日期 17/3/22-18:36
  */
 
-public class View_FlowLayout extends ViewGroup {
-    public View_FlowLayout(Context context, AttributeSet attrs, int defStyle)
+public class FlowLayoutView extends ViewGroup {
+    public FlowLayoutView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
 
-    public View_FlowLayout(Context context, AttributeSet attrs)
+    public FlowLayoutView(Context context, AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public View_FlowLayout(Context context)
+    public FlowLayoutView(Context context)
     {
         this(context, null);
     }

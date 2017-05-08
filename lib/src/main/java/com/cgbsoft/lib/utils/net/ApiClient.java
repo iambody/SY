@@ -479,4 +479,9 @@ public class ApiClient {
         }
         return map;
     }
+    // 获取产品的列表
+    public static Observable<String> getProductFiltrtDate (){
+        return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 }

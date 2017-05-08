@@ -10,12 +10,12 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
+import com.google.android.exoplayer.C;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.SetPasswordContract;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/23 15:50
@@ -23,9 +23,10 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  *  
  */
 public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.View> implements SetPasswordContract.Presenter {
-
+private Context context;
     public SetPasswordPresenter(Context context, SetPasswordContract.View view) {
         super(context, view);
+        this.context=context;
     }
 
     @Override

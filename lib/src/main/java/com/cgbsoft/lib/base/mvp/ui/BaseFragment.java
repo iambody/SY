@@ -33,7 +33,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     private DaoSession mDaoSession;//数据库
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用
-
+protected Activity baseActivity;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -47,10 +47,12 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        baseActivity=getActivity();
         before();
         if (mFragmentView == null && layoutID() > 0) {
             mFragmentView = inflater.inflate(layoutID(), container, false);
         }
+
         after(mFragmentView);
         init(mFragmentView, savedInstanceState);
         data();

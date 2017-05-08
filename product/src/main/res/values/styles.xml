@@ -7,4 +7,28 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">false</item>
     </style>
+
+    <style name="style_product_sort_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/ui_10_dip</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:paddingLeft">@dimen/ui_10_dip</item>
+        <item name="android:drawablePadding">1dp</item>
+        <item name="android:textColor">@color/product_sort_txt_color</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+    <style name="product_item_context_text">
+        <item name="android:textColor">@color/messge_title_normal</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+
+    <style name="product_item_context_text_big_big">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/messge_title_normal</item>
+    </style>
+    blue_shape_sel_btn.xml
 </resources>

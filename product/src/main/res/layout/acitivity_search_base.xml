@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:openXu="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/search_base_title" />
+
+    <include layout="@layout/acitivity_divide_online" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_list_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/history_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/history_search"
+                        android:textColor="@color/c_low_black"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <ImageView
+                        android:id="@+id/history_del"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/lishi_del" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="10dp">
+
+                    <app.product.com.widget.LineBreakLayout
+                        android:id="@+id/history_search_flag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        openXu:leftAndRightSpace="10dp"
+                        openXu:rowSpace="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_font"
+                android:divider="@color/text_line"
+                android:dividerHeight="1dp"
+                android:headerDividersEnabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/result_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_list_bg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/c_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/search_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/search_result_empty"
+                android:textColor="@color/c_high_black"
+                android:textSize="@dimen/text_size_medium" />
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

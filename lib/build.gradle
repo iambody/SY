@@ -104,8 +104,10 @@ dependencies {
     compile "com.facebook.rebound:rebound:${fbRebound_need_version}"
     //页面跳转 图片移动动画
     compile "com.kogitune:pre-lollipop-activity-transition:${actvityTr_need_version}"
+    //小红点
+    compile 'com.github.deano2390:android-viewbadger:1.0.0@aar'
     //umeng统计
-    compile 'com.umeng.analytics:analytics:latest.integration'
+//    compile 'com.umeng.analytics:analytics:latest.integration'
     //LeakCanary
     debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanary_version}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"
