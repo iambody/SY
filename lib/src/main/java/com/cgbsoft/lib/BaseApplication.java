@@ -34,10 +34,10 @@ public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
 
-    static {
-        //设置umeng分享 微信
-        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
-    }
+//    static {
+//        //设置umeng分享 微信
+//        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
+//    }
 
     @Override
     public void onCreate() {
@@ -52,9 +52,9 @@ public class BaseApplication extends MultiDexApplication {
         Database database = helper.getWritableDb();
         daoSession = new DaoMaster(database).newSession();
         //初始化umeng分享
-        UMShareAPI.get(this);
-        Config.IsToastTip = false;//关闭umeng toast
-        Config.dialogSwitch = false;//不使用默认的dialog
+////        UMShareAPI.get(this);
+//        Config.IsToastTip = false;//关闭umeng toast
+//        Config.dialogSwitch = false;//不使用默认的dialog
 
         initLearCanary();
         initX5Webview();

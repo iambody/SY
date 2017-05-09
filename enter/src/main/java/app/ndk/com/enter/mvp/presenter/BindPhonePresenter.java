@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 
@@ -55,7 +55,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                 } else if (TextUtils.equals(s, "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);
                     loadingDialog.dismiss();
-                    new IOSDialog(getContext(), getContext().getString(R.string.bpna_marge_str), vas,
+                    new DefaultDialog(getContext(), vas,
                             getContext().getString(R.string.bpna_marge_no_str), getContext().getString(R.string.bpna_marge_yes_str)) {
                         @Override
                         public void left() {

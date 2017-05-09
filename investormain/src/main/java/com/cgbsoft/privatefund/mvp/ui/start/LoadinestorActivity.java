@@ -22,7 +22,7 @@ public class LoadinestorActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        UiSkipUtils.toNextActivity(this,LoadCustomerActivity.class);
+        Router.build("investornmain_mainpageactivity").go(LoadinestorActivity.this);
+//        UiSkipUtils.toNextActivity(this,LoadCustomerActivity.class);
     }
 }
