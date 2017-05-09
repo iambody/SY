@@ -15,9 +15,6 @@ import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.QbSdk;
-import com.umeng.socialize.Config;
-import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -34,20 +31,10 @@ public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
 
-    private boolean isTouGuOnline;
-
-    public boolean isTouGuOnline() {
-        return isTouGuOnline;
-    }
-
-    public void setTouGuOnline(boolean touGuOnline) {
-        isTouGuOnline = touGuOnline;
-    }
-
-    static {
-        //设置umeng分享 微信
-        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
-    }
+//    static {
+//        //设置umeng分享 微信
+//        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
+//    }
 
     @Override
     public void onCreate() {
@@ -61,10 +48,10 @@ public class BaseApplication extends MultiDexApplication {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Utils.getDatabaseName(this));
         Database database = helper.getWritableDb();
         daoSession = new DaoMaster(database).newSession();
-        // 初始化umeng分享
-        UMShareAPI.get(this);
-        Config.IsToastTip = false;//关闭umeng toast
-        Config.dialogSwitch = false;//不使用默认的dialog
+        //初始化umeng分享
+//        UMShareAPI.get(this);
+//        Config.IsToastTip = false;//关闭umeng toast
+//        Config.dialogSwitch = false;//不使用默认的dialog
 
         initLearCanary();
         initX5Webview();

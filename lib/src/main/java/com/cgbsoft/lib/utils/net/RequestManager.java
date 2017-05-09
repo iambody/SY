@@ -263,4 +263,14 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.SIGNIN_URL)
     Observable<ResponseBody> testSignIn(@FieldMap Map<String, String> paramsMap);
+
+    //获取产品筛选条件
+    @GET(CNetConfig.PRODUCT.Get_PRODUCT_TAG)
+    Observable<ResponseBody> getProductFilter();
+
+
+    //获取产品列表数据
+
+    @GET(CNetConfig.PRODUCT.Get_PRODUCTLS_TAG)
+    Observable<ResponseBody> getProductls(@QueryMap Map<String, String> paramsMap);
 }

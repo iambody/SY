@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:clickable="true"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:gravity="left|center_vertical"
+        android:id="@+id/name"
+        android:textSize="@dimen/text_size_large_more"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/c_high_black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="left|center_vertical"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:ellipsize="end"
+        android:id="@+id/description"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/c_mid_black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="left|center_vertical"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:id="@+id/content"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/c_mid_black"/>
+
+</LinearLayout>

@@ -11,7 +11,6 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/18 14:51
@@ -19,9 +18,10 @@ import static com.umeng.socialize.utils.DeviceConfig.context;
  *  
  */
 public class ResetPasswordPresenter extends BasePresenterImpl<ResetPasswordContract.View> implements ResetPasswordContract.Presenter {
-
+private  Context context;
     public ResetPasswordPresenter(Context context, ResetPasswordContract.View view) {
         super(context, view);
+        this.context=context;
     }
 
     @Override

@@ -32,6 +32,10 @@ public class JavaScriptObjectToc {
         this.url = url;
     }
 
+    /**
+     * 暴露 给H5 用户信息的 对象接口
+     * @return
+     */
     @JavascriptInterface
     public String getData() {
         String token = SPreference.getToken(context);
@@ -41,6 +45,10 @@ public class JavaScriptObjectToc {
         return sb.toString();
     }
 
+    /**
+     * 重新加载url的 对象接口
+     * @return
+     */
     @JavascriptInterface
     public void reloadNetWork() {
         Log.i("JavaScriptObject", "reloadNetWork------url=" + url);

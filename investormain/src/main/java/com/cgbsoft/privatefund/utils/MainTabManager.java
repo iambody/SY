@@ -28,8 +28,8 @@ public class MainTabManager {
 //    private CollegeFragment collegeFragment;//学院
 
     private DiscoveryFragment discoveryFragment;//发现
-    private ProductFragment productFragment;//产品
-
+//    private ProductFragment productFragment;//产品
+private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 

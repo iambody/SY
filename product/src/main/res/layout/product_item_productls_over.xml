@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cornor_list_item_sel1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <RelativeLayout
+            android:id="@+id/product_item_productls_over_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_item_productls_over_title"
+                android:layout_width="match_parent"
+                android:layout_height="23dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="恒宇天泽衡山二号房地产投资基金三期1221（h类哈哈）"
+                android:textColor="#8b8b8b"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/product_item_productls_over_title_layout"
+            android:id="@+id/product_item_productls_over_inveister"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/c_high_black"
+                android:textSize="@dimen/text_size_small"
+                android:text="投资标的"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shap_item_product_flag"
+                android:id="@+id/product_item_productls_over_inviste_biaodi"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/c_high_black"
+                android:textSize="@dimen/text_size_small"
+                android:background="@drawable/shap_item_product_flag"
+                android:text="投资领域"
+                android:id="@+id/product_item_productls_over_inviste_area"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/product_item_productls_over_inveister">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/product_item_productls_over_leijijinzhi_text"
+                    style="@style/product_item_context_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="业绩基准" />
+
+                <TextView
+                    android:id="@+id/product_item_productls_over_leijijingzhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.2121"
+                    android:textColor="#222222"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/product_item_productls_over_chanpinqixian"
+                    style="@style/product_item_context_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#b3b3b3"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_marginBottom="9dp"
+                    android:text="产品期限" />
+
+                <TextView
+                    android:id="@+id/product_item_productls_over_qixian"
+                    style="@style/product_item_context_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:textColor="#222222"
+                    android:text="6个月" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="right|center_vertical">
+                <TextView
+                    android:id="@+id/product_item_productls_over_shengyuedu_text"
+                    style="@style/product_item_context_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#b3b3b3"
+                    android:layout_marginBottom="5dp"
+                    android:text="剩余额度" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_item_productls_over_shengyuedu_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mred"
+                        android:textSize="17sp"
+                        android:layout_marginRight="5dp"/>
+
+                    <TextView
+                        android:id="@+id/product_item_productls_over_wan"
+                        style="@style/product_item_context_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#b3b3b3"
+                        android:text="万" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/product_item_productls_over_qingsuan_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/logobackgroundyiqingsuan" />
+
+</RelativeLayout>

@@ -52,7 +52,7 @@ public class ChoiceIdentityActivity extends BaseActivity<ChoiceIdentityPresenter
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        if (AppManager.IsAdViser(baseContext)) {
+        if (!AppManager.isInvestor(baseContext)) {
             rb_aci_inverstor.setVisibility(View.GONE);
             identity=IDS_ADVISER;
             rb_aci_adviser.setChecked(true);

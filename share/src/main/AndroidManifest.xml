@@ -24,7 +24,7 @@
 
 
         <!-- 三方登录 -->
-
+<!--
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
             android:configChanges="keyboardHidden|orientation"
@@ -32,11 +32,11 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
-            <!--
+            &lt;!&ndash;
                  <meta-data
                 android:name="Adapter"
                 android:value="com.example.share.MyAdapter" />
-            -->
+            &ndash;&gt;
             <intent-filter>
                 <data android:scheme="db-7janx53ilz11gbs" />
 
@@ -45,9 +45,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <!-- 三方登录..... -->
-        <!--ShareSdk需要的 -->
+      <!--  &lt;!&ndash;ShareSdk需要的 &ndash;&gt;
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -62,15 +62,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-        </activity>
+        </activity>-->
 
         <!--微信分享回调 -->
-        <activity
+       <!-- <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
     </application>
 

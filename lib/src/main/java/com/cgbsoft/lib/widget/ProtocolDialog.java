@@ -32,7 +32,6 @@ import java.io.InputStreamReader;
 import butterknife.ButterKnife;
 
 import static com.cgbsoft.lib.utils.cache.CacheManager.FILE;
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * 规则显示
@@ -47,7 +46,7 @@ public class ProtocolDialog implements DBConstant{
     private String filePath = CacheManager.getCachePath(BaseApplication.getContext(), FILE) + "pro.tp";
 
     private DaoUtils daoUtils;
-
+private Context context;
     public ProtocolDialog(Context context, int type, Handler handler) {
         this.type = type;
         init(context);
@@ -55,7 +54,7 @@ public class ProtocolDialog implements DBConstant{
 
     private void init(Context context) {
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
-
+        this.context=context;
         dialog = new BaseDialog(context, R.style.CenterCompatDialogTheme);
         dialog.setContentView(R.layout.view_protocol_dialog);
         dialog.setCanceledOnTouchOutside(true);

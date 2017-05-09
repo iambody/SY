@@ -31,20 +31,18 @@ import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
+import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 登录
@@ -86,7 +84,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
-    private UMShareAPI mUMShareAPI;
+//    private UMShareAPI mUMShareAPI;
     private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
 
@@ -127,7 +125,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             recreate();
         }
 
-
+        ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
@@ -144,7 +142,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
-        mUMShareAPI = UMShareAPI.get(this);
+//        mUMShareAPI = UMShareAPI.get(this);
 
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
@@ -189,11 +187,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //testSelectPic();／／
 //PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
 //        Router.build("aks").go(LoginActivity.this);
-//        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
+        Router.build("investornmain_mainpageactivity").go(LoginActivity.this);
 //testSelectPic();／／
-//        if (true) {
-//            return;
-//        }
+        if (true) {
+            return;
+        }
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
@@ -205,30 +203,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         toDataStatistics(1002, 10005, "登录");
 //        Router.addRouteTable(new RouteTable() {
 //            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("order", Order_InItActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("share", Share_InitActivity.class);
-//            }
-//        });
-//        Router.addRouteTable(new RouteTable() {
-//            @Override
-//            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-//                map.put("login", LoginActivity.class);
-//            }
-//        });
-//        Bundle Mybud=new Bundle();
-////        Mybud.putBundle();
-//        Router.build("order").go(LoginActivity.this);
-////LoginActivity.this.startActivity(new Intent(LoginActivity.this,Order_InItActivity.class));
+//            public void getAuthorResult(int type, Platform platform) {
 //
-//
-//        if(true)return;
+//            }
+//        });
+//        authorUtils.WxAuth();
+
+
+
+        if(true){return;}
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
+
     }
 
     private ArrayList<String> picLs = new ArrayList<>();
@@ -241,6 +226,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
         imageSelector.start(LoginActivity.this, REQUEST_CODE);
+
     }
 
     @Override
@@ -299,20 +285,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
-    private void toWxLogin() {
-        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-        mLoadingDialog.show();
-
-        if (!Utils.isWeixinAvilible(this)) {
-            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
-            return;
-        }
-        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
-            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-        } else {
-            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-        }
-    }
+//    private void toWxLogin() {
+//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+//        mLoadingDialog.show();
+//
+//        if (!Utils.isWeixinAvilible(this)) {
+//            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
+//            return;
+//        }
+//        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
+//            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+//        } else {
+//            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+//        }
+//    }
 
     private class LoginTextWatcher implements TextWatcher {
         private int which;
@@ -360,34 +346,34 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         super.finish();
     }
-
-    private class MUMAuthListener implements UMAuthListener {
-        @Override
-        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            String unionid = map.get("unionid");
-            String sex = map.get("sex");
-            String nickname = map.get("nickname");
-            String headimgurl = map.get("headimgurl");
-
-            if (!mCustomBuilder.isSetPositiveListener()) {
-                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
-                    dialog.dismiss();
-                });
-            }
-            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media, int i) {
-            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
-        }
-    }
+//
+//    private class MUMAuthListener implements UMAuthListener {
+//        @Override
+//        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+//            String unionid = map.get("unionid");
+//            String sex = map.get("sex");
+//            String nickname = map.get("nickname");
+//            String headimgurl = map.get("headimgurl");
+//
+//            if (!mCustomBuilder.isSetPositiveListener()) {
+//                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+//                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
+//                    dialog.dismiss();
+//                });
+//            }
+//            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
+//        }
+//
+//        @Override
+//        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+//            mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+//        }
+//
+//        @Override
+//        public void onCancel(SHARE_MEDIA share_media, int i) {
+//            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
+//        }
+//    }
 
 
     @Override

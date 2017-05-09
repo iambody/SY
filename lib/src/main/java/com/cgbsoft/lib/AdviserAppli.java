@@ -13,9 +13,6 @@ import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
-import com.umeng.socialize.Config;
-import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
 
 import org.greenrobot.greendao.database.Database;
 

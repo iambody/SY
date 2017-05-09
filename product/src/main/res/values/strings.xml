@@ -4,4 +4,19 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="history_search">历史搜索</string>
+
+    <string name="search_result_empty">没有更多的搜索结果</string>
+
+    <string name="search_product">产品</string>
+    <string name="search_info">消息</string>
+    <string name="search_zixun">文章</string>
+    <string name="search_video">视频</string>
+    <string name="search_custom">客户</string>
+    <string name="relative_title">相关%1$s</string>
+
+    <string name="look_more">查看更多%1$s</string>
+    <string name="hot_search">热门搜索</string>
+    <string name="no_more_data">没有更多数据</string>
+    <string name="product_series_all">全部</string>
 </resources>

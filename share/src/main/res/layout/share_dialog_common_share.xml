@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.cgbsoft.lib.widget.View_FlowLayout
+    <com.cgbsoft.lib.widget.FlowLayoutView
         android:id="@+id/comment_share_flowlayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_20_dip"
@@ -48,7 +48,7 @@
                 android:layout_below="@id/commont_card_title_t"
                 android:layout_marginTop="@dimen/ui_10_dip">
 
-                <com.cgbsoft.lib.widget.RoundImageView
+                <ImageView
                     android:id="@+id/comment_share_card_iv"
                     android:layout_width="@dimen/ui_70_dip"
                     android:layout_height="@dimen/ui_70_dip"
@@ -56,9 +56,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/touxiang_default"
-                    imagecontrol:border_inside_color="#55666666"
-                    imagecontrol:border_outside_color="#55666666"
-                    imagecontrol:border_thickness="3dp" />
+                     />
 
                 <ImageView
                     android:id="@+id/commont_share_card_auth_tag"

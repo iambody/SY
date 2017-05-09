@@ -16,10 +16,8 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
-import com.cgbsoft.lib.widget.RoundImageView;
-import com.cgbsoft.lib.widget.View_FlowLayout;
+import com.cgbsoft.lib.widget.FlowLayoutView;
 import com.cgbsoft.privatefund.bean.share.CommonShareBean;
-import com.mob.commons.SHARESDK;
 
 import java.util.HashMap;
 
@@ -80,7 +78,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener 
     /**
      * card名片的iv
      */
-    private RoundImageView comment_share_card_iv;
+    private ImageView comment_share_card_iv;
     /**
      * card名片的名字
      */
@@ -105,7 +103,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener 
     /**
      * 流view
      */
-    private View_FlowLayout comment_share_flowlayout;
+    private FlowLayoutView comment_share_flowlayout;
     /**
      * 保存下分享的不带名片的url 和 带名片的url
      */

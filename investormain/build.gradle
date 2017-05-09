@@ -49,18 +49,18 @@ android {
     }
 
     signingConfigs {
-//        debug {
-//            storeFile file("D:\\develop\\key\\privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//        }
-//        release {
-//            storeFile file("D:\\develop\\key\\privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//        }
+        debug {
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+        release {
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
     }
 
     buildTypes {
@@ -86,7 +86,7 @@ android {
             //混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -143,4 +143,5 @@ dependencies {
     compile project(':order')
     compile project(':enter')
     compile project(':share')
+    compile project(':product')
 }
