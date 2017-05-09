@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class ExitLoginService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("ExitLoginService", "onCreate");
         String msg = "";
         childView = LayoutInflater.from(this).inflate(R.layout.view_custom_dialog, null);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(Utils.getScreenWidth(this), Utils.getScreenHeight(this));

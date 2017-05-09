@@ -72,7 +72,6 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         init();
     }
 
-
     public void init() {
         _verName = Utils.getVersionName(_context);
         _verCode = Utils.getVersionCode(_context);

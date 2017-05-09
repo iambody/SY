@@ -9,11 +9,11 @@
     tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity">
 
     <com.cgbsoft.lib.base.webview.BaseWebview
-        android:id="@+id/initWeb"
+        android:id="@+id/webView"
+        app:init="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:background="@color/transparent"/>
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/fl_main_content"

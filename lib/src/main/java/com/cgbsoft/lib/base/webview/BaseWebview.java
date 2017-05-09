@@ -1,11 +1,12 @@
 package com.cgbsoft.lib.base.webview;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -40,15 +41,7 @@ public class BaseWebview extends WebView {
      */
     private boolean isShangxueyuan = false;
 
-    /**
-     * 是否初始化数据过来
-     */
     private boolean isInitData;
-
-    public void setInitData(boolean initData) {
-        isInitData = initData;
-    }
-
 
     /**
      * 加载url
@@ -64,8 +57,15 @@ public class BaseWebview extends WebView {
     public BaseWebview(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.wcontext = context;
+        parseAttr(context, attributeSet);
         initView(context);
+    }
 
+    private void parseAttr(Context context, AttributeSet attributeSet) {
+        TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.initWebView);
+        isInitData = ta.getBoolean(R.styleable.initWebView_init, false);
+        System.out.println("-------initData=" + isInitData);
+        ta.recycle();
     }
 
     private void initView(Context context) {

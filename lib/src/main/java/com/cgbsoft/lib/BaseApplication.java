@@ -61,7 +61,7 @@ public class BaseApplication extends MultiDexApplication {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Utils.getDatabaseName(this));
         Database database = helper.getWritableDb();
         daoSession = new DaoMaster(database).newSession();
-        //初始化umeng分享
+        // 初始化umeng分享
         UMShareAPI.get(this);
         Config.IsToastTip = false;//关闭umeng toast
         Config.dialogSwitch = false;//不使用默认的dialog

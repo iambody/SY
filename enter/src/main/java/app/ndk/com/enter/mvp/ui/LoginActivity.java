@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
