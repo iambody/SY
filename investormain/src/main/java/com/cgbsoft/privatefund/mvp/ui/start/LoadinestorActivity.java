@@ -22,12 +22,7 @@ public class LoadinestorActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Router.addRouteTable(new RouteTable() {
-            @Override
-            public void handleActivityTable(Map<String, Class<? extends Activity>> map) {
-                map.put("aks", MainPageActivity.class);
-            }
-        });
+
         UiSkipUtils.toNextActivity(this,LoadCustomerActivity.class);
     }
 }
