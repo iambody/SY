@@ -15,6 +15,9 @@ import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import org.greenrobot.greendao.database.Database;
 

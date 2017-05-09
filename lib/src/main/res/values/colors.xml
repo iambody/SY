@@ -11,8 +11,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="font_grey_down">#999999</color>
     <color name="font_grey_up">#ef999999</color>
-    <color name="color_red_down">#D22315</color>
-    <color name="color_red_up">#D73A2E</color>
+    <color name="color_red_down">#be0f02</color>
+    <color name="color_red_up">#ea1202</color>
 
     <color name="color_red_light">#d73a2e</color>
     <color name="color_red_dark">#900</color>
