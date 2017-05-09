@@ -31,9 +31,6 @@ import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +144,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
-        mUMShareAPI = UMShareAPI.get(this);
+//        mUMShareAPI = UMShareAPI.get(this);
 
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
@@ -237,7 +234,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.weixin_text)
     void weixinClick() {//微信登录
-        toWxLogin();
+//        toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
 

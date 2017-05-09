@@ -49,7 +49,6 @@
     <color name="tv_gray">#666666</color>
     <color name="tv_blue">#308BE9</color>
     <color name="divider_gray">#d9d9d9</color>
-    <color name="orange">#f47900</color>
 
     <color name="color1">#ff8836</color>
     <color name="color2">#e84c1a</color>
@@ -59,13 +58,26 @@
 
     <color name="mred">#ea1202</color>
 
-    <color name="c_high_black">#333333</color>
-    <color name="c_mid_black">#666666</color>
-
     <color name="transparent">#00000000</color>
 
     <color name="messge_list_item_cornor">#ececec</color>
     <color name="red_new">#ea1202</color> <!-- 5.0红 -->
     <color name="red_new_select">#be0f02</color> <!-- 5.0红 -->
+
+    <color name="c_high_black">#333333</color>
+    <color name="c_mid_black">#666666</color>
+    <color name="c_low_black">#999999</color>
+    <color name="c_prompt">#bbbbbb</color>
+    <color name="c_divide">#d0d0d0</color>
+    <color name="c_background">#e9e9e9</color>
+    <color name="c_main_bottom">#636571</color>
+
+    <color name="c_main_tabbar_select">#2a2a2a</color>
+
+    <color name="orange">#f47900</color>
+    <color name="black">#000</color>
+    <color name="toc_login_orange_press">#aaf47900</color>
+    <color name="toc_cornor_no_alpha">#f47900</color>
+
 
 </resources>

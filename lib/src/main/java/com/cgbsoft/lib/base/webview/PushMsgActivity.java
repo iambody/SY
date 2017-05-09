@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,12 +17,10 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity;
-import com.cgbsoft.lib.mvp.ui.video.VideoHistoryListActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 
 import butterknife.BindView;
 
@@ -307,7 +304,7 @@ public class PushMsgActivity extends BaseActivity implements Toolbar.OnMenuItemC
 	}
 
 	private void backEvent() {
-		new IOSDialog(PushMsgActivity.this, "", getString(R.string.risk_comment_prmpt), "取消", "确定") {
+		new DefaultDialog(PushMsgActivity.this, getString(R.string.risk_comment_prmpt), "取消", "确定") {
 			@Override
 			public void left() {
 				this.dismiss();

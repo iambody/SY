@@ -8,15 +8,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.MyDogDialog;
-import com.cgbsoft.lib.utils.ui.OtheriOSDialog;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.tencent.smtt.sdk.WebView;
 
@@ -181,7 +178,7 @@ public class CWebviewUtil {
         } else if (action.contains("h5-native")) {
 //            VersonUpdate();
         } else if (action.contains("logOut")) {
-            IOSDialog dialog = new IOSDialog(context, "", "确认要退出账号吗？", "取消", "确认", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "确认要退出账号吗？", "取消", "确认") {
                 @Override
                 public void left() {
                     dismiss();
@@ -511,7 +508,7 @@ public class CWebviewUtil {
         try {
             String telephone = URLDecoder.decode(split[2], "utf-8");
             if (TextUtils.isEmpty(telephone)) {
-                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
+//                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
             NavigationUtils.startDialogSendMessage(context, telephone);
@@ -527,10 +524,10 @@ public class CWebviewUtil {
             String name = URLDecoder.decode(split[3], "utf-8");
 
             if (TextUtils.isEmpty(telephone)) {
-                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
+//                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            OtheriOSDialog dialog = new OtheriOSDialog(context, "", "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"),"", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -553,7 +550,7 @@ public class CWebviewUtil {
         String[] split = action.split(":");
         try {
             String value = URLDecoder.decode(split[2], "utf-8");
-            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
+//            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -960,7 +957,7 @@ public class CWebviewUtil {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String content = split[2];
-        new IOSDialog(context, "", content, "取消", "兑换") {
+        new DefaultDialog(context, content, "取消", "兑换") {
             @Override
             public void left() {
                 cancel();
