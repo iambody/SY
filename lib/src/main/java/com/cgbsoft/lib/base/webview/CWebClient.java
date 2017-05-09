@@ -8,8 +8,6 @@ import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-import io.rong.eventbus.EventBus;
-
 /**
  * desc  所有C的交互全部在这里进行
  * author wangyongkui  wangyongkui@simuyun.com
@@ -68,8 +66,8 @@ public class CWebClient extends WebViewClient {
                 /**
                  * 统一指令操作
                  */
-                // 其他
                 CWebviewUtil cWebClient = CWebviewUtil.getInstance(Cactivity);
+
                 cWebClient.setWeb(webView);
                 cWebClient.setAction(url);
             }

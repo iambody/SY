@@ -18,7 +18,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
  * @author chenlong
  */
 public abstract class IOSDialog extends BaseDialog {
-    private String title, content, left, right;
+    protected String title, content, left, right;
     private boolean showTitle = false;
     private CharSequence charSequence;
     private boolean hasChar = false;
@@ -102,7 +102,7 @@ public abstract class IOSDialog extends BaseDialog {
     }
 
     private TextView mTitle;
-    private TextView mContent;
+    protected TextView mContent;
     private TextView mQuxiao;
     private TextView mQueren;
 

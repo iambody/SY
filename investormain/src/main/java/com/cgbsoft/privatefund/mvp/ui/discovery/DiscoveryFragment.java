@@ -21,13 +21,12 @@ import butterknife.BindView;
  */
 public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements DiscoveryContract.View {
 
-    @BindView(R2.id.webView)
+    @BindView(R.id.webView)
     BaseWebview baseWebview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseWebview.loadUrls(CwebNetConfig.discoverPage);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-
+        baseWebview.loadUrls(CwebNetConfig.discoverPage);
     }
 
     @Override

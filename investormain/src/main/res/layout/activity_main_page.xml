@@ -8,6 +8,13 @@
     android:layout_height="match_parent"
     tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity">
 
+    <com.cgbsoft.lib.base.webview.BaseWebview
+        android:id="@+id/initWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@color/transparent"/>
+
     <FrameLayout
         android:id="@+id/fl_main_content"
         android:layout_width="match_parent"

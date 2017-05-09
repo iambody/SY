@@ -140,4 +140,11 @@
     <style name="CustomCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/select_checkbox</item>
     </style>
+
+    <style name="dialog_baobei">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/truns</item>
+    </style>
 </resources>

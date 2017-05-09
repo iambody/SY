@@ -16,6 +16,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 俱乐部
     public static String clubPgge;
 
+    public static String pageInit;
+
     static {
         initApi();
     }
@@ -25,6 +27,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         minePgge = baseParentUrl + "/index.html";
         productPage = baseParentUrl + "/apptie/productlist.html";
         discoverPage = baseParentUrl + "/discover/index.html";
-        clubPgge = baseParentUrl + "/bank/default.html;";
+        clubPgge = baseParentUrl + "/bank/default.html";
+        pageInit = baseParentUrl + "/setData.html";
     }
 }

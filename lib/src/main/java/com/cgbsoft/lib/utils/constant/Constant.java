@@ -1,3 +1,4 @@
+
 package com.cgbsoft.lib.utils.constant;
 
 import android.Manifest;
@@ -8,6 +9,8 @@ import android.Manifest;
  *  
  */
 public interface Constant {
+
+    int REQUEST_IMAGE = 100;
     // 用户设置信息
     String USER_SETTING = "user_setting";
     //上一次更新的应用版本号，如果刚安装则为当前版本号
@@ -110,5 +113,7 @@ public interface Constant {
     String PERMISSION_RECEIVE_MMS = Manifest.permission.RECEIVE_MMS;
     String PERMISSION_RECEIVE_SMS = Manifest.permission.RECEIVE_SMS;
     String PERMISISON_WAP_PUSH = Manifest.permission.RECEIVE_WAP_PUSH;
+
+
 
 }

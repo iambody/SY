@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;

@@ -34,6 +34,16 @@ public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
 
+    private boolean isTouGuOnline;
+
+    public boolean isTouGuOnline() {
+        return isTouGuOnline;
+    }
+
+    public void setTouGuOnline(boolean touGuOnline) {
+        isTouGuOnline = touGuOnline;
+    }
+
     static {
         //设置umeng分享 微信
         PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);

@@ -96,5 +96,174 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String isEvaluated;
         public String customerRiskEvaluation;
         public String stockAssetsImage;
+
+
+        public String getCustomerName() {
+            return customerName;
+        }
+
+        public void setCustomerName(String customerName) {
+            this.customerName = customerName;
+        }
+
+        public String getCustomerType() {
+            return customerType;
+        }
+
+        public void setCustomerType(String customerType) {
+            this.customerType = customerType;
+        }
+
+        public String getStockAssetsTime() {
+            return stockAssetsTime;
+        }
+
+        public void setStockAssetsTime(String stockAssetsTime) {
+            this.stockAssetsTime = stockAssetsTime;
+        }
+
+        public String getRiskEvaluationIdnum() {
+            return riskEvaluationIdnum;
+        }
+
+        public void setRiskEvaluationIdnum(String riskEvaluationIdnum) {
+            this.riskEvaluationIdnum = riskEvaluationIdnum;
+        }
+
+        public String getBandingAdviserId() {
+            return bandingAdviserId;
+        }
+
+        public void setBandingAdviserId(String bandingAdviserId) {
+            this.bandingAdviserId = bandingAdviserId;
+        }
+
+        public String getRiskEvaluationPhone() {
+            return riskEvaluationPhone;
+        }
+
+        public void setRiskEvaluationPhone(String riskEvaluationPhone) {
+            this.riskEvaluationPhone = riskEvaluationPhone;
+        }
+
+        public String getBandingTime() {
+            return bandingTime;
+        }
+
+        public void setBandingTime(String bandingTime) {
+            this.bandingTime = bandingTime;
+        }
+
+        public String getCustomerState() {
+            return customerState;
+        }
+
+        public void setCustomerState(String customerState) {
+            this.customerState = customerState;
+        }
+
+        public String getCustomerIdPhoto() {
+            return customerIdPhoto;
+        }
+
+        public void setCustomerIdPhoto(String customerIdPhoto) {
+            this.customerIdPhoto = customerIdPhoto;
+        }
+
+        public String getInvestmentType() {
+            return investmentType;
+        }
+
+        public void setInvestmentType(String investmentType) {
+            this.investmentType = investmentType;
+        }
+
+        public String getCustomerPhone() {
+            return customerPhone;
+        }
+
+        public void setCustomerPhone(String customerPhone) {
+            this.customerPhone = customerPhone;
+        }
+
+        public String getStockAssetsId() {
+            return stockAssetsId;
+        }
+
+        public void setStockAssetsId(String stockAssetsId) {
+            this.stockAssetsId = stockAssetsId;
+        }
+
+        public String getAssetsCertificationImage() {
+            return assetsCertificationImage;
+        }
+
+        public void setAssetsCertificationImage(String assetsCertificationImage) {
+            this.assetsCertificationImage = assetsCertificationImage;
+        }
+
+        public String getRiskEvaluationName() {
+            return riskEvaluationName;
+        }
+
+        public void setRiskEvaluationName(String riskEvaluationName) {
+            this.riskEvaluationName = riskEvaluationName;
+        }
+
+        public String getCustomerIdNumber() {
+            return customerIdNumber;
+        }
+
+        public void setCustomerIdNumber(String customerIdNumber) {
+            this.customerIdNumber = customerIdNumber;
+        }
+
+        public String getCustomerIdType() {
+            return customerIdType;
+        }
+
+        public void setCustomerIdType(String customerIdType) {
+            this.customerIdType = customerIdType;
+        }
+
+        public String getStockAssetsStatus() {
+            return stockAssetsStatus;
+        }
+
+        public void setStockAssetsStatus(String stockAssetsStatus) {
+            this.stockAssetsStatus = stockAssetsStatus;
+        }
+
+        public String getAssetsCertificationStatus() {
+            return assetsCertificationStatus;
+        }
+
+        public void setAssetsCertificationStatus(String assetsCertificationStatus) {
+            this.assetsCertificationStatus = assetsCertificationStatus;
+        }
+
+        public String getIsEvaluated() {
+            return isEvaluated;
+        }
+
+        public void setIsEvaluated(String isEvaluated) {
+            this.isEvaluated = isEvaluated;
+        }
+
+        public String getCustomerRiskEvaluation() {
+            return customerRiskEvaluation;
+        }
+
+        public void setCustomerRiskEvaluation(String customerRiskEvaluation) {
+            this.customerRiskEvaluation = customerRiskEvaluation;
+        }
+
+        public String getStockAssetsImage() {
+            return stockAssetsImage;
+        }
+
+        public void setStockAssetsImage(String stockAssetsImage) {
+            this.stockAssetsImage = stockAssetsImage;
+        }
     }
 }

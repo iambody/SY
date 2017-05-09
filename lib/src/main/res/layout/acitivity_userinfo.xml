@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_title"
+        layout="@layout/title_normal_new" />
+
+    <include
+        android:id="@+id/title_divide_line"
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@id/title_title" />
+
+    <com.cgbsoft.lib.base.webview.BaseWebview
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_divide_line" />
+
+    <LinearLayout
+        android:id="@+id/share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title_title"
+        android:background="#88000000"
+        android:orientation="vertical"
+        android:paddingRight="8dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/share"
+            android:layout_width="137dp"
+            android:layout_height="47dp"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_fenxiang_xiangqing"
+            android:drawableLeft="@drawable/bg_fenxiangtubiao_sel"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:text="分享"
+            android:textColor="@color/fenxiang_color_sel"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/menu_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="75dp"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/yunjian_c"
+        android:visibility="gone" />
+
+</RelativeLayout>

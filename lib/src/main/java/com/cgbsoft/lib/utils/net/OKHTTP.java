@@ -64,7 +64,7 @@ public class OKHTTP {
         //log 拦截器
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         if (NetConfig.isLocal) {
-            logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         } else {
             logInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
@@ -78,13 +78,16 @@ public class OKHTTP {
 
             uid = TextUtils.isEmpty(uid) ? "" : uid;
             token = TextUtils.isEmpty(token) ? "" : token;
-
             Request.Builder builder = originalRequest.newBuilder();
             builder.addHeader(NetConfig.DefaultParams.uid, uid);
             builder.addHeader(NetConfig.DefaultParams.token, token);
             builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
             builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
+            builder.addHeader("Accept", "application/json");
+            builder.addHeader("Content-Type", "application/json; charset=UTF-8");
+            builder.addHeader("X-HTTP-Method-Override", "no-cache");
+            builder.addHeader("Accept", "application/json");
             okhttp3.Request authorised = builder.build();
             Utils.log("ApiClient", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
@@ -99,7 +102,7 @@ public class OKHTTP {
             ResponseBody responseBody = response.body();
             Charset UTF8 = Charset.forName("UTF-8");
 
-            Utils.log(TAG, response.request().url().toString() + " " + response.code(), "d");
+            Utils.log("RESULT", response.request().url().toString() + " " + response.toString(), "d");
             String message = "";
             if (response.code() != 200) {
                 if (response.code() == 500) {

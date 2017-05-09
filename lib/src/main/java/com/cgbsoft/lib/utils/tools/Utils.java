@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
@@ -24,9 +26,11 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
+import com.cgbsoft.lib.widget.IOSDialog;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -488,5 +492,18 @@ public class Utils {
             }
         }
         return isRunning;
+    }
+
+    public static void telHotline(final Context context){
+        new IOSDialog(context, "", "拨打电话：" + context.getString(R.string.hotline), "取消", "确定") {
+            public void left() {
+                this.cancel();
+            }
+            public void right() {
+                Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + context.getString(R.string.hotline)));
+                context.startActivity(phoneIntent);
+                this.cancel();
+            }
+        }.show();
     }
 }

@@ -10,6 +10,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +38,17 @@ public class BaseWebview extends WebView {
     /**
      *  是否是商学院   @按照陈龙之前业务逻辑
      */
-
     private boolean isShangxueyuan = false;
+
+    /**
+     * 是否初始化数据过来
+     */
+    private boolean isInitData;
+
+    public void setInitData(boolean initData) {
+        isInitData = initData;
+    }
+
 
     /**
      * 加载url
@@ -61,20 +71,32 @@ public class BaseWebview extends WebView {
     private void initView(Context context) {
         //开启js脚本支持
         getSettings().setJavaScriptEnabled(true);
-
+        getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //适配手机大小
         getSettings().setUseWideViewPort(true);
         getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         getSettings().setLoadWithOverviewMode(true);
         getSettings().setSupportZoom(true);
         getSettings().setBuiltInZoomControls(true);
-        getSettings().setDisplayZoomControls(false);
+//        getSettings().setDisplayZoomControls(false);
+        getSettings().setSavePassword(true);
+        getSettings().setSaveFormData(true);
+        getSettings().setGeolocationEnabled(true);
+        getSettings().setDomStorageEnabled(true);
+        getSettings().setCacheMode(android.webkit.WebSettings.LOAD_NO_CACHE);
+        getSettings().setAppCacheEnabled(false);
+        getSettings().setDefaultFontSize(16);
 
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
         setWebChromeClient(new WVChromeClient());
         //目前先写C侧的Client 后续B重构会添加判断 添加B||C的Client
-        setWebViewClient(new CWebClient(BaseWebview.this,javaScriptObject, wcontext,click,isShangxueyuan));
+        setWebViewClient(isInitData ? new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
+                return true;
+            }
+        } : new CWebClient(BaseWebview.this,javaScriptObject, wcontext,click,isShangxueyuan));
     }
 
 
@@ -139,7 +161,6 @@ public class BaseWebview extends WebView {
             public void run() {
                 //TODO 去通知商学院  其他逻辑处理已经好了 只用确定按照那种方式进行调用即可
  //                EventBus.getDefault().post(new ShangxueyuanBackBean());
-
             }
         }, 500);
 

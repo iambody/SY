@@ -36,4 +36,10 @@
 
     <color name="orange_light">#88f47900</color>
     <color name="orange_dark">#aaf47900</color>
+
+    <color name="half_large_transparent">#88000000</color>
+    <color name="half_transfer">#70000000</color>
+    <color name="half_truns">#80000000</color>
+    <color name="truns">#00000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -47,7 +47,6 @@ public class SPreference implements Constant {
         edit.apply();
     }
 
-
     /**
      * 默认值为-1
      *
@@ -123,8 +122,7 @@ public class SPreference implements Constant {
      * @return boolean
      */
     public static boolean isCurrentRunningForeground(@NonNull Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
-                .getBoolean(IS_CURRENTRUNNINGFOREGROUND, false);
+        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getBoolean(IS_CURRENTRUNNINGFOREGROUND, false);
     }
 
     /**
@@ -202,7 +200,6 @@ public class SPreference implements Constant {
         putInt(context, LAST_APP_VERSION, Utils.getVersionCode(context.getApplicationContext()));
     }
 
-
     /**
      * 获取登录用户信息。
      *
@@ -221,6 +218,14 @@ public class SPreference implements Constant {
         UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
         if (userInfo != null) {
             return userInfo.toB;
+        }
+        return null;
+    }
+
+    public static UserInfoDataEntity.ToCBean getToCBean(@NonNull Context context) {
+        UserInfoDataEntity.UserInfo userInfo = getUserInfoData(context);
+        if (userInfo != null) {
+            return userInfo.toC;
         }
         return null;
     }
