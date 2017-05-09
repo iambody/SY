@@ -14,8 +14,15 @@ public class ProductFilterBean extends BaseBean {
 
     public FilterItem series;
     public FilterItem orderBy;
-    public FilterItem filter;
+    public List<FilterItem> filter;
 
+    public List<FilterItem> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(List<FilterItem> filter) {
+        this.filter = filter;
+    }
 
     public FilterItem getSeries() {
         return series;
@@ -33,11 +40,5 @@ public class ProductFilterBean extends BaseBean {
         this.orderBy = orderBy;
     }
 
-    public FilterItem getFilter() {
-        return filter;
-    }
 
-    public void setFilter(FilterItem filter) {
-        this.filter = filter;
-    }
 }

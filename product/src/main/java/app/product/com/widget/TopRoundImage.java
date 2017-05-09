@@ -28,17 +28,17 @@ public class TopRoundImage extends ImageView {
 
     public TopRoundImage(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-//        init(context, attrs);
+        init(context, attrs);
     }
 
     public TopRoundImage(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        init(context, attrs);
+        init(context, attrs);
     }
 
     public TopRoundImage(Context context) {
         super(context);
-//        init(context, null);
+        init(context, null);
     }
 
     private void init(Context context, AttributeSet attrs) {

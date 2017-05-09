@@ -5,6 +5,7 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.content.Context;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,4 +75,12 @@ public class BStrUtils {
         }
         return str;
     }
+    /**
+     * List转换String
+     *
+     * @param list
+     *            :需要转换的List
+     * @return String转换后的字符串
+     */
+
 }

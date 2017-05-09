@@ -32,7 +32,7 @@ public class ProductContract {
         void getProductData(int offset, String productType, String riskLevel, String income, String investmentArea, String orderBy, String series);
 
 
-        void getProductFilterData(ProductSeriesLayout seriesLayout);
+        void getProductFilterData(   );
 
     }
 

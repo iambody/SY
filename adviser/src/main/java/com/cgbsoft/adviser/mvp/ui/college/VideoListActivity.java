@@ -134,6 +134,8 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
     @Override
     public void onRefresh() {
         recyclerControl.onRefresh();
+
+
     }
 
 
