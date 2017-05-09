@@ -10,6 +10,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
@@ -47,11 +48,11 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                System.out.println("---------longs=" + s);
+
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
                 SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
-
+                LogUtils.Log("loginresult",s);
                 SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
@@ -62,7 +63,9 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+                LogUtils.Log("loginresult",error.toString());
+                loadingDialog.dismiss();
+//                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
 
