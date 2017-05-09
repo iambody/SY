@@ -25,7 +25,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
         super(context, view);
     }
 
-    public void getDataList() {}
+    public void getDataList() {
+
+    }
+
 
     @Override
     public void getRongToken() {
