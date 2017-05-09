@@ -84,7 +84,6 @@ public class VideoListActivity extends BaseActivity<VideoListPresenter> implemen
         title = getIntent().getStringExtra("title");
         tv_avl_title.setText(title);
         toolbar.setNavigationOnClickListener(v -> finish());
-
         videoListAdapter = new VideoListAdapter(this);
         gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);

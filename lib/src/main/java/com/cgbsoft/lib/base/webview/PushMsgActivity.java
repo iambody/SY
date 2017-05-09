@@ -1,23 +1,36 @@
 package com.cgbsoft.lib.base.webview;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.R2;
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity;
+import com.cgbsoft.lib.mvp.ui.video.VideoHistoryListActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.IOSDialog;
 
+import butterknife.BindView;
+
 /**
  * 通用的WebView页面
  */
-public class PushMsgActivity extends Activity {
+public class PushMsgActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
 	public static final int SAVE_REQUST = 300;
 	public static final int RELATIVE_ASSERT = 301;
@@ -27,23 +40,52 @@ public class PushMsgActivity extends Activity {
 	public static final String BACK_PARAM = "backValue";
 	String url = "";
 	private String title;
-	private RelativeLayout relativeLayout;
-	private ImageView cloudImage;
 	private boolean isLive;
 	private boolean isLookZhiBao;
+
+	@BindView(R2.id.toolbar)
+	Toolbar toolbar;
+
+	@BindView(R2.id.title_mid)
+	TextView titleMid;
+
+	@BindView(R2.id.webview)
+	BaseWebview mWebview;
+
+	@BindView(R2.id.menu_cloud)
+	ImageView cloudImage;
+
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
-		setContentView(R.layout.acitivity_userinfo);
-//		LogTest.Log("testpage","我执行的朴push新页面！！！！！！！！！！！！");
-		bindViews();
+	protected int layoutID() {
+		return R.layout.acitivity_userinfo;
+	}
+
+	@Override
+	protected void after() {
+		super.after();
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		}
+	}
+
+	@Override
+	protected void data() {
+		titleMid.setText(title);
+		mWebview.loadUrls(url);
+	}
+
+	@Override
+	protected void init(Bundle savedInstanceState) {
+		toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+		toolbar.setNavigationOnClickListener(v -> finish());
+		toolbar.setOnMenuItemClickListener(this);
 
 		url = getIntent().getStringExtra(WebViewConstant.push_message_url);
 		if(!url.contains("http")){
 			url = BaseWebNetConfig.baseParentUrl + url;
 		}
 		if (!TextUtils.isEmpty(getIntent().getStringExtra(WebViewConstant.Jump_Info_KeyWord))) {
-		  String keyWords = getIntent().getStringExtra(WebViewConstant.Jump_Info_KeyWord);
+			String keyWords = getIntent().getStringExtra(WebViewConstant.Jump_Info_KeyWord);
 			if (url.contains("?")) {
 				url += "&" + WebViewConstant.Jump_Info_KeyWord  + "=" + keyWords + "";
 			} else  {
@@ -58,12 +100,15 @@ public class PushMsgActivity extends Activity {
 //			webveiwUtil.setShareWithEmail(true);
 //			mWebview.setWebwebUtil(webveiwUtil);
 		}
-		relativeLayout.setVisibility(getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false) ? View.GONE : View.VISIBLE);
-		if(TextUtils.isEmpty(title)){
-			title = "";
-		}
+//		if (getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false)) {
+//			toolbar.setVisibility(View.VISIBLE);
+//		} else {
+//			toolbar.setVisibility(View.GONE);
+//		}
 
 		if (getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, false)) {
+
+		}
 			// showTileRight("分享");
 //			Drawable drawable = getResources().getDrawable(R.drawable.fenxiang_share_nor);
 //			drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -75,11 +120,7 @@ public class PushMsgActivity extends Activity {
 //					mWebview.getWebView().loadUrl(javascript);
 //				}
 //			});
-		}
-
-
-	//	showTileMid(title);
-		mWebview.loadUrls(url);
+//		}
 
 		final String value = getIntent().getStringExtra(WebViewConstant.push_message_value);
 		if (!TextUtils.isEmpty(value) && getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false)) {
@@ -140,9 +181,14 @@ public class PushMsgActivity extends Activity {
 //			});
 		}
 
-		if (url.contains("/apptie/new_detail_tob.html")||url.contains("/discover/details.html")){
-			getCoinTask();
-		}
+//		if (url.contains("/apptie/new_detail_tob.html")||url.contains("/discover/details.html")){
+//			getCoinTask();
+//		}
+	}
+
+	@Override
+	protected BasePresenterImpl createPresenter() {
+		return null;
 	}
 
 	private void getCoinTask() {
@@ -329,20 +375,35 @@ public class PushMsgActivity extends Activity {
 		}
 	}
 
-	private BaseWebview mWebview;
-
-	private void bindViews() {
-		mWebview = (BaseWebview) findViewById(R.id.webview);
-		relativeLayout = (RelativeLayout) findViewById(R.id.title_title);
-		cloudImage = (ImageView) findViewById(R.id.menu_cloud);
-	}
-
 	@Override
 	protected void onDestroy() {
 		mWebview.clearAnimation();
 		mWebview.removeAllViews();
 		mWebview.destroy();
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.firstBtn) {
+			Toast.makeText(this, "fistbtn", Toast.LENGTH_SHORT).show();
+		} else if (id == R.id.secondBtn) {
+			Toast.makeText(this, "secondBtn", Toast.LENGTH_SHORT).show();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.page_menu, menu);
+		MenuItem firstItem = menu.findItem(R.id.firstBtn);
+		MenuItem secItem = menu.findItem(R.id.secondBtn);
+		firstItem.setTitle(R.string.menu_play_history_str);
+		secItem.setTitle(R.string.menu_download_video_str);
+		firstItem.setIcon(R.drawable.ic_cache_list);
+		secItem.setIcon(R.drawable.ic_download);
+		return true;
 	}
 
 //	public void onEventMainThread(EventBusUpdateHeadImage event) {

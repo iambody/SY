@@ -57,7 +57,6 @@ public class CollegeFragment extends BaseFragment<CollegePresenter> implements C
     private RecyclerControl recyclerControl;
     private String isColorCloud, organizationName;
 
-
     @Override
     protected int layoutID() {
         return R.layout.fragment_college;
