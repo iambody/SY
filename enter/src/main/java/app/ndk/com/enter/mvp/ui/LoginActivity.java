@@ -299,20 +299,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
-//    private void toWxLogin() {
-//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-//        mLoadingDialog.show();
-//
-//        if (!Utils.isWeixinAvilible(this)) {
-//            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
-//            return;
-//        }
-//        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
-//            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-//        } else {
-//            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-//        }
-//    }
+    private void toWxLogin() {
+        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+        mLoadingDialog.show();
+
+        if (!Utils.isWeixinAvilible(this)) {
+            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
+            return;
+        }
+        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
+            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+        } else {
+            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
+        }
+    }
 
     private class LoginTextWatcher implements TextWatcher {
         private int which;
