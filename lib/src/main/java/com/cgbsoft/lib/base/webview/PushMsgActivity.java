@@ -248,7 +248,6 @@ public class PushMsgActivity extends BaseActivity implements Toolbar.OnMenuItemC
 //		}
 //	}
 
-
 //	public void onEventMainThread(LiveStatus liveStatus) {
 //		isLive = liveStatus.isLive();
 //		if (liveStatus.isLive()) {

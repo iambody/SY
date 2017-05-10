@@ -14,8 +14,7 @@ import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.MyDogDialog;
-import com.cgbsoft.lib.utils.ui.OtheriOSDialog;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.tencent.smtt.sdk.WebView;
 
@@ -180,7 +179,7 @@ public class CWebviewManger {
         } else if (action.contains("h5-native")) {
 //            VersonUpdate();
         } else if (action.contains("logOut")) {
-            IOSDialog dialog = new IOSDialog(context, "", "确认要退出账号吗？", "取消", "确认", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "确认要退出账号吗？", "取消", "确认") {
                 @Override
                 public void left() {
                     dismiss();
@@ -529,7 +528,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            OtheriOSDialog dialog = new OtheriOSDialog(context, "", "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -959,7 +958,7 @@ public class CWebviewManger {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String content = split[2];
-        new IOSDialog(context, "", content, "取消", "兑换") {
+        new DefaultDialog(context, content, "取消", "兑换") {
             @Override
             public void left() {
                 cancel();

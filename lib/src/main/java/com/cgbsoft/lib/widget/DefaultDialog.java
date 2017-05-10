@@ -86,8 +86,7 @@ public abstract class DefaultDialog extends BaseDialog {
     private TextView mQueren;
 
     private void bindViews() {
-
-        mContent = (TextView) findViewById(R.id.default_dialog_content);
+            mContent = (TextView) findViewById(R.id.default_dialog_content);
         mQuxiao = (TextView) findViewById(R.id.default_dialog_quxiao);
         mQueren = (TextView) findViewById(R.id.default_dialog_queren);
         int identify = SPreference.getIdtentify(getContext().getApplicationContext());
