@@ -67,7 +67,7 @@ public class CWebClient extends WebViewClient {
                  * 统一指令操作
                  */
                 // 其他
-                CWebviewUtil cWebClient = CWebviewUtil.getInstance(Cactivity);
+                CWebviewManger cWebClient = CWebviewManger.getInstance(Cactivity);
                 cWebClient.setWeb(webView);
                 cWebClient.setAction(url);
             }

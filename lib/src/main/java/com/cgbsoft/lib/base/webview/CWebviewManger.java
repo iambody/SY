@@ -8,12 +8,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.MyDogDialog;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.utils.ui.OtheriOSDialog;
+import com.cgbsoft.lib.widget.IOSDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.tencent.smtt.sdk.WebView;
 
@@ -29,23 +31,23 @@ import io.rong.imlib.model.Conversation;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/4-17:58
  */
-public class CWebviewUtil {
+public class CWebviewManger {
 
     private Activity context;
     private WebView webview;
     private boolean headRefreshing; // 头部是否有刷新
     private boolean loadMoreing; // 加载更大
 
-    private static CWebviewUtil instance = null;
+    private static CWebviewManger instance = null;
 
-    private CWebviewUtil(Activity activity) {
+    private CWebviewManger(Activity activity) {
         super();
         this.context = activity;
     }
 
-    public static synchronized CWebviewUtil getInstance(Activity bacActivity) {
+    public static synchronized CWebviewManger getInstance(Activity bacActivity) {
         if (instance == null) {
-            instance = new CWebviewUtil(bacActivity);
+            instance = new CWebviewManger(bacActivity);
         }
         return instance;
     }
@@ -178,7 +180,7 @@ public class CWebviewUtil {
         } else if (action.contains("h5-native")) {
 //            VersonUpdate();
         } else if (action.contains("logOut")) {
-            DefaultDialog dialog = new DefaultDialog(context, "确认要退出账号吗？", "取消", "确认") {
+            IOSDialog dialog = new IOSDialog(context, "", "确认要退出账号吗？", "取消", "确认", false) {
                 @Override
                 public void left() {
                     dismiss();
@@ -508,7 +510,7 @@ public class CWebviewUtil {
         try {
             String telephone = URLDecoder.decode(split[2], "utf-8");
             if (TextUtils.isEmpty(telephone)) {
-//                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
+                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
             NavigationUtils.startDialogSendMessage(context, telephone);
@@ -524,10 +526,10 @@ public class CWebviewUtil {
             String name = URLDecoder.decode(split[3], "utf-8");
 
             if (TextUtils.isEmpty(telephone)) {
-//                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
+                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"),"", "呼叫") {
+            OtheriOSDialog dialog = new OtheriOSDialog(context, "", "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫", false) {
                 @Override
                 public void left() {
                     dismiss();
@@ -547,13 +549,13 @@ public class CWebviewUtil {
 
     private void isTouGuOnline(String action) {
         Log.i("touguxinxi", "isTouGuOnline");
-        String[] split = action.split(":");
-        try {
-            String value = URLDecoder.decode(split[2], "utf-8");
+//        String[] split = action.split(":");
+//        try {
+//            String value = URLDecoder.decode(split[2], "utf-8");
 //            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    private void startVideoLive(String action) {
@@ -957,7 +959,7 @@ public class CWebviewUtil {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String content = split[2];
-        new DefaultDialog(context, content, "取消", "兑换") {
+        new IOSDialog(context, "", content, "取消", "兑换") {
             @Override
             public void left() {
                 cancel();
