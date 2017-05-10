@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.location.Address;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -378,16 +379,17 @@ public class ApiClient {
 
     /**
      * 视频点赞
+     *
      * @param videoId
      * @return
      */
-    public static Observable<VideoLikeEntity.Result> toVideoLike(String videoId){
+    public static Observable<VideoLikeEntity.Result> toVideoLike(String videoId) {
         Map<String, String> map = new HashMap<>();
         map.put("id", videoId);
         return OKHTTP.getInstance().getRequestManager().toVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> toTestVideoLike(String videoId){
+    public static Observable<String> toTestVideoLike(String videoId) {
         Map<String, String> map = new HashMap<>();
         map.put("id", videoId);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestVideoLike(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -395,16 +397,17 @@ public class ApiClient {
 
     /**
      * 签到
+     *
      * @param userId
      * @return
      */
-    public static Observable<SignInEntity.Result> signIn(String userId){
+    public static Observable<SignInEntity.Result> signIn(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userId);
         return OKHTTP.getInstance().getRequestManager().signIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> testSignIn(String userId){
+    public static Observable<String> testSignIn(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userId);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -479,15 +482,45 @@ public class ApiClient {
         }
         return map;
     }
+
     // 获取产品的筛选条件
-    public static Observable<String> getProductFiltrtDate (){
+    public static Observable<String> getProductFiltrtDate() {
         return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 
     // 获取产品的列表
-    public static Observable<String> getProductlsDate (Map<String,String>map){
+    public static Observable<String> getProductlsDate(Map<String, String> map) {
         return OKHTTP.getInstance().getRequestManager().getProductls(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //保存商城收货地址信息
+    public static Observable<String> saveMallAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().saveAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //删除商城收货地址
+    public static Observable<String> deleteMallAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().deleteAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //新增商城收货地址
+    public static Observable<String> addAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().addAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //获取商城收货地址列表
+    public static Observable<String> getMallAddress(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().getAddressList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    public static Observable<String> setDefauleMallAddress(String userId, String id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().setDefaultMallAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 }

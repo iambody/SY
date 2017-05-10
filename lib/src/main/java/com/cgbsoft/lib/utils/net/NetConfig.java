@@ -47,6 +47,19 @@ public class NetConfig {
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
+    static class MALL {
+        //新增商城收货地址
+        static final String MALL_ADD_ADDRESS = API_URL + "/ydInsertAddress";
+        //保存商城收获地址
+        static final String MALL_SAVE_ADDRESS = API_URL + "/ydUpdateAddress";
+        //删除商城收货地址
+        static final String MALL_DETELE_ADDRESS = API_URL + "/YdDeleteAddress";
+        //获取商城收货地址列表
+        static final String MALL_ADDRESS_LIST = API_URL + "/getYdAddressList";
+        //设置商城默认收货地址
+        static final String MALL_SET_DEFAULT = API_URL + "/ydDefaultAddress";
+    }
+
     static class INFORMATION {
         private static final String information = "/information";
         //获取学院推荐视频

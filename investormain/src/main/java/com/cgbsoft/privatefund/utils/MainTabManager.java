@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -29,8 +30,8 @@ public class MainTabManager {
 //    private CollegeFragment collegeFragment;//学院
 
     private DiscoveryFragment discoveryFragment;//发现
-//    private ProductFragment productFragment;//产品
-private ProductFragment productFragment;//产品
+    //    private ProductFragment productFragment;//产品
+    private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 

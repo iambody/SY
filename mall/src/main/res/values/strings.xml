@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Mall</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_phone">请输入电话</string>
+    <string name="edit_recever_name">请输入收货人姓名</string>
+    <string name="edit_recever_address">请输入收货地址</string>
+    <string name="mall_save_address">保存并使用</string>
+</resources>
