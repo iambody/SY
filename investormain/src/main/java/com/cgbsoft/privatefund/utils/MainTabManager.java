@@ -10,7 +10,8 @@ import com.cgbsoft.privatefund.mvp.ui.discovery.DiscoveryFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
-import com.cgbsoft.privatefund.mvp.ui.product.ProductFragment;
+
+import app.product.com.mvp.ui.ProductFragment;
 
 /**
  * Created by win8 -1 on 2015/8/14.
@@ -132,5 +133,10 @@ private ProductFragment productFragment;//产品
         discoveryFragment = null;
         productFragment = null;
     }
+
+    public ProductFragment getProductFragment() {
+        return productFragment;
+    }
+
 
 }

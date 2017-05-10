@@ -2,6 +2,7 @@ package app.product.com.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import app.product.com.R;
@@ -28,7 +35,8 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
     public final int HOTPRODUCT = 1;//热门的标签
     public final int NORMALPRODUCT = 2;//正常的标签
     public final int OVERPRODUCT = 3;//已结束的标签
-
+    // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private LayoutInflater layoutInflater;
     private Context acontext;
     private List<ProductlsBean> beanList;
@@ -37,6 +45,11 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
         this.acontext = acontext;
         this.beanList = beanList;
         this.layoutInflater = LayoutInflater.from(acontext);
+    }
+
+    public void freshAp(List<ProductlsBean> beanList) {
+        this.beanList = beanList;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -60,15 +73,311 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ProductlsBean productlsBean = beanList.get(position);
+
         switch (getItemViewType(position)) {
             case HOTPRODUCT://热门产品
+                HotProductHolder hotProductHolder = (HotProductHolder) holder;
+                Imageload.display(acontext, productlsBean.marketingImageUrl, hotProductHolder.productItemProductlsHotBg);
+                String pro_name = productlsBean.productName;
+                if (pro_name.length() > 16) {
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotTitle1, pro_name.substring(0, 16));
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotTitle2, pro_name.substring(16));
+                    hotProductHolder.productItemProductlsHotTitle2.setVisibility(View.VISIBLE);
+                } else {
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotTitle1, pro_name);
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotTitle2, "");
+                    hotProductHolder.productItemProductlsHotTitle2.setVisibility(View.GONE);
+                }
+                BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotQixian, productlsBean.term);
+                BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotCenter, productlsBean.hotName);
+                try {
+                    if ((productlsBean.state.equals("50") || productlsBean.state.equals("80")) && productlsBean.raiseEndTime != null) {
+                        java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
+                        long l = end_time.getTime() - System.currentTimeMillis();
+                        String dateString = null;
+                        int day = (int) (l / 1000 / 60 / 60 / 24);
+                        int hour = (int) (l / 1000 / 60 / 60);
+                        int min = (int) (l / 1000 / 60);
 
+                        if (hour >= 72) {
+                            dateString = day + "天";
+                        } else if (hour > 0 && hour < 72) {
+                            dateString = hour + "小时";
+                        } else {
+                            if (min == 0) {
+                                dateString = 1 + "分钟";
+                            } else {
+                                dateString = min + "分钟";
+                            }
+                        }
+                        if (l <= 0) {
+                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "已截止");
+                        } else {
+                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "截止打款" + dateString);
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                String type_code1 = productlsBean.productType;
+                if (type_code1.equals("1")) {
+
+                    hotProductHolder.productItemProductlsHotJiezhi.setText(productlsBean.expectedYield + "%");
+                    String raised_amt = String.valueOf(productlsBean.remainingAmount);
+                    if (TextUtils.isEmpty(raised_amt)) {
+                        raised_amt = "0";
+                    }
+                    raised_amt = BStrUtils.getYi(raised_amt);
+                    if (raised_amt.contains("亿")) {
+                        raised_amt = raised_amt.replace("亿", "");
+
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "亿");
+                    } else {
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, raised_amt);
+                    }
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
+
+                } else if (type_code1.equals("2")) {
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, productlsBean.cumulativeNet);
+                    String raised_amt = String.valueOf(productlsBean.remainingAmount);
+                    if (TextUtils.isEmpty(raised_amt)) {
+                        raised_amt = "0";
+                    }
+                    raised_amt = BStrUtils.getYi(raised_amt);
+                    if (raised_amt.contains("亿")) {
+                        raised_amt = raised_amt.replace("亿", "");
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "亿");
+                    } else {
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "万");
+                    }
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "累计净值");
+                } else if (type_code1.equals("3")) {
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJingzhi, productlsBean.expectedYield + "%+浮动");
+                    String raised_amt = String.valueOf(productlsBean.remainingAmount);
+                    if (TextUtils.isEmpty(raised_amt)) {
+                        raised_amt = "0";
+                    }
+                    raised_amt = BStrUtils.getYi(raised_amt);
+                    if (raised_amt.contains("亿")) {
+                        raised_amt = raised_amt.replace("亿", "");
+
+
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "亿");
+                    } else {
+
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "万");
+                    }
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
+                }
+//                h3.time.setBackgroundResource(Utils.isVisteRole(getContext()) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
+                hotProductHolder.productItemProductlsHotJiezhi.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
+                BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotMujicount);
+                BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotCenter);
                 break;
             case NORMALPRODUCT://正常标签
+                NormalProductHolder normalProductHolder = (NormalProductHolder) holder;
+                BStrUtils.SetTxt(normalProductHolder.productItemProductlsTitle, productlsBean.productName);
 
+                normalProductHolder.productItemProductlsLogobackground.setImageResource(R.drawable.logobackgroundzanting);
+
+
+                BStrUtils.SetTxt(normalProductHolder.productItemProductlsQixian, productlsBean.term);
+
+                BStrUtils.SetTxt1(normalProductHolder.productItemProductlsInvisteArea, productlsBean.investmentArea);
+                BStrUtils.SetTxt1(normalProductHolder.productItemProductlsInvisteBiaodi, productlsBean.label);
+
+                String type_code = productlsBean.productType;
+
+                if ("1".equals(type_code)) {
+                    String remainingAmount = String.valueOf(productlsBean.remainingAmount); //剩余额度
+                    if (TextUtils.isEmpty(remainingAmount)) {
+                        remainingAmount = "0";
+                    }
+                    remainingAmount = BStrUtils.getYi(remainingAmount);  //剩余额度
+                    if (remainingAmount.contains("亿")) {
+                        remainingAmount = remainingAmount.replace("亿", "");
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "亿");
+                    } else {
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "万");
+
+                    }
+
+
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijingzhi, productlsBean.expectedYield + "%");
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijinzhiText, "业绩基准");
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduText, "剩余额度");
+
+
+                } else if ("2".equals(type_code)) {
+                    String remainingAmount = String.valueOf(productlsBean.remainingAmount); //剩余额度
+                    if (TextUtils.isEmpty(remainingAmount)) {
+                        remainingAmount = "0";
+                    }
+                    remainingAmount = BStrUtils.getYi(remainingAmount);  //剩余额度
+                    if (remainingAmount.contains("亿")) {
+                        remainingAmount = remainingAmount.replace("亿", "");
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "亿");
+                    } else {
+
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "万");
+                    }
+
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijingzhi, productlsBean.cumulativeNet);
+
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijinzhiText, "累计净值");
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduText, "剩余额度");
+
+
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsInvisteArea, productlsBean.investmentArea);
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsInvisteBiaodi, productlsBean.label);
+
+
+                } else if ("3".equals(type_code)) {
+                    String remainingAmount = String.valueOf(productlsBean.remainingAmount); //剩余额度
+                    if (TextUtils.isEmpty(remainingAmount)) {
+                        remainingAmount = "0";
+                    }
+                    remainingAmount = BStrUtils.getYi(remainingAmount);  //剩余额度
+                    if (remainingAmount.contains("亿")) {
+                        remainingAmount = remainingAmount.replace("亿", "");
+
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "亿");
+                    } else {
+
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "万");
+                    }
+
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijingzhi, productlsBean.expectedYield + "%+浮动");
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijinzhiText, "业绩基准");
+                    BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduText, "剩余额度");
+
+                }
+
+                BStrUtils.switchColorToBandC(acontext, normalProductHolder.productItemProductlsShengyueduCount);
+
+                // 倒计时，将时间显示到listitem上
+                // 如果状态10并且有时间，则显示时间text。。。如果状态60，显示暂停text
+                try {
+                    if (productlsBean.state.equals("60")) {
+                        normalProductHolder.productItemProductlsJiezhidate.setText("");
+//                        h1.shengyuedu_count.setTextColor(0xff666666);
+                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xff222222);
+                        normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.zanting);
+                    } else if (productlsBean.state.equals("42")) {
+
+                        BStrUtils.SetTxt1(normalProductHolder.productItemProductlsJiezhidate, "");
+//                        h1.shengyuedu_count.setTextColor(0xffea1202);
+                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xff222222);
+                        normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.daifaxing);
+                    } else if (productlsBean.raiseEndTime != null) {
+                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xffea1202);
+//                        h1.shengyuedu_count.setTextColor(0xff222222);
+                        java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
+                        long l = end_time.getTime() - System.currentTimeMillis();
+                        String dateString = null;
+                        int day = (int) (l / 1000 / 60 / 60 / 24);
+                        int hour = (int) (l / 1000 / 60 / 60);
+                        int min = (int) (l / 1000 / 60);
+
+                        if (hour >= 72) {
+                            dateString = day + "天";
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.lanse);
+                            normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
+                        } else if (hour > 0 && hour < 72) {
+                            dateString = hour + "小时";
+                            normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.c_jiaobiao : R.drawable.hongse);
+                        } else {
+                            if (min == 0) {
+                                dateString = 1 + "分钟";
+                            } else {
+                                dateString = min + "分钟";
+
+                            }
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.c_jiaobiao : R.drawable.hongse);
+                            normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
+                        }
+                        if (l <= 0) {
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.zanting);
+                            normalProductHolder.productItemProductlsJiezhidate.setText("");
+                        } else {
+                            normalProductHolder.productItemProductlsJiezhidate.setText(dateString);
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
             case OVERPRODUCT://已清算
+                OverProductHolder overProductHolder = (OverProductHolder) holder;
 
+
+                BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverTitle, productlsBean.productName);
+                BStrUtils.switchColorToBandC(acontext, overProductHolder.productItemProductlsOverShengyueduCount);
+
+//                h2.touziqidian.setText(p2.getBuyStart() + "万");
+                if (productlsBean.state.equals("50")) {
+//                    h2.shengyuedu.setTextColor(0xff333333);//hong
+                    overProductHolder.productItemProductlsOverShengyueduCount.setTextColor(0xff222222);//hong
+                    overProductHolder.productItemProductlsOverQingsuanIcon.setBackgroundResource(R.drawable.mujijieshulogo);
+
+
+                } else if (productlsBean.state.equals("70")) {
+//                    h2.shengyuedu.setTextColor(0xffd73a2e);
+
+                    overProductHolder.productItemProductlsOverShengyueduCount.setTextColor(0xff222222);//hong
+                    overProductHolder.productItemProductlsOverQingsuanIcon.setBackgroundResource(R.drawable.logobackgroundyiqingsuan);
+                }
+
+                BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverQixian, productlsBean.term);
+                String remainingAmount = String.valueOf(productlsBean.remainingAmount); //剩余额度
+                if (TextUtils.isEmpty(remainingAmount)) {
+                    remainingAmount = "0";
+                }
+                remainingAmount = BStrUtils.getYi(remainingAmount);  //剩余额度
+                if (remainingAmount.contains("亿")) {
+                    remainingAmount = remainingAmount.replace("亿", "");
+
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverShengyueduCount, remainingAmount);
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverWan, "亿");
+                } else {
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverShengyueduCount, remainingAmount);
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverWan, "万");
+
+                }
+
+
+                BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverInvisteArea, productlsBean.investmentArea);
+                BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverInvisteBiaodi, productlsBean.label);
+
+                String type_code2 = productlsBean.productType;
+                if (type_code2.equals("1")) {
+
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijingzhi, productlsBean.expectedYield + "%");
+                    String buyStart = String.valueOf(productlsBean.buyStart);
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijinzhiText, "业绩基准");
+                } else if (type_code2.equals("2")) {
+
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijingzhi, productlsBean.cumulativeNet + "");
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijinzhiText, "累计净值");
+                } else if (type_code2.equals("3")) {
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijingzhi, productlsBean.expectedYield + "%+浮动");
+                    BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijinzhiText, "业绩基准");
+                }
                 break;
 
         }
@@ -76,7 +385,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if(null==beanList)return 10;
+        if (null == beanList) return 0;
         return beanList.size();
     }
 
@@ -84,10 +393,11 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if (null == beanList) return HOTPRODUCT;
 
-        if (beanList.get(position).getIsHotProduct().equals("1")) return HOTPRODUCT;
-        if (beanList.get(position).getIsHotProduct().equals("0")) return NORMALPRODUCT;
-//        if () return OVERPRODUCT;
-        return super.getItemViewType(position);
+        if (beanList.get(position).isHotProduct.equals("1")) return HOTPRODUCT;
+
+        if (!beanList.get(position).state.equals("70")) return NORMALPRODUCT;
+
+        return OVERPRODUCT;
     }
 
     //热门的产品Holder

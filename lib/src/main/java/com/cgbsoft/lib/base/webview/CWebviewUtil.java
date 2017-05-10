@@ -37,16 +37,16 @@ public class CWebviewUtil {
     private Activity context;
     private WebView webview;
     private boolean headRefreshing; // 头部是否有刷新
-    private boolean loadMoreing; // 加载更大
+    private  boolean loadMoreing; // 加载更大
 
-    private static CWebviewUtil instance = null;
+    private  static CWebviewUtil instance  ;
 
     private CWebviewUtil(Activity activity) {
         super();
         this.context = activity;
     }
 
-    public static synchronized CWebviewUtil getInstance(Activity bacActivity) {
+    public static CWebviewUtil getInstance(Activity bacActivity) {
         if (instance == null) {
             instance = new CWebviewUtil(bacActivity);
         }
@@ -553,7 +553,7 @@ public class CWebviewUtil {
         String[] split = action.split(":");
         try {
             String value = URLDecoder.decode(split[2], "utf-8");
-            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
+//            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,21 +4,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
-import com.cn.hugo.android.scanner.Intents;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +24,22 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.R2;
 import app.product.com.adapter.ProductlsAdapter;
+import app.product.com.model.EventFiltBean;
+import app.product.com.model.FilterItem;
 import app.product.com.model.ProductFilterBean;
+import app.product.com.model.ProductlsBean;
 import app.product.com.model.Series;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.contract.ProductContract;
 import app.product.com.mvp.presenter.ProductPresenter;
 import app.product.com.utils.BUtils;
+import app.product.com.widget.FilterPop;
+import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+import rx.Observable;
 
 
 /**
@@ -58,21 +60,35 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @BindView(R2.id.product_productfragment_productserieslayout)
     ProductSeriesLayout productProductfragmentProductserieslayout;
 
-
-private LinearLayoutManager linearLayoutManager;
+    //排序的事件
+    private Observable<Series> seriesObservable;
+    //筛选的确定事件
+    private Observable<EventFiltBean> filterObservable;
+    private LinearLayoutManager linearLayoutManager;
     private ProductlsAdapter productlsAdapter;
+    //智能排序的视图Pop
+    private OrderbyPop orderbyPop;
+    //筛选的视图Pop
+    private FilterPop filterPop;
     //获取的筛选条件的bean
     private ProductFilterBean productFilterBean;
     //筛选是否展开
     private boolean isExtend;
-    //记录当前的系列的数据
-    private Series CurrentSeries;
+
+    //所有记录选择状态的数据**********************
+    // 记录当前的系列的数据
+    private String CurrentSeries;
+    //记录当前的排序的数据
+    private String CurrentOderBy;
+    //默认第0页
+    private int CurrentOffset = 0;
+    //记录多个筛选的数据
+    private List<FilterItem> CurrentFilter = null;
+
 
     //获取列表需要的数据************
-    //默认第0页
-    private int CurrentOffset=0;
 
-
+    private List<ProductlsBean> productlsBeen = new ArrayList<>();
 
     @Override
     protected int layoutID() {
@@ -97,20 +113,69 @@ private LinearLayoutManager linearLayoutManager;
      * 初始化配置
      */
     private void initConfig() {
+
         productProductfragmentProductserieslayout.setInit(true);
-        linearLayoutManager=new LinearLayoutManager(baseActivity);
+        linearLayoutManager = new LinearLayoutManager(baseActivity);
         fragmentProductrecyclerView.setLayoutManager(linearLayoutManager);
-        productlsAdapter=new ProductlsAdapter(baseActivity,null);
-        fragmentProductrecyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity));
+        productlsAdapter = new ProductlsAdapter(baseActivity, null);
+        fragmentProductrecyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity, R.color.transparent, R.dimen.ui_10_dip));
         fragmentProductrecyclerView.setAdapter(productlsAdapter);
 
 
-        CurrentSeries = new Series("全部", "0");
-        if (!BStrUtils.isEmpty(CacheInvestor.getProductFilterCache(baseActivity))) {//判断是否有筛选条件爱今年的缓存
+        CurrentSeries = "0";//默认系列是全部  0代表全部
+        CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
+        if (!BStrUtils.isEmpty(CacheInvestor.getProductFilterCache(baseActivity))) {//判断是否有筛选条件的缓存
             productFilterBean = new Gson().fromJson(CacheInvestor.getProductFilterCache(baseActivity), ProductFilterBean.class);
             //如果哦有缓存 就初始化筛选条件
             initFilterDate(productFilterBean.getSeries().getItems());
         }
+        initEvent();
+
+    }
+
+    //注册事件
+    private void initEvent() {
+        //注册智能排序
+        seriesObservable = RxBus.get().register(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMENT, Series.class);
+        seriesObservable.subscribe(new RxSubscriber<Series>() {
+            @Override
+            protected void onEvent(Series series) {
+                BStrUtils.SetTxt(productProductfragmentPaixu, series.getName());
+                CurrentOderBy = series.getKey();
+                reSetConditionAction();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        //注册筛选点击
+        filterObservable = RxBus.get().register(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, EventFiltBean.class);
+
+        filterObservable.subscribe(new RxSubscriber<EventFiltBean>() {
+            @Override
+            protected void onEvent(EventFiltBean filterItems) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //注销
+        if (null != seriesObservable)
+            RxBus.get().unregister(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMENT, seriesObservable);
+
+        if (null != filterObservable)
+            RxBus.get().unregister(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, filterObservable);
     }
 
     /**
@@ -120,10 +185,7 @@ private LinearLayoutManager linearLayoutManager;
         //请求筛选条件的数据
         getPresenter().getProductFilterData();
         //请求列表的数据
-
-        JSONArray jsonArray=new JSONArray();
-        jsonArray.put("5");
-        getPresenter().getProductData(CurrentOffset,"","","","","",jsonArray.toString());
+        getPresenter().getProductData(CurrentOffset, CurrentSeries, CurrentOderBy, CurrentFilter);
     }
 
     @Override
@@ -139,31 +201,51 @@ private LinearLayoutManager linearLayoutManager;
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
+        if (null != orderbyPop && orderbyPop.isShowing()) {
+            orderbyPop.dismiss();
+            return;
+
+        }
+
+        orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems());
+        orderbyPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
+
     }
 
     @OnClick(R2.id.product_productfragment_shaixuan)
     public void onProductProductfragmentShaixuanClicked() {
+        filterPop = new FilterPop(baseActivity, productFilterBean.getFilter());
+        filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
     }
 
 
     @Override
-    public void getProductDataSucc(int Type, String str) {
-
+    public void getDataSucc(int Type, String str) {
         switch (Type) {
             case ProductContract.LOAD_FILTER://获取到的筛选条件
                 productFilterBean = new Gson().fromJson(str.trim(), ProductFilterBean.class);
-
                 initFilterDate(productFilterBean.getSeries().getItems());
-
                 break;
             case ProductContract.LOAD_PRODUCT_LISTDATA://获取到列表数据
+//                PromptManager.ShowCustomToast(getContext(), "请求列表成功" + str);
+                //开始解析数据
+                productlsBeen = new Gson().fromJson(str, new TypeToken<ArrayList<ProductlsBean>>() {
+                }.getType());
+                productlsAdapter.freshAp(productlsBeen);
                 break;
         }
     }
 
     @Override
-    public void getProductDataFail(int Type, String str) {
+    public void getDataFail(int Type, String str) {
+        PromptManager.ShowCustomToast(getContext(), str);
+        switch (Type) {
+            case ProductContract.LOAD_FILTER://请求筛选条件失败
 
+                break;
+            case ProductContract.LOAD_PRODUCT_LISTDATA://请求产品列表成功
+                break;
+        }
     }
 
     /**
@@ -187,18 +269,9 @@ private LinearLayoutManager linearLayoutManager;
                         initFilterDate(filterDate);
                     }
                 } else {
-                    Series series = (Series) textView.getTag();
-                    CurrentSeries=(Series) textView.getTag();
-//                    if (fragment != null && series != null) {
-//                        try {
-//                            JSONArray jsonArray = new JSONArray();
-//                            filterParam.put("series", jsonArray.put(series.getKey()));
-//                            fragment.setParams(filterParam);
-//                            fragment.requestPage();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        ProductDataStatistApiParam.onClickProductSeriesLable(series.getName());
+//                    Series series = (Series) textView.getTag();
+                    CurrentSeries = ((Series) textView.getTag()).getKey();
+                    reSetConditionAction();
                 }
             }
         });
@@ -215,6 +288,33 @@ private LinearLayoutManager linearLayoutManager;
         } else {
             productProductfragmentProductserieslayout.setLables(dataList, false);
         }
+    }
+
+    /**
+     * 点击系列 点击只能排序 点击筛选 的确定
+     * 开始重新请求数据
+     */
+    private void reSetConditionAction() {
+        getPresenter().getProductData(CurrentOffset, CurrentSeries, CurrentOderBy, CurrentFilter);
+    }
+
+    /**
+     * 返回键
+     */
+    public void backClick() {
+        if (null != orderbyPop && orderbyPop.isShowing())
+            orderbyPop.dismiss();
+
+        if (null != filterPop && filterPop.isShowing())
+            filterPop.dismiss();
+
+    }
+
+    /**
+     * 判断是否有显示的dialog
+     */
+    public boolean isShow() {
+        return (null != orderbyPop && orderbyPop.isShowing()) || (null != filterPop && filterPop.isShowing());
     }
 
 }

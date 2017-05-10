@@ -25,10 +25,10 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
     private Context context;
     private static int MARGIN_TOP = 15;
 
-    public SimpleItemDecoration(Context context) {
+    public SimpleItemDecoration(Context context,int ColorId,int HeightId) {
         this.context = context;
-        this.margin = context.getResources().getDimensionPixelOffset(R.dimen.list_item_margin);
-        this.divider = ContextCompat.getDrawable(context, R.color.list_decoration);
+        this.margin = context.getResources().getDimensionPixelOffset(HeightId);
+        this.divider = ContextCompat.getDrawable(context, ColorId);
     }
 
     @Override

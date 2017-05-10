@@ -37,6 +37,8 @@ dependencies {
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
+    //fragmen返回键
+//    compile 'com.github.ikidou:FragmentBackHandler:2.1'
     compile project(':lib')
     compile project(':libzxing')
 }
