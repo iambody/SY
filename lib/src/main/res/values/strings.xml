@@ -39,5 +39,6 @@
     <string name="no_phone_number">对不起，投顾还没有手机号</string>
     <string name="risk_comment_prmpt">当前问卷填写的内容将不会保存，确定要返回么?</string>
     <string name="fc_college_title_str">学院</string>
+    <string name="save">保持</string>
 
 </resources>

@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -19,18 +18,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
-import com.cgbsoft.lib.utils.tools.DataUtil;
-import com.cgbsoft.lib.utils.tools.Des3;
-import com.cgbsoft.lib.widget.MToast;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.cn.hugo.android.scanner.common.BitmapUtils;
 import com.cn.hugo.android.scanner.config.Config;
 import com.cn.hugo.android.scanner.decode.BitmapDecoder;
 import com.cn.hugo.android.scanner.decode.CaptureActivityHandler;
+import com.cn.hugo.android.scanner.rxjava.RxBus;
 import com.cn.hugo.android.scanner.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -42,10 +35,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
-
-import io.rong.eventbus.EventBus;
 
 
 /**
@@ -313,7 +307,6 @@ public final class CaptureActivity extends Activity implements
             case KeyEvent.KEYCODE_VOLUME_DOWN:
                 cameraManager.zoomOut();
                 return true;
-
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -379,22 +372,22 @@ public final class CaptureActivity extends Activity implements
         if (result.contains(Config.qr_codeUrl)) {
             try {
                 String aa = result.substring(result.indexOf("?") + 1);
-                String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
+                String deresult = Des.decode(result.substring(result.indexOf("?") + 1));
                 JSONObject j = new JSONObject(deresult);
                 String party_id = j.getString("party_id");
                 String party_name = j.getString("party_name");
                 String father_id = j.getString("uid");
                 String deadline = j.getString("deadline");
                 String father_name = j.getString("nickName");
-                if (deadline.equals(DataUtil.getDay1()) || (DataUtil.compareNow(deadline) != -1)) {
-                    RxBus.get().post(RxConstant.LOOK_TWO_CODE_OBSERVABLE, new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
+                if (deadline.equals(DataUtils.getDay()) || (DataUtils.compareNow(deadline) != -1)) {
+                    RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
 //                    if (!SPreference.isVisitorRole(getApplicationContext())) {
 //                        upload(party_id, party_name, father_id, father_name);
 //                    } else {
 //                        // toJumpTouziren(result);
 //                    }
                 } else {
-                    new MToast(this).show("该二维码已过期", 0);
+                    Toast.makeText(this, "该二维码已过期", Toast.LENGTH_SHORT).show();
                     restartPreviewAfterDelay(0L);
                 }
             } catch (JSONException e) {
@@ -403,11 +396,10 @@ public final class CaptureActivity extends Activity implements
                 e.printStackTrace();
             }
         } else {
-            new MToast(this).show("不是有效的推荐人二维码", 0);
+            Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
             restartPreviewAfterDelay(0L);
         }
     }
-
 //    private void toJumpTouziren(String result) {
 //        try {
 //            String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
@@ -421,23 +413,23 @@ public final class CaptureActivity extends Activity implements
 //        }
 //    }
 
-    private static void upload(String party_id, final String party_name, String father_id, final String father_name) {
-        JSONObject j = new JSONObject();
-        String name = nickname;
-        try {
-            j.put("advisersId", SPreference.getUserId(BaseApplication.getContext()));
-            if ((!TextUtils.isEmpty(name)) && (!name.equals(""))) {
-                j.put("realName", name);
-            }
-            j.put("orgId", party_id);
-            if ((!TextUtils.isEmpty(phoneNum)) && (!phoneNum.equals(""))) {
-                j.put("phoneNum", phoneNum);
-            }
-            j.put("fatherId", father_id);
-            j.put("authenticationType", "1");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//    private static void upload(String party_id, final String party_name, String father_id, final String father_name) {
+//        JSONObject j = new JSONObject();
+//        String name = nickname;
+//        try {
+//            j.put("advisersId", Mapp);
+//            if ((!TextUtils.isEmpty(name)) && (!name.equals(""))) {
+//                j.put("realName", name);
+//            }
+//            j.put("orgId", party_id);
+//            if ((!TextUtils.isEmpty(phoneNum)) && (!phoneNum.equals(""))) {
+//                j.put("phoneNum", phoneNum);
+//            }
+//            j.put("fatherId", father_id);
+//            j.put("authenticationType", "1");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 //        new RenzhengLicaishiTask(BaseApplication.getContext()).start(j.toString(), new HttpResponseListener() {
 //            @Override
 //            public void onResponse(JSONObject response) {
@@ -471,7 +463,7 @@ public final class CaptureActivity extends Activity implements
 //                }
 //            }
 //        });
-    }
+//    }
 
     public static void restartPreviewAfterDelay(long delayMS) {
         if (handler != null) {

@@ -7,6 +7,8 @@ package com.cgbsoft.lib.utils.net;
 public class NetConfig {
     public static final boolean isLocal = true;
 
+    public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
+
     private static final String START_APP = "https://app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
@@ -80,8 +82,10 @@ public class NetConfig {
         static final String WXMERGECHECK_URL = AUTH_URL + user + "/wxMergePhone";
         // 合并手机账户－－确认合并
         static final String WXMARGECONFIRM_URL = AUTH_URL + user + "/confirmMerge";
-        //签到
+        // 签到
         static final String SIGNIN_URL = AUTH_URL + user + "/signIn";
+        // 修改密码
+        static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
     }
 
 

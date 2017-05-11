@@ -8,6 +8,8 @@ import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * desc  所有C的交互全部在这里进行
  * author wangyongkui  wangyongkui@simuyun.com
@@ -42,33 +44,33 @@ public class CWebClient extends WebViewClient {
         super();
     }
 
-    public CWebClient(BaseWebview baseWebview1,JavaScriptObjectToc javaScriptObjectToc, Context cactivity, WebviewOnClick click,boolean isShangxueyuanc) {
+    public CWebClient(BaseWebview baseWebview, JavaScriptObjectToc javaScriptObjectToc, Context cactivity, WebviewOnClick click, boolean isShangxueyuanc) {
         this.javaScriptObjectToc = javaScriptObjectToc;
-        this.baseWebview=baseWebview1;
+        this.baseWebview = baseWebview;
         this.Cactivity = (Activity) cactivity;
         this.webviewOnClick = click;
-        this.isShangxueyuanc=isShangxueyuanc;
+        this.isShangxueyuanc = isShangxueyuanc;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 //        return super.shouldOverrideUrlLoading(webView, s);
         // 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+        System.out.println("-------webView= " + url);
+
         if (url.startsWith("app:")) {
             /**
              * 认购按钮的特殊处理
              */
-            if (null != webviewOnClick && (url.startsWith("app:buynow") || url.startsWith("app:canBuy"))) {
-                webviewOnClick.onClick(url);
-            } else if (null != webviewOnClick && (url.startsWith("app:liveVideo"))) {
+            if (null != webviewOnClick && (url.startsWith("app:buynow") || url.startsWith("app:canBuy")) || url.startsWith("app:liveVideo") ||
+                    url.startsWith(WebViewConstant.MODIFY_PASSWORD) || url.startsWith(WebViewConstant.JUMP_PRODUCT_DETAIL)) {
                 webviewOnClick.onClick(url);
             } else {
                 /**
                  * 统一指令操作
                  */
-                // 其他
                 CWebviewManger cWebClient = CWebviewManger.getInstance(Cactivity);
-                cWebClient.setWeb(webView);
+                cWebClient.setWeb((BaseWebview) webView);
                 cWebClient.setAction(url);
             }
             // view.loadUrl(loadUrl);
@@ -120,12 +122,8 @@ public class CWebClient extends WebViewClient {
         void onPageFinish(WebView view);
     }
 
-//认购按钮的记得处理特殊处理!!!!!!!!!!!!!!!!!!!
-
+    //认购按钮的记得处理特殊处理!!!!!!!!!!!!!!!!!!!
     public interface WebviewOnClick {
         public void onClick(String result);
-
     }
-
-
 }

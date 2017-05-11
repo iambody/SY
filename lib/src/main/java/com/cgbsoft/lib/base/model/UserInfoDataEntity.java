@@ -96,7 +96,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String isEvaluated;
         public String customerRiskEvaluation;
         public String stockAssetsImage;
-
+        public String checkFailureReason;
 
         public String getCustomerName() {
             return customerName;
@@ -264,6 +264,14 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
 
         public void setStockAssetsImage(String stockAssetsImage) {
             this.stockAssetsImage = stockAssetsImage;
+        }
+
+        public String getCheckFailureReason() {
+            return checkFailureReason;
+        }
+
+        public void setCheckFailureReason(String checkFailureReason) {
+            this.checkFailureReason = checkFailureReason;
         }
     }
 }

@@ -36,11 +36,12 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
+        <include layout="@layout/acitivity_divide_online"/>
+
         <com.cgbsoft.lib.base.webview.BaseWebview
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
     <!--<LinearLayout-->
@@ -80,5 +81,4 @@
         android:layout_marginRight="30dp"
         android:src="@drawable/yunjian_c"
         android:visibility="gone" />
-
 </RelativeLayout>

@@ -23,7 +23,7 @@ import app.ndk.com.enter.mvp.contract.SetPasswordContract;
  *  
  */
 public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.View> implements SetPasswordContract.Presenter {
-private Context context;
+    private Context context;
     public SetPasswordPresenter(Context context, SetPasswordContract.View view) {
         super(context, view);
         this.context=context;

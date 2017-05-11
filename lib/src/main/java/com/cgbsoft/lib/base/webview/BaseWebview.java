@@ -3,11 +3,15 @@ package com.cgbsoft.lib.base.webview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -36,6 +40,11 @@ public class BaseWebview extends WebView {
      */
 
     public CWebClient.WebviewOnClick click;
+
+    /**
+     * WebChromeClient回调方法
+     */
+    private android.webkit.WebChromeClient.CustomViewCallback myCallback;
     /**
      *  是否是商学院   @按照陈龙之前业务逻辑
      */
@@ -121,6 +130,28 @@ public class BaseWebview extends WebView {
             super.onProgressChanged(view, newProgress);
         }
 
+        @Override
+        public void onShowCustomView(View view,IX5WebChromeClient.CustomViewCallback callback) {
+            super.onShowCustomView(view, 0, callback);
+            if (myCallback != null) {
+                myCallback.onCustomViewHidden();
+                myCallback = null;
+                return;
+            }
+           /* ViewGroup parent = (ViewGroup) .getParent();
+            String s = parent.getClass().getName();
+            parent.removeView(mWebview);
+            parent.addView(view);
+            myView = view;*/
+        }
+
+        @Override
+        public void onHideCustomView() {
+            if (myCallback != null) {
+                myCallback.onCustomViewHidden();
+                myCallback = null ;
+            }
+        }
     }
 
     /**

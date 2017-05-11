@@ -11,7 +11,6 @@ import com.cgbsoft.lib.widget.LoadingDialog;
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 
-
 /**
  * Created by xiaoyu.zhang on 2016/11/18 14:51
  * Email:zhangxyfs@126.com

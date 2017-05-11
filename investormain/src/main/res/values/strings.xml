@@ -85,4 +85,14 @@
     <string name="token_error_510_str">账号加密信息已过期，请重新登录获取，如有疑问，请致电客服：400-188-8848</string>
     <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
     <string name="app_name_customer">私募云</string>
+
+    <string name="shouchishenfenzheng">请上传手持身份证照</string>
+    <string name="paizhaoshifan">拍照示范:</string>
+    <string name="biaozhun">标准</string>
+    <string name="biankuangqueshi">边框缺失</string>
+    <string name="zhaopianmohu">照片模糊</string>
+    <string name="shanguangqianglie">闪光强烈</string>
+    <string name="check_failure_reason_text">审核未通过的原因：</string>
+    <string name="guanlian_asset_description">1. 您之前通过投资顾问认购的产品即为历史订单，可通过上传证件进行关联查看。\n2. 您上传的证件必须与您投资所用证件一致。\n3. 上传的本人手持证件照片需确保人物面部、手持证件内容清晰完整可读。\n4. 我们承诺绝不对外泄露您的信息。\n5. 如有疑问可拨打客服电话 400-188-8848。</string>
+
 </resources>

@@ -36,4 +36,6 @@ public interface RxConstant {
 
     String LOOK_TWO_CODE_OBSERVABLE = "twocode_look_observable";
 
+    String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
+
 }

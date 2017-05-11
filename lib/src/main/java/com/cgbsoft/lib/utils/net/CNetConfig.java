@@ -8,7 +8,7 @@ package com.cgbsoft.lib.utils.net;
 public class CNetConfig {
     public static final boolean isLocal = true;
 
-//    private static final String START_APP = "https://app";
+    //    private static final String START_APP = "https://app";
     //目前用d6测试
     private static final String START_APP = "https://d6-app";
     private static final String START_DS = "http://muninubc";
