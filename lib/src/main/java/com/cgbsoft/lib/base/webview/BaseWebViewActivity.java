@@ -91,6 +91,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void before() {
+
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
         hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, false);

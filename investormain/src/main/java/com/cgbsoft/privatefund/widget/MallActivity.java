@@ -25,7 +25,7 @@ public class MallActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     protected TextView titleMid;
 
     @BindView(R.id.webview)
-    private BaseWebview mWebview;
+    protected BaseWebview mWebview;
 
     private View myView = null;
     private WebChromeClient.CustomViewCallback myCallback = null;
