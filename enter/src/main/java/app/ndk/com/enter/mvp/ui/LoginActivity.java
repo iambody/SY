@@ -231,7 +231,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.weixin_text)
     void weixinClick() {//微信登录
-        toWxLogin();
+//        toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
 
