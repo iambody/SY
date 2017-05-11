@@ -37,6 +37,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCompatActivity implements Constant {
+
     protected Activity baseContext;
     private BaseApplication mBaseApplication;//applicaiton
     private WeakHandler mBaseHandler;//handler
@@ -48,7 +49,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     private long mExitPressedTime = 0;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.baseContext=BaseActivity.this;

@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.widget.mvc;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -100,12 +102,7 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
         addImage.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
         showImage.setOnClickListener(this);
-        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), new ViewUtils.OnClickHyperlinkListener() {
-            @Override
-            public void onClick(View v, String linkText) {
-                NavigationUtils.startDialgTelephone(RelativeAssetActivity.this, "4001888848");
-            }
-        });
+        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(RelativeAssetActivity.this, "4001888848"));
     }
 
     @Override
@@ -118,7 +115,7 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
             relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
             initImage();
         } else if (CHECK_PAST == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.chenggong);
+            resultImage.setImageResource(R.drawable.ic_chenggong);
             resultImage.setVisibility(View.VISIBLE);
             commitBtn.setVisibility(View.GONE);
             addImage.setVisibility(View.GONE);
@@ -174,74 +171,31 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
 //                } else {
 //                    Toast.makeText(this, R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
 //                }
-                ImageSelector selector = ImageSelector.create();
-                selector.single();  // 选择一张图片
-                selector.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+                startCameraActivity();
                 break;
             case R.id.show_result_image:
                 if (isloading) {
                     return;
                 }
-//                if (IsShowing) {
-//                    Intent intent = new Intent(this, SmoothImageActivity.class);
-//                    if (!TextUtils.isEmpty(imageId)) {
-//                        intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imageId);
-//                        intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, false);
-//                        startActivityForResult(intent, SMOTH_CODE);
-//                    } else if (!TextUtils.isEmpty(imagePath) && new File(imagePath).length() > 0) {
-//                        intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imagePath);
-//                        intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, true);
-//                        startActivityForResult(intent, SMOTH_CODE);
-//                    } else {
-//                        Intent startIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        if (startIntent.resolveActivity(getPackageManager()) != null) {
-//                            // 设置系统相机拍照后的输出路径
-//                            File mTmpFile = com.cgbsoft.privatefund.rongcould.picture.FileUtils.createTmpFile(this);
-//                            imagePath = mTmpFile.getPath();
-//                            startIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
-//                            startActivityForResult(startIntent, Contant.REQUEST_CAMERA);
-//                        } else {
-//                            Toast.makeText(this, me.nereo.multi_image_selector.R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                    return;
-//                }
+
                 if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-//                    Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    if (camenIntent.resolveActivity(getPackageManager()) != null) {
-//                        // 设置系统相机拍照后的输出路径
-//                        imagePath = mTmpFile.getPath();
-//                        startActivityForResult(camenIntent, Contant.REQUEST_CAMERA);
-//                    } else {
-//                        Toast.makeText(this, me.nereo.multi_image_selector.R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
-//                    }
-                    ImageSelector cameraSelect = ImageSelector.create();
-                    cameraSelect.single();  // 选择一张图片
-                    cameraSelect.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+                    startCameraActivity();
                     return;
                 }
 
-//                Intent intent = new Intent(this, SmoothImageActivity.class);
-//                if (!TextUtils.isEmpty(imageId)) {
-//                    intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imageId);
-//                    intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, false);
-//                    startActivityForResult(intent, SMOTH_CODE);
-//                } else if (!TextUtils.isEmpty(imagePath) && new File(imagePath).length() > 0) {
-//                    intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imagePath);
-//                    intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, true);
-//                    startActivityForResult(intent, SMOTH_CODE);
-//                } else {
-//                    Intent startIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    if (startIntent.resolveActivity(getPackageManager()) != null) {
-//                        // 设置系统相机拍照后的输出路径
-//                        File mTmpFile = com.cgbsoft.privatefund.rongcould.picture.FileUtils.createTmpFile(this);
-//                        imagePath = mTmpFile.getPath();
-//                        startIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));
-//                        startActivityForResult(startIntent, Contant.REQUEST_CAMERA);
-//                    } else {
-//                        Toast.makeText(this, me.nereo.multi_image_selector.R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
+                Intent intent = new Intent(this, SmoothImageActivity.class);
+                if (!TextUtils.isEmpty(imageId)) {
+                    intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imageId);
+                    intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, false);
+                    startActivityForResult(intent, SMOTH_CODE);
+                } else if (!TextUtils.isEmpty(imagePath) && new File(imagePath).length() > 0) {
+                    intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, imagePath);
+                    intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, true);
+                    startActivityForResult(intent, SMOTH_CODE);
+                } else {
+                    startCameraActivity();
+                }
+
                 break;
             case R.id.commit:
                 if (isloading) {
@@ -249,6 +203,17 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
                 }
                 relativeAsset();
                 break;
+        }
+    }
+
+    private void startCameraActivity() {
+        Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (camenIntent.resolveActivity(getPackageManager()) != null) {
+            ImageSelector selectSec = ImageSelector.create();
+            selectSec.single();  // 选择一张图片
+            selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+        } else {
+            Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -260,13 +225,13 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
                 System.out.println("-----select1=" + mSelectPath.get(0));
                 imagePath = com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.compressFileToUpload(mSelectPath.get(0), true);
-                    addImage.setVisibility(View.GONE);
-                    showImage.setImageBitmap(MyBitmapUtils.getLoacalBitmap(imagePath));
-                    IsShowing = true;
-                    imageId = null;
-                    resultImage.setVisibility(View.GONE);
-                    checkFailure.setVisibility(View.GONE);
-                    relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
+                addImage.setVisibility(View.GONE);
+                showImage.setImageBitmap(MyBitmapUtils.getLoacalBitmap(imagePath));
+                IsShowing = true;
+                imageId = null;
+                resultImage.setVisibility(View.GONE);
+                checkFailure.setVisibility(View.GONE);
+                relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
 
 //                if (imagePath != null && imagePath.length() > 0) {
 //                    imagePath = com.cgbsoft.privatefund.utils.FileUtils.compressFileToUpload(imagePath, true);

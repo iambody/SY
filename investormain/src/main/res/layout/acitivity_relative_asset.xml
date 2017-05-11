@@ -134,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ui_10_dip"
-        android:background="@drawable/c_common_bg_btn"
+        android:background="@drawable/share_common_bg_btn"
         android:gravity="center"
         android:padding="@dimen/ui_10_dip"
         android:text="确认"

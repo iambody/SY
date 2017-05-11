@@ -1,3 +1,4 @@
+
 package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;

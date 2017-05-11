@@ -3,4 +3,5 @@
     <color name="black">#000</color>
 
     <color name="relative_upshouchizhao_txt_color">#666666</color>
+    <color name="lucency">#80000000</color>
 </resources>

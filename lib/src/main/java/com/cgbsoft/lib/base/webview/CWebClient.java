@@ -8,8 +8,6 @@ import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-import java.io.UnsupportedEncodingException;
-
 /**
  * desc  所有C的交互全部在这里进行
  * author wangyongkui  wangyongkui@simuyun.com
@@ -23,7 +21,7 @@ public class CWebClient extends WebViewClient {
     /**
      * 上下文
      */
-    private Activity Cactivity;
+    private Activity curretnAtivity;
     /**
      * 这个接口是直播和认购时候的特殊url截取逻辑 单独回调给ui进行处理  暴露给webview使用  @按照陈龙之前业务逻辑
      */
@@ -47,7 +45,7 @@ public class CWebClient extends WebViewClient {
     public CWebClient(BaseWebview baseWebview, JavaScriptObjectToc javaScriptObjectToc, Context cactivity, WebviewOnClick click, boolean isShangxueyuanc) {
         this.javaScriptObjectToc = javaScriptObjectToc;
         this.baseWebview = baseWebview;
-        this.Cactivity = (Activity) cactivity;
+        this.curretnAtivity = (Activity) cactivity;
         this.webviewOnClick = click;
         this.isShangxueyuanc = isShangxueyuanc;
     }
@@ -56,8 +54,7 @@ public class CWebClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 //        return super.shouldOverrideUrlLoading(webView, s);
         // 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
-        System.out.println("-------webView= " + url);
-
+        System.out.println("-------webview= " + url);
         if (url.startsWith("app:")) {
             /**
              * 认购按钮的特殊处理
@@ -69,8 +66,8 @@ public class CWebClient extends WebViewClient {
                 /**
                  * 统一指令操作
                  */
-                CWebviewManger cWebClient = CWebviewManger.getInstance(Cactivity);
-                cWebClient.setWeb((BaseWebview) webView);
+                CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
+                cWebClient.setWeb((BaseWebview)webView);
                 cWebClient.setAction(url);
             }
             // view.loadUrl(loadUrl);

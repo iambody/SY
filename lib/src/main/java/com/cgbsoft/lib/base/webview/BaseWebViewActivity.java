@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 import rx.Observable;
 
 /**
- * 通用的WebView页面
+ * 通用的WebView页面的基累，所有其他WevView的activity需要基础此Activity
  *
  * @author chenlong
  */
@@ -55,6 +56,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
+
+    @BindView(R2.id.title_right_btn)
+    protected TextView rightTextBtn;
 
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
@@ -91,9 +95,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void before() {
-
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
-        hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
         hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, false);
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
@@ -112,6 +115,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void data() {
         titleMid.setText(title);
+        mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
             executeObservable = RxBus.get().register(getRegeistRxBusId(), Object.class);
             executeObservable.subscribe(new RxSubscriber<Object>() {
@@ -160,8 +164,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void init(Bundle savedInstanceState) {
          // toolbar事件设置
-        toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+        setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
@@ -169,6 +174,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
         toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
+        rightTextBtn.setVisibility(hasRightShare || hasRightSave ? View.VISIBLE : View.GONE);
 
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {
@@ -189,6 +195,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else {
                 NavigationUtils.startActivityByRouter(this, "investormain_cloudmenuactivity", "product_detail", true);
             }
+        }
+    }
+
+    @OnClick(R2.id.title_right_btn)
+    void rightTextBtnClick() {
+        if (hasRightSave) {
+            String jascript = "javascript:Tools.save()";
+            mWebview.loadUrl(jascript);
+        } else if (hasRightShare) {
+            pageShare();
         }
     }
 
@@ -231,18 +247,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        try {
-            mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void backEvent() {
         new DefaultDialog(BaseWebViewActivity.this, getString(R.string.risk_comment_prmpt), "取消", "确定") {
             @Override
@@ -258,13 +262,27 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
-            mWebview.loadUrl("javascript:refresh()");
-        } else if (url.contains("apptie/detail.html")) {
+        mWebview.loadUrl("javascript:refresh()");
+        if (url.contains("apptie/detail.html")) {
             cloudImage.setVisibility(View.VISIBLE);
         }
+//        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
+//
+//        } else
         try {
             mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
         } catch (Exception e) {
@@ -325,18 +343,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.page_menu, menu);
-        rightItem = menu.findItem(R.id.firstBtn);
-        MenuItem secItem = menu.findItem(R.id.secondBtn);
-        if (hasRightShare) {
-            rightItem.setTitle(R.string.umeng_socialize_share);
-            rightItem.setIcon(R.drawable.fenxiang_share_nor);
+        Log.i("BaseWebViewActivity", "onCreateOptionsMenu");
+        if (hasRightShare || hasRightSave) {
+//            getMenuInflater().inflate(R.menu.page_menu, menu);
+//            rightItem = menu.findItem(R.id.firstBtn);
+//            MenuItem secItem = menu.findItem(R.id.secondBtn);
+//            rightItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+//            rightItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.shape_white);
+//            secItem.setVisible(false);
+            rightTextBtn.setText(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
         }
-        if (hasRightSave) {
-            rightItem.setTitle(R.string.save);
-            rightItem.setIcon(null);
-        }
-        secItem.setVisible(false);
         return true;
     }
 
@@ -345,7 +361,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (item.getTitle().equals(getString(R.string.umeng_socialize_share))) {
                 pageShare();
-            } else if(item.getTitle().equals(R.string.save)) {
+            } else if(item.getTitle().equals(getString(R.string.save))) {
                 String jascript = "javascript:Tools.save()";
                 mWebview.loadUrl(jascript);
             }

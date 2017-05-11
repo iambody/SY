@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -40,18 +39,9 @@ public class CWebviewManger {
     private boolean headRefreshing; // 头部是否有刷新
     private boolean loadMoreing; // 加载更大
 
-    private static CWebviewManger instance = null;
-
-    private CWebviewManger(Activity activity) {
+    public CWebviewManger(Activity activity) {
         super();
         this.context = activity;
-    }
-
-    public static synchronized CWebviewManger getInstance(Activity bacActivity) {
-        if (instance == null) {
-            instance = new CWebviewManger(bacActivity);
-        }
-        return instance;
     }
 
     public boolean isHeadRefreshing() {
@@ -138,7 +128,7 @@ public class CWebviewManger {
         } else if (action.contains("saveSuccess")) { // CHEN
             Intent intent = new Intent();
             intent.putExtra(BaseWebViewActivity.SAVE_PARAM, getValue(action));
-            context.setResult(1, intent);
+            context.setResult(Activity.RESULT_OK, intent);
             context.finish();
         } else if (action.contains("openSavePage")) {
             openpage(action, true, false, false);
@@ -178,7 +168,6 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouterForResult(context, "investornmain_relativeassetctivity", BaseWebViewActivity.RELATIVE_ASSERT);
         } else if (action.contains("pssetsProve")) {
             NavigationUtils.startActivityByRouterForResult(context, "investornmain_proveassetctivity", BaseWebViewActivity.ASSERT_PROVE);
-//            NavigationUtils.startActivityForResult(context, AssetProveActivity.class, PushMsgActivity.ASSERT_PROVE);
         } else if (action.contains("selectedInvestment")) {
 //            EventBus.getDefault().post(new Qrcode());
         } else if (action.contains("recommendFriend")) {
@@ -1234,7 +1223,6 @@ public class CWebviewManger {
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
-            String pushMessage = split[4];
             if (!url.contains("http")) {
                 url = BaseWebNetConfig.baseParentUrl + url;
             }
@@ -1243,6 +1231,7 @@ public class CWebviewManger {
             i.putExtra(WebViewConstant.push_message_url, url);
             i.putExtra(WebViewConstant.push_message_title, title);
             if (initPage) {
+                String pushMessage = split[4];
                 i.putExtra(WebViewConstant.push_message_value, pushMessage);
             }
             i.putExtra(WebViewConstant.RIGHT_SAVE, rightSave);

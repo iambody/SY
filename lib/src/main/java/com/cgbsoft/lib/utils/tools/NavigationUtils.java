@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.Router;
+import com.jhworks.library.ImageSelector;
 
 import java.io.File;
 import java.util.HashMap;
@@ -41,6 +43,12 @@ public class NavigationUtils {
         Intent intent = new Intent();
         intent.setComponent(new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity"));
         context.startActivity(intent);
+    }
+
+    public static void startSystemImageForResult(Activity activity, int reqeustCode) {
+        ImageSelector selectSec = ImageSelector.create();
+        selectSec.single();  // 选择一张图片
+        selectSec.start(activity, reqeustCode);
     }
 
     /**
