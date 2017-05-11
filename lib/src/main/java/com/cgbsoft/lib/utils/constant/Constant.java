@@ -114,6 +114,16 @@ public interface Constant {
     String PERMISSION_RECEIVE_SMS = Manifest.permission.RECEIVE_SMS;
     String PERMISISON_WAP_PUSH = Manifest.permission.RECEIVE_WAP_PUSH;
 
-
+    // 上传文件存放不同的路径
+    //上传图片路径类型  用户头像
+    public static final String UPLOAD_HEAD_TYPE = "avata/";
+    //证件/资产证明
+    public static final String UPLOAD_CERTIFICATE_TYPE = "certificates/";
+    //打款凭条
+    public static final String UPLOAD_SUBSRCIPTION_TYPE = "subscription/";
+    //赎回
+    public static final String UPLOAD_REDEMPTION_TYPE = "redemption/";
+    //意见反馈
+    public static final String UPLOAD_FEEDBACK_TYPE = "feedback/";
 
 }

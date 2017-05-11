@@ -58,7 +58,6 @@ public class RxBus {
         return false;
     }
 
-
     @SuppressWarnings("unchecked")
     public <T> Observable<T> register(@NonNull Object tag, @NonNull Class<T> clazz) {
         List<Subject> subjectList = subjectMapper.get(tag);

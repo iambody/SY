@@ -183,6 +183,19 @@ interface RequestManager {
     Observable<ResponseBody>resetTestPwd(@FieldMap Map<String, String> paramsMap);
 
     /**
+     * 修改密码
+     * @param paramsMap
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
+    Observable<BaseResult<String>>modifyPassword(@FieldMap Map<String, String> paramsMap);
+
+    @FormUrlEncoded
+    @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
+    Observable<ResponseBody>modifyTestPassword(@FieldMap Map<String, String> paramsMap);
+
+    /**
      * 合并帐号--验证手机
      * @param paramsMap
      * @return

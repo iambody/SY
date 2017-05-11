@@ -40,4 +40,6 @@ public interface RxConstant {
     //在产品模块 我的筛选的dialog点击确定时候传递给fragment数据消息
     String PRODUCT_FILTER_TO_FRAGMENT="product_filtr_to_fragment";
 
+    String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
+
 }

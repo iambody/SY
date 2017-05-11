@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar"
+        android:id="@+id/title_bar"/>
+
+    <include
+        android:id="@+id/divide_title_content"
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/title_bar" />
+
+    <com.cgbsoft.lib.widget.GestureImageView
+        android:id="@+id/show_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divide_title_content"
+        android:background="@color/white"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divide_title_content"
+        android:id="@+id/progress_ll"
+        android:background="@color/half_large_transparent"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="@color/gray_font"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/show_save_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lucency"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/saveImage"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/c_high_black"
+            android:textSize="@dimen/dimens_sp_14" />
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="返回"
+            android:textColor="@color/c_high_black"
+            android:textSize="@dimen/dimens_sp_14" />
+    </LinearLayout>
+</RelativeLayout>

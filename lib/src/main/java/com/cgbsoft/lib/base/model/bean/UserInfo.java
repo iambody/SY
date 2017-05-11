@@ -75,6 +75,7 @@ public class UserInfo {
     private String fatherId;
     private String lastLoginTime;
     private String memoToFather;
+
     /**
      * Used to resolve relations
      */

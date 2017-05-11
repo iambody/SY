@@ -183,35 +183,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-//        startActivityForResult(new Intent(LoginActivity.this, CaptureActivity.class), 0);
-//testSelectPic();／／
-//PromptManager.ShowCustomToast(LoginActivity.this,"ssaa坎坎坷坷扩扩");
-//        Router.build("aks").go(LoginActivity.this);
-//        Router.build("investornmain_mainpageactivity").go(LoginActivity.this);
-////testSelectPic();／／
-//        if (true) {
-//            return;
-//        }
-//        if (!isUsernameInput) {
-//            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
-//            return;
-//        }
-//        if (!isPasswordInput) {
-//            MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
-//            return;
-//        }
 //        toDataStatistics(1002, 10005, "登录");
-////        Router.addRouteTable(new RouteTable() {
-////            @Override
-////            public void getAuthorResult(int type, Platform platform) {
-////
-////            }
-////        });
-////        authorUtils.WxAuth();
-//
-//
-//
-//        if(true){return;}
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }
@@ -259,7 +231,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.weixin_text)
     void weixinClick() {//微信登录
-//        toWxLogin();
+        toWxLogin();
         toDataStatistics(1002, 10008, "微信登录");
     }
 

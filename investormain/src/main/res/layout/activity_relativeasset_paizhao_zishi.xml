@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/ui_10_dip">
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/paizhaoshifan"
+        android:textColor="@color/relative_upshouchizhao_txt_color"
+        android:textSize="@dimen/dimens_sp_20" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:orientation="horizontal">
+
+        <LinearLayout style="@style/view_relativeasset_in_lay">
+
+            <ImageView
+                style="@style/view_relativeasset_up_img"
+                android:src="@drawable/guanlian1" />
+
+            <TextView
+                style="@style/view_relativeasset_down_txt"
+                android:drawableLeft="@drawable/guanlian_right"
+                android:text="@string/biaozhun" />
+        </LinearLayout>
+
+        <ImageView style="@style/view_relativeasset_line" />
+
+        <LinearLayout
+            style="@style/view_relativeasset_in_lay">
+
+            <ImageView
+                style="@style/view_relativeasset_up_img"
+                android:src="@drawable/guanlian2" />
+
+            <TextView
+                style="@style/view_relativeasset_down_txt"
+                android:drawableLeft="@drawable/guanlian_wrong"
+                android:text="@string/biankuangqueshi" />
+        </LinearLayout>
+
+        <ImageView style="@style/view_relativeasset_line" />
+
+        <LinearLayout
+            style="@style/view_relativeasset_in_lay">
+
+            <ImageView
+                style="@style/view_relativeasset_up_img"
+                android:src="@drawable/guanlian3" />
+
+            <TextView
+                style="@style/view_relativeasset_down_txt"
+                android:drawableLeft="@drawable/guanlian_wrong"
+                android:text="@string/zhaopianmohu"
+
+
+                />
+        </LinearLayout>
+
+        <ImageView style="@style/view_relativeasset_line" />
+
+        <LinearLayout
+            style="@style/view_relativeasset_in_lay">
+
+            <ImageView
+                style="@style/view_relativeasset_up_img"
+                android:src="@drawable/guanlian4" />
+
+            <TextView
+                style="@style/view_relativeasset_down_txt"
+                android:drawableLeft="@drawable/guanlian_wrong"
+                android:text="@string/shanguangqianglie" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

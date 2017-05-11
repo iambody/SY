@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
-    private IOSDialog miOSDialog;
+    private DefaultDialog defaultDialog;
     private int countDownTime = COOL_DOWN_TIME;
     private Subscription countDownSub;
 
@@ -114,7 +114,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         et_ar_check.addTextChangedListener(new RegisterTextWatcher(CHECK_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.ra_register_loading_str), false, false);
-        miOSDialog = new IOSDialog(this, "", getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
+        defaultDialog = new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
             public void left() {
                 this.dismiss();
@@ -170,7 +170,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        miOSDialog.show();
+        defaultDialog.show();
     }
 
     @OnClick(R2.id.btn_ar_register)

@@ -85,4 +85,18 @@
     <string name="token_error_510_str">账号加密信息已过期，请重新登录获取，如有疑问，请致电客服：400-188-8848</string>
     <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
     <string name="app_name_customer">私募云</string>
+
+    <string name="shouchishenfenzheng">请上传手持身份证照</string>
+    <string name="paizhaoshifan">拍照示范:</string>
+    <string name="biaozhun">标准</string>
+    <string name="biankuangqueshi">边框缺失</string>
+    <string name="zhaopianmohu">照片模糊</string>
+    <string name="shanguangqianglie">闪光强烈</string>
+    <string name="check_failure_reason_text">审核未通过的原因：</string>
+    <string name="guanlian_asset_description">1. 您之前通过投资顾问认购的产品即为历史订单，可通过上传证件进行关联查看。\n2. 您上传的证件必须与您投资所用证件一致。\n3. 上传的本人手持证件照片需确保人物面部、手持证件内容清晰完整可读。\n4. 我们承诺绝不对外泄露您的信息。\n5. 如有疑问可拨打客服电话 400-188-8848。</string>
+    <string name="asset_prove_description">1. 根据《私募投资基金募集行为管理办法》的要求，只有合格投资者才能购买私募产品。\n2. 个人投资者需提供最近三年年均收入不应低于50万元的收入证明或资产总额不低于300万元金融资产证明。\n3. 机构投资者需提供资产负债表和真实性承诺函或会计师事务所出具的审计报告原件。\n4. 我们将会确保您提交材料的隐私安全，如有疑问请直接拨打客服电话400-188-8848。</string>
+
+    <string name="loading">加载中...</string>
+    <string name="no_camera_device">没有找到相机设备, 请检查是否有相应拍照权限</string>
+    <string name="asset_prove_upload_desc">支持10张以内JPG格式图片，单张图片不超过10M</string>
 </resources>

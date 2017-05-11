@@ -8,20 +8,20 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.MyDogDialog;
-import com.cgbsoft.lib.utils.ui.OtheriOSDialog;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
-import com.tencent.smtt.sdk.WebView;
+import com.cgbsoft.privatefund.bean.share.CommonShareBean;
+import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.Set;
 
 import io.rong.imkit.RongIM;
@@ -32,25 +32,16 @@ import io.rong.imlib.model.Conversation;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/4-17:58
  */
-public class CWebviewUtil {
+public class CWebviewManger {
 
     private Activity context;
-    private WebView webview;
+    private BaseWebview webview;
     private boolean headRefreshing; // 头部是否有刷新
-    private  boolean loadMoreing; // 加载更大
+    private boolean loadMoreing; // 加载更大
 
-    private  static CWebviewUtil instance  ;
-
-    private CWebviewUtil(Activity activity) {
+    public CWebviewManger(Activity activity) {
         super();
         this.context = activity;
-    }
-
-    public static CWebviewUtil getInstance(Activity bacActivity) {
-        if (instance == null) {
-            instance = new CWebviewUtil(bacActivity);
-        }
-        return instance;
     }
 
     public boolean isHeadRefreshing() {
@@ -61,8 +52,8 @@ public class CWebviewUtil {
         this.headRefreshing = headRefreshing;
     }
 
-    public void setWeb(WebView webViews) {
-        this.webview = webViews;
+    public void setWeb(BaseWebview webView) {
+        this.webview = webView;
     }
 
     /**
@@ -82,59 +73,62 @@ public class CWebviewUtil {
      * @param action
      */
     public void setAction(String action) {
-
-        if (action.contains("filingdata")) {
+        if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
-        } else if (action.contains("filing")) {
+        } else if (action.contains("filing")) { // TOB
 //            toBaobei();
         } else if (action.contains("openMytask")) {//C端新加需求 需要首页有我的任务 跳转到我的任务
-//            goMyTask();
+            goMyTask();
         } else if (action.contains("openpage")) {
             openpage(action, false, false, false);
         } else if (action.contains("openSingleTaskPage")) {
 //            openSingleTaskPage(action, false, false, true);
         } else if (action.contains("closepage") || action.contains("closePage")) {
             closepage(action);
-        } else if (action.contains("secretviewpdf")) {
+        } else if (action.contains("secretviewpdf")) { // 预留，可能后端直接写好
 //            secretviewpdf(action);
         } else if (action.contains("viewpdf")) {
 //            viewpdf(action);
-        } else if (action.contains("changepassword")) {
+//        } else if (action.contains("changepassword")) {
 //            changepassword(action);
         } else if (action.contains("copytoclipboard")) {
             copytoclipboard(action);
         } else if (action.contains("clickPasteServeCode")) {
             getContentFromPasteBoard(action);
         } else if (action.contains("playVideo")) {
-//            playVideo(action);
+            playVideo(action);
         } else if (action.contains("jumpProductList")) {
-
-        } else if (action.contains("jumpProduct")) {
+            jumpProductList(action);
+//        } else if (action.contains("jumpProduct")) {
 //            jumpProduct(action);
-        } else if (action.contains("custbyorder")) {
+        } else if (action.contains("custbyorder")) { // TOB
 //            jumpOrderList(action);
 //        } else if (action.contains("commitRedeem")) {
 //            commitRedeem(action);
-        } else if (action.contains("withdrawAlert")) {
+        } else if (action.contains("withdrawAlert")) { // TOB
 //            drawAlert(action);
         } else if (action.contains("secrecyPage")) {
             //TODO
-        } else if (action.contains("submitQuestionnaire")) {
+        } else if (action.contains("submitQuestionnaire")) { // TOB
 //            toRiskRusult(action);
         } else if (action.contains("openMallPage")) {
-//            openMallPage(action);
+            openMallPage(action);
         } else if (action.contains("openDialog")) {
             openDialog(action);
+//        } else if (action.contains("addAddress")) {
+//            context.startActivity(new Intent(context, EditAddress.class));
+//        } else if (action.contains("choiceAddress")) {
+//            context.startActivity(new Intent(context, ChoiceAddress.class));
         } else if (action.contains("telephone")) {
             Utils.telHotline(context);
         } else if (action.contains("openMallMain")) {
         } else if (action.contains("submitQuestionnaire")) {
-        } else if (action.contains("iftakeup")) {
+        } else if (action.contains("iftakeup")) { // todo 认购
 //            checkRengou(action);
         } else if (action.contains("saveSuccess")) { // CHEN
             Intent intent = new Intent();
-            intent.putExtra(PushMsgActivity.SAVE_PARAM, getValue(action));
-            context.setResult(1, intent);
+            intent.putExtra(BaseWebViewActivity.SAVE_PARAM, getValue(action));
+            context.setResult(Activity.RESULT_OK, intent);
             context.finish();
         } else if (action.contains("openSavePage")) {
             openpage(action, true, false, false);
@@ -145,15 +139,15 @@ public class CWebviewUtil {
         } else if (action.contains("openParam")) {
             openpage(action, false, true, false);
         } else if (action.contains("setUpHeadImage")) {// 上传头像
-//            startImagePage(action);
+            startImagePage(action);
         } else if (action.contains("scanning")) {
-//            toQrCode();
+            toQrCode();
         } else if (action.contains("toastStatus") || action.equals("toastSuccess")) {
             showToast(action);
         } else if (action.contains("showAlert")) {
-//            showComfirmDialog(action);
+            showComfirmDialog(action);
         } else if (action.contains("openMessage")) {
-//            toMessageList();
+            toMessageList();
         } else if (action.contains("cloudAnimate")) {
             //TODO 云动画
         } else if (action.contains("practiseAbility")) {
@@ -171,17 +165,17 @@ public class CWebviewUtil {
 //                context.startActivity(intent1);
 //            }
         } else if (action.contains("relationAssets")) {//关联资产动作
-           // NavigationUtils.startActivityForResult(context, RelativeAssetActivity.class, PushMsgActivity.RELATIVE_ASSERT);
+            NavigationUtils.startActivityByRouterForResult(context, "investornmain_relativeassetctivity", BaseWebViewActivity.RELATIVE_ASSERT);
         } else if (action.contains("pssetsProve")) {
-//            NavigationUtils.startActivityForResult(context, AssetProveActivity.class, PushMsgActivity.ASSERT_PROVE);
+            NavigationUtils.startActivityByRouterForResult(context, "investornmain_proveassetctivity", BaseWebViewActivity.ASSERT_PROVE);
         } else if (action.contains("selectedInvestment")) {
-           // EventBus.getDefault().post(new Qrcode());
+//            EventBus.getDefault().post(new Qrcode());
         } else if (action.contains("recommendFriend")) {
-//            recommentFriend();
+            recommentFriend();
         } else if (action.contains("h5-native")) {
 //            VersonUpdate();
         } else if (action.contains("logOut")) {
-            IOSDialog dialog = new IOSDialog(context, "", "确认要退出账号吗？", "取消", "确认", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "确认要退出账号吗？", "取消", "确认") {
                 @Override
                 public void left() {
                     dismiss();
@@ -201,11 +195,11 @@ public class CWebviewUtil {
         } else if (action.contains("mobClick")) {
 //            mobClick(action);
         } else if (action.contains("presentPage")) {
-//            startActivityOverridePendingTransition(action);
+            startActivityOverridePendingTransition(action);
         } else if (action.contains("dismissPage")) {
-//            overActivityOverridePendingTransition();
+            overActivityOverridePendingTransition();
         } else if (action.contains("inviteCust")) {
-//            shareDataFriend(action);
+            shareDataFriend(action);
         } else if (action.contains("clearLocal")) {
             CacheDataManager.cleanApplicationData(context, new String[]{context.getCacheDir().getAbsolutePath(), context.getExternalCacheDir().getAbsolutePath()});
             new MToast(context).show("应用缓存清除成功", 0);
@@ -216,7 +210,7 @@ public class CWebviewUtil {
         } else if (action.contains("tokenError")) {
             new MToast(context).show("token信息错误", 0);
         } else if (action.contains("tocShare")) {
-//            shareToC(action);
+            shareToC(action);
         } else if (action.contains("riskTest")) {
 //            Intent intent = new Intent(context, RiskResultToCActivity.class);
 //            String[] split = action.split(":");
@@ -335,7 +329,7 @@ public class CWebviewUtil {
 //        String decodeTitle = "";
 //        String decodeUrl = "";
 //        if (!string.contains("http")) {
-//            string = CwebNetConfig. + string;
+//            string = CwebNetConfig.baseParentUrl + string;
 //        }
 //        Intent i = new Intent(context, SinglePushMsgActivity.class);
 //        // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -520,6 +514,13 @@ public class CWebviewUtil {
         }
     }
 
+    private void jumpProductList(String action) {
+        if (SPreference.isVisitorRole(context)) {
+            NavigationUtils.startActivityByRouter(context, "investornmain_mainpageactivity",
+                    "jumpId", 1, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+    }
+
     private void callLiCaiShi(String action) {
         String[] split = action.split(":");
         try {
@@ -530,7 +531,7 @@ public class CWebviewUtil {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            OtheriOSDialog dialog = new OtheriOSDialog(context, "", "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫", false) {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -550,13 +551,13 @@ public class CWebviewUtil {
 
     private void isTouGuOnline(String action) {
         Log.i("touguxinxi", "isTouGuOnline");
-        String[] split = action.split(":");
-        try {
-            String value = URLDecoder.decode(split[2], "utf-8");
+//        String[] split = action.split(":");
+//        try {
+//            String value = URLDecoder.decode(split[2], "utf-8");
 //            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    private void startVideoLive(String action) {
@@ -723,78 +724,76 @@ public class CWebviewUtil {
 //        });
 //    }
 
-//    private void shareDataFriend(String action) {
-//        // "inviteCust","2",'/apptie/invite_preview_wx.html?site=2'); 1:普通邀请,可分享微信好友和朋友圈、2:精准邀请,只能分享到微信好友
-//        String[] split = action.split(":");
-//        try {
-//            String title = URLDecoder.decode(split[5], "utf-8");
-//            String type = URLDecoder.decode(split[2], "utf-8");
-//            String content = URLDecoder.decode(split[4], "utf-8");
-//            String link = URLDecoder.decode(split[3], "utf-8");
-//            link = link.startsWith("/") ? Domain.baseWebsite + link : Domain.baseWebsite + "/" + link;
+    private void shareDataFriend(String action) {
+        // "inviteCust","2",'/apptie/invite_preview_wx.html?site=2'); 1:普通邀请,可分享微信好友和朋友圈、2:精准邀请,只能分享到微信好友
+        String[] split = action.split(":");
+        try {
+            String title = URLDecoder.decode(split[5], "utf-8");
+            String type = URLDecoder.decode(split[2], "utf-8");
+            String content = URLDecoder.decode(split[4], "utf-8");
+            String link = URLDecoder.decode(split[3], "utf-8");
+            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
+            CommonShareBean commonShareBean = new CommonShareBean();
+            commonShareBean.setTitle(title);
+            commonShareBean.setContent(content);
+            commonShareBean.setLink(link);
 //            if ("2".equals(type)) {
-//                // openWeixin(title, content, link, R.drawable.logoshare);
-//                UMWXHandler wxHandler = new UMWXHandler(context,
-//                        Contant.weixin_appID, Contant.weixin_appSecret);
-//                wxHandler.addToSocialSDK();
-//                ShareYaoqinDialog shareDialog = new ShareYaoqinDialog(context, 0, "");
-//                shareDialog.shareWeixin(title, content, R.drawable.logoshare, link);
+//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
+//                commonShareDialog.show();
 //            } else {
-//                ShareYaoqinDialog shareDialog = new ShareYaoqinDialog(context, 0, "");
-//                shareDialog.setData(title, content, R.drawable.logoshare, link, content, content, content, link);
-//                shareDialog.show();
+//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 0, commonShareBean, null);
+//                commonShareDialog.show();
 //            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    private void openWeixin(final String title, final String content, final String url, final int image) {
 //        WeiXinShare sh = new WeiXinShare(context, "");
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
 
-//    private void shareToC(String action) {
-//        // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        String sharePYQtitle = "";
-//        try {
-//            String title = split[2];
-//            String subTitle = split[3];
-//            String imageTitle = split[4];
-//            String link = split[5];
-//            if (split.length >= 7) {
-//                sharePYQtitle = split[6];
-//            }
-//            link = link.startsWith("/") ? Domain.baseWebsite + link : Domain.baseWebsite + "/" + link;
-//            ShareYaoqinDialog shareDialog;
-//            if (shareWithEmail) {
-//                shareDialog = new ShareYaoqinDialog(context, 1, "");
-//            } else {
-//                shareDialog = new ShareYaoqinDialog(context, 0, "");
-//            }
-//            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-////            https://app.simuyun.com/app5.0/apptie/detail.html?schemeId=04c9dff066ab41499e2a189052ca6d94&type=1&share=1
-////            https://app.simuyun.com/app5.0/discover/details.html?id=cf2e0d629cf143c0b3e5a6f0b2415ded&category=4&share=1
+    private void shareToC(String action) {
+        // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
+        String actionDecode = URLDecoder.decode(action);
+        String[] split = actionDecode.split(":");
+        String sharePYQtitle = "";
+        try {
+            String title = split[2];
+            String subTitle = split[3];
+            String imageTitle = split[4];
+            String link = split[5];
+            if (split.length >= 7) {
+                sharePYQtitle = split[6];
+            }
+            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
+            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
+            CommonShareBean commonShareBean = new CommonShareBean();
+            commonShareBean.setTitle(title);
+            commonShareBean.setContent(subTitle);
+            commonShareBean.setLink(link);
+            commonShareBean.setYoujianTitleText(title);
 //            if (imageTitle.contains("greeteng")) {
-//                shareDialog.setData(title, subTitle, sharePYQtitle, 1, link, title, title, title, link, shareType);
+//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
+//                commonShareDialog.show();
 //            } else {
-//                shareDialog.setData(title, subTitle, sharePYQtitle, R.drawable.logoshare, link, title, title, title, link, shareType);
+//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
+//                commonShareDialog.show();
 //            }
 //            shareDialog.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void backPage(String action) {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
         Intent intent = new Intent();
-        intent.putExtra(PushMsgActivity.BACK_PARAM, index);
-        context.setResult(PushMsgActivity.BACK_RESULT_CODE, intent);
+        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index);
+        context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();
     }
 
@@ -817,57 +816,56 @@ public class CWebviewUtil {
 //        }
 //    }
 
-//    private void startActivityOverridePendingTransition(String action) {
-//        String[] split = action.split(":");
-//        String string = split[2];
-//        String title = split[3];
-//        string = Domain.baseWebsite + string;
-//        Intent i = new Intent(context, PushMsgActivity.class);
-//        // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        try {
-//            i.putExtra(Contant.push_message_url, URLDecoder.decode(string, "utf-8"));
-//            i.putExtra(Contant.push_message_title, URLDecoder.decode(title, "utf-8"));
-//            if (split.length > 5) {
-//                i.putExtra(Contant.PAGE_SHOW_TITLE, Boolean.valueOf(split[5]));
-//            }
-//            ((Activity) context).startActivityForResult(i, 300);
-//            ((Activity) context).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void startActivityOverridePendingTransition(String action) {
+        String[] split = action.split(":");
+        String string = split[2];
+        String title = split[3];
+        string = CwebNetConfig.baseParentUrl + string;
+        Intent i = new Intent(context, BaseWebViewActivity.class);
+        // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            i.putExtra(WebViewConstant.push_message_url, URLDecoder.decode(string, "utf-8"));
+            i.putExtra(WebViewConstant.push_message_title, URLDecoder.decode(title, "utf-8"));
+            if (split.length > 5) {
+                i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[5]));
+            }
+            ((Activity) context).startActivityForResult(i, 300);
+            ((Activity) context).overridePendingTransition(R.anim.push_bottom_in, R.anim.push_bottom_out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-//    private void overActivityOverridePendingTransition() {
-//        ((Activity) context).overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
-//        context.finish();
-//        //ScreenManager.getScreenManager().popActivity(false);
-//    }
-//
-//    private void toQrCode() {
-//        Intent intent3 = new Intent(context, CaptureActivity.class);
-//        context.startActivity(intent3);
-//    }
-//
-//    private void showComfirmDialog(String action) {
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        if (split.length > 4) {
-//            iOSDialog dialog = new iOSDialog(context, split[2], split[3], split[4], split[5], true) {
-//                @Override
-//                public void left() {
-//                    dismiss();
-//                    getWeb().loadUrl("javascript:Tools.clickedIndex('0')");
-//                }
-//
-//                @Override
-//                public void right() {
-//                    dismiss();
-//                    getWeb().loadUrl("javascript:Tools.clickedIndex('1')");
-//                }
-//            };
-//            dialog.show();
-//        }
-//    }
+    private void overActivityOverridePendingTransition() {
+        ((Activity) context).overridePendingTransition(R.anim.push_bottom_out, R.anim.push_bottom_in);
+        context.finish();
+        //ScreenManager.getScreenManager().popActivity(false);
+    }
+
+    private void toQrCode() {
+
+    }
+
+    private void showComfirmDialog(String action) {
+        String actionDecode = URLDecoder.decode(action);
+        String[] split = actionDecode.split(":");
+        if (split.length > 4) {
+            DefaultDialog dialog = new DefaultDialog(context, split[3], split[4], split[5]) {
+                @Override
+                public void left() {
+                    dismiss();
+                    webview.loadUrl("javascript:Tools.clickedIndex('0')");
+                }
+
+                @Override
+                public void right() {
+                    dismiss();
+                    webview.loadUrl("javascript:Tools.clickedIndex('1')");
+                }
+            };
+            dialog.show();
+        }
+    }
 
     private String getUrl(String action) {
         String[] split = action.split(":");
@@ -892,55 +890,36 @@ public class CWebviewUtil {
 //        }
 //    }
 
-//    private void startImagePage(String action) {
-//        Intent ii = new Intent(context, MultiImageSelectorActivity.class);
-//        // 是否显示拍摄图片
-//        ii.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-//        ii.putExtra("clear", 1);
-//        // 最大可选择图片数量
-//        // ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 5);
-//        // 选择模式
-//        ii.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
-//        ii.putExtra("camerasensortype", 2);
-//        // 默认选择
-//        // if (mSelectPath != null && mSelectPath.size() > 0) {
-//        // ii.putExtra(
-//        // MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST,
-//        // mSelectPath);
-//        // }
-//        context.startActivityForResult(ii, Contant.REQUEST_IMAGE);
-//    }
+    private void startImagePage(String action) {
+        ImageSelector selector = ImageSelector.create();
+         selector.single();  // 选择一张图片
+        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
+    }
 
-//    private void recommentFriend() {
-//        /**
-//         * 推荐私募云
-//         */
-//        ShareDialog shareDialog = new ShareDialog(context);
-//        shareDialog.setData("推荐理财师好友安装私募云，一起来聚合财富管理力量！", "http://www.simuyun.com/invite/invite.html", R.drawable.logoshare,
-//                "http://www.simuyun.com/invite/invite.html", "推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html",
-//                "推荐理财师好友安装私募云，一起来聚合财富管理力量！", "推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html",
-//                "http://www.simuyun.com/invite/invite.html");
-//        shareDialog.show();
-//    }
+    private void recommentFriend() {
+//        CommonShareBean shareBean = new CommonShareBean();
+//        shareBean.setTitle("推荐理财师好友安装私募云，一起来聚合财富管理力量！\", \"http://www.simuyun.com/invite/invite.html");
+//        shareBean.setContent("推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html");
+//        CommonShareDialog dialog = new CommonShareDialog(context,1,shareBean,null);
+//        dialog.show();
+    }
 //
 //    private void logOutUser() {
 //        ReturnLogin returnLogin = new ReturnLogin();
 //        returnLogin.tokenExit(context);
 //    }
 //
-//    private void checkRengou(String action) {
-//        String decode = URLDecoder.decode(action);
-//        String[] split = decode.split(":");
-//        String canTakeUp = split[2];
-//        TakeUp takeUp = new TakeUp(canTakeUp);
-//        EventBus.getDefault().post(takeUp);
-//    }
+    private void checkRengou(String action) {
+        String decode = URLDecoder.decode(action);
+        String[] split = decode.split(":");
+        String canTakeUp = split[2];
+    }
 
-//    private void toMessageList() {
+    private void toMessageList() {
 //        Intent in3 = new Intent(context, MessageListActivity.class);
 //        in3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(in3);
-//    }
+    }
 
     private void showToast(String action) {
         String actionDecode = URLDecoder.decode(action);
@@ -960,7 +939,7 @@ public class CWebviewUtil {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String content = split[2];
-        new IOSDialog(context, "", content, "取消", "兑换") {
+        new DefaultDialog(context, content, "取消", "兑换") {
             @Override
             public void left() {
                 cancel();
@@ -974,24 +953,22 @@ public class CWebviewUtil {
         }.show();
     }
 
-//    private void openMallPage(String action) {
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        String s = split[1];
-//        String name = split[2];
-//        String url = split[3];
-//        Intent intent = new Intent(context, MallActivity.class);
-//        intent.putExtra("url", url);
-//        intent.putExtra("title", name);
-//        context.startActivity(intent);
-//    }
+    private void openMallPage(String action) {
+        String actionDecode = URLDecoder.decode(action);
+        String[] split = actionDecode.split(":");
+        HashMap<String, String> hashMap = new HashMap();
+        hashMap.put("url", split[2]);
+        hashMap.put("title", split[3]);
+        NavigationUtils.startActivityByRouter(context, "investornmain_mallactivity", hashMap);
+    }
 
 //    public void secretviewpdf(String action) {
-//        String[] split = action.split(":");
-//        String string = split[2];
-//        Intent i = new Intent(context, PDFActivity.class);
 //        try {
-//            i.putExtra(Contant.pdf_url, URLDecoder.decode(string, "utf-8"));
+//            String baseParams = URLDecoder.decode(action, "utf-8");
+//            String[] split = baseParams.split(":");
+//            String padUrl = split[2];
+//            Intent i = new Intent(context, PDFActivity.class);
+//            i.putExtra(WebViewConstant.pdf_url, padUrl);
 //            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
 //            i.putExtra("isSecret", 1);
 //            context.startActivity(i);
@@ -1059,20 +1036,14 @@ public class CWebviewUtil {
 
     /**
      * 产品跳转到视频
-     *
      * @param action
      */
-//    private void playVideo(String action) {
-//        String[] vas = action.split(":");
-//        String videoId = action.substring(action.lastIndexOf("Video:") + 6);
-//        videoId = TextUtils.isEmpty(videoId) ? vas[2] : videoId;
-//        ToolsUtils.toPlayVideoActivity(context, videoId);
-//        if (Utils.isVisteRole(context)) {
-//            DataStatistApiParam.onClickVideoToC("", "");
-//        } else {
-//            DataStatistApiParam.onClickVideoToB("", "");
-//        }
-//    }
+    private void playVideo(String action) {
+        String[] vas = action.split(":");
+        String videoId = action.substring(action.lastIndexOf("Video:") + 6);
+        videoId = TextUtils.isEmpty(videoId) ? vas[2] : videoId;
+        NavigationUtils.toPlayVideoActivityByRouter(context, videoId);
+    }
 
     /**
      * 统计h5产品详情点击事件
@@ -1204,7 +1175,6 @@ public class CWebviewUtil {
      */
     private void closepage(String action) {
         ((Activity) context).finish();
-        // ScreenManager.getScreenManager().popActivity(false);
     }
 
     private void openUrl(String data) {
@@ -1216,7 +1186,7 @@ public class CWebviewUtil {
             if (!string.contains("http")) {
                 string = BaseWebNetConfig.baseParentUrl + string;
             }
-            Intent i = new Intent(context, PushMsgActivity.class);
+            Intent i = new Intent(context, BaseWebViewActivity.class);
             i.putExtra(WebViewConstant.push_message_url, URLDecoder.decode(string, "utf-8"));
             if (split.length >= 4) {
                 i.putExtra(WebViewConstant.push_message_title, URLDecoder.decode(split[3], "utf-8"));
@@ -1242,30 +1212,27 @@ public class CWebviewUtil {
 
     /**
      * 打开新页面
-     *
      * @param data url路径
      *             rightSave 右上角是否有保存按钮
      *             initPage 页面是否初始化
+     *             rightShare 右边是否有分享
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
-        String[] split = data.split(":");
-        String string = split[2];
-        String title = split[3];
-        String decodeTitle = "";
-        String decodeUrl = "";
-        if (!string.contains("http")) {
-            string = BaseWebNetConfig.baseParentUrl + string;
-        }
-        Intent i = new Intent(context, PushMsgActivity.class);
-        // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
-            decodeTitle = URLDecoder.decode(title, "utf-8");
-            decodeUrl = URLDecoder.decode(string, "utf-8");
+            String baseParams = URLDecoder.decode(data, "utf-8");
+            String[] split = baseParams.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (!url.contains("http")) {
+                url = BaseWebNetConfig.baseParentUrl + url;
+            }
+            Intent i = new Intent(context, BaseWebViewActivity.class);
 
-            i.putExtra(WebViewConstant.push_message_url, URLDecoder.decode(string, "utf-8"));
-            i.putExtra(WebViewConstant.push_message_title, URLDecoder.decode(title, "utf-8"));
+            i.putExtra(WebViewConstant.push_message_url, url);
+            i.putExtra(WebViewConstant.push_message_title, title);
             if (initPage) {
-                i.putExtra(WebViewConstant.push_message_value, URLDecoder.decode(split[4], "utf-8"));
+                String pushMessage = split[4];
+                i.putExtra(WebViewConstant.push_message_value, pushMessage);
             }
             i.putExtra(WebViewConstant.RIGHT_SAVE, rightSave);
             i.putExtra(WebViewConstant.RIGHT_SHARE, rightShare);
@@ -1273,14 +1240,14 @@ public class CWebviewUtil {
             if (split.length >= 5) {
                 i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
+            ((Activity) context).startActivityForResult(i, 300);
+            if ("产品详情".equals(title) && SPreference.isVisitorRole(context)) {
+//            new RundouTaskManager(context).executeRundouTask("查看产品");
+            } else if (!TextUtils.isEmpty(url) && url.contains("discover/details.html")) {
+//            new RundouTaskManager(context).executeRundouTask("查看资讯");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        ((Activity) context).startActivityForResult(i, 300);
-        if ("产品详情".equals(decodeTitle) && SPreference.isVisitorRole(context)) {
-//            new RundouTaskManager(context).executeRundouTask("查看产品");
-        } else if (!TextUtils.isEmpty(decodeUrl) && decodeUrl.contains("discover/details.html")) {
-//            new RundouTaskManager(context).executeRundouTask("查看资讯");
         }
     }
 
@@ -1311,21 +1278,6 @@ public class CWebviewUtil {
 //        }
 //    }
 
-//    private void toRiskRusult(String action) {
-//        try {
-//            action = action + ":1";
-//            String[] split = action.split(":");
-//            Intent intent = new Intent(context, RiskResultActivity.class);
-//            intent.putExtra("result", URLDecoder.decode(split[2], "utf-8"));
-//            intent.putExtra("riskEvaluationName", URLDecoder.decode(split[3], "utf-8"));
-//            intent.putExtra("riskEvaluationIdnum", URLDecoder.decode(split[4], "utf-8"));
-//            intent.putExtra("riskEvaluationPhone", URLDecoder.decode(split[5], "utf-8"));
-//
-//            context.startActivity(intent);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 //    /**
 //     * 设置cook信息
@@ -1525,13 +1477,13 @@ public class CWebviewUtil {
 //        });
 //    }
 //
-//    /**
-//     * 跳转到我的任务页面
-//     */
-//    private void goMyTask() {
-//        HashMap<String, String> parms = new HashMap<>();
-//        parms.put("fromc", "1");
-//        UiHelper.toNextActivity(context, DayTaskActivity.class, parms);
-//
-//    }
+    /**
+     * 跳转到我的任务页面
+     */
+    private void goMyTask() {
+        HashMap<String, String> parms = new HashMap<>();
+        parms.put("fromc", "1");
+        //UiHelper.toNextActivity(context, DayTaskActivity.class, parms);
+
+    }
 }

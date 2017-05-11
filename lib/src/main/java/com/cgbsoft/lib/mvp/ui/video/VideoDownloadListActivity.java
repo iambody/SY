@@ -32,7 +32,7 @@ import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.IOSDialog;
+import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
@@ -103,7 +103,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     private Observable<Boolean> downloadToListObservable;
     private boolean isChoiceAll, isAllDownloadStart;
     private MenuItem deleteItem;
-    private IOSDialog iosDialog;
+    private DefaultDialog defaultDialog;
     private String nowPlayVideoId;
 
     @Override
@@ -138,7 +138,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         toolbar.setNavigationOnClickListener(v -> finish());
 
 
-        iosDialog = new IOSDialog(this, "", getString(R.string.vdla_is_sure_delete_str), getString(R.string.cancel_str), getString(R.string.enter_str)) {
+        defaultDialog = new DefaultDialog(this, getString(R.string.vdla_is_sure_delete_str), getString(R.string.cancel_str), getString(R.string.enter_str)) {
             @Override
             public void left() {
                 this.dismiss();
@@ -240,7 +240,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
-                    iosDialog.show();
+                    defaultDialog.show();
                 } else {
                     getPresenter().delete(list.get(i).videoId);
                     if (list.get(i).status == VideoStatus.FINISH) {

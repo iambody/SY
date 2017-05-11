@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".base.webview.BaseWebViewActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,14 +35,27 @@
                     android:text="@string/fc_college_title_str"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/dimens_sp_18" />
+
+                <TextView
+                    android:id="@+id/title_right_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/dimens_sp_15"
+                    android:visibility="gone"
+                    android:text="OK"
+                    />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/acitivity_divide_online"/>
 
         <com.cgbsoft.lib.base.webview.BaseWebview
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
     <!--<LinearLayout-->
@@ -80,5 +95,4 @@
         android:layout_marginRight="30dp"
         android:src="@drawable/yunjian_c"
         android:visibility="gone" />
-
 </RelativeLayout>

@@ -1,0 +1,25 @@
+火箭弹窗
+new PushDialog(this, "title", "content", "right", "", "http://img05.tooopen.com/images/20150613/tooopen_sy_130228136568.jpg") {
+            @Override
+            public void left() {
+
+            }
+
+            @Override
+            public void right() {
+
+            }
+        }.show();
+
+仿系统弹窗
+new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
+            @Override
+            public void left() {
+                this.dismiss();
+            }
+
+            @Override
+            public void right() {
+
+            }
+        }.show();
