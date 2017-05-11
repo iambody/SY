@@ -18,12 +18,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataUtils;
+import com.cgbsoft.lib.utils.tools.Des3;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.cn.hugo.android.scanner.common.BitmapUtils;
 import com.cn.hugo.android.scanner.config.Config;
 import com.cn.hugo.android.scanner.decode.BitmapDecoder;
 import com.cn.hugo.android.scanner.decode.CaptureActivityHandler;
-import com.cn.hugo.android.scanner.rxjava.RxBus;
 import com.cn.hugo.android.scanner.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -35,10 +37,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 
 
@@ -372,7 +371,7 @@ public final class CaptureActivity extends Activity implements
         if (result.contains(Config.qr_codeUrl)) {
             try {
                 String aa = result.substring(result.indexOf("?") + 1);
-                String deresult = Des.decode(result.substring(result.indexOf("?") + 1));
+                String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
                 JSONObject j = new JSONObject(deresult);
                 String party_id = j.getString("party_id");
                 String party_name = j.getString("party_name");

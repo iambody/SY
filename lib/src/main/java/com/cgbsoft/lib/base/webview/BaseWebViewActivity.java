@@ -331,7 +331,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setTitle(R.string.umeng_socialize_share);
             rightItem.setIcon(R.drawable.fenxiang_share_nor);
         }
-        if (hasRightShare) {
+        if (hasRightSave) {
             rightItem.setTitle(R.string.save);
             rightItem.setIcon(null);
         }
