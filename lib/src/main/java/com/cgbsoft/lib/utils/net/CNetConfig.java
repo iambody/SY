@@ -61,14 +61,5 @@ public class CNetConfig {
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
 
-    //产品先关的url
-    static class PRODUCT {
-        private static final String product = "/products";
-        //获取产品的标签
-        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
-        //获取产品列表
-        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
-    }
-
 
 }

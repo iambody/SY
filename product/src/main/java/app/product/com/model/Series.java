@@ -9,12 +9,19 @@ public class Series implements Cloneable {
     //产品筛选列表中的系列
     private String name;
     private String key;
-    //这个是在筛选时候我们需要进行的标记是否选择过了
+    //这个是在筛选标签时候我们需要进行的标记是否选择过了
     private boolean isChecked;
+
 
     public Series(String name, String key) {
         this.name = name;
         this.key = key;
+    }
+
+    public Series(String name, String key, boolean isChecked) {
+        this.name = name;
+        this.key = key;
+        this.isChecked = isChecked;
     }
 
     public String getName() {

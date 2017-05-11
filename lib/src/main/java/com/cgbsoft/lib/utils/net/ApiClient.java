@@ -412,6 +412,31 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    // 产品模块=》的 获取产品的筛选条件
+    public static Observable<String> getProductFiltrtDate() {
+        return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    // 产品模块=》的 获取产品的列表
+    public static Observable<String> getProductlsDate(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().getProductls(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //产品模块=》的 搜索
+    public static Observable<String> getSousouData(Map<String, String> map) {
+
+        return OKHTTP.getInstance().getRequestManager().getSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    //产品模块=》热门 搜索
+    public static Observable<String> getHotSousouData(Map<String, String> map) {
+
+        return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
     /**
      * 重新生成Get 方式的value值
      *
@@ -480,17 +505,6 @@ public class ApiClient {
             }
         }
         return map;
-    }
-
-    // 获取产品的筛选条件
-    public static Observable<String> getProductFiltrtDate() {
-        return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-    }
-
-
-    // 获取产品的列表
-    public static Observable<String> getProductlsDate(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().getProductls(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 }

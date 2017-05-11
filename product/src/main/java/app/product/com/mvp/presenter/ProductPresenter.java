@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,9 +95,42 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
 
     //如果筛选条件有的话需要添加条件处理
     private void insetJsonByLsFilter(JSONObject jsonObject, List<FilterItem> datas) {
+        for (int i = 0; i < datas.size(); i++) {
+            try {
+                jsonObject.put(datas.get(i).getKey(), "text".equals(datas.get(i).getType()) ? filterEditTojsonarray(datas.get(i)) : filterItemTojsonarray(datas.get(i).getItems()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
+        }
     }
 
+    /**
+     * 单选多选是需要判断标识的
+     *
+     * @param data
+     * @return
+     */
+    private JSONArray filterItemTojsonarray(List<Series> data) {
+        List<String> lsdatas = new ArrayList<>();
+        for (Series h : data) {
+            if (h.isChecked()) lsdatas.add(h.getKey());
+        }
+        return BStrUtils.LsToJsonArray(lsdatas);
+    }
+
+    /**
+     * 输入模式时候需要直接接入最大最小值的
+     *
+     * @param seriesData
+     * @return
+     */
+    private JSONArray filterEditTojsonarray(FilterItem seriesData) {
+        List<String> lsdatass = new ArrayList<>();
+        lsdatass.add(seriesData.getMinNumber());
+        lsdatass.add(seriesData.getMaxNumber());
+        return BStrUtils.LsToJsonArray(lsdatass);
+    }
 
     @Override
     public void getProductFilterData() {

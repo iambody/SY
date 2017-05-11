@@ -1,9 +1,11 @@
 package app.product.com.mvp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.google.gson.Gson;
@@ -135,7 +138,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     //注册事件
     private void initEvent() {
-        //注册智能排序
+        // 智能排序
         seriesObservable = RxBus.get().register(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMENT, Series.class);
         seriesObservable.subscribe(new RxSubscriber<Series>() {
             @Override
@@ -150,13 +153,15 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
             }
         });
-        //注册筛选点击
+        // 筛选点击
         filterObservable = RxBus.get().register(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, EventFiltBean.class);
 
         filterObservable.subscribe(new RxSubscriber<EventFiltBean>() {
             @Override
             protected void onEvent(EventFiltBean filterItems) {
+                CurrentFilter = filterItems.getFilterItemList();
 
+                reSetConditionAction();
             }
 
             @Override
@@ -196,13 +201,21 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_sousou)
     public void onProductProductfragmentSousouClicked() {
-        UiSkipUtils.toNextActivity(baseActivity, SearchBaseActivity.class);
+//        UiSkipUtils.toNextActivity(baseActivity, SearchBaseActivity.class);
+        Intent i = new Intent(baseActivity, SearchBaseActivity.class);
+        i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
+        baseActivity.startActivity(i);
+
     }
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
         if (null != orderbyPop && orderbyPop.isShowing()) {
             orderbyPop.dismiss();
+
+
+
+
             return;
 
         }
@@ -214,8 +227,15 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_shaixuan)
     public void onProductProductfragmentShaixuanClicked() {
-        filterPop = new FilterPop(baseActivity, productFilterBean.getFilter());
-        filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
+        if (null == filterPop)
+            filterPop = new FilterPop(baseActivity, CurrentFilter);
+        if (null == CurrentFilter) {
+            PromptManager.ShowCustomToast(baseActivity, getResources().getString(R.string.nofiltedate));
+            return;
+        }
+
+        filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20, CurrentFilter);
+
     }
 
 
@@ -225,6 +245,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             case ProductContract.LOAD_FILTER://获取到的筛选条件
                 productFilterBean = new Gson().fromJson(str.trim(), ProductFilterBean.class);
                 initFilterDate(productFilterBean.getSeries().getItems());
+                CurrentFilter = productFilterBean.getFilter();
+
                 break;
             case ProductContract.LOAD_PRODUCT_LISTDATA://获取到列表数据
 //                PromptManager.ShowCustomToast(getContext(), "请求列表成功" + str);

@@ -41,4 +41,5 @@ dependencies {
 //    compile 'com.github.ikidou:FragmentBackHandler:2.1'
     compile project(':lib')
     compile project(':libzxing')
+    compile 'com.zhy:flowlayout-lib:1.0.3'
 }

@@ -3,15 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/ui_10_dip">
+    android:paddingTop="@dimen/ui_10_dip"
+    android:paddingBottom="@dimen/ui_10_dip">
     <TextView
         android:id="@+id/view_pop_filter_radio_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:textSize="@dimen/dimens_sp_12"/>
-    <com.cgbsoft.lib.widget.FlowLayoutView
+         android:textSize="@dimen/dimens_sp_18"
+        android:layout_marginLeft="@dimen/ui_10_dip"/>
+    <com.cgbsoft.lib.widget.taglayout.FlowTagLayout
         android:id="@+id/view_pop_filter_radio_floatview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

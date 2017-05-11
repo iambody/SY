@@ -64,4 +64,19 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
 
     }
+
+
+
+    //保存数据
+    public static void saveSousouHistory(Context pcContext,String str){
+        SharedPreferences sp = pcContext.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("history", str);
+        ed.commit();
+    }
+    //获取历史数据
+    public static String getSousouHistory(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
+        return sp.getString("history", "");
+    }
 }

@@ -28,4 +28,6 @@ public interface AppinfConstant {
      * 是否登录
      */
     public final String ISLOGIN="isloginsp";
+    //产品搜搜记录
+    public static final String SOUSOUHISTORY="historysp";
 }

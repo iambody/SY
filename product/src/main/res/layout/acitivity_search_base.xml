@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/history_search"
+                android:id="@+id/product_search_history_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -44,7 +44,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <ImageView
-                        android:id="@+id/history_del"
+                        android:id="@+id/product_search_history_del"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
@@ -58,7 +58,7 @@
                     android:padding="10dp">
 
                     <app.product.com.widget.LineBreakLayout
-                        android:id="@+id/history_search_flag"
+                        android:id="@+id/product_search_history_search_flag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         openXu:leftAndRightSpace="10dp"
@@ -68,7 +68,7 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/list"
+                android:id="@+id/product_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/gray_font"
@@ -78,7 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/search_result"
+            android:id="@+id/product_search_search_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -92,7 +92,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/search_empty"
+            android:id="@+id/product_search_search_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/c_background"

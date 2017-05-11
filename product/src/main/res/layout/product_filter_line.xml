@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="1dip"
+    android:layout_marginLeft="@dimen/ui_10_dip"
+    android:layout_marginRight="@dimen/ui_10_dip"
+    android:layout_marginTop="@dimen/ui_5_dip"
+    android:layout_marginBottom="@dimen/ui_5_dip"
+    android:paddingLeft="@dimen/ui_10_dip"
+    android:paddingRight="@dimen/ui_10_dip"
+    android:orientation="vertical"
+    android:background="@color/gray_font">
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@color/gray_font"/>
+</LinearLayout>
