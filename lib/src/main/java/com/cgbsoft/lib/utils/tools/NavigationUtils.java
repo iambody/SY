@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.Router;
@@ -94,6 +95,7 @@ public class NavigationUtils {
 
     /**
      * 跳转到产品详情的操作
+     *
      * @param context
      * @param schemeId
      * @param productName
@@ -105,7 +107,22 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-        ((Activity)context).startActivityForResult(intent, requestCode);
+        ((Activity) context).startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 跳转到视频详情页面
+     *
+     * @param
+     * @param
+     * @param
+     */
+    public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, String comeFrom) {
+        Intent intent = new Intent(context, VideoDetailActivity.class);
+        intent.putExtra("videoId", videoId);
+        intent.putExtra("videoCoverUrl", videoCoverUrl);
+        intent.putExtra("comeFrom", comeFrom);
+        ((Activity) context).startActivity(intent);
     }
 
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle) {
