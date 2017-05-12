@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/ui_10_dip"
+    android:paddingBottom="@dimen/ui_10_dip">
+    <TextView
+        android:id="@+id/view_pop_filter_radio_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:textSize="@dimen/dimens_sp_18"
+        android:layout_marginLeft="@dimen/ui_10_dip"/>
+    <com.cgbsoft.lib.widget.taglayout.FlowTagLayout
+        android:id="@+id/view_pop_filter_radio_floatview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

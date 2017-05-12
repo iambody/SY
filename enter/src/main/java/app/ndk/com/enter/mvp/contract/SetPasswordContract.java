@@ -33,7 +33,6 @@ public interface SetPasswordContract {
          */
         void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
 
-
     }
 
     interface View extends BaseView{

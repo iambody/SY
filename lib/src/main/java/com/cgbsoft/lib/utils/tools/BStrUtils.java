@@ -4,7 +4,14 @@ package com.cgbsoft.lib.utils.tools;
  */
 
 import android.content.Context;
+import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.R;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,10 +26,11 @@ public class BStrUtils {
 
     /**
      * 过滤掉特色字符
+     *
      * @return
      */
     public static String replaceSpeialStr(String resouceStr) {
-        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(resouceStr);
         return m.replaceAll("").trim();
@@ -65,6 +73,7 @@ public class BStrUtils {
         return Supperclass.getName();
 
     }
+
     /**
      * 判断如果null返回
      **/
@@ -75,12 +84,80 @@ public class BStrUtils {
         }
         return str;
     }
-    /**
-     * List转换String
-     *
-     * @param list
-     *            :需要转换的List
-     * @return String转换后的字符串
-     */
 
+    /**
+     * 判断如果null返回
+     **/
+    public static String NullToStr1(String str) {
+
+        if (null == str || "".equals(str)) {
+            return "";
+        }
+        return str;
+    }
+    /**
+     * Json
+     * 字符串数组转换成json数组
+     *
+     * @param strings
+     * @return
+     */
+    public static JSONArray LsToJsonArray(List<String> strings) {
+        JSONArray jsonArray = new JSONArray();
+        if (null == strings) return jsonArray;
+        for (String str : strings) {
+            jsonArray.put(str);
+        }
+        return jsonArray;
+    }
+
+    /**
+     * Json
+     * 字符串转换成json数组
+     * @param strings
+     * @return
+     */
+    public static JSONArray StrToJsonArray(String strings) {
+        if (isEmpty(strings)) return LsToJsonArray(null);
+        List<String> stringList = new ArrayList<>();
+        stringList.add(strings);
+        return LsToJsonArray(stringList);
+    }
+    /**
+     * Textview放置文本
+     */
+    public static void SetTxt(TextView T, String Str) {
+        T.setText(NullToStr(Str));
+    }
+    /**
+     * Textview放置文本
+     */
+    public static void SetTxt1(TextView T, String Str) {
+        T.setText(NullToStr1(Str));
+    }
+    /**
+     * 转换为亿
+     * @param num
+     * @return
+     */
+    public static String getYi(String num) {
+        try {
+            Float f = Float.parseFloat(num);
+            if (f >= 10000.00f) {
+                int vas = f.intValue();
+                if (vas%10000 == 0) {
+                    return vas/10000 + "亿";
+                }
+                f = f / 10000;
+                String d = String.format("%.2f", f);
+                return d + "亿";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return num;
+    }
+    public static void switchColorToBandC(Context context, TextView textView) {
+        textView.setTextColor(AppManager.isInvestor(context) ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.color5));
+    }
 }

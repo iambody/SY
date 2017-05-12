@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -50,8 +51,11 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onEvent(String s) {
 
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
-                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
+//                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
+//                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
+                AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
+                AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
                 LogUtils.Log("loginresult",s);
                 SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {

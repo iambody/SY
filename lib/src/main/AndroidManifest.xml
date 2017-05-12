@@ -46,7 +46,7 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <activity
-            android:name="com.cgbsoft.lib.base.webview.PushMsgActivity"
+            android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
             android:screenOrientation="portrait" />
 
         <activity

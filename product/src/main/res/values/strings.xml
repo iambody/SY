@@ -19,4 +19,8 @@
     <string name="hot_search">热门搜索</string>
     <string name="no_more_data">没有更多数据</string>
     <string name="product_series_all">全部</string>
+    <string name="resultempty">请求返回为空</string>
+    <string name="reset">重置</string>
+    <string name="wancheng">完成</string>
+    <string name="nofiltedate">暂无筛选条件信息</string>
 </resources>

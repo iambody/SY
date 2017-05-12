@@ -3,6 +3,9 @@ package app.product.com.mvp.contract;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
+import java.util.List;
+
+import app.product.com.model.FilterItem;
 import app.product.com.mvp.ui.adapter.ProductAdapter;
 import app.product.com.widget.ProductSeriesLayout;
 
@@ -29,7 +32,7 @@ public class ProductContract {
          * @param orderBy        排序 字符串数组
          * @param series         系列 字符串数组
          */
-        void getProductData(int offset, String productType, String riskLevel, String income, String investmentArea, String orderBy, String series);
+        void getProductData(int offset,  String series,  String  orderBy,List<FilterItem> datas);
 
 
         void getProductFilterData(   );
@@ -37,8 +40,8 @@ public class ProductContract {
     }
 
     public interface view extends BaseView {
-        void getProductDataSucc(int Type, String str);
+        void getDataSucc(int Type, String str);
 
-        void getProductDataFail(int Type, String str);
+        void getDataFail(int Type, String str);
     }
 }

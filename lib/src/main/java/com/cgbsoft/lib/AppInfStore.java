@@ -31,5 +31,52 @@ public class AppInfStore implements AppinfConstant {
         return sp.getBoolean("adviser", false);
     }
 
+    /**
+     * 保存用户id
+     */
+    public static void saveUserId(Context scContext, String userid) {
+        SharedPreferences sp = scContext.getSharedPreferences(USERIDSP, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("userid",userid);
+        ed.commit();
 
+    }
+
+    /**
+     * 保存用户id
+     */
+    public static void saveUserToken(Context scContext, String usertoken) {
+        SharedPreferences sp = scContext.getSharedPreferences(USERTOKENSP, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("usertoken",usertoken);
+        ed.commit();
+
+    }
+
+
+    /**
+     * 用户是否登录
+     */
+    public static void saveIsLogin(Context scContext, boolean islogin) {
+        SharedPreferences sp = scContext.getSharedPreferences(ISLOGIN, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("islogin",islogin);
+        ed.commit();
+
+    }
+
+
+
+    //保存数据
+    public static void saveSousouHistory(Context pcContext,String str){
+        SharedPreferences sp = pcContext.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("history", str);
+        ed.commit();
+    }
+    //获取历史数据
+    public static String getSousouHistory(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
+        return sp.getString("history", "");
+    }
 }

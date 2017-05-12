@@ -14,7 +14,9 @@ public class FilterItem extends BaseBean {
     private String name;//":"排序",
     private String type;//":"radio",
     private List<Series> items;
-
+    //如果是需要输入框的条件 也就是text 输入时候的最大最小数
+    private String minNumber="";
+    private String MaxNumber="";
     public String getKey() {
         return key;
     }
@@ -45,5 +47,21 @@ public class FilterItem extends BaseBean {
 
     public void setItems(List<Series> items) {
         this.items = items;
+    }
+
+    public String getMinNumber() {
+        return minNumber;
+    }
+
+    public void setMinNumber(String minNumber) {
+        this.minNumber = minNumber;
+    }
+
+    public String getMaxNumber() {
+        return MaxNumber;
+    }
+
+    public void setMaxNumber(String maxNumber) {
+        MaxNumber = maxNumber;
     }
 }

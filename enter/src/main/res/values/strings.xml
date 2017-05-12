@@ -48,6 +48,9 @@
     <string name="ra_register_success_str">注册成功</string>
     <string name="ra_register_fail_str">注册失败</string>
 
+    <string name="modify_password_success_str">修改密码成功</string>
+    <string name="modify_password_failure_str">注册密码失败</string>
+
     <string name="ra_register_loading_str">注册中……</string>
 
     <string name="al_need_bind_phone_str">您需要绑定手机号</string>
@@ -88,4 +91,5 @@
     <string name="proto_notread_str">请阅读私募云使用协议并确认</string>
 
     <string name="as_nosame_str">请输入相同的密码</string>
+    <string name="modify_password_failure">修改失败</string>
 </resources>

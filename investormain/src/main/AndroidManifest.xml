@@ -229,6 +229,20 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
+        <!--关联资产activity-->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.RelativeAssetActivity"
+            android:screenOrientation="portrait" />
+
+        <!--资产证明activity-->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.AssetProveActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.SmoothImageActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />
@@ -334,11 +348,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-            android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialog_transparent"
+    android:orientation="vertical">
+
+
+    <!-- 上边的筛选布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_10_dip"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/ui_10_dip"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/product_productfragment_sousou"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/message_search_flag_bg"
+            android:clickable="true"
+            android:drawableLeft="@drawable/search_black"
+            android:drawablePadding="5dp"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/ui_5_dip"
+            android:paddingLeft="10dp"
+            android:text="搜索"
+            android:textColor="@color/gray_font"
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="@dimen/ui_10_dip"
+            android:layout_height="match_parent"
+            android:src="@null" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/product_productfragment_shaixuan"
+            style="@style/style_product_sort_txt"
+            android:drawableRight="@drawable/shaixuan_product"
+
+            android:gravity="center"
+
+            android:text="筛选" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_z_dip"
+        android:src="@color/gray_font" />
+
+    <ListView
+        android:id="@+id/product_productfragment_orderbyls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/list_divider"
+        android:dividerHeight="@dimen/ui_z_dip"
+        android:listSelector="@drawable/select_orderby_item"
+        android:scrollbars="none" />
+</LinearLayout>

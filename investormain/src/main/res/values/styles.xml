@@ -6,4 +6,32 @@
         <item name="android:textSize">@dimen/dimens_sp_11</item>
         <item name="android:textColor">@color/ic_color_text_bottom_bar</item>
     </style>
+
+    <style name="view_relativeasset_down_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/ui_5_dip</item>
+        <item name="android:textColor">@color/relative_upshouchizhao_txt_color</item>
+        <item name="android:textSize">@dimen/dimens_sp_16</item>
+    </style>
+
+    <style name="view_relativeasset_up_img">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/ui_60_dip</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="view_relativeasset_line">
+        <item name="android:layout_width">@dimen/ui_10_dip</item>
+        <item name="android:layout_height">@dimen/ui_5_dip</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="view_relativeasset_in_lay">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 </resources>

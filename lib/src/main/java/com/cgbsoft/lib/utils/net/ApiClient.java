@@ -289,6 +289,29 @@ public class ApiClient {
     }
 
     /**
+     * 修改密码
+     * @param userName 用户名称
+     * @param pwdMd5Old 旧的密码 md5加密后
+     * @param pwdMd5New 新的密码 md5加密后
+     * @return
+     */
+    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("oldPassword", pwdMd5Old);
+        map.put("newPassword", pwdMd5New);
+        return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("oldPassword", pwdMd5Old);
+        map.put("newPassword", pwdMd5New);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).modifyTestPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 合并帐号--验证手机
      *
      * @param un
@@ -379,7 +402,6 @@ public class ApiClient {
 
     /**
      * 视频点赞
-     *
      * @param videoId
      * @return
      */
@@ -413,6 +435,31 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    // 产品模块=》的 获取产品的筛选条件
+    public static Observable<String> getProductFiltrtDate() {
+        return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    // 产品模块=》的 获取产品的列表
+    public static Observable<String> getProductlsDate(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().getProductls(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //产品模块=》的 搜索
+    public static Observable<String> getSousouData(Map<String, String> map) {
+
+        return OKHTTP.getInstance().getRequestManager().getSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    //产品模块=》热门 搜索
+    public static Observable<String> getHotSousouData(Map<String, String> map) {
+
+        return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
     /**
      * 重新生成Get 方式的value值
      *

@@ -20,8 +20,9 @@
     <dimen name="title_bar_height">50dp</dimen>
 
 
-
-
+    <dimen name="ui_2_dip">2dip</dimen>
+    <dimen name="ui_z_dip">0.5dip</dimen>
+    <dimen name="ui_1_dip">1dip</dimen>
     <dimen name="ui_5_dip">5dip</dimen>
     <dimen name="ui_10_dip">10dip</dimen>
     <dimen name="ui_15_dip">15dip</dimen>
@@ -30,5 +31,9 @@
     <dimen name="ui_40_dip">40dip</dimen>
     <dimen name="ui_50_dip">50dip</dimen>
     <dimen name="ui_60_dip">60dip</dimen>
+    <dimen name="ui_6_dip">6dip</dimen>
+
+    <dimen name="ui_180_dip">180dp</dimen>
+
 
 </resources>

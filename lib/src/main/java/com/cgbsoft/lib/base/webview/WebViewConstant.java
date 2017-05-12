@@ -20,6 +20,11 @@ public class WebViewConstant {
     public static final String PUSH_MESSAGE_RONGYUN_URL_NAME = "push_message_rongyun_url_name";
     public static final String PUSH_MESSAGE_COME_HERE = "push_message_come_here";
     public static final String Jump_Info_KeyWord = "keywords";
+    public static final String pdf_url = "pdf_url";
+    public static final String pdf_name = "pdf_name";
+
+    public static final String MODIFY_PASSWORD = "app:changepassword";
+    public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
 
     public static HashMap<String, String> NewFoundHashMap;
 

@@ -30,8 +30,24 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/messge_title_normal</item>
     </style>
+
     <style name="product_item_context_text2">
         <item name="android:textColor">@color/messge_title_normal2</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="style_product_oderby_dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/half_large_transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <style name="style_product_oderby_dialog_anim">
+        <item name="android:windowEnterAnimation">@anim/oderbydialog_animes_enter</item>
+        <item name="android:windowExitAnimation">@anim/oderbydialog_animes_exit</item>
+
     </style>
 </resources>

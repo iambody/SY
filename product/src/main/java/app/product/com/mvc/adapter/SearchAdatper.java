@@ -31,6 +31,7 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.ui.SearchBaseActivity;
+import app.product.com.utils.BUtils;
 import app.product.com.utils.CollectionUtils;
 import app.product.com.utils.ViewUtil;
 
@@ -337,32 +338,32 @@ public class SearchAdatper extends RecyclerView.Adapter {
         public BaseViewHolder(View itemView) {
             super(itemView);
             this.rootView = itemView;
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (v.getTag() != null) {
-//                        SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
-//                        switch (resultBean.getIsPart()) {
-//                            case PRODUCT_ITEM:
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (v.getTag() != null) {
+                        SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
+                        switch (resultBean.getIsPart()) {
+                            case PRODUCT_ITEM:
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
-//                                Utils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
-//                                break;
-//                            case XUN_ITEM:
+//                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
+                                break;
+                            case XUN_ITEM:
 //                                NavigationUtils.startZiXunActivity(context, resultBean);
-//                                Utils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
-//                                break;
-//                            case INFO_ITEM:
+//                                BUtils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
+                                break;
+                            case INFO_ITEM:
 //                                NavigationUtils.startMessageActivity(context, resultBean, keyName);
-//                                Utils.hotLookWrite(context, SearchBaseActivity.INFOMATION, resultBean);
-//                                break;
-//                            case VIDEO_ITEM:
+//                                BUtils.hotLookWrite(context, SearchBaseActivity.INFOMATION, resultBean);
+                                break;
+                            case VIDEO_ITEM://todo 热门搜索的adapter
 //                                ToolsUtils.toPlayVideoActivity(context, resultBean.getTargetId());
-//                                Utils.hotLookWrite(context, SearchBaseActivity.VIDEO, resultBean);
-//                                break;
-//                        }
-//                    }
-//                }
-//            });
+//                                BUtils.hotLookWrite(context, SearchBaseActivity.VIDEO, resultBean);
+                                break;
+                        }
+                    }
+                }
+            });
         }
 
         protected void bindData(SearchResultBean.ResultBean resultBean) {

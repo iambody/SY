@@ -135,4 +135,9 @@ public class MainTabManager {
         productFragment = null;
     }
 
+    public ProductFragment getProductFragment() {
+        return productFragment;
+    }
+
+
 }

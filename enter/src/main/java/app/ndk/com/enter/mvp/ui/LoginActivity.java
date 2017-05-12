@@ -31,10 +31,8 @@ import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
 import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
@@ -127,7 +125,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             recreate();
         }
 
-
+        ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
@@ -186,7 +184,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
 //        toDataStatistics(1002, 10005, "登录");
-//        Router.build("investornmain_mainpageactivity").go(LoginActivity.this);
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
 
     }

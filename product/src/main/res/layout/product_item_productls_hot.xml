@@ -14,7 +14,6 @@
             android:id="@+id/product_item_productls_hot_bg"
             android:layout_width="match_parent"
             android:layout_height="105dp"
-            android:background="@drawable/moren_list_background"
             android:scaleType="fitXY"
             app:roundHeight="2dp"
             app:roundWidth="2dp" />
