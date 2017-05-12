@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -357,8 +358,10 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         return false;
     }
 
-/**
- * 判断是否拥有运时权限
- */
+    protected void clodLsAnim(SwipeToLoadLayout swipeToLoadLayout) {
+        if (null == swipeToLoadLayout) return;
+        if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
+        if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
+    }
 }
 
