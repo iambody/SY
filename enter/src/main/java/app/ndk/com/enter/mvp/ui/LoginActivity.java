@@ -1,5 +1,6 @@
 package app.ndk.com.enter.mvp.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -11,27 +12,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
+import com.chenenyu.router.RouteTable;
 import com.chenenyu.router.Router;
+import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
+import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * 登录
@@ -114,6 +125,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             recreate();
         }
 
+        ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = SPreference.getLoginName(getApplicationContext());
         if (userInfo != null) {
@@ -173,6 +185,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     void loginClick() {//登录
 //        toDataStatistics(1002, 10005, "登录");
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
+
     }
 
     private ArrayList<String> picLs = new ArrayList<>();
@@ -185,6 +198,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
         imageSelector.start(LoginActivity.this, REQUEST_CODE);
+
     }
 
     @Override

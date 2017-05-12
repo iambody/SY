@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,5 +45,8 @@ public class UiSkipUtils {
         Intent i = new Intent(packageContext, cls);
         packageContext.startActivity(i);
     }
-
+    public static void toNextActivityWithparth(Context packageContext, Class<?> cls, HashMap<String,String>map) {
+        Intent i = new Intent(packageContext, cls);
+        packageContext.startActivity(i);
+    }
 }

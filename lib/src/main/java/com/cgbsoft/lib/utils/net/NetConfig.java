@@ -88,5 +88,23 @@ public class NetConfig {
         static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
     }
 
+  //搜索相关
+    static class SOUSOU{
+      private static final String sousou = "/search";
+      //产品全局搜索
+      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
+      //热门搜索
+      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
+  }
+
+    //产品先关的url
+    static class PRODUCT {
+        private static final String product = "/products";
+        //获取产品的标签
+        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
+        //获取产品列表
+        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
+
+    }
 
 }

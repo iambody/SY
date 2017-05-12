@@ -35,6 +35,10 @@ public interface RxConstant {
     String CLOSE_MAIN_OBSERVABLE = "close_main_observable";
 
     String LOOK_TWO_CODE_OBSERVABLE = "twocode_look_observable";
+    //在产品模块 我的排序的dialog点击item时候传递给fragment数据消息
+     String PRODUCT_ORDERBY_TO_FRAGMENT="product_oderby_to_fragment";
+    //在产品模块 我的筛选的dialog点击确定时候传递给fragment数据消息
+    String PRODUCT_FILTER_TO_FRAGMENT="product_filtr_to_fragment";
 
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 

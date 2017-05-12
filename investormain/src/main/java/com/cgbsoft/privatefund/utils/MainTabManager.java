@@ -134,4 +134,9 @@ private ProductFragment productFragment;//产品
         productFragment = null;
     }
 
+    public ProductFragment getProductFragment() {
+        return productFragment;
+    }
+
+
 }

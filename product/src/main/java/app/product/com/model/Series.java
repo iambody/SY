@@ -9,18 +9,19 @@ public class Series implements Cloneable {
     //产品筛选列表中的系列
     private String name;
     private String key;
+    //这个是在筛选标签时候我们需要进行的标记是否选择过了
+    private boolean isChecked;
 
-    //产品列表中用到的 units 数据  //产品的投资单元
-//    private String name;
-    private String id;
-    //产品列表中用到的schemes列表
-//    private String id;
-    private String schemeName;
-    private String state;
 
     public Series(String name, String key) {
         this.name = name;
         this.key = key;
+    }
+
+    public Series(String name, String key, boolean isChecked) {
+        this.name = name;
+        this.key = key;
+        this.isChecked = isChecked;
     }
 
     public String getName() {
@@ -39,28 +40,12 @@ public class Series implements Cloneable {
         this.key = key;
     }
 
-    public String getId() {
-        return id;
+    public boolean isChecked() {
+        return isChecked;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSchemeName() {
-        return schemeName;
-    }
-
-    public void setSchemeName(String schemeName) {
-        this.schemeName = schemeName;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public Series() {

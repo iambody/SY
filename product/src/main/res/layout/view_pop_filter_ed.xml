@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/ui_10_dip">
+    <TextView
+        android:id="@+id/view_pop_filter_ed_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimens_sp_18"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/view_pop_filter_ed_edleft"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/connor_edit_rectangle"
+            android:gravity="right|center_vertical"
+            android:inputType="numberDecimal"
+            android:textColor="#222"
+            android:paddingRight="3dp"
+            android:maxLength="4"
+            android:textCursorDrawable="@drawable/guangbiao"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#222" />
+
+        <EditText
+            android:id="@+id/view_pop_filter_ed_edright"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/connor_edit_rectangle"
+            android:gravity="right|center_vertical"
+            android:inputType="numberDecimal"
+            android:textColor="#222"
+            android:maxLength="4"
+            android:paddingRight="3dp"
+            android:textCursorDrawable="@drawable/guangbiao"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="%"
+            android:textColor="#222"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

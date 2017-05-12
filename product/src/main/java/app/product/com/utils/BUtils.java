@@ -1,7 +1,10 @@
 package app.product.com.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import app.product.com.model.Series;
 
@@ -17,5 +20,18 @@ public class BUtils {
             seriesList.add(series1.clone());
         }
         return seriesList;
+    }
+    /**
+     * 过滤掉特色字符
+     * @return
+     */
+    public static String replaceSpeialStr(String resouceStr) {
+        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(resouceStr);
+        return m.replaceAll("").trim();
+    }
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
     }
 }

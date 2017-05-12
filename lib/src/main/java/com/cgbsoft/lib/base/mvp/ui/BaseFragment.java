@@ -29,7 +29,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
     private BaseApplication mBaseApplication;
     private WeakHandler mBaseHandler;//handler
-    private View mFragmentView;
+    protected View mFragmentView;
     private DaoSession mDaoSession;//数据库
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用

@@ -278,12 +278,18 @@ interface RequestManager {
     Observable<ResponseBody> testSignIn(@FieldMap Map<String, String> paramsMap);
 
     //获取产品筛选条件
-    @GET(CNetConfig.PRODUCT.Get_PRODUCT_TAG)
+    @GET(NetConfig.PRODUCT.Get_PRODUCT_TAG)
     Observable<ResponseBody> getProductFilter();
 
 
     //获取产品列表数据
 
-    @GET(CNetConfig.PRODUCT.Get_PRODUCTLS_TAG)
+    @GET(NetConfig.PRODUCT.Get_PRODUCTLS_TAG)
     Observable<ResponseBody> getProductls(@QueryMap Map<String, String> paramsMap);
+    //产品模块进行搜索的数据
+    @GET(NetConfig.SOUSOU.Get_PRODUCTLS_SOU)
+    Observable<ResponseBody> getSousouResult(@QueryMap Map<String,String> paramsMap);
+    //热门搜索的标签
+    @GET(NetConfig.SOUSOU.Get_HOT_SOU)
+    Observable<ResponseBody> getHotSousouResult(@QueryMap Map<String,String> paramsMap);
 }
