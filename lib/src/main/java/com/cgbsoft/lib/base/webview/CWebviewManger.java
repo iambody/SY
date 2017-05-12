@@ -1036,7 +1036,7 @@ public class CWebviewManger {
         String[] vas = action.split(":");
         String videoId = action.substring(action.lastIndexOf("Video:") + 6);
         videoId = TextUtils.isEmpty(videoId) ? vas[2] : videoId;
-        NavigationUtils.toPlayVideoActivityByRouter(context, videoId);
+        NavigationUtils.startVidoDetailActivity(context, videoId, null, 2);
     }
 
     /**
