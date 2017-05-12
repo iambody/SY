@@ -12,6 +12,9 @@ import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.Utils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +45,7 @@ public class GestureDrawline extends View {
 	public GestureDrawline(Context context, List<GesturePoint> list, boolean isVerify,
 						   String passWord, GestureCallBack callBack) {
 		super(context);
-		screenDispaly = AppUtil.getScreenDispaly(context);
+		screenDispaly = Utils.getScreenDispaly(context);
 		paint = new Paint(Paint.DITHER_FLAG);
 		bitmap = Bitmap.createBitmap(screenDispaly[0], screenDispaly[0], Bitmap.Config.ARGB_8888);
 		canvas = new Canvas();
@@ -102,7 +105,7 @@ public class GestureDrawline extends View {
 			mov_y = (int) event.getY();
 			currentPoint = getPointAt(mov_x, mov_y);
 			if (currentPoint != null) {
-				currentPoint.setPointState(Constants.POINT_STATE_SELECTED);
+				currentPoint.setPointState(Constant.POINT_STATE_SELECTED);
 				passWordSb.append(currentPoint.getNum());
 			}
 			// canvas.drawPoint(mov_x, mov_y, paint);
@@ -117,25 +120,25 @@ public class GestureDrawline extends View {
 			} else {
 				if (currentPoint == null) {
 					currentPoint = pointAt;
-					currentPoint.setPointState(Constants.POINT_STATE_SELECTED);
+					currentPoint.setPointState(Constant.POINT_STATE_SELECTED);
 					passWordSb.append(currentPoint.getNum());
 				}
 			}
-			if (pointAt == null || currentPoint.equals(pointAt) || Constants.POINT_STATE_SELECTED == pointAt.getPointState()) {
+			if (pointAt == null || currentPoint.equals(pointAt) || Constant.POINT_STATE_SELECTED == pointAt.getPointState()) {
 				canvas.drawLine(currentPoint.getCenterX(), currentPoint.getCenterY(), event.getX(), event.getY(), paint);// ����
 			} else {
 				canvas.drawLine(currentPoint.getCenterX(), currentPoint.getCenterY(), pointAt.getCenterX(), pointAt.getCenterY(), paint);// ����
-				pointAt.setPointState(Constants.POINT_STATE_SELECTED);
+				pointAt.setPointState(Constant.POINT_STATE_SELECTED);
 				
 				GesturePoint betweenPoint = getBetweenCheckPoint(currentPoint, pointAt);
-				if (betweenPoint != null && Constants.POINT_STATE_SELECTED != betweenPoint.getPointState()) {
+				if (betweenPoint != null && Constant.POINT_STATE_SELECTED != betweenPoint.getPointState()) {
 					Pair<GesturePoint, GesturePoint> pair1 = new Pair<GesturePoint, GesturePoint>(currentPoint, betweenPoint);
 					lineList.add(pair1);
 					passWordSb.append(betweenPoint.getNum());
 					Pair<GesturePoint, GesturePoint> pair2 = new Pair<GesturePoint, GesturePoint>(betweenPoint, pointAt);
 					lineList.add(pair2);
 					passWordSb.append(pointAt.getNum());
-					betweenPoint.setPointState(Constants.POINT_STATE_SELECTED);
+					betweenPoint.setPointState(Constant.POINT_STATE_SELECTED);
 					currentPoint = pointAt;
 				} else {
 					Pair<GesturePoint, GesturePoint> pair = new Pair<GesturePoint, GesturePoint>(currentPoint, pointAt);
@@ -177,7 +180,7 @@ public class GestureDrawline extends View {
 			lineList.clear();
 			clearScreenAndDrawList();
 			for (GesturePoint p : list) {
-				p.setPointState(Constants.POINT_STATE_NORMAL);
+				p.setPointState(Constant.POINT_STATE_NORMAL);
 			}
 			invalidate();
 			isDrawEnable = true;
@@ -220,17 +223,17 @@ public class GestureDrawline extends View {
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 		for (Pair<GesturePoint, GesturePoint> pair : lineList) {
 			canvas.drawLine(pair.first.getCenterX(), pair.first.getCenterY(),
-					pair.second.getCenterX(), pair.second.getCenterY(), paint);// ����
+					pair.second.getCenterX(), pair.second.getCenterY(), paint);
 		}
 	}
 	private void drawErrorPathTip() {
 		canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-		paint.setColor(Color.rgb(154, 7, 21));// ����Ĭ����·��ɫ
+		paint.setColor(Color.rgb(154, 7, 21));
 		for (Pair<GesturePoint, GesturePoint> pair : lineList) {
-			pair.first.setPointState(Constants.POINT_STATE_WRONG);
-			pair.second.setPointState(Constants.POINT_STATE_WRONG);
+			pair.first.setPointState(Constant.POINT_STATE_WRONG);
+			pair.second.setPointState(Constant.POINT_STATE_WRONG);
 			canvas.drawLine(pair.first.getCenterX(), pair.first.getCenterY(),
-					pair.second.getCenterX(), pair.second.getCenterY(), paint);// ����
+					pair.second.getCenterX(), pair.second.getCenterY(), paint);
 		}
 		invalidate();
 	}
