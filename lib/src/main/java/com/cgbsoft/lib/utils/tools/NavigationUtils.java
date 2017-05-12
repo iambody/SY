@@ -92,6 +92,13 @@ public class NavigationUtils {
         Router.build(routerType).go(context);
     }
 
+    /**
+     * 跳转到产品详情的操作
+     * @param context
+     * @param schemeId
+     * @param productName
+     * @param requestCode
+     */
     public static void startProductDetailActivity(Context context, String schemeId, String productName, int requestCode) {
         String url = CwebNetConfig.productDetail.concat(schemeId);
         Intent intent = new Intent(context, BaseWebViewActivity.class);

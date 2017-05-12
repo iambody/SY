@@ -130,7 +130,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         productlsAdapter = new ProductlsAdapter(baseActivity, null);
         fragmentProductrecyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity, R.color.transparent, R.dimen.ui_10_dip));
         fragmentProductrecyclerView.setAdapter(productlsAdapter);
-
+        productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PromptManager.ShowCustomToast(baseActivity,"点击位置"+position);
+            }
+        });
 
         CurrentSeries = "0";//默认系列是全部  0代表全部
         CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
