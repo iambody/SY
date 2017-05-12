@@ -127,7 +127,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     int switchID = -1;
-    int currentPostion=-1;
+    int currentPostion = -1;
 
     @Override
     public void onTabSelected(int position) {
@@ -135,24 +135,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         switch (position) {
             case 0://左1
                 switchID = R.id.nav_left_first;
-                currentPostion=0;
+                currentPostion = 0;
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-                currentPostion=1;
+                currentPostion = 1;
                 break;
             case 2://左3
                 switchID = R.id.nav_right_first;
-                currentPostion=2;
+                currentPostion = 2;
                 break;
             case 3://左4
                 switchID = R.id.nav_right_second;
-                currentPostion=3;
+                currentPostion = 3;
                 break;
             case 4://中间
                 // getPresenter().toSignIn();
                 switchID = R.id.nav_center;
-                currentPostion=4;
+                currentPostion = 4;
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
@@ -216,7 +216,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void onBackPressed() {
-        if (1==currentPostion&&MainTabManager.getInstance().getProductFragment().isShow()) {
+        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
             MainTabManager.getInstance().getProductFragment().backClick();
         } else
             exitBy2Click();

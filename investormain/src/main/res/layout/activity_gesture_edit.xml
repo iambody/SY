@@ -41,7 +41,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <com.wujay.fund.widget.LockIndicator
+        <com.cgbsoft.privatefund.widget.mvc.view.LockIndicator
             android:id="@+id/lock_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
