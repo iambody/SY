@@ -117,7 +117,7 @@ public class NavigationUtils {
      * @param
      * @param
      */
-    public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, String comeFrom) {
+    public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, int comeFrom) {
         Intent intent = new Intent(context, VideoDetailActivity.class);
         intent.putExtra("videoId", videoId);
         intent.putExtra("videoCoverUrl", videoCoverUrl);
@@ -152,10 +152,5 @@ public class NavigationUtils {
 
     public static void startActivityByRouter(Context context, String routerType, String key, Object object, int flag) {
         Router.build(routerType).with(key, object).addFlags(flag).go(context);
-    }
-
-    //进入视频播放页面
-    public static void toPlayVideoActivityByRouter(Context context, String videoId) {
-        Router.build("video_playtactivity").with("videoId", videoId).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).go(context);
     }
 }

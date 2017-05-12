@@ -243,6 +243,21 @@
             android:name="com.cgbsoft.privatefund.widget.mvc.SmoothImageActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 已经反馈 -->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.FeedbackActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 设置手势密码 -->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.GestureEditActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 验证手机密码 -->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.GestureVerifyActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />
