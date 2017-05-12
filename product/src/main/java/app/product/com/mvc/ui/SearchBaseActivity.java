@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,7 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.product.com.R;
-import app.product.com.model.HistorySearch;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.adapter.SearchAdatper;
 import app.product.com.utils.BUtils;
@@ -71,13 +72,14 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private ClearEditText textEdit;
     private TextView backText;
     private View header;
-//    private DatabaseUtils databaseUtils;
+    //    private DatabaseUtils databaseUtils;
     private String currentType;
     private SearchAdatper searchAdatper;
     private RecyclerView recycleView;
     private LinearLayout resultLinearLayout;
     private LinearLayout emptyLinearLayout;
     private String currentKey;
+    private DaoUtils daoUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +87,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
         setContentView(R.layout.acitivity_search_base);
 //        databaseUtils = new DatabaseUtils(this);
+        daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
         currentType = getIntent().getStringExtra(TYPE_PARAM);
         initListView();
         initHistory();
@@ -100,23 +103,10 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
             finish();
             overridePendingTransition(0, R.anim.message_search_out_bottom);
         } else if (v.getId() == R.id.search_title_ed) {
-        } else if (R.id.product_search_history_del ==v.getId()) {
-//            databaseUtils.clearHistorySearch();
+        } else if (R.id.product_search_history_del == v.getId()) {
+            daoUtils.clearnHistorySearch();
             initHistory();
         }
-//        switch (v.getId()) {
-//            case R.id.search_cancel:
-//                finish();
-//                overridePendingTransition(0, R.anim.message_search_out_bottom);
-//                break;
-//            case R.id.search_title_ed:
-//
-//                break;
-//            case R.id.history_del:
-//                databaseUtils.clearHistorySearch();
-//                initHistory();
-//                break;
-//        }
     }
 
     private void initListView() {
@@ -164,7 +154,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
                         return false;
                     }
                     //todo 保存记录
-//                    saveSearchText(str);
+                    saveSearchText(str);
                     requestSearch(str);
 //                    if (AppManager.isInvestor(SearchBaseActivity.this)) {
 //                        DataStatistApiParam.searchBaseToC(textEdit.getText().toString(), Utils.getNameByName(SearchBaseActivity.this, currentType));
@@ -189,7 +179,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         searchAdatper = new SearchAdatper(this, currentType);
         recycleView.setAdapter(searchAdatper);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.addItemDecoration(new SimpleItemDecoration(this, R.color.gray_font, R.dimen.ui_z_dip));
+        recycleView.addItemDecoration(new SimpleItemDecoration(this, R.color.c_background, R.dimen.ui_z_dip));
     }
 
     private void requestSearch(String str) {
@@ -233,7 +223,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
             @Override
             protected void onRxError(Throwable error) {
-                LogUtils.Log("s","s");
+                LogUtils.Log("s", "s");
             }
         }));
 
@@ -307,14 +297,14 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
     private void initHotSearch() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("infoType",formateType());
-        map.put("category",AppManager.isInvestor(baseContext)?"c":"b");
+        map.put("infoType", formateType());
+        map.put("category", AppManager.isInvestor(baseContext) ? "c" : "b");
         addSubscription(ApiClient.getHotSousouData(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
 
                 try {
-                    JSONObject response=new JSONObject(s);
+                    JSONObject response = new JSONObject(s);
                     Log.i("hot search task ", "-------search hot=" + response.toString());
                     JSONArray jsonArray = response.getJSONArray("result");
                     Gson g = new Gson();
@@ -368,11 +358,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
     private void initHistory() {
 
-        List<HistorySearch> historySearches = new ArrayList<>();// databaseUtils.getHistorySearchListFromType(currentType, ((MApplication) MApplication.getInstance()).getUserid());
+        List<HistorySearchBean> historySearches =   daoUtils.getHistorysByType(currentType,AppManager.getUserId(baseContext));
         Log.i("----search history", "----search histor=" + historySearches.size());
         historySearch.setVisibility(BUtils.isEmpty(historySearches) ? View.GONE : View.VISIBLE);
         List<String> historyList = new ArrayList<>();
-        for (HistorySearch historySearch : historySearches) {
+        for (HistorySearchBean historySearch : historySearches) {
             historyList.add(historySearch.getName());
         }
         flagHistorySearch.setOnClickFlagText(new LineBreakLayout.OnClickFlagText() {
@@ -385,10 +375,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         flagHistorySearch.setLables(historyList, true);
     }
 //todo 更新搜搜记录
-//    private void saveSearchText(String name) {
-//        if (!TextUtils.isEmpty(name)) {
-//            HistorySearch historySearch = new HistorySearch(String.valueOf(System.currentTimeMillis()), name, currentType, System.currentTimeMillis(), MApplication.getUserid());
-//            databaseUtils.saveHistorySearch(historySearch);
-//        }
-//    }
+    private void saveSearchText(String name) {
+        if (!TextUtils.isEmpty(name)) {
+            HistorySearchBean historySearch = new HistorySearchBean(String.valueOf(System.currentTimeMillis()), name, currentType, System.currentTimeMillis(),AppManager.getUserId(baseContext));
+            daoUtils.insertHistorySearch(historySearch);
+
+        }
+    }
 }

@@ -102,6 +102,8 @@ dependencies {
     compile "com.wang.avi:library:${avilib_need_version}"
     //带下拉刷新的recyclerView https://github.com/dinuscxj/RecyclerRefreshLayout
     compile "com.dinuscxj:recyclerrefreshlayout:${recRefLayout_need_version}"
+    //分页加载
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
     //facebook 动画
     compile "com.facebook.rebound:rebound:${fbRebound_need_version}"
     //页面跳转 图片移动动画

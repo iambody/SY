@@ -51,7 +51,11 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
         this.beanList = beanList;
         this.notifyDataSetChanged();
     }
-
+    public void AddfreshAp(List<ProductlsBean> beanList) {
+        int count=beanList.size();
+        this.beanList.addAll(beanList);
+        this.notifyItemRangeChanged(count-1,beanList.size());
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;

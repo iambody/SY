@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:openXu="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_20_dip"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         android:padding="@dimen/ui_10_dip">
 
         <TextView
@@ -40,8 +41,8 @@
             style="@style/style_product_sort_txt"
             android:drawableRight="@drawable/paixu_product"
             android:gravity="right|center_vertical"
-            android:maxLines="1"
             android:maxEms="9"
+            android:maxLines="1"
             android:text="智能排序" />
 
         <TextView
@@ -75,12 +76,26 @@
             openXu:rowSpace="10dp" />
     </LinearLayout>
     <!--产品筛选里面的筛选... -->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_productrecyclerView"
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/ui_5_dip"
-        android:layout_marginRight="@dimen/ui_5_dip"
-        android:layout_marginTop="@dimen/ui_5_dip" />
+        android:background="@color/transparent">
+
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/view_comment_list_head" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/ui_5_dip"
+            android:layout_marginRight="@dimen/ui_5_dip"
+            android:layout_marginTop="@dimen/ui_5_dip" />
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/view_comment_list_foot" />
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>
