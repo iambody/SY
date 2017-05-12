@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -38,8 +39,8 @@ public class JavaScriptObjectToc {
      */
     @JavascriptInterface
     public String getData() {
-        String token = SPreference.getToken(context);
-        String userId = SPreference.getUserId(context);
+        String token = AppManager.getUserToken(context);
+        String userId = AppManager.getUserId(context);
         StringBuffer sb = new StringBuffer();
         sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionName(BaseApplication.getContext())).append(":").append("1");
         return sb.toString();
