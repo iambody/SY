@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
@@ -44,7 +45,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     BaseWebview baseWebview;
 
     private Observable<Boolean> closeMainObservable;
+    private Observable<Boolean> gestruePwdObservable;
     private boolean isOnlyClose;
+    private int currentResId;
 
     @Override
     protected int layoutID() {
@@ -167,6 +170,29 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
+        gestruePwdObservable = RxBus.get().register(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE, Boolean.class);
+        gestruePwdObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (SPreference.getToCBean(MainPageActivity.this) != null && "1".equals(SPreference.getToCBean(MainPageActivity.this).getGestureSwitch())) {
+                    gesturePasswordJumpPage();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    private void gesturePasswordJumpPage() {
+        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
+            /*Intent intent = new Intent(context, GestureVerifyActivity.class);
+            intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
+            context.startActivity(intent);*/
+        }
     }
 
     @Override

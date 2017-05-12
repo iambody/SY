@@ -236,22 +236,16 @@ public class CWebviewManger {
         } else if (action.contains("updated")) {
 //            VersonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转
-//            context.startActivity(new Intent(context, FeedbackActivity.class));
+            NavigationUtils.startActivityByRouter(context, "investornmain_feedbackctivity");
         } else if (action.contains("signEnt")) {
 //            SignIn();
         } else if (action.contains("setGestruePassword")) { //设置手势密码
-//            Intent intent = new Intent(context, GestureEditActivity.class);
-//            context.startActivity(intent);
-//            String valuse = "1".equals(MApplication.getUser().getToC().getGestureSwitch()) ? "2" : "1";
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureeditactivity");
         } else if (action.contains("modifyGestruePassword")) { // 修改手势密码
-//            Intent intent = new Intent(context, GestureVerifyActivity.class);
-//            intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
-//            context.startActivity(intent);
-//            context.finish();
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureeditactivity", "PARAM_FROM_MODIFY", true);
+            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
-//            Intent intent = new Intent(context, GestureVerifyActivity.class);
-//            intent.putExtra(GestureVerifyActivity.PARAM_CLOSE_PASSWORD, true);
-//            context.startActivity(intent);
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureeditactivity", "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
 //            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {

@@ -133,7 +133,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     /**
-     * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须注册此方法
+     * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须重写注册方法
      * @return
      */
     protected String getRegeistRxBusId() {

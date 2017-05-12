@@ -327,7 +327,6 @@ public class Utils {
         return versonName;
     }
 
-
     /**
      * 获取app版本号
      *
@@ -343,6 +342,19 @@ public class Utils {
             versonName = 1;
         }
         return versonName;
+    }
+
+    /**
+     * 得到屏幕分辨率数组
+     * @param context
+     * @return
+     */
+    public static int[] getScreenDispaly(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int width = windowManager.getDefaultDisplay().getWidth();
+        int height = windowManager.getDefaultDisplay().getHeight();
+        int result[] = { width, height };
+        return result;
     }
 
     /**

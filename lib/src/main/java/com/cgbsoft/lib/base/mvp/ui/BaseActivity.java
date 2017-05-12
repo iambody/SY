@@ -51,7 +51,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.baseContext=BaseActivity.this;
+        this.baseContext = BaseActivity.this;
         if (getIsNightTheme() && savedInstanceState == null) {
             if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -341,7 +341,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         map.put(mapKey, mapValue);
 //        MobclickAgent.onEvent(getApplicationContext(), umengKey, map);
     }
-
 
     /**
      * 双击退出。

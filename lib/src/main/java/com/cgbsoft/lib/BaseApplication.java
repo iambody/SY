@@ -1,5 +1,6 @@
 package com.cgbsoft.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
@@ -10,6 +11,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
+import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
@@ -30,11 +32,16 @@ import java.util.logging.Level;
 public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
+    private BackgroundManager backgroundManager;
 
 //    static {
 //        //设置umeng分享 微信
 //        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
 //    }
+
+    public BackgroundManager getBackgroundManager() {
+        return backgroundManager;
+    }
 
     @Override
     public void onCreate() {
@@ -66,6 +73,8 @@ public class BaseApplication extends MultiDexApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        backgroundManager = new BackgroundManager(this);
     }
 
     /**

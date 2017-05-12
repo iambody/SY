@@ -38,4 +38,6 @@ public interface RxConstant {
 
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 
+    String ON_ACTIVITY_RESUME_OBSERVABLE = "on_activity_resume_observable";
+
 }

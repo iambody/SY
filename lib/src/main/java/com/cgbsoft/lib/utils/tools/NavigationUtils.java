@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.Router;
 import com.jhworks.library.ImageSelector;
@@ -51,6 +54,10 @@ public class NavigationUtils {
         selectSec.start(activity, reqeustCode);
     }
 
+    public static void toMainActivity(Context context) {
+        Router.build("investornmain_mainpageactivity").go(context);
+    }
+
     /**
      * 调用系统报打电话页面
      *
@@ -83,6 +90,15 @@ public class NavigationUtils {
 
     public static void startActivityByRouter(Context context, String routerType) {
         Router.build(routerType).go(context);
+    }
+
+    public static void startProductDetailActivity(Context context, String schemeId, String productName, int requestCode) {
+        String url = CwebNetConfig.productDetail.concat(schemeId);
+        Intent intent = new Intent(context, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, productName);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        ((Activity)context).startActivityForResult(intent, requestCode);
     }
 
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle) {

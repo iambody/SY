@@ -126,4 +126,11 @@ public interface Constant {
     //意见反馈
     public static final String UPLOAD_FEEDBACK_TYPE = "feedback/";
 
+    // 手势密码
+    public static final int POINT_STATE_NORMAL = 0;
+
+    public static final int POINT_STATE_SELECTED = 1;
+
+    public static final int POINT_STATE_WRONG = 2;
+
 }

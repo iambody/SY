@@ -1,0 +1,108 @@
+package com.cgbsoft.privatefund.widget.mvc.view;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.View;
+
+import com.cgbsoft.privatefund.R;
+
+/**
+ * @author chenlong
+ *         手势缩略图
+ */
+public class LockIndicator extends View {
+    private int numRow = 3;
+    private int numColum = 3;
+    private int patternWidth = 40;
+    private int patternHeight = 40;
+    private int f = 5;
+    private int g = 5;
+    private int strokeWidth = 3;
+    private Paint paint = null;
+    private Drawable patternNoraml = null;
+    private Drawable patternPressed = null;
+    private String lockPassStr;
+
+    public LockIndicator(Context paramContext) {
+        super(paramContext);
+    }
+
+    public LockIndicator(Context paramContext, AttributeSet paramAttributeSet) {
+        super(paramContext, paramAttributeSet, 0);
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(strokeWidth);
+        paint.setStyle(Style.STROKE);
+        patternNoraml = getResources().getDrawable(R.drawable.ic_lock_pattern_node_normal);
+        patternPressed = getResources().getDrawable(R.drawable.ic_lock_pattern_node_pressed);
+        if (patternPressed != null) {
+            patternWidth = patternPressed.getIntrinsicWidth();
+            patternHeight = patternPressed.getIntrinsicHeight();
+            this.f = (patternWidth / 4);
+            this.g = (patternHeight / 4);
+            patternPressed.setBounds(0, 0, patternWidth, patternHeight);
+            patternNoraml.setBounds(0, 0, patternWidth, patternHeight);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if ((patternPressed == null) || (patternNoraml == null)) {
+            return;
+        }
+        for (int i = 0; i < numRow; i++) {
+            for (int j = 0; j < numColum; j++) {
+                paint.setColor(Color.parseColor("#f47900"));
+                int i1 = j * patternHeight + j * this.g;
+                int i2 = i * patternWidth + i * this.f;
+                canvas.save();
+                canvas.translate(i1, i2);
+                String curNum = String.valueOf(numColum * i + (j + 1));
+                if (!TextUtils.isEmpty(lockPassStr)) {
+                    if (lockPassStr.indexOf(curNum) == -1) {
+                        patternNoraml.draw(canvas);
+                    } else {
+                        patternPressed.draw(canvas);
+                    }
+                } else {
+                    patternNoraml.draw(canvas);
+                }
+                canvas.restore();
+            }
+        }
+    }
+
+    @Override
+    protected void onMeasure(int paramInt1, int paramInt2) {
+        if (patternPressed != null)
+            setMeasuredDimension(numColum * patternHeight + this.g
+                    * (-1 + numColum), numRow * patternWidth + this.f
+                    * (-1 + numRow));
+    }
+
+    public void setPath(String paramString) {
+        lockPassStr = paramString;
+        invalidate();
+    }
+
+//	private String formatValue(String paramString) {
+//		String returnValue = paramString;
+//		if (!TextUtils.isEmpty(paramString)) {
+//			char[] params = paramString.toCharArray();
+//			StringBuffer sb = new StringBuffer();
+//			for(int i = 0; i < params.length; i++) {
+//				char str = params[i];
+//				sb.append(str-1);
+//			}
+//			returnValue = sb.toString();
+//		}
+//		return returnValue;
+//	}
+
+}
