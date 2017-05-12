@@ -56,6 +56,9 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         this.beanList.addAll(beanList);
         this.notifyItemRangeChanged(count-1,beanList.size());
     }
+    public List<ProductlsBean>getBeanList(){
+        return beanList;
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;

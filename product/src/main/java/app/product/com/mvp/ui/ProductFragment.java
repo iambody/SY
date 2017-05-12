@@ -18,6 +18,7 @@ import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -133,7 +134,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PromptManager.ShowCustomToast(baseActivity,"点击位置"+position);
+                ProductlsBean productlsBean=    productlsAdapter.getBeanList().get(position);
+                NavigationUtils.startProductDetailActivity(baseActivity,productlsBean.schemeId,productlsBean.productName,100);
             }
         });
 
