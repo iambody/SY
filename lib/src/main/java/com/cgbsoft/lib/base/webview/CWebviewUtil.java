@@ -12,9 +12,9 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.utils.ui.MyDogDialog;
 import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.PushDialog;
 import com.tencent.smtt.sdk.WebView;
 
 import java.io.UnsupportedEncodingException;
@@ -168,11 +168,11 @@ public class CWebviewUtil {
 //                context.startActivity(intent1);
 //            }
         } else if (action.contains("relationAssets")) {//关联资产动作
-           // NavigationUtils.startActivityForResult(context, RelativeAssetActivity.class, PushMsgActivity.RELATIVE_ASSERT);
+            // NavigationUtils.startActivityForResult(context, RelativeAssetActivity.class, PushMsgActivity.RELATIVE_ASSERT);
         } else if (action.contains("pssetsProve")) {
 //            NavigationUtils.startActivityForResult(context, AssetProveActivity.class, PushMsgActivity.ASSERT_PROVE);
         } else if (action.contains("selectedInvestment")) {
-           // EventBus.getDefault().post(new Qrcode());
+            // EventBus.getDefault().post(new Qrcode());
         } else if (action.contains("recommendFriend")) {
 //            recommentFriend();
         } else if (action.contains("h5-native")) {
@@ -382,6 +382,7 @@ public class CWebviewUtil {
 
     /**
      * 获取理财师名片分享bean数据
+     *
      * @return
      */
 //    private BShare GetShareData(String action) {
@@ -403,7 +404,6 @@ public class CWebviewUtil {
 //            return null;
 //        }
 //    }
-
     private void showContactImDialog(String action) {
         String[] split = action.split(":");
         try {
@@ -411,7 +411,7 @@ public class CWebviewUtil {
             String title = URLDecoder.decode(split[3], "utf-8");
             String content = URLDecoder.decode(split[4], "utf-8");
             String btnText = URLDecoder.decode(split[5], "utf-8");
-            new MyDogDialog(context, title, content, "", btnText) {
+            new PushDialog(context, title, content, btnText, "", "") {
                 public void left() {
                     this.cancel();
                 }
@@ -527,7 +527,7 @@ public class CWebviewUtil {
 //                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"),"", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -1189,7 +1189,6 @@ public class CWebviewUtil {
 //            e.printStackTrace();
 //        }
 //    }
-
     private String repleaseUrl(String url) {
         return url.replace("peyunupload//", "peyunupload/");
     }

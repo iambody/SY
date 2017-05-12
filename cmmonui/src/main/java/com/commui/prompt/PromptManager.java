@@ -1,4 +1,4 @@
-package app.privatefund.com.cmmonui.prompt;
+package com.commui.prompt;
 
 import android.content.Context;
 import android.view.Gravity;
