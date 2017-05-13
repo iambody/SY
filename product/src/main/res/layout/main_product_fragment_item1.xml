@@ -57,7 +57,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/jiezhi"
+                android:background="@drawable/ic_jiezhi"
                 android:gravity="center"
                 android:text="截止打款X天"
                 android:textColor="#fff"

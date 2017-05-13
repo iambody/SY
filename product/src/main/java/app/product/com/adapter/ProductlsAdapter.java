@@ -191,8 +191,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                     }
                     BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
                 }
-//                h3.time.setBackgroundResource(Utils.isVisteRole(getContext()) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
-                hotProductHolder.productItemProductlsHotJiezhi.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
+                hotProductHolder.productItemProductlsHotJiezhi.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.jiezhi_c_bg : R.drawable.ic_jiezhi);
                 BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotMujicount);
                 BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotCenter);
                 break;
@@ -310,7 +309,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
 
                         if (hour >= 72) {
                             dateString = day + "天";
-                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.lanse);
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.ic_lanse);
                             normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
                         } else if (hour > 0 && hour < 72) {
                             dateString = hour + "小时";

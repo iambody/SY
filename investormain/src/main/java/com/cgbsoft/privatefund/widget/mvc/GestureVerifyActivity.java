@@ -32,12 +32,13 @@ import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
  */
 @Route("investornmain_gestureverifyactivity")
-public class GestureVerifyActivity extends BaseActivity implements View.OnClickListener {
+public class GestureVerifyActivity extends BaseActivity {
     public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
@@ -58,6 +59,9 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.text_forget_gesture)
     TextView mTextForget;
 
+    @BindView(R.id.text_cancel)
+    TextView backView;
+
     @Override
     protected void before() {
         super.before();
@@ -75,7 +79,6 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpViews();
-        setUpListeners();
     }
 
     @Override
@@ -129,9 +132,7 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
                     mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>密码输入错误，你还可以输入" + count + "次</font>"));
                     Animation shakeAnimation = AnimationUtils.loadAnimation(GestureVerifyActivity.this, R.anim.shake);
                     mTextTip.startAnimation(shakeAnimation);
-
                 }
-
             }
         });
         if (modifyGesturePassword) {
@@ -187,47 +188,36 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
 //        finish();
 //    }
 
-    private void setUpListeners() {
-        mTextForget.setOnClickListener(this);
-    }
-
     @Override
     public void onBackPressed() {
-//        baseActivity.finish();
+        GestureVerifyActivity.this.finish();
         return;
-
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.text_cancel:
-                System.exit(0);
-                break;
-            case R.id.text_forget_gesture:
-//                DataStatistApiParam.onForgetGesturePassword();
-                if (SPreference.getBoolean(this, Constant.weixin_login)) {
-                    DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
-                        @Override
-                        public void left() {
-                            dismiss();
-                        }
-
-                        @Override
-                        public void right() {
-                            NavigationUtils.startDialgTelephone(getContext(), getContext().getResources().getString(R.string.hotline));
-                            dismiss();
-                        }
-                    };
-                    dialog.show();
-                } else {
-                    resetGesturePasswordDialog(GestureVerifyActivity.this);
+    @OnClick(R.id.text_forget_gesture)
+    public void onForgetGesture() {
+        if (SPreference.getBoolean(this, Constant.weixin_login)) {
+            DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
+                @Override
+                public void left() {
+                    dismiss();
                 }
-                break;
-            default:
-                break;
+
+                @Override
+                public void right() {
+                    NavigationUtils.startDialgTelephone(getContext(), getContext().getResources().getString(R.string.hotline));
+                    dismiss();
+                }
+            };
+            dialog.show();
+        } else {
+            resetGesturePasswordDialog(GestureVerifyActivity.this);
         }
+    }
+
+    @OnClick(R.id.text_cancel)
+    public void backText() {
+        System.exit(0);
     }
 
     private void resetGesturePasswordDialog(Context context) {
@@ -238,7 +228,6 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
         textView.setText("当前账号：" + SPreference.getToCBean(this).getCustomerName());
         final EditText et_password = (EditText) layout.findViewById(R.id.input_login_password);
         TextView reset_gesture_password_dialog_forget_pwd = ViewHolders.get(layout, R.id.reset_gesture_password_dialog_forget_pwd);
-        reset_gesture_password_dialog_forget_pwd.setOnClickListener(this);
         TextView telPhone = (TextView) layout.findViewById(R.id.tel_phone);
         final TextView concel = (TextView) layout.findViewById(R.id.quxiao);
         TextView comfirm = (TextView) layout.findViewById(R.id.queren);
