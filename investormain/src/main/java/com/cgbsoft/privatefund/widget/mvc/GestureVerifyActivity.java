@@ -11,23 +11,27 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
+import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.widget.mvc.view.GestureContentView;
-import com.cgbsoft.privatefund.widget.mvc.view.GestureDrawline;
 import com.chenenyu.router.annotation.Route;
+import com.takwolf.android.lock9.Lock9View;
+
+import butterknife.BindView;
 
 /**
  * @author chenlong
@@ -39,15 +43,20 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
     public static final String PARAM_FROM_SWITCH = "PARAM_FROM_SWITCH";
 
-    private TextView mTextTip;
-    private FrameLayout mGestureContainer;
-    private GestureContentView mGestureContentView;
-    private TextView mTextForget;
     private int count = 5;
     private boolean isFromResumeIntercepter;
     private boolean isFromCloseGesturePassword;
     private boolean modifyGesturePassword;
     private boolean isFromSwitch;
+
+    @BindView(R.id.lock_9_view)
+    Lock9View lock9View;
+
+    @BindView(R.id.text_tip)
+    TextView mTextTip;
+
+    @BindView(R.id.text_forget_gesture)
+    TextView mTextForget;
 
     @Override
     protected void before() {
@@ -75,64 +84,56 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setUpViews() {
-        mTextTip = (TextView) findViewById(R.id.text_tip);
-        mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
-        mTextForget = (TextView) findViewById(R.id.text_forget_gesture);
-        mGestureContentView = new GestureContentView(this, true, SPreference.getToCBean(this) == null ? "" : SPreference.getToCBean(this).getGesturePassword(),
-                new GestureDrawline.GestureCallBack() {
-                    @Override
-                    public void onGestureCodeInput(String inputCode) {
+        lock9View.setCallBack(new Lock9View.CallBack() {
+            @Override
+            public void onFinish(String password) {
+                if (!TextUtils.isEmpty(password) && password.equals(SPreference.getToCBean(GestureVerifyActivity.this).getGesturePassword())) {
+//                        mGestureContentView.clearDrawlineState(0L);
+                    Toast.makeText(GestureVerifyActivity.this, "密码校验成功", Toast.LENGTH_SHORT).show();
+                    if (modifyGesturePassword) {
+                        Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
+                        intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
+                        startActivity(intent);
+                        finish();
+                    } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
+                        NavigationUtils.toMainActivity(GestureVerifyActivity.this);
+                        return;
+                    } else if (isFromSwitch) {
+                        NavigationUtils.toMainActivity(GestureVerifyActivity.this);
+                        finish();
+                        return;
                     }
 
-                    @Override
-                    public void checkedSuccess() {
-                        mGestureContentView.clearDrawlineState(0L);
-                        Toast.makeText(GestureVerifyActivity.this, "密码校验成功", Toast.LENGTH_SHORT).show();
-                        if (modifyGesturePassword) {
-                            Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
-                            intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
-                            startActivity(intent);
-                            finish();
-                        } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-                            NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-                            return;
-                        } else if (isFromSwitch) {
-                            NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-                            finish();
-                            return;
-                        }
-
-                        if (isFromResumeIntercepter) {
-                            GestureVerifyActivity.this.finish();
-                        } else if (isFromCloseGesturePassword) {
-                            closeGesturePassword(false);
-                        } else {
-                            GestureVerifyActivity.this.finish();
-                        }
+                    if (isFromResumeIntercepter) {
+                        GestureVerifyActivity.this.finish();
+                    } else if (isFromCloseGesturePassword) {
+                        closeGesturePassword(false);
+                    } else {
+                        GestureVerifyActivity.this.finish();
                     }
-
-                    @Override
-                    public void checkedFail() {
-                        if (count == 1) {
-                            DialogUtils.DialogSimplePrompt(GestureVerifyActivity.this, R.string.gesture_password_error_times, new DialogUtils.SimpleDialogListener() {
-                                @Override
-                                public void OnClickPositive() {
-                                    super.OnClickPositive();
-                                    ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
-                                    closeGesturePassword(true);
-                                }
-                            });
-                            return;
-                        }
-                        count -= 1;
-                        mGestureContentView.clearDrawlineState(1300L);
-                        mTextTip.setVisibility(View.VISIBLE);
-                        mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>密码输入错误，你还可以输入" + count + "次</font>"));
-                        Animation shakeAnimation = AnimationUtils.loadAnimation(GestureVerifyActivity.this, R.anim.shake);
-                        mTextTip.startAnimation(shakeAnimation);
+                } else {
+                    if (count == 1) {
+                        DialogUtils.DialogSimplePrompt(GestureVerifyActivity.this, R.string.gesture_password_error_times, new DialogUtils.SimpleDialogListener() {
+                            @Override
+                            public void OnClickPositive() {
+                                super.OnClickPositive();
+                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
+                                closeGesturePassword(true);
+                            }
+                        });
+                        return;
                     }
-                });
-        mGestureContentView.setParentView(mGestureContainer);
+                    count -= 1;
+//                        mGestureContentView.clearDrawlineState(1300L);
+                    mTextTip.setVisibility(View.VISIBLE);
+                    mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>密码输入错误，你还可以输入" + count + "次</font>"));
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(GestureVerifyActivity.this, R.anim.shake);
+                    mTextTip.startAnimation(shakeAnimation);
+
+                }
+
+            }
+        });
         if (modifyGesturePassword) {
             mTextTip.setText(R.string.please_target_gesture_password);
             mTextTip.setVisibility(View.VISIBLE);
@@ -149,6 +150,8 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
     }
 
     private void closeGesturePassword(final boolean isFiveTimesError) {
+        Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
+        finish();
 //        new UpdateAdviserNameTask(GestureVerifyActivity.this).start(ApiParams.closeGesturePassword(), new HttpResponseListener() {
 //            public void onResponse(JSONObject response) {
 //                try {
@@ -204,23 +207,23 @@ public class GestureVerifyActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.text_forget_gesture:
 //                DataStatistApiParam.onForgetGesturePassword();
-//                if (SPSave.getInstance(this).getBoolean(Contant.weixin_login)) {
-//                    DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
-//                        @Override
-//                        public void left() {
-//                            dismiss();
-//                        }
-//
-//                        @Override
-//                        public void right() {
-//                            NavigationUtils.startDialgTelephone(getContext(), getContext().getResources().getString(R.string.hotline));
-//                            dismiss();
-//                        }
-//                    };
-//                    dialog.show();
-//                } else {
-//                    resetGesturePasswordDialog(GestureVerifyActivity.this);
-//                }
+                if (SPreference.getBoolean(this, Constant.weixin_login)) {
+                    DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
+                        @Override
+                        public void left() {
+                            dismiss();
+                        }
+
+                        @Override
+                        public void right() {
+                            NavigationUtils.startDialgTelephone(getContext(), getContext().getResources().getString(R.string.hotline));
+                            dismiss();
+                        }
+                    };
+                    dialog.show();
+                } else {
+                    resetGesturePasswordDialog(GestureVerifyActivity.this);
+                }
                 break;
             default:
                 break;

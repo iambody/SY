@@ -54,17 +54,17 @@ public class SPreference implements Constant {
      * @param key
      * @return
      */
-    private static int getInt(@NonNull Context context, @NonNull String key) {
+    public static int getInt(@NonNull Context context, @NonNull String key) {
         return getBase(context).getInt(key, -1);
     }
 
-    private static void putBoolean(@NonNull Context context, @NonNull String key, @NonNull boolean value) {
+    public static void putBoolean(@NonNull Context context, @NonNull String key, @NonNull boolean value) {
         SharedPreferences.Editor edit = getBase(context).edit();
         edit.putBoolean(key, value);
         edit.apply();
     }
 
-    private static boolean getBoolean(@NonNull Context context, @NonNull String key) {
+    public static boolean getBoolean(@NonNull Context context, @NonNull String key) {
         return getBase(context).getBoolean(key, false);
     }
 

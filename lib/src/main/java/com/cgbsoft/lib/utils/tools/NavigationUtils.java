@@ -106,7 +106,7 @@ public class NavigationUtils {
         Intent intent = new Intent(context, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
