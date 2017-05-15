@@ -49,7 +49,7 @@ public class DaoUtils {
                 videoInfoDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getVideoInfoDao();
                 break;
             case W_TASK:
-                dayTaskDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDayTaskDao();
+                dayTaskDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDayTaskBeanDao();
                 break;
         }
     }

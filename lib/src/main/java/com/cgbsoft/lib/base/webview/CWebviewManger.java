@@ -13,9 +13,9 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.utils.ui.MyDogDialog;
 import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.jhworks.library.ImageSelector;
 
@@ -893,7 +893,7 @@ public class CWebviewManger {
 
     private void startImagePage(String action) {
         ImageSelector selector = ImageSelector.create();
-         selector.single();  // 选择一张图片
+        selector.single();  // 选择一张图片
         selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
     }
 

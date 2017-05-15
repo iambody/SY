@@ -49,7 +49,7 @@ public class DayTaskBeanDao extends AbstractDao<DayTaskBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DAY_TASK_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"TASK_NAME\" TEXT," + // 1: taskName
                 "\"CREATE_DATE\" TEXT," + // 2: createDate
                 "\"TASK_TYPE\" INTEGER NOT NULL ," + // 3: taskType

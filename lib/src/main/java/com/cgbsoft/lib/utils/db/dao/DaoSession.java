@@ -115,7 +115,4 @@ public class DaoSession extends AbstractDaoSession {
         return dayTaskBeanDao;
     }
 
-    public DayTaskBeanDao getDayTaskDao() {
-        return dayTaskBeanDao;
-    }
 }

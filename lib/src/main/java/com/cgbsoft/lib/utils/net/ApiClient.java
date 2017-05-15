@@ -530,17 +530,6 @@ public class ApiClient {
         return map;
     }
 
-    // 获取产品的筛选条件
-    public static Observable<String> getProductFiltrtDate() {
-        return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-    }
-
-
-    // 获取产品的列表
-    public static Observable<String> getProductlsDate(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().getProductls(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-    }
-
     //保存商城收货地址信息
     public static Observable<String> saveMallAddress(Map<String, String> map) {
         return OKHTTP.getInstance().getRequestManager().saveAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
