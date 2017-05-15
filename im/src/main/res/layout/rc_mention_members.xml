@@ -41,7 +41,10 @@
         android:id="@id/rc_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/rc_search"
+        android:hint="请输入"
+        android:textColor="@color/rc_location_text"
+        android:drawableLeft="@drawable/icon_search"
+        android:drawablePadding="3dp"
         android:singleLine="true"
         android:textSize="14sp" />
 

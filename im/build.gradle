@@ -11,11 +11,15 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
-
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
