@@ -61,5 +61,12 @@ public class CNetConfig {
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
 
+    //c端视频播放
+    static class VIDEO {
+        //获取视频的信息
+          static final String GetVideoDetail = API_URL+"/information/video/2c/5.0/";
+
+
+    }
 
 }

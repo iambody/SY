@@ -16,9 +16,9 @@ public class AppManager implements AppinfConstant {
      * @param PcContext
      * @return
      */
-//    public static boolean isAdViser(Context PcContext) {
-//        return AppInfStore.Get_IsAdviser(PcContext);
-//    }
+    public static boolean isAdViser(Context PcContext) {
+        return AppInfStore.Get_IsAdviser(PcContext);
+    }
 
     /**
      * 获取是否是理财师的标识

@@ -2,8 +2,29 @@
 
     package="app.privatefund.com.vido">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
         android:supportsRtl="true">
+        <activity android:name=".mvp.ui.video.VideoDownloadListActivity" />
+        <activity android:name=".mvp.ui.video.VideoHistoryListActivity" />
+        <activity android:name=".mvc.PlayVideoActivity"/>
+        <activity android:name=".mvc.LocalVideoActivity"/>
+        <activity android:name=".mvc.PlayRecordActivity"/>
+        <service android:name=".mvc.services.PlayerService">
+            <intent-filter>
+                <action android:name="com.cgbsoft.privatefund.service.player" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+        <service android:name=".mvc.services.DownloadService">
+            <intent-filter>
+                <action android:name="com.cgbsoft.privatefund.service.download" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
 
     </application>
 

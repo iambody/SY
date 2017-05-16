@@ -60,10 +60,16 @@
 
         <activity android:name="io.rong.imkit.activity.FilePreviewActivity" />
 
+        <service
+            android:name=".utils.service.FloatVideoService"
+            android:exported="false" />
+        <service
+            android:name=".utils.tools.rong.service.RongWindowService"
+            android:exported="true" />
         <!--推送服务请求token-->
         <service
             android:name="io.rong.push.core.PushRegistrationService"
-            android:exported="false" />
+            android:exported="true" />
         <!-- 处理 push 消息相关的服务 -->
         <service
             android:name="io.rong.push.core.MessageHandleService"

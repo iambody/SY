@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Vido</string>
+    <!-- 本地视频 -->
+    <string name="local_video_title">本地视频</string>
+    <string name="local_video_all">全选</string>
+    <string name="local_video_cancel_all">取消全选</string>
+    <string name="local_video_delete">删除</string>
+    <string name="local_video_item_pause">已暂停</string>
+    <string name="local_video_all_space">总空间</string>
+    <string name="local_video_free_space">剩余</string>
+    <string name="local_video_free_cache">缓存</string>
+    <string name="local_video_free_caching">缓存中</string>
+    <string name="local_video_free_cached">已缓存</string>
+    <string name="local_video_all_pause">全部暂停</string>
+    <string name="local_video_all_start">全部开始</string>
+    <string name="local_video_lack_free_space">剩余空间不足500M</string>
+    <string name="local_video_net_mobile">当前正在非wifi环境下进行缓存</string>
+    <string name="getvideoerror">获取视频信息失败</string>
+    <string name="addcommentsucced">添加评论成功</string>
+    <string name="addcommenterror">添加评论失败</string>
+
+
 </resources>

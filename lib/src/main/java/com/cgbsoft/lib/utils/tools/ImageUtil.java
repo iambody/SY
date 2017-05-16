@@ -5,4 +5,5 @@ package com.cgbsoft.lib.utils.tools;
  */
 
 public class ImageUtil {
+
 }

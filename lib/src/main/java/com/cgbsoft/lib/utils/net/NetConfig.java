@@ -56,7 +56,7 @@ public class NetConfig {
         //获取学院其他视频
         static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
         //获取视频详情
-        static final String GET_VIDEO_INFO = API_URL + information + "/video/5.0";
+        static final String GET_VIDEO_INFO = API_URL + information + "/video/2c/5.0";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
@@ -106,5 +106,14 @@ public class NetConfig {
         static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
 
     }
-
+   //视频相关模块
+    static class VIDEO{
+       private static final String video="/information/video";
+       //视频点赞
+       static  final String VIDEO_DIANZAN=API_URL +video+"/likes/5.0";
+       //视频评论添加
+       static  final String VIDEO_COMMENT_ADD=API_URL+video+"/2c/comment/add";
+       //视频的评论
+       static final String VIDEO_COMMENT_LS=API_URL+video+"/2c/comment";
+   }
 }

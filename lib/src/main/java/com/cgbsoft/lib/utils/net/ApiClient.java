@@ -1,8 +1,10 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
@@ -13,9 +15,12 @@ import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.google.android.exoplayer.C;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -289,12 +294,13 @@ public class ApiClient {
 
     /**
      * 修改密码
-     * @param userName 用户名称
+     *
+     * @param userName  用户名称
      * @param pwdMd5Old 旧的密码 md5加密后
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -302,7 +308,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -396,6 +402,14 @@ public class ApiClient {
     public static Observable<String> getTestVideoInfo(String videoId) {
         Map<String, String> map = new HashMap<>();
         map.put("id", videoId);
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    public static Observable<String> getToCVideoInfo(String videoId, Context context, String from) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", videoId);
+//        map.put("from", from);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -435,31 +449,95 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 产品模块=》的 获取产品的筛选条件
+     *
+     * @return
+     */
 
-    // 产品模块=》的 获取产品的筛选条件
     public static Observable<String> getProductFiltrtDate() {
         return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 产品模块=》的 获取产品的列表
+     *
+     * @param map
+     * @return
+     */
 
-    // 产品模块=》的 获取产品的列表
     public static Observable<String> getProductlsDate(Map<String, String> map) {
         return OKHTTP.getInstance().getRequestManager().getProductls(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
-    //产品模块=》的 搜索
+    /**
+     * 产品模块=》的 搜索
+     *
+     * @param map
+     * @return
+     */
+
     public static Observable<String> getSousouData(Map<String, String> map) {
 
         return OKHTTP.getInstance().getRequestManager().getSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
-    //产品模块=》热门 搜索
+    /**
+     * 产品模块=》热门 搜索
+     *
+     * @param map
+     * @return
+     */
+
     public static Observable<String> getHotSousouData(Map<String, String> map) {
 
         return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
+    /**
+     * 视频模块
+     */
+    public static Observable<String> VideoDianZan(String VideoId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", VideoId);
+        return OKHTTP.getInstance().getRequestManager().videoDianZan(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 视频添加评论
+     */
+    public static Observable<String>videoCommentAdd(String commnetContent,String SenderId,String id){
+        Map<String,String>map=new HashMap();
+        map.put("commentContent",commnetContent);
+        map.put("senderId",SenderId);
+        map.put("id",id);
+        return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 评论列表
+     */
+    public static Observable<String>videoCommentLs(String id,String commentId){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("commentId", commentId);
+        map.put("limit",  Contant.VIDEO_COMMENT_LIMIT);
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 重新生成Get 方式的value值
      *

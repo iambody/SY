@@ -79,12 +79,12 @@ public class DaoUtils {
      */
     public void insertHistorySearch(HistorySearchBean historySearchBean) {
         if (null == historySearchBeanDao) return;
-        if (historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Name.eq(historySearchBean.getName())).buildCount().count() > 0){
+        if (historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Name.eq(historySearchBean.getName())).buildCount().count() > 0) {
             historySearchBeanDao.update(historySearchBean);
             return;
         }
         historySearchBean.set_id(getHistoryLs().size());
-            historySearchBeanDao.insert(historySearchBean);
+        historySearchBeanDao.insert(historySearchBean);
     }
 
     /**
@@ -94,9 +94,11 @@ public class DaoUtils {
      * @param userId
      */
     public List<HistorySearchBean> getHistorysByType(String Type, String userId) {
+        List<HistorySearchBean> been = new ArrayList<>();
         if (null == historySearchBeanDao) return new ArrayList<>();
-        return historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Type.eq(Type), HistorySearchBeanDao.Properties.UserId.eq(userId)).build().list();
-
+        been = historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Type.eq(Type), HistorySearchBeanDao.Properties.UserId.eq(userId)).build().list();
+        if (null == been) return new ArrayList<>();
+        else return been;
     }
 
     public OtherInfo getOtherInfo(String title) {

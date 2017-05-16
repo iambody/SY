@@ -21,12 +21,14 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
+import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -53,7 +55,7 @@ import app.product.com.widget.SimpleItemDecoration;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/8-14:54
  */
-
+@Route("product_sousouactivity")
 public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickListener {
     public static final String PRODUCT = "1";
     public static final String ZIXUN = "2";
@@ -87,8 +89,9 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
         setContentView(R.layout.acitivity_search_base);
 //        databaseUtils = new DatabaseUtils(this);
-        daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
-        currentType = getIntent().getStringExtra(TYPE_PARAM);
+ daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
+        List<HistorySearchBean> daaaaa    =daoUtils.getHistoryLs();
+     currentType = getIntent().getStringExtra(TYPE_PARAM);
         initListView();
         initHistory();
         initHotSearch();
@@ -361,6 +364,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         List<HistorySearchBean> historySearches =   daoUtils.getHistorysByType(currentType,AppManager.getUserId(baseContext));
         Log.i("----search history", "----search histor=" + historySearches.size());
         historySearch.setVisibility(BUtils.isEmpty(historySearches) ? View.GONE : View.VISIBLE);
+
         List<String> historyList = new ArrayList<>();
         for (HistorySearchBean historySearch : historySearches) {
             historyList.add(historySearch.getName());

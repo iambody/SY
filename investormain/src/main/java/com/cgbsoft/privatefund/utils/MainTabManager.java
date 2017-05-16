@@ -11,6 +11,7 @@ import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 
+import app.privatefund.com.vido.mvp.ui.video.DiscoverFragmentc;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
@@ -28,7 +29,7 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
-    private DiscoveryFragment discoveryFragment;//发现
+    private DiscoverFragmentc discoveryFragment;//发现
 //    private ProductFragment productFragment;//产品
 private ProductFragment productFragment;//产品
 
@@ -88,7 +89,7 @@ private ProductFragment productFragment;//产品
                 break;
             case R.id.nav_right_first:
                 if (discoveryFragment == null) {
-                    discoveryFragment = new DiscoveryFragment();
+                    discoveryFragment = new DiscoverFragmentc();
                 }
                 fragment = discoveryFragment;
                 break;

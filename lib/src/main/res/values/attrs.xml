@@ -3,11 +3,14 @@
     <declare-styleable name="roundedimageview">
         <attr name="border_thickness" format="dimension" />
         <attr name="border_inside_color" format="color" />
-        <attr name="border_outside_color" format="color"/>
+        <attr name="border_outside_color" format="color" />
     </declare-styleable>
 
     <declare-styleable name="initWebView">
         <attr name="init" format="boolean" />
     </declare-styleable>
-
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>s
 </resources>
