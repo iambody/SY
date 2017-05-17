@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.widget;
+package com.cgbsoft.lib.widget.dialog;
 
 import android.content.Context;
 import android.os.Handler;
@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;

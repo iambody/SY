@@ -14,10 +14,10 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.DefaultDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
-import com.cgbsoft.lib.widget.ProtocolDialog;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 
 import java.util.concurrent.TimeUnit;
 

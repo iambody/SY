@@ -1,41 +1,17 @@
 package com.cgbsoft.lib.widget;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.model.bean.OtherInfo;
-import com.cgbsoft.lib.utils.cache.CacheManager;
-import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.db.DBConstant;
-import com.cgbsoft.lib.utils.db.DaoUtils;
-import com.cgbsoft.lib.utils.dm.core.DownloadManagerPro;
-import com.cgbsoft.lib.utils.dm.core.DownloadManagerProListener;
-import com.cgbsoft.lib.utils.dm.database.elements.Task;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
-import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.IOException;
-
-import rx.Observable;
-
-import static com.cgbsoft.lib.utils.db.DBConstant.APP_DOWNLOAD_PATH;
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 /**
  * 下载apkdialog

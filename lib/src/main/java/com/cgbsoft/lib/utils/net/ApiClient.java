@@ -2,8 +2,10 @@ package com.cgbsoft.lib.utils.net;
 
 import android.location.Address;
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
@@ -290,12 +292,13 @@ public class ApiClient {
 
     /**
      * 修改密码
-     * @param userName 用户名称
+     *
+     * @param userName  用户名称
      * @param pwdMd5Old 旧的密码 md5加密后
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -303,7 +306,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -402,6 +405,7 @@ public class ApiClient {
 
     /**
      * 视频点赞
+     *
      * @param videoId
      * @return
      */
@@ -460,6 +464,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
     /**
      * 重新生成Get 方式的value值
      *
@@ -517,7 +522,6 @@ public class ApiClient {
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");
             }
-
         } else {
             map = new HashMap<>();
             if (!map.containsKey("appVersion")) {
@@ -552,6 +556,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getAddressList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    //设为默认地址
     public static Observable<String> setDefauleMallAddress(String userId, String id) {
         Map<String, String> map = new HashMap<>();
         map.put("id", id);
@@ -559,4 +564,37 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().setDefaultMallAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    //获取直播列表
+    public static Observable<String> getLiveList(String userId) {
+        Map<String, String> map = new ArrayMap<>();
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().getLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播开房间
+     * key-->value
+     * id -->roomId
+     * chat --> chatId
+     * title -->roomTitle
+     * user_id --> userId
+     * room_type -->
+     * image --> 直播封面
+     * equipment --> 2
+     */
+    public static Observable<String> hostOpenLive(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播关闭房间
+     *
+     * @return
+     */
+    public static Observable<String> hostCloseLive(String roomId, String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }

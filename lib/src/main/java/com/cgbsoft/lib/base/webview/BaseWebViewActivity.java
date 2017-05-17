@@ -25,7 +25,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;

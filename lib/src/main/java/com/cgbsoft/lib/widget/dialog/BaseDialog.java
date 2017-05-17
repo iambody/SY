@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.widget;
+package com.cgbsoft.lib.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

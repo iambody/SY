@@ -14,12 +14,11 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
-import app.ndk.com.enter.mvp.ui.LoginActivity;
 import rx.Observable;
 
 /**

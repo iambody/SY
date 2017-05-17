@@ -37,7 +37,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
 import com.kogitune.activity_transition.ActivityTransition;

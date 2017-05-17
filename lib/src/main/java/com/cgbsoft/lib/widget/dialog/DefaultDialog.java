@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.widget;
+package com.cgbsoft.lib.widget.dialog;
 
 import android.content.Context;
 import android.graphics.Typeface;

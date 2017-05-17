@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.widget.CustomDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/28 11:58

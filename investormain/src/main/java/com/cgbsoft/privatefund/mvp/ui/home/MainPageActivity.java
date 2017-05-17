@@ -1,39 +1,49 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Layout;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
-import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
-import com.cgbsoft.lib.widget.DefaultDialog;
-import com.cgbsoft.lib.widget.DownloadDialog;
-import com.cgbsoft.lib.widget.PushDialog;
+import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.tencent.av.sdk.NetworkHelp;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import app.live.com.mvp.presenter.LoginHelper;
+import app.live.com.mvp.presenter.viewinface.LoginView;
+import app.live.com.mvp.ui.LiveActivity;
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
 
 @Route("investornmain_mainpageactivity")
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -43,8 +53,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @BindView(R.id.webView)
     BaseWebview baseWebview;
 
+    @BindView(R.id.cmain_live_dialog)
+    LinearLayout liveDialog;
+
+    @BindView(R.id.video_live_close)
+    ImageView liveDialogClose;
+
+    @BindView(R.id.video_live_pop)
+    RelativeLayout livePop;
+
+    @BindView(R.id.live_head)
+    ImageView liveIcon;
+
+    @BindView(R.id.live_title)
+    TextView liveTitle;
+
     private Observable<Boolean> closeMainObservable;
     private boolean isOnlyClose;
+    private JSONObject liveJsonData;
 
     @Override
     protected int layoutID() {
@@ -70,6 +96,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         transaction.commitAllowingStateLoss();
 
         initRxObservable();
+
+        loginLive();
+    }
+
+    private void loginLive() {
+        LoginHelper loginHelper = new LoginHelper(this, this);
+        //TODO 登录腾讯接口需要调试
+        loginHelper.iLiveLogin("yangyang", "eJxlj8tugzAQRfd8BWJdFfMw4O5aRKv0kco0Uh4b5IAxTlTHgKGQqv-ehESqpY40q3Nm7sy3YZqmtXj9uCV5fuiEytQoqWXemRawbv6glLzIiMq8pvgH6SB5QzNSKtpM0IEQugDoDi*oULzkV2Mkgp1bM9pin00xlxX*ad4NIx-pCmcTfEvW8QzHc5LY7LhOS6*IOsjfMXQJeiBdGrRlYj*Nj7gePVlvt-uvWXX-XIfLHUt2uErtViw42*QvA1r1GEo1BPa8qoZlsIJ9nG*0SMU-6fUg5CMQokj-qqdNyw9iElzgQMf1wLks48f4BfRDX1Y_");
     }
 
     @Override
@@ -130,7 +164,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     int switchID = -1;
-    int currentPostion=-1;
+    int currentPostion = -1;
 
     @Override
     public void onTabSelected(int position) {
@@ -138,24 +172,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         switch (position) {
             case 0://左1
                 switchID = R.id.nav_left_first;
-                currentPostion=0;
+                currentPostion = 0;
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-                currentPostion=1;
+                currentPostion = 1;
                 break;
             case 2://左3
                 switchID = R.id.nav_right_first;
-                currentPostion=2;
+                currentPostion = 2;
                 break;
             case 3://左4
                 switchID = R.id.nav_right_second;
-                currentPostion=3;
+                currentPostion = 3;
                 break;
             case 4://中间
                 // getPresenter().toSignIn();
                 switchID = R.id.nav_center;
-                currentPostion=4;
+                currentPostion = 4;
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
@@ -194,11 +228,52 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         System.exit(1);
     }
 
+    @OnClick(R.id.video_live_pop)
+    public void joinLive() {
+        if (liveJsonData!=null){
+
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
-        if (1==currentPostion&&MainTabManager.getInstance().getProductFragment().isShow()) {
+        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
             MainTabManager.getInstance().getProductFragment().backClick();
         } else
             exitBy2Click();
+    }
+
+    @Override
+    public void liveLoginSucc() {
+        getPresenter().getLiveList();
+    }
+
+    @Override
+    public void liveLoginFail(String module, int errCode, String errMsg) {
+        getPresenter().toSignIn();
+        Intent intent = new Intent(this, LiveActivity.class);
+        intent.putExtra("liveJson",liveJsonData.toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void hasLive(boolean hasLive, JSONObject jsonObject) {
+        if (hasLive) {
+            liveJsonData = jsonObject;
+            liveDialog.setVisibility(View.VISIBLE);
+            try {
+                liveTitle.setText(jsonObject.getString("a"));
+
+//                liveIcon
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            liveJsonData = null;
+            liveDialog.setVisibility(View.GONE);
+        }
+
     }
 }

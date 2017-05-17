@@ -14,6 +14,10 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 首页功能实现，数据调用
  * Created by xiaoyu.zhang on 2016/11/10 16:18
@@ -62,8 +66,53 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
         }
     }
 
+    /**
+     * 获取直播列表
+     */
+    @Override
+    public void getLiveList() {
+        ApiClient.getLiveList(SPreference.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                JSONArray jsonArray = null;
+                try {
+                    JSONObject js = new JSONObject(s);
+                    jsonArray = js.getJSONArray("result");
+                } catch (JSONException e) {
+                    getView().hasLive(false, null);
+                    e.printStackTrace();
+                }
+                if (jsonArray != null && jsonArray.length() > 0) {
+                    Gson g = new Gson();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            JSONObject liveJson = (JSONObject) jsonArray.get(i);
+                            if (liveJson.getInt("state") == 1) {
+                                System.out.println("-----------live---on");
+                                getView().hasLive(true, liveJson);
+                                break;
+                            } else {
+                                getView().hasLive(false, null);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                } else {
+                    getView().hasLive(false, null);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        });
+    }
+
     //todo 测试用
-    public void toSignIn(){
+    public void toSignIn() {
         String uid = SPreference.getUserId(BaseApplication.getContext());
         ApiClient.testSignIn(uid).subscribe(new RxSubscriber<String>() {
             @Override

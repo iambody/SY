@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.widget.MenuDialog;
+import com.cgbsoft.lib.widget.dialog.MenuDialog;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ import app.mall.com.mvp.contract.MallContract;
 import app.mall.com.mvp.listener.MallAddressListeber;
 import app.mall.com.mvp.presenter.MallPresenter;
 import butterknife.BindView;
-import butterknife.OnItemLongClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
 

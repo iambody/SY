@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.widget;
+package com.cgbsoft.lib.widget.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 /**
  * desc  菜单弹窗

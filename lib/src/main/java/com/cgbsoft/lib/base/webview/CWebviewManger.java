@@ -13,7 +13,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.privatefund.bean.share.CommonShareBean;

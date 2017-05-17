@@ -325,11 +325,53 @@ interface RequestManager {
 
     //获取商城收货地址列表
     @GET(NetConfig.MALL.MALL_ADDRESS_LIST)
-    Observable<ResponseBody> getAddressList(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> getAddressList(@QueryMap Map<String, String> paramsMap);
 
     //设置默认收货地址
     @FormUrlEncoded
     @DELETE(NetConfig.MALL.MALL_SET_DEFAULT)
     Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
+
+    //获取房间ID
+    @GET(NetConfig.LIVE.GET_ROOM_NUM)
+    Observable<ResponseBody> getRoomNum(@QueryMap Map<String, String> paramsMap);
+
+    //获取直播列表
+    @GET(NetConfig.LIVE.GET_LIVE_LIST)
+    Observable<ResponseBody> getLiveList(@QueryMap Map<String, String> paramsMap);
+
+    //主播开房间
+    @FormUrlEncoded
+    @POST(NetConfig.LIVE.HOST_OPEN_LIVE)
+    Observable<ResponseBody> hostOpenLive(@FieldMap Map<String, String> paramsMap);
+
+    //主播关闭房间
+    @FormUrlEncoded
+    @POST(NetConfig.LIVE.HOST_CLOSE_LIVE)
+    Observable<ResponseBody> hostCloseLive(@FieldMap Map<String, String> paramsMap);
+
+    //获取房间成员
+    @GET(NetConfig.LIVE.GET_ROOM_MEMBER)
+    Observable<ResponseBody> getRoomMenber(@QueryMap Map<String, String> paramsMap);
+
+    //主播心跳
+    @GET(NetConfig.LIVE.LIVE_HOST_HEART)
+    Observable<ResponseBody> liveHostHeart(@QueryMap Map<String, String> paramsMap);
+
+    //客户进入房间
+    @GET(NetConfig.LIVE.CUSTOM_JOIN_ROOM)
+    Observable<ResponseBody> customJoin(@QueryMap Map<String, String> paramsMap);
+
+    //客户退出房间
+    @GET(NetConfig.LIVE.CUSTOM_EXIT_ROOM)
+    Observable<ResponseBody> custonExit(@QueryMap Map<String, String> paramsMap);
+
+    //获取预告
+    @GET(NetConfig.LIVE.GET_LIVE_NOTICE)
+    Observable<ResponseBody> getNoticeLive(@QueryMap Map<String, String> paramsMap);
+
+    //获取直播资料
+    @GET(NetConfig.LIVE.GET_LIVE_PDF)
+    Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
 
 }

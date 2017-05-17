@@ -46,6 +46,10 @@ android {
             jumboMode = true
             javaMaxHeapSize = "8g"
         }
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
     }
 
     signingConfigs {
@@ -92,7 +96,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "shimuyun_release_${defaultConfig.versionName}.apk"
+                        def fileName = "simuyun_release_${defaultConfig.versionName}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
@@ -139,9 +143,9 @@ dependencies {
     compile "io.reactivex:rxjava:${rxjava_need_version}"
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
-//    compile project(':adviser')
     compile project(':order')
     compile project(':enter')
     compile project(':share')
     compile project(':product')
+    compile project(':live')
 }

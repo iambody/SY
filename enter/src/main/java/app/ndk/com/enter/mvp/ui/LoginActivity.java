@@ -1,6 +1,5 @@
 package app.ndk.com.enter.mvp.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -12,36 +11,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebview;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
-import com.cgbsoft.lib.widget.MToast;
-import com.cgbsoft.lib.widget.ProtocolDialog;
-import com.chenenyu.router.RouteTable;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
-import com.cn.hugo.android.scanner.CaptureActivity;
 import com.jhworks.library.ImageSelector;
 import java.util.ArrayList;
-import java.util.List;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
-import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -237,6 +226,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
+
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }

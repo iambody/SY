@@ -1,5 +1,6 @@
 package com.cgbsoft.lib;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
@@ -19,6 +20,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import org.greenrobot.greendao.database.Database;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.logging.Level;
 
 /**

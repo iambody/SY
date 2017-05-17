@@ -1,22 +1,19 @@
 package com.commui.prompt.mvp.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.webview.PushMsgActivity;
-import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.widget.BaseDialog;
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import app.privatefund.com.cmmonui.R;
-import io.rong.eventbus.EventBus;
 
 /**
  * desc  签到弹窗
