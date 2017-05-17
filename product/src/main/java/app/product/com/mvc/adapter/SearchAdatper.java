@@ -1,10 +1,6 @@
 package app.product.com.mvc.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,9 +15,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
-import com.cn.hugo.android.scanner.common.BitmapUtils;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +25,6 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.ui.SearchBaseActivity;
-import app.product.com.utils.BUtils;
 import app.product.com.utils.CollectionUtils;
 import app.product.com.utils.ViewUtil;
 
@@ -602,7 +595,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         int min = (int) (l / 1000 / 60);
                         if (hour >= 72) {
                             dateString = day + "天";
-                            jiezhibg.setBackgroundResource(R.drawable.lanse);
+                            jiezhibg.setBackgroundResource(R.drawable.ic_lanse);
                             jiezhidate.setTextColor(0xffffffff);
                         } else if (hour > 0 && hour < 72) {
                             dateString = hour + "小时";

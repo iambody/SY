@@ -5,19 +5,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,7 +43,9 @@ import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 
 
@@ -50,9 +54,9 @@ import rx.Observable;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/6-10:15
  */
-public class ProductFragment extends BaseFragment<ProductPresenter> implements ProductContract.view {
+public class ProductFragment extends BaseFragment<ProductPresenter> implements ProductContract.view, OnLoadMoreListener, OnRefreshListener {
 
-    @BindView(R2.id.fragment_productrecyclerView)
+    @BindView(R2.id.swipe_target)
     RecyclerView fragmentProductrecyclerView;
     @BindView(R2.id.product_productfragment_sousou)
     TextView productProductfragmentSousou;
@@ -62,6 +66,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     TextView productProductfragmentShaixuan;
     @BindView(R2.id.product_productfragment_productserieslayout)
     ProductSeriesLayout productProductfragmentProductserieslayout;
+    @BindView(R2.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
 
     //排序的事件
     private Observable<Series> seriesObservable;
@@ -77,7 +84,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private ProductFilterBean productFilterBean;
     //筛选是否展开
     private boolean isExtend;
-
+    private boolean isLoadmore;
     //所有记录选择状态的数据**********************
     // 记录当前的系列的数据
     private String CurrentSeries;
@@ -116,14 +123,21 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      * 初始化配置
      */
     private void initConfig() {
-
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+        swipeToLoadLayout.setOnRefreshListener(this);
         productProductfragmentProductserieslayout.setInit(true);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         fragmentProductrecyclerView.setLayoutManager(linearLayoutManager);
         productlsAdapter = new ProductlsAdapter(baseActivity, null);
         fragmentProductrecyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity, R.color.transparent, R.dimen.ui_10_dip));
         fragmentProductrecyclerView.setAdapter(productlsAdapter);
-
+        productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ProductlsBean productlsBean=    productlsAdapter.getBeanList().get(position);
+                NavigationUtils.startProductDetailActivity(baseActivity,productlsBean.schemeId,productlsBean.productName,100);
+            }
+        });
 
         CurrentSeries = "0";//默认系列是全部  0代表全部
         CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
@@ -190,7 +204,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         //请求筛选条件的数据
         getPresenter().getProductFilterData();
         //请求列表的数据
-        getPresenter().getProductData(CurrentOffset, CurrentSeries, CurrentOderBy, CurrentFilter);
+        reSetConditionAction();
     }
 
     @Override
@@ -212,8 +226,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     public void onProductProductfragmentPaixuClicked() {
         if (null != orderbyPop && orderbyPop.isShowing()) {
             orderbyPop.dismiss();
-
-
 
 
             return;
@@ -241,6 +253,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @Override
     public void getDataSucc(int Type, String str) {
+        clodLsAnim(swipeToLoadLayout);
         switch (Type) {
             case ProductContract.LOAD_FILTER://获取到的筛选条件
                 productFilterBean = new Gson().fromJson(str.trim(), ProductFilterBean.class);
@@ -253,13 +266,18 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 //开始解析数据
                 productlsBeen = new Gson().fromJson(str, new TypeToken<ArrayList<ProductlsBean>>() {
                 }.getType());
-                productlsAdapter.freshAp(productlsBeen);
+                if (isLoadmore) productlsAdapter.AddfreshAp(productlsBeen);
+                else
+                    productlsAdapter.freshAp(productlsBeen);
+
                 break;
         }
+        isLoadmore = false;
     }
 
     @Override
     public void getDataFail(int Type, String str) {
+        clodLsAnim(swipeToLoadLayout);
         PromptManager.ShowCustomToast(getContext(), str);
         switch (Type) {
             case ProductContract.LOAD_FILTER://请求筛选条件失败
@@ -268,6 +286,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             case ProductContract.LOAD_PRODUCT_LISTDATA://请求产品列表成功
                 break;
         }
+        isLoadmore = false;
     }
 
     /**
@@ -338,5 +357,19 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     public boolean isShow() {
         return (null != orderbyPop && orderbyPop.isShowing()) || (null != filterPop && filterPop.isShowing());
     }
+
+    @Override
+    public void onLoadMore() {
+        CurrentOffset = CurrentOffset + 1;
+        isLoadmore = true;
+        reSetConditionAction();
+    }
+
+    @Override
+    public void onRefresh() {
+        CurrentOffset = 0;
+        reSetConditionAction();
+    }
+
 
 }

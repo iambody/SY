@@ -15,6 +15,8 @@ public interface Constant {
     String USER_SETTING = "user_setting";
     //上一次更新的应用版本号，如果刚安装则为当前版本号
     String LAST_APP_VERSION = "last_app_version";
+    // 微信登陆
+    String weixin_login = "weixinlogin";
 
     // 用于判断后台到前台
     String IS_CURRENTRUNNINGFOREGROUND = "isCurrentRunningForeground";
@@ -125,5 +127,12 @@ public interface Constant {
     public static final String UPLOAD_REDEMPTION_TYPE = "redemption/";
     //意见反馈
     public static final String UPLOAD_FEEDBACK_TYPE = "feedback/";
+
+    // 手势密码
+    public static final int POINT_STATE_NORMAL = 0;
+
+    public static final int POINT_STATE_SELECTED = 1;
+
+    public static final int POINT_STATE_WRONG = 2;
 
 }

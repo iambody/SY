@@ -22,10 +22,6 @@ public class WebViewConstant {
     public static final String Jump_Info_KeyWord = "keywords";
     public static final String pdf_url = "pdf_url";
     public static final String pdf_name = "pdf_name";
-
-    public static final String MODIFY_PASSWORD = "app:changepassword";
-    public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
-
     public static HashMap<String, String> NewFoundHashMap;
 
     static {
@@ -36,6 +32,26 @@ public class WebViewConstant {
         NewFoundHashMap.put("2", "云观察");
         NewFoundHashMap.put("3", "云观点");
         NewFoundHashMap.put("4", "早知道");
+    }
+
+    /**
+     * 需要回调的指令集
+     */
+    public class AppCallBack {
+        public static final String BUY_NEW = "app:buynow";
+        public static final String CAN_BUY = "app:canBuy";
+        public static final String LIVE_VIDEO = "app:liveVideo";
+        public static final String MODIFY_PASSWORD = "app:changepassword";
+        public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
+        public static final String INVITE_CUSTOM = "app:inviteCust";
+    }
+
+    /**
+     * 需要拦截跳转到非BaseWebViewActivity页面的url地址集
+     */
+    public class IntecepterActivity {
+        public static final String recommend_friend = "/settings/recommendation.html";
+
     }
 
 }

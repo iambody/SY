@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/9-10:55
  */
-public class ProductlsAdapter extends RecyclerView.Adapter {
+public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnClickListener{
     public final int HOTPRODUCT = 1;//热门的标签
     public final int NORMALPRODUCT = 2;//正常的标签
     public final int OVERPRODUCT = 3;//已结束的标签
@@ -40,7 +40,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
     private LayoutInflater layoutInflater;
     private Context acontext;
     private List<ProductlsBean> beanList;
-
+    private OnRecyclerItemClickListener mOnItemClickListener = null;
     public ProductlsAdapter(Context acontext, List<ProductlsBean> beanList) {
         this.acontext = acontext;
         this.beanList = beanList;
@@ -51,20 +51,32 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
         this.beanList = beanList;
         this.notifyDataSetChanged();
     }
-
+    public void AddfreshAp(List<ProductlsBean> beanList) {
+        int count=beanList.size();
+        this.beanList.addAll(beanList);
+        this.notifyItemRangeChanged(count-1,beanList.size());
+    }
+    public List<ProductlsBean>getBeanList(){
+        return beanList;
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
             case HOTPRODUCT://热门产品
-                viewHolder = new HotProductHolder(layoutInflater.inflate(R.layout.product_item_productls_hot, null));
-
+                View hotView=layoutInflater.inflate(R.layout.product_item_productls_hot, null);
+                viewHolder = new HotProductHolder(hotView);
+                hotView.setOnClickListener(this);
                 break;
             case NORMALPRODUCT://正常标签
-                viewHolder = new NormalProductHolder(layoutInflater.inflate(R.layout.product_item_productls, null));
+                View normalView=layoutInflater.inflate(R.layout.product_item_productls, null);
+                viewHolder = new NormalProductHolder(normalView);
+                normalView.setOnClickListener(this);
                 break;
             case OVERPRODUCT://已清算
-                viewHolder = new OverProductHolder(layoutInflater.inflate(R.layout.product_item_productls_over, null));
+                View overView=layoutInflater.inflate(R.layout.product_item_productls_over, null);
+                viewHolder = new OverProductHolder(overView);
+                overView.setOnClickListener(this);
                 break;
 
         }
@@ -77,7 +89,9 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
 
         switch (getItemViewType(position)) {
             case HOTPRODUCT://热门产品
+
                 HotProductHolder hotProductHolder = (HotProductHolder) holder;
+                hotProductHolder.itemView.setTag(position);
                 Imageload.display(acontext, productlsBean.marketingImageUrl, hotProductHolder.productItemProductlsHotBg);
                 String pro_name = productlsBean.productName;
                 if (pro_name.length() > 16) {
@@ -177,13 +191,13 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
                     }
                     BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
                 }
-//                h3.time.setBackgroundResource(Utils.isVisteRole(getContext()) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
-                hotProductHolder.productItemProductlsHotJiezhi.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.jiezhi_c_bg : R.drawable.jiezhi);
+                hotProductHolder.productItemProductlsHotJiezhi.setBackgroundResource(AppManager.isInvestor(acontext) ? R.drawable.jiezhi_c_bg : R.drawable.ic_jiezhi);
                 BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotMujicount);
                 BStrUtils.switchColorToBandC(acontext, hotProductHolder.productItemProductlsHotCenter);
                 break;
             case NORMALPRODUCT://正常标签
                 NormalProductHolder normalProductHolder = (NormalProductHolder) holder;
+                normalProductHolder.itemView.setTag(position);
                 BStrUtils.SetTxt(normalProductHolder.productItemProductlsTitle, productlsBean.productName);
 
                 normalProductHolder.productItemProductlsLogobackground.setImageResource(R.drawable.logobackgroundzanting);
@@ -295,7 +309,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
 
                         if (hour >= 72) {
                             dateString = day + "天";
-                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.lanse);
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.ic_lanse);
                             normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
                         } else if (hour > 0 && hour < 72) {
                             dateString = hour + "小时";
@@ -324,7 +338,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
                 break;
             case OVERPRODUCT://已清算
                 OverProductHolder overProductHolder = (OverProductHolder) holder;
-
+                overProductHolder.itemView.setTag(position);
 
                 BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverTitle, productlsBean.productName);
                 BStrUtils.switchColorToBandC(acontext, overProductHolder.productItemProductlsOverShengyueduCount);
@@ -398,6 +412,14 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
         if (!beanList.get(position).state.equals("70")) return NORMALPRODUCT;
 
         return OVERPRODUCT;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+        }
     }
 
     //热门的产品Holder
@@ -510,5 +532,10 @@ public class ProductlsAdapter extends RecyclerView.Adapter {
         }
     }
 
-
+    public   interface OnRecyclerItemClickListener {
+        void onItemClick(View view , int position);
+    }
+    public void setOnItemClickListener(OnRecyclerItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
 }

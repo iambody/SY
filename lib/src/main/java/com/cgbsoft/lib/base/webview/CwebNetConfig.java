@@ -18,6 +18,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     public static String pageInit;
 
+    public static String productDetail;
+
     static {
         initApi();
     }
@@ -29,5 +31,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoverPage = baseParentUrl + "/discover/index.html";
         clubPgge = baseParentUrl + "/bank/default.html";
         pageInit = baseParentUrl + "/setData.html";
+        productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
     }
 }

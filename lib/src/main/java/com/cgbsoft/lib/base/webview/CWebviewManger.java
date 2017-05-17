@@ -212,12 +212,9 @@ public class CWebviewManger {
         } else if (action.contains("tocShare")) {
             shareToC(action);
         } else if (action.contains("riskTest")) {
-//            Intent intent = new Intent(context, RiskResultToCActivity.class);
-//            String[] split = action.split(":");
-//            intent.putExtra("level", split[2]);
-//            context.startActivity(intent);
-//            context.finish();
-            // ScreenManager.getScreenManager().popActivity(false);
+            String[] split = action.split(":");
+            NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
+            context.finish();
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
         } else if (action.contains("openSharePage")) {
@@ -236,22 +233,16 @@ public class CWebviewManger {
         } else if (action.contains("updated")) {
 //            VersonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转
-//            context.startActivity(new Intent(context, FeedbackActivity.class));
+            NavigationUtils.startActivityByRouter(context, "investornmain_feedbackctivity");
         } else if (action.contains("signEnt")) {
 //            SignIn();
         } else if (action.contains("setGestruePassword")) { //设置手势密码
-//            Intent intent = new Intent(context, GestureEditActivity.class);
-//            context.startActivity(intent);
-//            String valuse = "1".equals(MApplication.getUser().getToC().getGestureSwitch()) ? "2" : "1";
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureeditactivity");
         } else if (action.contains("modifyGestruePassword")) { // 修改手势密码
-//            Intent intent = new Intent(context, GestureVerifyActivity.class);
-//            intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
-//            context.startActivity(intent);
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureverifyactivity", "PARAM_FROM_MODIFY", true);
 //            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
-//            Intent intent = new Intent(context, GestureVerifyActivity.class);
-//            intent.putExtra(GestureVerifyActivity.PARAM_CLOSE_PASSWORD, true);
-//            context.startActivity(intent);
+            NavigationUtils.startActivityByRouter(context, "investornmain_gestureverifyactivity", "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
 //            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {
@@ -401,7 +392,6 @@ public class CWebviewManger {
 //            return null;
 //        }
 //    }
-
     private void showContactImDialog(String action) {
         String[] split = action.split(":");
         try {
@@ -727,17 +717,17 @@ public class CWebviewManger {
 
     private void shareDataFriend(String action) {
         // "inviteCust","2",'/apptie/invite_preview_wx.html?site=2'); 1:普通邀请,可分享微信好友和朋友圈、2:精准邀请,只能分享到微信好友
-        String[] split = action.split(":");
-        try {
-            String title = URLDecoder.decode(split[5], "utf-8");
-            String type = URLDecoder.decode(split[2], "utf-8");
-            String content = URLDecoder.decode(split[4], "utf-8");
-            String link = URLDecoder.decode(split[3], "utf-8");
-            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
-            CommonShareBean commonShareBean = new CommonShareBean();
-            commonShareBean.setTitle(title);
-            commonShareBean.setContent(content);
-            commonShareBean.setLink(link);
+//        String[] split = action.split(":");
+//        try {
+//            String title = URLDecoder.decode(split[5], "utf-8");
+//            String type = URLDecoder.decode(split[2], "utf-8");
+//            String content = URLDecoder.decode(split[4], "utf-8");
+//            String link = URLDecoder.decode(split[3], "utf-8");
+//            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
+//            CommonShareBean commonShareBean = new CommonShareBean();
+//            commonShareBean.setTitle(title);
+//            commonShareBean.setContent(content);
+//            commonShareBean.setLink(link);
 //            if ("2".equals(type)) {
 //                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
 //                commonShareDialog.show();
@@ -745,9 +735,9 @@ public class CWebviewManger {
 //                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 0, commonShareBean, null);
 //                commonShareDialog.show();
 //            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 //
 //    private void openWeixin(final String title, final String content, final String url, final int image) {
@@ -904,7 +894,8 @@ public class CWebviewManger {
 //        CommonShareDialog dialog = new CommonShareDialog(context,1,shareBean,null);
 //        dialog.show();
     }
-//
+
+    //
 //    private void logOutUser() {
 //        ReturnLogin returnLogin = new ReturnLogin();
 //        returnLogin.tokenExit(context);
@@ -957,7 +948,7 @@ public class CWebviewManger {
     private void openMallPage(String action) {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
-        HashMap<String, String> hashMap = new HashMap();
+        HashMap<String, Object> hashMap = new HashMap();
         hashMap.put("url", split[2]);
         hashMap.put("title", split[3]);
         NavigationUtils.startActivityByRouter(context, "investornmain_mallactivity", hashMap);
@@ -1037,13 +1028,14 @@ public class CWebviewManger {
 
     /**
      * 产品跳转到视频
+     *
      * @param action
      */
     private void playVideo(String action) {
         String[] vas = action.split(":");
         String videoId = action.substring(action.lastIndexOf("Video:") + 6);
         videoId = TextUtils.isEmpty(videoId) ? vas[2] : videoId;
-        NavigationUtils.toPlayVideoActivityByRouter(context, videoId);
+        NavigationUtils.startVidoDetailActivity(context, videoId, null, 2);
     }
 
     /**
@@ -1212,6 +1204,7 @@ public class CWebviewManger {
 
     /**
      * 打开新页面
+     *
      * @param data url路径
      *             rightSave 右上角是否有保存按钮
      *             initPage 页面是否初始化
@@ -1220,6 +1213,9 @@ public class CWebviewManger {
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
+            if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
+                return;
+            }
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
@@ -1249,6 +1245,38 @@ public class CWebviewManger {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 监听页面跳转的拦截，拦截成功返回ture, 失败返回false
+     * @return
+     */
+    private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
+        if (actionUrl.contains(WebViewConstant.IntecepterActivity.recommend_friend)) {
+            String[] split = actionUrl.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (!url.contains("http")) {
+                url = BaseWebNetConfig.baseParentUrl + url;
+            }
+
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            if (initPage) {
+                String pushMessage = split[4];
+                hashMap.put(WebViewConstant.push_message_value, pushMessage);
+            }
+            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+            if (split.length >= 5) {
+                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+            }
+            NavigationUtils.startActivityByRouter(context, "investornmain_invisterbasewebviewctivity", hashMap);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -1477,6 +1505,7 @@ public class CWebviewManger {
 //        });
 //    }
 //
+
     /**
      * 跳转到我的任务页面
      */

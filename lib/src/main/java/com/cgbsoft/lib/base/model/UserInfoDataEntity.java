@@ -97,6 +97,8 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String customerRiskEvaluation;
         public String stockAssetsImage;
         public String checkFailureReason;
+        public String gesturePassword;
+        private String gestureSwitch;
 
         public String getCustomerName() {
             return customerName;
@@ -272,6 +274,22 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
 
         public void setCheckFailureReason(String checkFailureReason) {
             this.checkFailureReason = checkFailureReason;
+        }
+
+        public String getGesturePassword() {
+            return gesturePassword;
+        }
+
+        public void setGesturePassword(String gesturePassword) {
+            this.gesturePassword = gesturePassword;
+        }
+
+        public String getGestureSwitch() {
+            return gestureSwitch;
+        }
+
+        public void setGestureSwitch(String gestureSwitch) {
+            this.gestureSwitch = gestureSwitch;
         }
     }
 }

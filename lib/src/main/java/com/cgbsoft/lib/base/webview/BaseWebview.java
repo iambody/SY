@@ -41,6 +41,8 @@ public class BaseWebview extends WebView {
 
     public CWebClient.WebviewOnClick click;
 
+    private CWebClient cWebClient;
+
     /**
      * WebChromeClient回调方法
      */
@@ -99,13 +101,14 @@ public class BaseWebview extends WebView {
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
         setWebChromeClient(new WVChromeClient());
+        cWebClient = new CWebClient(BaseWebview.this, javaScriptObject, wcontext, click, isShangxueyuan);
         //目前先写C侧的Client 后续B重构会添加判断 添加B||C的Client
         setWebViewClient(isInitData ? new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
                 return true;
             }
-        } : new CWebClient(BaseWebview.this,javaScriptObject, wcontext,click,isShangxueyuan));
+        } : cWebClient);
     }
 
 
@@ -199,6 +202,7 @@ public class BaseWebview extends WebView {
     //这个是之前webview需要有的live和认购的特殊回调  @陈龙
     public void setClick(CWebClient.WebviewOnClick click) {
         this.click = click;
+        cWebClient.setWebviewOnClick(click);
     }
 
     public boolean isShangxueyuan() {

@@ -133,7 +133,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     /**
-     * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须注册此方法
+     * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须重写注册方法
      * @return
      */
     protected String getRegeistRxBusId() {
@@ -154,7 +154,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
      */
-    protected void executeOverideUrlCallBack(String actionUrl) {}
+    protected void executeOverideUrlCallBack(String actionUrl) {
+
+    }
 
     @Override
     protected T createPresenter() {

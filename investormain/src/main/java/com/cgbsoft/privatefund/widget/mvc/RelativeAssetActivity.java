@@ -108,7 +108,7 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void data() {
         if (WAIT_CHECK == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.shenhezhong);
+            resultImage.setImageResource(R.drawable.ic_shenhezhong);
             resultImage.setVisibility(View.VISIBLE);
             commitBtn.setVisibility(View.GONE);
             addImage.setVisibility(View.GONE);
@@ -123,7 +123,7 @@ public class RelativeAssetActivity extends BaseActivity implements View.OnClickL
 
             initImage();
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.shibai);
+            resultImage.setImageResource(R.drawable.ic_shibai);
             resultImage.setVisibility(View.VISIBLE);
             addImage.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(SPreference.getToCBean(this).getCheckFailureReason())) {

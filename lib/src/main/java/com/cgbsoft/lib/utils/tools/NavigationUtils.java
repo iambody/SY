@@ -8,6 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.Router;
 import com.jhworks.library.ImageSelector;
@@ -51,6 +55,10 @@ public class NavigationUtils {
         selectSec.start(activity, reqeustCode);
     }
 
+    public static void toMainActivity(Context context) {
+        Router.build("investornmain_mainpageactivity").go(context);
+    }
+
     /**
      * 调用系统报打电话页面
      *
@@ -85,6 +93,38 @@ public class NavigationUtils {
         Router.build(routerType).go(context);
     }
 
+    /**
+     * 跳转到产品详情的操作
+     *
+     * @param context
+     * @param schemeId
+     * @param productName
+     * @param requestCode
+     */
+    public static void startProductDetailActivity(Context context, String schemeId, String productName, int requestCode) {
+        String url = CwebNetConfig.productDetail.concat(schemeId);
+        Intent intent = new Intent(context, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, productName);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        ((Activity) context).startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 跳转到视频详情页面
+     *
+     * @param
+     * @param
+     * @param
+     */
+    public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, int comeFrom) {
+        Intent intent = new Intent(context, VideoDetailActivity.class);
+        intent.putExtra("videoId", videoId);
+        intent.putExtra("videoCoverUrl", videoCoverUrl);
+        intent.putExtra("comeFrom", comeFrom);
+        ((Activity) context).startActivity(intent);
+    }
+
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle) {
         Router.build(routerType).with(bundle).go(context);
     }
@@ -93,10 +133,10 @@ public class NavigationUtils {
         Router.build(routerType).with(key, object).go(context);
     }
 
-    public static void startActivityByRouter(Context context, String routerType, HashMap<String, String> hashMap) {
+    public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap) {
         IRouter iRouter = Router.build(routerType);
-        Set<Map.Entry<String, String>> set = hashMap.entrySet();
-        for (Map.Entry<String, String> entry : set) {
+        Set<Map.Entry<String, Object>> set = hashMap.entrySet();
+        for (Map.Entry<String, Object> entry : set) {
             iRouter.with(entry.getKey(), entry.getValue());
         }
         iRouter.go(context);
@@ -112,10 +152,5 @@ public class NavigationUtils {
 
     public static void startActivityByRouter(Context context, String routerType, String key, Object object, int flag) {
         Router.build(routerType).with(key, object).addFlags(flag).go(context);
-    }
-
-    //进入视频播放页面
-    public static void toPlayVideoActivityByRouter(Context context, String videoId) {
-        Router.build("video_playtactivity").with("videoId", videoId).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).go(context);
     }
 }

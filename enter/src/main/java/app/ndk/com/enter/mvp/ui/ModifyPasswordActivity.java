@@ -16,7 +16,7 @@ import app.ndk.com.enter.mvp.presenter.ModifyPasswordPresenter;
 
 /**
  * @author chenlong
- * 修改密码
+ *         修改密码
  */
 public class ModifyPasswordActivity extends BaseWebViewActivity<ModifyPasswordPresenter> implements ModifyPasswordContract.View {
 
@@ -32,12 +32,12 @@ public class ModifyPasswordActivity extends BaseWebViewActivity<ModifyPasswordPr
         super.init(savedInstanceState);
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
         mWebview.setClick(result -> {
-            if (result.startsWith(WebViewConstant.MODIFY_PASSWORD)) { // 修改密码
+            if (result.startsWith(WebViewConstant.AppCallBack.MODIFY_PASSWORD)) {// 修改密码
                 String params = null;
                 try {
                     params = URLDecoder.decode(result, "utf-8");
                     String[] values = params.split(":");
-                    ((ModifyPasswordPresenter)getPresenter()).modifyPassword(mLoadingDialog, SPreference.getUserInfoData(this).userName, values[2], values[3]);
+                    ((ModifyPasswordPresenter) getPresenter()).modifyPassword(mLoadingDialog, SPreference.getUserInfoData(this).userName, values[2], values[3]);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

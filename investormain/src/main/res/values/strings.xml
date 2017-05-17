@@ -99,4 +99,27 @@
     <string name="loading">加载中...</string>
     <string name="no_camera_device">没有找到相机设备, 请检查是否有相应拍照权限</string>
     <string name="asset_prove_upload_desc">支持10张以内JPG格式图片，单张图片不超过10M</string>
+
+    <string name="risk_result_info">根据问卷答案分析，您的风险承受能力为</string>
+    <string name="risk_evaluating_title">风险承受能力评测</string>
+
+
+    <!-- Gesture code starting -->
+    <string name="setup_gesture_pattern">请输入手势密码</string>
+    <string name="setup_gesture_pattern_again">再次绘制解锁图案</string>
+    <string name="forget_gesture_code">忘记手势密码?</string>
+    <string name="set_gesture_password_success">手势密码设置成功</string>
+    <string name="modify_gesture_password_success">手势密码修改成功</string>
+    <string name="use_other_account_login">用其他账号登录</string>
+    <string name="please_right_gesture_password"><font color='#c70c1e'>至少连接四个点，请重新绘制</font></string>
+    <string name="set_gesture_agin"><font color='#c70c1e'>与首次绘制不一致，请重新绘制</font></string>
+    <string name="set_gesture_pattern_reason">为了您的账户安全，请设置手势密码</string>
+    <string name="reset_gesture_code">请再次设置手势密码</string>
+    <string name="please_target_gesture_password">请输入原手势密码</string>
+    <string name="please_new_gesture_password">请设置新的手势密码</string>
+    <string name="please_target_gesture_password_again">请再次绘制手势密码</string>
+    <string name="setup_gesture_code">验证手势密码</string>
+    <string name="gesture_password_error_times">您已连续五次输错手势，手势密码已关闭，请重新登录</string>
+    <string name="weixin_reset_gesture_password">忘记手势密码，请致电官方客户电话</string>
+    <string name="forget_pwd">忘记密码?</string>
 </resources>

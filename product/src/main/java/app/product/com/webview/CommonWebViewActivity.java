@@ -1,5 +1,8 @@
 package app.product.com.webview;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 

@@ -4,7 +4,8 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/c_background">
 
     <include layout="@layout/search_base_title" />
 
@@ -13,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_list_bg">
+        android:background="@color/c_background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,8 +72,8 @@
                 android:id="@+id/product_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_font"
-                android:divider="@color/text_line"
+                android:background="@color/c_background"
+                android:divider="@color/c_background"
                 android:dividerHeight="1dp"
                 android:headerDividersEnabled="false" />
         </LinearLayout>
@@ -88,7 +89,7 @@
                 android:id="@+id/result_show"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/main_list_bg" />
+                android:background="@color/c_background" />
         </LinearLayout>
 
         <LinearLayout

@@ -9,12 +9,14 @@ import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.dao.DayTaskBeanDao;
+import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
 
 import org.greenrobot.greendao.query.Query;
+import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,11 +32,15 @@ public class DaoUtils {
     private OtherInfoDao otherInfoDao;
     private UserInfoDao userInfoDao;
     private VideoInfoDao videoInfoDao;
+    private HistorySearchBeanDao historySearchBeanDao;
     private DayTaskBeanDao dayTaskDao;
 
     public static final int W_OTHER = 1;
     public static final int W_USER = 2;
     public static final int W_VIDEO = 3;
+    //搜索历史的数据库
+    public static final int W_SousouHistory = 101;
+
     public static final int W_TASK = 4;
 
     public DaoUtils(Context context, int which) {
@@ -48,10 +54,59 @@ public class DaoUtils {
             case W_VIDEO:
                 videoInfoDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getVideoInfoDao();
                 break;
+            case W_SousouHistory:
+                historySearchBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getHistorySearchBeanDao();
+                break;
             case W_TASK:
                 dayTaskDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDayTaskBeanDao();
                 break;
         }
+    }
+
+    /**
+     * 获取搜索历史的全部数据
+     *
+     * @return
+     */
+    public List<HistorySearchBean> getHistoryLs() {
+        if (null == historySearchBeanDao) return new ArrayList<>();
+
+        return historySearchBeanDao.queryBuilder().list();
+    }
+
+    /**
+     * 清除历史搜索记录
+     */
+    public void clearnHistorySearch() {
+        if (null != historySearchBeanDao)
+            historySearchBeanDao.deleteAll();
+    }
+
+    /**
+     * 插入一条
+     *
+     * @param historySearchBean
+     */
+    public void insertHistorySearch(HistorySearchBean historySearchBean) {
+        if (null == historySearchBeanDao) return;
+        if (historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Name.eq(historySearchBean.getName())).buildCount().count() > 0){
+            historySearchBeanDao.update(historySearchBean);
+            return;
+        }
+        historySearchBean.set_id(getHistoryLs().size());
+            historySearchBeanDao.insert(historySearchBean);
+    }
+
+    /**
+     * 根据type和用户id获取搜搜列表
+     *
+     * @param Type
+     * @param userId
+     */
+    public List<HistorySearchBean> getHistorysByType(String Type, String userId) {
+        if (null == historySearchBeanDao) return new ArrayList<>();
+        return historySearchBeanDao.queryBuilder().where(HistorySearchBeanDao.Properties.Type.eq(Type), HistorySearchBeanDao.Properties.UserId.eq(userId)).build().list();
+
     }
 
     public OtherInfo getOtherInfo(String title) {

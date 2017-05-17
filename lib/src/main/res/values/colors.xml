@@ -61,7 +61,8 @@
 
     <color name="mred">#ea1202</color>
 
-
+    <color name="c_btn_circle_nor">#f47900</color>
+    <color name="c_btn__circle_press">#ff9019</color>
 
     <color name="transparent">#00000000</color>
 

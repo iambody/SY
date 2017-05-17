@@ -40,5 +40,7 @@
     <string name="risk_comment_prmpt">当前问卷填写的内容将不会保存，确定要返回么?</string>
     <string name="fc_college_title_str">学院</string>
     <string name="save">保存</string>
+    <string name="frashing">刷新中</string>
+    <string name="loading">加载更多...</string>
 
 </resources>

@@ -23,6 +23,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
+import com.cgbsoft.lib.widget.DownloadDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
@@ -69,7 +70,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
+    private Observable<Boolean> gestruePwdObservable;
     private boolean isOnlyClose;
+    private int currentResId;
     private JSONObject liveJsonData;
 
     @Override
@@ -209,6 +212,29 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
+        gestruePwdObservable = RxBus.get().register(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE, Boolean.class);
+        gestruePwdObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (SPreference.getToCBean(MainPageActivity.this) != null && "1".equals(SPreference.getToCBean(MainPageActivity.this).getGestureSwitch())) {
+                    gesturePasswordJumpPage();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    private void gesturePasswordJumpPage() {
+        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
+            /*Intent intent = new Intent(context, GestureVerifyActivity.class);
+            intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
+            context.startActivity(intent);*/
+        }
     }
 
     @Override
