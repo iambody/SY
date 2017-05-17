@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.IRouter;
@@ -118,11 +119,13 @@ public class NavigationUtils {
      * @param
      */
     public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, int comeFrom) {
-        Intent intent = new Intent(context, VideoDetailActivity.class);
-        intent.putExtra("videoId", videoId);
-        intent.putExtra("videoCoverUrl", videoCoverUrl);
-        intent.putExtra("comeFrom", comeFrom);
-        ((Activity) context).startActivity(intent);
+//        Intent intent = new Intent(context, VideoDetailActivity.class);
+//        intent.putExtra("videoId", videoId);
+//        intent.putExtra("videoCoverUrl", videoCoverUrl);
+//        intent.putExtra("comeFrom", comeFrom);
+//        ((Activity) context).startActivity(intent);
+
+        Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", videoId).go(context);
     }
 
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle) {

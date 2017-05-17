@@ -7,4 +7,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">false</item>
     </style>
+    <style name="CustomCheckboxTheme_Licaishi" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
 </resources>

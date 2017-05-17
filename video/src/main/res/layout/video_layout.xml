@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="155dp"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:background="#ffffff">
+
+    <com.cgbsoft.privatefund.view.RoundAngleImageView
+        android:id="@+id/main_video_image"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/yuanjiaojuxin"
+        android:padding="1dp"
+        app:roundHeight="5dp"
+        app:roundWidth="5dp" />
+
+    <TextView
+        android:id="@+id/main_video_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:layout_marginTop="3dp"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/main_video_short"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:maxLines="2"
+        android:textColor="#666666"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="12sp" />
+
+</LinearLayout>

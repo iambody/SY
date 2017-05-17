@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -73,9 +74,10 @@ public class OKHTTP {
             Context context = BaseApplication.getContext();
             okhttp3.Request originalRequest = chain.request();
 
-            String uid = SPreference.getUserId(context);
-            String token = SPreference.getToken(context);
-
+//            String uid = SPreference.getUserId(context);
+//            String token = SPreference.getToken(context);
+            String uid = AppManager.getUserId(context);
+            String token = AppManager.getUserToken(context);
             uid = TextUtils.isEmpty(uid) ? "" : uid;
             token = TextUtils.isEmpty(token) ? "" : token;
             Request.Builder builder = originalRequest.newBuilder();

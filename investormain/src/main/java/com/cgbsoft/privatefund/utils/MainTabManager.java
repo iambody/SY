@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -12,6 +11,7 @@ import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 
+import app.privatefund.com.vido.mvp.ui.video.DiscoverFragmentc;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
@@ -29,9 +29,9 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
-    private DiscoveryFragment discoveryFragment;//发现
-    //    private ProductFragment productFragment;//产品
-    private ProductFragment productFragment;//产品
+    private DiscoverFragmentc discoveryFragment;//发现
+//    private ProductFragment productFragment;//产品
+private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 
@@ -89,7 +89,7 @@ public class MainTabManager {
                 break;
             case R.id.nav_right_first:
                 if (discoveryFragment == null) {
-                    discoveryFragment = new DiscoveryFragment();
+                    discoveryFragment = new DiscoverFragmentc();
                 }
                 fragment = discoveryFragment;
                 break;

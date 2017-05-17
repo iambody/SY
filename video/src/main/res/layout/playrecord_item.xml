@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:id="@+id/play_record_layout"
+    android:paddingRight="5dp">
+
+    <CheckBox
+        android:id="@+id/play_record_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        style="@style/CustomCheckboxTheme_Licaishi" />
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="95dp">
+
+        <com.cgbsoft.lib.widget.imagview.RoundAngleImageView
+            android:id="@+id/play_record_image"
+            android:layout_width="150dp"
+            android:layout_height="95dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/pic"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:roundHeight="5dp"
+            app:roundWidth="5dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/play_record_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="恒山5号武夷山市工业路棚"
+            android:textColor="@color/product_item_title"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip">
+
+
+            <TextView
+                android:id="@+id/play_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/lishi"
+                android:text=" 已播放"
+                android:textColor="#333"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentBottom="true"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

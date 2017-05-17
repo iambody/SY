@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/select_delete_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="45dp"
+    android:background="@color/main_list_bg"
+    android:orientation="horizontal"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:id="@+id/all_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center|center_horizontal|center_vertical">
+
+        <TextView
+            android:id="@+id/all_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_video_all"
+            android:textColor="@color/product_item_title"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/local_video_gray" />
+
+    <LinearLayout
+        android:id="@+id/delete_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center|center_horizontal|center_vertical">
+
+        <TextView
+            android:id="@+id/delete_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_video_delete"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

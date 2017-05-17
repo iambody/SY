@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="product_item_title">#333333</color>
+    <color name="local_video_red">#f22502</color>
+    <color name="local_video_gray">#e6e6e6</color>
+    <color name="local_video_blue">#5ba8f3</color>
+
+
+    <color name="main_list_bg">#f6f6f6</color>
+
+    <color name="messge_title_normal">#666666</color>
+    <color name="messge_title_normal2">#b3b3b3</color>
+
+</resources>

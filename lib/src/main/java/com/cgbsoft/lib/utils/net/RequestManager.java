@@ -192,16 +192,17 @@ interface RequestManager {
 
     /**
      * 修改密码
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<BaseResult<String>>modifyPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> modifyPassword(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<ResponseBody>modifyTestPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> modifyTestPassword(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--验证手机
@@ -292,20 +293,71 @@ interface RequestManager {
     @POST(NetConfig.USER.SIGNIN_URL)
     Observable<ResponseBody> testSignIn(@FieldMap Map<String, String> paramsMap);
 
-    //获取产品筛选条件
+    /**
+     * 获取产品筛选条件
+     *
+     * @return
+     */
+
     @GET(NetConfig.PRODUCT.Get_PRODUCT_TAG)
     Observable<ResponseBody> getProductFilter();
 
+    /**
+     * 获取产品列表数据
+     *
+     * @param paramsMap
+     * @return
+     */
 
-    //获取产品列表数据
 
     @GET(NetConfig.PRODUCT.Get_PRODUCTLS_TAG)
     Observable<ResponseBody> getProductls(@QueryMap Map<String, String> paramsMap);
-    //产品模块进行搜索的数据
+
+    /**
+     * 产品模块进行搜索的数据
+     *
+     * @param paramsMap
+     * @return
+     */
+
     @GET(NetConfig.SOUSOU.Get_PRODUCTLS_SOU)
-    Observable<ResponseBody> getSousouResult(@QueryMap Map<String,String> paramsMap);
-    //热门搜索的标签
+    Observable<ResponseBody> getSousouResult(@QueryMap Map<String, String> paramsMap);
+
+    /**
+     * 热门搜索的标签
+     *
+     * @param paramsMap
+     * @return
+     */
+
     @GET(NetConfig.SOUSOU.Get_HOT_SOU)
+    Observable<ResponseBody> getHotSousouResult(@QueryMap Map<String, String> paramsMap);
+
+    /**
+     * C端视频播放页获取视频播放
+     *
+     * @param parmsMap
+     * @return
+     */
+
+    @GET(CNetConfig.VIDEO.GetVideoDetail)
+    Observable<ResponseBody> getCvideoDetail(@QueryMap Map<String, String> parmsMap);
+
+    /**
+     * 视频点赞
+     */
+    @GET(NetConfig.VIDEO.VIDEO_DIANZAN)
+    Observable<ResponseBody> videoDianZan(@QueryMap Map<String, String> parmsMap);
+    /**
+     * 视频添加评论
+     */
+    @POST(NetConfig.VIDEO.VIDEO_COMMENT_ADD)
+    Observable<ResponseBody>videoCommentAdd(@QueryMap Map<String,String>parmsMap);
+    /**
+     * 视频评论列表
+     */
+    @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
+    Observable<ResponseBody>videoCommentLs(@QueryMap Map<String,String>parmsMap);
     Observable<ResponseBody> getHotSousouResult(@QueryMap Map<String,String> paramsMap);
 
     //编辑商城收货地址

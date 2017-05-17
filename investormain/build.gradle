@@ -149,4 +149,5 @@ dependencies {
     compile project(':share')
     compile project(':product')
     compile project(':live')
+    compile project(':video')
 }

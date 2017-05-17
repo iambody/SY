@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/local_video_list_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <ImageView
+        android:id="@+id/local_video_list_item_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/checkbox_normal"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="95dp">
+
+        <com.cgbsoft.lib.widget.imagview.RoundAngleImageView
+            android:id="@+id/local_video_list_item_image"
+            android:layout_width="150dp"
+            android:layout_height="95dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/yuanjiaojuxin"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:roundHeight="5dp"
+            app:roundWidth="5dp" />
+
+        <LinearLayout
+            android:id="@+id/local_video_list_item_pause_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:alpha="0.7"
+            android:background="@drawable/cornor"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:padding="1dp"
+            android:scaleType="centerCrop">
+
+            <ImageView
+                android:id="@+id/local_video_list_item_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/local_video_item_pause" />
+
+            <TextView
+                android:id="@+id/local_video_list_item_pause_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/local_video_item_pause"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/local_video_list_item_video_title"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@color/product_item_title"
+            android:textSize="14sp" />
+
+        <ProgressBar
+            android:id="@+id/local_video_list_item_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="12dp"
+            android:background="#F6F6F6" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip">
+
+            <TextView
+                android:id="@+id/local_video_list_item_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text=""
+                android:textColor="@color/product_item_title"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/local_video_list_item_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:textColor="@color/local_video_blue"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/local_video_list_item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+
+</LinearLayout>
