@@ -333,6 +333,7 @@ public class LocalVideoActivity extends BaseMvcActivity implements View.OnClickL
         private ViewHolder holder;
         //        private static final String TAG = LocalVideoAdapter.class.getSimpleName();
         private Context context;
+
 //        private List<SchoolVideo> list;
 
         public LocalVideoAdapter(Context context) {

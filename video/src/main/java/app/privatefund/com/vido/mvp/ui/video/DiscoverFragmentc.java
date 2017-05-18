@@ -63,6 +63,7 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @Override
     public void testview() {
         if (videoDiscoverWeb != null) {
+
             videoDiscoverWeb.loadUrl("javascript:refresh()");
         }
     }
