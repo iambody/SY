@@ -52,16 +52,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <!-- 微信分享 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- 微信分享** -->
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -97,7 +87,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.cgbsoft.lib.InvestorAppli"
+        android:name="com.cgbsoft.privatefund.InitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name_customer"
@@ -210,9 +200,9 @@
                     android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
 
         <!--视频列表-->
-        <activity
-            android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <!--视频下载列表-->
         <activity
             android:name="com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity"
@@ -293,6 +283,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- 融云 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.cgbsoft.privatefund"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+
         <!--===================umeng========================-->
         <!--微信-->
         <activity
@@ -362,14 +363,7 @@
             <!-- 微信分享*************************** -->
         </activity>
 
-        <!--微信分享回调 -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".widget.InverstorBaseWebviewActivity" />
+        <!--<activity android:name=".widget.InverstorBaseWebviewActivity" />-->
     </application>
 
 </manifest>

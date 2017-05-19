@@ -33,7 +33,6 @@ public class NetConfig {
         public static final String appPlatform = "appPlatform";
     }
 
-
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
@@ -48,6 +47,11 @@ public class NetConfig {
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
+
+    static class API {
+        //客户风险评测提交接口
+        static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
+    }
 
     static class INFORMATION {
         private static final String information = "/information";
@@ -86,6 +90,16 @@ public class NetConfig {
         static final String SIGNIN_URL = AUTH_URL + user + "/signIn";
         // 修改密码
         static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
+        // 关联资产
+        static final String RELATED_ASSET_URL = AUTH_URL + user + "/assetCertificate";
+        // 资产证明
+        static final String ASSET_PROVET_URL = AUTH_URL + user + "/connectedMyAsset";
+        // 更新用户信息
+        static final String UPDATE_USER_INFO_URL = AUTH_URL + user + "/updateUserInfo";
+        // 验证用户密码
+        static final String VALIDATE_USER_PASSWORD_URL = AUTH_URL + user + "/checkPassword";
+        // 用户反馈
+        static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
     }
 
   //搜索相关
@@ -104,7 +118,9 @@ public class NetConfig {
         static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
         //获取产品列表
         static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
-
     }
+
+    public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
+    public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
 
 }

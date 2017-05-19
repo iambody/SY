@@ -43,4 +43,14 @@
     <string name="frashing">刷新中</string>
     <string name="loading">加载更多...</string>
 
+    <string name="info_plamfort_server">平台客服</string>
+    <string name="info_zhibo_video">直播</string>
+    <string name="info_product_dynic">产品</string>
+    <string name="info_market_reprot">营销</string>
+    <string name="info_run_notice">运营</string>
+    <string name="info_system_notice">系统</string>
+    <string name="info_small_mishu">小秘书</string>
+    <string name="info_trade">交易</string>
+    <string name="info_speceil">特殊消息</string>
+
 </resources>

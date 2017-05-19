@@ -346,6 +346,7 @@ public class Utils {
 
     /**
      * 得到屏幕分辨率数组
+     *
      * @param context
      * @return
      */
@@ -353,7 +354,7 @@ public class Utils {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
         int height = windowManager.getDefaultDisplay().getHeight();
-        int result[] = { width, height };
+        int result[] = {width, height};
         return result;
     }
 
@@ -378,6 +379,7 @@ public class Utils {
 
         return dbName;
     }
+
     /**
      * 获取屏幕宽高
      *
@@ -395,6 +397,7 @@ public class Utils {
         s[1] = height;
         return s;
     }
+
     /**
      * 数据库版本号
      *
@@ -470,7 +473,6 @@ public class Utils {
         }
     }
 
-
     /**
      * 是否微信安装了
      *
@@ -505,11 +507,12 @@ public class Utils {
         return isRunning;
     }
 
-    public static void telHotline(final Context context){
+    public static void telHotline(final Context context) {
         new DefaultDialog(context, "拨打电话：" + context.getString(R.string.hotline), "取消", "确定") {
             public void left() {
                 this.cancel();
             }
+
             public void right() {
                 Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + context.getString(R.string.hotline)));
                 context.startActivity(phoneIntent);

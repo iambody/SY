@@ -7,7 +7,6 @@ import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
-
 import app.privatefund.com.share.dialog.CommonShareDialog;
 
 /**

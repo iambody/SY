@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
+import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
+import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
@@ -17,6 +19,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -289,12 +292,13 @@ public class ApiClient {
 
     /**
      * 修改密码
-     * @param userName 用户名称
+     *
+     * @param userName  用户名称
      * @param pwdMd5Old 旧的密码 md5加密后
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -302,7 +306,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -343,7 +347,6 @@ public class ApiClient {
     public static Observable<String> wxTestMergeConfirm() {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergeConfirm().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
-
 
     /**
      * 获取学院头部数据
@@ -397,6 +400,105 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("id", videoId);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestVideoInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 关联资产
+     *
+     * @param customId 客户id
+     * @param assertImage 上传图片路径
+     * @return
+     */
+    public static Observable<CommonEntity.Result> relatedAsset(String customId, String assertImage) {
+        Map<String, String> map = new HashMap<>();
+        map.put("customerId", customId);
+        map.put("myAssetImage", assertImage);
+        return OKHTTP.getInstance().getRequestManager().relatedAsset(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestRelatedAsset(String customId, String assertImage) {
+        Map<String, String> map = new HashMap<>();
+        map.put("customerId", customId);
+        map.put("myAssetImage", assertImage);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 资产证明
+     * @param customId 客户id
+     * @param assertImage 上传图片路径
+     * @return
+     */
+    public static Observable<CommonEntity.Result> assertProve(String customId, JSONArray assertImage, String investmentType) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", customId);
+        map.put("assetImage", assertImage);
+        map.put("investmentType", investmentType);
+        return OKHTTP.getInstance().getRequestManager().assetProve(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestassertProve(String customId, JSONArray assertImage, String investmentType) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customerId", customId);
+        map.put("assetImage", assertImage);
+        map.put("investmentType", investmentType);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestAssetProve(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param hashMap 需要更新的用户字段信息
+     * @return
+     */
+    public static Observable<CommonEntity.Result> updateUserInfo(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager().updateUserInfo(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestUpdateUserInfo(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestupdateUserInfo(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 验证用户密码
+     *
+     * @param hashMap 用户密码
+     * @return
+     */
+    public static Observable<CommonEntity.Result> validateUserPassword(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager().validateUserPasswrod(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestValidateUserPassword(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestValidateUserPasswrod(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 用户反馈
+     *
+     * @param hashMap
+     * @return
+     */
+    public static Observable<CommonEntity.Result> feedBackUser(HashMap<String, Object> hashMap) {
+        return OKHTTP.getInstance().getRequestManager().feedBackUser(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestFeedBackUser(HashMap<String, Object> hashMap) {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestFeedBackUser(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 提交风险评测
+     *
+     * @param hashMap
+     * @return
+     */
+    public static Observable<TypeNameEntity.Result> commitRistResult(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager().riskEvalutionCommit(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> toTestCommitRistResult(HashMap<String, Object> hashMap) {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRiskEvalutionCommit(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -460,6 +562,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
     /**
      * 重新生成Get 方式的value值
      *
@@ -468,6 +571,20 @@ public class ApiClient {
      */
     private static Map<String, String> createProgram(@NonNull Map<String, String> map) {
         String paramValue = getParamJSON(map);
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(paramValue))
+            params.put("param", paramValue);
+        return params;
+    }
+
+    /**
+     * 重新生成Post 方式的值
+     *
+     * @param map
+     * @return
+     */
+    private static Map<String, String> createProgramObject(@NonNull Map<String, Object> map) {
+        String paramValue = getParamJSONArray(map);
         Map<String, String> params = new HashMap<>();
         if (!TextUtils.isEmpty(paramValue))
             params.put("param", paramValue);
@@ -488,6 +605,29 @@ public class ApiClient {
             jsonObject = new JSONObject();
             for (String key : set) {
                 String value = map.get(key);
+                jsonObject.put(key, value);
+            }
+            paramValue = jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return paramValue;
+    }
+
+    /**
+     * 生成json
+     *
+     * @param map
+     * @return
+     */
+    private static String getParamJSONArray(@NonNull Map<String, Object> map) {
+        String paramValue = "";
+        JSONObject jsonObject = null;
+        Set<String> set = map.keySet();
+        try {
+            jsonObject = new JSONObject();
+            for (String key : set) {
+                Object value = map.get(key);
                 jsonObject.put(key, value);
             }
             paramValue = jsonObject.toString();

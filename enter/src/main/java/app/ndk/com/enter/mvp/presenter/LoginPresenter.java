@@ -49,13 +49,13 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
 //                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
 //                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
+                SPreference.saveUserInfoData(getContext(), loginBean.userInfo);
                 LogUtils.Log("loginresult",s);
                 SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {
@@ -69,7 +69,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onRxError(Throwable error) {
                 LogUtils.Log("loginresult",error.toString());
                 loadingDialog.dismiss();
-//                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+//              loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
 

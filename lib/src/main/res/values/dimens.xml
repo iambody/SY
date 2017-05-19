@@ -26,6 +26,7 @@
     <dimen name="ui_5_dip">5dip</dimen>
     <dimen name="ui_10_dip">10dip</dimen>
     <dimen name="ui_15_dip">15dip</dimen>
+    <dimen name="ui_17_dip">17dip</dimen>
     <dimen name="ui_20_dip">20dip</dimen>
     <dimen name="ui_30_dip">30dip</dimen>
     <dimen name="ui_40_dip">40dip</dimen>

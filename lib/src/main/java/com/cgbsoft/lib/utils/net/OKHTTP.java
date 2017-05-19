@@ -202,7 +202,6 @@ public class OKHTTP {
         }
     }
 
-
     RequestManager getRequestManager(String serverUrl) {
         return new Retrofit.Builder()
                 .client(mClient)

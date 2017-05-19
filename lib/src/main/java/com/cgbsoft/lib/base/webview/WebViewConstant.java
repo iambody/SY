@@ -22,17 +22,6 @@ public class WebViewConstant {
     public static final String Jump_Info_KeyWord = "keywords";
     public static final String pdf_url = "pdf_url";
     public static final String pdf_name = "pdf_name";
-    public static HashMap<String, String> NewFoundHashMap;
-
-    static {
-        if (NewFoundHashMap == null) {
-            NewFoundHashMap = new HashMap<>();
-        }
-        NewFoundHashMap.put("1", "行业资讯");
-        NewFoundHashMap.put("2", "云观察");
-        NewFoundHashMap.put("3", "云观点");
-        NewFoundHashMap.put("4", "早知道");
-    }
 
     /**
      * 需要回调的指令集

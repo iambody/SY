@@ -9,4 +9,7 @@ package com.cgbsoft.lib.contant;
 public class RouteConfig {
     //跳转到C端首页的url
     public static final String GOTOCMAINHONE="investornmain_mainpageactivity";
+
+    // 欢迎页面
+    public static final String GOTOWELCOMEPAGE="investornmain_welcomeativity";
 }

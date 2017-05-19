@@ -29,7 +29,6 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     }
 
-
     @Override
     public void getRongToken() {
         String rongExpired = OtherDataProvider.getRongTokenExpired(BaseApplication.getContext());

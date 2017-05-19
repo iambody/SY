@@ -20,6 +20,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     public static String productDetail;
 
+    //webView消息详情列表
+    public static String msgDetal;
+
     static {
         initApi();
     }
@@ -32,5 +35,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         clubPgge = baseParentUrl + "/bank/default.html";
         pageInit = baseParentUrl + "/setData.html";
         productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
+        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
     }
 }

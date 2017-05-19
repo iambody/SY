@@ -19,14 +19,11 @@ import java.io.File;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-
 /**
  * 图片加载库（持续更新）
  * Created by user on 2016/11/4.
  */
-
 public class Imageload {
-
     /**
      * 开始创建图片加载
      *
@@ -146,7 +143,7 @@ public class Imageload {
 
             if (roundDP < 0) {
                 requestCreator.transform(new GlideCircleTransform(context));
-            }else if(roundDP > 0){
+            } else if (roundDP > 0) {
                 int size = Utils.convertDipOrPx(context, roundDP);
                 requestCreator.bitmapTransform(new RoundedCornersTransformation(context, size, 0));
             }
@@ -172,7 +169,7 @@ public class Imageload {
             GifRequestBuilder grb = requestCreator.asGif().diskCacheStrategy(DiskCacheStrategy.ALL);
             if (roundDP < 0) {
                 grb.transformFrame(new GlideCircleTransform(context));
-            }else {
+            } else {
                 int size = Utils.convertDipOrPx(context, roundDP);
                 grb.transformFrame(new RoundedCornersTransformation(context, size, 0));
             }

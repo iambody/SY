@@ -17,7 +17,6 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public UserInfo userInfo;
     }
 
-
     public static class UserInfo{
         public String birthday;
         public String sex;
@@ -44,6 +43,207 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String fatherId;
         public String lastLogStringime;
         public String memoToFather;
+
+
+        public String getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(String birthday) {
+            this.birthday = birthday;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getHeadImageUrl() {
+            return headImageUrl;
+        }
+
+        public void setHeadImageUrl(String headImageUrl) {
+            this.headImageUrl = headImageUrl;
+        }
+
+        public ToCBean getToC() {
+            return toC;
+        }
+
+        public void setToC(ToCBean toC) {
+            this.toC = toC;
+        }
+
+        public String getUnionid() {
+            return unionid;
+        }
+
+        public void setUnionid(String unionid) {
+            this.unionid = unionid;
+        }
+
+        public String getRcToken() {
+            return rcToken;
+        }
+
+        public void setRcToken(String rcToken) {
+            this.rcToken = rcToken;
+        }
+
+        public ToBBean getToB() {
+            return toB;
+        }
+
+        public void setToB(ToBBean toB) {
+            this.toB = toB;
+        }
+
+        public String getAdviserRealName() {
+            return adviserRealName;
+        }
+
+        public void setAdviserRealName(String adviserRealName) {
+            this.adviserRealName = adviserRealName;
+        }
+
+        public String getAdviserPhone() {
+            return adviserPhone;
+        }
+
+        public void setAdviserPhone(String adviserPhone) {
+            this.adviserPhone = adviserPhone;
+        }
+
+        public String getMemoToMember() {
+            return memoToMember;
+        }
+
+        public void setMemoToMember(String memoToMember) {
+            this.memoToMember = memoToMember;
+        }
+
+        public String getEducation() {
+            return education;
+        }
+
+        public void setEducation(String education) {
+            this.education = education;
+        }
+
+        public String getAuthenticationType() {
+            return authenticationType;
+        }
+
+        public void setAuthenticationType(String authenticationType) {
+            this.authenticationType = authenticationType;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getPhoneNum() {
+            return phoneNum;
+        }
+
+        public void setPhoneNum(String phoneNum) {
+            this.phoneNum = phoneNum;
+        }
+
+        public String getResidentCity() {
+            return residentCity;
+        }
+
+        public void setResidentCity(String residentCity) {
+            this.residentCity = residentCity;
+        }
+
+        public String getIsSingIn() {
+            return isSingIn;
+        }
+
+        public void setIsSingIn(String isSingIn) {
+            this.isSingIn = isSingIn;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getAgeStage() {
+            return ageStage;
+        }
+
+        public void setAgeStage(String ageStage) {
+            this.ageStage = ageStage;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getRealName() {
+            return realName;
+        }
+
+        public void setRealName(String realName) {
+            this.realName = realName;
+        }
+
+        public String getMyPoString() {
+            return myPoString;
+        }
+
+        public void setMyPoString(String myPoString) {
+            this.myPoString = myPoString;
+        }
+
+        public String getFatherId() {
+            return fatherId;
+        }
+
+        public void setFatherId(String fatherId) {
+            this.fatherId = fatherId;
+        }
+
+        public String getLastLogStringime() {
+            return lastLogStringime;
+        }
+
+        public void setLastLogStringime(String lastLogStringime) {
+            this.lastLogStringime = lastLogStringime;
+        }
+
+        public String getMemoToFather() {
+            return memoToFather;
+        }
+
+        public void setMemoToFather(String memoToFather) {
+            this.memoToFather = memoToFather;
+        }
     }
 
     public static class ToBBean{

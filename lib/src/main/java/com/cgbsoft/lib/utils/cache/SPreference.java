@@ -31,17 +31,17 @@ public class SPreference implements Constant {
         return context.getApplicationContext().getSharedPreferences(key, Context.MODE_PRIVATE);
     }
 
-    private static void putString(@NonNull Context context, @NonNull String key, @NonNull String value) {
+    public static void putString(@NonNull Context context, @NonNull String key, @NonNull String value) {
         SharedPreferences.Editor edit = getBase(context).edit();
         edit.putString(key, value);
         edit.apply();
     }
 
-    private static String getString(@NonNull Context context, @NonNull String key) {
+    public static String getString(@NonNull Context context, @NonNull String key) {
         return getBase(context).getString(key, null);
     }
 
-    private static void putInt(@NonNull Context context, @NonNull String key, @NonNull int value) {
+    public static void putInt(@NonNull Context context, @NonNull String key, @NonNull int value) {
         SharedPreferences.Editor edit = getBase(context).edit();
         edit.putInt(key, value);
         edit.apply();
@@ -57,6 +57,7 @@ public class SPreference implements Constant {
     public static int getInt(@NonNull Context context, @NonNull String key) {
         return getBase(context).getInt(key, -1);
     }
+
 
     public static void putBoolean(@NonNull Context context, @NonNull String key, @NonNull boolean value) {
         SharedPreferences.Editor edit = getBase(context).edit();
@@ -256,6 +257,11 @@ public class SPreference implements Constant {
      */
     public static void saveUserInfoData(@NonNull Context context, String json) {
         UserDataProvider.saveUserInfo(context, json);
+        LogUtils.Log("ta","操作");
+    }
+
+    public static void saveUserInfoData(@NonNull Context context, UserInfoDataEntity.UserInfo userInfo) {
+        UserDataProvider.saveUserInfo(context,  new Gson().toJson(userInfo));
         LogUtils.Log("ta","操作");
     }
 
