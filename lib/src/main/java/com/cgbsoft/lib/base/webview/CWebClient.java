@@ -50,6 +50,10 @@ public class CWebClient extends WebViewClient {
         this.isShangxueyuanc = isShangxueyuanc;
     }
 
+    public void setWebviewOnClick(WebviewOnClick webviewOnClick) {
+        this.webviewOnClick = webviewOnClick;
+    }
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 //        return super.shouldOverrideUrlLoading(webView, s);
@@ -59,8 +63,13 @@ public class CWebClient extends WebViewClient {
             /**
              * 认购按钮的特殊处理
              */
-            if (null != webviewOnClick && (url.startsWith("app:buynow") || url.startsWith("app:canBuy")) || url.startsWith("app:liveVideo") ||
-                    url.startsWith(WebViewConstant.MODIFY_PASSWORD) || url.startsWith(WebViewConstant.JUMP_PRODUCT_DETAIL)) {
+            if (null != webviewOnClick && (
+                url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
+                url.startsWith(WebViewConstant.AppCallBack.CAN_BUY)) ||
+                url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
+                url.startsWith(WebViewConstant.AppCallBack.MODIFY_PASSWORD) ||
+                url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
+                url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM)) {
                 webviewOnClick.onClick(url);
             } else {
                 /**
@@ -103,9 +112,7 @@ public class CWebClient extends WebViewClient {
         super.onPageFinished(webView, s);
     }
 
-
     //此处可以有一个加载进度的接口  暂留 如有需要可以给暴露出来@wyk
-
     private onCWebViewListener mListener;
 
     public void setOnWebViewListener(onCWebViewListener listener) {

@@ -154,7 +154,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
      */
-    protected void executeOverideUrlCallBack(String actionUrl) {}
+    protected void executeOverideUrlCallBack(String actionUrl) {
+
+    }
 
     @Override
     protected T createPresenter() {

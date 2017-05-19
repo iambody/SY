@@ -258,6 +258,12 @@
             android:name="com.cgbsoft.privatefund.widget.mvc.GestureVerifyActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 风险评测结果-->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.mvc.RiskResultActivity"
+            android:screenOrientation="portrait" />
+
+
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />
@@ -363,6 +369,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".widget.InverstorBaseWebviewActivity" />
     </application>
 
 </manifest>

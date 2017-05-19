@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <RelativeLayout
@@ -15,7 +16,6 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_back_black_24dp"
             android:visibility="gone" />
-
     </RelativeLayout>
 
     <LinearLayout
@@ -23,9 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_layout"
-        android:orientation="vertical"
-        android:paddingTop="30dip">
-
+        android:orientation="vertical">
         <ImageView
             android:id="@+id/app_logo"
             android:layout_width="wrap_content"
@@ -51,17 +49,26 @@
             android:textColor="#000000" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/gesture_container"
-        android:layout_width="wrap_content"
+    <com.takwolf.android.lock9.Lock9View
+        android:id="@+id/lock_9_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gesture_tip_layout"></FrameLayout>
+        android:layout_gravity="center_horizontal|top"
+        android:layout_below="@id/gesture_tip_layout"
+        app:lock9_autoLink="false"
+        app:lock9_enableVibrate="true"
+        app:lock9_lineColor="@color/orange"
+        app:lock9_lineWidth="5dp"
+        app:lock9_nodeOnSrc="@drawable/gesture_node_pressed"
+        app:lock9_nodeSrc="@drawable/gesture_node_normal"
+        app:lock9_spacing="25dp"
+        app:lock9_padding="20dp"
+        app:lock9_vibrateTime="20"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dip"
+        android:layout_below="@id/lock_9_view"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -71,7 +78,7 @@
             android:layout_height="60dp"
             android:layout_weight="1.0"
             android:clickable="true"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:text="@string/forget_gesture_code"
             android:textColor="@color/c_mid_black"
             android:textSize="16sp" />

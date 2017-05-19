@@ -32,7 +32,6 @@ public class UserInfoC implements Serializable {
     private String customerRiskEvaluation;
     private String stockAssetsImage;
 
-
     public String getCustomerName() {
         return customerName;
     }

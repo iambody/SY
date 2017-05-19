@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.widget.mvc.view;
+package com.cgbsoft.lib.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.cgbsoft.privatefund.R;
+import com.cgbsoft.lib.R;
 
 /**
  * @author chenlong

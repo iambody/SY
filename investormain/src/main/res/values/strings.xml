@@ -100,6 +100,10 @@
     <string name="no_camera_device">没有找到相机设备, 请检查是否有相应拍照权限</string>
     <string name="asset_prove_upload_desc">支持10张以内JPG格式图片，单张图片不超过10M</string>
 
+    <string name="risk_result_info">根据问卷答案分析，您的风险承受能力为</string>
+    <string name="risk_evaluating_title">风险承受能力评测</string>
+
+
     <!-- Gesture code starting -->
     <string name="setup_gesture_pattern">请输入手势密码</string>
     <string name="setup_gesture_pattern_again">再次绘制解锁图案</string>

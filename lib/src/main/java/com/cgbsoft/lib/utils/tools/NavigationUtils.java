@@ -107,7 +107,7 @@ public class NavigationUtils {
         Intent intent = new Intent(context, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
@@ -136,10 +136,10 @@ public class NavigationUtils {
         Router.build(routerType).with(key, object).go(context);
     }
 
-    public static void startActivityByRouter(Context context, String routerType, HashMap<String, String> hashMap) {
+    public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap) {
         IRouter iRouter = Router.build(routerType);
-        Set<Map.Entry<String, String>> set = hashMap.entrySet();
-        for (Map.Entry<String, String> entry : set) {
+        Set<Map.Entry<String, Object>> set = hashMap.entrySet();
+        for (Map.Entry<String, Object> entry : set) {
             iRouter.with(entry.getKey(), entry.getValue());
         }
         iRouter.go(context);
