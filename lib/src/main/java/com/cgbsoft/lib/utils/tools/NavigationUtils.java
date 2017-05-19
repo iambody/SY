@@ -124,7 +124,7 @@ public class NavigationUtils {
 //        intent.putExtra("videoCoverUrl", videoCoverUrl);
 //        intent.putExtra("comeFrom", comeFrom);
 //        ((Activity) context).startActivity(intent);
-
+//进入自己的mvp类型的activity
         Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", videoId).go(context);
     }
 

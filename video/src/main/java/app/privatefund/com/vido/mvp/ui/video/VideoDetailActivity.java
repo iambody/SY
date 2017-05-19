@@ -25,9 +25,8 @@ import android.widget.TextView;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.contract.video.VideoDetailContract;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
-import com.cgbsoft.lib.mvp.presenter.video.VideoDetailPresenter;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
@@ -40,6 +39,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
+import com.chenenyu.router.annotation.Route;
 import com.kogitune.activity_transition.ActivityTransition;
 import com.kogitune.activity_transition.ExitActivityTransition;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
+import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -71,6 +73,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSER
  * Email:zhangxyfs@126.com
  *  
  */
+@Route(RouteConfig.GOTOVIDEOPLAY)
 public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> implements VideoDetailContract.View, PlayerListener {
     @BindView(R2.id.rl_avd_head)
     RelativeLayout rl_avd_head;

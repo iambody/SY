@@ -95,14 +95,14 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 VideoInfoEntity.Result result = new Gson().fromJson(s, VideoInfoEntity.Result.class);
 
                 viModel.videoId = result.videoId;
-                viModel.videoCoverUrl = result.coverImageUrl;
-                viModel.sdUrl = result.sdvideoUrl;
-                viModel.hdUrl = result.hdvideoUrl;
-                viModel.isLike = !TextUtils.equals(result.isLiked, "0");
-                viModel.videoName = result.videoName;
-                viModel.shortName = result.shortName;
-                viModel.content = result.videoSummary;
-                viModel.likeNum = Integer.parseInt(result.likes);
+                viModel.videoCoverUrl = result.rows.coverImageUrl;
+                viModel.sdUrl = result.rows.SDVideoUrl;
+                viModel.hdUrl = result.rows.HDVideoUrl;
+                viModel.isLike = !TextUtils.equals(result.rows.isLiked, "0");
+                viModel.videoName = result.rows.videoName;
+                viModel.shortName = result.rows.shortName;
+                viModel.content = result.rows.videoSummary;
+                viModel.likeNum = Integer.parseInt(result.rows.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
                 viModel.hasRecord = VideoStatus.RECORD;
                 viModel.encrypt = 1;

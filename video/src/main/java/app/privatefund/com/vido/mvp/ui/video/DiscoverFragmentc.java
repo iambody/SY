@@ -21,6 +21,7 @@ import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.mvc.LocalVideoActivity;
 import app.privatefund.com.vido.mvc.PlayRecordActivity;
 import app.privatefund.com.vido.mvp.contract.video.DiscoverTocContract;
+import app.privatefund.com.vido.mvp.contract.video.VideoHistoryListContract;
 import app.privatefund.com.vido.mvp.presenter.video.DiscoverTocPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,14 +80,14 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     }
 
     @OnClick(R2.id.video_discover_history_txt)
-    public void onVideoDiscoverHistoryTxtClicked() {
-        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
+    public void onVideoDiscoverHistoryTxtClicked() {//
+//        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
 
-
+        UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListContract.class);
     }
 
     @OnClick(R2.id.video_discover_download_txt)
     public void onVideoDiscoverDownloadTxtClicked() {
-        UiSkipUtils.toNextActivity(baseActivity, LocalVideoActivity.class);
+        UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListContract.class);
     }
 }

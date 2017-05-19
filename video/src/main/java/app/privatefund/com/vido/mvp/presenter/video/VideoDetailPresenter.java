@@ -8,7 +8,6 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.mvp.contract.video.VideoDetailContract;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
@@ -24,6 +23,7 @@ import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 
 import java.util.List;
+import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:09
@@ -95,14 +95,14 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 VideoInfoEntity.Result result = new Gson().fromJson(s, VideoInfoEntity.Result.class);
 
                 viModel.videoId = result.videoId;
-                viModel.videoCoverUrl = result.coverImageUrl;
-                viModel.sdUrl = result.sdvideoUrl;
-                viModel.hdUrl = result.hdvideoUrl;
-                viModel.isLike = !TextUtils.equals(result.isLiked, "0");
-                viModel.videoName = result.videoName;
-                viModel.shortName = result.shortName;
-                viModel.content = result.videoSummary;
-                viModel.likeNum = Integer.parseInt(result.likes);
+                viModel.videoCoverUrl = result.rows.coverImageUrl;
+                viModel.sdUrl = result.rows.SDVideoUrl;
+                viModel.hdUrl = result.rows.HDVideoUrl;
+                viModel.isLike = !TextUtils.equals(result.rows.isLiked, "0");
+                viModel.videoName = result.rows.videoName;
+                viModel.shortName = result.rows.shortName;
+                viModel.content = result.rows.videoSummary;
+                viModel.likeNum = Integer.parseInt(result.rows.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
                 viModel.hasRecord = VideoStatus.RECORD;
                 viModel.encrypt = 1;

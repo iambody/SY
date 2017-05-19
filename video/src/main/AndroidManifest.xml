@@ -8,9 +8,11 @@
         android:supportsRtl="true">
         <activity android:name=".mvp.ui.video.VideoDownloadListActivity" />
         <activity android:name=".mvp.ui.video.VideoHistoryListActivity" />
-        <activity android:name=".mvc.PlayVideoActivity"/>
-        <activity android:name=".mvc.LocalVideoActivity"/>
-        <activity android:name=".mvc.PlayRecordActivity"/>
+        <activity android:name=".mvp.ui.video.VideoDetailActivity" />
+        <activity android:name=".mvc.PlayVideoActivity" />
+        <activity android:name=".mvc.LocalVideoActivity" />
+        <activity android:name=".mvc.PlayRecordActivity" />
+
         <service android:name=".mvc.services.PlayerService">
             <intent-filter>
                 <action android:name="com.cgbsoft.privatefund.service.player" />
