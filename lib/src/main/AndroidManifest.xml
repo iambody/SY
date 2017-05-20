@@ -5,6 +5,9 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <activity
+            android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="io.rong.imkit.activity.PicturePreviewActivity"

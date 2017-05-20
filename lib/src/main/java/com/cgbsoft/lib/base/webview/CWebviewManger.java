@@ -31,7 +31,6 @@ import java.util.Set;
  * 日期 2017/5/4-17:58
  */
 public class CWebviewManger {
-
     private Activity context;
     private BaseWebview webview;
     private boolean headRefreshing; // 头部是否有刷新
@@ -149,19 +148,6 @@ public class CWebviewManger {
         } else if (action.contains("cloudAnimate")) {
             //TODO 云动画
         } else if (action.contains("practiseAbility")) {
-//            String adv2 = SPreference.getUser().getAdviserState();
-//            if (adv2.equals("1")) {
-//                NavigationUtils.startActivityForResult(context, PlannerActivity.class, Contant.CERTIFY_RENZHENG);
-//            } else if (adv2.equals("2")) {
-//                Intent intent = new Intent(context, RenzhengActivity.class);
-//                intent.putExtra(Contant.ADVISER_STATE, Contant.ADVISER_STATE_UNDER_REVIEW);
-//                context.startActivity(intent);
-//            } else if (adv2.equals("3")) {
-//            } else if (adv2.equals("4")) {
-//                Intent intent1 = new Intent(context, CheckFailureActivity.class);
-//                intent1.putExtra("type", 2);
-//                context.startActivity(intent1);
-//            }
         } else if (action.contains("relationAssets")) {//关联资产动作
             NavigationUtils.startActivityByRouterForResult(context, "investornmain_relativeassetctivity", BaseWebViewActivity.RELATIVE_ASSERT);
         } else if (action.contains("pssetsProve")) {
@@ -218,16 +204,6 @@ public class CWebviewManger {
         } else if (action.contains("openSharePage")) {
             openpage(action, false, false, true);
         } else if (action.contains("checkVersion")) {
-//            if (MApplication.getAppUpdate() != null) {
-//                String newVersion = MApplication.getAppUpdate().getVersion();
-//                String oldVersion = String.valueOf(AppInfo.versionCode(context));
-//                String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
-//                getWeb().loadUrl(language);
-//            } else {
-//                String oldVersion = String.valueOf(AppInfo.versionCode(context));
-//                String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
-//                getWeb().loadUrl(language);
-//            }
         } else if (action.contains("updated")) {
 //            VersonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转

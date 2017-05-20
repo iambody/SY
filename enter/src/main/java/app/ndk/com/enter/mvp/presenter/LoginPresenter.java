@@ -50,8 +50,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-//                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
-//                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);

@@ -11,23 +11,27 @@ import com.cgbsoft.lib.contant.AppinfConstant;
  * 日期 17/4/5-17:32
  */
 public class AppManager implements AppinfConstant {
+
+    private static SharedPreferences getBasePreference(Context context) {
+        return context.getSharedPreferences(USER_SHARE_PREFERENCE_SET, Context.MODE_PRIVATE);
+    }
     /**
      * 获取是否是理财师的标识
-     * @param PcContext
+     * @param context
      * @return
      */
-    public static boolean isAdViser(Context PcContext) {
-        return AppInfStore.Get_IsAdviser(PcContext);
+    public static boolean isAdViser(Context context) {
+        return getBasePreference(context).getBoolean(IsAdviser_Tage, false);
     }
 
     /**
      * 获取是否是理财师的标识
      *
-     * @param PcContext
+     * @param context
      * @return
      */
-    public static boolean isInvestor(Context PcContext) {
-        return !AppInfStore.Get_IsAdviser(PcContext);
+    public static boolean isInvestor(Context context) {
+        return !getBasePreference(context).getBoolean(IsAdviser_Tage, false);
     }
 
     /**
@@ -52,5 +56,11 @@ public class AppManager implements AppinfConstant {
     public static boolean getIsLogin(Context context) {
         SharedPreferences sp = context.getSharedPreferences(ISLOGIN, Context.MODE_PRIVATE);
         return sp.getBoolean("islogin", false);
+    }
+
+    //获取历史数据
+    public static String getSousouHistory(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
+        return sp.getString("history", "");
     }
 }

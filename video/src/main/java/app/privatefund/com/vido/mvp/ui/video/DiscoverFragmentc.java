@@ -35,7 +35,6 @@ import butterknife.OnClick;
  */
 public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implements DiscoverTocContract.view {
 
-
     @BindView(R2.id.video_discover_sousou_lay)
     LinearLayout videoDiscoverSousouLay;
     @BindView(R2.id.video_discover_history_txt)

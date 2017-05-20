@@ -156,7 +156,6 @@ public class SPreference implements Constant {
         putBoolean(context, IS_VISABLE_MESSAGE_LOGIN, true);
     }
 
-
     /**
      * 是否播放了理财师的动画
      *
