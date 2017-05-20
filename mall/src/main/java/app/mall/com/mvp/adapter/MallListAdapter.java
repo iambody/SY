@@ -26,7 +26,7 @@ public class MallListAdapter extends BaseAdapter<MallAddressBean, MallAddressLis
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == MallAddressBean.LIST)
-            return new MallAddressListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_item_address, null), listener);
+            return new MallAddressListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_item_address, parent, false), listener);
         return onCreateErrorViewHolder(parent);
     }
 
@@ -39,9 +39,9 @@ public class MallListAdapter extends BaseAdapter<MallAddressBean, MallAddressLis
             vhh.mall_item_address.setText(model.getAddress());
             vhh.mall_item_name.setText(model.getShopping_name());
             vhh.mall_item_phone.setText(model.getPhone());
-            if (model.getDefault_flag()==1){
+            if (model.getDefault_flag() == 1) {
                 vhh.mall_item_linear.setBackgroundColor(0xffd0d0d0);
-            }else {
+            } else {
                 vhh.mall_item_linear.setBackgroundColor(0xffffffff);
             }
         } else {

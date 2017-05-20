@@ -34,7 +34,6 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     private MallListAdapter mallListAdapter;
     private ArrayList<MallAddressBean> mallAddressBeans;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerControl recyclerControl;
 
 
     @Override
@@ -47,9 +46,8 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
         getPresenter().getMallAddressList();
         titleMid.setText("收货地址");
         mallListAdapter = new MallListAdapter(this);
-//        rcv_mall_address_list.setAdapter(mallListAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rcv_mall_address_list.setLayoutManager(linearLayoutManager);
         rcv_mall_address_list.setAdapter(mallListAdapter);
 
@@ -112,7 +110,7 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     public void onItemLongClick(final int position, LinearLayout linear) {
         linear.setBackgroundColor(0xffd0d0d0);
 
-        new MenuDialog(getApplicationContext(), new String[]{"设置默认", "编辑", "删除"}) {
+        new MenuDialog(this, new String[]{"设置默认", "编辑", "删除"}) {
 
             @Override
             public void onCheck(String menuStr) {

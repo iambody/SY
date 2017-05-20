@@ -41,7 +41,7 @@ public class MallAddressListHolder extends BaseHolder {
         mall_item_linear.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                listeber.onItemClick(getAdapterPosition(),mall_item_linear);
+                listeber.onItemLongClick(getAdapterPosition(), mall_item_linear);
                 return false;
             }
         });
