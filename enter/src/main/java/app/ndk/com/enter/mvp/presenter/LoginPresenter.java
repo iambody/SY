@@ -53,7 +53,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
-                SPreference.saveUserInfoData(getContext(), loginBean.userInfo);
+                AppInfStore.saveUserInfoData(getContext(), loginBean.userInfo);
                 LogUtils.Log("loginresult",s);
                 SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {
