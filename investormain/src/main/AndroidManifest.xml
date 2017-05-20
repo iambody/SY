@@ -221,36 +221,36 @@
 
         <!--关联资产activity-->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.RelativeAssetActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity"
             android:screenOrientation="portrait" />
 
         <!--资产证明activity-->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.AssetProveActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.SmoothImageActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.SmoothImageActivity"
             android:screenOrientation="portrait" />
 
         <!-- 已经反馈 -->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.FeedbackActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity"
             android:screenOrientation="portrait" />
 
         <!-- 设置手势密码 -->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.GestureEditActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.GestureEditActivity"
             android:screenOrientation="portrait" />
 
         <!-- 验证手机密码 -->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.GestureVerifyActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.GestureVerifyActivity"
             android:screenOrientation="portrait" />
 
         <!-- 风险评测结果-->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.mvc.RiskResultActivity"
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskResultActivity"
             android:screenOrientation="portrait" />
 
 
@@ -304,10 +304,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--分享编辑页-->
-        <activity
+      <!--  <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.UMDefault" />
+            android:theme="@style/Theme.UMDefault" />-->
         <!--=================================================-->
         <!-- X5内核的key -->
         <meta-data

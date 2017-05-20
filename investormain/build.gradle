@@ -140,10 +140,11 @@ dependencies {
     compile 'com.takwolf.android:lock9view:0.0.11'
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
-//    compile project(':adviser')
+    //    compile project(':adviser')
     compile project(':order')
     compile project(':enter')
     compile project(':share')
     compile project(':product')
     compile project(':im')
+    compile project(':video')
 }

@@ -83,11 +83,11 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     public void onVideoDiscoverHistoryTxtClicked() {//
 //        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
 
-        UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListContract.class);
+        UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListActivity.class);
     }
 
     @OnClick(R2.id.video_discover_download_txt)
     public void onVideoDiscoverDownloadTxtClicked() {
-        UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListContract.class);
+        UiSkipUtils.toNextActivity(baseActivity, VideoDownloadListActivity.class);
     }
 }

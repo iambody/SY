@@ -79,15 +79,15 @@ import app.privatefund.com.vido.mvc.services.PlayerService;
 import app.privatefund.com.vido.mvc.utils.ToolsUtils;
 import app.privatefund.com.vido.mvc.widget.ListViewForScrollView;
 import app.privatefund.com.vido.mvc.widget.ProgressWheel;
-import io.rong.eventbus.EventBus;
-import io.rong.imageloader.utils.L;
+
+
 
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/12-19:17
  */
-@Route(RouteConfig.GOTOVIDEOPLAY)
+
 public class PlayVideoActivity extends BaseMvcActivity implements View.OnClickListener {
 
 
@@ -938,7 +938,7 @@ public class PlayVideoActivity extends BaseMvcActivity implements View.OnClickLi
 //                    isZan.setAnimation(animation);
                 startTask();
                 isLike = 1;
-                EventBus.getDefault().post(new PostZan(count, tencentVideoId));
+//                EventBus.getDefault().post(new PostZan(count, tencentVideoId));
             }
             //todo 此处有，埋点 需要注意
             if (AppManager.isInvestor(baseContext)) {

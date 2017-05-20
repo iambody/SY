@@ -23,7 +23,7 @@ import app.privatefund.com.vido.mvc.Contant;
 import app.privatefund.com.vido.mvc.bean.SchoolVideo;
 import app.privatefund.com.vido.mvc.litener.AudioListener;
 import app.privatefund.com.vido.mvc.utils.ToolsUtils;
-import io.rong.eventbus.EventBus;
+
 
 /**
  * desc  ${DESC}
@@ -98,7 +98,7 @@ public class PlayerService extends Service  implements MediaPlayer.OnPreparedLis
                         stopPlayer();
                     }
                 });
-                EventBus.getDefault().register(this);
+//                EventBus.getDefault().register(this);
             }
         } catch (Exception e) {
             e.printStackTrace();

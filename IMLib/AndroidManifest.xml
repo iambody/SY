@@ -48,12 +48,14 @@
         <!--必选： SDK 核心功能-->
         <!--第三方相关,向第三方推送服务请求 token 的服务 -->
         <service
+            tools:replace="android:exported"
             android:name="io.rong.push.core.PushRegistrationService"
             android:exported="false">
         </service>
 
         <!-- 处理 push 消息相关的服务 -->
         <service
+            tools:replace="android:exported"
             android:name="io.rong.push.core.MessageHandleService"
             android:exported="true">
         </service>

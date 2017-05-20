@@ -24,7 +24,7 @@ import java.util.HashMap;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.mvc.bean.SchoolVideo;
 import app.privatefund.com.vido.mvc.utils.ToolsUtils;
-import io.rong.eventbus.EventBus;
+
 
 /**
  * desc  ${DESC}
