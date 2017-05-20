@@ -122,4 +122,6 @@
     <string name="gesture_password_error_times">您已连续五次输错手势，手势密码已关闭，请重新登录</string>
     <string name="weixin_reset_gesture_password">忘记手势密码，请致电官方客户电话</string>
     <string name="forget_pwd">忘记密码?</string>
+
+
 </resources>

@@ -5,37 +5,25 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import app.product.com.R;
 import app.product.com.model.FilterItem;
-import app.product.com.model.ProductFilterBean;
 import app.product.com.model.Series;
 import app.product.com.mvp.contract.ProductContract;
-import app.product.com.mvp.ui.adapter.ProductAdapter;
-import app.product.com.widget.ProductSeriesLayout;
 
 /**
  * desc  ${DESC}
@@ -62,8 +50,8 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
     public void getProductData(int offset, String series, String orderBy, List<FilterItem> datas) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("offset", "" + offset * Contant.LOAD_PRODUCT_lIMIT);
-            jsonObject.put("limit", Contant.LOAD_PRODUCT_lIMIT + "");
+            jsonObject.put("offset", "" + offset * Constant.LOAD_PRODUCT_lIMIT);
+            jsonObject.put("limit", Constant.LOAD_PRODUCT_lIMIT + "");
             jsonObject.put("userId", AppManager.getUserId(getContext().getApplicationContext()));
             jsonObject.put("series", BStrUtils.StrToJsonArray(series));
             jsonObject.put("orderBy", BStrUtils.StrToJsonArray(orderBy));

@@ -1,12 +1,14 @@
-
 package com.cgbsoft.lib.utils.constant;
 
 import android.Manifest;
 
+import com.cgbsoft.lib.R;
+
+import java.util.HashMap;
+
 /**
  * 用于存放静态变量 final static
  *  Created by xiaoyu.zhang on 2016/11/10 15:45
- *  
  */
 public interface Constant {
 
@@ -40,31 +42,12 @@ public interface Constant {
     String ACTION_LIVE_SEND_MSG = "ACTION_LIVE_SEND_MSG";
     String ACTION_LIVE_SEND_CONTENT = "ACTION_LIVE_SEND_CONTENT";
 
-    //消息模块特殊处理的ID
-    //平台客服
-    String msgCustomerService = "dd0cc61140504258ab474b8f0a38bb56";
-    //直播动态
-    String msgLiveStatus = "INTIME40001";
-    //产品动态
-    String msgProductStatus = "INTIME40002";
-    //营销喜报
-    String MSG_MARKETING_STATUS = "INTIME40003";
-    //运营公告
-    String MSG_OPERATION_STATUS = "INTIME40004";
-    //系统公告
-    String MSG_SYSTEM_STATUS = "INTIME40005";
-    //小秘书
-    String MSG_SECRETARY = "INTIME40006";
-    //交易信息
-    String MSG_TRADE_INFORMATION = "INTIME40007";
-    //特殊消息
-    String MSG_NOKNOW_INFORMATION = "INTIME49999";
-
     String HAS_PUSH_MESSAGE = "push_message_come_in";
 
     String ISTHISRUN_OPENDOWNLOAD = "isthisrun_opendownload";
 
     int RECEIVER_SEND_CODE = 99;
+    int RECEIVER_SEND_CODE_NEW_INFO = 100;
 
     String RONG_SERVICE_RECEIVER = "rong_service_receiver";
 
@@ -75,9 +58,7 @@ public interface Constant {
     String RECEIVER_EXIT_ACTION = "com.privateFund.exitLogin";
     String RECEIVER_ERRORCODE = "errorCode";
 
-
     //----------------权限管理参数(危险权限)------------------
-
     int REQUEST_CODE_ASK_PERMISSIONS = 0x0101;
     //危险权限,需要在运行时请求.注意: 危险权限是按组来分的,所以,当你申请了多个同组的危险权限时,运行时只需要申请一个就行
     // 联系人 
@@ -98,7 +79,7 @@ public interface Constant {
     // 相机 
     String PERMISSION_CAMERA = Manifest.permission.CAMERA;
     //震动
-    String PERMISSION_VIBRATE =Manifest.permission.VIBRATE;
+    String PERMISSION_VIBRATE = Manifest.permission.VIBRATE;
     //传感器
     String PERMISSION_BODY_SENSORS = Manifest.permission.BODY_SENSORS;
     //定位
@@ -135,4 +116,52 @@ public interface Constant {
 
     public static final int POINT_STATE_WRONG = 2;
 
+    //加载产品列表时候的 条数  默认加载20条数据
+    public static final int LOAD_PRODUCT_lIMIT = 20;
+
+    public static final String IMAGE_SAVE_PATH_LOCAL = "relative_asset_local";
+    public static final String IMAGE_RIGHT_DELETE = "show_right_delete";
+    public static final String IMAGE_THREM_LOCAL = "image_thmb_local";
+
+    //消息模块特殊处理的ID
+    //平台客服
+    public static final String msgCustomerService = "dd0cc61140504258ab474b8f0a38bb56";
+    //直播动态
+    public static final String msgLiveStatus = "INTIME40001";
+    //产品动态
+    public static final String msgProductStatus = "INTIME40002";
+    //营销喜报
+    public static final String msgMarketingStatus = "INTIME40003";
+    //运营公告
+    public static final String msgOperationStatus = "INTIME40004";
+    //系统公告
+    public static final String msgSystemStatus = "INTIME40005";
+    //小秘书
+    public static final String msgSecretary = "INTIME40006";
+    //交易信息
+    public static final String msgTradeInformation = "INTIME40007";
+    //特殊消息
+    public static final String msgNoKnowInformation = "INTIME49999";
+
+    HashMap<String, String> NewFoundHashMap = new HashMap<String, String>() {
+        {
+            put("1", "行业资讯");
+            put("2", "云观察");
+            put("3", "云观点");
+            put("4", "早知道");
+        }
+    };
+    HashMap<String, Integer> hashMap = new HashMap<String, Integer>() {
+        {
+            put(msgCustomerService, R.string.info_plamfort_server);
+            put(msgLiveStatus, R.string.info_zhibo_video);
+            put(msgProductStatus, R.string.info_product_dynic);
+            put(msgMarketingStatus, R.string.info_market_reprot);
+            put(msgOperationStatus, R.string.info_run_notice);
+            put(msgSystemStatus, R.string.info_system_notice);
+            put(msgSecretary, R.string.info_small_mishu);
+            put(msgTradeInformation, R.string.info_trade);
+            put(msgNoKnowInformation, R.string.info_speceil);
+        }
+    };
 }

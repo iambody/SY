@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -23,9 +24,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
 
 /**
  * desc  ${DESC}
@@ -405,7 +403,7 @@ public class CWebviewManger {
                 }
 
                 public void right() {
-                    RongIM.getInstance().startPrivateChat(context, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
+//                    RongIM.getInstance().startPrivateChat(context, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
                     this.cancel();
                 }
             }.show();
@@ -485,7 +483,7 @@ public class CWebviewManger {
         try {
             String targetId = URLDecoder.decode(split[2], "utf-8");
             String name = URLDecoder.decode(split[3], "utf-8");
-            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, targetId, name);
+//            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, targetId, name);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -616,14 +614,14 @@ public class CWebviewManger {
 //    }
 
     private void openCustomerChat(String action) {
-        String[] split = action.split(":");
-        try {
-            String name = URLDecoder.decode(split[3], "utf-8");
-            String userId = URLDecoder.decode(split[2], "utf-8");
-            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, userId, name);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        String[] split = action.split(":");
+//        try {
+//            String name = URLDecoder.decode(split[3], "utf-8");
+//            String userId = URLDecoder.decode(split[2], "utf-8");
+//            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, userId, name);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void cutScreenShare(String action) {
@@ -1195,9 +1193,9 @@ public class CWebviewManger {
     }
 
     private static String formatCodeToName(String catagory) {
-        Set<String> set = WebViewConstant.NewFoundHashMap.keySet();
+        Set<String> set = Constant.NewFoundHashMap.keySet();
         if (set.contains(catagory)) {
-            return WebViewConstant.NewFoundHashMap.get(catagory);
+            return Constant.NewFoundHashMap.get(catagory);
         }
         return "资讯信息";
     }

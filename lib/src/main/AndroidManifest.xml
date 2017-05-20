@@ -5,10 +5,6 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
-        <!--========================融云==========================-->
-        <activity
-            android:name="io.rong.imkit.activity.PictureSelectorActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name="io.rong.imkit.activity.PicturePreviewActivity"

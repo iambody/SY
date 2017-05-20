@@ -13,4 +13,7 @@ public class RouteConfig {
     public static final String GODTOSOUSOU="product_sousouactivity";
     //跳转到视频播放页面
     public static final String GOTOVIDEOPLAY="video_videoplay";
+
+    // 欢迎页面
+    public static final String GOTOWELCOMEPAGE="investornmain_welcomeativity";
 }

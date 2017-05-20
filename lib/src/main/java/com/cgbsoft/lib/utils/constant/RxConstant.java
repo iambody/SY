@@ -44,4 +44,6 @@ public interface RxConstant {
 
     String ON_ACTIVITY_RESUME_OBSERVABLE = "on_activity_resume_observable";
 
+    String RC_CONNECT_STATUS_OBSERVABLE = "rc_connect_status_observable";
+
 }

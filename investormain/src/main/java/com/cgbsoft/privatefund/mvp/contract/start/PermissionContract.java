@@ -16,6 +16,5 @@ public interface PermissionContract {
     }
 
     interface View extends BaseView{
-
     }
 }

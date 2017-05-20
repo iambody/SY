@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.util.List;

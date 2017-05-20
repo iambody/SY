@@ -45,7 +45,6 @@ public abstract class MenuAnimationHandler {
             subActionItem.view.setLayoutParams(params);
             ((ViewGroup)this.menu.getActivityContentView()).removeView(subActionItem.view);
         }
-
     }
 
     public abstract boolean isAnimating();

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
@@ -25,7 +26,6 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.ui.SearchBaseActivity;
-import app.product.com.utils.CollectionUtils;
 import app.product.com.utils.ViewUtil;
 
 /**

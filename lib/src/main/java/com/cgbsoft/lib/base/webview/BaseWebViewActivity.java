@@ -26,6 +26,7 @@ import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.DefaultDialog;
+import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import rx.Observable;
  *
  * @author chenlong
  */
+@Route("lib_basewebviewactivity")
 public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
     public static final int SAVE_REQUST = 300;
@@ -154,9 +156,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
      */
-    protected void executeOverideUrlCallBack(String actionUrl) {
-
-    }
+    protected void executeOverideUrlCallBack(String actionUrl) {}
 
     @Override
     protected T createPresenter() {

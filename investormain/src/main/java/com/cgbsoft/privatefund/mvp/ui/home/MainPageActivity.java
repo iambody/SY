@@ -24,7 +24,10 @@ import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import butterknife.BindView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import rx.Observable;
 
 @Route("investornmain_mainpageactivity")
@@ -87,8 +90,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void switchFragment(Fragment to) {
         if (mContentFragment != to) {
-            FragmentTransaction transaction = mFragmentManager.beginTransaction().setCustomAnimations(
-                    R.anim.home_fade_in, R.anim.home_fade_out);
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//            setCustomAnimations(R.anim.home_fade_in, R.anim.home_fade_out);
             if (!to.isAdded()) {    // 先判断是否被add过
                 transaction.hide(mContentFragment).add(R.id.fl_main_content, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
@@ -123,6 +126,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 4://客服
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
+                RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
     }
 
