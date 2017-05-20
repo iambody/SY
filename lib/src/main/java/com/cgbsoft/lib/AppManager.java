@@ -38,29 +38,25 @@ public class AppManager implements AppinfConstant {
      * 获取用户id
      */
     public static String getUserId(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(USERIDSP, Context.MODE_PRIVATE);
-        return sp.getString("userid", "");
+        return getBasePreference(context).getString(USERIDSP, "");
     }
 
     /**
      * 获取用户token
      */
     public static String getUserToken(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(USERTOKENSP, Context.MODE_PRIVATE);
-        return sp.getString("usertoken", "");
+        return getBasePreference(context).getString(USERTOKENSP, "");
     }
 
     /**
      * 获取用户登录状态
      */
     public static boolean getIsLogin(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(ISLOGIN, Context.MODE_PRIVATE);
-        return sp.getBoolean("islogin", false);
+        return getBasePreference(context).getBoolean(ISLOGIN, false);
     }
 
     //获取历史数据
     public static String getSousouHistory(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
-        return sp.getString("history", "");
+        return getBasePreference(context).getString(SOUSOUHISTORY, "");
     }
 }
