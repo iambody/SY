@@ -1,11 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -25,7 +22,6 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.webView)
     BaseWebview baseWebview;
 
-
     @Override
     protected int layoutID() {
         return R.layout.fragment_webview_common;
@@ -39,5 +35,11 @@ public class MineFragment extends BaseFragment {
     @Override
     protected BasePresenterImpl createPresenter() {
         return null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        baseWebview.loadUrl("javascript:refresh()");
     }
 }

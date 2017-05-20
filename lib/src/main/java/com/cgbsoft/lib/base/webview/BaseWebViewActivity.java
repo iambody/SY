@@ -26,7 +26,6 @@ import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.DefaultDialog;
-import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ import rx.Observable;
  *
  * @author chenlong
  */
-@Route("lib_basewebviewactivity")
 public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
     public static final int SAVE_REQUST = 300;
@@ -291,6 +289,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             e.printStackTrace();
         }
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

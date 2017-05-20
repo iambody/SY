@@ -32,7 +32,6 @@ public class NavigationUtils {
         ((Activity) context).startActivity(intent);
     }
 
-
     public static void startActivity(Context context, Class target, String id) {
         Intent intent = new Intent(context, target);
         intent.putExtra("PARAMS_ID", id);

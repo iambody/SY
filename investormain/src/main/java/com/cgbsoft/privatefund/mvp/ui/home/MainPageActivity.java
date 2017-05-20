@@ -80,7 +80,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void data() {
         baseWebview.loadUrls(CwebNetConfig.pageInit);
-
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
 

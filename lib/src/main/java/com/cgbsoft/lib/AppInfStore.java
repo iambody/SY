@@ -47,6 +47,15 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存用户账号
+     */
+    public static void saveUserAccount(Context scContext, String userAccount) {
+        SharedPreferences.Editor ed = getBasePreference(scContext).edit();
+        ed.putString(USERACCOUNT, userAccount);
+        ed.commit();
+    }
+
+    /**
      * 用户是否登录
      */
     public static void saveIsLogin(Context scContext, boolean islogin) {

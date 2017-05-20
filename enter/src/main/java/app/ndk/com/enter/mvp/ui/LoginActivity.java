@@ -22,6 +22,7 @@ import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.chenenyu.router.Router;
+import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import cn.sharesdk.framework.ShareSDK;
  * Email:zhangxyfs@126.com
  *  
  */
+@Route("enter_loginactivity")
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
 //    @BindView(R2.id.iv_al_back)

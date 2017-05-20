@@ -12,6 +12,7 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.MyDogDialog;
@@ -168,7 +169,7 @@ public class CWebviewManger {
                 @Override
                 public void right() {
                     dismiss();
-//                    logOutUser();
+                    logOutUser();
                 }
             };
             dialog.show();
@@ -869,12 +870,11 @@ public class CWebviewManger {
 //        dialog.show();
     }
 
-    //
-//    private void logOutUser() {
-//        ReturnLogin returnLogin = new ReturnLogin();
-//        returnLogin.tokenExit(context);
-//    }
-//
+    private void logOutUser() {
+        LogOutAccount returnLogin = new LogOutAccount();
+        returnLogin.accounttExit(context);
+    }
+
     private void checkRengou(String action) {
         String decode = URLDecoder.decode(action);
         String[] split = decode.split(":");

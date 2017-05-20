@@ -260,6 +260,10 @@ public class SPreference implements Constant {
     }
 
     public static void saveUserInfoData(@NonNull Context context, UserInfoDataEntity.UserInfo userInfo) {
+        if (userInfo == null) {
+            UserDataProvider.saveUserInfo(context, "");
+            return;
+        }
         UserDataProvider.saveUserInfo(context,  new Gson().toJson(userInfo));
         LogUtils.Log("ta","操作");
     }

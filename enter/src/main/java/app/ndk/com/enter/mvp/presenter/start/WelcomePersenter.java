@@ -117,7 +117,6 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     if (getView() != null)
                         getView().getDataSucc("");
                 }
-
             }
 
             @Override
@@ -198,13 +197,13 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    String strAddr = getAddressFromLocation(location);
+//                    String strAddr = getAddressFromLocation(location);
                     //todo
-                    if (TextUtils.isEmpty(strAddr)) {
-//                        view.onLocationChanged(-1, 0, 0, strAddr);
-                    } else {
-//                        view.onLocationChanged(0, location.getLatitude(), location.getLongitude(), strAddr);
-                    }
+//                    if (TextUtils.isEmpty(strAddr)) {
+////                        view.onLocationChanged(-1, 0, 0, strAddr);
+//                    } else {
+////                        view.onLocationChanged(0, location.getLatitude(), location.getLongitude(), strAddr);
+//                    }
                 }
 
                 @Override
@@ -220,32 +219,32 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                 }
             });
         } else {
-            String strAddr = getAddressFromLocation(curLoc);
+//            String strAddr = getAddressFromLocation(curLoc);
             //todo
-            if (TextUtils.isEmpty(strAddr)) {
-//                view.onLocationChanged(-1, 0, 0, strAddr);
-            } else {
-//                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
-            }
+//            if (TextUtils.isEmpty(strAddr)) {
+////                view.onLocationChanged(-1, 0, 0, strAddr);
+//            } else {
+////                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
+//            }
         }
     }
-
-    private String getAddressFromLocation(Location location) {
-        Geocoder geocoder = new Geocoder(getContext());
-
-        try {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
-            if (list.size() > 0) {
-                Address address = list.get(0);
-                return address.getAddressLine(0);
-            }
-        } catch (IOException e) {
-        }
-
-        return "";
-    }
+//
+//    private String getAddressFromLocation(Location location) {
+//        Geocoder geocoder = new Geocoder(getContext());
+//
+//        try {
+//            double latitude = location.getLatitude();
+//            double longitude = location.getLongitude();
+//            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+//            if (list.size() > 0) {
+//                Address address = list.get(0);
+//                return address.getAddressLine(0);
+//            }
+//        } catch (IOException e) {
+//        }
+//
+//        return "";
+//    }
 
     @Override
     public void detachView() {
