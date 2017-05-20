@@ -34,7 +34,7 @@ import butterknife.OnClick;
  *         手势密码设置页面
  */
 @Route("investornmain_gestureeditactivity")
-public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View{
+public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
 
     public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";
     public static final String PARAM_FROM_MODIFY = "PARAM_FROM_MODIFY";
