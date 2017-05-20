@@ -29,7 +29,7 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
-    private DiscoverFragmentc discoveryFragment;//发现
+    private DiscoverFragmen discoveryFragment;//发现
 //    private ProductFragment productFragment;//产品
 private ProductFragment productFragment;//产品
 
