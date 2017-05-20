@@ -21,7 +21,7 @@ import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;

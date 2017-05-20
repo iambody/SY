@@ -19,7 +19,6 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
-import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.chenenyu.router.Router;
 
 import java.util.concurrent.TimeUnit;

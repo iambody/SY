@@ -4,11 +4,23 @@ import android.app.ActivityManager;
 import android.content.Context;
 
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.utils.tools.DeviceUtils;
+import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
 import java.util.List;
 
 import app.live.com.mvp.presenter.InitBusinessHelper;
 import app.live.com.utils.SxbLogImpl;
+import app.privatefund.com.im.bean.NewsMessage;
+import app.privatefund.com.im.bean.PdfMessage;
+import app.privatefund.com.im.bean.ProductMessage;
+import app.privatefund.com.im.listener.MyConversationBehaviorListener;
+import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
+import app.privatefund.com.im.listener.MyReceiveMessageListener;
+import app.privatefund.com.im.listener.NewMessageItemProvider;
+import app.privatefund.com.im.listener.PdfMessageItemProvider;
+import app.privatefund.com.im.listener.ProductMessageItemProvider;
+import io.rong.imkit.RongIM;
 
 /**
  * desc

@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.widget.BaseDialog;
+
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 import app.privatefund.com.im.R;
 import io.rong.imkit.model.UIConversation;

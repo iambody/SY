@@ -17,7 +17,6 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 
-import app.mall.com.mvp.presenter.MallFragmentPresenter;
 import app.mall.com.mvp.presenter.MallPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,7 +24,7 @@ import qcloud.mall.R;
 import qcloud.mall.R2;
 
 /**
- *
+ * 商城
  */
 public class MallFragment extends BaseFragment<MallPresenter> {
 
