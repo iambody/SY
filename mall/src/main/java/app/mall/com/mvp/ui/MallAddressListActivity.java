@@ -2,11 +2,15 @@ package app.mall.com.mvp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.widget.dialog.MenuDialog;
+import com.cgbsoft.lib.widget.recycler.RecyclerControl;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
 
@@ -15,16 +19,23 @@ import app.mall.com.mvp.adapter.MallListAdapter;
 import app.mall.com.mvp.contract.MallContract;
 import app.mall.com.mvp.listener.MallAddressListeber;
 import app.mall.com.mvp.presenter.MallPresenter;
+import butterknife.BindFloat;
 import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
 
+@Route("mall_choice_address")
 public class MallAddressListActivity extends BaseActivity<MallPresenter> implements MallContract.View, MallAddressListeber {
 
     @BindView(R2.id.mall_address_list)
     RecyclerView rcv_mall_address_list;
+    @BindView(R2.id.title_mid)
+    TextView titleMid;
     private MallListAdapter mallListAdapter;
     private ArrayList<MallAddressBean> mallAddressBeans;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerControl recyclerControl;
+
 
     @Override
     protected int layoutID() {
@@ -34,8 +45,14 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     @Override
     protected void init(Bundle savedInstanceState) {
         getPresenter().getMallAddressList();
+        titleMid.setText("收货地址");
         mallListAdapter = new MallListAdapter(this);
+//        rcv_mall_address_list.setAdapter(mallListAdapter);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rcv_mall_address_list.setLayoutManager(linearLayoutManager);
         rcv_mall_address_list.setAdapter(mallListAdapter);
+
     }
 
     @Override
@@ -55,7 +72,9 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     public void getMallAddressLitSuc(ArrayList<MallAddressBean> list) {
+        mallAddressBeans = list;
         mallListAdapter.refAllData(list);
+        mallListAdapter.notifyDataSetChanged();
 
     }
 
@@ -90,7 +109,7 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     }
 
     @Override
-    public void onItemLongClick(int position, LinearLayout linear) {
+    public void onItemLongClick(final int position, LinearLayout linear) {
         linear.setBackgroundColor(0xffd0d0d0);
 
         new MenuDialog(getApplicationContext(), new String[]{"设置默认", "编辑", "删除"}) {

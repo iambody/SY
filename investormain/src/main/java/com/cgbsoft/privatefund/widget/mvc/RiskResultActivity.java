@@ -75,23 +75,23 @@ public class RiskResultActivity extends BaseActivity {
         switch (value) {
             case 1:
                 str = "[ 保守型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.baoshou_nor : R.drawable.risk_result_conservative);
+//                image.setBackgroundResource(visitor ? R.drawable.baoshou_nor : R.drawable.risk_result_conservative);
                 break;
             case 2:
                 str = "[ 稳健型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.ic_wenjian_nor : R.drawable.risk_result_steady);
+//                image.setBackgroundResource(visitor ? R.drawable.ic_wenjian_nor : R.drawable.risk_result_steady);
                 break;
             case 3:
                 str = "[ 平衡型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.pingheng_nor : R.drawable.risk_result_balance);
+//                image.setBackgroundResource(visitor ? R.drawable.pingheng_nor : R.drawable.risk_result_balance);
                 break;
             case 4:
                 str = "[ 成长型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.chengzhang_nor : R.drawable.risk_result_grow);
+//                image.setBackgroundResource(visitor ? R.drawable.chengzhang_nor : R.drawable.risk_result_grow);
                 break;
             case 5:
                 str = "[ 进取型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.jinqu_nor : R.drawable.risk_result_radical);
+//                image.setBackgroundResource(visitor ? R.drawable.jinqu_nor : R.drawable.risk_result_radical);
                 break;
         }
 
@@ -99,7 +99,7 @@ public class RiskResultActivity extends BaseActivity {
         type.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
         type.setText(str);
         resultinfo.setText(getString(R.string.risk_result_info) + "\n" + str);
-        commit.setBackgroundResource(visitor ? R.drawable.c_common_bg_btn : R.drawable.common_red_bg_btn);
+//        commit.setBackgroundResource(visitor ? R.drawable.c_common_bg_btn : R.drawable.common_red_bg_btn);
 
 //        UserInfo user = MApplication.getUser();
 //        user.setRiskEvaluationIdnum(riskEvaluationIdnum);
@@ -136,23 +136,23 @@ public class RiskResultActivity extends BaseActivity {
         switch (value) {
             case 1:
                 str = "[ 保守型 ]";
-                image.setBackgroundResource(R.drawable.risk_result_conservative);
+//                image.setBackgroundResource(R.drawable.risk_result_conservative);
                 break;
             case 2:
                 str = "[ 稳健型 ]";
-                image.setBackgroundResource(R.drawable.risk_result_steady);
+//                image.setBackgroundResource(R.drawable.risk_result_steady);
                 break;
             case 3:
                 str = "[ 平衡型 ]";
-                image.setBackgroundResource(R.drawable.risk_result_balance);
+//                image.setBackgroundResource(R.drawable.risk_result_balance);
                 break;
             case 4:
                 str = "[ 成长型 ]";
-                image.setBackgroundResource(R.drawable.risk_result_grow);
+//                image.setBackgroundResource(R.drawable.risk_result_grow);
                 break;
             case 5:
                 str = "[ 进取型 ]";
-                image.setBackgroundResource(R.drawable.risk_result_radical);
+//                image.setBackgroundResource(R.drawable.risk_result_radical);
                 break;
         }
 

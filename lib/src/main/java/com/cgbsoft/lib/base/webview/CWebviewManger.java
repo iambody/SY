@@ -115,10 +115,10 @@ public class CWebviewManger {
             openMallPage(action);
         } else if (action.contains("openDialog")) {
             openDialog(action);
-//        } else if (action.contains("addAddress")) {
-//            context.startActivity(new Intent(context, EditAddress.class));
-//        } else if (action.contains("choiceAddress")) {
-//            context.startActivity(new Intent(context, ChoiceAddress.class));
+        } else if (action.contains("addAddress")) {
+            NavigationUtils.startActivityByRouter(context, "mall_address");
+        } else if (action.contains("choiceAddress")) {
+            NavigationUtils.startActivityByRouter(context, "mall_choice_address");
         } else if (action.contains("telephone")) {
             Utils.telHotline(context);
         } else if (action.contains("openMallMain")) {
@@ -948,10 +948,22 @@ public class CWebviewManger {
     private void openMallPage(String action) {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
-        HashMap<String, Object> hashMap = new HashMap();
-        hashMap.put("url", split[2]);
-        hashMap.put("title", split[3]);
-        NavigationUtils.startActivityByRouter(context, "investornmain_mallactivity", hashMap);
+        String url = split[3];
+        String title = split[2];
+        if (!url.contains("http")) {
+            url = BaseWebNetConfig.baseParentUrl + url;
+        }
+        Intent i = new Intent(context, BaseWebViewActivity.class);
+
+        i.putExtra(WebViewConstant.push_message_url, url);
+        i.putExtra(WebViewConstant.push_message_title, title);
+        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+        i.putExtra(WebViewConstant.PAGE_INIT, false);
+        if (split.length >= 5) {
+            i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+        }
+        ((Activity) context).startActivityForResult(i, 300);
     }
 
 //    public void secretviewpdf(String action) {

@@ -11,7 +11,7 @@ import java.io.Serializable;
  *  
  */
 public class MallAddressBean extends BaseModel implements Serializable{
-    public static int LIST = 1;
+    public static int LIST = 0;
 
     private String shopping_name;
     private String address;

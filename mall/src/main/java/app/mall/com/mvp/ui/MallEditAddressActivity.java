@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ import qcloud.mall.R2;
 /**
  * 商城编辑地址页面
  */
+@Route("mall_address")
 public class MallEditAddressActivity extends BaseActivity<MallPresenter> implements MallContract.View {
 
     //地址

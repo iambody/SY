@@ -7,8 +7,15 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import app.mall.com.model.MallAddressBean;
@@ -94,7 +101,14 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
         addSubscription(ApiClient.getMallAddress(SPreference.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
+                try {
+                    JSONArray ja = new JSONArray(s);
+                    List<MallAddressBean> rows = new Gson().fromJson(s, new TypeToken<List<MallAddressBean>>() {
+                    }.getType());
+                    getView().getMallAddressLitSuc((ArrayList<MallAddressBean>) rows);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 

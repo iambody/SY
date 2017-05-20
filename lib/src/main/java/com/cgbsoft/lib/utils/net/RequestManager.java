@@ -358,7 +358,6 @@ interface RequestManager {
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
     Observable<ResponseBody>videoCommentLs(@QueryMap Map<String,String>parmsMap);
-    Observable<ResponseBody> getHotSousouResult(@QueryMap Map<String,String> paramsMap);
 
     //编辑商城收货地址
     @FormUrlEncoded

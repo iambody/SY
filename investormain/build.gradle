@@ -150,4 +150,5 @@ dependencies {
     compile project(':product')
     compile project(':live')
     compile project(':video')
+    compile project(':mall')
 }

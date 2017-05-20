@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.widget.BaseDialog;
 
 /**
  * desc  ${DESC}
