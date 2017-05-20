@@ -3,6 +3,7 @@ package app.ndk.com.enter.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -34,10 +35,14 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
-                SPreference.saveToken(getContext().getApplicationContext(), result.token);
+//                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
+//                SPreference.saveToken(getContext().getApplicationContext(), result.token);
 
-                SPreference.saveLoginFlag(getContext(), true);
+//                SPreference.saveLoginFlag(getContext(), true);
+                AppInfStore.saveUserId(getContext().getApplicationContext(),result.userId);
+                AppInfStore.saveUserToken(getContext().getApplicationContext(), result.token);
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
+
                 if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(result.userInfo));
                     SPreference.saveLoginName(getContext(), un);

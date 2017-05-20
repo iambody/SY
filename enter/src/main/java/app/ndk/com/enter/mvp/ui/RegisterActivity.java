@@ -12,12 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.DefaultDialog;
 import com.cgbsoft.lib.widget.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProtocolDialog;
+import com.chenenyu.router.Router;
 
 import java.util.concurrent.TimeUnit;
 
@@ -123,7 +125,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             @Override
             public void right() {
                 this.dismiss();
-                toDataStatistics(1002, 10010, "注册验证码获取");
+//                toDataStatistics(1002, 10010, "注册验证码获取");
                 getPresenter().sendCode(mLoadingDialog, et_ar_username.getText().toString());
             }
         };
@@ -215,6 +217,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     public void regSucc() {
 //        openActivity(MainPageActivity.class);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
         finish();
     }
 
