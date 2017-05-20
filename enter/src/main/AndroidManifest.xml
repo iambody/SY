@@ -111,7 +111,7 @@
             android:name="UMENG_APPKEY"
             android:value="54583d07fd98c52c6e000a1c" />
 
-         <provider
+        <provider
             android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
             android:authorities="com.cgbsoft.cache.user"
             android:exported="true"
@@ -122,8 +122,10 @@
             android:exported="true"
             android:multiprocess="true" />
 
-        <activity android:name=".mvp.ui.Load.LoadAdviserActivity"  >
-            <meta-data android:name="isadviser" android:value="0"></meta-data>
+        <activity android:name=".mvp.ui.Load.LoadAdviserActivity">
+            <meta-data
+                android:name="isadviser"
+                android:value="0"></meta-data>
         </activity>
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
         <activity android:name=".mvp.ui.start.WelcomeActivity"></activity>
@@ -131,7 +133,8 @@
         <activity android:name=".mvp.ui.AnimActivity"></activity>
         <activity android:name=".mvp.ui.ChoiceIdentityActivity" />
         <activity android:name=".mvp.ui.start.PermissionsActivity" />
-<activity android:name=".test.TestWebview"/>
+        <activity android:name=".mvp.ui.RegisterActivity" />
+        <activity android:name=".test.TestWebview" />
     </application>
 
 

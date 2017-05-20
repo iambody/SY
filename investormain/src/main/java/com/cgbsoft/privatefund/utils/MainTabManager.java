@@ -6,7 +6,6 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.ui.discovery.DiscoveryFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
