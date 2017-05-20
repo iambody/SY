@@ -15,31 +15,25 @@ import com.cgbsoft.lib.utils.cache.SPreference;
  */
 public class AppInfStore implements AppinfConstant {
 
+    private static SharedPreferences getBasePreference(Context context) {
+        return context.getSharedPreferences(USER_SHARE_PREFERENCE_SET, Context.MODE_PRIVATE);
+    }
+
     /**
      * 保存是否是理财师端
      */
     public static void Save_IsAdviser(Context spContext, boolean IsAdviser) {
-        SharedPreferences sp = spContext.getSharedPreferences(IsAdviser_Tage, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.putBoolean("adviser", IsAdviser);
+        SharedPreferences.Editor ed = getBasePreference(spContext).edit();
+        ed.putBoolean(IsAdviser_Tage, IsAdviser);
         ed.commit();
-    }
-
-    /**
-     * 获取对否是理财师
-     */
-    public static boolean Get_IsAdviser(Context spContext) {
-        SharedPreferences sp = spContext.getSharedPreferences(IsAdviser_Tage, Context.MODE_PRIVATE);
-        return sp.getBoolean("adviser", false);
     }
 
     /**
      * 保存用户id
      */
     public static void saveUserId(Context scContext, String userid) {
-        SharedPreferences sp = scContext.getSharedPreferences(USERIDSP, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.putString("userid", userid);
+        SharedPreferences.Editor ed = getBasePreference(scContext).edit();
+        ed.putString(USERIDSP, userid);
         ed.commit();
     }
 
@@ -47,9 +41,8 @@ public class AppInfStore implements AppinfConstant {
      * 保存用户id
      */
     public static void saveUserToken(Context scContext, String usertoken) {
-        SharedPreferences sp = scContext.getSharedPreferences(USERTOKENSP, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.putString("usertoken", usertoken);
+        SharedPreferences.Editor ed = getBasePreference(scContext).edit();
+        ed.putString(USERTOKENSP, usertoken);
         ed.commit();
     }
 
@@ -57,25 +50,34 @@ public class AppInfStore implements AppinfConstant {
      * 用户是否登录
      */
     public static void saveIsLogin(Context scContext, boolean islogin) {
-        SharedPreferences sp = scContext.getSharedPreferences(ISLOGIN, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.putBoolean("islogin", islogin);
+        SharedPreferences.Editor ed = getBasePreference(scContext).edit();
+        ed.putBoolean(ISLOGIN, islogin);
         ed.commit();
+    }
 
+    /**
+     * 保存用户信息
+     * @param context
+     * @param userInfo
+     */
+    public static void saveUserInfo(Context context, UserInfoDataEntity.UserInfo userInfo) {
+        SPreference.saveUserInfoData(context, userInfo);
+    }
+
+    /**
+     * 得到用户信息
+     * @param context
+     * @return
+     */
+    public static UserInfoDataEntity.UserInfo getUserInfo(Context context) {
+        return SPreference.getUserInfoData(context);
     }
 
     //保存数据
     public static void saveSousouHistory(Context pcContext, String str) {
-        SharedPreferences sp = pcContext.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.putString("history", str);
+        SharedPreferences.Editor ed = getBasePreference(pcContext).edit();
+        ed.putString(SOUSOUHISTORY, str);
         ed.commit();
-    }
-
-    //获取历史数据
-    public static String getSousouHistory(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SOUSOUHISTORY, Context.MODE_PRIVATE);
-        return sp.getString("history", "");
     }
 
     /**

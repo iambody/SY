@@ -6,6 +6,9 @@ package com.cgbsoft.lib.contant;
  * 日期 2017/5/9-09:15
  */
 public interface AppinfConstant {
+
+    String USER_SHARE_PREFERENCE_SET = "user_flag_info_prefrence";
+
     /**
      * 存储理财师标识的sp的名字
      */
@@ -30,4 +33,5 @@ public interface AppinfConstant {
     public final String ISLOGIN="isloginsp";
     //产品搜搜记录
     public static final String SOUSOUHISTORY="historysp";
+
 }
