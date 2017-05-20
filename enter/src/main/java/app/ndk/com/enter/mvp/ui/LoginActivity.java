@@ -19,19 +19,20 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.CustomDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
-import com.cgbsoft.lib.widget.ProtocolDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
 import com.jhworks.library.ImageSelector;
-
 import java.util.ArrayList;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
+import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 
 /**
@@ -226,6 +227,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
+
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }

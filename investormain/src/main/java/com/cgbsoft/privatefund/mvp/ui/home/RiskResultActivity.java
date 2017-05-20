@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.ui.home;
+package com.cgbsoft.privatefund.widget.mvc;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,25 +81,26 @@ public class RiskResultActivity extends BaseActivity {
         switch (value) {
             case 1:
                 str = "[ 保守型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.baoshou_nor : R.drawable.ic_risk_result_conservative);
+                image.setBackgroundResource(visitor ? R.drawable.baoshou_nor : R.drawable.risk_result_conservative);
                 break;
             case 2:
                 str = "[ 稳健型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.ic_wenjian_nor : R.drawable.ic_risk_result_steady);
+                image.setBackgroundResource(visitor ? R.drawable.ic_wenjian_nor : R.drawable.risk_result_steady);
                 break;
             case 3:
                 str = "[ 平衡型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.ic_pingheng_nor : R.drawable.ic_risk_result_balance);
+                image.setBackgroundResource(visitor ? R.drawable.pingheng_nor : R.drawable.risk_result_balance);
                 break;
             case 4:
                 str = "[ 成长型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.ic_chengzhang_nor : R.drawable.ic_risk_result_grow);
+                image.setBackgroundResource(visitor ? R.drawable.chengzhang_nor : R.drawable.risk_result_grow);
                 break;
             case 5:
                 str = "[ 进取型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.ic_jinqu_nor : R.drawable.ic_risk_result_radical);
+                image.setBackgroundResource(visitor ? R.drawable.jinqu_nor : R.drawable.risk_result_radical);
                 break;
         }
+
         restart.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
         type.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
         type.setText(str);
@@ -132,71 +133,85 @@ public class RiskResultActivity extends BaseActivity {
         switch (value) {
             case 1:
                 str = "[ 保守型 ]";
-                image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
+                image.setBackgroundResource(R.drawable.risk_result_conservative);
                 break;
             case 2:
                 str = "[ 稳健型 ]";
-                image.setBackgroundResource(R.drawable.ic_risk_result_steady);
+                image.setBackgroundResource(R.drawable.risk_result_steady);
                 break;
             case 3:
                 str = "[ 平衡型 ]";
-                image.setBackgroundResource(R.drawable.ic_risk_result_balance);
+                image.setBackgroundResource(R.drawable.risk_result_balance);
                 break;
             case 4:
                 str = "[ 成长型 ]";
-                image.setBackgroundResource(R.drawable.ic_risk_result_grow);
+                image.setBackgroundResource(R.drawable.risk_result_grow);
                 break;
             case 5:
                 str = "[ 进取型 ]";
-                image.setBackgroundResource(R.drawable.ic_risk_result_radical);
+                image.setBackgroundResource(R.drawable.risk_result_radical);
                 break;
         }
 
         type.setText(str);
         resultinfo.setText(getString(R.string.risk_result_info) + str);
-        commitRistResult();
+
+//        JSONObject jsonObj = new JSONObject();
+//        try {
+//            jsonObj.put("uid", SPreference.getUserId(this));
+//            jsonObj.put("answer", result);
+//            jsonObj.put("riskEvaluationName", riskEvaluationName);
+//            jsonObj.put("riskEvaluationIdnum", riskEvaluationIdnum);
+//            jsonObj.put("riskEvaluationPhone", riskEvaluationPhone);
+//        } catch (Exception e) {
+//        }
+//        new RiskEvaluationTask(context).start(jsonObj.toString(), new HttpResponseListener() {
+//
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    Log.i("", "resopnse=" + response.toString());
+//                    String valueStr = response.getString("type");
+//                    int value = Integer.valueOf(valueStr);
+//                    String str = "";
+//                    switch (value) {
+//                        case 1:
+//                            str = "[ 保守型 ]";
+//                            image.setBackgroundResource(R.drawable.risk_result_conservative);
+//                            break;
+//                        case 2:
+//                            str = "[ 稳健型 ]";
+//                            image.setBackgroundResource(R.drawable.risk_result_steady);
+//                            break;
+//                        case 3:
+//                            str = "[ 平衡型 ]";
+//                            image.setBackgroundResource(R.drawable.risk_result_balance);
+//                            break;
+//                        case 4:
+//                            str = "[ 成长型 ]";
+//                            image.setBackgroundResource(R.drawable.risk_result_grow);
+//                            break;
+//                        case 5:
+//                            str = "[ 进取型 ]";
+//                            image.setBackgroundResource(R.drawable.risk_result_radical);
+//                            break;
+//                    }
+//
+//                    type.setText(str);
+//                    resultinfo.setText(getString(R.string.risk_result_info) + str);
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+ //           }
+//
+//            public void onErrorResponse(String error, int statueCode) {
+//                try {
+//                    Toast.makeText(RiskResultActivity.this, "风险承受能力评测失败", Toast.LENGTH_SHORT).show();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
-    private void commitRistResult() {
-        ApiClient.commitRistResult(ApiBusParam.riskEvalutionParams(SPreference.getUserId(this), result, riskEvaluationName, riskEvaluationIdnum, riskEvaluationPhone)).subscribe(new RxSubscriber<TypeNameEntity.Result>() {
-            @Override
-            protected void onEvent(TypeNameEntity.Result result) {
-                updateView(result.type);
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-                Toast.makeText(RiskResultActivity.this, "风险承受能力评测失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void updateView(String values) {
-        int value = Integer.valueOf(values);
-        String str = "";
-        switch (value) {
-        case 1:
-            str = "[ 保守型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
-            break;
-        case 2:
-            str = "[ 稳健型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_steady);
-            break;
-        case 3:
-            str = "[ 平衡型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_balance);
-            break;
-        case 4:
-            str = "[ 成长型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_grow);
-            break;
-        case 5:
-            str = "[ 进取型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_radical);
-            break;
-        }
-        type.setText(str);
-        resultinfo.setText(getString(R.string.risk_result_info) + str);
-    }
 }

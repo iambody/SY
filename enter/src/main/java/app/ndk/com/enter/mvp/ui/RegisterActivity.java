@@ -15,9 +15,10 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.DefaultDialog;
-import com.cgbsoft.lib.widget.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.lib.widget.ProtocolDialog;
 import com.chenenyu.router.Router;
 
@@ -125,7 +126,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             @Override
             public void right() {
                 this.dismiss();
-//                toDataStatistics(1002, 10010, "注册验证码获取");
+                toDataStatistics(1002, 10010, "注册验证码获取");
                 getPresenter().sendCode(mLoadingDialog, et_ar_username.getText().toString());
             }
         };

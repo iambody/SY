@@ -7,6 +7,6 @@ package com.cgbsoft.lib.base.webview;
  */
 public class BaseWebNetConfig {
     //基础host
-    public static String baseParentUrl = "https://app.simuyun.com/app5.0";
+    public static String baseParentUrl = "https://app.simuyun.com/app5.0/";
 
 }

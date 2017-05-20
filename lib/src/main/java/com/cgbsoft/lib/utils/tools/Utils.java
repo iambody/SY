@@ -29,7 +29,7 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;

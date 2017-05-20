@@ -8,10 +8,14 @@ import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
+import com.cgbsoft.lib.utils.db.dao.DayTaskBeanDao;
 import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
+import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
+
+import org.greenrobot.greendao.query.Query;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 
 import java.io.File;
@@ -29,12 +33,15 @@ public class DaoUtils {
     private UserInfoDao userInfoDao;
     private VideoInfoDao videoInfoDao;
     private HistorySearchBeanDao historySearchBeanDao;
+    private DayTaskBeanDao dayTaskDao;
+
     public static final int W_OTHER = 1;
     public static final int W_USER = 2;
     public static final int W_VIDEO = 3;
     //搜索历史的数据库
     public static final int W_SousouHistory = 101;
 
+    public static final int W_TASK = 4;
 
     public DaoUtils(Context context, int which) {
         switch (which) {
@@ -49,6 +56,9 @@ public class DaoUtils {
                 break;
             case W_SousouHistory:
                 historySearchBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getHistorySearchBeanDao();
+                break;
+            case W_TASK:
+                dayTaskDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDayTaskBeanDao();
                 break;
         }
     }
@@ -313,11 +323,121 @@ public class DaoUtils {
         return model;
     }
 
+    /**
+     * 获取每日任务完成情况
+     */
+    public ArrayList<DayTaskBean> getDayTaskList(){
+        return (ArrayList<DayTaskBean>) dayTaskDao.loadAll();
+    }
+
+    /**
+     * 修改任务完成情况
+     */
+    public void updataDayTask(String taskName,int state){
+        DayTaskBean dayTaskBean = dayTaskDao.queryBuilder().where(DayTaskBeanDao.Properties.TaskName.eq(taskName)).build().unique();
+        dayTaskBean.setState(state);
+        dayTaskDao.update(dayTaskBean);
+    }
+
+    /**
+     * 获取任务状态
+     */
+    public int getDayTaskState(String taskName){
+        DayTaskBean dayTaskBean = dayTaskDao.queryBuilder().where(DayTaskBeanDao.Properties.TaskName.eq(taskName)).build().unique();
+        return dayTaskBean.getState();
+    }
+
+    /**
+     * 清空任务
+     */
+    public void clearDayTask(){
+        dayTaskDao.deleteAll();
+    }
+
+    /**
+     * 获取任务最后更新时间
+     * @return
+     */
+    public String getTaskLastDate(){
+        DayTaskBean dayTaskBean = dayTaskDao.queryBuilder().where(DayTaskBeanDao.Properties.TaskName.eq("每日签到")).build().unique();
+        return dayTaskBean.getResetDay();
+
+    }
+
+    /**
+     * 初始化任务
+     * @param resetDay
+     */
+    public void initDayTask(String resetDay){
+        clearDayTask();
+        ArrayList<DayTaskBean> dayTaskBeans = new ArrayList<>();
+        DayTaskBean signIn = new DayTaskBean();
+        signIn.setId(1L);
+        signIn.setTaskName("每日签到");
+        signIn.setContent("每日可以签到一次，获得1-10个云豆");
+        signIn.setCreateDate(resetDay);
+        signIn.setResetDay(resetDay);
+        signIn.setState(0);
+        signIn.setTaskType(0);
+        dayTaskBeans.add(signIn);
+
+        DayTaskBean zixunTask = new DayTaskBean();
+        zixunTask.setId(3L);
+        zixunTask.setTaskName("查看资讯");
+        zixunTask.setContent("阅读最新资讯/公告可获得2个云豆");
+        zixunTask.setCreateDate(resetDay);
+        zixunTask.setResetDay(resetDay);
+        zixunTask.setTaskType(3);
+        zixunTask.setState(0);
+        dayTaskBeans.add(zixunTask);
+
+        DayTaskBean shareZixunTask = new DayTaskBean();
+        shareZixunTask.setId(4L);
+        shareZixunTask.setTaskName("分享资讯");
+        shareZixunTask.setContent("成功分享资讯到微信可获得5个云豆");
+        shareZixunTask.setCreateDate(resetDay);
+        shareZixunTask.setResetDay(resetDay);
+        shareZixunTask.setTaskType(4);
+        shareZixunTask.setState(0);
+        dayTaskBeans.add(shareZixunTask);
+
+        DayTaskBean productTask = new DayTaskBean();
+        productTask.setId(6L);
+        productTask.setTaskName("查看产品");
+        productTask.setContent("查看在线产品可获得2个云豆");
+        productTask.setCreateDate(resetDay);
+        productTask.setResetDay(resetDay);
+        productTask.setState(0);
+        productTask.setTaskType(1);
+        dayTaskBeans.add(productTask);
+
+        DayTaskBean shareTask = new DayTaskBean();
+        shareTask.setId(2L);
+        shareTask.setTaskName("分享产品");
+        shareTask.setContent("成功分享产品到微信好友可获得5个云豆");
+        shareTask.setCreateDate(resetDay);
+        shareTask.setResetDay(resetDay);
+        shareTask.setTaskType(2);
+        shareTask.setState(0);
+        dayTaskBeans.add(shareTask);
+
+        DayTaskBean videoTask = new DayTaskBean();
+        videoTask.setId(5L);
+        videoTask.setTaskName("学习视频");
+        videoTask.setContent("观看学院视频超过5分钟可获得10个云豆");
+        videoTask.setCreateDate(resetDay);
+        videoTask.setResetDay(resetDay);
+        videoTask.setTaskType(5);
+        videoTask.setState(0);
+        dayTaskBeans.add(videoTask);
+        dayTaskDao.saveInTx(dayTaskBeans);
+    }
 
     public void destory() {
         otherInfoDao = null;
         userInfoDao = null;
         videoInfoDao = null;
+        dayTaskDao = null;
     }
 
 }

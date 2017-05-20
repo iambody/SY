@@ -1,7 +1,9 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
@@ -556,7 +558,6 @@ public class ApiClient {
      *
      * @return
      */
-
     public static Observable<String> getProductFiltrtDate() {
         return OKHTTP.getInstance().getRequestManager().getProductFilter().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
@@ -567,7 +568,6 @@ public class ApiClient {
      * @param map
      * @return
      */
-
     public static Observable<String> getProductlsDate(Map<String, String> map) {
         return OKHTTP.getInstance().getRequestManager().getProductls(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
@@ -578,7 +578,6 @@ public class ApiClient {
      * @param map
      * @return
      */
-
     public static Observable<String> getSousouData(Map<String, String> map) {
 
         return OKHTTP.getInstance().getRequestManager().getSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -591,7 +590,6 @@ public class ApiClient {
      * @param map
      * @return
      */
-
     public static Observable<String> getHotSousouData(Map<String, String> map) {
 
         return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -629,16 +627,6 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -735,7 +723,6 @@ public class ApiClient {
             if (!map.containsKey("appPlatform")) {
                 map.put("appPlatform", "android");
             }
-
         } else {
             map = new HashMap<>();
             if (!map.containsKey("appVersion")) {
@@ -748,4 +735,67 @@ public class ApiClient {
         return map;
     }
 
+    //保存商城收货地址信息
+    public static Observable<String> saveMallAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().saveAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //删除商城收货地址
+    public static Observable<String> deleteMallAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().deleteAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //新增商城收货地址
+    public static Observable<String> addAddress(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().addAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //获取商城收货地址列表
+    public static Observable<String> getMallAddress(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().getAddressList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //设为默认地址
+    public static Observable<String> setDefauleMallAddress(String userId, String id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().setDefaultMallAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    //获取直播列表
+    public static Observable<String> getLiveList(String userId) {
+        Map<String, String> map = new ArrayMap<>();
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().getLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播开房间
+     * key-->value
+     * id -->roomId
+     * chat --> chatId
+     * title -->roomTitle
+     * user_id --> userId
+     * room_type -->
+     * image --> 直播封面
+     * equipment --> 2
+     */
+    public static Observable<String> hostOpenLive(Map<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播关闭房间
+     *
+     * @return
+     */
+    public static Observable<String> hostCloseLive(String roomId, String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }

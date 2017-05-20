@@ -1,33 +1,28 @@
 package com.cgbsoft.privatefund;
 
+import android.app.ActivityManager;
 import android.content.Context;
-import android.support.multidex.MultiDex;
 
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.utils.tools.DeviceUtils;
-import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
-import app.privatefund.com.im.bean.NewsMessage;
-import app.privatefund.com.im.bean.PdfMessage;
-import app.privatefund.com.im.bean.ProductMessage;
-import app.privatefund.com.im.listener.MyConversationBehaviorListener;
-import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
-import app.privatefund.com.im.listener.MyReceiveMessageListener;
-import app.privatefund.com.im.listener.NewMessageItemProvider;
-import app.privatefund.com.im.listener.PdfMessageItemProvider;
-import app.privatefund.com.im.listener.ProductMessageItemProvider;
-import io.rong.imkit.RongIM;
+import java.util.List;
+
+import app.live.com.mvp.presenter.InitBusinessHelper;
+import app.live.com.utils.SxbLogImpl;
 
 /**
- * @author chenlong
+ * desc
+ * Created by yangzonghui on 2017/5/16 20:20
+ * Email:yangzonghui@simuyun.com
+ *  
  */
-
-public class InitApplication  extends InvestorAppli {
-
+public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Contexts.init(this);
+        //初始化直播
+        initLive();
+
         Thread.setDefaultUncaughtExceptionHandler(new SimuyunUncaughtExceptionHandler(this));
 
         /**
@@ -51,6 +46,35 @@ public class InitApplication  extends InvestorAppli {
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
         }
-
     }
+
+
+    private void initLive() {
+        if (shouldInit()) {
+            SxbLogImpl.init(getApplicationContext());
+
+            //初始化APP
+            InitBusinessHelper.initApp(context);
+        }
+    }
+
+
+    /**
+     * 判断是否需要初始化
+     * @return
+     */
+    private boolean shouldInit() {
+        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = getPackageName();
+        int myPid = android.os.Process.myPid();
+
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -36,7 +36,7 @@ public class NetConfig {
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    static final String GET_RES_URL = API_URL + "/startup/5.0";
+    static final String GET_RES_URL = API_URL + "/startup/5.1";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
@@ -51,6 +51,19 @@ public class NetConfig {
     static class API {
         //客户风险评测提交接口
         static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
+    }
+
+    static class MALL {
+        //新增商城收货地址
+        static final String MALL_ADD_ADDRESS = API_URL + "/ydInsertAddress";
+        //保存商城收获地址
+        static final String MALL_SAVE_ADDRESS = API_URL + "/ydUpdateAddress";
+        //删除商城收货地址
+        static final String MALL_DETELE_ADDRESS = API_URL + "/YdDeleteAddress";
+        //获取商城收货地址列表
+        static final String MALL_ADDRESS_LIST = API_URL + "/getYdAddressList";
+        //设置商城默认收货地址
+        static final String MALL_SET_DEFAULT = API_URL + "/ydDefaultAddress";
     }
 
     static class INFORMATION {
@@ -102,23 +115,53 @@ public class NetConfig {
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
     }
 
-  //搜索相关
-    static class SOUSOU{
-      private static final String sousou = "/search";
-      //产品全局搜索
-      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
-      //热门搜索
-      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
-  }
+    //搜索相关
+    static class SOUSOU {
+        private static final String sousou = "/search";
+        //产品全局搜索
+        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
+        //热门搜索
+        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
+    }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
+        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
         //获取产品列表
-        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
+        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
+
     }
+
+    //直播相关
+    static class LIVE {
+        private static final String live = "/live";
+        //获取直播列表
+        static final String GET_LIVE_LIST = LIVE_URL + live + "/rooms/5.0";
+        //获取房间号
+        static final String GET_ROOM_NUM = LIVE_URL + live + "/room/id/5.0";
+        //发送直播评论
+        static final String SENT_COMMENT = LIVE_URL + live + "/room/sendMessage/5.0";
+        //获取直播附件
+        static final String GET_LIVE_PDF = LIVE_URL + live + "/room/attachment/5.0";
+        //主播心跳
+        static final String LIVE_HOST_HEART = LIVE_URL + live + "/room/activate/5.0";
+        //进入房间
+        static final String CUSTOM_JOIN_ROOM = LIVE_URL + live + "/room/enter/5.0";
+        //退出房间
+        static final String CUSTOM_EXIT_ROOM = LIVE_URL + live + "/room/exit/5.0";
+        //主播开房间
+        static final String HOST_OPEN_LIVE = LIVE_URL + live + "/room/5.0";
+        //主播关闭房间
+        static final String HOST_CLOSE_LIVE = LIVE_URL + live + "/room/close/5.0";
+        //获取房间用户
+        static final String GET_ROOM_MEMBER = LIVE_URL + live + "/users/5.0";
+        //直播预告
+        static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
+    }
+
+
 
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";

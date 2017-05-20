@@ -30,7 +30,7 @@ public class ClubFragment extends BaseFragment {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        baseWebview.loadUrls(CwebNetConfig.clubPgge);
+        baseWebview.loadUrls(CwebNetConfig.clubPage);
     }
 
     @Override

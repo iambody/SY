@@ -14,9 +14,9 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.utils.ui.MyDogDialog;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.jhworks.library.ImageSelector;
 
@@ -112,10 +112,10 @@ public class CWebviewManger {
             openMallPage(action);
         } else if (action.contains("openDialog")) {
             openDialog(action);
-//        } else if (action.contains("addAddress")) {
-//            context.startActivity(new Intent(context, EditAddress.class));
-//        } else if (action.contains("choiceAddress")) {
-//            context.startActivity(new Intent(context, ChoiceAddress.class));
+        } else if (action.contains("addAddress")) {
+            NavigationUtils.startActivityByRouter(context, "mall_address");
+        } else if (action.contains("choiceAddress")) {
+            NavigationUtils.startActivityByRouter(context, "mall_choice_address");
         } else if (action.contains("telephone")) {
             Utils.telHotline(context);
         } else if (action.contains("openMallMain")) {
@@ -373,7 +373,7 @@ public class CWebviewManger {
             String title = URLDecoder.decode(split[3], "utf-8");
             String content = URLDecoder.decode(split[4], "utf-8");
             String btnText = URLDecoder.decode(split[5], "utf-8");
-            new MyDogDialog(context, title, content, "", btnText) {
+            new PushDialog(context, title, content, btnText, "", "") {
                 public void left() {
                     this.cancel();
                 }
@@ -496,7 +496,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -922,10 +922,22 @@ public class CWebviewManger {
     private void openMallPage(String action) {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
-        HashMap<String, Object> hashMap = new HashMap();
-        hashMap.put("url", split[2]);
-        hashMap.put("title", split[3]);
-        NavigationUtils.startActivityByRouter(context, "investornmain_mallactivity", hashMap);
+        String url = split[3];
+        String title = split[2];
+        if (!url.contains("http")) {
+            url = BaseWebNetConfig.baseParentUrl + url;
+        }
+        Intent i = new Intent(context, BaseWebViewActivity.class);
+
+        i.putExtra(WebViewConstant.push_message_url, url);
+        i.putExtra(WebViewConstant.push_message_title, title);
+        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+        i.putExtra(WebViewConstant.PAGE_INIT, false);
+        if (split.length >= 5) {
+            i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+        }
+        ((Activity) context).startActivityForResult(i, 300);
     }
 
 //    public void secretviewpdf(String action) {

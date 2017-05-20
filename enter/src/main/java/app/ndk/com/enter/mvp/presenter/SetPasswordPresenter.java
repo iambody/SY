@@ -9,8 +9,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
-import com.cgbsoft.lib.widget.LoadingDialog;
-import com.google.android.exoplayer.C;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;

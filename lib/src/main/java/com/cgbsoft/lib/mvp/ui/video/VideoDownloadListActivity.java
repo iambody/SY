@@ -32,7 +32,7 @@ import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;

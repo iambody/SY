@@ -10,6 +10,7 @@ import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 
+import app.mall.com.mvp.ui.MallFragment;
 import app.privatefund.com.vido.mvp.ui.video.DiscoverFragmentc;
 import app.product.com.mvp.ui.ProductFragment;
 
@@ -21,7 +22,7 @@ public class MainTabManager {
     //投资人
     private MineFragment mineFragment;//个人页
     private CloudFragment cloudFragment;//云键
-    private ClubFragment clubFragment;//俱乐部
+    private MallFragment clubFragment;//俱乐部
 
     //理财师
 //    private MessageFragment messageFragment;//消息
@@ -95,7 +96,7 @@ private ProductFragment productFragment;//产品
             case R.id.nav_right_second:
                 if (isInvestor()) {
                     if (clubFragment == null) {
-                        clubFragment = new ClubFragment();
+                        clubFragment = new MallFragment();
                     }
                     fragment = clubFragment;
                 } else {

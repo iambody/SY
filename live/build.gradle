@@ -6,8 +6,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-
-
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -23,15 +21,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile  "com.android.support:appcompat-v7:${android_need_version}"
+    compile "com.android.support:appcompat-v7:${android_need_version}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
-    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
+    compile "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
+    compile 'com.android.support:support-v4:24.2.1'
+    compile project(':lib')
+    compile 'com.tencent.ilivesdk:ilivesdk:1.4.0'
+    compile 'com.tencent.livesdk:livesdk:1.1.1'
+    compile 'com.tencent.rtmpsdk:rtmpsdk:1.0.1'
+    compile 'com.tencent.ilivefilter:ilivefilter:1.1.9'
+    compile 'com.tencent.iliveptufilter:iliveptufilter:1.0.0'
 }
