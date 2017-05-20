@@ -1,5 +1,6 @@
 package app.mall.com.mvp.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 
 import app.mall.com.mvp.presenter.MallFragmentPresenter;
 import app.mall.com.mvp.presenter.MallPresenter;
@@ -52,7 +55,13 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     }
 
     @OnClick(R2.id.mall_rule)
-    public void onVideoDiscoverSousouLayClicked() {
-//        new Intent(getActivity(),PushMsg)
+    public void openRulePage() {
+        Intent i = new Intent(getContext(), BaseWebViewActivity.class);
+        i.putExtra(WebViewConstant.push_message_url, "bank/ydrule.html");
+        i.putExtra(WebViewConstant.push_message_title, "云豆使用规则");
+        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+        i.putExtra(WebViewConstant.PAGE_INIT, false);
+        startActivity(i);
     }
 }
