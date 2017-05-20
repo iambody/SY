@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -35,7 +36,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
         String rongUID = OtherDataProvider.getRongUid(BaseApplication.getContext());
         String rongToken = OtherDataProvider.getRongToken(BaseApplication.getContext());
 
-        String userId = SPreference.getUserId(BaseApplication.getContext());
+        String userId = AppManager.getUserId(BaseApplication.getContext());
 
         if (!TextUtils.equals(rongUID, userId) || !TextUtils.equals("2", rongExpired)) {
             OtherDataProvider.saveRongUid(BaseApplication.getContext(), userId);
@@ -63,7 +64,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     //todo 测试用
     public void toSignIn(){
-        String uid = SPreference.getUserId(BaseApplication.getContext());
+        String uid = AppManager.getUserId(BaseApplication.getContext());
         ApiClient.testSignIn(uid).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

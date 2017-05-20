@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -91,7 +92,8 @@ public class ExitLoginService extends Service {
         intent.setClass(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        SPreference.quitLogin(BaseApplication.getContext());
+        AppInfStore.saveIsLogin(getApplicationContext(), false);
+        AppInfStore.saveUserAccount(getApplicationContext(), null);
 
         RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
 

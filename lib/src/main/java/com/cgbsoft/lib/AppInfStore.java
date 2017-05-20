@@ -22,7 +22,7 @@ public class AppInfStore implements AppinfConstant {
     /**
      * 保存是否是理财师端
      */
-    public static void Save_IsAdviser(Context spContext, boolean IsAdviser) {
+    public static void saveAdvise(Context spContext, boolean IsAdviser) {
         SharedPreferences.Editor ed = getBasePreference(spContext).edit();
         ed.putBoolean(IsAdviser_Tage, IsAdviser);
         ed.commit();

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -83,20 +84,14 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     @Override
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identity < 0) {
-            identity = SPreference.getIdtentify(getApplicationContext());
-        }
-        switch (identity) {
-            case IDS_ADVISER:
-                iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_af_next.setTextColor(0xff666666);
-                break;
-            case IDS_INVERSTOR:
-                iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_af_next.setTextColor(0xffffffff);
-                break;
+        if (AppManager.isAdViser(this)) {
+            iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
+            btn_af_next.setTextColor(0xff666666);
+        } else {
+            iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
+            btn_af_next.setTextColor(0xffffffff);
         }
         et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
@@ -167,7 +162,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             MToast.makeText(this, "手机号码与验证码不匹配", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
+        if (AppManager.isAdViser(this)) {
             toUmengStatistics(UMENG_KEY, "按钮", "找回下一步");
         } else {
             toDataStatistics(2005, 20011, "下一步");

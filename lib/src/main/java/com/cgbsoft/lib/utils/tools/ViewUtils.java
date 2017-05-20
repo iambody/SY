@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -73,7 +74,7 @@ public class ViewUtils {
             for (String keyTitle : keyTitleList) {
                 int startIndex = values.indexOf(keyTitle);
                 if (startIndex >= 0) {
-                    textSize.setSpan(new ForegroundColorSpan(SPreference.isVisitorRole(context) ? Color.parseColor("#f47900") :
+                    textSize.setSpan(new ForegroundColorSpan(AppManager.isInvestor(context) ? Color.parseColor("#f47900") :
                             Color.parseColor("#ea1202")), startIndex, startIndex + keyTitle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     success = true;
                 }
@@ -237,7 +238,7 @@ public class ViewUtils {
     }
 
     public static void switchColorToBandC(Context context, TextView textView) {
-        textView.setTextColor(SPreference.isVisitorRole(context) ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.color5));
+        textView.setTextColor(AppManager.isInvestor(context) ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.color5));
     }
 
     /**

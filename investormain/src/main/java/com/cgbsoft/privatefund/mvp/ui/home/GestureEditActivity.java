@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -184,7 +185,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     private void updateGesturePassword(final String newPassword) {
         password = newPassword;
-        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordSetParams(SPreference.getUserId(this), newPassword), false);
+        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordSetParams(AppManager.getUserId(this), newPassword), false);
     }
 
     private boolean isInputPassValidate(String inputPassword) {

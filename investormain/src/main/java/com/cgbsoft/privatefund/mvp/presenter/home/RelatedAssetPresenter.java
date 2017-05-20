@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -22,7 +23,7 @@ public class RelatedAssetPresenter extends BasePresenterImpl<RelativeAssetContra
 
     @Override
     public void uploadAssetRelatedFile(String imageUrl) {
-        ApiClient.relatedAsset(SPreference.getUserId(getContext()), imageUrl).subscribe(new RxSubscriber<CommonEntity.Result>() {
+        ApiClient.relatedAsset(AppManager.getUserId(getContext()), imageUrl).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
                 if ("suc".equals(result.results)) {

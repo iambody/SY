@@ -50,7 +50,7 @@ public class ApiClient {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(BaseApplication.getContext()));
-        params.put("client", SPreference.getIdtentify(BaseApplication.getContext()) + "");
+        params.put("client", AppManager.isAdViser(BaseApplication.getContext()) ? "2" : "1");
 
         return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
@@ -59,7 +59,7 @@ public class ApiClient {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(BaseApplication.getContext()));
-        params.put("client", SPreference.getIdtentify(BaseApplication.getContext()) + "");
+        params.put("client", AppManager.isAdViser(BaseApplication.getContext()) ? "2" : "1");
 
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 

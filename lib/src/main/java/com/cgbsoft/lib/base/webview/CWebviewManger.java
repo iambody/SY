@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -481,7 +482,7 @@ public class CWebviewManger {
     }
 
     private void jumpProductList(String action) {
-        if (SPreference.isVisitorRole(context)) {
+        if (AppManager.isInvestor(context)) {
             NavigationUtils.startActivityByRouter(context, "investornmain_mainpageactivity",
                     "jumpId", 1, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
@@ -1211,7 +1212,7 @@ public class CWebviewManger {
                 i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
             ((Activity) context).startActivityForResult(i, 300);
-            if ("产品详情".equals(title) && SPreference.isVisitorRole(context)) {
+            if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");
             } else if (!TextUtils.isEmpty(url) && url.contains("discover/details.html")) {
 //            new RundouTaskManager(context).executeRundouTask("查看资讯");

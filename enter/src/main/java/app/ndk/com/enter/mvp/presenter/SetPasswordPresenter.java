@@ -3,6 +3,7 @@ package app.ndk.com.enter.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -61,13 +62,13 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
         addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
             @Override
             protected void onEvent(UserInfoDataEntity.Result loginBean) {
-                SPreference.saveUserId(getContext().getApplicationContext(), loginBean.userId);
-                SPreference.saveToken(getContext().getApplicationContext(), loginBean.token);
+                AppInfStore.saveUserId(getContext(), loginBean.userId);
+                AppInfStore.saveUserToken(getContext(), loginBean.token);
+                AppInfStore.saveIsLogin(getContext(), true);
 
-                SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
-                    SPreference.saveLoginName(getContext(), un);
+                    AppInfStore.saveUserAccount(getContext(), un);
                 }
 //                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> {
 //                    getContext().startActivity(new Intent(getContext(), MainPageActivity.class));

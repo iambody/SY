@@ -3,6 +3,8 @@ package com.cgbsoft.lib.utils.tools;
 import android.content.Context;
 import android.os.Build;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -31,7 +33,7 @@ public class DataStatisticsUtils {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
         try {
-            js.put("uid", SPreference.getUserId(context.getApplicationContext()));
+            js.put("uid", AppManager.getUserId(context.getApplicationContext()));
             js.put("ip", OtherDataProvider.getIP(context.getApplicationContext()));
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
             js.put("mos", "A");
@@ -91,7 +93,7 @@ public class DataStatisticsUtils {
     }
 
     private static boolean isToC(Context context) {
-        return SPreference.getIdtentify(context.getApplicationContext()) == Constant.IDS_INVERSTOR;
+        return AppManager.isAdViser(context);
     }
 
 

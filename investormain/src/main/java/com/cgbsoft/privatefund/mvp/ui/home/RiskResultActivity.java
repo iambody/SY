@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -158,7 +159,7 @@ public class RiskResultActivity extends BaseActivity {
     }
 
     private void commitRistResult() {
-        ApiClient.commitRistResult(ApiBusParam.riskEvalutionParams(SPreference.getUserId(this), result, riskEvaluationName, riskEvaluationIdnum, riskEvaluationPhone)).subscribe(new RxSubscriber<TypeNameEntity.Result>() {
+        ApiClient.commitRistResult(ApiBusParam.riskEvalutionParams(AppManager.getUserId(this), result, riskEvaluationName, riskEvaluationIdnum, riskEvaluationPhone)).subscribe(new RxSubscriber<TypeNameEntity.Result>() {
             @Override
             protected void onEvent(TypeNameEntity.Result result) {
                 updateView(result.type);

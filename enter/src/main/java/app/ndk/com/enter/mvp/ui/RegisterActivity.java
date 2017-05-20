@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -94,21 +95,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identity < 0) {
-            identity = SPreference.getIdtentify(getApplicationContext());
-        }
-        switch (identity) {
-            case IDS_ADVISER:
-                iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_ar_register.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_ar_register.setTextColor(0xff666666);
-                break;
-            case IDS_INVERSTOR:
-                iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_ar_register.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_ar_register.setTextColor(0xffffffff);
-                break;
+
+        if (AppManager.isAdViser(this)) {
+            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            btn_ar_register.setBackgroundResource(R.drawable.select_btn_advister);
+            btn_ar_register.setTextColor(0xff666666);
+        } else {
+            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+            btn_ar_register.setBackgroundResource(R.drawable.select_btn_inverstor);
+            btn_ar_register.setTextColor(0xffffffff);
         }
 
         et_ar_username.addTextChangedListener(new RegisterTextWatcher(USERNAME_KEY));

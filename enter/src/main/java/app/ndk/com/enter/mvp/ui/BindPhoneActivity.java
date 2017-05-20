@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -77,25 +78,18 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        identify = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identify < 0) {
-            identify = SPreference.getIdtentify(getApplicationContext());
-        }
-        switch (identify) {
-            case IDS_ADVISER:
-                iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_ab_ok.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_ab_ok.setTextColor(0xff666666);
-                tv_ab_next.setBackgroundResource(R.drawable.select_btn_advister);
-                tv_ab_next.setTextColor(0xff666666);
-                break;
-            case IDS_INVERSTOR:
-                iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_ab_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_ab_ok.setTextColor(0xffffffff);
-                tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-                tv_ab_next.setTextColor(0xffffffff);
-                break;
+        if (AppManager.isAdViser(this)) {
+            iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            btn_ab_ok.setBackgroundResource(R.drawable.select_btn_advister);
+            btn_ab_ok.setTextColor(0xff666666);
+            tv_ab_next.setBackgroundResource(R.drawable.select_btn_advister);
+            tv_ab_next.setTextColor(0xff666666);
+        } else {
+            iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+            btn_ab_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
+            btn_ab_ok.setTextColor(0xffffffff);
+            tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
+            tv_ab_next.setTextColor(0xffffffff);
         }
         et_ab_username.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
         et_ab_check.addTextChangedListener(new BindTextWatcher(CHECK_KEY));

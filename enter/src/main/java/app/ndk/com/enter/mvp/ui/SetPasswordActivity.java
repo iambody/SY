@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.LoadingDialog;
@@ -87,20 +88,14 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         userName = getIntent().getStringExtra("userName");
         code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identity < 0) {
-            identity = SPreference.getIdtentify(getApplicationContext());
-        }
-        switch (identity) {
-            case IDS_ADVISER:
-                iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_as_ok.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_as_ok.setTextColor(0xff666666);
-                break;
-            case IDS_INVERSTOR:
-                iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_as_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_as_ok.setTextColor(0xffffffff);
-                break;
+        if (AppManager.isAdViser(this)) {
+            iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            btn_as_ok.setBackgroundResource(R.drawable.select_btn_advister);
+            btn_as_ok.setTextColor(0xff666666);
+        } else {
+            iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+            btn_as_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
+            btn_as_ok.setTextColor(0xffffffff);
         }
         et_as_password1.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD1_KEY));
         et_as_password2.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD2_KEY));

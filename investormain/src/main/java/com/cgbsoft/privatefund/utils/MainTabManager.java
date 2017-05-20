@@ -2,6 +2,8 @@ package com.cgbsoft.privatefund.utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -118,7 +120,7 @@ private ProductFragment productFragment;//产品
      * 是否为投资者
      */
     private boolean isInvestor() {
-        return SPreference.getIdtentify(BaseApplication.getContext()) == Constant.IDS_INVERSTOR;
+        return AppManager.isInvestor(BaseApplication.getContext());
     }
 
     public void destory() {

@@ -3,6 +3,8 @@ package app.privatefund.com.im.listener;
 import android.content.Context;
 import android.util.Log;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 
 import org.json.JSONException;
@@ -41,7 +43,7 @@ public class ConnectRongYun {
     private void getRcToken() {
         final String[] token = {null};
         int tokenExpired = SPreference.getInt(context, RONGYUN_TOKEN_SPPREFERENCE_EXPIRED);
-        String userId = SPreference.getUserId(context);
+        String userId = AppManager.getUserId(BaseApplication.getContext());
         String rcToken1 = SPreference.getString(context, RONGYUN_TOKEN_SPPREFERENCE_TOKEN);
         if (!userId.equals(userId) || tokenExpired != 2 || rcToken1 == null || rcToken1.equals("null")) {   //融云登录失败值为1，成功为2，首次登录不传值为0
             JSONObject j = new JSONObject();

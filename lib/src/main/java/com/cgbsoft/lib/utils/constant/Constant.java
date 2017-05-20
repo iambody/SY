@@ -14,7 +14,8 @@ public interface Constant {
 
     int REQUEST_IMAGE = 100;
     // 用户设置信息
-    String USER_SETTING = "user_setting";
+    String USER_INFO_BEAN_SP = "user_info_bean_sp";
+    String USER_INFO_BEAN_PROPERTY = "user_info_property";
     //上一次更新的应用版本号，如果刚安装则为当前版本号
     String LAST_APP_VERSION = "last_app_version";
     // 微信登陆
