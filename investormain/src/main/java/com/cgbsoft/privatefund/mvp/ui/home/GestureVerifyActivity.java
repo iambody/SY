@@ -162,10 +162,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(AppManager.getUserId(this)), isFiveTimesError);
     }
 
-//    public void onEventMainThread(ReturnLogin returnLogin) {
-//        finish();
-//    }
-
     @Override
     public void onBackPressed() {
         GestureVerifyActivity.this.finish();
@@ -202,6 +198,25 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         this.dialog = dialog;
         getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(AppManager.getUserId(this), password));
     }
+
+    @Override
+    public void modifyUserSuccess(boolean isFiveTimesError) {
+        AppInfStore.updateUserGesturePassword(this, "");
+        RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
+        if (!isFiveTimesError) {
+            Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            LogOutAccount logOutAccount = new LogOutAccount();
+            logOutAccount.accounttExit(this);
+        }
+    }
+
+    @Override
+    public void modifyUserFailure() {
+        Toast.makeText(GestureVerifyActivity.this, "关闭手势密码失败", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void resetGesturePasswordDialog(Context context) {
         final Dialog dialog = new Dialog(context, R.style.gesture_password_dialog);
@@ -256,24 +271,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         } else {
             GestureVerifyActivity.this.finish();
         }
-    }
-
-    @Override
-    public void modifyUserSuccess(boolean isFiveTimesError) {
-        AppInfStore.updateUserGesturePassword(this, "");
-        RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
-        if (!isFiveTimesError) {
-            Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            LogOutAccount logOutAccount = new LogOutAccount();
-            logOutAccount.accounttExit(this);
-        }
-    }
-
-    @Override
-    public void modifyUserFailure() {
-        Toast.makeText(GestureVerifyActivity.this, "关闭手势密码失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -6,10 +6,13 @@
     android:background="@color/c_background"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_bar_id"/>
 
     <LinearLayout
-        android:layout_below="@+id/title_title"
+        android:layout_below="@+id/title_bar_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="74dp"
