@@ -75,7 +75,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
     }
 
-
     protected void before() {
         mBaseApplication = (BaseApplication) getApplication();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

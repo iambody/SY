@@ -4,12 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.RelativeAssetContract;
+import org.json.JSONObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
