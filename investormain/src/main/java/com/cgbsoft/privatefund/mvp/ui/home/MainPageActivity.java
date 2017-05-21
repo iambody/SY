@@ -183,6 +183,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     int switchID = -1;
     int currentPostion = -1;
+    boolean isHaveClickProduct;
 
     @Override
     public void onTabSelected(int position) {
@@ -194,6 +195,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
+                if (1 != currentPostion && isHaveClickProduct) {
+                    MainTabManager.getInstance().getProductFragment().resetAllData();
+                }
+                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
             case 2://左3

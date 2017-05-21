@@ -199,7 +199,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     @OnClick(R2.id.title_right_btn)
-    void rightTextBtnClick() {
+   protected void rightTextBtnClick() {
         if (hasRightSave) {
             String jascript = "javascript:Tools.save()";
             mWebview.loadUrl(jascript);
