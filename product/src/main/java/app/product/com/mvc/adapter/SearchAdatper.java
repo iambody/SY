@@ -26,6 +26,7 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.ui.SearchBaseActivity;
+import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.utils.ViewUtil;
 
 /**
@@ -338,6 +339,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         switch (resultBean.getIsPart()) {
                             case PRODUCT_ITEM:
+//                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.get);
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
                                 break;
