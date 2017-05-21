@@ -3,6 +3,7 @@ package app.mall.com.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -36,7 +37,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void saveMallAddress(final MallAddressBean model) {
         Map<String,String> params = new HashMap<>();
-        params.put("user_id", SPreference.getUserId(getContext()));
+        params.put("user_id", AppManager.getUserId(getContext()));
         params.put("shopping_name",model.getShopping_name());
         params.put("id",model.getId());
         params.put("address",model.getAddress());
@@ -58,7 +59,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void addMaddAddress(MallAddressBean model) {
         Map<String,String> params = new HashMap<>();
-        params.put("user_id", SPreference.getUserId(getContext()));
+        params.put("user_id", AppManager.getUserId(getContext()));
         params.put("shopping_name",model.getShopping_name());
         params.put("id",model.getId());
         params.put("address",model.getAddress());
@@ -80,7 +81,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void deleteMallAddress(String addressId) {
         Map<String,String> params = new HashMap<>();
-        params.put("user_id", SPreference.getUserId(getContext()));
+        params.put("user_id", AppManager.getUserId(getContext()));
         params.put("id",addressId);
         addSubscription(ApiClient.deleteMallAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
@@ -98,7 +99,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
     @Override
     public void getMallAddressList() {
-        addSubscription(ApiClient.getMallAddress(SPreference.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.getMallAddress(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
@@ -121,7 +122,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
     @Override
     public void setDefaultAddress(String id) {
-        addSubscription(ApiClient.setDefauleMallAddress(SPreference.getUserId(getContext()),id).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.setDefauleMallAddress(AppManager.getUserId(getContext()),id).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
 
