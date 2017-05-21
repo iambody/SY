@@ -33,6 +33,7 @@ public class WebViewConstant {
         public static final String MODIFY_PASSWORD = "app:changepassword";
         public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
         public static final String INVITE_CUSTOM = "app:inviteCust";
+        public static final String INVITE_SHARE="app:tocShare";
     }
 
     /**

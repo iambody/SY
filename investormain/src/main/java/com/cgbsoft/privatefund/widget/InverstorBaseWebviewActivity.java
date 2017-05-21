@@ -30,11 +30,11 @@ public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
                 commonShareBean.setContent(content);
                 commonShareBean.setLink(link);
                 if ("2".equals(type)) {
-                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 1, commonShareBean, null);
-                    commonShareDialog.show();
+//                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 1, commonShareBean, null);
+//                    commonShareDialog.show();
                 } else {
-                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 0, commonShareBean, null);
-                    commonShareDialog.show();
+//                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 0, commonShareBean, null);
+//                    commonShareDialog.show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

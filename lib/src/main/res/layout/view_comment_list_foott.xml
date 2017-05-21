@@ -6,7 +6,7 @@
     android:background="@color/transparent">
 
     <TextView
-        android:id="@+id/view_comment_head_txt"
+        android:id="@+id/view_comment_foot_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading"

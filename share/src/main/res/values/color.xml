@@ -4,4 +4,5 @@
     <color name="share_transparent_bg">#80000000</color>
     <!--文字白色-->
     <color name="colorTextWhite">#FFFFFF</color>
+    <color name="comment_share_bt_press">#67dfdede</color>
 </resources>

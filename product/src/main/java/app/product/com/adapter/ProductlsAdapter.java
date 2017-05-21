@@ -50,6 +50,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
     public void freshAp(List<ProductlsBean> beanList) {
         this.beanList = beanList;
         this.notifyDataSetChanged();
+
     }
     public void AddfreshAp(List<ProductlsBean> beanList) {
         int count=beanList.size();
