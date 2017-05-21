@@ -123,6 +123,17 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 更新资产证明图片信息
+     * @param context
+     * @param assetCertificationImageUrl
+     */
+    public static void updateUserAssetCertificationImageUrl(Context context, String assetCertificationImageUrl) {
+        UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(context);
+        userInfo.getToC().setAssetsCertificationImage(assetCertificationImageUrl);
+        SPreference.saveUserInfoData(context, userInfo);
+    }
+
+    /**
      * 更新资产证明状态
      * @param context
      * @param investmentType

@@ -12,6 +12,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.AssetProveContract;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author chenlong
@@ -25,18 +26,40 @@ public class AssetProvePresenter extends BasePresenterImpl<AssetProveContract.Vi
 
     @Override
     public void uploadAssetProveData(JSONArray assertImage, String investmentType) {
-        ApiClient.assertProve(AppManager.getUserId(getContext()), assertImage, investmentType).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//        ApiClient.assertProve(AppManager.getUserId(getContext()), assertImage, investmentType).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//            @Override
+//            protected void onEvent(CommonEntity.Result result) {
+//                if ("suc".equals(result.results)) {
+//                    getView().requestSuccess();
+//                } else {
+//                    getView().requestFailure();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {}
+//        });
+        ApiClient.toTestassertProve(AppManager.getUserId(getContext()), assertImage, investmentType).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(CommonEntity.Result result) {
-                if ("suc".equals(result.results)) {
-                    getView().requestSuccess();
-                } else {
-                    getView().requestFailure();
+            protected void onEvent(String result) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    String results = jsonObject.get("result").toString();
+                    if ("suc".equals(results)) {
+                        getView().requestSuccess();
+                    } else {
+                        getView().requestFailure();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
-            protected void onRxError(Throwable error) {}
+            protected void onRxError(Throwable error) {
+                getView().requestError(error.getMessage());
+            }
         });
     }
 }
