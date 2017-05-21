@@ -434,7 +434,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("customerId", customId);
         map.put("myAssetImage", assertImage);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRelatedAsset(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

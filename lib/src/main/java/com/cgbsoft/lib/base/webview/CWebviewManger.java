@@ -88,8 +88,8 @@ public class CWebviewManger {
 //            secretviewpdf(action);
         } else if (action.contains("viewpdf")) {
 //            viewpdf(action);
-//        } else if (action.contains("changepassword")) {
-//            changepassword(action);
+        } else if (action.contains("changepassword")) {
+            changepassword(action);
         } else if (action.contains("copytoclipboard")) {
             copytoclipboard(action);
         } else if (action.contains("clickPasteServeCode")) {
@@ -1060,7 +1060,15 @@ public class CWebviewManger {
      *
      * @param action
      */
-//    private void changepassword(String action) {
+    private void changepassword(String action) {
+        try {
+            String[] splits = URLDecoder.decode(action,  "utf-8").split(":");
+            String newPassword = splits[3];
+            Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
+            context.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        String[] split = action.split(":");
 //        String password = split[2];
 //        final String newPassword = URLDecoder.decode(split[3]);
@@ -1111,7 +1119,7 @@ public class CWebviewManger {
 //                ((Activity) context).finish();
 //            }
 //        });
-//    }
+    }
 
     /**
      * 查看pdf

@@ -253,6 +253,10 @@
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskResultActivity"
             android:screenOrientation="portrait" />
 
+        <!-- app module 通用的webview -->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.InverstorBaseWebviewActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">

@@ -92,9 +92,9 @@ public class NetConfig {
         // 修改密码
         static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
         // 关联资产
-        static final String RELATED_ASSET_URL = AUTH_URL + user + "/assetCertificate";
+        static final String RELATED_ASSET_URL = AUTH_URL + user + "/connectedMyAsset";
         // 资产证明
-        static final String ASSET_PROVET_URL = AUTH_URL + user + "/connectedMyAsset";
+        static final String ASSET_PROVET_URL = AUTH_URL + user + "/assetCertificate";
         // 更新用户信息
         static final String UPDATE_USER_INFO_URL = AUTH_URL + user + "/updateUserInfo";
         // 验证用户密码
