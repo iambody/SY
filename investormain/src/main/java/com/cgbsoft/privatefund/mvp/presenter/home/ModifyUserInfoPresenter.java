@@ -8,6 +8,10 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.ModifyUserInfoContract;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -22,30 +26,74 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
 
     @Override
     public void modifyUserInfo(HashMap<String, String> hashMap, boolean isFiveTimes) {
-        ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//        ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//            @Override
+//            protected void onEvent(CommonEntity.Result result) {
+//                if ("suc".equals(result.results)) {
+//                    getView().modifyUserSuccess(isFiveTimes);
+//                } else {
+//                    getView().modifyUserFailure();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {}
+//        });
+        ApiClient.toTestUpdateUserInfo(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(CommonEntity.Result result) {
-                if ("suc".equals(result.results)) {
-                    getView().modifyUserSuccess(isFiveTimes);
-                } else {
-                    getView().modifyUserFailure();
+            protected void onEvent(String result) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    String results = jsonObject.get("result").toString();
+                    if ("suc".equals(results)) {
+                        getView().modifyUserSuccess(isFiveTimes);
+                    } else {
+                        getView().modifyUserFailure();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
-            protected void onRxError(Throwable error) {}
+            protected void onRxError(Throwable error) {
+                getView().modifyUserFailure();
+            }
         });
     }
 
     @Override
     public void validateUserPassword(HashMap<String, String> hashMap) {
-        ApiClient.validateUserPassword(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//        ApiClient.validateUserPassword(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//            @Override
+//            protected void onEvent(CommonEntity.Result result) {
+//                if ("1".equals(result.results)) {
+//                    getView().validatePasswordSuccess();
+//                } else {
+//                    getView().validatePasswordFailure();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                getView().validatePasswordError(error.getMessage());
+//            }
+//        });
+        ApiClient.toTestValidateUserPassword(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(CommonEntity.Result result) {
-                if ("1".equals(result.results)) {
-                    getView().validatePasswordSuccess();
-                } else {
-                    getView().validatePasswordFailure();
+            protected void onEvent(String result) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(result);
+                    String results = jsonObject.get("result").toString();
+                    if ("1".equals(results)) {
+                        getView().validatePasswordSuccess();
+                    } else {
+                        getView().validatePasswordFailure();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 

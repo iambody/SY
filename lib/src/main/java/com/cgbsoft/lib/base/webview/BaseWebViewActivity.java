@@ -20,6 +20,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -27,7 +28,6 @@ import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -41,7 +41,6 @@ import rx.Observable;
  *
  * @author chenlong
  */
-@Route("lib_basewebviewactivity")
 public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
     public static final int SAVE_REQUST = 300;
@@ -90,6 +89,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected boolean isLookZhiBao;
 
     private Observable<Object> executeObservable;
+    private Observable<String> refrushGestureObservable;
 
     @Override
     protected int layoutID() {
@@ -133,6 +133,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 }
             });
         }
+        refrushGestureObservable = RxBus.get().register(RxConstant.REFRUSH_GESTURE_OBSERVABLE, String.class);
+        refrushGestureObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String values) {
+                mWebview.loadUrl("javascript:setGesture('" + values + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
     }
 
     /**
@@ -207,7 +218,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     @OnClick(R2.id.title_right_btn)
-    void rightTextBtnClick() {
+   protected void rightTextBtnClick() {
         if (hasRightSave) {
             String jascript = "javascript:Tools.save()";
             mWebview.loadUrl(jascript);
@@ -215,6 +226,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pageShare();
         }
     }
+
 
     /**
      * @param url
@@ -297,6 +309,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             e.printStackTrace();
         }
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

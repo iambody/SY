@@ -64,12 +64,12 @@ public class CWebClient extends WebViewClient {
              * 认购按钮的特殊处理
              */
             if (null != webviewOnClick && (
-                url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
-                url.startsWith(WebViewConstant.AppCallBack.CAN_BUY)) ||
-                url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
-                url.startsWith(WebViewConstant.AppCallBack.MODIFY_PASSWORD) ||
-                url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
-                url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM)) {
+                    url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
+                            url.startsWith(WebViewConstant.AppCallBack.CAN_BUY)) ||
+                    url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
+                    url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
+                    url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
+                    url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE)) {
                 webviewOnClick.onClick(url);
             } else {
                 /**

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -92,6 +93,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
@@ -119,7 +121,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void data() {
         baseWebview.loadUrls(CwebNetConfig.pageInit);
-
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
 
@@ -182,6 +183,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     int switchID = -1;
     int currentPostion = -1;
+    boolean isHaveClickProduct;
 
     @Override
     public void onTabSelected(int position) {
@@ -193,6 +195,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
+                if (1 != currentPostion && isHaveClickProduct) {
+                    MainTabManager.getInstance().getProductFragment().resetAllData();
+                }
+                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
             case 2://左3
@@ -223,7 +229,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
 
@@ -291,7 +296,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void liveLoginFail(String module, int errCode, String errMsg) {
-        getPresenter().toSignIn();
+//        getPresenter().toSignIn();
 //        Intent intent = new Intent(this, LiveActivity.class);
 //        intent.putExtra("liveJson",liveJsonData.toString());
 //        startActivity(intent);

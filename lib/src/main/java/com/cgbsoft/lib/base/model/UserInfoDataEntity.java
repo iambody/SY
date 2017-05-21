@@ -43,7 +43,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String fatherId;
         public String lastLogStringime;
         public String memoToFather;
-
+        public String  isAdvisers;
 
         public String getBirthday() {
             return birthday;

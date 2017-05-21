@@ -33,13 +33,14 @@ public class WebViewConstant {
         public static final String MODIFY_PASSWORD = "app:changepassword";
         public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
         public static final String INVITE_CUSTOM = "app:inviteCust";
+        public static final String INVITE_SHARE="app:tocShare";
     }
 
     /**
      * 需要拦截跳转到非BaseWebViewActivity页面的url地址集
      */
     public class IntecepterActivity {
-        public static final String recommend_friend = "/settings/recommendation.html";
+        public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
 
     }
 

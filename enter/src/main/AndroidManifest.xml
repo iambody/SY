@@ -129,7 +129,7 @@
         </activity>
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
         <activity android:name=".mvp.ui.start.WelcomeActivity"></activity>
-        <activity android:name=".mvp.ui.LoginActivity"></activity>
+        <activity android:name=".mvp.ui.LoginActivity" android:launchMode="singleTask"/>
         <activity android:name=".mvp.ui.AnimActivity"></activity>
         <activity android:name=".mvp.ui.ChoiceIdentityActivity" />
         <activity android:name=".mvp.ui.start.PermissionsActivity" />

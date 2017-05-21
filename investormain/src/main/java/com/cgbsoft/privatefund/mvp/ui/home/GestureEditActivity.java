@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -11,10 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
 import com.cgbsoft.lib.widget.LockIndicator;
@@ -33,7 +38,7 @@ import butterknife.OnClick;
  *         手势密码设置页面
  */
 @Route("investornmain_gestureeditactivity")
-public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View{
+public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
 
     public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";
     public static final String PARAM_FROM_MODIFY = "PARAM_FROM_MODIFY";
@@ -89,39 +94,36 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         return new ModifyUserInfoPresenter(getBaseContext(), this);
     }
 
-//	@Override
-//	protected void onNewIntent(Intent intent) {
-//		super.onNewIntent(intent);
-//		isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
-//	}
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
+	}
 
     private void setUpViews() {
-        lock9View.setCallBack(new Lock9View.CallBack() {
-            @Override
-            public void onFinish(String inputCode) {
-                 System.out.println("------inputCode=" + inputCode);
-                if (!isInputPassValidate(inputCode)) {
-                    mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
+        lock9View.setCallBack(inputCode -> {
+             System.out.println("------inputCode=" + inputCode);
+            if (!isInputPassValidate(inputCode)) {
+                mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
 //                    mGestureContentView.clearDrawlineState(0L);
-                    return;
-                }
-                if (mIsFirstInput) {
-                    mFirstPassword = inputCode;
-                    updateCodeList(inputCode);
-//                    mGestureContentView.clearDrawlineState(0L);
-                    mTextTip.setText(isModifyPassword ? R.string.please_target_gesture_password_again : R.string.reset_gesture_code);
-                } else {
-                    if (inputCode.equals(mFirstPassword)) {
-                        updateGesturePassword(inputCode);
-                    } else {
-                        mTextTip.setText(Html.fromHtml(getResources().getString(R.string.set_gesture_agin)));
-                        Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
-                        mTextTip.startAnimation(shakeAnimation);
-//                        mGestureContentView.clearDrawlineState(1300L);
-                    }
-                }
-                mIsFirstInput = false;
+                return;
             }
+            if (mIsFirstInput) {
+                mFirstPassword = inputCode;
+                updateCodeList(inputCode);
+//                    mGestureContentView.clearDrawlineState(0L);
+                mTextTip.setText(isModifyPassword ? R.string.please_target_gesture_password_again : R.string.reset_gesture_code);
+            } else {
+                if (inputCode.equals(mFirstPassword)) {
+                    updateGesturePassword(inputCode);
+                } else {
+                    mTextTip.setText(Html.fromHtml(getResources().getString(R.string.set_gesture_agin)));
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
+                    mTextTip.startAnimation(shakeAnimation);
+//                        mGestureContentView.clearDrawlineState(1300L);
+                }
+            }
+            mIsFirstInput = false;
         });
         mTextTip.setText(isModifyPassword ? R.string.please_new_gesture_password : R.string.set_gesture_pattern_reason);
         updateCodeList("");
@@ -141,8 +143,8 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @OnClick(R.id.title_left)
     void leftBackClick() {
         if (fromRegistOrLoginPage) {
-//            ReturnLogin returnLogin = new ReturnLogin();
-//            returnLogin.tokenExit(GestureEditActivity.this);
+            LogOutAccount logOutAccount = new LogOutAccount();
+            logOutAccount.accounttExit(this);
         } else {
             finish();
         }
@@ -184,7 +186,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     private void updateGesturePassword(final String newPassword) {
         password = newPassword;
-        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordSetParams(SPreference.getUserId(this), newPassword), false);
+        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordSetParams(AppManager.getUserId(this), newPassword), false);
     }
 
     private boolean isInputPassValidate(String inputPassword) {
@@ -207,7 +209,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         if (fromRegistOrLoginPage) {
             NavigationUtils.toMainActivity(GestureEditActivity.this);
         } else {
-//            EventBus.getDefault().post(new RefrushHtmlPage("1"));
+            RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
             finish();
         }
     }

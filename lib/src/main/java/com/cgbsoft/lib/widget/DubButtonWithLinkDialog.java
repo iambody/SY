@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -104,7 +105,7 @@ public abstract class DubButtonWithLinkDialog extends BaseDialog {
 //        if (TextUtils.isEmpty(identify)){
 //            identify = SPSave.getInstance(getContext()).getString("proId");
 //        }
-        if (!SPreference.isVisitorRole(getContext())) {
+        if (AppManager.isAdViser(getContext())) {
             mQueren.setBackgroundResource(R.drawable.right_btn_select_tob);
         } else {
             mQueren.setBackgroundResource(R.drawable.right_btn_select_toc);

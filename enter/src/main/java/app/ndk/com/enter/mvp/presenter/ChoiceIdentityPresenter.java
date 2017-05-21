@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.MToast;
@@ -59,9 +60,6 @@ public class ChoiceIdentityPresenter extends BasePresenterImpl<ChoiceIdentityCon
                     show(getContext().getString(R.string.cia_choice_ids_str), Toast.LENGTH_SHORT);
         }
 
-        if (value > 0) {
-            SPreference.saveIdtentify(getContext(), value);
-        }
         if (clazz != null) {
             Intent intent = new Intent(getContext(), clazz);
             intent.putExtra(IDS_KEY, value);

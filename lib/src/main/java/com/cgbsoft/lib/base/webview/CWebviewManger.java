@@ -8,10 +8,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -86,8 +88,8 @@ public class CWebviewManger {
 //            secretviewpdf(action);
         } else if (action.contains("viewpdf")) {
 //            viewpdf(action);
-//        } else if (action.contains("changepassword")) {
-//            changepassword(action);
+        } else if (action.contains("changepassword")) {
+            changepassword(action);
         } else if (action.contains("copytoclipboard")) {
             copytoclipboard(action);
         } else if (action.contains("clickPasteServeCode")) {
@@ -168,7 +170,7 @@ public class CWebviewManger {
                 @Override
                 public void right() {
                     dismiss();
-//                    logOutUser();
+                    logOutUser();
                 }
             };
             dialog.show();
@@ -480,7 +482,7 @@ public class CWebviewManger {
     }
 
     private void jumpProductList(String action) {
-        if (SPreference.isVisitorRole(context)) {
+        if (AppManager.isInvestor(context)) {
             NavigationUtils.startActivityByRouter(context, "investornmain_mainpageactivity",
                     "jumpId", 1, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
@@ -869,12 +871,11 @@ public class CWebviewManger {
 //        dialog.show();
     }
 
-    //
-//    private void logOutUser() {
-//        ReturnLogin returnLogin = new ReturnLogin();
-//        returnLogin.tokenExit(context);
-//    }
-//
+    private void logOutUser() {
+        LogOutAccount returnLogin = new LogOutAccount();
+        returnLogin.accounttExit(context);
+    }
+
     private void checkRengou(String action) {
         String decode = URLDecoder.decode(action);
         String[] split = decode.split(":");
@@ -1071,7 +1072,15 @@ public class CWebviewManger {
      *
      * @param action
      */
-//    private void changepassword(String action) {
+    private void changepassword(String action) {
+        try {
+            String[] splits = URLDecoder.decode(action,  "utf-8").split(":");
+            String newPassword = splits[3];
+            Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
+            context.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        String[] split = action.split(":");
 //        String password = split[2];
 //        final String newPassword = URLDecoder.decode(split[3]);
@@ -1122,7 +1131,7 @@ public class CWebviewManger {
 //                ((Activity) context).finish();
 //            }
 //        });
-//    }
+    }
 
     /**
      * 查看pdf
@@ -1223,7 +1232,7 @@ public class CWebviewManger {
                 i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
             ((Activity) context).startActivityForResult(i, 300);
-            if ("产品详情".equals(title) && SPreference.isVisitorRole(context)) {
+            if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");
             } else if (!TextUtils.isEmpty(url) && url.contains("discover/details.html")) {
 //            new RundouTaskManager(context).executeRundouTask("查看资讯");
@@ -1238,7 +1247,7 @@ public class CWebviewManger {
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
-        if (actionUrl.contains(WebViewConstant.IntecepterActivity.recommend_friend)) {
+        if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND)) {
             String[] split = actionUrl.split(":");
             String url = split[2];
             String title = split[3];

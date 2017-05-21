@@ -35,6 +35,7 @@
     <dimen name="ui_6_dip">6dip</dimen>
 
     <dimen name="ui_180_dip">180dp</dimen>
+    <dimen name="dimens_sp_28">28sp</dimen>
 
 
 </resources>

@@ -109,6 +109,9 @@ dependencies {
     compile "com.kogitune:pre-lollipop-activity-transition:${actvityTr_need_version}"
     //小红点
     compile 'com.github.deano2390:android-viewbadger:1.0.0@aar'
+    //
+    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
+
     //umeng统计
     //    compile 'com.umeng.analytics:analytics:latest.integration'
     //LeakCanary

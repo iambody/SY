@@ -1,5 +1,6 @@
 package app.privatefund.com.im.utils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -31,11 +32,11 @@ public class RongCouldUtil {
     }
 
     public boolean hideConversation(String senderUserId) {
-        if (SPreference.isVisitorRole(InvestorAppli.getContext())) {
+        if (AppManager.isInvestor(InvestorAppli.getContext())) {
             if (senderUserId.equals(Constant.msgMarketingStatus) || senderUserId.equals(Constant.msgOperationStatus) || senderUserId.equals(Constant.msgSecretary)) {
                 return true;
             }
-        } else if (!SPreference.isVisitorRole(InvestorAppli.getContext())) {
+        } else if (!AppManager.isInvestor(InvestorAppli.getContext())) {
             if (senderUserId.equals(Constant.msgTradeInformation)) {
                 return true;
             }

@@ -16,12 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
@@ -155,12 +159,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     private void closeGesturePassword(final boolean isFiveTimesError) {
         Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
         finish();
-        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(SPreference.getUserId(this)), isFiveTimesError);
+        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(AppManager.getUserId(this)), isFiveTimesError);
     }
-
-//    public void onEventMainThread(ReturnLogin returnLogin) {
-//        finish();
-//    }
 
     @Override
     public void onBackPressed() {
@@ -196,8 +196,27 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     private void validateResetPassword(final Dialog dialog, String password) {
         this.dialog = dialog;
-        getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(SPreference.getUserId(this), password));
+        getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(AppManager.getUserId(this), password));
     }
+
+    @Override
+    public void modifyUserSuccess(boolean isFiveTimesError) {
+        AppInfStore.updateUserGesturePassword(this, "");
+        RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
+        if (!isFiveTimesError) {
+            Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            LogOutAccount logOutAccount = new LogOutAccount();
+            logOutAccount.accounttExit(this);
+        }
+    }
+
+    @Override
+    public void modifyUserFailure() {
+        Toast.makeText(GestureVerifyActivity.this, "关闭手势密码失败", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void resetGesturePasswordDialog(Context context) {
         final Dialog dialog = new Dialog(context, R.style.gesture_password_dialog);
@@ -252,24 +271,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         } else {
             GestureVerifyActivity.this.finish();
         }
-    }
-
-    @Override
-    public void modifyUserSuccess(boolean isFiveTimesError) {
-        AppInfStore.updateUserGesturePassword(this, "");
-//        EventBus.getDefault().post(new RefrushHtmlPage("2"));
-        if (!isFiveTimesError) {
-            Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-//            ReturnLogin returnLogin = new ReturnLogin();
-//            returnLogin.tokenExit(GestureVerifyActivity.this);
-        }
-    }
-
-    @Override
-    public void modifyUserFailure() {
-        Toast.makeText(GestureVerifyActivity.this, "关闭手势密码失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -22,7 +22,7 @@ public class AppInfStore implements AppinfConstant {
     /**
      * 保存是否是理财师端
      */
-    public static void Save_IsAdviser(Context spContext, boolean IsAdviser) {
+    public static void saveAdvise(Context spContext, boolean IsAdviser) {
         SharedPreferences.Editor ed = getBasePreference(spContext).edit();
         ed.putBoolean(IsAdviser_Tage, IsAdviser);
         ed.commit();
@@ -43,6 +43,15 @@ public class AppInfStore implements AppinfConstant {
     public static void saveUserToken(Context scContext, String usertoken) {
         SharedPreferences.Editor ed = getBasePreference(scContext).edit();
         ed.putString(USERTOKENSP, usertoken);
+        ed.commit();
+    }
+
+    /**
+     * 保存用户账号
+     */
+    public static void saveUserAccount(Context scContext, String userAccount) {
+        SharedPreferences.Editor ed = getBasePreference(scContext).edit();
+        ed.putString(USERACCOUNT, userAccount);
         ed.commit();
     }
 
@@ -110,6 +119,17 @@ public class AppInfStore implements AppinfConstant {
     public static void updateUserAssetCertificationStatus(Context context, String assetCertificationStatus) {
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(context);
         userInfo.getToC().setAssetsCertificationStatus(assetCertificationStatus);
+        SPreference.saveUserInfoData(context, userInfo);
+    }
+
+    /**
+     * 更新资产证明图片信息
+     * @param context
+     * @param assetCertificationImageUrl
+     */
+    public static void updateUserAssetCertificationImageUrl(Context context, String assetCertificationImageUrl) {
+        UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(context);
+        userInfo.getToC().setAssetsCertificationImage(assetCertificationImageUrl);
         SPreference.saveUserInfoData(context, userInfo);
     }
 

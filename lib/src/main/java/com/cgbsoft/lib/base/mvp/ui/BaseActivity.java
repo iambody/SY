@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -52,7 +53,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
         if (getIsNightTheme() && savedInstanceState == null) {
-            if (SPreference.getIdtentify(getApplicationContext()) == IDS_ADVISER) {
+            if (AppManager.isAdViser(this)) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -73,7 +74,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         super.onResume();
         OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
     }
-
 
     protected void before() {
         mBaseApplication = (BaseApplication) getApplication();

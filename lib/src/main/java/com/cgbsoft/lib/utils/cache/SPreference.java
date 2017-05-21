@@ -23,12 +23,9 @@ import static com.cgbsoft.lib.utils.cache.CPConstant.IS_VISABLE_PROTOCOL_LOGIN;
  * 不要用于跨进程使用，虽然也可以用，如果需要数据跨进程请使用OtherDataProvider
  */
 public class SPreference implements Constant {
-    private static SharedPreferences getBase(@NonNull Context context) {
-        return context.getApplicationContext().getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
-    }
 
-    private static SharedPreferences getBase(@NonNull Context context, @NonNull String key) {
-        return context.getApplicationContext().getSharedPreferences(key, Context.MODE_PRIVATE);
+    private static SharedPreferences getBase(@NonNull Context context) {
+        return context.getApplicationContext().getSharedPreferences(USER_INFO_BEAN_SP, Context.MODE_PRIVATE);
     }
 
     public static void putString(@NonNull Context context, @NonNull String key, @NonNull String value) {
@@ -47,13 +44,6 @@ public class SPreference implements Constant {
         edit.apply();
     }
 
-    /**
-     * 默认值为-1
-     *
-     * @param context
-     * @param key
-     * @return
-     */
     public static int getInt(@NonNull Context context, @NonNull String key) {
         return getBase(context).getInt(key, -1);
     }
@@ -69,7 +59,7 @@ public class SPreference implements Constant {
         return getBase(context).getBoolean(key, false);
     }
 
-    private static <T> void put(@NonNull Context context, @NonNull String key, @NonNull T value) {
+    public static <T> void put(@NonNull Context context, @NonNull String key, @NonNull T value) {
         if (value instanceof String) {
             putString(context, key, (String) value);
         } else if (value instanceof Integer) {
@@ -84,37 +74,6 @@ public class SPreference implements Constant {
             }
         }
     }
-
-    /**
-     * 对原来保存在sp里的数据进行迁移
-     */
-    /*public static void toDataMigration(@NonNull Context context) {
-        Context c = context.getApplicationContext();
-        SharedPreferences old1Sp = getBase(c, "simuyun");
-        // 1理财师  2投资人
-        String identify = old1Sp.getString("identify", "");
-        //是否登录
-        String hasUserInfo = old1Sp.getString("hasUserInfo", "");
-        //token
-        String token = old1Sp.getString("token", "");
-
-        SharedPreferences old2Sp = getBase(c, "saveBean.xml");
-        String userBase64 = old2Sp.getString("userInfo", "");
-        com.cgbsoft.privatefund.bean.UserInfo userInfo = Base64Util.getEntityByOIS(userBase64);
-        String json = new Gson().toJson(userInfo);
-
-        if (!TextUtils.isEmpty(json))
-            UserDataProvider.saveUserInfo(c, json);
-        if (!TextUtils.isEmpty(hasUserInfo))
-            UserDataProvider.saveLoginFlag(c, TextUtils.equals("1", hasUserInfo));
-        if (!TextUtils.isEmpty(token))
-            UserDataProvider.saveToken(c, token);
-        if (TextUtils.equals("IdentityLicaishi", identify)) {
-            OtherDataProvider.saveIdentify(c, 1);
-        } else if (TextUtils.equals("IdentityTouziren", identify)) {
-            OtherDataProvider.saveIdentify(c, 2);
-        }
-    }*/
 
     /**
      * 用于判断应用后台到前台
@@ -207,7 +166,7 @@ public class SPreference implements Constant {
      * @return 用户信息类
      */
     public static UserInfoDataEntity.UserInfo getUserInfoData(@NonNull Context context) {
-        String userInfoDataJson = UserDataProvider.queryUserInfoData(context);
+        String userInfoDataJson = getBase(context).getString(USER_INFO_BEAN_PROPERTY, "");
         if (TextUtils.isEmpty(userInfoDataJson)) {
             return null;
         }
@@ -255,131 +214,16 @@ public class SPreference implements Constant {
      * @param json
      */
     public static void saveUserInfoData(@NonNull Context context, String json) {
-        UserDataProvider.saveUserInfo(context, json);
+        getBase(context).edit().putString(USER_INFO_BEAN_PROPERTY, json).apply();
         LogUtils.Log("ta","操作");
     }
 
     public static void saveUserInfoData(@NonNull Context context, UserInfoDataEntity.UserInfo userInfo) {
-        UserDataProvider.saveUserInfo(context,  new Gson().toJson(userInfo));
-        LogUtils.Log("ta","操作");
-    }
-
-    /**
-     * 保存登录名
-     *
-     * @param context
-     * @param loginName
-     */
-    public static void saveLoginName(@NonNull Context context, String loginName) {
-        UserDataProvider.saveLoginName(context, loginName);
-        LogUtils.Log("ta","操作");
-    }
-
-    public static String getLoginName(@NonNull Context context) {
-        LogUtils.Log("ta","操作");
-        return UserDataProvider.getLoginName(context);
-    }
-
-    /**
-     * 清理用户信息
-     *
-     * @param context 上下文
-     */
-    public static void quitLogin(@NonNull Context context) {
-        UserDataProvider.quitLogin(context);
-    }
-
-
-    /**
-     * 获取用户id
-     *
-     * @param context 上下文
-     * @return 用户id
-     */
-    public static String getUserId(@NonNull Context context) {
-        String userId = UserDataProvider.getUserId(context);
-        if (!TextUtils.isEmpty(userId)) {
-            return userId;
+        if (userInfo == null) {
+            getBase(context).edit().putString(USER_INFO_BEAN_PROPERTY, "").apply();
+            return;
         }
-        UserInfoDataEntity.UserInfo userInfoData = getUserInfoData(context);
-        if (userInfoData != null) {
-            return userInfoData.id;
-        }
-        return "";
-    }
-
-    /**
-     * 保存登录用户token信息。
-     *
-     * @param context 上下文
-     * @param token   token
-     */
-    public static void saveToken(@NonNull Context context, @NonNull String token) {
-        UserDataProvider.saveToken(context, token);
-        LogUtils.Log("ta","操作");
-    }
-
-    /**
-     * 获取登录用户token信息。
-     *
-     * @param context 上下文
-     * @return 用户token
-     */
-    public static String getToken(@NonNull Context context) {
-        LogUtils.Log("ta","操作");
-        return UserDataProvider.queryToken(context);
-    }
-
-    public static void saveUserId(@NonNull Context context, @NonNull String uid) {
-        UserDataProvider.saveUserId(context, uid);
-        LogUtils.Log("ta","操作");
-    }
-
-    /**
-     * 保存登录状态
-     *
-     * @param context 上下文
-     * @param flag    是否成功
-     */
-    public static void saveLoginFlag(@NonNull Context context, boolean flag) {
-        UserDataProvider.saveLoginFlag(context, flag);
-        LogUtils.Log("ta","操作");
-    }
-
-    /**
-     * 是否登录
-     *
-     * @param context 上下文
-     * @return 登录状态
-     */
-    public static boolean isLogin(@NonNull Context context) {
-        LogUtils.Log("ta","操作");
-        return UserDataProvider.queryLoginFlag(context);
-
-    }
-
-    /**
-     * 获取身份 1理财师  2投资人
-     *
-     * @param context 上下文
-     * @return true 理财师
-     */
-    public static int getIdtentify(@NonNull Context context) {
-        return OtherDataProvider.getIdentify(context);
-    }
-
-    public static boolean isVisitorRole(Context context) {
-        return 2 == getIdtentify(context);
-    }
-
-    /**
-     * 保存身份信息
-     *
-     * @param context 上下文
-     * @param value   1理财师，2投资人
-     */
-    public static void saveIdtentify(@NonNull Context context, int value) {
-        OtherDataProvider.saveIdentify(context, value);
+        getBase(context).edit().putString(USER_INFO_BEAN_PROPERTY, new Gson().toJson(userInfo)).apply();
         LogUtils.Log("ta","操作");
     }
 

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -89,9 +90,8 @@ public abstract class DefaultDialog extends BaseDialog {
             mContent = (TextView) findViewById(R.id.default_dialog_content);
         mQuxiao = (TextView) findViewById(R.id.default_dialog_quxiao);
         mQueren = (TextView) findViewById(R.id.default_dialog_queren);
-        int identify = SPreference.getIdtentify(getContext().getApplicationContext());
 
-        if (identify == Constant.IDS_ADVISER) {
+        if (AppManager.isAdViser(getContext())) {
             mQueren.setBackgroundResource(R.drawable.default_dialog_right_btn_select_adviser);
         } else {
             mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);

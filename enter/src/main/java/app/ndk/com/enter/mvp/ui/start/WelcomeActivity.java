@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -233,8 +234,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         btn_wel_cancle = null;
         weakHandler = null;
 
-        if ((!SPreference.isLogin(this) || SPreference.getUserInfoData(this) == null)) {
-            if (SPreference.getIdtentify(this) == -1) {
+        if ((!AppManager.getIsLogin(this) || SPreference.getUserInfoData(this) == null)) {
+            if (AppManager.isAdViser(this)) {
                 openActivity(ChoiceIdentityActivity.class);
             } else {
                 openActivity(LoginActivity.class);

@@ -1,5 +1,6 @@
 package app.privatefund.com.vido.mvp.contract.video;
 
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -76,7 +77,7 @@ public interface VideoDetailContract {
     interface View extends BaseView {
         void getLocalVideoInfoSucc(VideoInfoModel model);
 
-        void getNetVideoInfoSucc(VideoInfoModel model);
+        void getNetVideoInfoSucc(VideoInfoModel model, VideoInfoEntity.Result result);
 
         void toVideoLikeSucc(int likeRes, int likeNum);
 

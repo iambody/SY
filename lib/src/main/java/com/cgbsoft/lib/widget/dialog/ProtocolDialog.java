@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.ProtocolEntity;
@@ -72,7 +73,7 @@ private Context context;
 
         mContentTv.setMovementMethod(new ScrollingMovementMethod());
 
-        if (SPreference.getIdtentify(context) == Constant.IDS_INVERSTOR) {
+        if (AppManager.isInvestor(context)) {
             titleTv.setTextColor(0xfff47900);
             mConfirmTv.setBackgroundResource(R.drawable.shape_f47900);
         } else {
