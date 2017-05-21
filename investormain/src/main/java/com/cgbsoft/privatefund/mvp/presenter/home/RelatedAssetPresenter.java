@@ -8,6 +8,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.RelativeAssetContract;
+import org.json.JSONObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
