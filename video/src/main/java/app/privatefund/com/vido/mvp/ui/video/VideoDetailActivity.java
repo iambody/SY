@@ -55,6 +55,7 @@ import java.util.concurrent.TimeUnit;
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -144,6 +145,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @BindView(R2.id.tv_avd_cache_num)
     TextView tv_avd_cache_num;
+    @BindView(R2.id.video_videodetail_creattime_toc)
+    TextView videoVideodetailCreattimeToc;
+
+    @BindView(R2.id.video_videodetail_playnum_toc)
+    TextView videoVideodetailPlaynumToc;
 
     private String videoId, videoCoverUrl;
     private boolean isPlayAnim;
@@ -424,11 +430,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
         }
     }
-//获取视频信息
+
+    //获取视频信息
     @Override
     public void getNetVideoInfoSucc(VideoInfoModel model, VideoInfoEntity.Result result) {
         videoInfoModel = model;
-        videoAllInf=result;
+        videoAllInf = result;
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
@@ -788,6 +795,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         return false;
     }
+
+
 
     class AnimListener implements Animation.AnimationListener {
         int which;
