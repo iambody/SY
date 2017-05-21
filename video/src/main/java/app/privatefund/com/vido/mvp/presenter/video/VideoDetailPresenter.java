@@ -113,7 +113,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
                 updataLocalVideoInfo();
 
-                getView().getNetVideoInfoSucc(viModel);
+                getView().getNetVideoInfoSucc(viModel,result);
 
             }
 
