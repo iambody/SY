@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 
@@ -75,7 +77,7 @@ public class NewMessageItemProvider extends IContainerItemProvider.MessageProvid
 //        newsBean.setDate(newsMessage.getDate());
 //        newsBean.setUrl(newsMessage.getUrl());
         newsBean.setIsLike(newsMessage.getIsLike());
-        if (!SPreference.isVisitorRole(context)) {
+        if (!AppManager.isInvestor(BaseApplication.getContext())) {
            /* Intent intent = new Intent(context, FoundNewsDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(FoundNewsDetailActivity.NEW_PARAM_NAME, newsBean);

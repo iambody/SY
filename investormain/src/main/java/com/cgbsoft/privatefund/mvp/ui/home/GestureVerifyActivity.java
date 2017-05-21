@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -155,7 +156,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     private void closeGesturePassword(final boolean isFiveTimesError) {
         Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
         finish();
-        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(SPreference.getUserId(this)), isFiveTimesError);
+        getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(AppManager.getUserId(this)), isFiveTimesError);
     }
 
 //    public void onEventMainThread(ReturnLogin returnLogin) {
@@ -196,7 +197,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     private void validateResetPassword(final Dialog dialog, String password) {
         this.dialog = dialog;
-        getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(SPreference.getUserId(this), password));
+        getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(AppManager.getUserId(this), password));
     }
 
     private void resetGesturePasswordDialog(Context context) {

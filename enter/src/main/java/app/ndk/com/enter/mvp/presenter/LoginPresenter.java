@@ -52,12 +52,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
-                SPreference.saveUserInfoData(getContext(), loginBean.userInfo);
+                AppInfStore.saveUserAccount(getContext().getApplicationContext(), un);
                 LogUtils.Log("loginresult",s);
-                SPreference.saveLoginFlag(getContext(), true);
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
-                    SPreference.saveLoginName(getContext(), un);
                 }
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
@@ -118,9 +116,9 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     builder.setMessage(getContext().getString(R.string.la_cd_content_str, nickName));
                     builder.create().show();
                 } else {
-                    SPreference.saveToken(getContext().getApplicationContext(), result.token);
-                    SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
-                    SPreference.saveLoginFlag(getContext(), true);
+                    AppInfStore.saveUserId(getContext().getApplicationContext(), result.token);
+                    AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+                    AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
@@ -155,9 +153,9 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-                SPreference.saveToken(getContext().getApplicationContext(), result.token);
-                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
-                SPreference.saveLoginFlag(getContext(), true);
+                AppInfStore.saveUserId(getContext().getApplicationContext(), result.token);
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+                AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                 if (result.userInfo != null)
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                 if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中

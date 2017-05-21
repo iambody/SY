@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -22,6 +23,7 @@ import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
+import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 import java.util.ArrayList;
 
@@ -41,6 +43,7 @@ import cn.sharesdk.framework.ShareSDK;
  * Email:zhangxyfs@126.com
  *  
  */
+@Route("enter_loginactivity")
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
 //    @BindView(R2.id.iv_al_back)
@@ -91,21 +94,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (identity < 0) {
-            identity = SPreference.getIdtentify(getApplicationContext());
-        }
-        switch (identity) {
-            case IDS_ADVISER:
-//                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-                btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
-                btn_al_login.setTextColor(0xff666666);
-                break;
-            case IDS_INVERSTOR:
-//                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-                btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
-                btn_al_login.setTextColor(0xffffffff);
-                break;
-        }
+       if (AppManager.isAdViser(this)) {
+           //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+           btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
+           btn_al_login.setTextColor(0xff666666);
+       } else {
+//           iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+           btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
+           btn_al_login.setTextColor(0xffffffff);
+       }
+
         if (savedInstanceState == null) {
             if (identity == IDS_ADVISER) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -117,7 +115,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
-        String loginName = SPreference.getLoginName(getApplicationContext());
+        String loginName = AppManager.getUserAccount(this);
         if (userInfo != null) {
             et_al_username.setText(userInfo.userName);
         } else if (loginName != null) {

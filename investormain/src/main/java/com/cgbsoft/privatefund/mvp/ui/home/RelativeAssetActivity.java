@@ -266,7 +266,6 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         }).start();
     }
 
-
     @Override
     public void requestSuccess() {
         commitBtn.setEnabled(true);
@@ -283,6 +282,16 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     @Override
     public void requestFailure() {
         Toast.makeText(RelativeAssetActivity.this, "关联资产失败", Toast.LENGTH_SHORT).show();
+        AppInfStore.updateUserStockAssetsStatus(this, "3");
+        commitBtn.setEnabled(true);
+        if (loading != null) {
+            loading.dismiss();
+        }
+    }
+
+    @Override
+    public void requestError(String mssage) {
+        Toast.makeText(RelativeAssetActivity.this, mssage, Toast.LENGTH_SHORT).show();
         AppInfStore.updateUserStockAssetsStatus(this, "3");
         commitBtn.setEnabled(true);
         if (loading != null) {

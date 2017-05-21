@@ -86,12 +86,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private static int state;
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        initData();
-    }
-
-    @Override
     protected int layoutID() {
         return R.layout.acitivity_asset_prove;
     }
@@ -107,6 +101,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848"));
         frameLayout.setmCellWidth(width / 4);
         frameLayout.setmCellHeight(width / 4);
+        initData();
     }
 
     @Override
@@ -225,11 +220,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }
     }
 
-    @OnClick(R.id.relative_add)
-    void addImageClick() {
-        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE);
-    }
-
     @OnClick(R.id.commit)
     void commitButton() {
         commitProveInfo();
@@ -287,7 +277,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }).start();
     }
 
-    private JSONArray getArrayParams(List<String> lists) {
+        private JSONArray getArrayParams(List<String> lists) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < lists.size() ; i++) {
             jsonArray.put(lists.get(i).startsWith("http") ? lists.get(i) : NetConfig.UPLOAD_FILE+ lists.get(i));
@@ -301,6 +291,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             loading.dismiss();
         }
         AppInfStore.updateUserAssetCertificationStatus(this, "1");
+        AppInfStore.updateUserAssetCertificationImageUrl(this, getArrayParams(remoteParams).toString());
         AppInfStore.updateUserInvestentType(this, ((RadioButton)viewGroup.getChildAt(0)).isChecked() ? "1" : "2");
         new MToast(AssetProveActivity.this).show("提交成功", 0);
 //        EventBus.getDefault().post(new RefushUser());
@@ -314,6 +305,15 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }
         AppInfStore.updateUserAssetCertificationStatus(this, "0");
         Toast.makeText(AssetProveActivity.this, "资产证明失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void requestError(String errorMsg) {
+        if (loading != null && loading.isShowing()) {
+            loading.dismiss();
+        }
+        AppInfStore.updateUserAssetCertificationStatus(this, "0");
+        Toast.makeText(AssetProveActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     private void uploadInfo() {

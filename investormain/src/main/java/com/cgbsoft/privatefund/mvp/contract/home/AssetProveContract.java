@@ -21,5 +21,7 @@ public interface AssetProveContract {
 
         void requestFailure();
 
+        void requestError(String errorMsg);
+
     }
 }

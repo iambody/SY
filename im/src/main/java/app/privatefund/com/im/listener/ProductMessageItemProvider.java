@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 
 import org.json.JSONObject;
@@ -73,7 +74,7 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
     @Override
     public void onItemClick(View view, int i, ProductMessage productMessage, UIMessage uiMessage) {
         final String schemeId = productMessage.getSchemeId();
-        if (!SPreference.isVisitorRole(view.getContext())) {
+        if (!AppManager.isInvestor(view.getContext())) {
             JSONObject j = new JSONObject();
             try {
                 j.put("schemeId", schemeId);

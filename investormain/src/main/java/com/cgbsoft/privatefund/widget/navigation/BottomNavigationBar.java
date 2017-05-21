@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -118,7 +119,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         isSpringFestival = checkSpringFestival();
 
         view_bottom_navigation_close.setVisibility(GONE);
-        isIdtentifyWithInvestor = SPreference.getIdtentify(getContext().getApplicationContext()) == Constant.IDS_INVERSTOR;
+        isIdtentifyWithInvestor = AppManager.isInvestor(context);
         changeResWithIdtentify();
 
         changeIdtentifyObservable = RxBus.get().register(BOTTOM_CHANGE_IDTENTIFY, Boolean.class);
@@ -193,7 +194,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         doubleClickDetect(doubleClickTime, fl_bottom_nav_left_second);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
-        if (SPreference.getIdtentify(getContext()) == Constant.IDS_INVERSTOR) {
+        if (AppManager.isInvestor(activity)) {
             doubleClickDetect(doubleClickTime * 4, iv_bottom_navigation_cloud);
         } else {
             doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);

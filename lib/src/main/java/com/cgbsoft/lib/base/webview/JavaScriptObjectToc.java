@@ -53,17 +53,14 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void reloadNetWork() {
         Log.i("JavaScriptObject", "reloadNetWork------url=" + url);
-        ThreadUtils.runOnMainThread(new Runnable() {
-            @Override
-            public void run() {
-                if (webView != null) {
-                    webView.loadUrl(url);
-//                    PromptManager.ShowCustomToast(context,"拉动和打火机");
-                }
+        ThreadUtils.runOnMainThread(() -> {
+            if (webView != null) {
+                webView.loadUrl(url);
             }
         });
     }
 
+//  PromptManager.ShowCustomToast(context,"拉动和打火机");
 //    @JavascriptInterface
 //    public boolean hasAddCarlender(String title, String startTime) {
 //        Log.i("JavaScriptObject", "hasAddCarlender----=" + CalendarManamger.isExist(context, startTime, title));

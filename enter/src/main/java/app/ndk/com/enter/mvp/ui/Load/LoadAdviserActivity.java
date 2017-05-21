@@ -20,7 +20,7 @@ public class LoadAdviserActivity extends BaseActivity {
     protected void configApp() {
 
         //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
-        AppInfStore.Save_IsAdviser(baseActivity, true);
+        AppInfStore.saveAdvise(baseActivity, true);
         UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
 //ss
     }

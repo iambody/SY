@@ -35,6 +35,13 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 保存用户账号
+     */
+    public static String getUserAccount(Context scContext) {
+        return getBasePreference(scContext).getString(USERACCOUNT, "");
+    }
+
+    /**
      * 获取用户id
      */
     public static String getUserId(Context context) {
