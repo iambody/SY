@@ -44,6 +44,8 @@ public interface MallContract {
         void deleteSuc(String id);
 
         void setDefaultSuc(String id);
+
+        void addAddressSuc(MallAddressBean mallAddressBean);
     }
 
 }

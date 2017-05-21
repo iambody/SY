@@ -439,7 +439,7 @@ interface RequestManager {
 
     //删除商城收货地址
     @FormUrlEncoded
-    @DELETE(NetConfig.MALL.MALL_DETELE_ADDRESS)
+    @POST(NetConfig.MALL.MALL_DETELE_ADDRESS)
     Observable<ResponseBody> deleteAddress(@FieldMap Map<String, String> paramsMap);
 
     //获取商城收货地址列表
@@ -448,7 +448,7 @@ interface RequestManager {
 
     //设置默认收货地址
     @FormUrlEncoded
-    @DELETE(NetConfig.MALL.MALL_SET_DEFAULT)
+    @POST(NetConfig.MALL.MALL_SET_DEFAULT)
     Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
 
     //获取房间ID
@@ -492,5 +492,17 @@ interface RequestManager {
     //获取直播资料
     @GET(NetConfig.LIVE.GET_LIVE_PDF)
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
+
+    //支付配置
+    @GET(NetConfig.PAY.GET_PAY_CONFIG)
+    Observable<ResponseBody> getRechargeConfig(@QueryMap Map<String, String> paramsMap);
+
+    //校验支付结果
+    @GET(NetConfig.PAY.CHECK_RECHARGE_SIGN)
+    Observable<ResponseBody> checkRechargeSign(@QueryMap Map<String, String> paramsMap);
+
+    //云豆充值
+    @GET(NetConfig.PAY.YD_RECHARGE)
+    Observable<ResponseBody> ydRecharge(@QueryMap Map<String, String> paramsMap);
 
 }

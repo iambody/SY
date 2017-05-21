@@ -292,9 +292,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void liveLoginFail(String module, int errCode, String errMsg) {
         getPresenter().toSignIn();
-        Intent intent = new Intent(this, LiveActivity.class);
-        intent.putExtra("liveJson",liveJsonData.toString());
-        startActivity(intent);
+//        Intent intent = new Intent(this, LiveActivity.class);
+//        intent.putExtra("liveJson",liveJsonData.toString());
+//        startActivity(intent);
     }
 
     @Override

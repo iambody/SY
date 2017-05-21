@@ -35,12 +35,12 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
     @Override
     public void saveMallAddress(final MallAddressBean model) {
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("user_id", SPreference.getUserId(getContext()));
-        params.put("shopping_name",model.getShopping_name());
-        params.put("id",model.getId());
-        params.put("address",model.getAddress());
-        params.put("phone",model.getPhone());
+        params.put("shopping_name", model.getShopping_name());
+        params.put("id", model.getId());
+        params.put("address", model.getAddress());
+        params.put("phone", model.getPhone());
 
         addSubscription(ApiClient.saveMallAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
@@ -56,18 +56,17 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     }
 
     @Override
-    public void addMaddAddress(MallAddressBean model) {
-        Map<String,String> params = new HashMap<>();
+    public void addMaddAddress(final MallAddressBean model) {
+        Map<String, String> params = new HashMap<>();
         params.put("user_id", SPreference.getUserId(getContext()));
-        params.put("shopping_name",model.getShopping_name());
-        params.put("id",model.getId());
-        params.put("address",model.getAddress());
-        params.put("phone",model.getPhone());
+        params.put("shopping_name", model.getShopping_name());
+        params.put("id", model.getId());
+        params.put("address", model.getAddress());
+        params.put("phone", model.getPhone());
         addSubscription(ApiClient.addAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
-
+                getView().addAddressSuc(model);
             }
 
             @Override
@@ -78,20 +77,19 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     }
 
     @Override
-    public void deleteMallAddress(String addressId) {
-        Map<String,String> params = new HashMap<>();
+    public void deleteMallAddress(final String addressId) {
+        Map<String, String> params = new HashMap<>();
         params.put("user_id", SPreference.getUserId(getContext()));
-        params.put("id",addressId);
+        params.put("id", addressId);
         addSubscription(ApiClient.deleteMallAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
-
+                getView().deleteSuc(addressId);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         }));
     }
@@ -120,17 +118,15 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     }
 
     @Override
-    public void setDefaultAddress(String id) {
-        addSubscription(ApiClient.setDefauleMallAddress(SPreference.getUserId(getContext()),id).subscribe(new RxSubscriber<String>() {
+    public void setDefaultAddress(final String id) {
+        addSubscription(ApiClient.setDefauleMallAddress(SPreference.getUserId(getContext()), id).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
-
+                getView().setDefaultSuc(id);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         }));
     }

@@ -45,10 +45,6 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <activity
-            android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="io.rong.imkit.mention.MemberMentionedActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden" />

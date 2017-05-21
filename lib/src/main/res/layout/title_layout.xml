@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         app:elevation="0dp">
 
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -17,15 +18,31 @@
             android:background="@color/white"
             app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
+            <ImageView
+                android:id="@+id/title_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_left_btn"
+                />
             <TextView
                 android:id="@+id/title_mid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/fc_college_title_str"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/dimens_sp_18" />
+            <TextView
+                android:id="@+id/title_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:layout_marginRight="10dp"
+                android:textSize="@dimen/dimens_sp_16" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

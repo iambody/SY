@@ -5,17 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/title_layout" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mall_address_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
+    <Button
+        android:id="@+id/mall_new_address"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/newaddress"
+        android:background="@color/mred"/>
 
 </LinearLayout>

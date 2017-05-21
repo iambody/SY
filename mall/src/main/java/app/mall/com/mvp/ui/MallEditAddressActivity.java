@@ -1,6 +1,9 @@
 package app.mall.com.mvp.ui;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,7 +24,7 @@ import qcloud.mall.R2;
  * 商城编辑地址页面
  */
 @Route("mall_address")
-public class MallEditAddressActivity extends BaseActivity<MallPresenter> implements MallContract.View {
+public class MallEditAddressActivity extends BaseActivity<MallPresenter> implements MallContract.View, TextWatcher {
 
     //地址
     @BindView(R2.id.mall_receiving_address)
@@ -53,10 +56,15 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         } else {
             btn_address_save.setEnabled(false);
         }
+
+        et_recever_name.addTextChangedListener(this);
+        et_recever_address.addTextChangedListener(this);
+        et_recever_phone.addTextChangedListener(this);
+
     }
 
     @OnClick(R2.id.mall_address_save_msg)
-    void save() {
+    public void save() {
         String address = et_recever_address.getText().toString().trim();
         String phone = et_recever_phone.getText().toString().trim();
         String name = et_recever_name.getText().toString().trim();
@@ -85,7 +93,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     public void saveAddressSucc(MallAddressBean model) {
-
+        this.finish();
     }
 
     @Override
@@ -108,4 +116,27 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     }
 
+    @Override
+    public void addAddressSuc(MallAddressBean mallAddressBean) {
+        this.finish();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(et_recever_name.getText()) || TextUtils.isEmpty(et_recever_phone.getText()) || TextUtils.isEmpty(et_recever_address.getText())) {
+            btn_address_save.setEnabled(false);
+        } else {
+            btn_address_save.setEnabled(true);
+        }
+    }
 }

@@ -7,4 +7,10 @@
     <string name="edit_recever_name">请输入收货人姓名</string>
     <string name="edit_recever_address">请输入收货地址</string>
     <string name="mall_save_address">保存并使用</string>
+    <string name="recharge_hint">最低充值额为500云豆！</string>
+    <string name="recharge">充值</string>
+    <string name="paymethod">支付方式</string>
+    <string name="weixinpay">微信支付</string>
+    <string name="weixinedu">( 最高额度 : ¥3000 )</string>
+    <string name="newaddress">新建收货地址</string>
 </resources>

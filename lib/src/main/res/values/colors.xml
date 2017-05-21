@@ -60,6 +60,7 @@
     <color name="color5">#ea1202</color>
 
     <color name="mred">#ea1202</color>
+    <color name="red_down">#d22214</color>
 
     <color name="c_btn_circle_nor">#f47900</color>
     <color name="c_btn__circle_press">#ff9019</color>

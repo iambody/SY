@@ -9,7 +9,8 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-    private static final String START_APP = "https://d6-app";
+    private static final String START_APP = "https://app";
+    //    private static final String START_APP = "https://d6-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -161,19 +162,29 @@ public class NetConfig {
         static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
     }
 
+    //支付
+    static class PAY {
+        private static final String pay = "/pay";
+        //支付配置
+        static final String GET_PAY_CONFIG = API_URL + pay + "/rechargeinfo";
+        //校验支付结果
+        static final String CHECK_RECHARGE_SIGN = API_URL + pay + "/checksign";
+        //云豆充值
+        static final String YD_RECHARGE = API_URL + pay + "/ydrecharge";
+    }
 
 
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
 
-   //视频相关模块
-    static class VIDEO{
-       private static final String video="/information/video";
-       //视频点赞
-       static  final String VIDEO_DIANZAN=API_URL +video+"/likes/5.0";
-       //视频评论添加
-       static  final String VIDEO_COMMENT_ADD=API_URL+video+"/2c/comment/add";
-       //视频的评论
-       static final String VIDEO_COMMENT_LS=API_URL+video+"/2c/comment";
-   }
+    //视频相关模块
+    static class VIDEO {
+        private static final String video = "/information/video";
+        //视频点赞
+        static final String VIDEO_DIANZAN = API_URL + video + "/likes/5.0";
+        //视频评论添加
+        static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
+        //视频的评论
+        static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
+    }
 }
