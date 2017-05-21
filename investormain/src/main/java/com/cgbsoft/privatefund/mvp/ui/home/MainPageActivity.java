@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -92,6 +93,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
@@ -222,7 +224,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
 

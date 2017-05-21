@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
 import com.cgbsoft.lib.widget.LockIndicator;
@@ -90,39 +92,36 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         return new ModifyUserInfoPresenter(getBaseContext(), this);
     }
 
-//	@Override
-//	protected void onNewIntent(Intent intent) {
-//		super.onNewIntent(intent);
-//		isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
-//	}
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
+	}
 
     private void setUpViews() {
-        lock9View.setCallBack(new Lock9View.CallBack() {
-            @Override
-            public void onFinish(String inputCode) {
-                 System.out.println("------inputCode=" + inputCode);
-                if (!isInputPassValidate(inputCode)) {
-                    mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
+        lock9View.setCallBack(inputCode -> {
+             System.out.println("------inputCode=" + inputCode);
+            if (!isInputPassValidate(inputCode)) {
+                mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
 //                    mGestureContentView.clearDrawlineState(0L);
-                    return;
-                }
-                if (mIsFirstInput) {
-                    mFirstPassword = inputCode;
-                    updateCodeList(inputCode);
-//                    mGestureContentView.clearDrawlineState(0L);
-                    mTextTip.setText(isModifyPassword ? R.string.please_target_gesture_password_again : R.string.reset_gesture_code);
-                } else {
-                    if (inputCode.equals(mFirstPassword)) {
-                        updateGesturePassword(inputCode);
-                    } else {
-                        mTextTip.setText(Html.fromHtml(getResources().getString(R.string.set_gesture_agin)));
-                        Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
-                        mTextTip.startAnimation(shakeAnimation);
-//                        mGestureContentView.clearDrawlineState(1300L);
-                    }
-                }
-                mIsFirstInput = false;
+                return;
             }
+            if (mIsFirstInput) {
+                mFirstPassword = inputCode;
+                updateCodeList(inputCode);
+//                    mGestureContentView.clearDrawlineState(0L);
+                mTextTip.setText(isModifyPassword ? R.string.please_target_gesture_password_again : R.string.reset_gesture_code);
+            } else {
+                if (inputCode.equals(mFirstPassword)) {
+                    updateGesturePassword(inputCode);
+                } else {
+                    mTextTip.setText(Html.fromHtml(getResources().getString(R.string.set_gesture_agin)));
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
+                    mTextTip.startAnimation(shakeAnimation);
+//                        mGestureContentView.clearDrawlineState(1300L);
+                }
+            }
+            mIsFirstInput = false;
         });
         mTextTip.setText(isModifyPassword ? R.string.please_new_gesture_password : R.string.set_gesture_pattern_reason);
         updateCodeList("");
@@ -142,8 +141,8 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @OnClick(R.id.title_left)
     void leftBackClick() {
         if (fromRegistOrLoginPage) {
-//            ReturnLogin returnLogin = new ReturnLogin();
-//            returnLogin.tokenExit(GestureEditActivity.this);
+            LogOutAccount logOutAccount = new LogOutAccount();
+            logOutAccount.accounttExit(this);
         } else {
             finish();
         }

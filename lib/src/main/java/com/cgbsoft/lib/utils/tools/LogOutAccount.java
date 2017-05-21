@@ -3,6 +3,8 @@ package com.cgbsoft.lib.utils.tools;
 import android.app.Activity;
 import android.content.Context;
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 
 /**
  * @author chenlong
@@ -18,7 +20,7 @@ public class LogOutAccount {
             AppInfStore.saveUserId(context, "");
 
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
-
+            RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity)context).finish();
 
             //退出时清空融云token en
