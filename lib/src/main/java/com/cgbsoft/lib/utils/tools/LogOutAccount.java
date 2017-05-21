@@ -17,7 +17,7 @@ public class LogOutAccount {
             AppInfStore.saveIsLogin(context, false);
             AppInfStore.saveUserInfo(context, null);
             AppInfStore.saveUserId(context, "");
-            AppInfStore.saveUserId(context, "");
+            AppInfStore.saveUserToken(context, "");
 
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
