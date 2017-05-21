@@ -23,6 +23,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //webView消息详情列表
     public static String msgDetal;
 
+    // 风险评测结果页面
+    public static String riskEvaluationQuestion;
+
     static {
         initApi();
     }
@@ -36,5 +39,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         pageInit = baseParentUrl + "/setData.html";
         productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
+        riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
     }
 }

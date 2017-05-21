@@ -197,6 +197,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             loading.dismiss();
         }
         Toast.makeText(FeedbackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

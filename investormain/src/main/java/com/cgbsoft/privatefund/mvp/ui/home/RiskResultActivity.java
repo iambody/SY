@@ -116,9 +116,9 @@ public class RiskResultActivity extends BaseActivity {
 
     @OnClick(R.id.risk_result_restart)
     public void onRestartCommit() {
-//        Intent intent = new Intent(this, RiskEvaluationActivity.class);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, RiskEvaluationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.risk_result_commit)

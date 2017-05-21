@@ -248,10 +248,17 @@
             android:name="com.cgbsoft.privatefund.mvp.ui.home.GestureVerifyActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 风险评测页面 -->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity"
+            android:screenOrientation="portrait" />
+        RiskEvaluationActivity
+
         <!-- 风险评测结果-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskResultActivity"
             android:screenOrientation="portrait" />
+
 
         <!-- app module 通用的webview -->
         <activity
