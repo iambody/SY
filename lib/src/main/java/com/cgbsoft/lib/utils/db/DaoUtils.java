@@ -80,8 +80,16 @@ public class DaoUtils {
     public void clearnHistorySearch() {
         if (null != historySearchBeanDao)
             historySearchBeanDao.deleteAll();
-    }
 
+    }
+public void clearnHistoryByID(String Type, String userId){
+    List<HistorySearchBean> been = new ArrayList<>();
+    been=getHistorysByType(Type,userId);
+    if(null==been||been.size()==0)return;
+    for(int i=0;i<been.size();i++){
+        historySearchBeanDao.delete(been.get(i));
+    }
+}
     /**
      * 插入一条
      *

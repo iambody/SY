@@ -107,7 +107,8 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
             overridePendingTransition(0, R.anim.message_search_out_bottom);
         } else if (v.getId() == R.id.search_title_ed) {
         } else if (R.id.product_search_history_del == v.getId()) {
-            daoUtils.clearnHistorySearch();
+//            daoUtils.clearnHistorySearch();
+            daoUtils.clearnHistoryByID(currentType,AppManager.getUserId(baseContext));
             initHistory();
         }
     }

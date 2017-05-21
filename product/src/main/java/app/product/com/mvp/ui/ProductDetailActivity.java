@@ -19,7 +19,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
-        PromptManager.ShowCustomToast(baseContext, actionUrl);
         shareToC(actionUrl);
     }
 
