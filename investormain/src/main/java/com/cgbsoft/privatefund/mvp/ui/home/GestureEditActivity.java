@@ -16,7 +16,9 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
@@ -207,7 +209,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         if (fromRegistOrLoginPage) {
             NavigationUtils.toMainActivity(GestureEditActivity.this);
         } else {
-//            EventBus.getDefault().post(new RefrushHtmlPage("1"));
+            RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
             finish();
         }
     }

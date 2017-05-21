@@ -22,7 +22,10 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
@@ -258,13 +261,13 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     @Override
     public void modifyUserSuccess(boolean isFiveTimesError) {
         AppInfStore.updateUserGesturePassword(this, "");
-//        EventBus.getDefault().post(new RefrushHtmlPage("2"));
+        RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-//            ReturnLogin returnLogin = new ReturnLogin();
-//            returnLogin.tokenExit(GestureVerifyActivity.this);
+            LogOutAccount logOutAccount = new LogOutAccount();
+            logOutAccount.accounttExit(this);
         }
     }
 

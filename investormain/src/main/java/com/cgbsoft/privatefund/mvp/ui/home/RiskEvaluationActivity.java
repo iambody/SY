@@ -3,9 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
