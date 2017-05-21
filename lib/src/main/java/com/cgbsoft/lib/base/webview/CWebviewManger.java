@@ -1247,7 +1247,7 @@ public class CWebviewManger {
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
-        if (actionUrl.contains(WebViewConstant.IntecepterActivity.recommend_friend)) {
+        if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND)) {
             String[] split = actionUrl.split(":");
             String url = split[2];
             String title = split[3];

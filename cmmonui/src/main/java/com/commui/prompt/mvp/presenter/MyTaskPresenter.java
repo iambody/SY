@@ -98,7 +98,7 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
     public void finishTask(String id) {
         switch (id) {
             case MyTaskBean.ITEM_SIGN + "":
-                addSubscription(ApiClient.testSignIn(SPreference.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+                addSubscription(ApiClient.testSignIn(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                     protected void onEvent(String s) {
                         try {
                             JSONObject response = new JSONObject(s);

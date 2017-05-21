@@ -5,8 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+import com.cgbsoft.lib.utils.tools.PromptManager;
+
 import app.privatefund.adviser.R;
-import app.privatefund.com.cmmonui.prompt.PromptManager;
 import app.privatefund.com.share.dialog.CommonShareDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;

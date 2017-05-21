@@ -7,6 +7,8 @@ import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
+
+import app.privatefund.com.share.bean.ShareCommonBean;
 import app.privatefund.com.share.dialog.CommonShareDialog;
 
 /**
@@ -25,16 +27,16 @@ public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
                 String content = URLDecoder.decode(split[4], "utf-8");
                 String link = URLDecoder.decode(split[3], "utf-8");
                 link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
-                CommonShareBean commonShareBean = new CommonShareBean();
-                commonShareBean.setTitle(title);
-                commonShareBean.setContent(content);
-                commonShareBean.setLink(link);
+                ShareCommonBean commonShareBean = new ShareCommonBean();
+                commonShareBean.setShareTitle(title);
+                commonShareBean.setShareContent(content);
+                commonShareBean.setShareUrl(link);
                 if ("2".equals(type)) {
-//                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 1, commonShareBean, null);
-//                    commonShareDialog.show();
+                    CommonShareDialog commonShareDialog = new CommonShareDialog(InverstorBaseWebviewActivity.this, 1, commonShareBean, null);
+                    commonShareDialog.show();
                 } else {
-//                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 0, commonShareBean, null);
-//                    commonShareDialog.show();
+                    CommonShareDialog commonShareDialog = new CommonShareDialog(this, 0, commonShareBean, null);
+                    commonShareDialog.show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

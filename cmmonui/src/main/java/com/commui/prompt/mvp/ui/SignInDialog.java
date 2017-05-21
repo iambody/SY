@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.webview.PushMsgActivity;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
