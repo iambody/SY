@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -20,6 +21,8 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
+import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,6 +41,7 @@ import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.contract.ProductContract;
 import app.product.com.mvp.presenter.ProductPresenter;
 import app.product.com.utils.BUtils;
+import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.widget.FilterPop;
 import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
@@ -68,6 +72,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     ProductSeriesLayout productProductfragmentProductserieslayout;
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+    @BindView(R2.id.product_productfragment_empty_iv)
+    ImageView productProductfragmentEmptyIv;
+//    @BindView(R2.id.swipe_refresh_header)
+//    CustomRefreshHeadView swipeRefreshHeader;
+//    @BindView(R2.id.swipe_load_more_footer)
+//    CustomRefreshFootView swipeLoadMoreFooter;
 
 
     //排序的事件
@@ -134,8 +144,11 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ProductlsBean productlsBean=    productlsAdapter.getBeanList().get(position);
-                NavigationUtils.startProductDetailActivity(baseActivity,productlsBean.schemeId,productlsBean.productName,100);
+                ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
+                ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+
+
+
             }
         });
 
@@ -159,6 +172,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             protected void onEvent(Series series) {
                 BStrUtils.SetTxt(productProductfragmentPaixu, series.getName());
                 CurrentOderBy = series.getKey();
+                CurrentOffset = 0;
+                isLoadmore = false;
                 reSetConditionAction();
             }
 
@@ -174,7 +189,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             @Override
             protected void onEvent(EventFiltBean filterItems) {
                 CurrentFilter = filterItems.getFilterItemList();
-
+                CurrentOffset = 0;
+                isLoadmore = false;
                 reSetConditionAction();
             }
 
@@ -266,9 +282,21 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 //开始解析数据
                 productlsBeen = new Gson().fromJson(str, new TypeToken<ArrayList<ProductlsBean>>() {
                 }.getType());
-                if (isLoadmore) productlsAdapter.AddfreshAp(productlsBeen);
-                else
+                fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
+
+                productProductfragmentEmptyIv.setVisibility(View.GONE);
+                swipeToLoadLayout.setVisibility(View.VISIBLE);
+                if (isLoadmore) {
+                    productlsAdapter.AddfreshAp(productlsBeen);
+
+                } else {
+                    if (0 == productlsBeen.size()) {
+                        productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
+                        swipeToLoadLayout.setVisibility(View.GONE);
+                    }
                     productlsAdapter.freshAp(productlsBeen);
+
+                }
 
                 break;
         }
@@ -284,6 +312,10 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
                 break;
             case ProductContract.LOAD_PRODUCT_LISTDATA://请求产品列表成功
+                if (!isLoadmore) {
+                    productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
+                    swipeToLoadLayout.setVisibility(View.GONE);
+                }
                 break;
         }
         isLoadmore = false;
@@ -368,6 +400,30 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     public void onRefresh() {
         CurrentOffset = 0;
+        reSetConditionAction();
+    }
+
+    /**
+     * 重新整理数据
+     */
+    public void resetAllData() {
+        CurrentOffset = 0;
+        CurrentSeries = "0";//默认系列是全部  0代表全部
+        CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
+        isLoadmore = false;
+
+        for (FilterItem h : CurrentFilter) {
+            for (int i = 0; i < h.getItems().size(); i++) {
+                h.getItems().get(i).setChecked(false);
+            }
+        }
+        BStrUtils.SetTxt(productProductfragmentPaixu, getResources().getString(R.string.zhinengpaixu));
+        orderbyPop = null;
+        filterPop = null;
+        if (null != productFilterBean) {
+            productProductfragmentProductserieslayout.setInit(true);
+            initFilterDate(productFilterBean.getSeries().getItems());
+        }
         reSetConditionAction();
     }
 

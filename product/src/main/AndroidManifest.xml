@@ -10,6 +10,7 @@
         >
 
         <activity android:name=".mvc.ui.SearchBaseActivity"/>
+        <activity android:name=".mvp.ui.ProductDetailActivity"/>
     </application>
 
 </manifest>

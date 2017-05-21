@@ -82,9 +82,10 @@
         android:layout_height="match_parent"
         android:background="@color/transparent">
 
-        <include
+        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
             android:id="@id/swipe_refresh_header"
-            layout="@layout/view_comment_list_head" />
+           android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@id/swipe_target"
@@ -94,8 +95,19 @@
             android:layout_marginRight="@dimen/ui_5_dip"
             android:layout_marginTop="@dimen/ui_5_dip" />
 
-        <include
+        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
             android:id="@id/swipe_load_more_footer"
-            layout="@layout/view_comment_list_foot" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+    <ImageView
+        android:id="@+id/product_productfragment_empty_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_saixuan"
+        android:layout_gravity="center"
+        android:paddingTop="100dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"/>
+
 </LinearLayout>

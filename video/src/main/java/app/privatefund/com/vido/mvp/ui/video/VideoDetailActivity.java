@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -54,6 +55,7 @@ import java.util.concurrent.TimeUnit;
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -143,6 +145,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @BindView(R2.id.tv_avd_cache_num)
     TextView tv_avd_cache_num;
+    @BindView(R2.id.video_videodetail_creattime_toc)
+    TextView videoVideodetailCreattimeToc;
+
+    @BindView(R2.id.video_videodetail_playnum_toc)
+    TextView videoVideodetailPlaynumToc;
 
     private String videoId, videoCoverUrl;
     private boolean isPlayAnim;
@@ -151,6 +158,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private boolean seekFlag = true, isPlaying, isSetDataSource;//是否播放器设置了数据;
     private int playerCurrentTime;
     private VideoInfoModel videoInfoModel;
+    private VideoInfoEntity.Result videoAllInf;
     private long startPlayTime;//当前播放时间,用于做任务
     private long allPlayTime;//一共播放时间
     private long fiveMinutes = 5 * 60 * 1000;
@@ -423,9 +431,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
     }
 
+    //获取视频信息
     @Override
-    public void getNetVideoInfoSucc(VideoInfoModel model) {
+    public void getNetVideoInfoSucc(VideoInfoModel model, VideoInfoEntity.Result result) {
         videoInfoModel = model;
+        videoAllInf = result;
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
@@ -771,6 +781,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             isDisplayCover = true;
             Imageload.display(this, videoInfoModel.videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
         }
+        //添加播放次数 时间
+
+
     }
 
     private boolean isVideoDownload() {
@@ -782,6 +795,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         return false;
     }
+
+
 
     class AnimListener implements Animation.AnimationListener {
         int which;

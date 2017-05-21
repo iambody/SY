@@ -9,14 +9,14 @@
     <com.cgbsoft.lib.widget.FlowLayoutView
         android:id="@+id/comment_share_flowlayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_20_dip"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
     <!--上层名片 -->
     <RelativeLayout
         android:id="@+id/comment_share_up_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/comment_share_flowlayout"
+        android:layout_above="@id/comment_share_flowlayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="11dp">
@@ -48,7 +48,7 @@
                 android:layout_below="@id/commont_card_title_t"
                 android:layout_marginTop="@dimen/ui_10_dip">
 
-                <ImageView
+                <com.cgbsoft.lib.widget.RoundImageView
                     android:id="@+id/comment_share_card_iv"
                     android:layout_width="@dimen/ui_70_dip"
                     android:layout_height="@dimen/ui_70_dip"
@@ -62,9 +62,9 @@
                     android:id="@+id/commont_share_card_auth_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/comment_share_card_iv"
-                    android:layout_alignLeft="@+id/comment_share_card_iv"
-                    android:layout_alignStart="@+id/comment_share_card_iv"
+                    android:layout_alignBottom="@id/comment_share_card_iv"
+                    android:layout_alignLeft="@id/comment_share_card_iv"
+                    android:layout_alignStart="@id/comment_share_card_iv"
                     android:layout_marginLeft="36dp"
                     android:layout_marginStart="36dp"
                     android:src="@drawable/commont_share_card_tag_iv" />
