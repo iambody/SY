@@ -6,11 +6,13 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
@@ -36,7 +38,7 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
         addSubscription(ApiClient.resetTestPwd(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-//                loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false));
+                loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false));
             }
 
             @Override
@@ -58,9 +60,10 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
-        addSubscription(ApiClient.toLogin(un, pwd).subscribe(new RxSubscriber<UserInfoDataEntity.Result>() {
+        addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(UserInfoDataEntity.Result loginBean) {
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserId(getContext(), loginBean.userId);
                 AppInfStore.saveUserToken(getContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext(), true);
@@ -69,15 +72,15 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                     AppInfStore.saveUserAccount(getContext(), un);
                 }
-//                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> {
-//                    getContext().startActivity(new Intent(getContext(), MainPageActivity.class));
-//                    getView().toFinish();
-//                });
+                loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> {
+                    Router.build(RouteConfig.GOTOCMAINHONE).go(getContext());
+                    getView().toFinish();
+                });
             }
 
             @Override
             protected void onRxError(Throwable error) {
-//                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000);
+                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000);
             }
         }));
     }

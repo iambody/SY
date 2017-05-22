@@ -81,6 +81,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
 
             @Override
             protected void onRxError(Throwable error) {
+                loadingDialog.dismiss();
                 MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }));

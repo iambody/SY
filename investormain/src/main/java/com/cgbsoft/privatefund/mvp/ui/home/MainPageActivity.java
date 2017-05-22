@@ -29,6 +29,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
+import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.tencent.av.sdk.NetworkHelp;
@@ -105,6 +106,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initRxObservable();
 
         loginLive();
+
+        RiskEvaluatDialog  riskEvaluatDialog=new RiskEvaluatDialog(baseContext);
+        riskEvaluatDialog.show();
     }
 
     private void loginLive() {
@@ -195,9 +199,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-                if (1 != currentPostion && isHaveClickProduct) {
-                    MainTabManager.getInstance().getProductFragment().resetAllData();
-                }
+//                if (1 == currentPostion && isHaveClickProduct) {
+//                    MainTabManager.getInstance().getProductFragment().resetAllData();
+//                }
                 isHaveClickProduct = true;
                 currentPostion = 1;
                 break;

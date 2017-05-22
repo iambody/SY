@@ -128,8 +128,16 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     void okClick() {
         String pwd1 = et_as_password1.getText().toString();
         String pwd2 = et_as_password2.getText().toString();
-        if (!isPassword1Input || isPassword2Input) {
+//        if (!isPassword1Input || isPassword2Input) {
+//            MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
+//            return;
+//        }
+        if(TextUtils.isEmpty(pwd1)||TextUtils.isEmpty(pwd1)){
             MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
+            return;
+        }
+        if(pwd1.length()<6||pwd1.length()>16||pwd2.length()<6||pwd2.length()>16){
+            MToast.makeText(getApplicationContext(), getString(R.string.pw_lenth_str), Toast.LENGTH_SHORT);
             return;
         }
         if (!TextUtils.equals(pwd1, pwd2)) {

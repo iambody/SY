@@ -92,4 +92,5 @@
 
     <string name="as_nosame_str">请输入相同的密码</string>
     <string name="modify_password_failure">修改失败</string>
+    <string name="pw_lenth_str">请输入6-16位密码</string>
 </resources>

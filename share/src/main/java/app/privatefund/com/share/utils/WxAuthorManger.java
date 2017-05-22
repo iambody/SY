@@ -39,7 +39,7 @@ public class WxAuthorManger {
     /**
      * 授权成功
      */
-    public  static final int  WxAuthorOk=1;
+    public  static final int   WxAuthorOk=1;
     /**
      * 授权成功
      */
@@ -55,10 +55,11 @@ public class WxAuthorManger {
     ;
 
     //静态工厂方法
-    public static WxAuthorManger getInstance(Context wxContextx, AuthorUtilsResultListenr authorUtilsResultListenrs) {
+    public static WxAuthorManger getInstance(Context wxContextx, AuthorUtilsResultListenr authorUtilsResultListenrss) {
         if (wxAuthorManger == null) {
-            wxAuthorManger = new WxAuthorManger(wxContextx, authorUtilsResultListenrs);
+            wxAuthorManger = new WxAuthorManger(wxContextx );
         }
+         authorUtilsResultListenr=authorUtilsResultListenrss;
         return wxAuthorManger;
     }
 
@@ -66,13 +67,10 @@ public class WxAuthorManger {
      * 初始化
      *
      * @param wxContextx
-     * @param authorUtilsResultListenrs
+     * @param
      */
-    private WxAuthorManger(Context wxContextx, AuthorUtilsResultListenr authorUtilsResultListenrs) {
+    private WxAuthorManger(Context wxContextx ) {
         this.wxContext = wxContextx;
-        this.authorUtilsResultListenr = authorUtilsResultListenrs;
-
-
     }
 
     /**
@@ -94,7 +92,7 @@ public class WxAuthorManger {
             switch (auth_statu) {
                 case WxAuthorOk:
                     Platform platform = (Platform) msg.obj;
-                    authorUtilsResultListenr.getAuthorResult(1, platform);
+                    authorUtilsResultListenr.getAuthorResult(WxAuthorOk, platform);
                     PromptManager.ShowCustomToast(wxContext,"获取的名字"+platform.getDb().getUserName());
 
 
@@ -111,14 +109,13 @@ public class WxAuthorManger {
                 case WxAuthorERROR://错误
                     Platform errorplatform = (Platform) msg.obj;
                     Toast.makeText(wxContext, "微信验证失败", Toast.LENGTH_SHORT).show();
-                    authorUtilsResultListenr.getAuthorResult(0, errorplatform);
+                    authorUtilsResultListenr.getAuthorResult(WxAuthorERROR, errorplatform);
 
                     break;
                 case WxAuthorCANCLE://取消
                     Platform Cancleplatform = (Platform) msg.obj;
-
                     Toast.makeText(wxContext, "微信验证取消", Toast.LENGTH_SHORT).show();
-                    authorUtilsResultListenr.getAuthorResult(3, null);
+                    authorUtilsResultListenr.getAuthorResult(WxAuthorCANCLE, null);
                 default:
                     break;
             }
@@ -131,7 +128,7 @@ public class WxAuthorManger {
      * 授权完成后会有回调接口  会暴露状态
      */
 
-    public static  void WxAuth() {
+    public static  void startAuth() {
 
         Platform weixinplatform = ShareSDK.getPlatform( Wechat.NAME);// Wechat.NAME);
         weixinplatform.removeAccount(true);
@@ -170,7 +167,7 @@ public class WxAuthorManger {
     /**
      * 暴露的回调接口
      */
-    public interface AuthorUtilsResultListenr {
-        public void getAuthorResult(int type, Platform platform);
+    public  interface AuthorUtilsResultListenr {
+          void getAuthorResult(int type, Platform platform);
     }
 }

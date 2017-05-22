@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-     >
+    android:fitsSystemWindows="true">
 
     <com.cgbsoft.lib.widget.ScrollingImageView
         android:id="@+id/siv_al_bg"
@@ -181,37 +180,64 @@
                 android:textSize="16sp" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/weixin_text"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:id="@+id/weixin_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/al_wx_login_str"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_toLeftOf="@+id/weixin_text"
+                    android:background="#d0d0d0" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_toRightOf="@+id/weixin_text"
+                    android:background="#d0d0d0" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/enter_login_wx_bt_lay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/al_wx_login_str"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_20_dip"
+                android:clickable="true"
+                android:padding="@dimen/ui_10_dip"
+                android:background="@drawable/select_comment_share_bt">
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="40dp"
-                android:layout_toLeftOf="@+id/weixin_text"
-                android:background="#d0d0d0" />
+                <ImageView
+                    android:id="@+id/enter_login_wx_bt"
+                    android:layout_width="@dimen/ui_50_dip"
+                    android:layout_height="@dimen/ui_50_dip"
+                    android:src="@drawable/wexin_share"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="2px"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="40dp"
-                android:layout_toRightOf="@+id/weixin_text"
-                android:background="#d0d0d0" />
-        </RelativeLayout>
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

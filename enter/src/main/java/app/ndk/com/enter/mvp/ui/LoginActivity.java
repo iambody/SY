@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -17,14 +18,17 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
+
 import java.util.ArrayList;
 
 import app.ndk.com.enter.R;
@@ -33,6 +37,7 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -72,6 +77,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @BindView(R2.id.weixin_text)
     TextView weixin_text;//微信登录
+    @BindView(R2.id.enter_login_wx_bt_lay)
+    RelativeLayout enterLoginWxBtLay;
+
 
     private LoadingDialog mLoadingDialog;
     private int identity;
@@ -94,15 +102,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-       if (AppManager.isAdViser(this)) {
-           //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-           btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
-           btn_al_login.setTextColor(0xff666666);
-       } else {
+        if (AppManager.isAdViser(this)) {
+            //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
+            btn_al_login.setTextColor(0xff666666);
+        } else {
 //           iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-           btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
-           btn_al_login.setTextColor(0xffffffff);
-       }
+            btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
+            btn_al_login.setTextColor(0xffffffff);
+        }
 
         if (savedInstanceState == null) {
             if (identity == IDS_ADVISER) {
@@ -220,12 +228,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.weixin_text)
     void weixinClick() {//微信登录
 //        toWxLogin();
-        toDataStatistics(1002, 10008, "微信登录");
+//        toDataStatistics(1002, 10008, "微信登录");
+
     }
 
     @Override
     public void loginSuccess() {
-
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }
@@ -245,21 +253,52 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    @OnClick(R2.id.enter_login_wx_bt_lay)
+    public void onViewClicked() {
+        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+        mLoadingDialog.show();
 
-//    private void toWxLogin() {
-//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-//        mLoadingDialog.show();
+        if (!Utils.isWeixinAvilible(this)) {
+            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
+            return;
+        }
+        WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
+            @Override
+            public void getAuthorResult(int type, Platform platform) {
+
+                switch (type) {
+                    case WxAuthorManger.WxAuthorOk:
+                        String userId = platform.getDb().getUserId();
+                        String userIcon = platform.getDb().getUserIcon();
+                        String userGender = platform.getDb().getUserGender();
+                        String userName = platform.getDb().getUserName();
+                        LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
+
+                        String SexStr=BStrUtils.isEmpty(userGender)?"2":userGender.equals("m")?"0":"1";
+
+//                        if (!mCustomBuilder.isSetPositiveListener()) {
+//                            mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+//                                getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
+//                                dialog.dismiss();
+//                            });
+//                        }
 //
-//        if (!Utils.isWeixinAvilible(this)) {
-//            mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
-//            return;
-//        }
-//        if (mUMShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
-//            mUMShareAPI.getPlatformInfo(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-//        } else {
-//            mUMShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, new MUMAuthListener());
-//        }
-//    }
+                        getPresenter().toDialogWxLogin(mLoadingDialog,   userId, SexStr, userName, userIcon);
+
+
+                        break;
+                    case WxAuthorManger.WxAuthorCANCLE:
+                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                        break;
+                    case WxAuthorManger.WxAuthorERROR:
+                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                        break;
+                }
+            }
+        });
+        wxAuthorManger.startAuth();
+    }
+
 
     private class LoginTextWatcher implements TextWatcher {
         private int which;
@@ -316,13 +355,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //            String nickname = map.get("nickname");
 //            String headimgurl = map.get("headimgurl");
 //
-//            if (!mCustomBuilder.isSetPositiveListener()) {
-//                mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-//                    getPresenter().toDialogWxLogin(mLoadingDialog, unionid, sex, nickname, headimgurl);
-//                    dialog.dismiss();
-//                });
-//            }
-//            getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, sex, nickname, headimgurl);
 //        }
 //
 //        @Override
@@ -335,7 +367,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //            mLoadingDialog.setResult(false, getString(R.string.author_cancel_str), 1000);
 //        }
 //    }
-
+//
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -13,11 +13,12 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.MToast;
+import com.chenenyu.router.Router;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
 import app.ndk.com.enter.mvp.presenter.BindPhonePresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -106,6 +108,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
                 getPresenter().sendCode(mLoadingDialog, et_ab_username.getText().toString());
             }
         };
+
     }
 
     /**
@@ -192,7 +195,9 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @Override
     public void margeSucc() {
 //        openActivity(MainPageActivity.class);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
+
     }
 
     /**
@@ -210,6 +215,14 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @Override
     protected BindPhonePresenter createPresenter() {
         return new BindPhonePresenter(this, this);
+    }
+
+
+
+    @OnClick(R2.id.tv_ab_next)
+    public void onViewClicked() {//跳转首页
+        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
+        finish();
     }
 
 
