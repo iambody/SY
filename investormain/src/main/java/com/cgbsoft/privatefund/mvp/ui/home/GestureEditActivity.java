@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  *         <p>
  *         手势密码设置页面
  */
-@Route("investornmain_gestureeditactivity")
+@Route(RouteConfig.SET_GESTURE_PASSWORD)
 public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
 
     public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";

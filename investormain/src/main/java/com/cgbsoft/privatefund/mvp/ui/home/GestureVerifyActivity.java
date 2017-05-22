@@ -49,6 +49,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
     public static final String PARAM_FROM_SWITCH = "PARAM_FROM_SWITCH";
 
+
     private int count = 5;
     private boolean isFromResumeIntercepter;
     private boolean isFromCloseGesturePassword;

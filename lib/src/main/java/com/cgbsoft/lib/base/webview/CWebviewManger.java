@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
@@ -213,12 +214,12 @@ public class CWebviewManger {
         } else if (action.contains("signEnt")) {
 //            SignIn();
         } else if (action.contains("setGestruePassword")) { //设置手势密码
-            NavigationUtils.startActivityByRouter(context, "investornmain_gestureeditactivity");
+            NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD);
         } else if (action.contains("modifyGestruePassword")) { // 修改手势密码
-            NavigationUtils.startActivityByRouter(context, "investornmain_gestureverifyactivity", "PARAM_FROM_MODIFY", true);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
 //            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
-            NavigationUtils.startActivityByRouter(context, "investornmain_gestureverifyactivity", "PARAM_CLOSE_PASSWORD", true);
+            NavigationUtils.startActivityByRouter(context,  RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
 //            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {

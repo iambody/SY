@@ -16,4 +16,10 @@ public class RouteConfig {
 
     // 欢迎页面
     public static final String GOTOWELCOMEPAGE="investornmain_welcomeativity";
+
+    // 设置手势密码
+    public static final String SET_GESTURE_PASSWORD = "investornmain_gestureeditactivity";
+
+    // 验证手势密码
+    public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
 }
