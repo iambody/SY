@@ -883,9 +883,7 @@ public class CWebviewManger {
     }
 
     private void toMessageList() {
-//        Intent in3 = new Intent(context, MessageListActivity.class);
-//        in3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(in3);
+        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     private void showToast(String action) {
