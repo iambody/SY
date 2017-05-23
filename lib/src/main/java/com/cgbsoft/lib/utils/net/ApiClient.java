@@ -743,7 +743,15 @@ public class ApiClient {
 
     //删除商城收货地址
     public static Observable<String> deleteMallAddress(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().deleteAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        JSONObject js = new JSONObject();
+        try {
+            js.put("user_id", map.get("user_id"));
+            js.put("id", map.get("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return OKHTTP.getInstance().getRequestManager().deleteAddress(js.toString()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //新增商城收货地址

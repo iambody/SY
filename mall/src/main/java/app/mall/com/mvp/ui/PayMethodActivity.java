@@ -1,10 +1,12 @@
 package app.mall.com.mvp.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,15 +28,14 @@ import app.mall.com.model.PayMethod;
 import app.mall.com.mvp.adapter.PayMethodAdapter;
 import app.mall.com.mvp.contract.PayMethodContract;
 import app.mall.com.mvp.presenter.PayMethodPresenter;
+import butterknife.BindView;
 import qcloud.mall.R;
+import qcloud.mall.R2;
 
 public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implements PayMethodContract.View, View.OnClickListener {
 
     //返回键
     private ImageView title_left;
-    //完成按钮
-    private TextView title_right;
-    private TextView titleMid;
     //微信
     private ImageView paymethod_weixin;
     //支付宝
@@ -55,10 +56,26 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
 
     private int checkPosition;
 
+    @BindView(R2.id.title_mid)
+    TextView titleMid;
+
+    @BindView(R2.id.title_right)
+    TextView title_right;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_pay_method;
     }
+
+
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -69,7 +86,6 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
         title_right = (TextView) findViewById(R.id.title_right);
         titleMid = (TextView) findViewById(R.id.title_mid);
         payList = (ListView) findViewById(R.id.pay_method_lv);
-        title_left.setOnClickListener(this);
 
 
         titleMid.setText("支付方式");

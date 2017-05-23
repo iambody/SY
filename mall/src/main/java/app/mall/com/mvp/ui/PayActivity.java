@@ -2,6 +2,7 @@ package app.mall.com.mvp.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -108,6 +110,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     @BindView(R2.id.pay_method_iv)
     ImageView pay_method_iv;
 
+    @BindView(R2.id.title_mid)
+    TextView titleMid;
+
     private int totleCount = 500;
 
     private List<TextView> up_bttag_txts = new ArrayList<>();
@@ -132,11 +137,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bt_txts.add(recharge_up_bt1);
         up_bt_txts.add(recharge_up_bt2);
         up_bt_txts.add(recharge_up_bt3);
+        titleMid.setText(getResources().getString(R.string.ydRecharge));
 
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
         up_bttag_txts.add(recharge_up_bt3_tag);
-
 
         pay_yundou_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -280,6 +285,13 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
     }
 
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
     /**
      * 点击事件需要修改shape背景

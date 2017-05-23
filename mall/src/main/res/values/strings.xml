@@ -13,4 +13,5 @@
     <string name="weixinpay">微信支付</string>
     <string name="weixinedu">( 最高额度 : ¥3000 )</string>
     <string name="newaddress">新建收货地址</string>
+    <string name="ydRecharge">云豆充值</string>
 </resources>

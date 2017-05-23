@@ -21,6 +21,8 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -438,9 +440,9 @@ interface RequestManager {
     Observable<ResponseBody> addAddress(@FieldMap Map<String, String> paramsMap);
 
     //删除商城收货地址
-    @FormUrlEncoded
-    @POST(NetConfig.MALL.MALL_DETELE_ADDRESS)
-    Observable<ResponseBody> deleteAddress(@FieldMap Map<String, String> paramsMap);
+    @DELETE(NetConfig.MALL.MALL_DETELE_ADDRESS)
+    Observable<ResponseBody> deleteAddress(@Query("param") String param);
+
 
     //获取商城收货地址列表
     @GET(NetConfig.MALL.MALL_ADDRESS_LIST)

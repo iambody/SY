@@ -18,6 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <include
+                android:id="@+id/yd_hint"
+                layout="@layout/layout_pay_hint" />
             <!-- 手动输入回显布局 -->
             <include layout="@layout/layout_chongzhi_mony_ed" />
 
@@ -64,9 +68,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:id="@+id/yd_hint"
-        layout="@layout/layout_pay_hint" />
 
     <View
         android:layout_width="match_parent"

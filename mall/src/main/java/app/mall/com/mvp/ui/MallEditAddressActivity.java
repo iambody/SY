@@ -1,11 +1,14 @@
 package app.mall.com.mvp.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.chenenyu.router.annotation.Route;
@@ -35,6 +38,8 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
     //姓名
     @BindView(R2.id.mall_receiving_name)
     EditText et_recever_name;
+    @BindView(R2.id.title_mid)
+    TextView titleMid;
     //保存
     @BindView(R2.id.mall_address_save_msg)
     Button btn_address_save;
@@ -60,7 +65,19 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         et_recever_name.addTextChangedListener(this);
         et_recever_address.addTextChangedListener(this);
         et_recever_phone.addTextChangedListener(this);
+        if (addressBean != null) {
+            titleMid.setText("编辑收货地址");
+        }else{
+            titleMid.setText("新增收货地址");
+        }
+    }
 
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     @OnClick(R2.id.mall_address_save_msg)
@@ -73,13 +90,14 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             addressBean.setPhone(phone);
             addressBean.setShopping_name(name);
             getPresenter().saveMallAddress(addressBean);
+
         } else {
-            getPresenter().addMaddAddress(
+            getPresenter().addMallAddress(
                     new MallAddressBean(
                             name,
                             address,
                             phone,
-                            1,
+                            "1",
                             "")
             );
         }
