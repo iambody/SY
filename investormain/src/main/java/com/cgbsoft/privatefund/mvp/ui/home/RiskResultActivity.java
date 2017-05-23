@@ -24,6 +24,7 @@ import butterknife.OnClick;
 
 /**
  * 风险承受能力评测结果
+ *
  * @author chenlong
  */
 @Route("investornmain_riskresultactivity")
@@ -76,8 +77,11 @@ public class RiskResultActivity extends BaseActivity {
 
     private void initView() {
         Intent intent = getIntent();
-        String level = intent.getStringExtra("level");
-        int value = Integer.valueOf(level);
+        int value = -1;
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey("level")) {
+            String level = intent.getStringExtra("level");
+            value = Integer.valueOf(level);
+        }
         String str = "";
         switch (value) {
             case 1:
@@ -99,6 +103,9 @@ public class RiskResultActivity extends BaseActivity {
             case 5:
                 str = "[ 进取型 ]";
                 image.setBackgroundResource(visitor ? R.drawable.ic_jinqu_nor : R.drawable.ic_risk_result_radical);
+                break;
+            default:
+
                 break;
         }
         restart.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
@@ -176,26 +183,26 @@ public class RiskResultActivity extends BaseActivity {
         int value = Integer.valueOf(values);
         String str = "";
         switch (value) {
-        case 1:
-            str = "[ 保守型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
-            break;
-        case 2:
-            str = "[ 稳健型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_steady);
-            break;
-        case 3:
-            str = "[ 平衡型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_balance);
-            break;
-        case 4:
-            str = "[ 成长型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_grow);
-            break;
-        case 5:
-            str = "[ 进取型 ]";
-            image.setBackgroundResource(R.drawable.ic_risk_result_radical);
-            break;
+            case 1:
+                str = "[ 保守型 ]";
+                image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
+                break;
+            case 2:
+                str = "[ 稳健型 ]";
+                image.setBackgroundResource(R.drawable.ic_risk_result_steady);
+                break;
+            case 3:
+                str = "[ 平衡型 ]";
+                image.setBackgroundResource(R.drawable.ic_risk_result_balance);
+                break;
+            case 4:
+                str = "[ 成长型 ]";
+                image.setBackgroundResource(R.drawable.ic_risk_result_grow);
+                break;
+            case 5:
+                str = "[ 进取型 ]";
+                image.setBackgroundResource(R.drawable.ic_risk_result_radical);
+                break;
         }
         type.setText(str);
         resultinfo.setText(getString(R.string.risk_result_info) + str);

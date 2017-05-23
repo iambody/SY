@@ -19,7 +19,7 @@ import android.view.WindowManager;
  */
 public abstract class BaseDialog extends Dialog {
     protected View baseDialogView;
-    protected Context dActivity;
+    protected Context baseContext;
 
 
     protected abstract int getViewResourceId();
@@ -33,7 +33,7 @@ public abstract class BaseDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseDialogView = LayoutInflater.from(dActivity).inflate(getViewResourceId(), null);
+        baseDialogView = LayoutInflater.from(baseContext).inflate(getViewResourceId(), null);
         setContentView(baseDialogView);
         initBase();
         initView();

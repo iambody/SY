@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -107,8 +110,20 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         loginLive();
 
-        RiskEvaluatDialog  riskEvaluatDialog=new RiskEvaluatDialog(baseContext);
-        riskEvaluatDialog.show();
+        initDialog();
+
+    }
+
+    /**
+     * 各种需要初始化判断是否显示dialog的 eg:风险测评
+     */
+    private void initDialog() {
+
+        //是否需要风险评测d 弹出框
+        if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
+            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
+            riskEvaluatDialog.show();
+        }
     }
 
     private void loginLive() {
@@ -279,7 +294,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
-        if (liveJsonData!=null){
+        if (liveJsonData != null) {
 
         }
     }

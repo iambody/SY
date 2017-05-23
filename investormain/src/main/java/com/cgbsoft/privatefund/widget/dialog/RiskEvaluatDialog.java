@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.MainNavigationUtils;
 
 /**
  * desc  ${DESC}
@@ -22,7 +23,7 @@ public class RiskEvaluatDialog extends BaseDialog {
 
     public RiskEvaluatDialog(Context dActivity) {
         super(dActivity, R.style.dialog_comment_style);
-        this.dActivity = dActivity;
+        this.baseContext = dActivity;
     }
 
 
@@ -39,7 +40,7 @@ public class RiskEvaluatDialog extends BaseDialog {
         wenjuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                MainNavigationUtils.startCommonWebActivity(baseContext,);
             }
         });
     }
