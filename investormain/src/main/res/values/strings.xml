@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="vbnb_mine_str">我的</string>
     <string name="vbnb_product_str">产品</string>
     <string name="vbnb_discovery_str">发现</string>

@@ -105,10 +105,10 @@ android {
     }
 
     lintOptions {
-//        checkReleaseBuilds false
+        checkReleaseBuilds false
         abortOnError false
         //// 不检查给定的问题id
-        disable 'TypographyFractions', 'TypographyQuotes'
+        disable 'TypographyFractions', 'TypographyQuotes','MissingTranslation'
         // 如果为 true，则将所有警告视为错误
         warningsAsErrors false
     }
