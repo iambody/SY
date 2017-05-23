@@ -393,4 +393,85 @@ public class DataStatistApiParam{
         data3.put("arg3", name);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3);
     }*/
+
+
+    /**
+     * B云豆充值 充值云豆按钮点击
+     */
+    public static void Pay_B_BtClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "1034");
+        data3.put("act", "10147");
+        data3.put("arg1", "充值云豆");
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        DataStatisticsUtils.getInstance().push(context, data3);
+    }
+
+    /**
+     * B云豆充值 充值金额快选按钮
+     */
+    public static void Pay_B_KuaiXuan(String zengjia) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "1034");
+        data3.put("act", "10148");
+        data3.put("arg1", "选择金额");
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        data3.put("arg4", zengjia);
+//        DataStatisticsUtils.getInstance().push(context, data3);
+    }
+
+    /**
+     * B云豆充值 充值金额快选按钮
+     */
+    public static void Pay_B_Method(String payname) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "1034");
+        data3.put("act", "10149");
+        data3.put("arg1", "支付方式");
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        data3.put("arg4", payname);
+//        DataStatisticsUtils.getInstance().push(context, data3);
+    }
+
+    /**
+     * B云豆充值 充值云豆按钮点击
+     */
+    public static void Pay_C_BtClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2037");
+        data3.put("act", "20258");
+        data3.put("arg1", "充值云豆");
+//        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+    }
+
+    /**
+     * B云豆充值 充值金额快选按钮
+     */
+    public static void Pay_C_KuaiXuan(String zengjia) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2037");
+        data3.put("act", "20259");
+        data3.put("arg1", "选择金额");
+//        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
+        data3.put("arg4", zengjia);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+    }
+
+    /**
+     * B云豆充值 充值金额快选按钮
+     */
+    public static void Pay_C_Method(String payname) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2037");
+        data3.put("act", "20260");
+        data3.put("arg1", "支付方式");
+//        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
+        data3.put("arg4", payname);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+    }
+
 }

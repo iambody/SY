@@ -21,6 +21,8 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -438,9 +440,9 @@ interface RequestManager {
     Observable<ResponseBody> addAddress(@FieldMap Map<String, String> paramsMap);
 
     //删除商城收货地址
-    @FormUrlEncoded
     @DELETE(NetConfig.MALL.MALL_DETELE_ADDRESS)
-    Observable<ResponseBody> deleteAddress(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> deleteAddress(@Query("param") String param);
+
 
     //获取商城收货地址列表
     @GET(NetConfig.MALL.MALL_ADDRESS_LIST)
@@ -448,7 +450,7 @@ interface RequestManager {
 
     //设置默认收货地址
     @FormUrlEncoded
-    @DELETE(NetConfig.MALL.MALL_SET_DEFAULT)
+    @POST(NetConfig.MALL.MALL_SET_DEFAULT)
     Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
 
     //获取房间ID
@@ -492,5 +494,17 @@ interface RequestManager {
     //获取直播资料
     @GET(NetConfig.LIVE.GET_LIVE_PDF)
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
+
+    //支付配置
+    @GET(NetConfig.PAY.GET_PAY_CONFIG)
+    Observable<ResponseBody> getRechargeConfig(@QueryMap Map<String, String> paramsMap);
+
+    //校验支付结果
+    @GET(NetConfig.PAY.CHECK_RECHARGE_SIGN)
+    Observable<ResponseBody> checkRechargeSign(@QueryMap Map<String, String> paramsMap);
+
+    //云豆充值
+    @GET(NetConfig.PAY.YD_RECHARGE)
+    Observable<ResponseBody> ydRecharge(@QueryMap Map<String, String> paramsMap);
 
 }

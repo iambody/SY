@@ -16,10 +16,10 @@ public class MallAddressBean extends BaseModel implements Serializable{
     private String shopping_name;
     private String address;
     private String phone;
-    private int default_flag;
+    private String default_flag;
     private String id;
 
-    public MallAddressBean(String shopping_name, String address, String phone, int default_flag, String id) {
+    public MallAddressBean(String shopping_name, String address, String phone, String default_flag, String id) {
         this.shopping_name = shopping_name;
         this.address = address;
         this.phone = phone;
@@ -51,11 +51,11 @@ public class MallAddressBean extends BaseModel implements Serializable{
         this.phone = phone;
     }
 
-    public int getDefault_flag() {
+    public String getDefault_flag() {
         return default_flag;
     }
 
-    public void setDefault_flag(int default_flag) {
+    public void setDefault_flag(String default_flag) {
         this.default_flag = default_flag;
     }
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
+    <!-- 第一个框 -->
+    <LinearLayout
+        android:id="@+id/chongzhi_down_lay_bt1"
+        android:layout_width="0dip"
+        android:layout_height="@dimen/ui_50_dip"
+        android:layout_weight="1"
+        android:background="@drawable/shape_corner_txt"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="+"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="10云豆"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+    <!-- 第二个框 -->
+    <LinearLayout
+        android:id="@+id/chongzhi_down_lay_bt2"
+        android:layout_width="0dip"
+        android:layout_height="@dimen/ui_50_dip"
+        android:layout_weight="1"
+        android:background="@drawable/shape_corner_txt"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="+"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="100云豆"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+    <!-- 第三个框 -->
+    <LinearLayout
+        android:id="@+id/chongzhi_down_lay_bt3"
+        android:layout_width="0dip"
+        android:layout_height="@dimen/ui_50_dip"
+        android:layout_weight="1"
+        android:background="@drawable/shape_corner_txt"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="+"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="1000云豆"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

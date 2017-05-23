@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
+import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -88,6 +89,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected boolean isLookZhiBao;
 
     private Observable<Object> executeObservable;
+    private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> refrushGestureObservable;
 
     @Override
@@ -143,10 +145,25 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
+
+        mallChoiceObservable = RxBus.get().register(RxConstant.MALL_CHOICE_ADDRESS, MallAddress.class);
+        mallChoiceObservable.subscribe(new RxSubscriber<MallAddress>() {
+
+            @Override
+            protected void onEvent(MallAddress myAddress) {
+                mWebview.loadUrl("javaScript:products.setAddress('" + myAddress.getId() + "','" + myAddress.getName() + "','" + myAddress.getPhone() + "','" + myAddress.getAddress() + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     /**
      * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须重写注册方法
+     *
      * @return
      */
     protected String getRegeistRxBusId() {
@@ -155,19 +172,23 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     /**
      * 执行注册在此webview中事件的回调接口,根据objec对象转化成需要的数据，子类直接实现此方法即可
+     *
      * @param
      */
-    protected void onEventRxBus(Object object) {}
+    protected void onEventRxBus(Object object) {
+    }
 
     /**
      * 点击分享按钮操作，具体子类覆盖次方法，如果子类没有分享功能则不需要复写此方法
      */
-    protected void pageShare() {}
+    protected void pageShare() {
+    }
 
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
      */
-    protected void executeOverideUrlCallBack(String actionUrl) {}
+    protected void executeOverideUrlCallBack(String actionUrl) {
+    }
 
     @Override
     protected T createPresenter() {
@@ -176,7 +197,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void init(Bundle savedInstanceState) {
-         // toolbar事件设置
+        // toolbar事件设置
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
@@ -202,7 +223,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (SPreference.getToCBean(this) != null && TextUtils.isEmpty(SPreference.getToCBean(this).getBandingAdviserId())) {
             NavigationUtils.startActivityByRouter(this, "investormain_bindvisiteactivity");
         } else {
-            if (isLive  && !isLookZhiBao) {
+            if (isLive && !isLookZhiBao) {
                 isLookZhiBao = true;
                 //joinLive();
             } else {
@@ -250,9 +271,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             backEvent();
             return;
         }
-		if (hasPushMessage) {
+        if (hasPushMessage) {
 //			NavigationUtils.startMessageList(context);
-		}
+        }
 
         if (url.contains("rankList_share")) {
             ThreadUtils.runOnMainThreadDelay(() -> BaseWebViewActivity.this.onBackPressed(), 1000);
@@ -354,6 +375,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (executeObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
             RxBus.get().unregister(getRegeistRxBusId(), executeObservable);
         }
+        if (mallChoiceObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
+            RxBus.get().unregister(getRegeistRxBusId(),mallChoiceObservable);
+        }
     }
 
     @Override
@@ -376,13 +400,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (item.getTitle().equals(getString(R.string.umeng_socialize_share))) {
                 pageShare();
-            } else if(item.getTitle().equals(getString(R.string.save))) {
+            } else if (item.getTitle().equals(getString(R.string.save))) {
                 String jascript = "javascript:Tools.save()";
                 mWebview.loadUrl(jascript);
             }
         }
         return false;
     }
+
 //	public void onEventMainThread(EventBusUpdateHeadImage event) {
 //		String laun = "javascript:setHeadImage('" + event.getRemoteAddress() + "');";
 //		mWebview.loadUrl(laun);

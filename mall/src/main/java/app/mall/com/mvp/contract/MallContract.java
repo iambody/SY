@@ -20,7 +20,7 @@ public interface MallContract {
         void saveMallAddress(MallAddressBean model);
 
         //新增商城收货地址
-        void addMaddAddress(MallAddressBean model);
+        void addMallAddress(MallAddressBean model);
 
         //删除收货地址
         void deleteMallAddress(String id);
@@ -44,6 +44,8 @@ public interface MallContract {
         void deleteSuc(String id);
 
         void setDefaultSuc(String id);
+
+        void addAddressSuc(MallAddressBean mallAddressBean);
     }
 
 }

@@ -37,7 +37,7 @@ public class NetConfig {
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    static final String GET_RES_URL = API_URL + "/startup/5.0";
+    static final String GET_RES_URL = API_URL + "/startup/5.1";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
@@ -161,6 +161,16 @@ public class NetConfig {
         static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
     }
 
+    //支付
+    static class PAY {
+        private static final String pay = "/pay";
+        //支付配置
+        static final String GET_PAY_CONFIG = API_URL + pay + "/rechargeinfo";
+        //校验支付结果
+        static final String CHECK_RECHARGE_SIGN = API_URL + pay + "/checksign";
+        //云豆充值
+        static final String YD_RECHARGE = API_URL + pay + "/ydrecharge";
+    }
 
 
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
