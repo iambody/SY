@@ -46,4 +46,6 @@ public interface RxConstant {
 
     String RC_CONNECT_STATUS_OBSERVABLE = "rc_connect_status_observable";
 
+    String REFRUSH_GESTURE_OBSERVABLE = "refrush_gesture_password_observable";
+
 }

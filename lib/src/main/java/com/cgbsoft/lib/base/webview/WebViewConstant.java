@@ -40,7 +40,7 @@ public class WebViewConstant {
      * 需要拦截跳转到非BaseWebViewActivity页面的url地址集
      */
     public class IntecepterActivity {
-        public static final String recommend_friend = "/settings/recommendation.html";
+        public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
 
     }
 

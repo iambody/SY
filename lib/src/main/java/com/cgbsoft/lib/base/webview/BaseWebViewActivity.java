@@ -19,6 +19,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -87,6 +88,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected boolean isLookZhiBao;
 
     private Observable<Object> executeObservable;
+    private Observable<String> refrushGestureObservable;
 
     @Override
     protected int layoutID() {
@@ -130,6 +132,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 }
             });
         }
+        refrushGestureObservable = RxBus.get().register(RxConstant.REFRUSH_GESTURE_OBSERVABLE, String.class);
+        refrushGestureObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String values) {
+                mWebview.loadUrl("javascript:setGesture('" + values + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
     }
 
     /**
@@ -207,6 +220,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pageShare();
         }
     }
+
 
     /**
      * @param url

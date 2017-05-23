@@ -28,6 +28,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
+
     private BaseApplication mBaseApplication;
     private WeakHandler mBaseHandler;//handler
     protected View mFragmentView;
@@ -35,6 +36,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用
     protected Activity baseActivity;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -43,12 +45,11 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        baseActivity=getActivity();
+        baseActivity = getActivity();
         before();
         if (mFragmentView == null && layoutID() > 0) {
             mFragmentView = inflater.inflate(layoutID(), container, false);
@@ -157,7 +158,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         DataStatisticsUtils.push(getContext().getApplicationContext(), data);
     }
 
-    protected void toDataStatistics(int grp, int act, String[] args){
+    protected void toDataStatistics(int grp, int act, String[] args) {
         HashMap<String, String> data = new HashMap<>();
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
@@ -184,6 +185,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         }
         startActivity(intent);
     }
+
     protected void clodLsAnim(SwipeToLoadLayout swipeToLoadLayout) {
         if (null == swipeToLoadLayout) return;
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);

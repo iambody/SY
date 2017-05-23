@@ -11,8 +11,6 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.Router;
 import com.jhworks.library.ImageSelector;
