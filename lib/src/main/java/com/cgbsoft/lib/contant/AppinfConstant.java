@@ -38,6 +38,16 @@ public interface AppinfConstant {
      */
     String ISLOGIN = "isloginsp";
 
+    /**
+     * 融云token
+     */
+    String RONGYUN_TOKEN = "rongyun_tokoen_sp";
+
+    /**
+     * 融云token有效期
+     */
+    String RONGYUN_TOKEN_EXPIRED = "rongyun_token_expired_sp";
+
     //产品搜搜记录
     String SOUSOUHISTORY = "historysp";
 

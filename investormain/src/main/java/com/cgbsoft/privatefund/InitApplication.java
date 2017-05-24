@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
@@ -9,7 +10,6 @@ import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
 import java.util.List;
 
-import app.live.com.mvp.presenter.InitBusinessHelper;
 import app.live.com.utils.SxbLogImpl;
 import app.privatefund.com.im.bean.NewsMessage;
 import app.privatefund.com.im.bean.PdfMessage;
@@ -41,13 +41,16 @@ public class InitApplication extends InvestorAppli {
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
-        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext())) ||
-                "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
+        // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
+        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext())) ) {
+            Log.i("InitApplication", "----initRongConnect");
 
             /**
              * IMKit SDK调用第一步 初始化
              */
-            RongIM.init(this);
+           if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
+                RongIM.init(this);
+            }
             RongIM.registerMessageType(ProductMessage.class);
             RongIM.registerMessageType(PdfMessage.class);
             RongIM.registerMessageType(NewsMessage.class);
@@ -59,7 +62,6 @@ public class InitApplication extends InvestorAppli {
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
         }
     }
-
 
     private void initLive() {
         if (shouldInit()) {

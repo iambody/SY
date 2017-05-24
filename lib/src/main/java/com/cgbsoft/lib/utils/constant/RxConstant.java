@@ -48,4 +48,6 @@ public interface RxConstant {
 
     String REFRUSH_GESTURE_OBSERVABLE = "refrush_gesture_password_observable";
 
+    String OPEN_MESSAGE_LIST_PAGE_OBSERVABLE = "open_message_list_activity_observable";
+
 }

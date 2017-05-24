@@ -44,7 +44,6 @@
             android:name="io.rong.imlib.HeartbeatReceiver"
             android:process=":ipc" />
         <!-- imlib config end -->
-
         <!--必选： SDK 核心功能-->
         <!--第三方相关,向第三方推送服务请求 token 的服务 -->
         <service

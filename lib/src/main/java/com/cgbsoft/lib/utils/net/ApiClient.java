@@ -11,7 +11,10 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -141,7 +144,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         if (rongExpired != null)
             map.put("tokenExpired", rongExpired);
-        map.put("uid", rongUID);
+            map.put("uid", rongUID);
         return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
@@ -515,6 +518,58 @@ public class ApiClient {
 
     public static Observable<String> toTestCommitRistResult(HashMap<String, Object> hashMap) {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRiskEvalutionCommit(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取融云用户信息
+     *
+     * @param userId
+     * @return
+     */
+    public static Observable<RongUserEntity.Result> getRongUserInfo(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getRongUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> goTestGetRongUserInfo(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetRongUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取群组信息
+     *
+     * @param groupId
+     */
+    public static Observable<GroupInfoEntity.Result> getGroupInfo(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupInfo(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取群成员
+     *
+     * @param groupId
+     */
+    public static Observable<GroupMemberEntity.Result> getGroupMember(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupMember(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupMember(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupMember(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

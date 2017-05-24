@@ -97,7 +97,6 @@ private Context context;
         getProtocol(context);
     }
 
-
     public void getProtocol(Context context) {
         String result = "";
         String titlestr = "";
