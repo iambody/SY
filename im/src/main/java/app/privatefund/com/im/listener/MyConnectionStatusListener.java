@@ -54,7 +54,6 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
 //                    RongIM.getInstance().logout();
 //                }
 //
-//
 //                SPSave.getInstance(MApplication.mContext).putString("managerUid",null);
 //                SPSave.getInstance(MApplication.mContext).putString(Contant.token, "");
 //                // SPSave.getInstance(getActivity()).putString(Contant.username, "");

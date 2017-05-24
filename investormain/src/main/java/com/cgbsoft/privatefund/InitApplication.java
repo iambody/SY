@@ -14,6 +14,7 @@ import app.live.com.utils.SxbLogImpl;
 import app.privatefund.com.im.bean.NewsMessage;
 import app.privatefund.com.im.bean.PdfMessage;
 import app.privatefund.com.im.bean.ProductMessage;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.im.listener.MyConversationBehaviorListener;
 import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
 import app.privatefund.com.im.listener.MyReceiveMessageListener;
@@ -58,6 +59,7 @@ public class InitApplication extends InvestorAppli {
             RongIM.getInstance().registerMessageTemplate(new PdfMessageItemProvider());
             RongIM.getInstance().registerMessageTemplate(new NewMessageItemProvider());
             RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+            RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
         }

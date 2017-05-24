@@ -27,7 +27,7 @@ public class MyGroupInfoListener implements RongIM.GroupInfoProvider {
     }
 
     public Group getGroupInfo(String groupID) {
-        Group group = new Group(Parcel.obtain());
+        Group group = new Group(groupID, "", null);
         ApiClient.getTestGetGroupInfo(groupID).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

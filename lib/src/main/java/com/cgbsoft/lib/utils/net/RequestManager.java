@@ -5,6 +5,7 @@ import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -417,6 +418,31 @@ interface RequestManager {
 
     @GET(NetConfig.API.GROUP_MEMBERS)
     Observable<ResponseBody> getTestGetGroupMember(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取平台客户
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<BaseResult<CommonEntity.Result>> getPlatformCustomer(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<ResponseBody> getTestGetPlatformCustomer(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取机构经理
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
+
 
     //获取产品筛选条件
     /**

@@ -70,15 +70,15 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             midTitleView.setText("消息");
         }
 
-//        conversationListFragment.setArguments(bundle);
-//        uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-//                .appendPath("conversationlist")
-//                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
-//                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
-//                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
-//                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
-//                .build();
-//        conversationListFragment.setUri(uri);
+        conversationListFragment.setArguments(bundle);
+        uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+            .appendPath("conversationlist")
+            .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+            .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
+            .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+            .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+            .build();
+        conversationListFragment.setUri(uri);
         fragments.add(conversationListFragment);
         FragmentManager fragmentManager = getChildFragmentManager();
         teamPageAdapter = new TeamPageAdapter(fragmentManager, fragments);
@@ -100,7 +100,6 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 //                }
         });
     }
-
 
     @Override
     protected BasePresenterImpl createPresenter() {

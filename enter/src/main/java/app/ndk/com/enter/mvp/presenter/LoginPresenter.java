@@ -62,7 +62,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-                getRongToken(loginBean.userId);
                 AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
@@ -71,6 +70,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
+                getRongToken(loginBean.userId);
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
 
@@ -191,7 +191,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         String rongUID = AppManager.getUserId(BaseApplication.getContext());
         String rongToken = AppManager.getRongToken(BaseApplication.getContext());
         Log.i("LoginPresenter", "rongExpired=" + rongExpired + "-----rongUID=" + rongUID + "---rongToken=" + rongToken);
-        if ((!TextUtils.equals(rongUID, userId) || !TextUtils.equals("2", String.valueOf(rongExpired))) && TextUtils.isEmpty(rongToken)) {
+        if ((!TextUtils.equals(rongUID, userId) || !TextUtils.equals("2", String.valueOf(rongExpired)))) {
             AppInfStore.saveUserId(BaseApplication.getContext(), userId);
             AppInfStore.saveRongTokenExpired(BaseApplication.getContext(), 2);
             String needExpired = rongExpired == 1 ? "1" : null;

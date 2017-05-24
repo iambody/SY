@@ -867,7 +867,7 @@ public class CWebviewManger {
     }
 
     private void recommentFriend() {
-//        CommonShareBean shareBean = new CommonShareBean();
+//        CommonShareBean shareBean = new CommonShareBean();C
 //        shareBean.setTitle("推荐理财师好友安装私募云，一起来聚合财富管理力量！\", \"http://www.simuyun.com/invite/invite.html");
 //        shareBean.setContent("推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html");
 //        CommonShareDialog dialog = new CommonShareDialog(context,1,shareBean,null);

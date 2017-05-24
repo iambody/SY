@@ -1,6 +1,5 @@
 package app.privatefund.com.im.listener;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.text.TextUtils;
@@ -26,7 +25,7 @@ public class MyUserInfoListener implements RongIM.UserInfoProvider {
     @Override
     public UserInfo getUserInfo(final String userId) {
         Log.i(this.getClass().getName(), "getUserInfo");
-        UserInfo userInfo = new UserInfo(Parcel.obtain());
+        UserInfo userInfo = new UserInfo(userId, "", null);
         ApiClient.goTestGetRongUserInfo(userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

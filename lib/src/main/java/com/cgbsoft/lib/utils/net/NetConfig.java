@@ -69,6 +69,10 @@ public class NetConfig {
         static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
         // 获取融云用户信息
         static final String RONGYUN_USERINFO = AUTH_URL + "/rc/userinfo";
+        //获取平台客服聊天
+        static final String PLATFORM_CUSTOMER = AUTH_URL + "/rc/greetingmessage";
+        //获取机构经理的聊天
+        static final String ORIGNATION_MANAGER = AUTH_URL +  "/rc/managerinfo";
     }
 
     static class MALL {

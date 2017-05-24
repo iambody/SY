@@ -13,6 +13,7 @@ import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -155,7 +156,6 @@ public class ApiClient {
         map.put("uid", rongUID);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
-
 
     /**
      * 微信 unioid 验证
@@ -571,6 +571,40 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("groupId", groupId);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupMember(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取平台客户
+     *
+     * @param userId
+     */
+    public static Observable<CommonEntity.Result> getPlatformCustomer(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getPlatformCustomer(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetPlatformCustomer(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetPlatformCustomer(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取机构经理
+     *
+     * @param userId
+     */
+    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
