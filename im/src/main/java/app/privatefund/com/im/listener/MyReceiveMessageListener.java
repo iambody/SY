@@ -64,7 +64,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                         @Override
                         public void run() {
                             SPreference.putBoolean(InvestorAppli.getContext(), Constant.HAS_PUSH_MESSAGE, false);
-//                            SPSave.getInstance(MApplication.mContext).putBoolean(Contant.HAS_PUSH_MESSAGE, false);
                         }
                     }, 500);
                     return !hasPush;

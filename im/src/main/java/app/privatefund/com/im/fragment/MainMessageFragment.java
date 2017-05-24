@@ -6,11 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +25,9 @@ import app.privatefund.com.im.R;
 import app.privatefund.com.im.R2;
 import app.privatefund.com.im.adapter.TeamPageAdapter;
 import butterknife.BindView;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 /**
  * 首页消息页面
@@ -99,11 +106,46 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 //                    getActivity().overridePendingTransition(R.anim.message_search_in_bottom, 0);
 //                }
         });
+        initPlatformCustomer();
     }
 
     @Override
     protected BasePresenterImpl createPresenter() {
         return null;
+    }
+
+
+    private void initPlatformCustomer() {
+        Log.e("MainPageActivity", "start checkKefu()");
+        if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+            List<Conversation> conversationList =RongIMClient.getInstance().getConversationList();
+            if (conversationList != null) {
+                for (int i = 0; i < conversationList.size(); i++) {
+                    if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+                        return;
+                    }
+                }
+            }
+
+            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String s) {
+                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                    if (null != conversationList) {
+                        Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
+                    }
+                    if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+//                            EventBus.getDefault().post(new RefreshKefu());
+                    }
+                    ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
+                }
+            });
+        }
     }
 
     /**

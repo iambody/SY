@@ -41,17 +41,17 @@ public interface LoginContract {
          */
         void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
 
-        /**
-         * 获取融云Token id
-         * @param userId
-         */
-        void getRongToken(String userId);
-
-        /**
-         * 初始化融云连接
-         * @param RongToken
-         */
-        void initRongConnect(String RongToken);
+//        /**
+//         * 获取融云Token id
+//         * @param userId
+//         */
+//        void getRongToken(String userId);
+//
+//        /**
+//         * 初始化融云连接
+//         * @param RongToken
+//         */
+//        void initRongConnect(String RongToken);
     }
 
     interface View extends BaseView {

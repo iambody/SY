@@ -16,20 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
-import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
@@ -42,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
@@ -53,11 +49,10 @@ import app.privatefund.com.im.listener.MyUserInfoListener;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
-@Route("investornmain_mainpageactivity")
+@Route(RouteConfig.GOTOCMAINHONE)
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
@@ -139,7 +134,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 各种需要初始化判断是否显示dialog的 eg:风险测评
      */
     private void initDialog() {
-
         //是否需要风险评测d 弹出框
         if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
             RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
@@ -251,7 +245,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                RongIM.getInstance().disconnect();
+                 RongIM.getInstance().disconnect();
                 finish();
             }
 
@@ -280,7 +274,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 Log.i("MainPageActivity", String.valueOf(aBoolean));
-                initPlatformCustomer();
                 baseWebview.loadUrls(WebViewConstant.PAGE_INIT);
             }
 
@@ -306,39 +299,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             protected void onRxError(Throwable error) {
             }
         });
-    }
-
-    private void initPlatformCustomer() {
-            Log.e("MainPageActivity", "start checkKefu()");
-            if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-                List<Conversation> conversationList =RongIMClient.getInstance().getConversationList();
-                if (conversationList != null) {
-                    for (int i = 0; i < conversationList.size(); i++) {
-                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
-                            return;
-                        }
-                    }
-                }
-
-                ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
-                    @Override
-                    protected void onEvent(String s) {
-                        List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-                        if (null != conversationList) {
-                            Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
-                        }
-                        if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-//                            EventBus.getDefault().post(new RefreshKefu());
-                        }
-                        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
-                    }
-
-                    @Override
-                    protected void onRxError(Throwable error) {
-                        Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
-                    }
-                });
-            }
     }
 
     private void gesturePasswordJumpPage() {

@@ -148,7 +148,7 @@ dependencies {
     compile project(':enter')
     compile project(':share')
     compile project(':product')
-    compile project(':live')
+//    compile project(':live')
     compile project(':im')
     compile project(':video')
     compile project(':mall')
