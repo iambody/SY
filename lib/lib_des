@@ -23,3 +23,9 @@ new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getSt
 
             }
         }.show();
+
+
+
+路由中intent的获取和使用
+ 获取Intent
+Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合路由规则Intent对象，然后你可以使用这个intent来跳转，或者发一个通知。

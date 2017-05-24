@@ -7,12 +7,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.cgbsoft.lib.R2;
-import com.cgbsoft.lib.mvp.ui.video.listener.VideoHistoryListener;
+import app.privatefund.com.vido.R2;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 
+import app.privatefund.com.vido.mvp.ui.video.listener.VideoHistoryListener;
 import butterknife.BindView;
 
 /**

@@ -16,16 +16,18 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -34,28 +36,42 @@ import com.cgbsoft.lib.utils.damp.SpringEffect;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.service.FloatVideoService;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
+import com.cgbsoft.lib.widget.dialog.CommentDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.widget.ls.ListViewForScrollView;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kogitune.activity_transition.ActivityTransition;
 import com.kogitune.activity_transition.ExitActivityTransition;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.privatefund.com.vido.R;
+import app.privatefund.com.vido.R2;
+import app.privatefund.com.vido.VideoUtils;
+import app.privatefund.com.vido.mvc.adapter.CommentAdapter;
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -71,8 +87,6 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSER
  * 简述：首先获取本地数据（有：判断视频是否下载，如果下载则播放本地视频，否则播放网络视频），然后在获取网络数据（成功：更新本地数据）
  * 推出时候会保存当前视频的播放进度。
  * 如果希望视频在下载列表中出现那么起码得进一次视频详情。
- * Created by xiaoyu.zhang on 2016/12/7 18:07
- * Email:zhangxyfs@126.com
  *  
  */
 @Route(RouteConfig.GOTOVIDEOPLAY)
@@ -145,11 +159,41 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @BindView(R2.id.tv_avd_cache_num)
     TextView tv_avd_cache_num;
-    @BindView(R2.id.video_videodetail_creattime_toc)
-    TextView videoVideodetailCreattimeToc;
+    //产品view=>名字
+    @BindView(R2.id.view_videoplay_product_name)
+    TextView viewVideoplayProductName;
+    //产品view=>基准
+    @BindView(R2.id.view_videoplay_product_income)
+    TextView viewVideoplayProductIncome;
+    //产品view=>剩余时间
+    @BindView(R2.id.view_videoplay_product_day)
+    TextView viewVideoplayProductDay;
+    //产品view=>产品期限
+    @BindView(R2.id.view_videoplay_product_allday)
+    TextView viewVideoplayProductAllday;
+    //剩余额度
+    @BindView(R2.id.view_videoplay_product_edu)
+    TextView viewVideoplayProductEdu;
+    @BindView(R2.id.video_view_comment_null_layout)
+    RelativeLayout videoViewCommentNullLayout;
+    @BindView(R2.id.video_view_comment_list)
+    ListViewForScrollView videoViewCommentList;
+    @BindView(R2.id.video_view_check_more)
+    TextView videoViewCheckMore;
+    //评论信息
+    @BindView(R2.id.video_videplay_edit_comment_c)
+    TextView videoVideplayEditCommentC;
+    //发送评论
+    @BindView(R2.id.video_videplay_send_comment)
+    Button videoVideplaySendComment;
+    @BindView(R2.id.video_videplay_edit_comment_lay)
+    LinearLayout videoVideplayEditCommentLay;
 
-    @BindView(R2.id.video_videodetail_playnum_toc)
-    TextView videoVideodetailPlaynumToc;
+    //C端评论的列表Adapter
+    private CommentAdapter commentAdapter;
+    //C端需要的产品
+    private View videplay_produxt_view;
+    private View view_video_comment_lay;
 
     private String videoId, videoCoverUrl;
     private boolean isPlayAnim;
@@ -190,6 +234,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void init(Bundle savedInstanceState) {
+
         videoId = getIntent().getStringExtra("videoId");
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
@@ -213,7 +258,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             loadingDialog.setResult(false, getString(R.string.no_videoid_str), 1000, this::finish);
             return;
         }
-
+        findview();
         vrf_avd.setListener(this);
         getVideoDetailInfo();
         pw_mvv_wait.setVisibility(View.VISIBLE);
@@ -227,6 +272,22 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
 
         FloatVideoService.stopService();
+    }
+
+    private void findview() {
+        videplay_produxt_view = findViewById(R.id.videplay_produxt_view);
+        view_video_comment_lay = findViewById(R.id.view_video_comment_lay);
+        videplay_produxt_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != videoAllInf && null != videoAllInf.rows) {
+                    VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
+                    String url = CwebNetConfig.productDetail.concat(productBean.schemeId);
+
+                    Router.build(RouteConfig.GOTOPRODUCTDETAIL).with(WebViewConstant.push_message_url, url).with(WebViewConstant.push_message_title, productBean.productName).go(baseContext);
+                }
+            }
+        });
     }
 
     @Override
@@ -474,6 +535,64 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
         tv_avd_cache.setText(R.string.caching_str);
         iv_avd_cache.setImageResource(R.drawable.ic_caching);
+    }
+
+    @Override
+    public void addCommontSucc(String commontsucc) {
+        //添加视频成功后需要先判断原本是否有评论过的
+        JSONObject response = null;
+        VideoInfoEntity.CommentBean comment;
+        try {
+            response = new JSONObject(commontsucc);
+            JSONObject rows = response.getJSONObject("rows");
+            Gson g = new Gson();
+            comment = g.fromJson(rows.toString(), VideoInfoEntity.CommentBean.class);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        if (null == comment) return;
+        List<VideoInfoEntity.CommentBean> commentBeanList = new ArrayList<>();
+        commentBeanList.add(comment);
+
+
+        if (null == commentAdapter) {//原来是没有视频的;
+            commentAdapter = new CommentAdapter(baseContext, commentBeanList);
+            videoViewCommentList.setVisibility(View.VISIBLE);
+            videoViewCommentNullLayout.setVisibility(View.GONE);
+            commentAdapter = new CommentAdapter(baseContext, commentBeanList);
+            videoViewCommentList.setAdapter(commentAdapter);
+        } else {//在原有的列表中进行添加
+            commentAdapter.getData().add(0, comment);
+            commentAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void getMoreCommontSucc(String moreCommontStr) {//获取更多评论
+        if (BStrUtils.isEmpty(moreCommontStr)) {
+            PromptManager.ShowCustomToast(baseContext, getResources().getString(R.string.nomorecommont));
+            return;
+        }
+
+        try {
+            JSONObject obj = new JSONObject(moreCommontStr);
+            JSONArray rows = obj.getJSONArray("rows");
+            List<VideoInfoEntity.CommentBean> comments = new Gson().fromJson(rows.toString(), new TypeToken<List<VideoInfoEntity.CommentBean>>() {
+            }.getType());
+            if (null == comments || 0 == comments.size()) {
+                PromptManager.ShowCustomToast(baseContext, getResources().getString(R.string.nomorecommont));
+                return;
+            }
+            commentAdapter.getData().addAll(comments);
+            commentAdapter.notifyDataSetChanged();
+            videoViewCheckMore.setVisibility(comments.size() == Contant.VIDEO_COMMENT_LIMIT ? View.VISIBLE : View.GONE);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -781,8 +900,42 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             isDisplayCover = true;
             Imageload.display(this, videoInfoModel.videoCoverUrl, 0, 0, 0, iv_mvv_cover, null, null);
         }
-        //添加播放次数 时间
+        //todo 商品
+        if (null != videoAllInf && null != videoAllInf.rows && null != videoAllInf.rows.product && videoAllInf.rows.product.size() >= 1) {
+            videplay_produxt_view.setVisibility(View.VISIBLE);
+            VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
+            BStrUtils.SetTxt(viewVideoplayProductName, productBean.productName);
+            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", productBean.netUnit));
+            BStrUtils.SetTxt(viewVideoplayProductDay, String.format("剩余时间：%s", VideoUtils.getDeadLine(productBean.raiseEndTime)));
+            BStrUtils.SetTxt(viewVideoplayProductAllday, String.format("产品期限：%s", productBean.term));
+            BStrUtils.SetTxt(viewVideoplayProductEdu, String.format("剩余额度：%s", productBean.remainingAmountStr));
 
+        } else {
+            videplay_produxt_view.setVisibility(View.GONE);
+
+        }
+
+
+        //剩余额度
+
+        //todo 评论列表
+        if (null != videoAllInf && null != videoAllInf.rows && null != videoAllInf.rows.comment && videoAllInf.rows.comment.size() >= 1) {
+            List<VideoInfoEntity.CommentBean> commentBeanList = videoAllInf.rows.comment;
+            videoViewCheckMore.setVisibility(commentBeanList.size() > 3 ? View.VISIBLE : View.INVISIBLE);
+
+
+            videoViewCommentList.setVisibility(View.VISIBLE);
+            videoViewCommentNullLayout.setVisibility(View.GONE);
+            commentAdapter = new CommentAdapter(baseContext, commentBeanList);
+            videoViewCommentList.setAdapter(commentAdapter);
+
+        } else {
+            videoViewCheckMore.setVisibility(View.GONE);
+            videoViewCommentList.setVisibility(View.GONE);
+            videoViewCommentNullLayout.setVisibility(View.VISIBLE);
+            commentAdapter = null;
+
+        }
 
     }
 
@@ -796,6 +949,43 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         return false;
     }
 
+    //查看就更多
+    @OnClick(R2.id.video_view_check_more)
+    public void onViewClicked() {
+
+        if (null == commentAdapter || null == commentAdapter.getData() || 0 == commentAdapter.getData().size())
+            return;
+
+        if (null == videoAllInf || null == videoAllInf.videoId) return;
+
+        getPresenter().getMoreCommont(videoAllInf.videoId, commentAdapter.getData().get(commentAdapter.getData().size() - 1).commentId);
+    }
+
+    //发表评论
+//    @OnClick(R2.id.video_videplay_edit_comment_lay)
+//    public void onViewClickedz() {
+//
+//
+//
+//    }
+
+
+    @OnClick(R2.id.video_videplay_edit_comment_lay)
+    public void oncommontClicked() {
+        CommentDialog commentDialog = new CommentDialog(baseContext) {
+            @Override
+            public void left() {
+                this.dismiss();
+            }
+
+            @Override
+            public void right(String extra) {
+                this.dismiss();
+                getPresenter().addCommont(extra, videoAllInf.videoId);
+            }
+        };
+        commentDialog.show();
+    }
 
 
     class AnimListener implements Animation.AnimationListener {

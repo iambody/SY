@@ -37,7 +37,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -88,6 +87,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //    private UMShareAPI mUMShareAPI;
     private CustomDialog mCustomDialog;
     private CustomDialog.Builder mCustomBuilder;
+    //公钥直接存内存中
+    private String publicKey;
 
     @Override
     protected int layoutID() {
@@ -146,6 +147,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         if (!SPreference.isVisableProtocol(getApplicationContext()))
             new ProtocolDialog(this, 0, null);
+        //开始获取公钥publicKey
+        getPresenter().toGetPublicKey();
     }
 
     @Override
@@ -180,7 +183,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
 //        toDataStatistics(1002, 10005, "登录");
-        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
+
+//        String publickey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCp8pDxAhjGPMxxU4VCWo1if4djzyqxM6dScGhb5q+/wqKfY/3SvPH7XKhtF1Q/0kRjCM3tFFpdGJyqXl0Bl34o3RlGoCeCGbUxVRj2IXvsryaOeF1yi8vW7DtOu2VPePS+Hv69SUCDaJYRdSz1+bhaa1ltFoYIvyTjhr+V8umjNQIDAQAB";
+//        String privatekey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKnykPECGMY8zHFThUJajWJ/h2PPKrEzp1JwaFvmr7/Cop9j/dK88ftcqG0XVD/SRGMIze0UWl0YnKpeXQGXfijdGUagJ4IZtTFVGPYhe+yvJo54XXKLy9bsO067ZU949L4e/r1JQINolhF1LPX5uFprWW0Whgi/JOOGv5Xy6aM1AgMBAAECgYBg9z7N1GVwTmZTztS83E/JQHxubVitjIxOlEZnEUN7xUDmcrXzVM04n1CWFfaDB6TvYKmmOLOqZI2XA4pLizV2iV3YaJUzv7M0kioZ/0+QG5NwGhaF4wCNOPK9MSmNcSX5qLm0PbOixDc/+E/YY8N9XwfmWgi/CxQs58vBK7Fo7QJBAO0ZafOd841e8YXT9pxZ6jIUAocgKWds9U7SJbxCN4VHHX+cvAUsLS/L9hWfZx0ejBcWrIFuW7hka2mrJfYnP28CQQC3fsIEzt2RVb9klmC4NyJdEA6M8fNF/wTuVwmLvUCPCUWhvEW34//Z5qlBxfPHA/uXuKsq/UiC+0O0xD+FH/WbAkEAlXCuOjG1H8bW3i4CQvvdQ+Ee0sJvtlOTrjGAPU9TJTr0mclVLMFyXazlly1YVZ86VxcgdZf0UZ1hokGQdLy6GwJAQ6OoJVmT9yTinlOIZ597PU7T7kSp5l1xFeJjlG04xQEn98yM7pJPF6WdMq+jgvMG5RCfmAMxnYa9mH7W4126jQJAOoXPUTZoGP1LYtIEUrNLIM5GsngmktrgjVj2HbzYhdvAVk8Zcbu0BoexC8Gg7Ka17sWWuCKqxGoKqLaV56X0Jw==";
+//        String sss = null;
+//        try {
+//            sss = RSAUtils.encryptByPublicKey("{\"userName\":\"18900000001\",\"password\":\"9def65456fc2a68a\",\"client\":\"C\"}", publickey);
+//            String dddd = new String(RSAUtils.decryptByPrivateKey(sss, privatekey));
+//            LogUtils.Log("s", sss);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        LogUtils.Log("s", sss);
+
+        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
 
     }
 
@@ -253,6 +269,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    @Override
+    public void publicKeySuccess(String str) {
+        publicKey = str;
+    }
+
     @OnClick(R2.id.enter_login_wx_bt_lay)
     public void onViewClicked() {
         mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
@@ -274,7 +295,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                         String userName = platform.getDb().getUserName();
                         LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
 
-                        String SexStr=BStrUtils.isEmpty(userGender)?"2":userGender.equals("m")?"0":"1";
+                        String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
 
 //                        if (!mCustomBuilder.isSetPositiveListener()) {
 //                            mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
@@ -283,7 +304,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //                            });
 //                        }
 //
-                        getPresenter().toDialogWxLogin(mLoadingDialog,   userId, SexStr, userName, userIcon);
+                        getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
 
 
                         break;

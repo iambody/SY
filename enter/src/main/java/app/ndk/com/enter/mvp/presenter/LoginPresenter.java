@@ -11,10 +11,12 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
@@ -39,30 +41,52 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param isWx 是否微信登录
      */
     @Override
-    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx) {
+    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey, boolean isWx) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
 
+        /**
+         * 新版登录需要加密
+         */
+//        JSONObject object = new JSONObject();
+//        String RsaStr = "";
+//        try {
+//            object.put("userName", un);
+//            object.put("password", isWx ? pwd : MD5Utils.getShortMD5(pwd));
+//            object.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
+//            RsaStr = RSAUtils.encryptByPublicKey( object.toString() , publicKey);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            PromptManager.ShowCustomToast(getContext(), getContext().getResources().getString(R.string.rsa_encryput_error));
+//            loadingDialog.dismiss();
+//            return;
+//        }
         //todo 测试时候调用该接口，
         addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
+        //测试V2登录接口
+//        addSubscription(ApiClient.toV2TestLogin(RsaStr).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
-                AppInfStore.saveUserId(getContext().getApplicationContext(),loginBean.userId);
+                AppInfStore.saveUserId(getContext().getApplicationContext(), loginBean.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
-                AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
+                AppInfStore.saveUserV2Token(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                 AppInfStore.saveUserAccount(getContext().getApplicationContext(), un);
-                LogUtils.Log("loginresult",s);
+                LogUtils.Log("loginresult", s);
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
+                loadingDialog.dismiss();
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                LogUtils.Log("loginresult",error.toString());
+                LogUtils.Log("loginresult", error.toString());
                 loadingDialog.dismiss();
 //              loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
@@ -119,6 +143,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.token);
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
+                    AppInfStore.saveUserV2Token(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
+
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
@@ -168,6 +194,25 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onRxError(Throwable error) {
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+            }
+        }));
+    }
+
+    /**
+     * 获取登录前的公钥
+     */
+    @Override
+    public void toGetPublicKey() {
+        addSubscription(ApiClient.getLoginPublic().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                StrResult result = new Gson().fromJson(s, StrResult.class);
+                getView().publicKeySuccess(result.result);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("user", error.toString());
             }
         }));
     }

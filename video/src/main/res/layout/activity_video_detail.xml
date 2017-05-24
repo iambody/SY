@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pro="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_background"
+    android:clipChildren="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.video.VideoDetailActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/c_background"
+        android:clipChildren="false"
+        android:fitsSystemWindows="true" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false">
+
+            <RelativeLayout
+                android:id="@+id/rl_avd_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
+
+                <com.tencent.qcload.playersdk.ui.VideoRootFrame
+                    android:id="@+id/vrf_avd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/iv_mvv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.cgbsoft.lib.widget.ProgressWheel
+                    android:id="@+id/pw_mvv_wait"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="70dp"
+                    pro:matProg_barColor="#a3a3a3"
+                    pro:matProg_progressIndeterminate="true" />
+
+                <LinearLayout
+                    android:id="@+id/ll_mvv_nowifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_333333"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_mvv_no_wifi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:text="@string/avd_no_wifi_str"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_mvv_rich_go"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/avd_rich_go_str"
+                        android:textColor="#5ba8f3"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/iv_avd_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignLeft="@+id/vrf_avd"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/ic_play_back" />
+
+                <ImageView
+                    android:id="@+id/iv_avd_back_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignRight="@+id/vrf_avd"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_back_play" />
+            </RelativeLayout>
+
+            <ScrollView
+                android:id="@+id/sv_avd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_avd_head"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_avd_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:background="@color/white"
+                        android:padding="@dimen/ui_10_dip"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_18"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:paddingLeft="@dimen/ui_10_dip"
+                        android:src="@color/gray_font" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingBottom="@dimen/ui_10_dip"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp">
+                        <!-- C端需要的时间和次数-->
+                        <TextView
+                            android:id="@+id/video_videplay_time_playnumber_toc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="2017-02-18  | 播放次数 302 " />
+
+                        <TextView
+                            android:id="@+id/tv_avd_like_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/ui_20_dip"
+                            android:gravity="center"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:text="10"
+                            android:textColor="@color/color_c73d33"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/iv_avd_like"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/tv_avd_like_num"
+                            android:src="@drawable/ic_like_up"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_avd_cache"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="14dp"
+                            android:layout_toLeftOf="@+id/iv_avd_like"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_avd_cache"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/ic_cache" />
+
+                            <TextView
+                                android:id="@+id/tv_avd_cache"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/cache_str"
+                                android:textColor="@drawable/select_avd_cache"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--C相关产品 -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_10_dip"
+                        android:background="@color/transparent" />
+
+                    <include
+                        android:id="@+id/videplay_produxt_view"
+                        layout="@layout/view_vidoplay_product"
+                        android:visibility="gone" />
+                    <!-- C相关产品.......... -->
+                    <!-- 内容-->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ui_10_dip"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/video_product_icon"
+                        android:drawablePadding="@dimen/ui_5_dip"
+                        android:padding="@dimen/ui_10_dip"
+                        android:text="@string/xiangxijieshao"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_16"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_z_dip"
+                        android:layout_marginLeft="@dimen/ui_10_dip"
+                        android:src="@color/gray_font" />
+
+                    <TextView
+                        android:id="@+id/tv_avd_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="4dp"
+                        android:padding="8dp"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/dimens_sp_16" />
+                    <!-- 内容-->
+
+                    <!-- 评论内容 -->
+                    <include
+                        android:id="@+id/view_video_comment_lay"
+                        layout="@layout/view_videoplay_commont" />
+                </LinearLayout>
+            </ScrollView>
+
+
+            <!-- C端的地步的评论框布局 .....................-->
+
+            <RelativeLayout
+                android:id="@+id/rl_avd_download"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_avd_head"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/avd_please_choise_str"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/iv_avd_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/ic_avd_close" />
+
+                <TextView
+                    android:id="@+id/tv_avd_hd"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="115dp"
+                    android:background="#00ffffff"
+                    android:gravity="center"
+                    android:text="@string/hd_str"
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_avd_sd"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_below="@id/tv_avd_hd"
+                    android:background="#00ffffff"
+                    android:gravity="center"
+                    android:text="@string/sd_str"
+                    android:textColor="#666"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_avd_cache_open"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#e6e6e6" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_avd_folder">
+
+                            <TextView
+                                android:id="@+id/tv_avd_cache_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="12dp"
+                                android:layout_gravity="right"
+                                android:background="@drawable/shape_round_msg"
+                                android:gravity="center"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimens_sp_6" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="@string/avd_look_cache_str"
+                            android:textColor="#333"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+    <!-- C端的地步的评论框布局 -->
+    <LinearLayout
+        android:id="@+id/video_videplay_edit_comment_lay"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:background="#d6d6d6"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/video_videplay_edit_comment_c"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/searchkuang"
+            android:padding="1dp"
+            android:gravity="center_vertical"
+            android:text="我来说一说..."
+            android:textColorHint="#666"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/video_videplay_send_comment"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@drawable/toc_cornor_btn"
+            android:text="评论"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

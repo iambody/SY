@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.utils.net;
 
-import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -20,11 +19,8 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.android.exoplayer.C;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,6 +106,45 @@ public class ApiClient {
         map.put("userName", username);
         map.put("password", pwdMD5);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * V2 测试登录接口
+     *
+     * @param Sing
+     * @return
+     */
+    public static Observable<String> toV2TestLogin(String Sing) {
+//        Sing="mSx9n0v3DeNDJbJjv2DvJWFEPEPY9xF0IrwTAXJgL4r+O54aKfnyDnBiO5Zt1Y3rngo58erOjPQSbgqClRwGKRZNKsrwoH1eTidp6rdvdKWjTmdJ1FO4Ehwxnxxqc142sTewrbkGE7icHa7u37wnHd6KjzaT6FuBrLvrMxaOpEE=";
+
+
+        Map<String, String> map = new HashMap<>();
+        map.put("sign", Sing);
+//        JSONObject object=new JSONObject();
+//        try {
+//            object.put("sign",Sing);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+//        LoginV2Bean loginV2Bea=new LoginV2Bean();
+//        loginV2Bea.setSign(Sing);
+//
+//        Gson gson=new Gson();
+//
+//        HashMap<String,String> paramsMap=new HashMap<>();
+//
+//        paramsMap.put("sign",Sing);
+//
+//        String strEntity = gson.toJson(paramsMap);
+//
+//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
+
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(loginV2Bea).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
     }
 
     /**
@@ -305,7 +340,7 @@ public class ApiClient {
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -313,7 +348,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -421,7 +456,7 @@ public class ApiClient {
     /**
      * 关联资产
      *
-     * @param customId 客户id
+     * @param customId    客户id
      * @param assertImage 上传图片路径
      * @return
      */
@@ -441,7 +476,8 @@ public class ApiClient {
 
     /**
      * 资产证明
-     * @param customId 客户id
+     *
+     * @param customId    客户id
      * @param assertImage 上传图片路径
      * @return
      */
@@ -608,23 +644,36 @@ public class ApiClient {
     /**
      * 视频添加评论
      */
-    public static Observable<String>videoCommentAdd(String commnetContent,String SenderId,String id){
-        Map<String,String>map=new HashMap();
-        map.put("commentContent",commnetContent);
-        map.put("senderId",SenderId);
-        map.put("id",id);
+    public static Observable<String> videoCommentAdd(String commnetContent, String SenderId, String id) {
+        Map<String, String> map = new HashMap();
+        map.put("commentContent", commnetContent);
+        map.put("senderId", SenderId);
+        map.put("id", id);
         return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
      * 评论列表
      */
-    public static Observable<String>videoCommentLs(String id,String commentId){
-        Map<String, String> map = new HashMap<>();
-        map.put("id", id);
-        map.put("commentId", commentId);
-        map.put("limit",  Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> videoCommentLs(String id, String commentId) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("id", id);
+////        map.put("offset", "3");
+//        map.put("commentId", commentId);
+//        map.put("limit", Contant.VIDEO_COMMENT_LIMIT);
+
+        JSONObject object = new JSONObject();
+
+        try {
+            object.put("id", id);
+            object.put("commentId", commentId);
+            object.put("limit", Contant.VIDEO_COMMENT_LIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("param", object.toString());
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -642,6 +691,7 @@ public class ApiClient {
             params.put("param", paramValue);
         return params;
     }
+
 
     /**
      * 重新生成Post 方式的值
@@ -679,6 +729,7 @@ public class ApiClient {
         }
         return paramValue;
     }
+
 
     /**
      * 生成json
@@ -797,5 +848,12 @@ public class ApiClient {
         map.put("room_id", roomId);
         map.put("user_id", userId);
         return OKHTTP.getInstance().getRequestManager().hostCloseLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取登录前的publickey
+     */
+    public static Observable<String> getLoginPublic() {
+        return OKHTTP.getInstance().getRequestManager().getPublicKey().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 }

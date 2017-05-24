@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.mvp.ui.video.model;
+package com.cgbsoft.privatefund.bean.video;
 
 import com.cgbsoft.lib.widget.recycler.BaseModel;
 

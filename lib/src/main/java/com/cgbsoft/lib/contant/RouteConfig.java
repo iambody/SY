@@ -22,4 +22,7 @@ public class RouteConfig {
 
     // 验证手势密码
     public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
+
+    //跳转到产品详情详情的路由
+    public static final String GOTOPRODUCTDETAIL="product_pproductdetail";
 }

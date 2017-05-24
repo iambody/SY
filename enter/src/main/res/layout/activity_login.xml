@@ -186,6 +186,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/enter_login_wxlogin_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp">
@@ -224,7 +225,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/ui_20_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
                 android:clickable="true"
                 android:padding="@dimen/ui_10_dip"
                 android:background="@drawable/select_comment_share_bt">

@@ -9,8 +9,8 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-//    private static final String START_APP = "https://app";
-  private static final String START_APP = "https://d6-app";
+    private static final String START_APP = "https://app";
+    //  private static final String START_APP = "https://d6-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -36,6 +36,8 @@ public class NetConfig {
 
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
+
+
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
     static final String GET_RES_URL = API_URL + "/startup/5.0";
     //数据统计埋点
@@ -114,24 +116,25 @@ public class NetConfig {
         static final String VALIDATE_USER_PASSWORD_URL = AUTH_URL + user + "/checkPassword";
         // 用户反馈
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
+
     }
 
-  //搜索相关
-    static class SOUSOU{
-      private static final String sousou = "/search";
-      //产品全局搜索
-      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
-      //热门搜索
-      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
-  }
+    //搜索相关
+    static class SOUSOU {
+        private static final String sousou = "/search";
+        //产品全局搜索
+        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
+        //热门搜索
+        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
+    }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
+        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
         //获取产品列表
-        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
+        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
     }
 
     //直播相关
@@ -162,18 +165,26 @@ public class NetConfig {
     }
 
 
-
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
 
-   //视频相关模块
-    static class VIDEO{
-       private static final String video="/information/video";
-       //视频点赞
-       static  final String VIDEO_DIANZAN=API_URL +video+"/likes/5.0";
-       //视频评论添加
-       static  final String VIDEO_COMMENT_ADD=API_URL+video+"/2c/comment/add";
-       //视频的评论
-       static final String VIDEO_COMMENT_LS=API_URL+video+"/2c/comment";
-   }
+    //视频相关模块
+    static class VIDEO {
+        private static final String video = "/information/video";
+        //视频点赞
+        static final String VIDEO_DIANZAN = API_URL + video + "/likes/5.0";
+        //视频评论添加
+        static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
+        //视频的更多评论
+        static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
+    }
+
+    //用户授权相关 V2********
+    static class AUTHOR {
+        private static final String auth = "/auth";
+        //登录前获取publickey公钥
+        static final String GET_PUBLIC_KEY = auth  + "/v2/publicKey";
+        //V2登录
+        static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
+    }
 }

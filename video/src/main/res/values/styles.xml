@@ -10,4 +10,13 @@
     <style name="CustomCheckboxTheme_Licaishi" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_style</item>
     </style>
+
+    <style name="videoplay_product_txt_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/dimens_sp_15</item>
+        <item name="android:textColor">@color/c_mid_black</item>
+        <item name="android:gravity">left</item>
+    </style>
 </resources>

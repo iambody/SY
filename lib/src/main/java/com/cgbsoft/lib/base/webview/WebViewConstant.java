@@ -1,7 +1,5 @@
 package com.cgbsoft.lib.base.webview;
 
-import java.util.HashMap;
-
 /**
  * @author chenlong
  */
@@ -34,6 +32,8 @@ public class WebViewConstant {
         public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
         public static final String INVITE_CUSTOM = "app:inviteCust";
         public static final String INVITE_SHARE="app:tocShare";
+        public static final String OPEN_SHAREPAGE ="app:openSharePage";
+        public static final String TOC_SHARE ="app:tocShare";
     }
 
     /**

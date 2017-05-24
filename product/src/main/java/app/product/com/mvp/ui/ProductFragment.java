@@ -97,7 +97,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private boolean isLoadmore;
     //所有记录选择状态的数据**********************
     // 记录当前的系列的数据
-    private String CurrentSeries;
+    private String CurrentSeries="0";
     //记录当前的排序的数据
     private String CurrentOderBy;
     //默认第0页

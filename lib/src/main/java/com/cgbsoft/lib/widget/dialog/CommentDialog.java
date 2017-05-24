@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public abstract class CommentDialog  extends BaseDialog{
         comment.requestFocus();
 //        showKeyboard();
 
-//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         send.setEnabled(false);
         send.setTextColor(0x99999999);
         send.setOnClickListener(new View.OnClickListener() {

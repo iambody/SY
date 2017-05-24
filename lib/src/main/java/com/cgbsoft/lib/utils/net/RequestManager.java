@@ -75,6 +75,24 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.LOGIN_URL)
     Observable<ResponseBody> toTestLogin(@FieldMap() Map<String, String> paramsMap);
+
+
+    /**
+     * 获取登录V2的接口
+     * @param
+     * @return
+     */
+//    @FormUrlEncoded
+//    @Headers({"Content-Type: application/json","Accept: application/json"})
+//    @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
+//    Observable<ResponseBody> toV2TestLogin(@Body RequestBody str);
+
+    @FormUrlEncoded
+//    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
+    Observable<ResponseBody> toV2TestLogin(@FieldMap() Map<String, String> paramsMap);
+
+
     /**
      * 获取用户信息
      *
@@ -425,7 +443,7 @@ interface RequestManager {
      * 视频评论列表
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
-    Observable<ResponseBody>videoCommentLs(@QueryMap Map<String,String>parmsMap);
+    Observable<ResponseBody>videoCommentLs(@QueryMap Map<String,Object>parmsMap);
 
     //编辑商城收货地址
     @FormUrlEncoded
@@ -492,5 +510,13 @@ interface RequestManager {
     //获取直播资料
     @GET(NetConfig.LIVE.GET_LIVE_PDF)
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
+
+
+
+
+
+    //登录前获取公钥
+    @GET(NetConfig.AUTHOR.GET_PUBLIC_KEY)
+    Observable<ResponseBody>getPublicKey();
 
 }

@@ -1,7 +1,8 @@
 package app.product.com.mvp.ui;
 
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
-import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
 
@@ -13,6 +14,7 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/20-18:53
  */
+@Route(RouteConfig.GOTOPRODUCTDETAIL)
 public class ProductDetailActivity extends BaseWebViewActivity {
     private CommonShareDialog commonShareDialog;
     private ShareCommonBean shareCommonBean;
@@ -23,7 +25,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
     }
 
     private void shareToC(String action) {
-
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String sharePYQtitle = "";

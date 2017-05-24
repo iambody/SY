@@ -47,6 +47,15 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存V2的混淆的Token
+     */
+    public static void saveUserV2Token(Context sContext, String v2Token) {
+        SharedPreferences.Editor ed = getBasePreference(sContext).edit();
+        ed.putString(USERV2TOKEN, v2Token);
+        ed.commit();
+    }
+
+    /**
      * 保存用户账号
      */
     public static void saveUserAccount(Context scContext, String userAccount) {
@@ -66,6 +75,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存用户信息
+     *
      * @param context
      * @param userInfo
      */
@@ -75,6 +85,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 得到用户信息
+     *
      * @param context
      * @return
      */
@@ -91,6 +102,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产状态
+     *
      * @param context
      * @param stockAssetStaus
      */
@@ -102,6 +114,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产图片信息
+     *
      * @param context
      * @param imageUrl
      */
@@ -113,6 +126,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
+     *
      * @param context
      * @param assetCertificationStatus
      */
@@ -124,6 +138,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明图片信息
+     *
      * @param context
      * @param assetCertificationImageUrl
      */
@@ -135,6 +150,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
+     *
      * @param context
      * @param investmentType
      */
@@ -146,6 +162,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新手势密码值
+     *
      * @param context
      * @param getsturePassword
      */

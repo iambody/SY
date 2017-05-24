@@ -23,7 +23,7 @@ public interface LoginContract {
          * @param pwd  密码
          * @param isWx 是否微信登录
          */
-        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
+        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd,String publicKey, boolean isWx);
 
         /**
          * 微信登录
@@ -40,6 +40,10 @@ public interface LoginContract {
          * @param headimgurl
          */
         void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
+        /**
+         * 获取登录公钥
+         */
+        void toGetPublicKey();
     }
 
     interface View extends BaseView {
@@ -48,5 +52,6 @@ public interface LoginContract {
         void loginFail();
 
         void toBindActivity();
+        void publicKeySuccess(String str);
     }
 }

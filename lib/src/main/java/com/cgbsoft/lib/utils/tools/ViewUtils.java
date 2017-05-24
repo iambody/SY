@@ -84,6 +84,21 @@ public class ViewUtils {
         return success;
     }
 
+    /**
+     * 左侧添加图片
+     * @param textView
+     * @param value
+     * @param colorRes
+     */
+    public static void setTextViewLeftIv(Context context,TextView  textView,int ivResuorceId){
+        Drawable dwLeft = context.getResources().getDrawable(ivResuorceId);
+        dwLeft.setBounds(0, 0, dwLeft.getMinimumWidth(), dwLeft.getMinimumHeight());
+        textView.setCompoundDrawables(dwLeft, null, null, null);
+    }
+
+    public static void cancleTextViewLeftIv(TextView  textView){
+        textView.setCompoundDrawables(null, null, null, null);
+    }
 //    public static boolean containKeyName(TextView textView , List<String> keyTitleList) {
 //        String values = textView.getText().toString();
 //        if (!CollectionUtils.isEmpty(keyTitleList)) {

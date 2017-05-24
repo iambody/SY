@@ -15,14 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.mvp.contract.video.VideoHistoryListContract;
-import com.cgbsoft.lib.mvp.presenter.video.VideoHistoryListPresenter;
-import com.cgbsoft.lib.mvp.ui.video.adapter.VideoHistoryAdapter;
-import com.cgbsoft.lib.mvp.ui.video.listener.VideoHistoryListener;
-import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -32,6 +25,13 @@ import com.kogitune.activity_transition.ActivityTransitionLauncher;
 
 import java.util.List;
 
+import app.privatefund.com.vido.R;
+import app.privatefund.com.vido.R2;
+import app.privatefund.com.vido.mvp.contract.video.VideoHistoryListContract;
+import app.privatefund.com.vido.mvp.presenter.video.VideoHistoryListPresenter;
+import app.privatefund.com.vido.mvp.ui.video.adapter.VideoHistoryAdapter;
+import app.privatefund.com.vido.mvp.ui.video.listener.VideoHistoryListener;
+import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -40,8 +40,8 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSE
 
 /**
  * 播放历史
- * Created by xiaoyu.zhang on 2016/12/12 17:39
- * Email:zhangxyfs@126.com
+ *
+ *
  *  
  */
 public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, RecyclerControl.OnControlGetDataListListener, VideoHistoryListener,

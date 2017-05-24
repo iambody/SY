@@ -12,6 +12,7 @@
         <activity android:name=".mvc.PlayVideoActivity" />
         <activity android:name=".mvc.LocalVideoActivity" />
         <activity android:name=".mvc.PlayRecordActivity" />
+        <activity android:name=".mvp.ui.video.InformationDetailActivity" />
 
         <service android:name=".mvc.services.PlayerService">
             <intent-filter>

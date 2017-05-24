@@ -1,4 +1,4 @@
-package com.cgbsoft.lib.utils.service;
+package app.privatefund.com.vido.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -14,14 +14,15 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
 
 import java.io.IOException;
+
+import app.privatefund.com.vido.R;
+import app.privatefund.com.vido.mvp.ui.video.VideoDetailActivity;
 
 /**
  * 后台播放视频

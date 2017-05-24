@@ -26,7 +26,6 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
@@ -44,6 +43,7 @@ import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
 import app.live.com.mvp.ui.LiveActivity;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -339,5 +339,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             liveDialog.setVisibility(View.GONE);
         }
 
+    }
+
+    private void SsetBottomNavigation(){
+//        bottomNavigationBar.
     }
 }
