@@ -60,11 +60,11 @@
         </service>
 
         <!-- push服务 -->
-        <service
+        <servicel
             android:name="io.rong.push.PushService"
             android:exported="false"
             android:process="io.rong.push">
-        </service>
+        </servicel>
     <!-- push进程，可以改名 -->
 
         <!-- push 相关事件接收器 -->

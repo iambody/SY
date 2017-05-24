@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="io.rong.fast"
+                    android:host="com.cgbsoft.privatefund"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>

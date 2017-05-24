@@ -886,8 +886,8 @@ public class CWebviewManger {
     }
 
     private void toMessageList() {
-//        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
-        RxBus.get().post(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, true);
+        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
+//        RxBus.get().post(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, true);
     }
 
     private void showToast(String action) {
