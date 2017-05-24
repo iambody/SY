@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="style_paymethod_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">3dp</item>
+    </style>
+
+    <style name="style_paymethod_in_ig">
+        <item name="android:layout_width">@dimen/ui_30_dip</item>
+        <item name="android:layout_height">@dimen/ui_30_dip</item>
+        <item name="android:padding">@dimen/ui_5_dip</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">@dimen/ui_5_dip</item>
+    </style>
+
+    <style name="style_paymethod_int_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#616161</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="red1_btn">
+        <item name="android:background">@drawable/red_shape_sel_btn1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+</resources>

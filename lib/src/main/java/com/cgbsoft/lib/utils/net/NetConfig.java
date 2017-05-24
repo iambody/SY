@@ -178,6 +178,16 @@ public class NetConfig {
         static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
     }
 
+    //支付
+    static class PAY {
+        private static final String pay = "/pay";
+        //支付配置
+        static final String GET_PAY_CONFIG = API_URL + pay + "/rechargeinfo";
+        //校验支付结果
+        static final String CHECK_RECHARGE_SIGN = API_URL + pay + "/checksign";
+        //云豆充值
+        static final String YD_RECHARGE = API_URL + pay + "/ydrecharge";
+    }
 
 
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";

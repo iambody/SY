@@ -50,4 +50,6 @@ public interface RxConstant {
 
     String OPEN_MESSAGE_LIST_PAGE_OBSERVABLE = "open_message_list_activity_observable";
 
+    String MALL_CHOICE_ADDRESS = "choice_address";
+
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Enter</string>
     <string name="reseting_str">重置中……</string>
     <string name="la_login_loading_str">登录中……</string>
