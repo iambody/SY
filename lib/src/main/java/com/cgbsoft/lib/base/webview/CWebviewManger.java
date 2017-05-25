@@ -16,11 +16,11 @@ import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
@@ -725,35 +725,36 @@ public class CWebviewManger {
 
     private void shareToC(String action) {
         // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-        String actionDecode = URLDecoder.decode(action);
-        String[] split = actionDecode.split(":");
-        String sharePYQtitle = "";
-        try {
-            String title = split[2];
-            String subTitle = split[3];
-            String imageTitle = split[4];
-            String link = split[5];
-            if (split.length >= 7) {
-                sharePYQtitle = split[6];
-            }
-            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
-            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-            CommonShareBean commonShareBean = new CommonShareBean();
-            commonShareBean.setTitle(title);
-            commonShareBean.setContent(subTitle);
-            commonShareBean.setLink(link);
-            commonShareBean.setYoujianTitleText(title);
-//            if (imageTitle.contains("greeteng")) {
-//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-//                commonShareDialog.show();
-//            } else {
-//                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-//                commonShareDialog.show();
+        PromptManager.ShowCustomToast(context,"shareToC分享的代码需要挪到业务module中 不要写在lib里面");
+//        String actionDecode = URLDecoder.decode(action);
+//        String[] split = actionDecode.split(":");
+//        String sharePYQtitle = "";
+//        try {
+//            String title = split[2];
+//            String subTitle = split[3];
+//            String imageTitle = split[4];
+//            String link = split[5];
+//            if (split.length >= 7) {
+//                sharePYQtitle = split[6];
 //            }
-//            shareDialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
+//            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
+//            Share commonShareBean = new CommonShareBean();
+//            commonShareBean.setTitle(title);
+//            commonShareBean.setContent(subTitle);
+//            commonShareBean.setLink(link);
+//            commonShareBean.setYoujianTitleText(title);
+////            if (imageTitle.contains("greeteng")) {
+////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
+////                commonShareDialog.show();
+////            } else {
+////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
+////                commonShareDialog.show();
+////            }
+////            shareDialog.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void backPage(String action) {

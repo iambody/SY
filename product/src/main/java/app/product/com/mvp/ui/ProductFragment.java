@@ -5,24 +5,22 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
-import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
+import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,9 +45,7 @@ import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.Observable;
 
 
@@ -74,11 +70,15 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     SwipeToLoadLayout swipeToLoadLayout;
     @BindView(R2.id.product_productfragment_empty_iv)
     ImageView productProductfragmentEmptyIv;
-//    @BindView(R2.id.swipe_refresh_header)
+    @BindView(R2.id.product_product_wenjuan)
+    TextView productProductWenjuan;
+
+    //    @BindView(R2.id.swipe_refresh_header)
 //    CustomRefreshHeadView swipeRefreshHeader;
 //    @BindView(R2.id.swipe_load_more_footer)
 //    CustomRefreshFootView swipeLoadMoreFooter;
-
+//风险测评
+    private View product_product_riskevalust;
 
     //排序的事件
     private Observable<Series> seriesObservable;
@@ -97,7 +97,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private boolean isLoadmore;
     //所有记录选择状态的数据**********************
     // 记录当前的系列的数据
-    private String CurrentSeries="0";
+    private String CurrentSeries = "0";
     //记录当前的排序的数据
     private String CurrentOderBy;
     //默认第0页
@@ -118,7 +118,23 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
+        initRiskEvaluat();
+        initCache();
         initData();
+
+    }
+
+    /**
+     * 产品的缓存处理  进来勿忘状态OR请求数据前需要展示的
+     */
+    private void initCache() {
+
+    }
+
+    /**
+     *
+     */
+    private void initRiskEvaluat() {
 
     }
 
@@ -126,13 +142,17 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     public void onResume() {
         super.onResume();
-
+        //是否需要风险评测d 弹出框
+        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppInfStore.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
     }
 
     /**
      * 初始化配置
      */
     private void initConfig() {
+
+        product_product_riskevalust = mFragmentView.findViewById(R.id.product_product_riskevalust);
+
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         productProductfragmentProductserieslayout.setInit(true);
@@ -146,7 +166,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             public void onItemClick(View view, int position) {
                 ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
                 ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-
 
 
             }
@@ -427,5 +446,10 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         reSetConditionAction();
     }
 
+    //问卷调查
 
+    @OnClick(R2.id.product_product_wenjuan)
+    public void onViewClicked() {
+        Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+    }
 }

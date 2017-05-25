@@ -10,6 +10,8 @@
     android:orientation="vertical"
     tools:context=".mvp.ui.video.VideoDetailActivity">
 
+    <include layout="@layout/title_videoplay_lay" />
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
@@ -17,7 +19,7 @@
         android:layout_weight="1"
         android:background="@color/c_background"
         android:clipChildren="false"
-        android:fitsSystemWindows="true" >
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -84,7 +86,8 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignLeft="@+id/vrf_avd"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_play_back" />
+                    android:src="@drawable/ic_play_back"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/iv_avd_back_play"
@@ -92,7 +95,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignRight="@+id/vrf_avd"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/ic_back_play" />
+                    android:src="@drawable/service_play_icon" />
             </RelativeLayout>
 
             <ScrollView
@@ -363,8 +366,8 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/searchkuang"
-            android:padding="1dp"
             android:gravity="center_vertical"
+            android:padding="1dp"
             android:text="我来说一说..."
             android:textColorHint="#666"
             android:textSize="13sp" />

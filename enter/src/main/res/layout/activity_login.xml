@@ -226,16 +226,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/ui_10_dip"
+                android:background="@drawable/select_comment_share_bt"
                 android:clickable="true"
-                android:padding="@dimen/ui_10_dip"
-                android:background="@drawable/select_comment_share_bt">
+                android:padding="@dimen/ui_10_dip">
 
                 <ImageView
                     android:id="@+id/enter_login_wx_bt"
                     android:layout_width="@dimen/ui_50_dip"
                     android:layout_height="@dimen/ui_50_dip"
-                    android:src="@drawable/wexin_share"
-                    />
+                    android:src="@drawable/wexin_share" />
             </RelativeLayout>
         </LinearLayout>
 

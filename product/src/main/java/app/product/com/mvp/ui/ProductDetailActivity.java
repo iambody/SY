@@ -39,7 +39,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             link = link.startsWith("/") ? " https://app.simuyun.com/app5.0" + link : " https://app.simuyun.com/app5.0" + "/" + link;
 
             String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-            shareCommonBean = new ShareCommonBean(title, subTitle, link, app.privatefund.com.share.R.drawable.logo);
+            shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
                 @Override
                 public void onclick() {

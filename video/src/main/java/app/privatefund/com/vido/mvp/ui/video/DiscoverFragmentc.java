@@ -1,21 +1,15 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
-import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
@@ -100,7 +94,7 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
 
     @OnClick(R2.id.video_discover_sousou_lay)
     public void onVideoDiscoverSousouLayClicked() {
-        Router.build(RouteConfig.GODTOSOUSOU).with("SEARCH_TYPE_PARAMS", "3").go(baseActivity);
+        Router.build(RouteConfig.GODTOSOUSOU).with("SEARCH_TYPE_PARAMS", "2").go(baseActivity);
     }
 
     @OnClick(R2.id.video_discover_history_txt)

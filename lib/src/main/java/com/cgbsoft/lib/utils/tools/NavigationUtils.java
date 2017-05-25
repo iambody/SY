@@ -116,13 +116,23 @@ public class NavigationUtils {
      * @param
      */
     public static void startVidoDetailActivity(Context context, String videoId, String videoCoverUrl, int comeFrom) {
-//        Intent intent = new Intent(context, VideoDetailActivity.class);
-//        intent.putExtra("videoId", videoId);
-//        intent.putExtra("videoCoverUrl", videoCoverUrl);
-//        intent.putExtra("comeFrom", comeFrom);
-//        ((Activity) context).startActivity(intent);
-//进入自己的mvp类型的activity
+       //进入自己的mvp类型的activity
         Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", videoId).go(context);
+    }
+
+    /**
+     * 跳转到video -->informaton资讯页
+     * @param context
+     * @param routerType
+     * @param bundle
+     */
+    public static void startVideoInformationActivityu(Context context,String url,String title){
+        Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
+                .with(WebViewConstant.push_message_url, url)
+                .with(WebViewConstant.push_message_title, title)
+                .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                .with(WebViewConstant.RIGHT_SHARE,true)
+                .go(context);
     }
 
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle) {

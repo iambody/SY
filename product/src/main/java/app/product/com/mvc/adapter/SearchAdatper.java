@@ -1,6 +1,8 @@
 package app.product.com.mvc.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,14 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
+import com.chenenyu.router.Router;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +30,7 @@ import java.util.List;
 
 import app.product.com.R;
 import app.product.com.model.SearchResultBean;
+import app.product.com.mvc.SearchResultListActivity;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.utils.ViewUtil;
@@ -339,13 +345,18 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         switch (resultBean.getIsPart()) {
                             case PRODUCT_ITEM:
+                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.getTargetId(),resultBean.getTitle(),200);
 //                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.get);
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
                                 break;
                             case XUN_ITEM:
+
+                           String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();
+                                NavigationUtils.startVideoInformationActivityu(context,informationUrl,resultBean.getTitle());
 //                                NavigationUtils.startZiXunActivity(context, resultBean);
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
+//                                NavigationUtils.startVideoInformationActivityu()
                                 break;
                             case INFO_ITEM:
 //                                NavigationUtils.startMessageActivity(context, resultBean, keyName);
@@ -354,6 +365,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                             case VIDEO_ITEM://todo 热门搜索的adapter
 //                                ToolsUtils.toPlayVideoActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.VIDEO, resultBean);
+                                Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", resultBean.getTargetId()).go(context);
                                 break;
                         }
                     }
@@ -406,17 +418,17 @@ public class SearchAdatper extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if (v.getTag() != null) {
                         PromptManager.ShowCustomToast(context,"在searchAdapter 里面的 FooterViewHolder 找我填补");
-//                        SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
-//                        List<SearchResultBean.ResultBean> list = hashMap.get(resultBean.getIsPart());
-//                        Intent intent = new Intent(context, SearchResultListActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable(SearchResultListActivity.LIST_PARAM, (Serializable) list);
-//                        bundle.putStringArrayList(SearchResultListActivity.KEY_NAME_PARAM, (ArrayList<String>) returnKeys);
-//                        bundle.putString(SearchBaseActivity.KEY_NAME_PARAM, keyName);
-//                        bundle.putString(SearchBaseActivity.TYPE_PARAM, currentType);
-//                        bundle.putString(SearchBaseActivity.SUB_TYPE_PARAM, getSubType(resultBean));
-//                        intent.putExtras(bundle);
-//                        context.startActivity(intent);
+                        SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
+                        List<SearchResultBean.ResultBean> list = hashMap.get(resultBean.getIsPart());
+                        Intent intent = new Intent(context, SearchResultListActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(SearchResultListActivity.LIST_PARAM, (Serializable) list);
+                        bundle.putStringArrayList(SearchResultListActivity.KEY_NAME_PARAM, (ArrayList<String>) returnKeys);
+                        bundle.putString(SearchBaseActivity.KEY_NAME_PARAM, keyName);
+                        bundle.putString(SearchBaseActivity.TYPE_PARAM, currentType);
+                        bundle.putString(SearchBaseActivity.SUB_TYPE_PARAM, getSubType(resultBean));
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
                     }
                 }
             });

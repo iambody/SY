@@ -1,14 +1,11 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -31,17 +26,14 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
-import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
-import com.tencent.av.sdk.NetworkHelp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
-import app.live.com.mvp.ui.LiveActivity;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
@@ -119,11 +111,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      */
     private void initDialog() {
 
-        //是否需要风险评测d 弹出框
-        if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
-            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
-            riskEvaluatDialog.show();
-        }
+
     }
 
     private void loginLive() {

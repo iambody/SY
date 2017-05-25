@@ -21,6 +21,7 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -116,7 +118,7 @@ public class ApiClient {
      */
     public static Observable<String> toV2TestLogin(String Sing) {
 //        Sing="mSx9n0v3DeNDJbJjv2DvJWFEPEPY9xF0IrwTAXJgL4r+O54aKfnyDnBiO5Zt1Y3rngo58erOjPQSbgqClRwGKRZNKsrwoH1eTidp6rdvdKWjTmdJ1FO4Ehwxnxxqc142sTewrbkGE7icHa7u37wnHd6KjzaT6FuBrLvrMxaOpEE=";
-
+//        Sing=RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),Sing).toString();
 
         Map<String, String> map = new HashMap<>();
         map.put("sign", Sing);
@@ -130,20 +132,39 @@ public class ApiClient {
 //        LoginV2Bean loginV2Bea=new LoginV2Bean();
 //        loginV2Bea.setSign(Sing);
 //
-//        Gson gson=new Gson();
+//        Gson gson = new Gson();
+////
+//        HashMap<String, String> paramsMap = new HashMap<>();
+////
+//    JSONObject object=new JSONObject();
+//        object.put("param",)
+//        paramsMap.put("sign", Sing);
 //
-//        HashMap<String,String> paramsMap=new HashMap<>();
-//
-//        paramsMap.put("sign",Sing);
-//
+////
 //        String strEntity = gson.toJson(paramsMap);
+
+        HashMap<String, String> mmmap = new HashMap<>();
+        mmmap.put("sign", Sing);
+
+        String strEntity =   new Gson().toJson(mmmap);
+
+
+        HashMap<String,String>aaaaa=new HashMap<>();
+        aaaaa.put("param",strEntity);
+
+        String bbbb =   new Gson().toJson(aaaaa);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),bbbb);
+
+
+      return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        PostInf postInf = new PostInf();
+//        PostInf.LoginV2Bean loginV2Bean = postInf.new LoginV2Bean();
+//        loginV2Bean.setSign(Sing);
 //
-//        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"),strEntity);
-
-
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
-//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(loginV2Bea).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        String postInfoStr = new Gson().toJson(loginV2Bean);
+//
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),postInfoStr);
+//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2TestLogin(body).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

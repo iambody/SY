@@ -20,6 +20,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -79,6 +80,7 @@ interface RequestManager {
 
     /**
      * 获取登录V2的接口
+     *
      * @param
      * @return
      */
@@ -86,16 +88,15 @@ interface RequestManager {
 //    @Headers({"Content-Type: application/json","Accept: application/json"})
 //    @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
 //    Observable<ResponseBody> toV2TestLogin(@Body RequestBody str);
-
     @FormUrlEncoded
-//    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
+//    Observable<ResponseBody> toV2TestLogin(@Body RequestBody str);
     Observable<ResponseBody> toV2TestLogin(@FieldMap() Map<String, String> paramsMap);
 
 
     /**
      * 获取用户信息
-     *
      * @param paramsMap
      * @return
      */
@@ -133,6 +134,7 @@ interface RequestManager {
 
     /**
      * 微信登录
+     *
      * @param paramsMap
      * @return
      */
@@ -146,6 +148,7 @@ interface RequestManager {
 
     /**
      * 获取协议
+     *
      * @return
      */
     @GET(NetConfig.USERAGENT_URL)
@@ -153,6 +156,7 @@ interface RequestManager {
 
     /**
      * 注册
+     *
      * @param paramsMap
      * @return
      */
@@ -166,83 +170,90 @@ interface RequestManager {
 
     /**
      * 发送验证码
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<BaseResult<String>>sendCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> sendCode(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<ResponseBody>sendTestCode(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> sendTestCode(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 验证验证码
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.CHECKCODE_URL)
-    Observable<BaseResult<String>>checkCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> checkCode(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.CHECKCODE_URL)
-    Observable<ResponseBody>checkTestCode(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> checkTestCode(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 重置密码
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
-    Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> resetPwd(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
-    Observable<ResponseBody>resetTestPwd(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> resetTestPwd(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 修改密码
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<BaseResult<String>>modifyPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> modifyPassword(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<ResponseBody>modifyTestPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> modifyTestPassword(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--验证手机
+     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMERGECHECK_URL)
-    Observable<BaseResult<String>>wxMergePhone(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> wxMergePhone(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMERGECHECK_URL)
-    Observable<ResponseBody>wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--确认合并
+     *
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
-    Observable<BaseResult<String>>wxMergeConfirm();
+    Observable<BaseResult<String>> wxMergeConfirm();
 
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
-    Observable<ResponseBody>wxTestMergeConfirm();
+    Observable<ResponseBody> wxTestMergeConfirm();
 
     /**
      * 获取学院推荐数据
+     *
      * @return
      */
     @GET(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
@@ -253,6 +264,7 @@ interface RequestManager {
 
     /**
      * 获取学院其他数据
+     *
      * @return
      */
     @GET(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
@@ -263,6 +275,7 @@ interface RequestManager {
 
     /**
      * 获取视频详情
+     *
      * @param map
      * @return
      */
@@ -274,6 +287,7 @@ interface RequestManager {
 
     /**
      * 点赞
+     *
      * @param paramsMap
      * @return
      */
@@ -287,6 +301,7 @@ interface RequestManager {
 
     /**
      * 签到
+     *
      * @param paramsMap
      * @return
      */
@@ -354,6 +369,7 @@ interface RequestManager {
 
     /**
      * 用户反馈信息
+     *
      * @param paramsMap
      * @return
      */
@@ -367,6 +383,7 @@ interface RequestManager {
 
     /**
      * 风险评测提交
+     *
      * @param paramsMap
      * @return
      */
@@ -379,6 +396,7 @@ interface RequestManager {
     Observable<ResponseBody> toTestRiskEvalutionCommit(@FieldMap Map<String, String> paramsMap);
 
     //获取产品筛选条件
+
     /**
      * 获取产品筛选条件
      *
@@ -434,16 +452,18 @@ interface RequestManager {
      */
     @GET(NetConfig.VIDEO.VIDEO_DIANZAN)
     Observable<ResponseBody> videoDianZan(@QueryMap Map<String, String> parmsMap);
+
     /**
      * 视频添加评论
      */
     @POST(NetConfig.VIDEO.VIDEO_COMMENT_ADD)
-    Observable<ResponseBody>videoCommentAdd(@QueryMap Map<String,String>parmsMap);
+    Observable<ResponseBody> videoCommentAdd(@QueryMap Map<String, String> parmsMap);
+
     /**
      * 视频评论列表
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
-    Observable<ResponseBody>videoCommentLs(@QueryMap Map<String,Object>parmsMap);
+    Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, Object> parmsMap);
 
     //编辑商城收货地址
     @FormUrlEncoded
@@ -512,11 +532,8 @@ interface RequestManager {
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
 
 
-
-
-
     //登录前获取公钥
     @GET(NetConfig.AUTHOR.GET_PUBLIC_KEY)
-    Observable<ResponseBody>getPublicKey();
+    Observable<ResponseBody> getPublicKey();
 
 }

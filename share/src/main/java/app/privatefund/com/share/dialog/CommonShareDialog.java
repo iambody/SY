@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -26,7 +27,6 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.FlowLayoutView;
 import com.cgbsoft.lib.widget.RoundImageView;
-import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -327,9 +327,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                 ViewLs.add(new ShareViewBean(3, GetViewApPotion(3)));
                 break;
 
-//            case Tag_Style_Vido_WeiXin://微信
-//                ViewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
-//                break;
+            case Tag_Style_WeiXin://微信
+                ViewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
+                break;
             case Tag_Style_WxPyq://微信 朋友圈
                 ViewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
                 ViewLs.add(new ShareViewBean(2, GetViewApPotion(2)));
@@ -416,10 +416,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         Wechat.ShareParams sp = new Wechat.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);// 一定要设置分享属性
         sp.setTitle(WxShareData.getShareTitle());
-        sp.setText(WxShareData.getShareContent());
+        sp.setText(BStrUtils.isEmpty(WxShareData.getShareContent())?WxShareData.getShareTitle():WxShareData.getShareContent());
         sp.setUrl(WxShareData.getShareUrl());
         sp.setImageData(null);
-        sp.setImageUrl(WxShareData.getShareNetLog());
+        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog())? Constant.SHARE_LOG:WxShareData.getShareNetLog());
 
         sp.setImagePath(null);
 
@@ -443,7 +443,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         sp.setText(WxShareData.getShareContent());
         sp.setUrl(WxShareData.getShareUrl());
         sp.setImageData(null);
-        sp.setImageUrl(WxShareData.getShareNetLog());
+        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog())? Constant.SHARE_LOG:WxShareData.getShareNetLog());
         sp.setImagePath(null);
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享

@@ -45,6 +45,7 @@ import com.cgbsoft.lib.widget.ProgressWheel;
 import com.cgbsoft.lib.widget.dialog.CommentDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.ls.ListViewForScrollView;
+import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -64,6 +65,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.privatefund.com.share.bean.ShareCommonBean;
+import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.VideoUtils;
@@ -72,6 +75,7 @@ import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -188,7 +192,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     Button videoVideplaySendComment;
     @BindView(R2.id.video_videplay_edit_comment_lay)
     LinearLayout videoVideplayEditCommentLay;
+    @BindView(R2.id.view_title_back_iv)
+    ImageView viewTitleBackIv;
+    @BindView(R2.id.view_title_right_txt)
+    TextView viewTitleRightTxt;
 
+    //C端分享的dialog
+    private CommonShareDialog commonShareDialog;
     //C端评论的列表Adapter
     private CommentAdapter commentAdapter;
     //C端需要的产品
@@ -985,6 +995,23 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             }
         };
         commentDialog.show();
+    }
+
+
+    @OnClick(R2.id.view_title_back_iv)
+    public void onViewTitleBackIvClicked() {
+        VideoDetailActivity.this.finish();
+    }
+
+    //点击视频详情页的分享按钮
+    @OnClick(R2.id.view_title_right_txt)
+    public void onViewTitleRightTxtClicked() {
+
+        if (null == videoAllInf.rows) return;
+        if (null != commonShareDialog) commonShareDialog = null;
+        ShareCommonBean commonShareBean = new ShareCommonBean(  videoAllInf.rows.videoName, videoAllInf.rows.videoSummary,videoAllInf.rows.shareUrl ,"");
+        commonShareDialog = new CommonShareDialog(baseContext,CommonShareDialog.Tag_Style_WeiXin,commonShareBean,null);
+        commonShareDialog.show();
     }
 
 

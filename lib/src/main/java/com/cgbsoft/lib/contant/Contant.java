@@ -10,4 +10,5 @@ public class Contant {
     public static final int LOAD_PRODUCT_lIMIT=20;
     //视频评论默认条数
     public static final  int VIDEO_COMMENT_LIMIT= 20 ;
+
 }

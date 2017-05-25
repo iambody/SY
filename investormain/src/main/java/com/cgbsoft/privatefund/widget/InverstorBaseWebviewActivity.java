@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.widget;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;

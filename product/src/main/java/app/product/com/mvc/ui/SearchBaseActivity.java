@@ -1,6 +1,5 @@
 package app.product.com.mvc.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
@@ -25,9 +23,12 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +45,7 @@ import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.adapter.SearchAdatper;
 import app.product.com.utils.BUtils;
+import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.widget.ClearEditText;
 import app.product.com.widget.HotSearchAdapter;
 import app.product.com.widget.LineBreakLayout;
@@ -88,10 +90,8 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.acitivity_search_base);
-//        databaseUtils = new DatabaseUtils(this);
- daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
-        List<HistorySearchBean> daaaaa    =daoUtils.getHistoryLs();
-     currentType = getIntent().getStringExtra(TYPE_PARAM);
+        daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
+        currentType = getIntent().getStringExtra(TYPE_PARAM);
         initListView();
         initHistory();
         initHotSearch();
@@ -108,7 +108,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         } else if (v.getId() == R.id.search_title_ed) {
         } else if (R.id.product_search_history_del == v.getId()) {
 //            daoUtils.clearnHistorySearch();
-            daoUtils.clearnHistoryByID(currentType,AppManager.getUserId(baseContext));
+            daoUtils.clearnHistoryByID(currentType, AppManager.getUserId(baseContext));
             initHistory();
         }
     }
@@ -231,39 +231,6 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
             }
         }));
 
-//
-//        new BaseSearchTask(this).start(ApiParams.baseSearchParams(this, formateType(), name, null, null), new HttpResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.i("searchData", "-------search request=" + response.toString());
-//                String s = response.toString();
-//                Gson gson = new Gson();
-//                try {
-//                    JSONObject ja = new JSONObject(response.toString());
-//                    JSONArray keys = ja.getJSONArray("keywords");
-//                    JSONArray jsonArray = ja.getJSONArray("items");
-//                    List<SearchResultBean> list = gson.fromJson(jsonArray.toString(), new TypeToken<List<SearchResultBean>>() {
-//                    }.getType());
-//                    List<String> keysList = gson.fromJson(keys.toString(), new TypeToken<List<String>>() {
-//                    }.getType());
-//                    resultLinearLayout.setVisibility(View.VISIBLE);
-//                    searchAdatper.setReturnKeys(keysList);
-//                    if (!CollectionUtils.isEmpty(list)) {
-//                        searchAdatper.setData(list);
-//                        changeViewDisplay(false);
-//                    } else {
-//                        changeViewDisplay(true);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//                MToast.makeText(SearchBaseActivity.this, error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private void changeViewDisplay(boolean empty) {
@@ -276,13 +243,14 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                NavigationUtils.startMessageActivity(context, resultBean, currentKey);
                 break;
             case PRODUCT:
-//                NavigationUtils.startProductActivity(this, resultBean.getTargetId());
+                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200);
                 break;
             case ZIXUN:
-//                NavigationUtils.startZiXunActivity(this, resultBean);
+                String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();
+                NavigationUtils.startVideoInformationActivityu(baseContext,informationUrl,resultBean.getTitle());
                 break;
             case VIDEO:
-//                ToolsUtils.toPlayVideoActivity(this.getApplicationContext(), resultBean.getTargetId());
+                Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", resultBean.getTargetId()).go(baseContext);
                 break;
         }
     }
@@ -308,12 +276,12 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
             protected void onEvent(String s) {
 
                 try {
-                    JSONObject response = new JSONObject(s);
-                    Log.i("hot search task ", "-------search hot=" + response.toString());
-                    JSONArray jsonArray = response.getJSONArray("result");
+//                    JSONObject response = new JSONObject(s);
+//                    Log.i("hot search task ", "-------search hot=" + response.toString());
+//                    JSONArray jsonArray = response.getJSONArray("result");
                     Gson g = new Gson();
-                    if (jsonArray != null && jsonArray.length() > 0) {
-                        List<SearchResultBean.ResultBean> list = g.fromJson(jsonArray.toString(), new TypeToken<List<SearchResultBean.ResultBean>>() {
+                    if (!BStrUtils.isEmpty(s)) {
+                        List<SearchResultBean.ResultBean> list = g.fromJson(s, new TypeToken<List<SearchResultBean.ResultBean>>() {
                         }.getType());
                         if (!BUtils.isEmpty(list)) {
                             listView.setHeaderDividersEnabled(false);
@@ -332,37 +300,12 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
             }
         }));
 
-//        new HotSearchTask(this).start(ApiParams.hotSearchParams(context, formateType()), new HttpResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    Log.i("hot search task ", "-------search hot=" + response.toString());
-//                    JSONArray jsonArray = response.getJSONArray("result");
-//                    Gson g = new Gson();
-//                    if (jsonArray != null && jsonArray.length() > 0) {
-//                        List<SearchResultBean.ResultBean> list = g.fromJson(jsonArray.toString(), new TypeToken<List<SearchResultBean.ResultBean>>() {
-//                        }.getType());
-//                        if (!CollectionUtils.isEmpty(list)) {
-//                            listView.setHeaderDividersEnabled(false);
-//                            listView.addHeaderView(header);
-//                            listAdapter.setData(list);
-//                        }
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//                MToast.makeText(SearchBaseActivity.this, error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
     }
 
     private void initHistory() {
 
-        List<HistorySearchBean> historySearches =   daoUtils.getHistorysByType(currentType,AppManager.getUserId(baseContext));
+        List<HistorySearchBean> historySearches = daoUtils.getHistorysByType(currentType, AppManager.getUserId(baseContext));
         Log.i("----search history", "----search histor=" + historySearches.size());
         historySearch.setVisibility(BUtils.isEmpty(historySearches) ? View.GONE : View.VISIBLE);
 
@@ -379,10 +322,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         });
         flagHistorySearch.setLables(historyList, true);
     }
-//todo 更新搜搜记录
+
+    //todo 更新搜搜记录
     private void saveSearchText(String name) {
         if (!TextUtils.isEmpty(name)) {
-            HistorySearchBean historySearch = new HistorySearchBean(String.valueOf(System.currentTimeMillis()), name, currentType, System.currentTimeMillis(),AppManager.getUserId(baseContext));
+            HistorySearchBean historySearch = new HistorySearchBean(String.valueOf(System.currentTimeMillis()), name, currentType, System.currentTimeMillis(), AppManager.getUserId(baseContext));
             daoUtils.insertHistorySearch(historySearch);
 
         }

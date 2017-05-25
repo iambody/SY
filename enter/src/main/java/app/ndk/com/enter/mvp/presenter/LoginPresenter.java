@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
@@ -45,18 +46,25 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
-
-        /**
-         * 新版登录需要加密
-         */
+////        /**
+////         * 新版登录需要加密
+////         */
 //        JSONObject object = new JSONObject();
 //        String RsaStr = "";
 //        try {
 //            object.put("userName", un);
-//            object.put("password", isWx ? pwd : MD5Utils.getShortMD5(pwd));
+////            object.put("password", isWx ? pwd : MD5Utils.getShortMD5(pwd));
+//            object.put("password", pwd);
 //            object.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
-//            RsaStr = RSAUtils.encryptByPublicKey( object.toString() , publicKey);
+//            HashMap<String,String>stringStringHashMap=new HashMap<>();
 //
+//            stringStringHashMap.put("userName", un);
+//            stringStringHashMap.put("password", pwd);
+//            stringStringHashMap.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
+//
+//
+//            RsaStr = RSAUtils.getRsa(  new Gson().toJson(stringStringHashMap)  , publicKey);
+////            RsaStr=URLEncoder.encode(RsaStr,"utf-8");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            PromptManager.ShowCustomToast(getContext(), getContext().getResources().getString(R.string.rsa_encryput_error));
@@ -65,7 +73,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 //        }
         //todo 测试时候调用该接口，
         addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
-        //测试V2登录接口
+            //测试V2登录接口
 //        addSubscription(ApiClient.toV2TestLogin(RsaStr).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -80,13 +88,15 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
-                loadingDialog.dismiss();
+
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                loadingDialog.dismiss();
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 LogUtils.Log("loginresult", error.toString());
+                PromptManager.ShowCustomToast(getContext(),error.toString());
                 loadingDialog.dismiss();
 //              loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
