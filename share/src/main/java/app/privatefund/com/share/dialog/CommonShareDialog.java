@@ -199,7 +199,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         this.commonShareBean = commonShareBean;
         this.commentShareListener = commentShareListener;
         ShareSDK.initSDK(Dcontext);
-        userInfo = AppInfStore.getUserInfo(Dcontext);
+        userInfo = AppManager.getUserInfo(Dcontext);
 //     根据需求分享理财是名片
         IsCanShare = !BStrUtils.isEmpty(userInfo.realName) && userInfo.isAdvisers.endsWith("y") && AppManager.isAdViser(Dcontext);
         IUrl(commonShareBean);

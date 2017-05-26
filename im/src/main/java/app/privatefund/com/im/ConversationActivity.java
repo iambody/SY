@@ -1,53 +1,63 @@
 package app.privatefund.com.im;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.cgbsoft.lib.R2;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
 
-import app.privatefund.com.im.listener.MyConversationBehaviorListener;
+import app.privatefund.com.im.listener.ProductInputModule;
 import butterknife.BindView;
-import io.rong.imkit.RongIM;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 
-public class ConversationActivity extends BaseActivity implements  Toolbar.OnMenuItemClickListener {
+public class ConversationActivity extends BaseActivity {
 
-    @BindView(R2.id.toolbar)
-    protected Toolbar toolbar;
+    @BindView(R2.id.title_right)
+    TextView right;
 
     @BindView(R2.id.title_mid)
-    protected TextView titleMid;
+    TextView title;
 
-    private MenuItem rightItem;
+    @BindView(R2.id.title_left)
+    ImageView left;
     /**
      * 目标 Id
      */
     private String mTargetId;
+
     /**
      * 刚刚创建完讨论组后获得讨论组的id 为targetIds，需要根据 为targetIds 获取 targetId
      */
     private String mTargetIds;
+
     private String userPhoneNumber;
+
+    private String conversationName;
 
     /**
      * 会话类型
      */
     private Conversation.ConversationType mConversationType;
-
 
     @Override
     protected int layoutID() {
@@ -56,16 +66,14 @@ public class ConversationActivity extends BaseActivity implements  Toolbar.OnMen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
-
-        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
-        setInputProvider();
+        right.setVisibility(View.INVISIBLE);
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_im_phone);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        right.setCompoundDrawables(drawable, null, null, null);
+        left.setVisibility(View.VISIBLE);
+        left.setOnClickListener(v -> finish());
         getIntentDate(getIntent());
         showRightFlagFunction();
-        SPreference.putString(this, "chatId", mTargetId);
     }
 
     @Override
@@ -75,24 +83,20 @@ public class ConversationActivity extends BaseActivity implements  Toolbar.OnMen
 
     private void showRightFlagFunction() {
         if (mConversationType == Conversation.ConversationType.GROUP) {
-            rightItem.setVisible(true);
-            rightItem.setIcon(R.drawable.ic_groupchat_member_flag);
+            right.setVisibility(View.VISIBLE);
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_groupchat_member_flag);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            right.setCompoundDrawables(drawable, null, null, null);
+            right.setOnClickListener(v -> {
+                Intent intent = new Intent(ConversationActivity.this, GroupChatGridListActivity.class);
+                intent.putExtra(Contants.CHAT_GROUP_NAME,getIntent().getData().getQueryParameter("title"));
+                intent.putExtra(Contants.CHAT_GROUP_ID, mTargetId);
+                intent.putExtra(Contants.CHAT_IS_TOP,0);
+                ConversationActivity.this.startActivity(intent);
+            });
         } else {
             getUserPhoneNumber();
         }
-    }
-
-    private void setInputProvider() {
-        //扩展功能自定义
-//        InputProvider.ExtendProvider[] provider = {
-//                new PhotoInputProvider(RongContext.getInstance()),//图片
-//                new MyCameraInputProvider(RongContext.getInstance()),//相机
-////                new LocationInputProvider(RongContext.getInstance()),//地理位置
-//                new ProductInputProvider(RongContext.getInstance())
-//        };
-//
-//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
-//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.GROUP, provider);
     }
 
     /**
@@ -100,145 +104,135 @@ public class ConversationActivity extends BaseActivity implements  Toolbar.OnMen
      */
     private void getIntentDate(Intent intent) {
         String name = intent.getData().getQueryParameter("title");
-        titleMid.setText(name);
+        this.title.setText(name);
         mTargetId = intent.getData().getQueryParameter("targetId");
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         mTargetIds = intent.getData().getQueryParameter("targetIds");
         enterFragment(mConversationType, mTargetId);
         if (mConversationType == Conversation.ConversationType.GROUP) {
-            SPreference.putString(this, "conversationType", "GROUP");
-            SPreference.putString(this, "chatName", name);
+//            SPSave.getInstance(ConversationActivity.this).putString("conversationType", "GROUP");
+//            SPSave.getInstance(ConversationActivity.this).putString("chatName", name);
             return;
         }
-        SPreference.putString(this, "conversationType", "PRIVATE");
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("uid", mTargetId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-//        new RCUserInfoTask(this).start(jsonObject.toString(), new HttpResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    final String name = response.getString("name");
-//                    // title.setText(name);
-//                    SPSave.getInstance(ConversationActivity.this).putString("chatName", name);
-//                    SharedPreferences sharedPreferences = getSharedPreferences("ManagePhoneNum.xml", Context.MODE_PRIVATE);
-//                    final String managerUid = sharedPreferences.getString("managerUid", "");
-//                    final String teamManagerUid = sharedPreferences.getString("teamManagerUid", "");
-//                    final String[] phoneNum = {sharedPreferences.getString("managerMobile", "")};
-//                    right.setVisibility(Contant.msgSecretary.equals(mTargetId) ? View.GONE : View.VISIBLE);
-////                    else if (name.equals("私募云客服") || mTargetId.equals(managerUid) || mTargetId.equals(teamManagerUid) || mTargetId.equals(MApplication.getUser().getToC().getBandingAdviserId())) {
-////                        right.setVisibility(View.VISIBLE);
-////                    } else {
-////                        right.setVisibility(View.INVISIBLE);
-////                    }
-//                    right.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            if (mTargetId.equals(MApplication.getUser().getToC().getBandingAdviserId())) {
-//                                phoneNum[0] = MApplication.getUser().getAdviserPhone();
-//                                new iOSDialog(ConversationActivity.this, "", "拨打" + name + "电话：" + phoneNum[0], "取消", "确定") {
-//
-//                                    @Override
-//                                    public void left() {
-//                                        this.cancel();
-//                                    }
-//
-//                                    @Override
-//                                    public void right() {
-//                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "400-188-8848"));
-//                                        startActivity(phoneIntent);
-//                                        this.cancel();
-//                                    }
-//                                }.show();
-//                            } else if (name.equals("私募云客服")) {
-//                                new iOSDialog(ConversationActivity.this, "", "拨打客服电话：400-188-8848", "取消", "确定") {
-//
-//                                    @Override
-//                                    public void left() {
-//                                        this.cancel();
-//                                    }
-//
-//                                    @Override
-//                                    public void right() {
-//                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "400-188-8848"));
-//                                        startActivity(phoneIntent);
-//                                        this.cancel();
-//                                    }
-//                                }.show();
-//                            } else if (mTargetId.equals(managerUid) || mTargetId.equals(teamManagerUid)) {
-//                                new iOSDialog(ConversationActivity.this, "", "拨打" + name + "电话：" + phoneNum[0], "取消", "确定") {
-//
-//                                    @Override
-//                                    public void left() {
-//                                        this.cancel();
-//                                    }
-//
-//                                    @Override
-//                                    public void right() {
-//                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNum[0]));
-//                                        startActivity(phoneIntent);
-//                                        this.cancel();
-//                                    }
-//                                }.show();
-//                            } else if (!TextUtils.isEmpty(userPhoneNumber)) {
-//                                new iOSDialog(ConversationActivity.this, "", "拨打" + name + "电话：" + userPhoneNumber, "取消", "确定") {
-//
-//                                    @Override
-//                                    public void left() {
-//                                        this.cancel();
-//                                    }
-//
-//                                    @Override
-//                                    public void right() {
-//                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + userPhoneNumber));
-//                                        startActivity(phoneIntent);
-//                                        this.cancel();
-//                                    }
-//                                }.show();
-//                            } else {
-//                                if (userPhoneNumber.equals("null") || TextUtils.isEmpty(userPhoneNumber)) {
-//                                    new MToast(ConversationActivity.this).show(getResources().getString(R.string.call_phone_no), 0);
-//                                }
-//                                // right.setVisibility(View.INVISIBLE);
-//                            }
-//                        }
-//                    });
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//            }
-//        });
+        //SPSave.getInstance(ConversationActivity.this).putString("conversationType", "PRIVATE");
+        initTelDialog();
     }
 
-    @Override
-    protected void onPause() {
+    private void initTelDialog() {
+        ApiClient.goTestGetRongUserInfo(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.i("MyUserInfoListener", "RCUserInfoTask=" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    conversationName = jsonObject.getString("name");
+                    String bindMobileNumber = AppManager.getUserInfo(ConversationActivity.this).getAdviserPhone();
+                    right.setVisibility(Constant.msgSecretary.equals(mTargetId) ? View.GONE : View.VISIBLE);
+                    right.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mTargetId.equals(AppManager.getUserInfo(ConversationActivity.this).getToC().getBandingAdviserId())) {
+                                new DefaultDialog(ConversationActivity.this, "拨打"+conversationName+"电话：" + bindMobileNumber, "取消", "确定") {
+
+                                    @Override
+                                    public void left() {
+                                        this.cancel();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "400-188-8848"));
+                                        startActivity(phoneIntent);
+                                        this.cancel();
+                                    }
+                                }.show();
+                            } else if (conversationName.equals("私募云客服")) {
+                                new DefaultDialog(ConversationActivity.this, "拨打客服电话：400-188-8848", "取消", "确定") {
+
+                                    @Override
+                                    public void left() {
+                                        this.cancel();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "400-188-8848"));
+                                        startActivity(phoneIntent);
+                                        this.cancel();
+                                    }
+                                }.show();
+                            } else if (mTargetId.equals(AppManager.getOrgManagerUid(ConversationActivity.this)) || mTargetId.equals(AppManager.getTeamManagerUid(ConversationActivity.this))) {
+                                new DefaultDialog(ConversationActivity.this, "拨打"+conversationName+"电话：" + bindMobileNumber, "取消", "确定") {
+
+                                    @Override
+                                    public void left() {
+                                        this.cancel();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + bindMobileNumber));
+                                        startActivity(phoneIntent);
+                                        this.cancel();
+                                    }
+                                }.show();
+                            } else if (!TextUtils.isEmpty(userPhoneNumber)) {
+                                new DefaultDialog(ConversationActivity.this, "拨打"+conversationName+"电话：" + userPhoneNumber, "取消", "确定") {
+
+                                    @Override
+                                    public void left() {
+                                        this.cancel();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + userPhoneNumber));
+                                        startActivity(phoneIntent);
+                                        this.cancel();
+                                    }
+                                }.show();
+                            } else {
+                                if ("null".equals(userPhoneNumber) || TextUtils.isEmpty(userPhoneNumber)) {
+                                    Toast.makeText(ConversationActivity.this, getResources().getString(R.string.call_phone_no), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+    }
+
+//    @Override
+//    protected void onPause() {
 //        Event.InputViewEvent event = new Event.InputViewEvent();
 //        event.setIsVisibility(true);
 //        EventBus.getDefault().post(event);
-        super.onPause();
-    }
+//        super.onPause();
+//    }
 
     private void getUserPhoneNumber() {
-//        String params = ApiParams.requestMemeberPhoneNumber(mTargetId);
-//        new GroupChatUserTelTask(this).start(params, new HttpResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                userPhoneNumber = response.optString("phoneNumber");
-//                Log.i(this.getClass().getName(), "user_phone_number=" + userPhoneNumber);
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//            }
-//        });
+        ApiClient.getTestGetUserPhoneNumber(mTargetId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    Log.i("ConversationActivity", "-----getUserPhoneNumber=" + s);
+                    JSONObject jsonObject = new JSONObject(s);
+                    userPhoneNumber = jsonObject.optString("phoneNumber");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {}
+        });
     }
 
     /**
@@ -253,27 +247,5 @@ public class ConversationActivity extends BaseActivity implements  Toolbar.OnMen
                 .appendPath("conversation").appendPath(mConversationType.getName().toLowerCase())
                 .appendQueryParameter("targetId", mTargetId).build();
         fragment.setUri(uri);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.page_menu, menu);
-        rightItem = menu.findItem(R.id.firstBtn);
-        MenuItem secItem = menu.findItem(R.id.secondBtn);
-        rightItem.setIcon(R.drawable.ic_im_phone);
-        secItem.setVisible(false);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.firstBtn && mConversationType == Conversation.ConversationType.GROUP) {
-            Intent intent = new Intent(ConversationActivity.this, GroupChatGridListActivity.class);
-            intent.putExtra(Contants.CHAT_GROUP_NAME, getIntent().getData().getQueryParameter("title"));
-            intent.putExtra(Contants.CHAT_GROUP_ID, mTargetId);
-            intent.putExtra(Contants.CHAT_IS_TOP, 0);
-            ConversationActivity.this.startActivity(intent);
-        }
-        return false;
     }
 }

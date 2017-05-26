@@ -62,6 +62,9 @@ public class NetConfig {
 
         // 群信息
         static final String GROUP_INFO = API_URL + "/chat/groupInformation";
+
+        //群成員列表 新接口
+        static final String GROUP_MEMBER_BY_DATE = API_URL + "/chat/groupMembersByDate";
     }
 
     static class Auth {

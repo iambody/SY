@@ -2,6 +2,8 @@ package app.privatefund.com.im;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -9,10 +11,19 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.privatefund.com.im.adapter.GroupChatMemberListAdapter;
+import app.privatefund.com.im.bean.GroupMember;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -65,6 +76,8 @@ public class GroupChatMemberListActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         groupMemberListAdapter = new GroupChatMemberListAdapter(this, new ArrayList());
         listView.setAdapter(groupMemberListAdapter);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("成员列表");
         questGroupMemberList();
     }
@@ -85,42 +98,39 @@ public class GroupChatMemberListActivity extends BaseActivity {
         }
         setPic(STATE_LOADING);
         isLoading = true;
-//        new GroupChatGroupMemberTask(this).start(ApiParams.requestGroupMemberList(getIntent().getStringExtra(GROUP_ID)),
-//                new HttpResponseListener() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        setPic(STATE_CLEAR);
-//                        Log.i(GroupChatMemberListActivity.this.getClass().getName(), "groupchat_groupmemberlist=" + response.toString());
-//                        isLoading = false;
-//                        try {
-//                            String string = response.get("result").toString();
-//                            if (!TextUtils.isEmpty(string)) {
-//                                Gson g = new Gson();
-//                                List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {
-//                                }.getType());
-//                                if (!CollectionUtils.isEmpty(datas)) {
-//                                    groupMemberListAdapter.add(datas);
-//                                } else {
-//                                    setPic(STATE_EMPTY);
-//                                }
-//                            } else {
-//                                setPic(STATE_EMPTY);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            setPic(STATE_ERROR);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onErrorResponse(String error, int statueCode) {
-//                        isLoading = false;
-//                        setPic(STATE_CLEAR);
-//                        if (groupMemberListAdapter != null && groupMemberListAdapter.getCount() == 0) {
-//                            setPic(STATE_ERROR);
-//                        }
-//                    }
-//                });
+        ApiClient.getTestGetGroupMember(getIntent().getStringExtra(GROUP_ID)).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                setPic(STATE_CLEAR);
+                Log.i(GroupChatMemberListActivity.this.getClass().getName(), "---=" + s);
+                isLoading = false;
+                try {
+                    if (!TextUtils.isEmpty(s)) {
+                        Gson g = new Gson();
+                        List<GroupMember> datas = g.fromJson(s, new TypeToken<List<GroupMember>>() {}.getType());
+                        if (!CollectionUtils.isEmpty(datas)) {
+                            groupMemberListAdapter.add(datas);
+                        } else {
+                            setPic(STATE_EMPTY);
+                        }
+                    } else {
+                        setPic(STATE_EMPTY);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    setPic(STATE_ERROR);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                isLoading = false;
+                setPic(STATE_CLEAR);
+                if (groupMemberListAdapter != null && groupMemberListAdapter.getCount() == 0) {
+                    setPic(STATE_ERROR);
+                }
+            }
+        });
     }
 
     // 图片状态选择逻辑

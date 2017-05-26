@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -124,9 +124,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 初始化融云的接口信息
      */
     private void initRongInterface() {
-        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
-        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
-        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), true);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
     }
 
@@ -135,7 +135,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      */
     private void initDialog() {
         //是否需要风险评测d 弹出框
-        if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
             RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
             riskEvaluatDialog.show();
         }

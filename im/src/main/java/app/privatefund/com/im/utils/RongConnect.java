@@ -33,10 +33,11 @@ public class RongConnect {
      * @param userId
      */
     public static void initRongTokenConnect(String userId) {
+
         int rongExpired = AppManager.getRongTokenExpired(BaseApplication.getContext());
         String UID = AppManager.getUserId(BaseApplication.getContext());
         String rongToken = AppManager.getRongToken(BaseApplication.getContext());
-        Log.i("LoginPresenter", "rongExpired=" + rongExpired + "-----rongUID=" + UID + "---rongToken=" + rongToken);
+        Log.i("RongConnect", "rongExpired=" + rongExpired + "-----rongUID=" + UID + "---rongToken=" + rongToken);
         if (!TextUtils.equals(UID, userId) || !TextUtils.equals("2", String.valueOf(rongExpired)) || TextUtils.isEmpty(rongToken)) {
             AppInfStore.saveUserId(BaseApplication.getContext(), userId);
             AppInfStore.saveRongTokenExpired(BaseApplication.getContext(), 2);
@@ -44,7 +45,7 @@ public class RongConnect {
             ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
-                    Log.i("LoginPresenter", "getRongToken=" + s);
+                    Log.i("RongConnect", "getRongToken=" + s);
                     RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
                     AppInfStore.saveRongToken(BaseApplication.getContext(), result.rcToken);
                     if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
@@ -54,7 +55,7 @@ public class RongConnect {
 
                 @Override
                 protected void onRxError(Throwable error) {
-                    Log.e("LoginPresenter", error.getMessage());
+                    Log.e("RongConnect", error.getMessage());
                 }
             });
         } else {
@@ -65,7 +66,7 @@ public class RongConnect {
     }
 
     private static void initRongConnect(String rongToken) {
-        Log.i("LoginPresenter", "token=" + rongToken);
+        Log.i("RongConnect", "token=" + rongToken);
         if (BaseApplication.getContext().getApplicationInfo().packageName.equals(com.cgbsoft.lib.utils.tools.DeviceUtils.getCurProcessName(BaseApplication.getContext()))) {
             // IMKit SDK调用第二步,建立与服务器的连接
             RongIM.connect(rongToken, new RongIMClient.ConnectCallback() {
@@ -73,12 +74,12 @@ public class RongConnect {
                 @Override
                 public void onTokenIncorrect() {
                     AppInfStore.saveRongTokenExpired(BaseApplication.getContext(), 1);
-                    Log.i("LoginPresenter", "RongYun Connect failure");
+                    Log.i("RongConnect", "RongYun Connect failure");
                 }
 
                 @Override
                 public void onSuccess(String userid) {
-                    Log.i("", "RongYun Connect onSuccess  =" + userid);
+                    Log.i("RongConnect", "RongYun Connect onSuccess  =" + userid);
                     getTarget();
                     if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
                         // 设置连接状态变化的监听器.
@@ -98,7 +99,7 @@ public class RongConnect {
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.i("LoginPresenter", "RongYun Connect error =" + errorCode + ",code=" + errorCode.toString() + ",token=" + rongToken + ",value=" + errorCode.getValue());
+                    Log.i("RongConnect", "RongYun Connect error =" + errorCode + ",code=" + errorCode.toString() + ",token=" + rongToken + ",value=" + errorCode.getValue());
                     getTarget();
                     RxBus.get().post(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, false);
                 }

@@ -36,7 +36,7 @@
 //
 //import app.privatefund.com.im.MessageListActivity;
 //import app.privatefund.com.im.R;
-//import app.privatefund.com.im.adapter.RcConversationListAdapter;
+//import app.privatefund.com.im.adapter.RongConversationListAdapter;
 //import io.rong.common.RLog;
 //import io.rong.imkit.RongContext;
 //import io.rong.imkit.RongIM;

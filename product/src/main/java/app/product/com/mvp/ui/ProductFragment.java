@@ -122,7 +122,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();

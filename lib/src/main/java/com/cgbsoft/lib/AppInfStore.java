@@ -96,12 +96,69 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
-     * 得到用户信息
+     * 保存机构经理ID
      * @param context
      * @return
      */
-    public static UserInfoDataEntity.UserInfo getUserInfo(Context context) {
-        return SPreference.getUserInfoData(context);
+    public static void saveOrgManagerUid(Context context, String uid) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(ORG_MANAGER_UID, uid);
+        ed.commit();
+    }
+
+    /**
+     * 保存机构经理手机号
+     * @param context
+     * @return
+     */
+    public static void saveOrgManagerMobile(Context context, String mobileNumber) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(ORG_MANAGER_MOBILE, mobileNumber);
+        ed.commit();
+    }
+
+    /**
+     * 保存团队长ID
+     * @param context
+     * @return
+     */
+    public static void saveTeamManagerUid(Context context, String teamUid) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(TEAM_MANAGER_UID, teamUid);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有团队长
+     * @param context
+     * @return
+     */
+    public static void saveHasTeamManager(Context context, boolean hasTeamManager) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_TEAM_MANAGER, hasTeamManager);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有机构经理
+     * @param context
+     * @return
+     */
+    public static void saveHasOrgManager(Context context, boolean hasOrgManager) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_ORG_MANAGER, hasOrgManager);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有用户所属群
+     * @param context
+     * @return
+     */
+    public static void saveHasUserGroup(Context context, boolean hasGroup) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_USER_GROUP, hasGroup);
+        ed.commit();
     }
 
     //保存数据

@@ -3,6 +3,8 @@ package app.privatefund.com.im;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -12,9 +14,14 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.ToggleButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.privatefund.com.im.adapter.MemberGridViewAdapter;
 import app.privatefund.com.im.bean.GroupMember;
@@ -24,6 +31,11 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
+/**
+ * @author chenlong
+ *
+ * 群组成员列表缩略图
+ */
 public class GroupChatGridListActivity extends BaseActivity {
 
     @BindView(R2.id.toolbar)
@@ -60,6 +72,8 @@ public class GroupChatGridListActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         groupId = getIntent().getStringExtra(Contants.CHAT_GROUP_ID);
         titleMid.setText(getIntent().getStringExtra(Contants.CHAT_GROUP_NAME));
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         boolean isTop = SPreference.getBoolean(this, "isTop");
         if (isTop) {
             setChatTopTog.setToggleOn();
@@ -126,44 +140,41 @@ public class GroupChatGridListActivity extends BaseActivity {
                 );
             }
         });
-        setNotifyToggle.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                if (on) {
-                    RongIM.getInstance().setConversationNotificationStatus(
-                        Conversation.ConversationType.GROUP,
-                        getIntent().getStringExtra(Contants.CHAT_GROUP_ID),
-                        Conversation.ConversationNotificationStatus.DO_NOT_DISTURB,
-                        new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
-                            @Override
-                            public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
-                                Toast.makeText(GroupChatGridListActivity.this, "设置免打扰成功", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                Toast.makeText(GroupChatGridListActivity.this, "设置免打扰失败", Toast.LENGTH_SHORT).show();
-                            }
+        setNotifyToggle.setOnToggleChanged(on -> {
+            if (on) {
+                RongIM.getInstance().setConversationNotificationStatus(
+                    Conversation.ConversationType.GROUP,
+                    getIntent().getStringExtra(Contants.CHAT_GROUP_ID),
+                    Conversation.ConversationNotificationStatus.DO_NOT_DISTURB,
+                    new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
+                        @Override
+                        public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
+                            Toast.makeText(GroupChatGridListActivity.this, "设置免打扰成功", Toast.LENGTH_SHORT).show();
                         }
-                    );
-                } else {
-                    RongIM.getInstance().setConversationNotificationStatus(
-                        Conversation.ConversationType.GROUP,
-                        getIntent().getStringExtra(Contants.CHAT_GROUP_ID),
-                        Conversation.ConversationNotificationStatus.NOTIFY,
-                        new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
-                            @Override
-                            public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
-                                Toast.makeText(GroupChatGridListActivity.this, "关闭免打扰成功", Toast.LENGTH_SHORT).show();
-                            }
 
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                Toast.makeText(GroupChatGridListActivity.this, "关闭免打扰失败", Toast.LENGTH_SHORT).show();
-                            }
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Toast.makeText(GroupChatGridListActivity.this, "设置免打扰失败", Toast.LENGTH_SHORT).show();
                         }
-                    );
-                }
+                    }
+                );
+            } else {
+                RongIM.getInstance().setConversationNotificationStatus(
+                    Conversation.ConversationType.GROUP,
+                    getIntent().getStringExtra(Contants.CHAT_GROUP_ID),
+                    Conversation.ConversationNotificationStatus.NOTIFY,
+                    new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
+                        @Override
+                        public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
+                            Toast.makeText(GroupChatGridListActivity.this, "关闭免打扰成功", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Toast.makeText(GroupChatGridListActivity.this, "关闭免打扰失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                );
             }
         });
     }
@@ -174,35 +185,31 @@ public class GroupChatGridListActivity extends BaseActivity {
     }
 
     private void questGroupMemberList() {
-//        new GroupMemberTask(this).start(ApiParams.requestGroupMemberList(getIntent().getStringExtra(Contant.CHAT_GROUP_ID)),
-//                new HttpResponseListener() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Log.i(GroupChatGridListActivity.this.getClass().getName(), "groupchat_groupmemberlist=" + response.toString());
-//                        try {
-//                            String string = response.get("result").toString();
-//                            if (!TextUtils.isEmpty(string)) {
-//                                Gson g = new Gson();
-//                                datas = g.fromJson(string, new TypeToken<List<GroupMember.GroupMemberPerson>>() {
-//                                }.getType());
-//                                if (datas.size() >= 15) {
-//                                    moreMember.setVisibility(View.VISIBLE);
-//                                }
-//                                groupMemberListAdapter = new MemberGridViewAdapter(GroupChatGridListActivity.this, datas);
-//
-//                                memberList.setAdapter(groupMemberListAdapter);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onErrorResponse(String error, int statueCode) {
-//                        String err = error;
-//                        Log.e("err", err);
-//                    }
-//                });
+        ApiClient.getTestGetGroupMemberNew(groupId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    Log.i("groupnumberlist", "----" + s);
+                    if (!TextUtils.isEmpty(s)) {
+                        Gson g = new Gson();
+                        datas = g.fromJson(s, new TypeToken<List<GroupMember.GroupMemberPerson>>() {}.getType());
+                        if (datas.size() >= 15) {
+                            moreMember.setVisibility(View.VISIBLE);
+                        }
+                        groupMemberListAdapter = new MemberGridViewAdapter(GroupChatGridListActivity.this, datas);
+                        memberList.setAdapter(groupMemberListAdapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                String err = error.getMessage();
+                Log.e("err", err);
+            }
+        });
     }
 
 

@@ -4,7 +4,9 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
@@ -418,6 +420,41 @@ interface RequestManager {
 
     @GET(NetConfig.API.GROUP_MEMBERS)
     Observable<ResponseBody> getTestGetGroupMember(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取用户手机号码
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBER_PHONE)
+    Observable<BaseResult<CommonEntity.Result>> getUserPhoneNumber(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBER_PHONE)
+    Observable<ResponseBody> getTestGetUserPhoneNumber(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群组成员新的接口，返回数据结构不一样
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBER_BY_DATE)
+    Observable<BaseResult<GroupMemberNewEntity.Result>> getGroupMemberByBytes(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBER_BY_DATE)
+    Observable<ResponseBody> getTestGetGroupMemberByBytes(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取用户所属群组列表
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.CHATE_GROUP_LIST)
+    Observable<BaseResult<GroupListEntity.Result>> getGroupList(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.CHATE_GROUP_LIST)
+    Observable<ResponseBody> getTestGetGroupList(@QueryMap Map<String, String> map);
 
     /**
      * 获取平台客户

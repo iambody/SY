@@ -93,14 +93,11 @@ public class GroupChatMemberListAdapter extends BaseAdapter {
                 }
             }
         });
-        viewHolderTitle.innerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int sunPosition, long id) {
-                List<GroupMember.GroupMemberPerson> groupMemberPersonList = mData.get(position).getMembers();
-                if (!CollectionUtils.isEmpty(groupMemberPersonList)) {
-                    GroupMember.GroupMemberPerson person = groupMemberPersonList.get(sunPosition);
-                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, person.getUserId(), person.getUserName());
-                }
+        viewHolderTitle.innerListView.setOnItemClickListener((parent, view, sunPosition, id) -> {
+            List<GroupMember.GroupMemberPerson> groupMemberPersonList = mData.get(position).getMembers();
+            if (!CollectionUtils.isEmpty(groupMemberPersonList)) {
+                GroupMember.GroupMemberPerson person = groupMemberPersonList.get(sunPosition);
+                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, person.getUserId(), person.getUserName());
             }
         });
         setListViewHeightBasedOnChildren(viewHolderTitle.innerListView);
