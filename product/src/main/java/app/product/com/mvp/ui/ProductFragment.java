@@ -168,46 +168,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private void openShareProductDialog(int position) {
             final int finalPosition = position;
             String series = productlsBeen.get(finalPosition).series;
-            if (null == series) {
-                series = "0";
-            }
-            switch (series) {
-                case "0"://"泰山":
-                    series = "1";
-                    break;
-                case "1":
-                    series = "1";
-                    break;
-                case "2":
-                    series = "1";
-                    break;
-                case "3"://"恒山":
-                    series = "1";
-                    break;
-                case "4"://"嵩山":
-                    series = "1";
-                    break;
-                case "6"://"黄河":
-                    series = "2";
-                    break;
-                case "5"://"长江":
-                    series = "2";
-                    break;
-                case "7"://"澜沧江":
-                    series = "2";
-                    break;
-                case "8"://"亚马逊":
-                    series = "2";
-                    break;
-                case "9"://"昆仑山":
-                    series = "1";
-                    break;
-                default:
-                    series = "0";
-                    break;
-            }
-            final String finalSeries = series;
-            new MsgSentDialog(getActivity(), productlsBeen.get(finalPosition).productName, AppManager.getChatName(getContext()), finalSeries, productlsBeen.get(finalPosition).productId) {
+            new MsgSentDialog(getActivity(), productlsBeen.get(finalPosition).productName, AppManager.getChatName(getContext()), Series.formatSeries(series), productlsBeen.get(finalPosition).productId) {
                 @Override
                 public void left() {
                     this.dismiss();

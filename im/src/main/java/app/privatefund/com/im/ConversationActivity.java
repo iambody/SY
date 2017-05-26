@@ -110,7 +110,7 @@ public class ConversationActivity extends BaseActivity {
             Type = Conversation.ConversationType.PRIVATE;
         }
         final Conversation.ConversationType finalType = Type;
-        RongIM.getInstance().getRongIMClient().sendMessage(Type, mTargetId, productMessage, "[链接]" + productlsBean.productName, "", new RongIMClient.SendMessageCallback() {
+        RongIM.getInstance().sendMessage(Type, mTargetId, productMessage, "[链接]" + productlsBean.productName, "", new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
                 Toast.makeText(ConversationActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
@@ -119,16 +119,17 @@ public class ConversationActivity extends BaseActivity {
             @Override
             public void onSuccess(Integer integer) {
                 Toast.makeText(ConversationActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                ConversationActivity.this.finish();
                 // && backConversation.equals("conversation")
-                if (!TextUtils.isEmpty("backConversation")) {
-                    RongIM.getInstance().startConversation(
-                            ConversationActivity.this,
-                            finalType,
-                            mTargetId,
-                            AppManager.getChatName(ConversationActivity.this));
-                } else {
-                    ConversationActivity.this.finish();
-                }
+//                if (!TextUtils.isEmpty("backConversation")) {
+//                    RongIM.getInstance().startConversation(
+//                            ConversationActivity.this,
+//                            finalType,
+//                            mTargetId,
+//                            AppManager.getChatName(ConversationActivity.this));
+//                } else {
+//                    ConversationActivity.this.finish();
+//                }
             }
         });
     }
