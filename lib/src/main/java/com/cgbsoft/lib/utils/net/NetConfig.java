@@ -1,8 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
 /**
- *  * Created by xiaoyu.zhang on 2016/11/8 17:19
- *  
+ * Created by xiaoyu.zhang on 2016/11/8 17:19
  */
 public class NetConfig {
     public static final boolean isLocal = true;
@@ -10,7 +9,7 @@ public class NetConfig {
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
 //    private static final String START_APP = "https://app";
-  private static final String START_APP = "https://d6-app";
+    private static final String START_APP = "https://t4-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -37,12 +36,13 @@ public class NetConfig {
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    static final String GET_RES_URL = API_URL + "/startup/5.0";
+    static final String GET_RES_URL = API_URL + "/startup/5.1";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
-
+    //获取容云token
+    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
     //客户风险评测提交接口
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
@@ -99,6 +99,15 @@ public class NetConfig {
         static final String GET_VIDEO_INFO = API_URL + information + "/video/2c/5.0";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+    }
+
+    //每日任务
+    static class TASK {
+        private static final String task = "/task";
+        //任务列表
+        static final String TASK_LIST = API_URL_V2 + task + "/adviserTaskList";
+        //任务完成领云豆
+        static final String GET_COIN = API_URL_V2 + task + "/addTaskCoin";
     }
 
     //用户相关
@@ -159,6 +168,8 @@ public class NetConfig {
     //直播相关
     static class LIVE {
         private static final String live = "/live";
+        //获取直播签名
+        static final String GET_LIVE_SIGN = LIVE_URL + live + "/user/sig/5.0";
         //获取直播列表
         static final String GET_LIVE_LIST = LIVE_URL + live + "/rooms/5.0";
         //获取房间号

@@ -70,7 +70,7 @@ public class InitApplication extends InvestorAppli {
             SxbLogImpl.init(getApplicationContext());
 
             //初始化APP
-//            InitBusinessHelper.initApp(context);
+            InitBusinessHelper.initApp(context);
         }
     }
 

@@ -26,8 +26,10 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -45,6 +47,8 @@ import java.util.List;
 
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
+import app.live.com.mvp.ui.LiveActivity;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
@@ -91,6 +95,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
+    private LoginHelper loginHelper;
+    private Observable<Integer> showIndexObservable;
 
     @Override
     protected int layoutID() {
@@ -113,6 +119,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
+
+
+        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
+        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                onTabSelected(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         transaction.add(R.id.fl_main_content, mContentFragment);
 
         transaction.commitAllowingStateLoss();
@@ -124,6 +145,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initDialog();
 
         initRongInterface();
+
+        initDayTask();
     }
 
     /**
@@ -134,6 +157,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
         RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
+        initDayTask();
+
     }
 
     /**
@@ -145,9 +170,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void loginLive() {
-        LoginHelper loginHelper = new LoginHelper(this, this);
-        //TODO 登录腾讯接口需要调试
-        loginHelper.iLiveLogin("yangyang", "eJxlj8tugzAQRfd8BWJdFfMw4O5aRKv0kco0Uh4b5IAxTlTHgKGQqv-ehESqpY40q3Nm7sy3YZqmtXj9uCV5fuiEytQoqWXemRawbv6glLzIiMq8pvgH6SB5QzNSKtpM0IEQugDoDi*oULzkV2Mkgp1bM9pin00xlxX*ad4NIx-pCmcTfEvW8QzHc5LY7LhOS6*IOsjfMXQJeiBdGrRlYj*Nj7gePVlvt-uvWXX-XIfLHUt2uErtViw42*QvA1r1GEo1BPa8qoZlsIJ9nG*0SMU-6fUg5CMQokj-qqdNyw9iElzgQMf1wLks48f4BfRDX1Y_");
+        loginHelper = new LoginHelper(this, this);
+        loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 
     @Override
@@ -203,6 +227,26 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
+                RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        int index = getIntent().getIntExtra("index", 0);
+        onTabSelected(index);
+
     }
 
     int switchID = -1;
@@ -368,11 +412,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
-
         if (isOnlyClose) {
             return;
         }
-
         Process.killProcess(Process.myPid());
         System.exit(1);
     }
@@ -380,6 +422,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
+            Intent intent = new Intent(this, LiveActivity.class);
+            intent.putExtra("liveJson", liveJsonData.toString());
+            startActivity(intent);
 
         }
     }
@@ -406,16 +451,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        startActivity(intent);
     }
 
+
+    private void initDayTask() {
+        getPresenter().initDayTask();
+    }
+
+    @Override
+    public void getLiveSignSuc(String sign) {
+        loginHelper.iLiveLogin(AppManager.getUserId(this), sign);
+    }
+
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
             try {
-                liveTitle.setText(jsonObject.getString("a"));
-
-//                liveIcon
-
+                liveTitle.setText(jsonObject.getString("title"));
+                Imageload.display(this, jsonObject.getString("image"), liveIcon);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -429,4 +482,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private void SsetBottomNavigation(){
 //        bottomNavigationBar.
     }
+
+
 }

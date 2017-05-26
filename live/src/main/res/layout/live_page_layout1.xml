@@ -208,14 +208,14 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp">
 
-            <com.tencent.qcloud.suixinbo.views.customviews.HeartLayout
-                android:id="@+id/heart_layout"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="-10dp"
-                android:focusable="true" />
+            <!--<com.tencent.qcloud.suixinbo.views.customviews.HeartLayout-->
+                <!--android:id="@+id/heart_layout"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginRight="-10dp"-->
+                <!--android:focusable="true" />-->
         </RelativeLayout>
 
     </FrameLayout>

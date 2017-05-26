@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.webview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -222,7 +223,7 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
 //            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
-            NavigationUtils.startActivityByRouter(context,  RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
 //            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {
@@ -271,8 +272,7 @@ public class CWebviewManger {
         } else if (action.contains("sharePoster")) {
 //            sharePoster();
         } else if (action.contains("ydPay")) {
-//            Intent intent = new Intent(context, PayActivity.class);
-//            context.startActivity(intent);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
         }
     }
 
@@ -869,7 +869,7 @@ public class CWebviewManger {
     }
 
     private void recommentFriend() {
-//        CommonShareBean shareBean = new CommonShareBean();C
+//        CommonShareBean shareBean = new CommonShareBean();
 //        shareBean.setTitle("推荐理财师好友安装私募云，一起来聚合财富管理力量！\", \"http://www.simuyun.com/invite/invite.html");
 //        shareBean.setContent("推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html");
 //        CommonShareDialog dialog = new CommonShareDialog(context,1,shareBean,null);
@@ -1078,7 +1078,7 @@ public class CWebviewManger {
      */
     private void changepassword(String action) {
         try {
-            String[] splits = URLDecoder.decode(action,  "utf-8").split(":");
+            String[] splits = URLDecoder.decode(action, "utf-8").split(":");
             String newPassword = splits[3];
             Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
             context.finish();
@@ -1248,6 +1248,7 @@ public class CWebviewManger {
 
     /**
      * 监听页面跳转的拦截，拦截成功返回ture, 失败返回false
+     *
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
@@ -1509,9 +1510,6 @@ public class CWebviewManger {
      * 跳转到我的任务页面
      */
     private void goMyTask() {
-        HashMap<String, String> parms = new HashMap<>();
-        parms.put("fromc", "1");
-        //UiHelper.toNextActivity(context, DayTaskActivity.class, parms);
-
+        NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
     }
 }

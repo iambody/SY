@@ -9,6 +9,6 @@ import com.cgbsoft.lib.utils.net.NetConfig;
  */
 public class BaseWebNetConfig extends NetConfig {
     //基础host
-    public static String baseParentUrl = SERVER_ADD + "/app5.0/";
+    public static String baseParentUrl = "https://app.simuyun.com/app5.0/";
 
 }
