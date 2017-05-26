@@ -107,7 +107,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     protected void data() {
         super.data();
         tv_adt_title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        tv_task_ydCount.setText(AppInfStore.getUserInfo(this).getMyPoint());
+        tv_task_ydCount.setText(AppManager.getUserInfo(this).getMyPoint());
 
         ViewGroup.LayoutParams lp = iv_adt_bg.getLayoutParams();
         lp.width = Utils.getScreenWidth(this);

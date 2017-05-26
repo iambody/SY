@@ -45,7 +45,6 @@ import com.cgbsoft.lib.widget.ProgressWheel;
 import com.cgbsoft.lib.widget.dialog.CommentDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.ls.ListViewForScrollView;
-import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;

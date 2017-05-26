@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -33,6 +34,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
+import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 
@@ -40,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
@@ -54,6 +57,7 @@ import app.privatefund.com.im.listener.MyUserInfoListener;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
@@ -142,6 +146,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initRongInterface();
 
         initDayTask();
+
+        initPlatformCustomer();
     }
 
     /**
@@ -162,7 +168,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private void initDialog() {
 
         //是否需要风险评测d 弹出框
-        if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
             RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
             riskEvaluatDialog.show();
         }
@@ -346,7 +352,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                         }
                     }
                 }
-
                 ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
                     @Override
                     protected void onEvent(String s) {
@@ -464,10 +469,5 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
     }
-
-    private void SsetBottomNavigation(){
-//        bottomNavigationBar.
-    }
-
 
 }

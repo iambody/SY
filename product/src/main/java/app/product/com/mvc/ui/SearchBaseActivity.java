@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;

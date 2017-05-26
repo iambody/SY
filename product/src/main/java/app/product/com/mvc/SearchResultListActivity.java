@@ -44,7 +44,6 @@ import app.product.com.widget.SimpleItemDecoration;
  */
 public class SearchResultListActivity extends BaseMvcActivity implements View.OnClickListener {
 
-
     public static final String LIST_PARAM = "LIST_PARAMS";
     public static final String KEY_NAME_PARAM = "KEY_NAME_PARAMS";
     public static final String NOTICE_SEARCH = "notice_search";

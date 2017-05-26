@@ -13,6 +13,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
@@ -143,7 +144,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     public void onResume() {
         super.onResume();
         //是否需要风险评测d 弹出框
-        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppInfStore.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
     }
 
     /**
