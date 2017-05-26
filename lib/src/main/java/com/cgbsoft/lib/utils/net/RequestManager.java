@@ -435,8 +435,8 @@ interface RequestManager {
      *  @param map
      * @return
      */
-    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
-    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+//    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+//    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
 
     @GET(NetConfig.Auth.ORIGNATION_MANAGER)
     Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
