@@ -24,6 +24,8 @@ public class NetConfig {
     public static final String LIVE_URL = "zhibo";
     public static final String AUTH_URL = "auth";
 
+    public static final String API_URL_V2 = "api/v2";
+
     // 基本传输结构
     public static class DefaultParams {
         public static final String token = "token";

@@ -13,7 +13,6 @@ import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
-import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -594,11 +593,11 @@ public class ApiClient {
      *
      * @param userId
      */
-    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("uid", userId);
-        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
-    }
+//    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("uid", userId);
+//        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    }
 
     public static Observable<String> getTestOrgManager(String userId) {
         Map<String, String> map = new HashMap<>();
@@ -709,11 +708,11 @@ public class ApiClient {
      * 评论列表
      */
     public static Observable<String> videoCommentLs(String id, String commentId) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("commentId", commentId);
         map.put("limit", Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

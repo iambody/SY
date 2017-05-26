@@ -3,7 +3,10 @@ package com.cgbsoft.lib.utils.net;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -434,8 +437,8 @@ interface RequestManager {
      *  @param map
      * @return
      */
-    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
-    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+//    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+//    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
 
     @GET(NetConfig.Auth.ORIGNATION_MANAGER)
     Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
