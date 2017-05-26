@@ -82,8 +82,8 @@ public class LoginHelper extends Presenter {
 //                        Toast.makeText(mContext, "IMLogin succ !", Toast.LENGTH_SHORT).show();
                         SxbLog.d(TAG, LogConstants.ACTION_HOST_CREATE_ROOM + LogConstants.DIV + identify + LogConstants.DIV + "request room id");
                         MySelfInfo.getInstance().setId(AppManager.getUserId(mContext));
-                        MySelfInfo.getInstance().setAvatar(AppInfStore.getUserInfo(mContext).getHeadImageUrl());
-                        if(AppInfStore.getUserInfo(mContext).getPhoneNum().equals("666666")||AppInfStore.getUserInfo(mContext).getPhoneNum().equals("18500139172")){
+                        MySelfInfo.getInstance().setAvatar(AppManager.getUserInfo(mContext).getHeadImageUrl());
+                        if(AppManager.getUserInfo(mContext).getPhoneNum().equals("666666")||AppManager.getUserInfo(mContext).getPhoneNum().equals("18500139172")){
                             getMyRoomNum();
                         }
                         startAVSDK();
@@ -191,7 +191,6 @@ public class LoginHelper extends Presenter {
             Toast.makeText(mContext, "input invalid !", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     /**
      * 向用户服务器获取自己房间号

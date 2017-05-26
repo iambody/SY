@@ -21,6 +21,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -32,6 +33,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
+import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 
@@ -57,7 +59,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
-@Route("investornmain_mainpageactivity")
+@Route(RouteConfig.GOTOCMAINHONE)
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
@@ -142,15 +144,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initRongInterface();
 
         initDayTask();
+
+        initPlatformCustomer();
     }
 
     /**
      * 初始化融云的接口信息
      */
     private void initRongInterface() {
-        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
-        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
-        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), true);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
         initDayTask();
 
@@ -161,7 +165,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      */
     private void initDialog() {
 
-
+        //是否需要风险评测d 弹出框
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
+            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
+            riskEvaluatDialog.show();
+        }
     }
 
     private void loginLive() {
@@ -225,18 +233,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-            /**
-             * 设置连接状态变化的监听器.
-             */
-            if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
-                RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
-        }
-    }
-
-    @Override
     protected void onRestart() {
         super.onRestart();
 //        int index = getIntent().getIntExtra("index", 0);
@@ -287,7 +283,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                RongIM.getInstance().disconnect();
+                 RongIM.getInstance().disconnect();
                 finish();
             }
 
@@ -316,7 +312,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 Log.i("MainPageActivity", String.valueOf(aBoolean));
-                initPlatformCustomer();
                 baseWebview.loadUrls(WebViewConstant.PAGE_INIT);
             }
 
@@ -355,7 +350,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                         }
                     }
                 }
-
                 ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
                     @Override
                     protected void onEvent(String s) {
@@ -420,10 +414,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             startActivity(intent);
-
         }
     }
-
 
     @Override
     public void onBackPressed() {
@@ -473,10 +465,5 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
     }
-
-    private void SsetBottomNavigation(){
-//        bottomNavigationBar.
-    }
-
 
 }

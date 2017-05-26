@@ -5,12 +5,20 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.baoyz.swipemenulistview.RoundCornerImageView
+    <!--<com.baoyz.swipemenulistview.RoundCornerImageView-->
+        <!--android:id="@+id/member_img"-->
+        <!--android:layout_width="45dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:src="@drawable/logoshare" />-->
+
+    <com.cgbsoft.lib.widget.RoundImageView
         android:id="@+id/member_img"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="@dimen/ui_45_dip"
+        android:layout_height="@dimen/ui_45_dip"
         android:layout_marginTop="20dp"
-        android:src="@drawable/logoshare" />
+        android:src="@drawable/logoshare"
+        />
 
     <TextView
         android:id="@+id/name"

@@ -11,7 +11,10 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -569,6 +572,58 @@ public class ApiClient {
     }
 
     /**
+     * 获取群成员 新增接口，返回数据结构不一样
+     *
+     * @param groupId
+     */
+    public static Observable<GroupMemberNewEntity.Result> getGroupMemberNew(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupMemberByBytes(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupMemberNew(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupMemberByBytes(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 获取用户所属群组列表
+     *
+     * @param userId
+     */
+    public static Observable<GroupListEntity.Result> getGroupList(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager().getGroupList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupList(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取用户手机号码
+     *
+     * @param memberId
+     */
+    public static Observable<CommonEntity.Result> getUserPhoneNumber(String memberId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("memberId", memberId);
+        return OKHTTP.getInstance().getRequestManager().getUserPhoneNumber(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetUserPhoneNumber(String memberId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("memberId", memberId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetUserPhoneNumber(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取平台客户
      *
      * @param userId
@@ -590,11 +645,11 @@ public class ApiClient {
      *
      * @param userId
      */
-//    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("uid", userId);
-//        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
-//    }
+    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
 
     public static Observable<String> getTestOrgManager(String userId) {
         Map<String, String> map = new HashMap<>();

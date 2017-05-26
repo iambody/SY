@@ -17,12 +17,21 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.baoyz.swipemenulistview.RoundCornerImageView
+            <!--<com.baoyz.swipemenulistview.RoundCornerImageView-->
+                <!--android:id="@+id/user_image"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/logoshare" />-->
+
+            <com.cgbsoft.lib.widget.RoundImageView
                 android:id="@+id/user_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/ui_40_dip"
+                android:layout_height="@dimen/ui_40_dip"
                 android:layout_gravity="center"
-                android:src="@drawable/logoshare" />
+                android:src="@drawable/logoshare"
+                />
+
 
             <TextView
                 android:id="@+id/user_name"

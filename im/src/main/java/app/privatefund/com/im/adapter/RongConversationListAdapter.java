@@ -10,12 +10,11 @@ import io.rong.imkit.widget.adapter.ConversationListAdapter;
 /**
  * @author chenlong
  */
-
-public class RcConversationListAdapter extends ConversationListAdapter {
+public class RongConversationListAdapter extends ConversationListAdapter {
 
     private Context context;
 
-    public RcConversationListAdapter(Context context) {
+    public RongConversationListAdapter(Context context) {
         super(context);
         this.context = context;
     }

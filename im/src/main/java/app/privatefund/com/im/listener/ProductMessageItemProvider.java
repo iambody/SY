@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.utils.cache.SPreference;
 
 import org.json.JSONObject;
 
@@ -56,9 +55,9 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
         }
         holder.message.setText(content.getProductName());
         if (content.getProductType().equals("2")) {
-            holder.imageView.setBackgroundResource(R.drawable.rivers_large);
+            holder.imageView.setBackgroundResource(R.drawable.ic_rivers_large);
         } else if (content.getProductType().equals("1")) {
-            holder.imageView.setBackgroundResource(R.drawable.mountain_large);
+            holder.imageView.setBackgroundResource(R.drawable.ic_mountain_large);
         } else {
             holder.imageView.setBackgroundResource(R.drawable.moren_large);
         }

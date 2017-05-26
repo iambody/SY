@@ -3,7 +3,9 @@ package com.cgbsoft.lib;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
+import com.cgbsoft.lib.utils.cache.SPreference;
 
 /**
  * desc  进行不同application的管理 注意 防止误操作无修改 此处只能取状态不能村状态
@@ -92,5 +94,68 @@ public class AppManager implements AppinfConstant {
      */
     public static int getRongTokenExpired(Context context) {
         return getBasePreference(context).getInt(RONGYUN_TOKEN_EXPIRED, 0);
+    }
+
+    /**
+     * 得到用户信息
+     * @param context
+     * @return
+     */
+    public static UserInfoDataEntity.UserInfo getUserInfo(Context context) {
+        return SPreference.getUserInfoData(context);
+    }
+
+    /**
+     * 获取机构经理ID
+     * @param context
+     * @return
+     */
+    public static String getOrgManagerUid(Context context) {
+        return getBasePreference(context).getString(ORG_MANAGER_UID, "");
+    }
+
+    /**
+     * 获取机构经理手机号
+     * @param context
+     * @return
+     */
+    public static String getOrgManagerMobile(Context context) {
+        return getBasePreference(context).getString(ORG_MANAGER_MOBILE, "");
+    }
+
+    /**
+     * 获取团队长ID
+     * @param context
+     * @return
+     */
+    public static String getTeamManagerUid(Context context) {
+        return getBasePreference(context).getString(TEAM_MANAGER_UID, "");
+    }
+
+    /**
+     * 是否有团队长
+     * @param context
+     * @return
+     */
+    public static boolean hasTeamManager(Context context) {
+        return getBasePreference(context).getBoolean(HAS_TEAM_MANAGER, false);
+    }
+
+    /**
+     * 是否有机构经理
+     * @param context
+     * @return
+     */
+    public static boolean hasOrgManager(Context context) {
+        return getBasePreference(context).getBoolean(HAS_ORG_MANAGER, false);
+    }
+
+    /**
+     * 是否有用户所属群
+     * @param context
+     * @return
+     */
+    public static boolean hasUserGroup(Context context) {
+        return getBasePreference(context).getBoolean(HAS_USER_GROUP, false);
     }
 }

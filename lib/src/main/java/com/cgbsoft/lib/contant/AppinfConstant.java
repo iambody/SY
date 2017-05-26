@@ -55,4 +55,21 @@ public interface AppinfConstant {
     //产品搜搜记录
     String SOUSOUHISTORY = "historysp";
 
+    // 机构经理ID
+    String ORG_MANAGER_UID = "managerUid";
+
+    // 机构经理电话
+    String ORG_MANAGER_MOBILE = "managerMobile";
+
+    // 团队长ID
+    String TEAM_MANAGER_UID = "teamManagerUid";
+
+    // 是否有团队长
+    String HAS_TEAM_MANAGER = "hasTeamManage";
+
+    // 是否有机构
+    String HAS_ORG_MANAGER = "hasManage";
+
+    // 是否有用户所属群
+    String HAS_USER_GROUP = "hasGroup";
 }

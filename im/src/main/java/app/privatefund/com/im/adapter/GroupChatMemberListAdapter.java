@@ -93,14 +93,11 @@ public class GroupChatMemberListAdapter extends BaseAdapter {
                 }
             }
         });
-        viewHolderTitle.innerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int sunPosition, long id) {
-                List<GroupMember.GroupMemberPerson> groupMemberPersonList = mData.get(position).getMembers();
-                if (!CollectionUtils.isEmpty(groupMemberPersonList)) {
-                    GroupMember.GroupMemberPerson person = groupMemberPersonList.get(sunPosition);
-                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, person.getUserId(), person.getUserName());
-                }
+        viewHolderTitle.innerListView.setOnItemClickListener((parent, view, sunPosition, id) -> {
+            List<GroupMember.GroupMemberPerson> groupMemberPersonList = mData.get(position).getMembers();
+            if (!CollectionUtils.isEmpty(groupMemberPersonList)) {
+                GroupMember.GroupMemberPerson person = groupMemberPersonList.get(sunPosition);
+                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, person.getUserId(), person.getUserName());
             }
         });
         setListViewHeightBasedOnChildren(viewHolderTitle.innerListView);
@@ -119,11 +116,8 @@ public class GroupChatMemberListAdapter extends BaseAdapter {
         }
         int totalHeight = 0;
         for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
             View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
             listItem.measure(0, 0);
-            // 统计所有子项的总高度
             totalHeight += listItem.getMeasuredHeight();
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
