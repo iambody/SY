@@ -20,6 +20,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     public static String productDetail;
 
+    public static String product;
+
     //webView消息详情列表
     public static String msgDetal;
 
@@ -40,5 +42,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
+        product = baseParentUrl +  "/apptie/detail.html?schemeId=";
     }
 }

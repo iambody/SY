@@ -58,9 +58,9 @@ public class InitApplication extends InvestorAppli {
             RongIM.registerMessageType(ProductMessage.class);
             RongIM.registerMessageType(PdfMessage.class);
             RongIM.registerMessageType(NewsMessage.class);
-            RongIM.getInstance().registerMessageTemplate(new ProductMessageItemProvider());
-            RongIM.getInstance().registerMessageTemplate(new PdfMessageItemProvider());
-            RongIM.getInstance().registerMessageTemplate(new NewMessageItemProvider());
+            RongIM.registerMessageTemplate(new ProductMessageItemProvider());
+            RongIM.registerMessageTemplate(new PdfMessageItemProvider());
+            RongIM.registerMessageTemplate(new NewMessageItemProvider());
             RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
