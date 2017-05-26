@@ -197,7 +197,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        }
 //        LogUtils.Log("s", sss);
 
-        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
+        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(),false);
 
     }
 

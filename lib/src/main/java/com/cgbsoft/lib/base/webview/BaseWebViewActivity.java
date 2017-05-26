@@ -88,6 +88,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected boolean isLookZhiBao;
 
     private Observable<Object> executeObservable;
+    private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> refrushGestureObservable;
 
     @Override
@@ -141,6 +142,20 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
             @Override
             protected void onRxError(Throwable error) {
+            }
+        });
+
+        mallChoiceObservable = RxBus.get().register(RxConstant.MALL_CHOICE_ADDRESS, MallAddress.class);
+        mallChoiceObservable.subscribe(new RxSubscriber<MallAddress>() {
+
+            @Override
+            protected void onEvent(MallAddress myAddress) {
+                mWebview.loadUrl("javaScript:products.setAddress('" + myAddress.getId() + "','" + myAddress.getName() + "','" + myAddress.getPhone() + "','" + myAddress.getAddress() + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
             }
         });
     }

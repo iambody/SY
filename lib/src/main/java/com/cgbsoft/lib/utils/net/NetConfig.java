@@ -9,7 +9,7 @@ public class NetConfig {
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
 //    private static final String START_APP = "https://app";
-    private static final String START_APP = "https://t4-app";
+    private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -23,6 +23,8 @@ public class NetConfig {
     public static final String API_URL = "api";
     public static final String LIVE_URL = "zhibo";
     public static final String AUTH_URL = "auth";
+
+    public static final String API_URL_V2 = "api/v2";
 
     // 基本传输结构
     public static class DefaultParams {
