@@ -40,18 +40,13 @@ public class ProductMessage extends MessageContent {
 
         try {
             jsonStr = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException e1) {
-
-        }
-        try {
             JSONObject jsonObj = new JSONObject(jsonStr);
             productId = jsonObj.optString("productId");
             schemeId = jsonObj.optString("schemeId");
             productName = jsonObj.optString("productName");
             productType = jsonObj.optString("productType");
             typeCode = jsonObj.optString("typeCode");
-
-        } catch (JSONException e) {
+        } catch (Exception e) {
             RLog.e("JSONException", e.getMessage());
         }
 

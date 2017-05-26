@@ -119,7 +119,7 @@ public class ConversationActivity extends BaseActivity {
             @Override
             public void onSuccess(Integer integer) {
                 Toast.makeText(ConversationActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
-                ConversationActivity.this.finish();
+//                ConversationActivity.this.finish();
                 // && backConversation.equals("conversation")
 //                if (!TextUtils.isEmpty("backConversation")) {
 //                    RongIM.getInstance().startConversation(
