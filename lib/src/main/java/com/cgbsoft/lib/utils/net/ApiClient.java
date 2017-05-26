@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.utils.net;
 
-import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -13,7 +12,6 @@ import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
-import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -26,7 +24,6 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +34,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -594,11 +590,11 @@ public class ApiClient {
      *
      * @param userId
      */
-    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("uid", userId);
-        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
-    }
+//    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("uid", userId);
+//        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    }
 
     public static Observable<String> getTestOrgManager(String userId) {
         Map<String, String> map = new HashMap<>();

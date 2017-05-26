@@ -7,7 +7,6 @@ import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -25,12 +23,11 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
-import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
@@ -48,12 +45,11 @@ import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
 import app.live.com.mvp.ui.LiveActivity;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
-import app.privatefund.com.im.listener.MyConnectionStatusListener;
-import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -243,8 +239,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        int index = getIntent().getIntExtra("index", 0);
-        onTabSelected(index);
+//        int index = getIntent().getIntExtra("index", 0);
+//        onTabSelected(index);
 
     }
 

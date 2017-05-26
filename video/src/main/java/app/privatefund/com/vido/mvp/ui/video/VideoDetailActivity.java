@@ -45,7 +45,6 @@ import com.cgbsoft.lib.widget.ProgressWheel;
 import com.cgbsoft.lib.widget.dialog.CommentDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.ls.ListViewForScrollView;
-import com.cgbsoft.privatefund.bean.share.CommonShareBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -63,6 +62,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import app.privatefund.com.share.bean.ShareCommonBean;
@@ -75,7 +76,6 @@ import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -994,7 +994,17 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 getPresenter().addCommont(extra, videoAllInf.videoId);
             }
         };
+
         commentDialog.show();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                commentDialog.showKeyboard();
+            }
+        }, 200);
     }
 
 

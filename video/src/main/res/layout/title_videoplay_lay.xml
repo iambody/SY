@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -9,9 +10,9 @@
         android:id="@+id/view_title_back_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_back_black_24dp"
+        android:layout_centerVertical="true"
 
-        android:layout_centerVertical="true"/>
+        android:src="@drawable/ic_back_black_24dp" />
 
     <TextView
         android:id="@+id/view_title_title_txt"
@@ -20,17 +21,17 @@
         android:layout_centerInParent="true"
         android:padding="@dimen/ui_10_dip"
         android:text="@string/video_detail"
-        android:textSize="@dimen/dimens_sp_18"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_sp_18" />
 
     <TextView
         android:id="@+id/view_title_right_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/share"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:drawableLeft="@drawable/fenxiang_share_nor"/>
+        android:drawableLeft="@drawable/fenxiang_share_nor"
+        android:text="@string/share" />
 
 </RelativeLayout>

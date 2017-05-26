@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <com.cgbsoft.lib.widget.ScrollingImageView
@@ -188,7 +188,9 @@
                 android:id="@+id/enter_login_wxlogin_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="40dp"
+                android:focusable="true"
+                android:clickable="true">
 
                 <TextView
                     android:id="@+id/weixin_text"
@@ -199,6 +201,8 @@
                     android:layout_marginRight="10dp"
                     android:text="@string/al_wx_login_str"
                     android:textColor="@color/white"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:textSize="15sp" />
 
                 <View
@@ -227,7 +231,8 @@
                 android:layout_marginTop="@dimen/ui_10_dip"
                 android:background="@drawable/select_comment_share_bt"
                 android:clickable="true"
-                android:padding="@dimen/ui_10_dip">
+                android:padding="@dimen/ui_10_dip"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/enter_login_wx_bt"
