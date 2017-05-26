@@ -27,7 +27,10 @@ public class RouteConfig {
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
     // 选择产品
-    public static final String GOTO_SELECT_PRODUCT = "select_product_activity";
+    public static final String GOTO_SELECT_PRODUCT = "product_select_product_activity";
+
+    // 基本webview页面
+    public static final String GOTO_BASE_WEBVIEW = "lib_basewebviewactivity";
 
     //充值
     public static final String MALL_PAY = "mall_pay";

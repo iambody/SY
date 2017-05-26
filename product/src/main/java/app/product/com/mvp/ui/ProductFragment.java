@@ -16,9 +16,11 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -37,7 +39,6 @@ import app.product.com.listener.RecyclerViewScrollDetector;
 import app.product.com.model.EventFiltBean;
 import app.product.com.model.FilterItem;
 import app.product.com.model.ProductFilterBean;
-import app.product.com.model.ProductlsBean;
 import app.product.com.model.Series;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.contract.ProductContract;
@@ -45,6 +46,7 @@ import app.product.com.mvp.presenter.ProductPresenter;
 import app.product.com.utils.BUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.widget.FilterPop;
+import app.product.com.widget.MsgSentDialog;
 import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
@@ -54,13 +56,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import rx.Observable;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/6-10:15
  */
 public class ProductFragment extends BaseFragment<ProductPresenter> implements ProductContract.view, OnLoadMoreListener, OnRefreshListener {
+
+    public static final String FROM_SEND_PRODUCT = "from_rong_send_product";
 
     @BindView(R2.id.swipe_target)
     RecyclerView fragmentProductrecyclerView;
@@ -82,6 +85,10 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     LinearLayout productProductFilterLay;
 
 
+    @BindView(R2.id.title_layout)
+    LinearLayout titileLayout;
+    @BindView(R2.id.series_layout)
+    LinearLayout seriesLayout;
     //    @BindView(R2.id.swipe_refresh_header)
 //    CustomRefreshHeadView swipeRefreshHeader;
 //    @BindView(R2.id.swipe_load_more_footer)
@@ -114,6 +121,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     //记录多个筛选的数据
     private List<FilterItem> CurrentFilter = null;
 
+    private boolean fromShare;
 
     //获取列表需要的数据************
 
@@ -130,7 +138,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         initRiskEvaluat();
         initCache();
         initData();
-
     }
 
     /**
@@ -147,7 +154,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -156,12 +162,42 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     }
 
     /**
+     * 初始化是否IM分享过来的view
+     */
+    private void initShareProductView() {
+        fromShare = getArguments() != null && getArguments().getBoolean(FROM_SEND_PRODUCT, false);
+        titileLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
+        seriesLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * 打开分享产品对话框
+     */
+    private void openShareProductDialog(int position) {
+            final int finalPosition = position;
+            String series = productlsBeen.get(finalPosition).series;
+            new MsgSentDialog(getActivity(), productlsBeen.get(finalPosition).productName, AppManager.getChatName(getContext()), Series.formatSeries(series), productlsBeen.get(finalPosition).productId) {
+                @Override
+                public void left() {
+                    this.dismiss();
+                }
+
+                @Override
+                public void right(String extra) {
+                    this.dismiss();
+                    RxBus.get().post(RxConstant.SHARE_PRODUCT_SEND, productlsBeen.get(finalPosition));
+                    getActivity().finish();
+                }
+
+            }.show();
+    }
+
+    /**
      * 初始化配置
      */
     private void initConfig() {
-
+        initShareProductView();
         product_product_riskevalust = mFragmentView.findViewById(R.id.product_product_riskevalust);
-
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         productProductfragmentProductserieslayout.setInit(true);
@@ -173,10 +209,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
-                ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-
-
+                if (fromShare) {
+                    openShareProductDialog(position);
+                } else {
+                    ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
+                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+                }
             }
         });
 
@@ -188,23 +226,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             initFilterDate(productFilterBean.getSeries().getItems());
         }
         initEvent();
-//        fragmentProductrecyclerView.addOnScrollListener(new RecyclerViewScrollDetector(new RecyclerViewScrollDetector.scrollInterface() {
-//            @Override
-//            public void scrolling() {
-////                返回值为0，visible；返回值为4，invisible；返回值为8，gone。
-////                int type = productProductFilterLay.getVisibility();
-//                if (View.VISIBLE == productProductFilterLay.getVisibility())
-//                    productProductFilterLay.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onTop() {
-////                int type = productProductFilterLay.getVisibility();
-//                if (View.GONE == productProductFilterLay.getVisibility())
-//                    productProductFilterLay.setVisibility(View.VISIBLE);
-//            }
-//        }));
-
     }
 
     //注册事件
@@ -307,7 +328,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         }
 
         filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20, CurrentFilter);
-
     }
 
 
@@ -477,6 +497,4 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     public void onViewClicked() {
         Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
     }
-
-
 }

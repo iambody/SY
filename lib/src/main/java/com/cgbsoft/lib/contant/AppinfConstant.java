@@ -48,6 +48,16 @@ public interface AppinfConstant {
     String RONGYUN_TOKEN = "rongyun_tokoen_sp";
 
     /**
+     * 聊天名称
+     */
+    String CHAT_NAME = "chatName";
+
+    /**
+     * 聊天名称
+     */
+    String CONVERSATION_TYPE = "conversationType";
+
+    /**
      * 融云token有效期
      */
     String RONGYUN_TOKEN_EXPIRED = "rongyun_token_expired_sp";

@@ -68,6 +68,9 @@ public class NetConfig {
 
         //群成員列表 新接口
         static final String GROUP_MEMBER_BY_DATE = API_URL + "/chat/groupMembersByDate";
+
+        // 获取热门搜索列表
+        static final String HOT_SEARCH_PRODUCT = API_URL + "/products/hotNames";
     }
 
     static class Auth {

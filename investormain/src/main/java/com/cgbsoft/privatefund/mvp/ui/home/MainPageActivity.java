@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -37,6 +39,8 @@ import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +51,13 @@ import java.util.List;
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
 import app.live.com.mvp.ui.LiveActivity;
+import app.privatefund.com.im.Contants;
+import app.privatefund.com.im.bean.SMMessage;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.im.utils.PushPreference;
+import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
@@ -116,8 +127,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
-
-
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -146,6 +155,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initDayTask();
 
         initPlatformCustomer();
+
+        showInfoDialog();
     }
 
     /**
@@ -202,6 +213,26 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
             todo();
             mContentFragment = to;
+        }
+    }
+
+    private void showInfoDialog() {
+        String pushInfo = PushPreference.getPushInfo(this);
+        if (!TextUtils.isEmpty(pushInfo)) {
+            Gson gson = new Gson();
+            List<SMMessage> smMessageList = gson.fromJson(pushInfo, new TypeToken<List<SMMessage>>() {
+            }.getType());
+            SMMessage smMessage = smMessageList.get(smMessageList.size() == 0 ? 0 : smMessageList.size() - 1);
+            android.os.Message message2 = android.os.Message.obtain();
+            Bundle bundle2 = new Bundle();
+            message2.what = TextUtils.isEmpty(smMessage.getShowType()) ? 0 : Integer.parseInt(smMessage.getShowType());
+            bundle2.putString("jumpUrl", smMessage.getJumpUrl());
+            bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
+            bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
+            bundle2.putString("shareType", smMessage.getShareType());
+            message2.setData(bundle2);
+            ReceiveInfoManager.getInstance().getHandler().sendMessage(message2);
+            PushPreference.savePushInfo(this, "");
         }
     }
 

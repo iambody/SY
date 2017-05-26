@@ -11,11 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.MallAddress;
+import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
@@ -24,11 +29,16 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
+import app.privatefund.com.im.bean.ProductMessage;
 import app.privatefund.com.im.listener.ProductInputModule;
 import butterknife.BindView;
 import io.rong.imkit.RongExtensionManager;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.message.TextMessage;
+import rx.Observable;
 
 public class ConversationActivity extends BaseActivity {
 
@@ -54,6 +64,8 @@ public class ConversationActivity extends BaseActivity {
 
     private String conversationName;
 
+    private Observable<ProductlsBean> shareProductObservable;
+
     /**
      * 会话类型
      */
@@ -74,6 +86,52 @@ public class ConversationActivity extends BaseActivity {
         left.setOnClickListener(v -> finish());
         getIntentDate(getIntent());
         showRightFlagFunction();
+        initRxBusObservable();
+    }
+
+    private void initRxBusObservable() {
+        shareProductObservable = RxBus.get().register(RxConstant.SHARE_PRODUCT_SEND, ProductlsBean.class);
+        shareProductObservable.subscribe(new RxSubscriber<ProductlsBean>() {
+            @Override
+            protected void onEvent(ProductlsBean productlsBean) {
+                sendProduct(productlsBean);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {}
+        });
+    }
+
+    private void sendProduct(ProductlsBean productlsBean) {
+        ProductMessage productMessage = ProductMessage.obtain(productlsBean.series, productlsBean.productId, productlsBean.schemeId, productlsBean.productName, productlsBean.productType);
+        String conversationType = AppManager.getConversationType(this);
+        Conversation.ConversationType Type = Conversation.ConversationType.GROUP;
+        if (conversationType.equals("PRIVATE")) {
+            Type = Conversation.ConversationType.PRIVATE;
+        }
+        final Conversation.ConversationType finalType = Type;
+        RongIM.getInstance().sendMessage(Type, mTargetId, productMessage, "[链接]" + productlsBean.productName, "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                Toast.makeText(ConversationActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+                Toast.makeText(ConversationActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                ConversationActivity.this.finish();
+                // && backConversation.equals("conversation")
+//                if (!TextUtils.isEmpty("backConversation")) {
+//                    RongIM.getInstance().startConversation(
+//                            ConversationActivity.this,
+//                            finalType,
+//                            mTargetId,
+//                            AppManager.getChatName(ConversationActivity.this));
+//                } else {
+//                    ConversationActivity.this.finish();
+//                }
+            }
+        });
     }
 
     @Override
@@ -110,22 +168,21 @@ public class ConversationActivity extends BaseActivity {
         mTargetIds = intent.getData().getQueryParameter("targetIds");
         enterFragment(mConversationType, mTargetId);
         if (mConversationType == Conversation.ConversationType.GROUP) {
-//            SPSave.getInstance(ConversationActivity.this).putString("conversationType", "GROUP");
-//            SPSave.getInstance(ConversationActivity.this).putString("chatName", name);
+            AppInfStore.saveChatName(this, name);
             return;
         }
-        //SPSave.getInstance(ConversationActivity.this).putString("conversationType", "PRIVATE");
         initTelDialog();
     }
 
     private void initTelDialog() {
-        ApiClient.goTestGetRongUserInfo(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+        ApiClient.goTestGetRongUserInfo(mTargetId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.i("MyUserInfoListener", "RCUserInfoTask=" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     conversationName = jsonObject.getString("name");
+                    AppInfStore.saveChatName(ConversationActivity.this, conversationName);
                     String bindMobileNumber = AppManager.getUserInfo(ConversationActivity.this).getAdviserPhone();
                     right.setVisibility(Constant.msgSecretary.equals(mTargetId) ? View.GONE : View.VISIBLE);
                     right.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +290,15 @@ public class ConversationActivity extends BaseActivity {
             @Override
             protected void onRxError(Throwable error) {}
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (shareProductObservable != null) {
+            RxBus.get().unregister(RxConstant.SHARE_PRODUCT_SEND, shareProductObservable);
+        }
     }
 
     /**

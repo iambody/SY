@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 
@@ -21,7 +22,6 @@ import java.util.List;
 
 import app.product.com.R;
 import app.product.com.R2;
-import app.product.com.model.ProductlsBean;
 import app.product.com.widget.TopRoundImage;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -224,9 +224,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                     } else {
                         BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduCount, remainingAmount);
                         BStrUtils.SetTxt1(normalProductHolder.productItemProductlsWan, "万");
-
                     }
-
 
                     BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijingzhi, productlsBean.expectedYield + "%");
                     BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijinzhiText, "业绩基准");
@@ -279,7 +277,6 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                     BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijingzhi, productlsBean.expectedYield + "%+浮动");
                     BStrUtils.SetTxt1(normalProductHolder.productItemProductlsLeijijinzhiText, "业绩基准");
                     BStrUtils.SetTxt1(normalProductHolder.productItemProductlsShengyueduText, "剩余额度");
-
                 }
 
                 BStrUtils.switchColorToBandC(acontext, normalProductHolder.productItemProductlsShengyueduCount);

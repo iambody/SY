@@ -12,6 +12,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.chenenyu.router.IRouter;
+import com.chenenyu.router.RouteCallback;
 import com.chenenyu.router.Router;
 import com.jhworks.library.ImageSelector;
 
@@ -154,6 +155,10 @@ public class NavigationUtils {
 
     public static void startActivityByRouterForResult(Context context, String routerType, int requestCode) {
         Router.build(routerType).requestCode(requestCode).go(context);
+    }
+
+    public static void startActivityByRouterForResult(Context context, String routerType, int requestCode, RouteCallback routeCallback) {
+        Router.build(routerType).requestCode(requestCode).go(context, routeCallback);
     }
 
     public static void startActivityByRouter(Context context, String routerType, Bundle bundle, int flag) {

@@ -33,5 +33,4 @@ public class BaseDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 
 	}
-
 }

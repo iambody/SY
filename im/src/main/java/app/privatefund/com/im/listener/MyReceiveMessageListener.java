@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.google.gson.Gson;
 
 import app.privatefund.com.im.bean.SMMessage;
+import app.privatefund.com.im.utils.ReceiveInfoManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -52,7 +53,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             TextMessage content = (TextMessage) message.getContent();
             if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra())) {
                 String msg = ((TextMessage) message.getContent()).getExtra();
-                System.out.println("--------onReceiverMessage==" + msg);
                 Gson g = new Gson();
                 SMMessage smMessage = g.fromJson(msg, SMMessage.class);
                 smMessage.setContent(content.getContent());
@@ -72,40 +72,39 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
 //                if (smMessage.getReceiverType().equals("1") && SPSave.getInstance(MApplication.mContext).getString(Contant.identify).equals(Contant.IdentityTouziren)
 //                        || (smMessage.getReceiverType().equals("2") && SPSave.getInstance(MApplication.mContext).getString(Contant.identify).equals(Contant.IdentityLicaishi))
 //                        || smMessage.getReceiverType().equals("3")) {
-                    android.os.Message message2 = android.os.Message.obtain();
+                    android.os.Message sendMessage = android.os.Message.obtain();
                     Bundle bundle2 = new Bundle();
                     switch (smMessage.getShowType()) {
                         case "1": //有弹窗、有跳转
-                            message2.what = Constant.RECEIVER_SEND_CODE;
+                            sendMessage.what = Constant.RECEIVER_SEND_CODE;
                             bundle2.putString("type", "1");
                             bundle2.putString("jumpUrl", smMessage.getJumpUrl());
                             bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
                             bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
                             bundle2.putString("shareType", shareType);
-                            message2.setData(bundle2);
-//                            MApplication.myHandler.sendMessage(message2);
+                            sendMessage.setData(bundle2);
+                            ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
                             break;
                         case "2": //有弹窗、无跳转
-                            message2.what = Constant.RECEIVER_SEND_CODE;
+                            sendMessage.what = Constant.RECEIVER_SEND_CODE;
                             bundle2.putString("type", "2");
                             bundle2.putString("jumpUrl", smMessage.getJumpUrl());
                             bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
                             bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
                             bundle2.putString("shareType", shareType);
-                            message2.setData(bundle2);
-//                            MApplication.myHandler.sendMessage(message2);
+                            sendMessage.setData(bundle2);
+                            ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
                             break;
                         case "3": //无弹窗、有跳转
                             break;
                         case "4": // 新的消息弹窗
-                            message2.what = Constant.RECEIVER_SEND_CODE_NEW_INFO;
+                            sendMessage.what = Constant.RECEIVER_SEND_CODE_NEW_INFO;
                             bundle2.putSerializable("smMessage", smMessage);
-                            message2.setData(bundle2);
-//                            MApplication.myHandler.sendMessage(message2);
+                            sendMessage.setData(bundle2);
+                            ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
                         default:
                             break;
                     }
-//                }
             }
         }
         return false;

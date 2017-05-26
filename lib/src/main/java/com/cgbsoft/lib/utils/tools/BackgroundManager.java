@@ -25,6 +25,7 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
   private Calendar bcSwitchCalendar = Calendar.getInstance();
   private Calendar exitCalendar = Calendar.getInstance();
   private boolean isDisplay = false;
+  private Activity currentActivity;
 
   public Calendar getBcSwitchCalendar() {
     return bcSwitchCalendar;
@@ -32,6 +33,10 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
 
   public void setBcSwitchCalendar(Calendar bcSwitchCalendar) {
     this.bcSwitchCalendar = bcSwitchCalendar;
+  }
+
+  public Activity getCurrentActivity() {
+    return currentActivity;
   }
 
   public Calendar getExitCalendar() {
@@ -48,6 +53,7 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
 
   @Override
   public void onActivityResumed(Activity activity) {
+    currentActivity = activity;
     if (expireDate != null && Calendar.getInstance().after(expireDate) && isDisplay && "MainPageActivity".equals(activity.getClass().getSimpleName())) {
       RxBus.get().post(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE);
       Log.i("onActivityResumed", "--------isDisplay=" + isDisplay);
