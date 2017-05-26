@@ -10,6 +10,7 @@ import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
 import java.util.List;
 
+import app.live.com.mvp.presenter.InitBusinessHelper;
 import app.live.com.utils.SxbLogImpl;
 import app.privatefund.com.im.bean.NewsMessage;
 import app.privatefund.com.im.bean.PdfMessage;
@@ -63,6 +64,7 @@ public class InitApplication extends InvestorAppli {
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
         }
+
     }
 
     private void initLive() {
