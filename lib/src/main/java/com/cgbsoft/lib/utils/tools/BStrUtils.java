@@ -2,13 +2,16 @@ package com.cgbsoft.lib.utils.tools;
 /**
  * Created by datutu on 17/3/20.
  */
+
 import android.content.Context;
 import android.widget.TextView;
+
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 
 import org.json.JSONArray;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
