@@ -2,6 +2,7 @@ package app.privatefund.com.im.listener;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
@@ -23,7 +24,7 @@ public class ProductInputModule extends DefaultExtensionModule {
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
-        List<IPluginModule> pluginModules =  super.getPluginModules(conversationType);
+        List<IPluginModule> pluginModules =  new ArrayList<>();
         if (myPlugin == null) {
             myPlugin = new ProductInputPlugin(context);
         }
