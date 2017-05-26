@@ -23,6 +23,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -1362,7 +1363,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             hashMap.put(WebViewConstant.PAGE_SHARE_WITH_EMAIL, true);
             hashMap.put(WebViewConstant.RIGHT_SAVE, false);
             hashMap.put(WebViewConstant.PAGE_INIT, false);
-            NavigationUtils.startActivityByRouter(getContext(), "lib_basewebviewactivity", hashMap);
+            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
             return;
         }
 

@@ -23,11 +23,9 @@ import static com.cgbsoft.lib.utils.cache.CPConstant.IS_VISABLE_PROTOCOL_LOGIN;
  * 不要用于跨进程使用，虽然也可以用，如果需要数据跨进程请使用OtherDataProvider
  */
 public class SPreference implements Constant {
-
     private static SharedPreferences getBase(@NonNull Context context) {
         return context.getApplicationContext().getSharedPreferences(USER_INFO_BEAN_SP, Context.MODE_PRIVATE);
     }
-
     public static void putString(@NonNull Context context, @NonNull String key, @NonNull String value) {
         SharedPreferences.Editor edit = getBase(context).edit();
         edit.putString(key, value);

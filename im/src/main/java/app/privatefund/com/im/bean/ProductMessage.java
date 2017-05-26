@@ -19,8 +19,6 @@ import io.rong.imlib.model.MessageContent;
  */
 @MessageTag(value = "YT:productMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class ProductMessage extends MessageContent {
-
-
     private String productName;
     private String productType;
     private String productId;

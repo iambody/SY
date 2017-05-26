@@ -162,6 +162,28 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存聊天名称 －－产品分享需要用到
+     * @param context
+     * @param chatName
+     */
+    public static void saveChatName(Context context, String chatName) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(CHAT_NAME, chatName);
+        ed.commit();
+    }
+
+    /**
+     * 保存聊天名称 －－产品分享需要用到
+     * @param context
+     * @param conversationName
+     */
+    public static void saveConversation(Context context, String conversationName) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(CONVERSATION_TYPE, conversationName);
+        ed.commit();
+    }
+
+    /**
      * 保存是否有用户所属群
      * @param context
      * @return

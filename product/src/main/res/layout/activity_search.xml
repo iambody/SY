@@ -1,0 +1,183 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/search_base_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5px"
+        android:background="#d0d0d0"></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/search_taishan"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="泰山"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_henshan"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="恒山"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_songshan"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="嵩山"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_kunlunshan"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="昆仑山"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/search_huanghe"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="黄河"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_changjiang"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="长江"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_lanchangjiang"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="澜沧江"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_yamaxun"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/chanpin_bg_sel"
+                android:gravity="center"
+                android:text="亚马逊"
+                android:textColor="@drawable/chanpin_text_color_sel"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#f6f6f6" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="热门搜索"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@drawable/ic_xian" />
+
+        <ListView
+            android:id="@+id/search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@drawable/ic_xian"></ListView>
+
+    </LinearLayout>
+</LinearLayout>

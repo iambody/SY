@@ -458,6 +458,18 @@ interface RequestManager {
     Observable<ResponseBody> getTestGetGroupList(@QueryMap Map<String, String> map);
 
     /**
+     * 获取热门产品
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.HOT_SEARCH_PRODUCT)
+    Observable<BaseResult<CommonEntity.Result>> getHotProduct(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.HOT_SEARCH_PRODUCT)
+    Observable<ResponseBody> getTestGetHotProduct(@QueryMap Map<String, String> map);
+
+    /**
      * 获取平台客户
      *
      *  @param map

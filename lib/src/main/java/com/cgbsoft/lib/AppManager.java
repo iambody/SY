@@ -67,6 +67,24 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 获取聊天页面名称－－产品分享需要用到
+     * @param context
+     * @return
+     */
+    public static String getChatName(Context context) {
+        return getBasePreference(context).getString(CHAT_NAME, "");
+    }
+
+    /**
+     * 获取聊天类型－－产品分享需要用到
+     * @param context
+     * @return
+     */
+    public static String getConversationType(Context context) {
+        return getBasePreference(context).getString(CONVERSATION_TYPE, "");
+    }
+
+    /**
      * 获取用户登录状态
      */
     public static boolean getIsLogin(Context context) {

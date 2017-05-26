@@ -1,7 +1,6 @@
-package app.product.com.model;
+package com.cgbsoft.lib.base.model.bean;
 
-import com.cgbsoft.lib.base.model.bean.BaseBean;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +8,7 @@ import java.util.List;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/9-11:18
  */
-public class ProductlsBean   {
+public class ProductlsBean implements Serializable {
     //产品ID
     public String productId;
     //产品类型
@@ -65,7 +64,7 @@ public class ProductlsBean   {
     public String investmentArea;
 
     //    产品的发行期
-    public static class Schemes {
+    public static class Schemes implements Serializable{
 
         public String id;//":"34b08935e59d41ceb44eeb1f1c3cff19",
         public String state;//":"60",
@@ -74,7 +73,7 @@ public class ProductlsBean   {
     }
 
     //产品投资单元units
-    public  static class Units {
+    public  static class Units implements Serializable {
         public String id;//":"f1a9339d3f8149d4b007c84c63a4b76d",
         public String name;//":"A类A类",
         public String productId;//":"4c67c13bc9804e7390fb8841ddcb0eb6"

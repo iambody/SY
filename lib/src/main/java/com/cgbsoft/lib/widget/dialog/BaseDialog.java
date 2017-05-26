@@ -38,5 +38,4 @@ public class BaseDialog extends Dialog {
 				getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 		}
 	}
-
 }

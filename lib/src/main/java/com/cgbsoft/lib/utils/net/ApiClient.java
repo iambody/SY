@@ -627,6 +627,20 @@ public class ApiClient {
     }
 
     /**
+     * 获取热门产品
+     *
+     */
+    public static Observable<CommonEntity.Result> getHotProduct() {
+        Map<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getHotProduct(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetHotProduct() {
+        Map<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetHotProduct(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取平台客户
      *
      * @param userId

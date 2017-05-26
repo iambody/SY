@@ -18,6 +18,7 @@
             android:layout_marginTop="@dimen/ui_20_dip"
             android:background="@color/white"
             android:orientation="horizontal"
+            android:id="@+id/title_layout"
             android:padding="@dimen/ui_10_dip">
 
             <TextView
@@ -67,6 +68,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
+            android:id="@+id/series_layout"
             android:paddingBottom="10dp"
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
@@ -88,12 +90,12 @@
             android:background="@color/transparent">
 
             <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
-                android:id="@id/swipe_refresh_header"
+                android:id="@+id/swipe_refresh_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@id/swipe_target"
+                android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ui_5_dip"
@@ -101,7 +103,7 @@
                 android:layout_marginTop="@dimen/ui_5_dip" />
 
             <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
-                android:id="@id/swipe_load_more_footer"
+                android:id="@+id/swipe_load_more_footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
@@ -113,7 +115,7 @@
             android:layout_gravity="center"
             android:paddingTop="100dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/empty_saixuan"
+            android:src="@drawable/ic_empty_saixuan"
             android:visibility="gone" />
     </LinearLayout>
 
