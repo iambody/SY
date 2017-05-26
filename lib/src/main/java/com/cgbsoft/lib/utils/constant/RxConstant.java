@@ -50,4 +50,6 @@ public interface RxConstant {
 
     String MALL_CHOICE_ADDRESS = "choice_address";
 
+    String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
+
 }

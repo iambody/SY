@@ -17,10 +17,13 @@ public interface MainPageContract {
         void getRongToken();
 
         void getLiveList();
+
+        void initDayTask();
     }
 
     interface View extends BaseView{
         //判断是否有直播
         void hasLive(boolean hasLive, JSONObject jsonObject);
+
     }
 }

@@ -17,7 +17,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public UserInfo userInfo;
     }
 
-    public static class UserInfo{
+    public static class UserInfo {
         public String birthday;
         public String sex;
         public String headImageUrl;
@@ -39,11 +39,11 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String ageStage;
         public String userName;
         public String realName;
-        public String myPoString;
+        public String myPoint;
         public String fatherId;
         public String lastLogStringime;
         public String memoToFather;
-        public String  isAdvisers;
+        public String isAdvisers;
 
         public String getBirthday() {
             return birthday;
@@ -213,12 +213,12 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
             this.realName = realName;
         }
 
-        public String getMyPoString() {
-            return myPoString;
+        public String getMyPoint() {
+            return myPoint;
         }
 
-        public void setMyPoString(String myPoString) {
-            this.myPoString = myPoString;
+        public void setMyPoint(String myPoString) {
+            this.myPoint = myPoint;
         }
 
         public String getFatherId() {
@@ -246,7 +246,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         }
     }
 
-    public static class ToBBean{
+    public static class ToBBean {
         public String organizationName;
         public String preparedforNum;
         public String submitTime;
@@ -274,7 +274,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String isExtension;
     }
 
-    public static class ToCBean{
+    public static class ToCBean {
         public String customerName;
         public String customerType;
         public String stockAssetsTime;

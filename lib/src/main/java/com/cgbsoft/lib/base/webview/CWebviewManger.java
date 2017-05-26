@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.webview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -141,7 +142,8 @@ public class CWebviewManger {
         } else if (action.contains("setUpHeadImage")) {// 上传头像
             startImagePage(action);
         } else if (action.contains("scanning")) {
-            toQrCode();
+//            toQrCode();
+            goMyTask();
         } else if (action.contains("toastStatus") || action.equals("toastSuccess")) {
             showToast(action);
         } else if (action.contains("showAlert")) {
@@ -219,7 +221,7 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
 //            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
-            NavigationUtils.startActivityByRouter(context,  RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
 //            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {
@@ -268,8 +270,7 @@ public class CWebviewManger {
         } else if (action.contains("sharePoster")) {
 //            sharePoster();
         } else if (action.contains("ydPay")) {
-//            Intent intent = new Intent(context, PayActivity.class);
-//            context.startActivity(intent);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
         }
     }
 
@@ -884,7 +885,7 @@ public class CWebviewManger {
     }
 
     private void toMessageList() {
-        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
+        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", new Bundle(), Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     private void showToast(String action) {
@@ -1073,7 +1074,7 @@ public class CWebviewManger {
      */
     private void changepassword(String action) {
         try {
-            String[] splits = URLDecoder.decode(action,  "utf-8").split(":");
+            String[] splits = URLDecoder.decode(action, "utf-8").split(":");
             String newPassword = splits[3];
             Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
             context.finish();
@@ -1243,6 +1244,7 @@ public class CWebviewManger {
 
     /**
      * 监听页面跳转的拦截，拦截成功返回ture, 失败返回false
+     *
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
@@ -1504,9 +1506,6 @@ public class CWebviewManger {
      * 跳转到我的任务页面
      */
     private void goMyTask() {
-        HashMap<String, String> parms = new HashMap<>();
-        parms.put("fromc", "1");
-        //UiHelper.toNextActivity(context, DayTaskActivity.class, parms);
-
+        NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
     }
 }

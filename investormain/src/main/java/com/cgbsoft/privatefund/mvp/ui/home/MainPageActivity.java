@@ -7,7 +7,6 @@ import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +23,7 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.service.FloatVideoService;
@@ -35,7 +35,6 @@ import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
-import com.tencent.av.sdk.NetworkHelp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,6 +80,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
+    private LoginHelper loginHelper;
+    private Observable<Integer> showIndexObservable;
 
     @Override
     protected int layoutID() {
@@ -102,6 +103,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
+
+
+        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
+        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                onTabSelected(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         transaction.add(R.id.fl_main_content, mContentFragment);
 
         transaction.commitAllowingStateLoss();
@@ -111,6 +127,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         loginLive();
 
         initDialog();
+
+        initDayTask();
 
     }
 
@@ -127,9 +145,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void loginLive() {
-        LoginHelper loginHelper = new LoginHelper(this, this);
-        //TODO 登录腾讯接口需要调试
-        loginHelper.iLiveLogin("yangyang", "eJxlj8tugzAQRfd8BWJdFfMw4O5aRKv0kco0Uh4b5IAxTlTHgKGQqv-ehESqpY40q3Nm7sy3YZqmtXj9uCV5fuiEytQoqWXemRawbv6glLzIiMq8pvgH6SB5QzNSKtpM0IEQugDoDi*oULzkV2Mkgp1bM9pin00xlxX*ad4NIx-pCmcTfEvW8QzHc5LY7LhOS6*IOsjfMXQJeiBdGrRlYj*Nj7gePVlvt-uvWXX-XIfLHUt2uErtViw42*QvA1r1GEo1BPa8qoZlsIJ9nG*0SMU-6fUg5CMQokj-qqdNyw9iElzgQMf1wLks48f4BfRDX1Y_");
+        loginHelper = new LoginHelper(this, this);
+        loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 
     @Override
@@ -198,6 +215,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
                 RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        int index = getIntent().getIntExtra("index", 0);
+        onTabSelected(index);
+
     }
 
     int switchID = -1;
@@ -295,6 +320,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
+            Intent intent = new Intent(this, LiveActivity.class);
+            intent.putExtra("liveJson", liveJsonData.toString());
+            startActivity(intent);
 
         }
     }
@@ -321,16 +349,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        startActivity(intent);
     }
 
+
+    private void initDayTask() {
+        getPresenter().initDayTask();
+    }
+
+    @Override
+    public void getLiveSignSuc(String sign) {
+        loginHelper.iLiveLogin(AppManager.getUserId(this), sign);
+    }
+
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
             try {
-                liveTitle.setText(jsonObject.getString("a"));
-
-//                liveIcon
-
+                liveTitle.setText(jsonObject.getString("title"));
+                Imageload.display(this, jsonObject.getString("image"), liveIcon);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -340,4 +376,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
     }
+
+
 }

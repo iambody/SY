@@ -37,8 +37,8 @@ ext {
     buildToolsVersion = "25.0.0"
     minSdkVersion = 17
     targetSdkVersion = 24
-    versionCode = 55100
-    versionName = "5.0.9"
+    versionCode = 50800
+    versionName = "5.8.0"
     databaseName = "privateFundDB.db";
     databaseVer = 1;
 

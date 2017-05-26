@@ -5,8 +5,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.utils.cache.OtherDataProvider;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.google.gson.Gson;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.core.ILiveLoginManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import app.live.com.mvp.model.MySelfInfo;
 import app.live.com.mvp.presenter.viewinface.LoginView;
@@ -78,6 +87,26 @@ public class LoginHelper extends Presenter {
             public void onError(String module, int errCode, String errMsg) {
                 if (mLoginView != null)
                     mLoginView.liveLoginFail(module, errCode, errMsg);
+            }
+        });
+    }
+
+    public void getLiveSign(String userId){
+        ApiClient.getLiveSign(userId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject js = new JSONObject(s);
+                    String sig = js.getString("user_sig");
+                    mLoginView.getLiveSignSuc(sig);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
             }
         });
     }

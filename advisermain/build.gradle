@@ -66,6 +66,6 @@ dependencies {
     compile project(':lib')
     compile project(':share')
     compile project(':share')
-    compile project(':cmmonui')
+    compile project(':commonui')
     compile project(':enter')
 }

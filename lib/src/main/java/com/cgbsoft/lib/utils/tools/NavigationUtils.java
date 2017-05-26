@@ -153,4 +153,16 @@ public class NavigationUtils {
     public static void startActivityByRouter(Context context, String routerType, String key, Object object, int flag) {
         Router.build(routerType).with(key, object).addFlags(flag).go(context);
     }
+
+
+
+    public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap, int flag) {
+        IRouter iRouter = Router.build(routerType);
+        Set<Map.Entry<String, Object>> set = hashMap.entrySet();
+        for (Map.Entry<String, Object> entry : set) {
+            iRouter.with(entry.getKey(), entry.getValue());
+        }
+        iRouter.addFlags(flag);
+        iRouter.go(context);
+    }
 }

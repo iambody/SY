@@ -9,8 +9,8 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-    private static final String START_APP = "https://app";
-//  private static final String START_APP = "https://d6-app";
+//    private static final String START_APP = "https://app";
+      private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -24,6 +24,8 @@ public class NetConfig {
     public static final String API_URL = "api";
     public static final String LIVE_URL = "zhibo";
     public static final String AUTH_URL = "auth";
+
+    public static final String API_URL_V2 = "api/v2";
 
     // 基本传输结构
     public static class DefaultParams {
@@ -79,6 +81,15 @@ public class NetConfig {
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
 
+    //每日任务
+    static class TASK {
+        private static final String task = "/task";
+        //任务列表
+        static final String TASK_LIST = API_URL_V2 + task + "/adviserTaskList";
+        //任务完成领云豆
+        static final String GET_COIN = API_URL_V2 + task + "/addTaskCoin";
+    }
+
     //用户相关
     static class USER {
         private static final String user = "/user";
@@ -116,27 +127,29 @@ public class NetConfig {
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
     }
 
-  //搜索相关
-    static class SOUSOU{
-      private static final String sousou = "/search";
-      //产品全局搜索
-      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
-      //热门搜索
-      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
-  }
+    //搜索相关
+    static class SOUSOU {
+        private static final String sousou = "/search";
+        //产品全局搜索
+        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
+        //热门搜索
+        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
+    }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
+        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
         //获取产品列表
-        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
+        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
     }
 
     //直播相关
     static class LIVE {
         private static final String live = "/live";
+        //获取直播签名
+        static final String GET_LIVE_SIGN = LIVE_URL + live + "/user/sig/5.0";
         //获取直播列表
         static final String GET_LIVE_LIST = LIVE_URL + live + "/rooms/5.0";
         //获取房间号
@@ -176,14 +189,14 @@ public class NetConfig {
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
 
-   //视频相关模块
-    static class VIDEO{
-       private static final String video="/information/video";
-       //视频点赞
-       static  final String VIDEO_DIANZAN=API_URL +video+"/likes/5.0";
-       //视频评论添加
-       static  final String VIDEO_COMMENT_ADD=API_URL+video+"/2c/comment/add";
-       //视频的评论
-       static final String VIDEO_COMMENT_LS=API_URL+video+"/2c/comment";
-   }
+    //视频相关模块
+    static class VIDEO {
+        private static final String video = "/information/video";
+        //视频点赞
+        static final String VIDEO_DIANZAN = API_URL + video + "/likes/5.0";
+        //视频评论添加
+        static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
+        //视频的评论
+        static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
+    }
 }

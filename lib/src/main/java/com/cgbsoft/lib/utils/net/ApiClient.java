@@ -809,6 +809,18 @@ public class ApiClient {
     }
 
     /**
+     * 获取直播签名
+     *
+     * @param userId
+     * @return
+     */
+    public static Observable<String> getLiveSign(String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getLiveSign(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取支付配置
      */
     public static Observable<String> getRechargeConfig() {
@@ -830,4 +842,21 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().ydRecharge(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    /**
+     * 获取每日任务
+     */
+    public static Observable<String> initDayTask() {
+        return OKHTTP.getInstance().getRequestManager().getDayTask(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 任务完成添加云豆
+     */
+    public static Observable<String> addTaskCoin(String taskType, String taskName) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("taskName", taskName);
+        map.put("taskType", taskType);
+        return OKHTTP.getInstance().getRequestManager().taskAddCoin(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }

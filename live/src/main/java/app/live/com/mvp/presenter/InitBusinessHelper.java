@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
-import com.tencent.av.extra.effect.AVVideoEffect;
 import com.tencent.ilivesdk.ILiveSDK;
 import com.tencent.livesdk.ILVLiveConfig;
 import com.tencent.livesdk.ILVLiveManager;
@@ -58,7 +57,7 @@ public class InitBusinessHelper {
         ILVLiveManager.getInstance().init(liveConfig);
 
         // 初始化P图模块
-        AVVideoEffect.getInstance(context).init(context, "ptusdk_suixinbo.licence");
+//        AVVideoEffect.getInstance(context).init(context, "ptusdk_suixinbo.licence");
 
 //        ILiveLoginManager.getInstance().setUserStatusListener(new ILiveLoginManager.TILVBStatusListener() {
 //            @Override
