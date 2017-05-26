@@ -40,7 +40,6 @@
         <activity android:name=".GroupChatGridListActivity"/>
         <activity android:name=".GroupChatMemberListActivity"/>
 
-
         <!-- 容云离线消息推送 -->
         <receiver
             android:name="app.privatefund.com.im.listener.MyPushMessageReceive"

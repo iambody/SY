@@ -416,10 +416,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             startActivity(intent);
-
         }
     }
-
 
     @Override
     public void onBackPressed() {

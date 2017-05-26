@@ -26,6 +26,9 @@ public class RouteConfig {
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
+    // 选择产品
+    public static final String GOTO_SELECT_PRODUCT = "select_product_activity";
+
     //充值
     public static final String MALL_PAY = "mall_pay";
 

@@ -1,14 +1,15 @@
 package app.privatefund.com.im.listener;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
+
 import app.privatefund.com.im.R;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
@@ -43,12 +44,13 @@ public class ProductInputPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-//        Intent intent = new Intent(mContext, SelectProductActivity.class);
-//        fragment.getActivity().startActivityForResult(intent, REQUEST_PRODUCT);
+        NavigationUtils.startActivityByRouterForResult(mContext, RouteConfig.GOTO_SELECT_PRODUCT, REQUEST_PRODUCT);
     }
 
     @Override
     public void onActivityResult(int i, int i1, Intent intent) {
+        if (REQUEST_PRODUCT == i1) {
 
+        }
     }
 }
