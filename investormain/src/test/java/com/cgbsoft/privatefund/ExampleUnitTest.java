@@ -1,5 +1,8 @@
 package com.cgbsoft.privatefund;
 
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,5 +16,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+
+
+        String ssss = BStrUtils.decodeSimpleEncrypt("ABCDEF");
+        LogUtils.Log("s", "sssss");
+
     }
 }

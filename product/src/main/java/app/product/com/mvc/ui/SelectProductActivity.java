@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.R2;
+
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.product.com.R;
+import app.product.com.R2;
 import app.product.com.mvp.ui.ProductFragment;
 import butterknife.BindView;
 

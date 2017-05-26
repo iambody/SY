@@ -24,8 +24,22 @@ new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getSt
             }
         }.show();
 
+路由器
 
-
-路由中intent的获取和使用
+1路由中intent的获取和使用
  获取Intent
 Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合路由规则Intent对象，然后你可以使用这个intent来跳转，或者发一个通知。
+
+
+
+2// 最简单的路由跳转，打开TestActivity
+ Router.build("test").go(context);
+
+3 // 其他部分api
+ Router.build("user")
+     .requestCode(int) // 调用startActivityForResult
+     .extras(bundle)  // 携带跳转参数
+     .addFlags(flag)  // 添加标记，比如intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+     .anim(enter, exit)  // 添加跳转动画
+     .callback(calback)  // 跳转结果回调
+     .go(context);

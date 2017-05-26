@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -31,6 +33,7 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.R2;
 import app.product.com.adapter.ProductlsAdapter;
+import app.product.com.listener.RecyclerViewScrollDetector;
 import app.product.com.model.EventFiltBean;
 import app.product.com.model.FilterItem;
 import app.product.com.model.ProductFilterBean;
@@ -46,7 +49,9 @@ import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 
 
@@ -73,6 +78,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     ImageView productProductfragmentEmptyIv;
     @BindView(R2.id.product_product_wenjuan)
     TextView productProductWenjuan;
+    @BindView(R2.id.product_product_filter_lay)
+    LinearLayout productProductFilterLay;
+
 
     //    @BindView(R2.id.swipe_refresh_header)
 //    CustomRefreshHeadView swipeRefreshHeader;
@@ -180,6 +188,22 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             initFilterDate(productFilterBean.getSeries().getItems());
         }
         initEvent();
+//        fragmentProductrecyclerView.addOnScrollListener(new RecyclerViewScrollDetector(new RecyclerViewScrollDetector.scrollInterface() {
+//            @Override
+//            public void scrolling() {
+////                返回值为0，visible；返回值为4，invisible；返回值为8，gone。
+////                int type = productProductFilterLay.getVisibility();
+//                if (View.VISIBLE == productProductFilterLay.getVisibility())
+//                    productProductFilterLay.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onTop() {
+////                int type = productProductFilterLay.getVisibility();
+//                if (View.GONE == productProductFilterLay.getVisibility())
+//                    productProductFilterLay.setVisibility(View.VISIBLE);
+//            }
+//        }));
 
     }
 
@@ -453,4 +477,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     public void onViewClicked() {
         Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
     }
+
+
 }

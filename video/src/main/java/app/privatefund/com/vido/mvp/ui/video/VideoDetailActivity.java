@@ -234,7 +234,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -250,7 +250,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
         comeFrom = getIntent().getIntExtra("comeFrom", -1);
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         if (iv_mvv_cover.getVisibility() == View.VISIBLE && videoCoverUrl != null && !TextUtils.isEmpty(videoCoverUrl)) {
             Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, R.drawable.bg_default, R.drawable.bg_default);

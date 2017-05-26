@@ -21,7 +21,9 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -82,6 +84,13 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.LOGIN_URL)
     Observable<ResponseBody> toTestLogin(@FieldMap() Map<String, String> paramsMap);
+
+    /**
+     * V2
+     */
+//    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
+    Observable<ResponseBody> toTestV2Login(@Body RequestBody paramsMap);
 
     /**
      * 获取用户信息

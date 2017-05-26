@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -47,7 +46,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param isWx 是否微信登录
      */
     @Override
-    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd,String publicKey,boolean isWx) {
+    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey, boolean isWx) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
@@ -61,15 +60,14 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 ////            object.put("password", isWx ? pwd : MD5Utils.getShortMD5(pwd));
 //            object.put("password", pwd);
 //            object.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
-//            HashMap<String,String>stringStringHashMap=new HashMap<>();
+//            HashMap<String, String> stringStringHashMap = new HashMap<>();
 //
 //            stringStringHashMap.put("userName", un);
 //            stringStringHashMap.put("password", pwd);
 //            stringStringHashMap.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
+//            RsaStr = RSAUtils.GetRsA(getContext(), object.toString(), publicKey);
 //
 //
-//            RsaStr = RSAUtils.getRsa(  new Gson().toJson(stringStringHashMap)  , publicKey);
-////            RsaStr=URLEncoder.encode(RsaStr,"utf-8");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            PromptManager.ShowCustomToast(getContext(), getContext().getResources().getString(R.string.rsa_encryput_error));
@@ -83,6 +81,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onEvent(String s) {
                 //
+                LogUtils.Log("login", s);
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
