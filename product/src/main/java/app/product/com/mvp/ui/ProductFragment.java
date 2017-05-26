@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.R2;
 import app.product.com.adapter.ProductlsAdapter;
+import app.product.com.listener.RecyclerViewScrollDetector;
 import app.product.com.model.EventFiltBean;
 import app.product.com.model.FilterItem;
 import app.product.com.model.ProductFilterBean;
@@ -48,7 +51,9 @@ import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 
 /**
@@ -76,9 +81,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     ImageView productProductfragmentEmptyIv;
     @BindView(R2.id.product_product_wenjuan)
     TextView productProductWenjuan;
+    @BindView(R2.id.product_product_filter_lay)
+    LinearLayout productProductFilterLay;
 
-    @BindView(R2.id.title_layout)
-    LinearLayout titileLayout;
+
+//    @BindView(R2.id.product_product_filter_lay)
+//    LinearLayout titileLayout;
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
     //    @BindView(R2.id.swipe_refresh_header)
@@ -158,7 +166,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      */
     private void initShareProductView() {
         fromShare = getArguments() != null && getArguments().getBoolean(FROM_SEND_PRODUCT, false);
-        titileLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
+        productProductFilterLay.setVisibility(fromShare ? View.GONE : View.VISIBLE);
         seriesLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
     }
 

@@ -2,8 +2,10 @@ package com.cgbsoft.lib.utils.tools;
 /**
  * Created by datutu on 17/3/20.
  */
+
 import android.content.Context;
 import android.widget.TextView;
+
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 

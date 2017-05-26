@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.utils.net;
 
-import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -28,7 +27,6 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +37,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -117,6 +116,21 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    public static Observable<String> toV2TestLogin(String rsaString) {
+   JSONObject obj=new JSONObject();
+        try {
+            obj.put("sign",rsaString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),obj.toString());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(body).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+
+    }
+
     /**
      * 获取用户信息
      *
@@ -146,7 +160,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         if (rongExpired != null)
             map.put("tokenExpired", rongExpired);
-            map.put("uid", rongUID);
+        map.put("uid", rongUID);
         return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
@@ -777,11 +791,11 @@ public class ApiClient {
      * 评论列表
      */
     public static Observable<String> videoCommentLs(String id, String commentId) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("commentId", commentId);
-        map.put("limit", Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        map.put("limit", "" + Contant.VIDEO_COMMENT_LIMIT);
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -1015,6 +1029,7 @@ public class ApiClient {
         map.put("taskType", taskType);
         return OKHTTP.getInstance().getRequestManager().taskAddCoin(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     /**
      * 获取登录前的publickey
      */

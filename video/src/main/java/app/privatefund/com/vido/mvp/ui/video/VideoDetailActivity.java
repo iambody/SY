@@ -62,6 +62,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import app.privatefund.com.share.bean.ShareCommonBean;
@@ -74,7 +76,6 @@ import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -233,7 +234,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -249,7 +250,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
         comeFrom = getIntent().getIntExtra("comeFrom", -1);
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         if (iv_mvv_cover.getVisibility() == View.VISIBLE && videoCoverUrl != null && !TextUtils.isEmpty(videoCoverUrl)) {
             Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, R.drawable.bg_default, R.drawable.bg_default);
@@ -993,7 +994,17 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 getPresenter().addCommont(extra, videoAllInf.videoId);
             }
         };
+
         commentDialog.show();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                commentDialog.showKeyboard();
+            }
+        }, 200);
     }
 
 

@@ -40,6 +40,8 @@ public abstract class CommentDialog  extends BaseDialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.comment_dialog);
         bindViews();
     }
@@ -52,7 +54,7 @@ public abstract class CommentDialog  extends BaseDialog{
         comment.requestFocus();
 //        showKeyboard();
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//SOFT_INPUT_ADJUST_PAN
         send.setEnabled(false);
         send.setTextColor(0x99999999);
         send.setOnClickListener(new View.OnClickListener() {

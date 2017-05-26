@@ -27,8 +27,8 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -62,6 +62,7 @@ import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -135,6 +136,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             @Override
             protected void onRxError(Throwable error) {
+
             }
         });
 
@@ -264,8 +266,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        int index = getIntent().getIntExtra("index", 0);
-        onTabSelected(index);
+//        int index = getIntent().getIntExtra("index", 0);
+//        onTabSelected(index);
+
     }
 
     int switchID = -1;
@@ -465,6 +468,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        intent.putExtra("liveJson",liveJsonData.toString());
 //        startActivity(intent);
     }
+
 
     private void initDayTask() {
         getPresenter().initDayTask();

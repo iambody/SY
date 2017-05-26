@@ -139,7 +139,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                 String type_code1 = productlsBean.productType;
                 if (type_code1.equals("1")) {
 
-                    hotProductHolder.productItemProductlsHotJiezhi.setText(productlsBean.expectedYield + "%");
+                    hotProductHolder.productItemProductlsHotJingzhi.setText(productlsBean.expectedYield + "%");
                     String raised_amt = String.valueOf(productlsBean.remainingAmount);
                     if (TextUtils.isEmpty(raised_amt)) {
                         raised_amt = "0";
@@ -157,7 +157,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                     BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
 
                 } else if (type_code1.equals("2")) {
-                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, productlsBean.cumulativeNet);
+                    BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJingzhi, productlsBean.cumulativeNet);
                     String raised_amt = String.valueOf(productlsBean.remainingAmount);
                     if (TextUtils.isEmpty(raised_amt)) {
                         raised_amt = "0";

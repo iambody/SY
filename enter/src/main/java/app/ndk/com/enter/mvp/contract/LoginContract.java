@@ -23,7 +23,7 @@ public interface LoginContract {
          * @param pwd  密码
          * @param isWx 是否微信登录
          */
-        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
+        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey,boolean isWx);
 
         /**
          * 微信登录

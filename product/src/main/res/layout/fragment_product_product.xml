@@ -13,12 +13,12 @@
 
         <!-- 上边的筛选布局-->
         <LinearLayout
+            android:id="@+id/product_product_filter_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ui_20_dip"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:id="@+id/title_layout"
             android:padding="@dimen/ui_10_dip">
 
             <TextView
@@ -122,5 +122,5 @@
     <include
         android:id="@+id/product_product_riskevalust"
         layout="@layout/view_riskevalust"
-          />
+          android:visibility="gone"/>
 </RelativeLayout>

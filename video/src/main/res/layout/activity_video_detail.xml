@@ -5,26 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_background"
-    android:clipChildren="false"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/ui_25_dip"
     tools:context=".mvp.ui.video.VideoDetailActivity">
 
     <include layout="@layout/title_videoplay_lay" />
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/c_background"
-        android:clipChildren="false"
-        android:fitsSystemWindows="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false">
+        android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_avd_head"
@@ -345,9 +338,9 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </RelativeLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
     <!-- C端的地步的评论框布局 -->
     <LinearLayout
         android:id="@+id/video_videplay_edit_comment_lay"

@@ -1,12 +1,14 @@
 package app.ndk.com.enter.mvp.presenter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -16,7 +18,6 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
@@ -45,7 +46,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param isWx 是否微信登录
      */
     @Override
-    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd,boolean isWx) {
+    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey, boolean isWx) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
@@ -59,15 +60,14 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 ////            object.put("password", isWx ? pwd : MD5Utils.getShortMD5(pwd));
 //            object.put("password", pwd);
 //            object.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
-//            HashMap<String,String>stringStringHashMap=new HashMap<>();
+//            HashMap<String, String> stringStringHashMap = new HashMap<>();
 //
 //            stringStringHashMap.put("userName", un);
 //            stringStringHashMap.put("password", pwd);
 //            stringStringHashMap.put("client", AppManager.isInvestor(getContext()) ? "C" : "B");
+//            RsaStr = RSAUtils.GetRsA(getContext(), object.toString(), publicKey);
 //
 //
-//            RsaStr = RSAUtils.getRsa(  new Gson().toJson(stringStringHashMap)  , publicKey);
-////            RsaStr=URLEncoder.encode(RsaStr,"utf-8");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            PromptManager.ShowCustomToast(getContext(), getContext().getResources().getString(R.string.rsa_encryput_error));
@@ -80,6 +80,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 //        addSubscription(ApiClient.toV2TestLogin(RsaStr).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                //
+                LogUtils.Log("login", s);
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
@@ -223,5 +225,15 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 LogUtils.Log("user", error.toString());
             }
         }));
+    }
+
+    public void setAnimation(View VV) {
+        AnimatorSet animationSet = new AnimatorSet();
+        ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
+        ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha", 0f, 0.4f, 06f, 0.7f, 0.9f, 1f);
+        Alpha.setDuration(300);
+        animationSet.playSequentially(Translate);
+        animationSet.setDuration(300);
+        animationSet.start();
     }
 }
