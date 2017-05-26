@@ -19,7 +19,6 @@
             android:layout_marginTop="@dimen/ui_20_dip"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:id="@+id/title_layout"
             android:padding="@dimen/ui_10_dip">
 
             <TextView

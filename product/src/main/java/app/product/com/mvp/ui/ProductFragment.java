@@ -85,8 +85,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     LinearLayout productProductFilterLay;
 
 
-    @BindView(R2.id.title_layout)
-    LinearLayout titileLayout;
+//    @BindView(R2.id.product_product_filter_lay)
+//    LinearLayout titileLayout;
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
     //    @BindView(R2.id.swipe_refresh_header)
@@ -166,7 +166,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      */
     private void initShareProductView() {
         fromShare = getArguments() != null && getArguments().getBoolean(FROM_SEND_PRODUCT, false);
-        titileLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
+        productProductFilterLay.setVisibility(fromShare ? View.GONE : View.VISIBLE);
         seriesLayout.setVisibility(fromShare ? View.GONE : View.VISIBLE);
     }
 
