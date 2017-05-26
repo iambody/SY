@@ -17,13 +17,11 @@ import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
 
-
 /**
  * 风险承受能力评测 *
  */
 @Route(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY)
 public class RiskEvaluationActivity extends BaseActivity {
-
 
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;

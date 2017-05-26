@@ -215,4 +215,34 @@ public class BStrUtils {
             end--;
         }
     }
+
+    /**
+     * 去掉小数后面的0
+     */
+    public static String replacePoint(String count) {
+        if (count.indexOf(".") > 0) {
+            count = count.replaceAll("0+?$", "");//去掉多余的0
+            count = count.replaceAll("[.]$", "");//如最后一位是.则去掉
+        }
+        return count;
+    }
+
+
+    /**
+     * float 转换四舍五入 成int
+     */
+    public static int floatToint(Context context, float f) {
+        if (f < 0) {
+            PromptManager.ShowCustomToast(context, "金额小于0元");
+            return (int) f;
+        }
+        return Math.round(f);
+    }
+    /**
+     * 小数点后面保留一位
+     */
+    public static double holdOnePoint(double d) {
+        BigDecimal b = new BigDecimal(d);
+        return b.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 }

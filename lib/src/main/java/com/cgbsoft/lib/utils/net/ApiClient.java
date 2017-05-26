@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -10,7 +11,11 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -361,7 +366,7 @@ public class ApiClient {
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String>  modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -369,7 +374,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+    public static Observable<String>  toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
         Map<String, String> map = new HashMap<>();
         map.put("userName", userName);
         map.put("oldPassword", pwdMd5Old);
@@ -477,7 +482,7 @@ public class ApiClient {
     /**
      * 关联资产
      *
-     * @param customId    客户id
+     * @param customId 客户id
      * @param assertImage 上传图片路径
      * @return
      */
@@ -497,8 +502,7 @@ public class ApiClient {
 
     /**
      * 资产证明
-     *
-     * @param customId    客户id
+     * @param customId 客户id
      * @param assertImage 上传图片路径
      * @return
      */
@@ -572,6 +576,92 @@ public class ApiClient {
 
     public static Observable<String> toTestCommitRistResult(HashMap<String, Object> hashMap) {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRiskEvalutionCommit(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取融云用户信息
+     *
+     * @param userId
+     * @return
+     */
+    public static Observable<RongUserEntity.Result> getRongUserInfo(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getRongUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> goTestGetRongUserInfo(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetRongUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取群组信息
+     *
+     * @param groupId
+     */
+    public static Observable<GroupInfoEntity.Result> getGroupInfo(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupInfo(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取群成员
+     *
+     * @param groupId
+     */
+    public static Observable<GroupMemberEntity.Result> getGroupMember(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupMember(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupMember(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupMember(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取平台客户
+     *
+     * @param userId
+     */
+    public static Observable<CommonEntity.Result> getPlatformCustomer(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getPlatformCustomer(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetPlatformCustomer(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetPlatformCustomer(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取机构经理
+     *
+     * @param userId
+     */
+    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -665,11 +755,11 @@ public class ApiClient {
     /**
      * 视频添加评论
      */
-    public static Observable<String> videoCommentAdd(String commnetContent, String SenderId, String id) {
-        Map<String, String> map = new HashMap();
-        map.put("commentContent", commnetContent);
-        map.put("senderId", SenderId);
-        map.put("id", id);
+    public static Observable<String>videoCommentAdd(String commnetContent,String SenderId,String id){
+        Map<String,String>map=new HashMap();
+        map.put("commentContent",commnetContent);
+        map.put("senderId",SenderId);
+        map.put("id",id);
         return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -713,7 +803,6 @@ public class ApiClient {
         return params;
     }
 
-
     /**
      * 重新生成Post 方式的值
      *
@@ -750,7 +839,6 @@ public class ApiClient {
         }
         return paramValue;
     }
-
 
     /**
      * 生成json
@@ -814,7 +902,15 @@ public class ApiClient {
 
     //删除商城收货地址
     public static Observable<String> deleteMallAddress(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().deleteAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        JSONObject js = new JSONObject();
+        try {
+            js.put("user_id", map.get("user_id"));
+            js.put("id", map.get("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return OKHTTP.getInstance().getRequestManager().deleteAddress(js.toString()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //新增商城收货地址
@@ -871,6 +967,27 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().hostCloseLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 获取支付配置
+     */
+    public static Observable<String> getRechargeConfig() {
+        Map<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getRechargeConfig(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 校验支付结果
+     */
+    public static Observable<String> checkRecharge(Map<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().checkRechargeSign(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 充值
+     */
+    public static Observable<String> ydRecharge(Map<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().ydRecharge(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
     /**
      * 获取登录前的publickey
      */

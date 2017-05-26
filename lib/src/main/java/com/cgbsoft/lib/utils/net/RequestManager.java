@@ -22,6 +22,8 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -97,6 +99,7 @@ interface RequestManager {
 
     /**
      * 获取用户信息
+     *
      * @param paramsMap
      * @return
      */
@@ -114,10 +117,10 @@ interface RequestManager {
      * @param map
      * @return
      */
-    @GET(NetConfig.GET_RONG_TOKEN)
+    @GET(NetConfig.Auth.GET_RONG_TOKEN)
     Observable<BaseResult<RongTokenEntity.Result>> getRongToken(@QueryMap Map<String, String> map);
 
-    @GET(NetConfig.GET_RONG_TOKEN)
+    @GET(NetConfig.Auth.GET_RONG_TOKEN)
     Observable<ResponseBody> getTestRongToken(@QueryMap Map<String, String> map);
 
     /**
@@ -134,7 +137,6 @@ interface RequestManager {
 
     /**
      * 微信登录
-     *
      * @param paramsMap
      * @return
      */
@@ -148,7 +150,6 @@ interface RequestManager {
 
     /**
      * 获取协议
-     *
      * @return
      */
     @GET(NetConfig.USERAGENT_URL)
@@ -156,7 +157,6 @@ interface RequestManager {
 
     /**
      * 注册
-     *
      * @param paramsMap
      * @return
      */
@@ -170,90 +170,83 @@ interface RequestManager {
 
     /**
      * 发送验证码
-     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<BaseResult<String>> sendCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>>sendCode(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<ResponseBody> sendTestCode(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody>sendTestCode(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 验证验证码
-     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.CHECKCODE_URL)
-    Observable<BaseResult<String>> checkCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>>checkCode(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.CHECKCODE_URL)
-    Observable<ResponseBody> checkTestCode(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody>checkTestCode(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 重置密码
-     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
-    Observable<BaseResult<String>> resetPwd(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>>resetPwd(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
-    Observable<ResponseBody> resetTestPwd(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody>resetTestPwd(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 修改密码
-     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<BaseResult<String>> modifyPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>>modifyPassword(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<ResponseBody> modifyTestPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody>modifyTestPassword(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--验证手机
-     *
      * @param paramsMap
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMERGECHECK_URL)
-    Observable<BaseResult<String>> wxMergePhone(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>>wxMergePhone(@FieldMap Map<String, String> paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMERGECHECK_URL)
-    Observable<ResponseBody> wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody>wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 合并帐号--确认合并
-     *
      * @return
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
-    Observable<BaseResult<String>> wxMergeConfirm();
+    Observable<BaseResult<String>>wxMergeConfirm();
 
     @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
-    Observable<ResponseBody> wxTestMergeConfirm();
+    Observable<ResponseBody>wxTestMergeConfirm();
 
     /**
      * 获取学院推荐数据
-     *
      * @return
      */
     @GET(NetConfig.INFORMATION.GET_COLLEGE_RECOMMEND_VIDEO)
@@ -264,7 +257,6 @@ interface RequestManager {
 
     /**
      * 获取学院其他数据
-     *
      * @return
      */
     @GET(NetConfig.INFORMATION.GET_COLLEGE_OTHER_VIDEO)
@@ -275,7 +267,6 @@ interface RequestManager {
 
     /**
      * 获取视频详情
-     *
      * @param map
      * @return
      */
@@ -287,7 +278,6 @@ interface RequestManager {
 
     /**
      * 点赞
-     *
      * @param paramsMap
      * @return
      */
@@ -301,7 +291,6 @@ interface RequestManager {
 
     /**
      * 签到
-     *
      * @param paramsMap
      * @return
      */
@@ -369,7 +358,6 @@ interface RequestManager {
 
     /**
      * 用户反馈信息
-     *
      * @param paramsMap
      * @return
      */
@@ -383,7 +371,6 @@ interface RequestManager {
 
     /**
      * 风险评测提交
-     *
      * @param paramsMap
      * @return
      */
@@ -394,6 +381,67 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.API.RISK_EVALUTION)
     Observable<ResponseBody> toTestRiskEvalutionCommit(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 获取融云用户信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.RONGYUN_USERINFO)
+    Observable<BaseResult<RongUserEntity.Result>> getRongUserInfo(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.RONGYUN_USERINFO)
+    Observable<ResponseBody> getTestGetRongUserInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群组信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_INFO)
+    Observable<BaseResult<GroupInfoEntity.Result>> getGroupInfo(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_INFO)
+    Observable<ResponseBody> getTestGetGroupInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群成员信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBERS)
+    Observable<BaseResult<GroupMemberEntity.Result>> getGroupMember(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBERS)
+    Observable<ResponseBody> getTestGetGroupMember(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取平台客户
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<BaseResult<CommonEntity.Result>> getPlatformCustomer(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<ResponseBody> getTestGetPlatformCustomer(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取机构经理
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
+
 
     //获取产品筛选条件
 
@@ -463,7 +511,7 @@ interface RequestManager {
      * 视频评论列表
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
-    Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, Object> parmsMap);
+    Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, String> parmsMap);
 
     //编辑商城收货地址
     @FormUrlEncoded
@@ -476,9 +524,9 @@ interface RequestManager {
     Observable<ResponseBody> addAddress(@FieldMap Map<String, String> paramsMap);
 
     //删除商城收货地址
-    @FormUrlEncoded
     @DELETE(NetConfig.MALL.MALL_DETELE_ADDRESS)
-    Observable<ResponseBody> deleteAddress(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> deleteAddress(@Query("param") String param);
+
 
     //获取商城收货地址列表
     @GET(NetConfig.MALL.MALL_ADDRESS_LIST)
@@ -486,7 +534,7 @@ interface RequestManager {
 
     //设置默认收货地址
     @FormUrlEncoded
-    @DELETE(NetConfig.MALL.MALL_SET_DEFAULT)
+    @POST(NetConfig.MALL.MALL_SET_DEFAULT)
     Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
 
     //获取房间ID
@@ -530,6 +578,18 @@ interface RequestManager {
     //获取直播资料
     @GET(NetConfig.LIVE.GET_LIVE_PDF)
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
+
+    //支付配置
+    @GET(NetConfig.PAY.GET_PAY_CONFIG)
+    Observable<ResponseBody> getRechargeConfig(@QueryMap Map<String, String> paramsMap);
+
+    //校验支付结果
+    @GET(NetConfig.PAY.CHECK_RECHARGE_SIGN)
+    Observable<ResponseBody> checkRechargeSign(@QueryMap Map<String, String> paramsMap);
+
+    //云豆充值
+    @GET(NetConfig.PAY.YD_RECHARGE)
+    Observable<ResponseBody> ydRecharge(@QueryMap Map<String, String> paramsMap);
 
 
     //登录前获取公钥

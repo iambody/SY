@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="33dp"
+    android:background="#fefdea"
+    android:orientation="horizontal"
+    android:layout_centerVertical="true"
+    android:visibility="gone"
+    android:paddingBottom="@dimen/ui_5_dip"
+    android:paddingTop="@dimen/ui_5_dip">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_10_dip"
+        android:src="@drawable/hint_warming" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/ui_5_dip"
+        android:text="@string/recharge_hint"
+        android:textColor="@color/mred"
+        android:textSize="16sp" />
+
+</LinearLayout>

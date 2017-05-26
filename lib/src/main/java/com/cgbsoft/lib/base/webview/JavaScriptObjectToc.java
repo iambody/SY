@@ -40,6 +40,7 @@ public class JavaScriptObjectToc {
         String userId = AppManager.getUserId(context);
         StringBuffer sb = new StringBuffer();
         sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionName(BaseApplication.getContext())).append(":").append("1");
+        Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }
 

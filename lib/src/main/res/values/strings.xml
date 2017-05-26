@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">私募云理财师</string>
     <string name="nav_back_again_finish">再按一次退出程序</string>
     <string name="avd_no_wifi_str">您正在使用非WIFI网络，播放将产生费用...</string>

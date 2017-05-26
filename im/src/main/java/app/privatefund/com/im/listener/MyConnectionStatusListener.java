@@ -19,7 +19,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                 Log.e("Conn", "onChanged: CONNECTED");
                 RCConnect rcConnect = new RCConnect();
                 rcConnect.setConnectStatus("CONNECTED");
-                RxBus.get().post(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, rcConnect);
+                RxBus.get().post(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, true);
                 break;
             case DISCONNECTED://断开连接。
                 Log.e("Conn", "onChanged: DISCONNECTED");
@@ -53,7 +53,6 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
 //                if (RongIM.getInstance() != null) {
 //                    RongIM.getInstance().logout();
 //                }
-//
 //
 //                SPSave.getInstance(MApplication.mContext).putString("managerUid",null);
 //                SPSave.getInstance(MApplication.mContext).putString(Contant.token, "");

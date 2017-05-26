@@ -74,6 +74,28 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存融云token
+     * @param context
+     * @param rongYunToken
+     */
+    public static void saveRongToken(Context context, String rongYunToken) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(RONGYUN_TOKEN, rongYunToken);
+        ed.commit();
+    }
+
+    /**
+     * 融云token有效期
+     * @param context
+     * @param rongYunTokenExpired
+     */
+    public static void saveRongTokenExpired(Context context, int rongYunTokenExpired) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putInt(RONGYUN_TOKEN_EXPIRED, rongYunTokenExpired);
+        ed.commit();
+    }
+
+    /**
      * 保存用户信息
      *
      * @param context

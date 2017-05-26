@@ -9,8 +9,8 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-    private static final String START_APP = "https://app";
-    //  private static final String START_APP = "https://d6-app";
+//    private static final String START_APP = "https://app";
+  private static final String START_APP = "https://d6-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -36,16 +36,13 @@ public class NetConfig {
 
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
-
-
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
     static final String GET_RES_URL = API_URL + "/startup/5.0";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
-    //获取容云token
-    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+
     //客户风险评测提交接口
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
@@ -54,6 +51,29 @@ public class NetConfig {
     static class API {
         //客户风险评测提交接口
         static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
+
+        // 获取群组列表
+        static final String CHATE_GROUP_LIST = API_URL + "/chat/groupList";
+
+        // 用户手机号码
+        static final String GROUP_MEMBER_PHONE = API_URL + "/chat/memberPhoneNumber";
+
+        // 群成员
+        static final String GROUP_MEMBERS = API_URL + "/chat/groupMembers";
+
+        // 群信息
+        static final String GROUP_INFO = API_URL + "/chat/groupInformation";
+    }
+
+    static class Auth {
+        //获取容云token
+        static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+        // 获取融云用户信息
+        static final String RONGYUN_USERINFO = AUTH_URL + "/rc/userinfo";
+        //获取平台客服聊天
+        static final String PLATFORM_CUSTOMER = AUTH_URL + "/rc/greetingmessage";
+        //获取机构经理的聊天
+        static final String ORIGNATION_MANAGER = AUTH_URL +  "/rc/managerinfo";
     }
 
     static class MALL {
@@ -116,25 +136,24 @@ public class NetConfig {
         static final String VALIDATE_USER_PASSWORD_URL = AUTH_URL + user + "/checkPassword";
         // 用户反馈
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
-
     }
 
-    //搜索相关
-    static class SOUSOU {
-        private static final String sousou = "/search";
-        //产品全局搜索
-        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
-        //热门搜索
-        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
-    }
+  //搜索相关
+    static class SOUSOU{
+      private static final String sousou = "/search";
+      //产品全局搜索
+      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
+      //热门搜索
+      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
+  }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
+        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
         //获取产品列表
-        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
+        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
     }
 
     //直播相关
@@ -164,6 +183,16 @@ public class NetConfig {
         static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
     }
 
+    //支付
+    static class PAY {
+        private static final String pay = "/pay";
+        //支付配置
+        static final String GET_PAY_CONFIG = API_URL + pay + "/rechargeinfo";
+        //校验支付结果
+        static final String CHECK_RECHARGE_SIGN = API_URL + pay + "/checksign";
+        //云豆充值
+        static final String YD_RECHARGE = API_URL + pay + "/ydrecharge";
+    }
 
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";

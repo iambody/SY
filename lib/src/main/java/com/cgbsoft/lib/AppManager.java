@@ -75,4 +75,22 @@ public class AppManager implements AppinfConstant {
     public static String getSousouHistory(Context context) {
         return getBasePreference(context).getString(SOUSOUHISTORY, "");
     }
+
+    /**
+     * 获取融云Token
+     * @param context
+     * @return
+     */
+    public static String getRongToken(Context context) {
+        return getBasePreference(context).getString(RONGYUN_TOKEN, "");
+    }
+
+    /**
+     * 获取融云token有效期
+     * @param context
+     * @return
+     */
+    public static int getRongTokenExpired(Context context) {
+        return getBasePreference(context).getInt(RONGYUN_TOKEN_EXPIRED, 0);
+    }
 }

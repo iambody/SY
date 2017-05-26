@@ -37,6 +37,7 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -295,7 +296,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                         String userName = platform.getDb().getUserName();
                         LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
 
-                        String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
+                        String SexStr=BStrUtils.isEmpty(userGender)?"2":userGender.equals("m")?"0":"1";
 
 //                        if (!mCustomBuilder.isSetPositiveListener()) {
 //                            mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
@@ -304,7 +305,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //                            });
 //                        }
 //
-                        getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
+                        getPresenter().toDialogWxLogin(mLoadingDialog,   userId, SexStr, userName, userIcon);
 
 
                         break;

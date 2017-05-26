@@ -12,6 +12,8 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -867,7 +869,7 @@ public class CWebviewManger {
     }
 
     private void recommentFriend() {
-//        CommonShareBean shareBean = new CommonShareBean();
+//        CommonShareBean shareBean = new CommonShareBean();C
 //        shareBean.setTitle("推荐理财师好友安装私募云，一起来聚合财富管理力量！\", \"http://www.simuyun.com/invite/invite.html");
 //        shareBean.setContent("推荐理财师好友安装私募云，一起来聚合财富管理力量！http://www.simuyun.com/invite/invite.html");
 //        CommonShareDialog dialog = new CommonShareDialog(context,1,shareBean,null);
@@ -887,6 +889,7 @@ public class CWebviewManger {
 
     private void toMessageList() {
         NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
+//        RxBus.get().post(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, true);
     }
 
     private void showToast(String action) {

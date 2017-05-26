@@ -39,7 +39,7 @@ public class MallListAdapter extends BaseAdapter<MallAddressBean, MallAddressLis
             vhh.mall_item_address.setText(model.getAddress());
             vhh.mall_item_name.setText(model.getShopping_name());
             vhh.mall_item_phone.setText(model.getPhone());
-            if (model.getDefault_flag() == 1) {
+            if (model.getDefault_flag().equals("1")) {
                 vhh.mall_item_linear.setBackgroundColor(0xffd0d0d0);
             } else {
                 vhh.mall_item_linear.setBackgroundColor(0xffffffff);

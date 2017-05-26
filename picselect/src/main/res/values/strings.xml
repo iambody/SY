@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">library</string>
     <string name="mis_folder_all">All Images</string>
     <string name="mis_preview">Preview</string>

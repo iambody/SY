@@ -3,9 +3,16 @@ package app.privatefund.com.im.listener;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,27 +36,26 @@ public class MyGroupMembersProvider implements RongIM.IGroupMembersProvider {
 
     @Override
     public void getGroupMembers(String groupId, final RongIM.IGroupMemberCallback iGroupMemberCallback) {
-//        new GroupChatGroupMemberTask(context).start(ApiParams.requestGroupMemberList(groupId),
-//            new HttpResponseListener() {
-//                @Override
-//                public void onResponse(JSONObject response) {
-//                    Log.i(MyGroupMembersProvider.this.getClass().getName(), "getGroupMemberst=" + response.toString());
-//                    try {
-//                        String string = response.get("result").toString();
-//                        if (!TextUtils.isEmpty(string)) {
-//                            Gson g = new Gson();
-//                            List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {}.getType());
-//                            iGroupMemberCallback.onGetGroupMembersResult(formatGroupInfoToUserList(datas));
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                @Override
-//                public void onErrorResponse(String error, int statueCode) {
-//                }
-//            });
+        ApiClient.getTestGetGroupInfo(groupId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.i(MyGroupMembersProvider.this.getClass().getName(), "getGroupMemberst=" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String string = jsonObject.get("result").toString();
+                    if (!TextUtils.isEmpty(string)) {
+                        Gson g = new Gson();
+                        List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {}.getType());
+                        iGroupMemberCallback.onGetGroupMembersResult(formatGroupInfoToUserList(datas));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {}
+        });
     }
 
     private List<UserInfo> formatGroupInfoToUserList(List<GroupMember> list) {

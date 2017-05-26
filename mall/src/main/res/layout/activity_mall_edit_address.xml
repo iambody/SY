@@ -98,9 +98,9 @@
             android:id="@+id/mall_address_save_msg"
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            style="@style/red1_btn"
             android:text="@string/mall_save_address"
             />
-        <!--style="@style/red1_btn"-->
 
     </LinearLayout>
 

@@ -1,11 +1,13 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,14 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
+import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
@@ -32,14 +40,22 @@ import com.chenenyu.router.annotation.Route;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.List;
+
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.vido.service.FloatVideoService;
+import app.privatefund.com.im.listener.MyGroupInfoListener;
+import app.privatefund.com.im.listener.MyGroupMembersProvider;
+import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
+import app.privatefund.com.im.listener.MyUserInfoListener;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 @Route("investornmain_mainpageactivity")
@@ -70,6 +86,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private Observable<Boolean> closeMainObservable;
     private Observable<Boolean> gestruePwdObservable;
+    private Observable<Boolean> rongTokenRefushObservable;
+    private Observable<Boolean> openMessageListObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
@@ -85,6 +103,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+        baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
 
     @Override
@@ -104,6 +123,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initDialog();
 
+        initRongInterface();
+    }
+
+    /**
+     * 初始化融云的接口信息
+     */
+    private void initRongInterface() {
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
+        RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
     }
 
     /**
@@ -127,7 +157,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void data() {
-        baseWebview.loadUrls(CwebNetConfig.pageInit);
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity(this);
 
@@ -139,7 +168,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (mContentFragment != to) {
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
 //            setCustomAnimations(R.anim.home_fade_in, R.anim.home_fade_out);
-            if (!to.isAdded()) {    // 先判断是否被add过
+            if (!to.isAdded()) {  // 先判断是否被add过
                 transaction.hide(mContentFragment).add(R.id.fl_main_content, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
                 transaction.hide(mContentFragment).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
@@ -173,18 +202,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 4://客服
 
                 break;
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-            /**
-             * 设置连接状态变化的监听器.
-             */
-            if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
-                RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
     }
 
@@ -231,6 +248,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
+                RongIM.getInstance().disconnect();
                 finish();
             }
 
@@ -253,6 +271,71 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
+        rongTokenRefushObservable = RxBus.get().register(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, Boolean.class);
+        rongTokenRefushObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                Log.i("MainPageActivity", String.valueOf(aBoolean));
+                initPlatformCustomer();
+                baseWebview.loadUrls(WebViewConstant.PAGE_INIT);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
+        openMessageListObservable = RxBus.get().register(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, Boolean.class);
+        openMessageListObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                Log.i("MainPageActivity", "----rxbus open messagelist");
+                HashMap<String, Boolean> hashMap = new HashMap<>();
+                hashMap.put(Conversation.ConversationType.PRIVATE.getName(), false);
+                hashMap.put(Conversation.ConversationType.GROUP.getName(), true);
+                hashMap.put(Conversation.ConversationType.DISCUSSION.getName(), false);
+                hashMap.put(Conversation.ConversationType.SYSTEM.getName(), false);
+                RongIM.getInstance().startConversationList(MainPageActivity.this, hashMap);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+    }
+
+    private void initPlatformCustomer() {
+            Log.e("MainPageActivity", "start checkKefu()");
+            if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+                List<Conversation> conversationList =RongIMClient.getInstance().getConversationList();
+                if (conversationList != null) {
+                    for (int i = 0; i < conversationList.size(); i++) {
+                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+                            return;
+                        }
+                    }
+                }
+
+                ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+                    @Override
+                    protected void onEvent(String s) {
+                        List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                        if (null != conversationList) {
+                            Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
+                        }
+                        if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+//                            EventBus.getDefault().post(new RefreshKefu());
+                        }
+                        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+                    }
+
+                    @Override
+                    protected void onRxError(Throwable error) {
+                        Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
+                    }
+                });
+            }
     }
 
     private void gesturePasswordJumpPage() {
@@ -265,10 +348,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+
         if (closeMainObservable != null) {
             RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, closeMainObservable);
         }
-        super.onDestroy();
+
+        if (gestruePwdObservable != null) {
+            RxBus.get().unregister(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE, gestruePwdObservable);
+        }
+
+        if (rongTokenRefushObservable != null) {
+            RxBus.get().unregister(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, rongTokenRefushObservable);
+        }
+
+        if (openMessageListObservable != null) {
+            RxBus.get().unregister(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, openMessageListObservable);
+        }
+
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
 

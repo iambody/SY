@@ -14,8 +14,6 @@ import org.json.JSONObject;
 public interface MainPageContract {
 
     interface Presenter extends BasePresenter{
-        void getRongToken();
-
         void getLiveList();
     }
 

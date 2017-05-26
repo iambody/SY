@@ -55,12 +55,15 @@ public class MallFragment extends BaseFragment<MallPresenter> {
 
     @OnClick(R2.id.mall_rule)
     public void openRulePage() {
-        Intent i = new Intent(getContext(), BaseWebViewActivity.class);
-        i.putExtra(WebViewConstant.push_message_url, "bank/ydrule.html");
-        i.putExtra(WebViewConstant.push_message_title, "云豆使用规则");
-        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
-        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
-        i.putExtra(WebViewConstant.PAGE_INIT, false);
-        startActivity(i);
+//        Intent i = new Intent(getContext(), BaseWebViewActivity.class);
+//        i.putExtra(WebViewConstant.push_message_url, "bank/ydrule.html");
+//        i.putExtra(WebViewConstant.push_message_title, "云豆使用规则");
+//        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+//        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+//        i.putExtra(WebViewConstant.PAGE_INIT, false);
+//        startActivity(i);
+
+        Intent intent = new Intent(getContext(),PayActivity.class);
+        startActivity(intent);
     }
 }
