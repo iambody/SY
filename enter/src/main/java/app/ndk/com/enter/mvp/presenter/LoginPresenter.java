@@ -3,13 +3,19 @@ package app.ndk.com.enter.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -20,8 +26,14 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
+import app.privatefund.com.im.listener.MyReceiveMessageListener;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -42,7 +54,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param isWx 是否微信登录
      */
     @Override
-    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx) {
+    public void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd,boolean isWx) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
         pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
