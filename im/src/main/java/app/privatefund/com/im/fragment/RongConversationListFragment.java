@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.im.adapter.RongConversationListAdapter;
+import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.common.RLog;
 import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongContext;
@@ -80,12 +82,14 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Discussion;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.PublicServiceProfile;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.model.Conversation.ConversationType;
 import io.rong.imlib.model.Message.SentStatus;
 import io.rong.message.ReadReceiptMessage;
 import io.rong.push.RongPushClient;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -210,12 +214,16 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 protected void onRxError(Throwable error) {}
             });
             ThreadUtils.runOnMainThreadDelay(() -> {
-//                    showNoticeItem();
+                addNoticeItem();
             },1000);
         }
     }
 
     private void addGroupInfo(String id, final String name) {
+        if (isNoticeList) {
+            return;
+        }
+
         Conversation conversation = Conversation.obtain(Conversation.ConversationType.GROUP, id, name);
         int position;
         if(RongConversationListFragment.this.getGatherState(ConversationType.GROUP)) {
@@ -235,6 +243,30 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         } else {
             uiConversation = (UIConversation)RongConversationListFragment.this.mAdapter.getItem(position);
             uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.GROUP));
+            RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
+        }
+    }
+
+    private void addNoticeItem() {
+        Conversation conversation = Conversation.obtain(ConversationType.PRIVATE, noticeId, "");
+        int position;
+        if(RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE)) {
+            position = RongConversationListFragment.this.mAdapter.findGatheredItem(ConversationType.PRIVATE);
+        } else {
+            position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, noticeId);
+        }
+
+        conversation.setConversationTitle("");
+        UIConversation uiConversation;
+        if(position < 0) {
+            conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
+            uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
+            int index = RongConversationListFragment.this.getPosition(uiConversation);
+            RongConversationListFragment.this.mAdapter.add(uiConversation, index);
+            RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
+        } else {
+            uiConversation = (UIConversation)RongConversationListFragment.this.mAdapter.getItem(position);
+            uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
             RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
         }
     }
@@ -440,7 +472,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 this.mAdapter.getView(originalIndex, this.mList.getChildAt(originalIndex - this.mList.getFirstVisiblePosition()), this.mList);
             }
         }
-
     }
 
     public void onEventMainThread(AudioListenedEvent event) {
@@ -459,9 +490,88 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
             }
         }
-
     }
 
+    private boolean isFilterNoticeInfo(String messageId) {
+        if (isNoticeList) {
+            return !RongCouldUtil.getInstance().customConversation(messageId);
+        } else {
+            return RongCouldUtil.getInstance().customConversation(messageId);
+        }
+    }
+
+//    private void refreshUnreadMessage(Message message, int position) {
+//        if (!isNoticeList && RongCouldUtil.getInstance().customConversation(message.getSenderUserId())) {
+//            System.out.println("-------conversation-----unReadMessage");
+//            UIConversation conversation = null;
+//            int originalIndex = this.mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
+//            if (originalIndex < 0) {
+//                addNoticeItem();
+//                originalIndex = mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
+//                conversation = this.mAdapter.getItem(originalIndex);
+//            } else {
+//                conversation = this.mAdapter.getItem(originalIndex);
+//                if (conversation == null) {
+//                    MessageContent mc = new MessageContent() {
+//                        @Override
+//                        public byte[] encode() {
+//                            return "公告".getBytes();
+//                        }
+//
+//                        @Override
+//                        public int describeContents() {
+//                            return 0;
+//                        }
+//
+//                        @Override
+//                        public void writeToParcel(Parcel dest, int flags) {
+//                        }
+//                    };
+//                    Message targetMessage = Message.obtain(noticeId, Conversation.ConversationType.PRIVATE, mc);
+//                    conversation = UIConversation.obtain(targetMessage, getGatherState(Conversation.ConversationType.PRIVATE));
+//                }
+//            }
+//
+//            if (conversation != null) {
+//                conversation.setUnReadMessageCount(conversation.getUnReadMessageCount() + 1);
+//                int newPosition = ConversationListUtils.findPositionForNewConversation(conversation, this.mAdapter);
+//
+//                long showTime = conversation.getSentStatus() == Message.SentStatus.SENT ? message.getSentTime() : message.getReceivedTime();
+//                if (showTime != 0) {
+//                    conversation.setUIConversationTime(showTime);
+//                }
+//
+//                int unread = 0;
+//                for (UIConversation uiConversation : cacheConversation) {
+//                    unread += uiConversation.getUnReadMessageCount();
+//                }
+//                if (unread > 0) {
+//                    conversation.setUnReadMessageCount(unread);
+//                }
+//
+//                try {
+//                    Field field = message.getContent().getClass().getDeclaredField("content");/////这个对应的是属性
+//                    field.setAccessible(true);
+//                    Object value = field.get(message.getContent());
+//                    if (value != null && value instanceof String) {
+//                        String content = String.valueOf(value);
+//                        System.out.println("------content=" + content);
+//                        conversation.setConversationContent(Spannable.Factory.getInstance().newSpannable(content));
+//                    }
+//                } catch (Exception e) {
+//                }
+//
+//                if (originalIndex < 0) {
+//                    this.mAdapter.add(conversation, newPosition);
+//                } else {
+//                    this.mAdapter.remove(originalIndex);
+//                    this.mAdapter.add(conversation, newPosition);
+//                }
+//
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        }
+//    }／
     public boolean shouldUpdateConversation(Message message, int left) {
         return true;
     }
@@ -480,6 +590,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     position = this.mAdapter.findGatheredItem(conversationType);
                 } else {
                     position = this.mAdapter.findPosition(conversationType, targetId);
+                }
+
+                if (isNoticeList && RongCouldUtil.getInstance().hideConversation(event.getMessage().getSenderUserId())) {
+                    return;
                 }
 
                 UIConversation uiConversation;
@@ -695,6 +809,12 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             int position = gathered?this.mAdapter.findGatheredItem(conversationType):this.mAdapter.findPosition(conversationType, targetId);
             UIConversation uiConversation;
             int index;
+
+            if (isFilterNoticeInfo(message.getSenderUserId())) {
+//                refreshUnreadMessage(message, originalIndex);
+                return;
+            }
+
             if(position < 0) {
                 uiConversation = UIConversation.obtain(message, gathered);
                 index = this.getPosition(uiConversation);
@@ -739,6 +859,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                             position = RongConversationListFragment.this.mAdapter.findGatheredItem(ConversationType.DISCUSSION);
                         } else {
                             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.DISCUSSION, targetId);
+                        }
+
+                        if (isNoticeList) {
+                            return;
                         }
 
                         conversation.setConversationTitle(createDiscussionEvent.getDiscussionName());
@@ -903,6 +1027,9 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     public void onEventMainThread(PublicServiceFollowableEvent event) {
         RLog.d(this.TAG, "PublicServiceFollowableEvent");
         if(!event.isFollow()) {
+            if (isNoticeList) {
+                return;
+            }
             int originalIndex = this.mAdapter.findPosition(event.getConversationType(), event.getTargetId());
             if(originalIndex >= 0) {
                 this.mAdapter.remove(originalIndex);
@@ -1343,6 +1470,9 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             boolean gatherState = this.getGatherState(conversationType);
             UIConversation uiConversation;
             int originalIndex;
+            if (isFilterNoticeInfo(conversation.getSenderUserId())) {
+                continue;
+            }
             if(gatherState) {
                 originalIndex = this.mAdapter.findGatheredItem(conversationType);
                 if(originalIndex >= 0) {
@@ -1363,7 +1493,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
             }
         }
-
     }
 
     private UIConversation makeUIConversation(List<Conversation> conversations) {
