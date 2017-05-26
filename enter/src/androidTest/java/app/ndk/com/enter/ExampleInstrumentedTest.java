@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.RSAUtils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,4 +26,13 @@ public class ExampleInstrumentedTest {
 
         assertEquals("app.ndk.com.enter.test", appContext.getPackageName());
     }
+
+    @Test
+    public void SSS() throws Exception {
+        String publickey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCp8pDxAhjGPMxxU4VCWo1if4djzyqxM6dScGhb5q+/wqKfY/3SvPH7XKhtF1Q/0kRjCM3tFFpdGJyqXl0Bl34o3RlGoCeCGbUxVRj2IXvsryaOeF1yi8vW7DtOu2VPePS+Hv69SUCDaJYRdSz1+bhaa1ltFoYIvyTjhr+V8umjNQIDAQAB";
+        String sss = RSAUtils.encryptByPublicKey("12346", publickey);
+        LogUtils.Log("s", sss);
+
+    }
+
 }

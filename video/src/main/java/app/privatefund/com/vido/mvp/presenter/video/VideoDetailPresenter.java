@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
@@ -14,6 +15,7 @@ import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.request.GetRequest;
@@ -23,6 +25,7 @@ import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 
 import java.util.List;
+
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
 
 /**
@@ -113,7 +116,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
                 updataLocalVideoInfo();
 
-                getView().getNetVideoInfoSucc(viModel,result);
+                getView().getNetVideoInfoSucc(viModel, result);
 
             }
 
@@ -204,6 +207,41 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }
         if (downloadInfo != null)
             downloadInfo.setListener(new VideoDownloadCallback(videoId));
+    }
+
+    //添加评论
+    @Override
+    public void addCommont(String commontStr, String vdieoId) {
+        addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                getView().addCommontSucc(s);
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("addcommont", error.toString());
+
+            }
+        }));
+    }
+
+    //获取更多评论接口
+    @Override
+    public void getMoreCommont(String voideoId, String CommontId) {
+
+        addSubscription(ApiClient.videoCommentLs(voideoId, CommontId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                getView().getMoreCommontSucc(s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().getMoreCommontSucc(null);
+            }
+        }));
     }
 
 

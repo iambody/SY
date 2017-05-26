@@ -34,13 +34,14 @@ public class RiskEvaluatDialog extends BaseDialog {
 
     @Override
     protected void initView() {
-        ding= (LinearLayout) baseDialogView.findViewById(R.id.ding);
-        wenjuan= (TextView) baseDialogView.findViewById(R.id.wenjuan);
+        ding = (LinearLayout) baseDialogView.findViewById(R.id.ding);
+        wenjuan = (TextView) baseDialogView.findViewById(R.id.wenjuan);
         RiskEvaluatDialog.this.setCanceledOnTouchOutside(true);
         wenjuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                MainNavigationUtils.startCommonWebActivity(baseContext,);
+                MainNavigationUtils.startCommonWebActivity(baseContext);
+                RiskEvaluatDialog.this.dismiss();
             }
         });
     }
@@ -50,12 +51,12 @@ public class RiskEvaluatDialog extends BaseDialog {
         int x = (int) event.getX();
         final int y = (int) event.getY();
 
-        int viewTop=ding.getTop();
-        int viewBottom=ding.getBottom();
-        int viewLeft=ding.getLeft();
-        int viewRight=ding.getRight();
+        int viewTop = ding.getTop();
+        int viewBottom = ding.getBottom();
+        int viewLeft = ding.getLeft();
+        int viewRight = ding.getRight();
 
-        if(x<viewLeft||x>viewRight||y<viewTop||y>viewBottom){
+        if (x < viewLeft || x > viewRight || y < viewTop || y > viewBottom) {
 
             RiskEvaluatDialog.this.dismiss();
         }

@@ -1,30 +1,27 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
 
+import java.net.URLDecoder;
+
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
-import app.privatefund.com.vido.mvc.LocalVideoActivity;
-import app.privatefund.com.vido.mvc.PlayRecordActivity;
+import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.mvp.contract.video.DiscoverTocContract;
-import app.privatefund.com.vido.mvp.contract.video.VideoHistoryListContract;
 import app.privatefund.com.vido.mvp.presenter.video.DiscoverTocPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -53,17 +50,39 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         videoDiscoverWeb.loadUrls(CwebNetConfig.discoverPage);
+        videoDiscoverWeb.setClick(new CWebClient.WebviewOnClick() {
+            @Override
+            public void onClick(String result) {
+                goDetail(result);
+            }
+        });
+    }
+
+    public void goDetail(String res) {
+        try {
+            String baseParams = URLDecoder.decode(res, "utf-8");
+
+            String[] split = baseParams.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (!url.contains("http")) {
+                url = BaseWebNetConfig.baseParentUrl + url;
+            }
+
+            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected DiscoverTocPresenter createPresenter() {
-        return null;
+        return new DiscoverTocPresenter(baseActivity, this);
     }
 
     @Override
     public void testview() {
         if (videoDiscoverWeb != null) {
-
             videoDiscoverWeb.loadUrl("javascript:refresh()");
         }
     }
@@ -75,7 +94,7 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
 
     @OnClick(R2.id.video_discover_sousou_lay)
     public void onVideoDiscoverSousouLayClicked() {
-        Router.build(RouteConfig.GODTOSOUSOU).with("SEARCH_TYPE_PARAMS", "3").go(baseActivity);
+        Router.build(RouteConfig.GODTOSOUSOU).with("SEARCH_TYPE_PARAMS", "2").go(baseActivity);
     }
 
     @OnClick(R2.id.video_discover_history_txt)

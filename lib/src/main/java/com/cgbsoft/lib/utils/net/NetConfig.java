@@ -9,7 +9,7 @@ public class NetConfig {
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
 //    private static final String START_APP = "https://app";
-    private static final String START_APP = "https://t4-app";
+    private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -24,6 +24,8 @@ public class NetConfig {
     public static final String LIVE_URL = "zhibo";
     public static final String AUTH_URL = "auth";
 
+    public static final String API_URL_V2 = "api/v2";
+
     // 基本传输结构
     public static class DefaultParams {
         public static final String token = "token";
@@ -36,12 +38,13 @@ public class NetConfig {
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    static final String GET_RES_URL = API_URL + "/startup/5.0";
+    static final String GET_RES_URL = API_URL + "/startup/5.1";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
-
+    //获取容云token
+    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
     //客户风险评测提交接口
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
@@ -103,6 +106,15 @@ public class NetConfig {
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
 
+    //每日任务
+    static class TASK {
+        private static final String task = "/task";
+        //任务列表
+        static final String TASK_LIST = API_URL_V2 + task + "/adviserTaskList";
+        //任务完成领云豆
+        static final String GET_COIN = API_URL_V2 + task + "/addTaskCoin";
+    }
+
     //用户相关
     static class USER {
         private static final String user = "/user";
@@ -161,6 +173,8 @@ public class NetConfig {
     //直播相关
     static class LIVE {
         private static final String live = "/live";
+        //获取直播签名
+        static final String GET_LIVE_SIGN = LIVE_URL + live + "/user/sig/5.0";
         //获取直播列表
         static final String GET_LIVE_LIST = LIVE_URL + live + "/rooms/5.0";
         //获取房间号
@@ -196,18 +210,26 @@ public class NetConfig {
         static final String YD_RECHARGE = API_URL + pay + "/ydrecharge";
     }
 
-
     public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
     public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
 
-   //视频相关模块
-    static class VIDEO{
-       private static final String video="/information/video";
-       //视频点赞
-       static  final String VIDEO_DIANZAN=API_URL +video+"/likes/5.0";
-       //视频评论添加
-       static  final String VIDEO_COMMENT_ADD=API_URL+video+"/2c/comment/add";
-       //视频的评论
-       static final String VIDEO_COMMENT_LS=API_URL+video+"/2c/comment";
-   }
+    //视频相关模块
+    static class VIDEO {
+        private static final String video = "/information/video";
+        //视频点赞
+        static final String VIDEO_DIANZAN = API_URL + video + "/likes/5.0";
+        //视频评论添加
+        static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
+        //视频的更多评论
+        static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
+    }
+
+    //用户授权相关 V2********
+    static class AUTHOR {
+        private static final String auth = "/auth";
+        //登录前获取publickey公钥
+        static final String GET_PUBLIC_KEY = auth  + "/v2/publicKey";
+        //V2登录
+        static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
+    }
 }

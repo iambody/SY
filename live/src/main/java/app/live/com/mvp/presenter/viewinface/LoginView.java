@@ -11,6 +11,6 @@ public interface LoginView extends MvpView{
 
     void liveLoginFail(String module, int errCode, String errMsg);
 
-
+    void getLiveSignSuc(String sign);
 
 }

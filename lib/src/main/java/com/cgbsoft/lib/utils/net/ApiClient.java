@@ -26,11 +26,9 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.android.exoplayer.C;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +39,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -764,11 +763,11 @@ public class ApiClient {
      * 评论列表
      */
     public static Observable<String> videoCommentLs(String id, String commentId) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("commentId", commentId);
         map.put("limit", Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -952,6 +951,18 @@ public class ApiClient {
     }
 
     /**
+     * 获取直播签名
+     *
+     * @param userId
+     * @return
+     */
+    public static Observable<String> getLiveSign(String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getLiveSign(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取支付配置
      */
     public static Observable<String> getRechargeConfig() {
@@ -973,4 +984,27 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().ydRecharge(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    /**
+     * 获取每日任务
+     */
+    public static Observable<String> initDayTask() {
+        return OKHTTP.getInstance().getRequestManager().getDayTask(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 任务完成添加云豆
+     */
+    public static Observable<String> addTaskCoin(String taskType, String taskName) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("taskName", taskName);
+        map.put("taskType", taskType);
+        return OKHTTP.getInstance().getRequestManager().taskAddCoin(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    /**
+     * 获取登录前的publickey
+     */
+    public static Observable<String> getLoginPublic() {
+        return OKHTTP.getInstance().getRequestManager().getPublicKey().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }

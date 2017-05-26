@@ -22,4 +22,17 @@ public class RouteConfig {
 
     // 验证手势密码
     public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
+
+    //我的任务
+    public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
+
+    //充值
+    public static final String MALL_PAY = "mall_pay";
+
+    //跳转到产品详情详情的路由
+    public static final String GOTOPRODUCTDETAIL = "product_pproductdetail";
+    //app moudle中的风险测评
+    public static final String GOTO_APP_RISKEVALUATIONACTIVITY = "app_riskevaluate";
+    //video的module的information资讯页
+    public static final String GOTO_VIDEO_INFORMATIOON = "video_information";
 }

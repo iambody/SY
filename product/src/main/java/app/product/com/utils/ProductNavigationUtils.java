@@ -3,16 +3,10 @@ package app.product.com.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
-import app.product.com.model.SearchResultBean;
 import app.product.com.mvp.ui.ProductDetailActivity;
 
 /**
@@ -29,6 +23,7 @@ public class ProductNavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
+
 //    public static void startMessageActivity (Context context, SearchResultBean.ResultBean resultBean, String keyWords) {
 ////        if (resultBean.getTargetId().contains("INTIME") && !resultBean.getTargetId().contains("INTIME40006")) {
 ////            if (targetId.equals("INTIME40001")) { //  直CHENLONG播动态消息直接到二级列表页面

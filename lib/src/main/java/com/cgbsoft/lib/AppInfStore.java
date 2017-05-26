@@ -47,6 +47,15 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存V2的混淆的Token
+     */
+    public static void saveUserV2Token(Context sContext, String v2Token) {
+        SharedPreferences.Editor ed = getBasePreference(sContext).edit();
+        ed.putString(USERV2TOKEN, v2Token);
+        ed.commit();
+    }
+
+    /**
      * 保存用户账号
      */
     public static void saveUserAccount(Context scContext, String userAccount) {
@@ -97,6 +106,8 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存机构经理ID
+     *
+     *
      * @param context
      * @return
      */

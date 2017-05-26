@@ -1,1 +1,1 @@
-include ':investormain',  ':adviser', ':lib', ':order',':share', ':advisermain', ':cmmonui', ':live', ':im', ':ndk', ':product', ':enter', ':video',  ':picselect', ':libzxing',':mall',':IMKit','IMLib'
+include ':investormain', ':adviser', ':lib', ':order', ':share', ':advisermain', ':commonui', ':live', ':im', ':ndk', ':product', ':enter', ':video', ':picselect', ':libzxing', ':mall', ':IMKit', ':liveold', 'IMLib'

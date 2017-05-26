@@ -165,4 +165,7 @@ public interface Constant {
             put(msgNoKnowInformation, R.string.info_speceil);
         }
     };
+
+    //分享时候的外网log地址
+    public static final String SHARE_LOG="https://simuyun-upload.oss-cn-beijing.aliyuncs.com/app/simuyunlogo.png";
 }

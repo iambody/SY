@@ -3,11 +3,12 @@ package app.privatefund.com.vido.mvp.contract.video;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.video.model.VideoDownloadListModel;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 
 import java.util.List;
+
+import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/12 17:31

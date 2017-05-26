@@ -72,6 +72,14 @@ public interface VideoDetailContract {
          * @param videoId
          */
         void bindDownloadCallback(String videoId);
+        /**
+         * 添加评论
+         */
+        void addCommont(String commontStr,String vdieoId);
+        /**
+         * 获取更多评论
+         */
+        void getMoreCommont(String voideoId,String CommontId );
     }
 
     interface View extends BaseView {
@@ -84,5 +92,10 @@ public interface VideoDetailContract {
         void onDownloadFinish(VideoInfoModel model);
 
         void onDownloadVideoAdd();
+
+        void addCommontSucc(String commontsucc);
+
+        void getMoreCommontSucc(String moreCommontStr);
+
     }
 }

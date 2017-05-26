@@ -7,7 +7,8 @@ package com.cgbsoft.lib.contant;
  */
 public class Contant {
     //加载产品列表时候的 条数  默认加载20条数据
-    public static final int LOAD_PRODUCT_lIMIT=20;
+    public static final int LOAD_PRODUCT_lIMIT = 20;
     //视频评论默认条数
-    public static final  String VIDEO_COMMENT_LIMIT="20";
+    public static final int VIDEO_COMMENT_LIMIT = 20;
+
 }

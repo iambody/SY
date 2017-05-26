@@ -9,15 +9,18 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
+import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
 
 /**
  * 风险承受能力评测 *
  */
+@Route(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY)
 public class RiskEvaluationActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)

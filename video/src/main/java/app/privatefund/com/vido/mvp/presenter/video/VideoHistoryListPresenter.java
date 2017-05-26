@@ -3,16 +3,17 @@ package app.privatefund.com.vido.mvp.presenter.video;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cgbsoft.lib.R;
+import app.privatefund.com.vido.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.mvp.contract.video.VideoHistoryListContract;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.video.model.VideoHistoryModel;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.tools.DataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import app.privatefund.com.vido.mvp.contract.video.VideoHistoryListContract;
+import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/12 17:41

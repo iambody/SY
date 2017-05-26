@@ -5,11 +5,8 @@ import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.mvp.contract.video.VideoDownloadListContract;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
-import com.cgbsoft.lib.mvp.ui.video.model.VideoDownloadListModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
@@ -20,11 +17,15 @@ import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 import com.lzy.okserver.task.ExecutorWithListener;
+import app.privatefund.com.vido.R;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import app.privatefund.com.vido.mvp.contract.video.VideoDownloadListContract;
+import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/12 17:30

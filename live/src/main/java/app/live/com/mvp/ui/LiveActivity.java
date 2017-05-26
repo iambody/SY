@@ -8,6 +8,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -43,15 +44,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.tencent.TIMMessage;
 import com.tencent.TIMUserProfile;
 import com.tencent.av.TIMAvManager;
-import com.tencent.av.extra.effect.AVVideoEffect;
+//import com.tencent.av.extra.effect.AVVideoEffect;
 import com.tencent.av.sdk.AVAudioCtrl;
 import com.tencent.av.sdk.AVVideoCtrl;
 import com.tencent.av.sdk.AVView;
-import com.tencent.ilivefilter.TILFilter;
+//import com.tencent.ilivefilter.TILFilter;
 import com.tencent.ilivesdk.ILiveCallBack;
 import com.tencent.ilivesdk.ILiveConstants;
 import com.tencent.ilivesdk.ILiveSDK;
@@ -157,7 +159,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
 
     private Dialog mDetailDialog;
 
-    private TILFilter mUDFilter; //美颜处理器
+//    private TILFilter mUDFilter; //美颜处理器
 
 
     private Handler mHandler = new Handler(new Handler.Callback() {
@@ -248,20 +250,20 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
     }
 
     private void initILiveBeauty() {
-        if (null == mUDFilter) {
-            SxbLog.d(TAG, "FILTER->created");
-            mUDFilter = new TILFilter(this);
-            mUDFilter.setFilter(1);
-            mUDFilter.setBeauty(0);
-            mUDFilter.setWhite(0);
+//        if (null == mUDFilter) {
+//            SxbLog.d(TAG, "FILTER->created");
+//            mUDFilter = new TILFilter(this);
+//            mUDFilter.setFilter(1);
+//            mUDFilter.setBeauty(0);
+//            mUDFilter.setWhite(0);
             ILiveSDK.getInstance().getAvVideoCtrl().setLocalVideoPreProcessCallback(new AVVideoCtrl.LocalVideoPreProcessCallback() {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
                 @Override
                 public void onFrameReceive(AVVideoCtrl.VideoFrame var1) {
-                    mUDFilter.processData(var1.data, var1.dataLen, var1.width, var1.height, var1.srcType);
+//                    mUDFilter.processData(var1.data, var1.dataLen, var1.width, var1.height, var1.srcType);
                 }
             });
-        }
+//        }
     }
 
 
@@ -270,12 +272,18 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
         return R.layout.activity_live;
     }
 
+
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void before() {
+        super.before();
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);   // 不锁屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
         checkPermission();
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
         initLiveData();
 
         mLiveHelper = new LiveHelper(this, this);
@@ -293,16 +301,29 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
     private void initLiveData() {
         String liveJsonStr = getIntent().getStringExtra("liveJson");
         JSONObject liveJson = null;
+//        try {
+//            liveJson = new JSONObject(liveJsonStr);
+//            MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
+//            MySelfInfo.getInstance().setJoinRoomWay(false);
+//            CurLiveInfo.setHostID(liveJson.getString("user_id"));
+//            CurLiveInfo.setHostName("nick_name");
+//            CurLiveInfo.setHostAvator("head_image_url");
+//            CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
+//            CurLiveInfo.setMembers(0);
+//            CurLiveInfo.setAdmires(11);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         try {
             liveJson = new JSONObject(liveJsonStr);
-            MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
-            MySelfInfo.getInstance().setJoinRoomWay(false);
-            CurLiveInfo.setHostID(liveJson.getString(""));
-            CurLiveInfo.setHostName("");
+            MySelfInfo.getInstance().setIdStatus(Constants.HOST);
+            MySelfInfo.getInstance().setJoinRoomWay(true);
+            CurLiveInfo.setHostID(AppManager.getUserId(this));
+            CurLiveInfo.setHostName(AppManager.getUserId(this));
             CurLiveInfo.setHostAvator("");
-            CurLiveInfo.setRoomNum(2);
-            CurLiveInfo.setMembers(12);
-            CurLiveInfo.setAdmires(11);
+            CurLiveInfo.setRoomNum(0);
+            CurLiveInfo.setMembers(0);
+            CurLiveInfo.setAdmires(0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -334,15 +355,15 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
         mVideoMemberCtrlView = (LinearLayout) view1.findViewById(R.id.video_member_bottom_layout);
         mHostLeaveLayout = (LinearLayout) view1.findViewById(R.id.ll_host_leave);
 
-        mVideoChat = (TextView) findViewById(R.id.video_interact);
+        mVideoChat = (TextView) view1.findViewById(R.id.video_interact);
 //        mHeartLayout = (HeartLayout) findViewById(R.id.heart_layout);
-        mVideoTime = (TextView) findViewById(R.id.broadcasting_time);
-        mHeadIcon = (ImageView) findViewById(R.id.head_icon);
-        mHostNameTv = (TextView) findViewById(R.id.host_name);
-        tvMembers = (TextView) findViewById(R.id.member_counts);
-        tvAdmires = (TextView) findViewById(R.id.heart_counts);
-        mQualityText = (TextView) findViewById(R.id.quality_text);
-        mQualityCircle = (ImageView) findViewById(R.id.quality_circle);
+        mVideoTime = (TextView) view1.findViewById(R.id.broadcasting_time);
+        mHeadIcon = (ImageView) view1.findViewById(R.id.head_icon);
+        mHostNameTv = (TextView) view1.findViewById(R.id.host_name);
+        tvMembers = (TextView) view1.findViewById(R.id.member_counts);
+        tvAdmires = (TextView) view1.findViewById(R.id.heart_counts);
+        mQualityText = (TextView)view1.findViewById(R.id.quality_text);
+        mQualityCircle = (ImageView) view1.findViewById(R.id.quality_circle);
 
         // 通用对话框初始化
 //        initVoiceTypeDialog();
@@ -351,15 +372,15 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
 //        initMagicDialog();
 
         // 通用按钮初始化
-        findViewById(R.id.speed_test_btn).setOnClickListener(this);
-        findViewById(R.id.log_report).setOnClickListener(this);
-        findViewById(R.id.back_primary).setOnClickListener(this);
+        view1.findViewById(R.id.speed_test_btn).setOnClickListener(this);
+        view1.findViewById(R.id.log_report).setOnClickListener(this);
+        view1.findViewById(R.id.back_primary).setOnClickListener(this);
 
-        btnChageVoice = (TextView) findViewById(R.id.change_voice);
-        btnChangeRole = (TextView) findViewById(R.id.change_role);
-        btnFlash = (TextView) findViewById(R.id.flash_btn);
-        btnFilter = (TextView) findViewById(R.id.tv_filter);
-        btnMagic = (TextView) findViewById(R.id.tv_magic);
+        btnChageVoice = (TextView) view1.findViewById(R.id.change_voice);
+        btnChangeRole = (TextView) view1.findViewById(R.id.change_role);
+        btnFlash = (TextView) view1.findViewById(R.id.flash_btn);
+        btnFilter = (TextView) view1.findViewById(R.id.tv_filter);
+        btnMagic = (TextView) view1.findViewById(R.id.tv_magic);
 
         btnChageVoice.setOnClickListener(this);
         btnChangeRole.setOnClickListener(this);
@@ -367,10 +388,10 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
         btnFilter.setOnClickListener(this);
         btnMagic.setOnClickListener(this);
 
-        mBeautySettings = (LinearLayout) findViewById(R.id.qav_beauty_setting);
-        mBeautyConfirm = (TextView) findViewById(R.id.qav_beauty_setting_finish);
+        mBeautySettings = (LinearLayout) view1.findViewById(R.id.qav_beauty_setting);
+        mBeautyConfirm = (TextView) view1.findViewById(R.id.qav_beauty_setting_finish);
         mBeautyConfirm.setOnClickListener(this);
-        mBeautyBar = (SeekBar) (findViewById(R.id.qav_beauty_progress));
+        mBeautyBar = (SeekBar) (view1.findViewById(R.id.qav_beauty_progress));
         mBeautyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -390,14 +411,14 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
                 mBeautyRate = progress;
                 if (MySelfInfo.getInstance().getBeautyType() == 0) {
                     initILiveBeauty();
-                    mUDFilter.setBeauty(progress * 7 / 100);
+//                    mUDFilter.setBeauty(progress * 7 / 100);
                 } else {
                     if (null != ILiveSDK.getInstance().getAvVideoCtrl())
                         ILiveSDK.getInstance().getAvVideoCtrl().inputBeautyParam(getBeautyProgress(progress));//美颜
                 }
             }
         });
-        mWhiteBar = (SeekBar) (findViewById(R.id.qav_white_progress));
+        mWhiteBar = (SeekBar) (view1.findViewById(R.id.qav_white_progress));
         mWhiteBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -417,7 +438,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
                 mWhiteRate = progress;
                 if (MySelfInfo.getInstance().getBeautyType() == 0) {
                     initILiveBeauty();
-                    mUDFilter.setWhite(progress * 9 / 100);
+//                    mUDFilter.setWhite(progress * 9 / 100);
                 } else {
                     if (null != ILiveSDK.getInstance().getAvVideoCtrl())
                         ILiveSDK.getInstance().getAvVideoCtrl().inputWhiteningParam(getBeautyProgress(progress));//美白
@@ -425,12 +446,12 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             }
         });
 
-        roomId = (TextView) findViewById(R.id.room_id);
+        roomId = (TextView) view1.findViewById(R.id.room_id);
 
         //for 测试用
-        TextView paramVideo = (TextView) findViewById(R.id.param_video);
+        TextView paramVideo = (TextView) view1.findViewById(R.id.param_video);
         paramVideo.setOnClickListener(this);
-        tvTipsMsg = (TextView) findViewById(R.id.qav_tips_msg);
+        tvTipsMsg = (TextView) view1.findViewById(R.id.qav_tips_msg);
         tvTipsMsg.setTextColor(Color.BLACK);
         paramTimer.schedule(task, 1000, 1000);
 
@@ -439,39 +460,39 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             mHostCtrView.setVisibility(View.VISIBLE);
             mNomalMemberCtrView.setVisibility(View.GONE);
             mVideoMemberCtrlView.setVisibility(View.GONE);
-            mRecordBall = (ImageView) findViewById(R.id.record_ball);
-            BtnMic = (TextView) findViewById(R.id.host_mic_btn);
+            mRecordBall = (ImageView) view1.findViewById(R.id.record_ball);
+            BtnMic = (TextView) view1.findViewById(R.id.host_mic_btn);
             // 推流
-            pushBtn = (TextView) findViewById(R.id.push_btn);
+            pushBtn = (TextView) view1.findViewById(R.id.push_btn);
             pushBtn.setVisibility(View.VISIBLE);
             pushBtn.setOnClickListener(this);
             // 录制
-            recordBtn = (TextView) findViewById(R.id.record_btn);
+            recordBtn = (TextView) view1.findViewById(R.id.record_btn);
             recordBtn.setVisibility(View.VISIBLE);
             recordBtn.setOnClickListener(this);
 
             mVideoChat.setVisibility(View.VISIBLE);
 
-            findViewById(R.id.host_message_input).setOnClickListener(this);
-            findViewById(R.id.host_fullscreen_btn).setOnClickListener(this);
-            findViewById(R.id.host_switch_cam).setOnClickListener(this);
-            findViewById(R.id.host_beauty_btn).setOnClickListener(this);
-            findViewById(R.id.host_menu_more).setOnClickListener(this);
+            view1.findViewById(R.id.host_message_input).setOnClickListener(this);
+            view1.findViewById(R.id.host_fullscreen_btn).setOnClickListener(this);
+            view1.findViewById(R.id.host_switch_cam).setOnClickListener(this);
+            view1.findViewById(R.id.host_beauty_btn).setOnClickListener(this);
+            view1.findViewById(R.id.host_menu_more).setOnClickListener(this);
             BtnMic.setOnClickListener(this);
             mVideoChat.setOnClickListener(this);
-            inviteView1 = (TextView) findViewById(R.id.invite_view1);
-            inviteView2 = (TextView) findViewById(R.id.invite_view2);
-            inviteView3 = (TextView) findViewById(R.id.invite_view3);
+            inviteView1 = (TextView) view1.findViewById(R.id.invite_view1);
+            inviteView2 = (TextView) view1.findViewById(R.id.invite_view2);
+            inviteView3 = (TextView) view1.findViewById(R.id.invite_view3);
             inviteView1.setOnClickListener(this);
             inviteView2.setOnClickListener(this);
             inviteView3.setOnClickListener(this);
 
             tvAdmires.setVisibility(View.VISIBLE);
 
-            View view = findViewById(R.id.link_btn);
+            View view = view1.findViewById(R.id.link_btn);
             view.setVisibility(View.VISIBLE);
             view.setOnClickListener(this);
-            view = findViewById(R.id.unlink_btn);
+            view = view1.findViewById(R.id.unlink_btn);
             view.setVisibility(View.VISIBLE);
             view.setOnClickListener(this);
 
@@ -486,23 +507,23 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             mHostCtrView.setVisibility(View.GONE);
             changeCtrlView(bVideoMember);
 
-            BtnMic = (TextView) findViewById(R.id.vmember_mic_btn);
+            BtnMic = (TextView) view1.findViewById(R.id.vmember_mic_btn);
 
-            findViewById(R.id.record_tip).setVisibility(View.GONE);
+            view1.findViewById(R.id.record_tip).setVisibility(View.GONE);
             mHostNameTv.setVisibility(View.VISIBLE);
             initInviteDialog();
-            findViewById(R.id.vmember_close_member_video).setOnClickListener(this);
-            findViewById(R.id.vmember_fullscreen_btn).setOnClickListener(this);
-            findViewById(R.id.member_fullscreen_btn).setOnClickListener(this);
-            findViewById(R.id.vmember_switch_cam).setOnClickListener(this);
-            findViewById(R.id.member_message_input).setOnClickListener(this);
-            findViewById(R.id.member_send_good).setOnClickListener(this);
-            findViewById(R.id.member_menu_more).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_close_member_video).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_fullscreen_btn).setOnClickListener(this);
+            view1.findViewById(R.id.member_fullscreen_btn).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_switch_cam).setOnClickListener(this);
+            view1.findViewById(R.id.member_message_input).setOnClickListener(this);
+            view1.findViewById(R.id.member_send_good).setOnClickListener(this);
+            view1.findViewById(R.id.member_menu_more).setOnClickListener(this);
 
-            findViewById(R.id.vmember_beauty_btn).setOnClickListener(this);
-            findViewById(R.id.vmember_menu_more).setOnClickListener(this);
-            findViewById(R.id.vmember_message_input).setOnClickListener(this);
-            findViewById(R.id.vmember_send_good).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_beauty_btn).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_menu_more).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_message_input).setOnClickListener(this);
+            view1.findViewById(R.id.vmember_send_good).setOnClickListener(this);
             mVideoChat.setVisibility(View.GONE);
 
             List<String> ids = new ArrayList<>();
@@ -510,17 +531,17 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             showHeadIcon(mHeadIcon, CurLiveInfo.getHostAvator());
             mHostNameTv.setText(UIUtils.getLimitString(CurLiveInfo.getHostID(), 10));
 
-            mHostLayout = (LinearLayout) findViewById(R.id.head_up_layout);
+            mHostLayout = (LinearLayout) view1.findViewById(R.id.head_up_layout);
             mHostLayout.setOnClickListener(this);
         }
-        BtnNormal = (TextView) findViewById(R.id.normal_btn);
+        BtnNormal = (TextView) view1.findViewById(R.id.normal_btn);
         BtnNormal.setOnClickListener(this);
-        mFullControllerUi = (FrameLayout) findViewById(R.id.controll_ui);
+        mFullControllerUi = (FrameLayout) view1.findViewById(R.id.controll_ui);
 
         initPushDialog();
         initRecordDialog();
 
-        BtnBack = (TextView) findViewById(R.id.btn_back);
+        BtnBack = (TextView) view1.findViewById(R.id.btn_back);
         BtnBack.setOnClickListener(this);
 
         mListViewMsgItems = (ListView) findViewById(R.id.im_msg_listview);
@@ -812,11 +833,11 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
 //    }
 
     private void initPtuEnv() {
-        AVVideoEffect mEffect = AVVideoEffect.getInstance(LiveActivity.this);
+//        AVVideoEffect mEffect = AVVideoEffect.getInstance(LiveActivity.this);
 
         AVVideoCtrl avVideoCtrl = ILiveSDK.getInstance().getAvVideoCtrl();
-        if (null != avVideoCtrl)
-            avVideoCtrl.setEffect(mEffect);
+//        if (null != avVideoCtrl)
+//            avVideoCtrl.setEffect(mEffect);
     }
 
     /**
@@ -825,9 +846,9 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
     @Override
     public void enterRoomComplete(int id_status, boolean isSucc) {
         // 重置滤镜
-        AVVideoEffect.getInstance(this).setFilter(null);
+//        AVVideoEffect.getInstance(this).setFilter(null);
         // 重置脸萌
-        AVVideoEffect.getInstance(this).setPendant(null);
+//        AVVideoEffect.getInstance(this).setPendant(null);
 
         mRootView.getViewByIndex(0).setRotate(true);
 //        mRootView.getViewByIndex(0).setDiffDirectionRenderMode(AVVideoView.ILiveRenderMode.BLACK_TO_FILL);
@@ -900,12 +921,12 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             finish();
         }
 
-        if (null != mUDFilter && MySelfInfo.getInstance().getBeautyType() == 0) {
-            SxbLog.d(TAG, "FILTER->destory");
-            mUDFilter.setFilter(-1);
-            mUDFilter.destroyFilter();
-            mUDFilter = null;
-        }
+//        if (null != mUDFilter && MySelfInfo.getInstance().getBeautyType() == 0) {
+//            SxbLog.d(TAG, "FILTER->destory");
+//            mUDFilter.setFilter(-1);
+//            mUDFilter.destroyFilter();
+//            mUDFilter = null;
+//        }
 
         //发送
         bInAvRoom = false;
@@ -1415,9 +1436,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
         } else if (i == R.id.tv_magic) {
 //            if (filterDialog != null) magicDialog.show();
 
-        } else if (i == R.id.log_report) {
-//            showLogDialog();
-
         } else if (i == R.id.record_btn) {
             if (!mRecord) {
                 if (recordDialog != null)
@@ -1425,9 +1443,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements LiveCon
             } else {
                 mLiveHelper.stopRecord();
             }
-
-        } else if (i == R.id.speed_test_btn) {
-//            new SpeedTestDialog(this).start();
 
         } else if (i == R.id.invite_view1) {
             inviteView1.setVisibility(View.INVISIBLE);

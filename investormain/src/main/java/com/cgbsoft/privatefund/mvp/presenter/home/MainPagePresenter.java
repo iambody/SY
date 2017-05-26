@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -43,8 +44,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(String s) {
                 JSONArray jsonArray = null;
                 try {
-                    JSONObject js = new JSONObject(s);
-                    jsonArray = js.getJSONArray("result");
+                    jsonArray = new JSONArray(s);
                 } catch (JSONException e) {
                     getView().hasLive(false, null);
                     e.printStackTrace();
@@ -86,6 +86,27 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(String s) {
                 SignInEntity.Result result = new Gson().fromJson(s, SignInEntity.Result.class);
 
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void initDayTask(){
+        ApiClient.initDayTask().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject ja = new JSONObject(s);
+                    JSONArray result = ja.getJSONArray("result");
+                    TaskInfo.saveTaskStatus(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

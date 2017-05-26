@@ -1,7 +1,8 @@
 package app.product.com.mvp.ui;
 
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
-import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
 
@@ -13,6 +14,7 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/20-18:53
  */
+@Route(RouteConfig.GOTOPRODUCTDETAIL)
 public class ProductDetailActivity extends BaseWebViewActivity {
     private CommonShareDialog commonShareDialog;
     private ShareCommonBean shareCommonBean;
@@ -23,7 +25,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
     }
 
     private void shareToC(String action) {
-
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String sharePYQtitle = "";
@@ -38,7 +39,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             link = link.startsWith("/") ? " https://app.simuyun.com/app5.0" + link : " https://app.simuyun.com/app5.0" + "/" + link;
 
             String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-            shareCommonBean = new ShareCommonBean(title, subTitle, link, app.privatefund.com.share.R.drawable.logo);
+            shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
                 @Override
                 public void onclick() {

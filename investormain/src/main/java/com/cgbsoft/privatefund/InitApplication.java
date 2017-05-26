@@ -10,6 +10,7 @@ import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
 import java.util.List;
 
+import app.live.com.mvp.presenter.InitBusinessHelper;
 import app.live.com.utils.SxbLogImpl;
 import app.privatefund.com.im.bean.NewsMessage;
 import app.privatefund.com.im.bean.PdfMessage;
@@ -66,6 +67,7 @@ public class InitApplication extends InvestorAppli {
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
             RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
         }
+
     }
 
     private void initLive() {
@@ -73,7 +75,7 @@ public class InitApplication extends InvestorAppli {
             SxbLogImpl.init(getApplicationContext());
 
             //初始化APP
-//            InitBusinessHelper.initApp(context);
+            InitBusinessHelper.initApp(context);
         }
     }
 

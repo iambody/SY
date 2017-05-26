@@ -4,14 +4,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import  app.privatefund.com.vido.R;
 
-import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.mvp.ui.video.holder.VideoDownloadListHolder;
-import com.cgbsoft.lib.mvp.ui.video.listener.VideoDownloadListListener;
-import com.cgbsoft.lib.mvp.ui.video.model.VideoDownloadListModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
+
+import app.privatefund.com.vido.mvp.ui.video.holder.VideoDownloadListHolder;
+import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
+import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/13 16:59

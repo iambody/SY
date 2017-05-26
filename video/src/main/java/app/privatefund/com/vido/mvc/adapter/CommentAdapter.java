@@ -8,12 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.privatefund.com.vido.R;
-import app.privatefund.com.vido.mvc.bean.Comment;
 
 /**
  * desc  ${DESC}
@@ -22,11 +23,16 @@ import app.privatefund.com.vido.mvc.bean.Comment;
  */
 public class CommentAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Comment> comments;
+    private List<VideoInfoEntity.CommentBean> comments;
 
-    public CommentAdapter(Context context, ArrayList<Comment> comments) {
+    public CommentAdapter(Context context, List<VideoInfoEntity.CommentBean> comments) {
         this.context = context;
         this.comments = comments;
+    }
+
+    public List<VideoInfoEntity.CommentBean> getData() {
+        if (null == comments) return new ArrayList<>();
+        return comments;
     }
 
     @Override
@@ -56,8 +62,8 @@ public class CommentAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        ViewHolder holder =(ViewHolder) view.getTag();
-        if (holder == null){
+        ViewHolder holder = (ViewHolder) view.getTag();
+        if (holder == null) {
             holder = new ViewHolder();
             holder.time = (TextView) view.findViewById(R.id.item_time);
             holder.name = (TextView) view.findViewById(R.id.item_name);
@@ -66,16 +72,16 @@ public class CommentAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        holder.comment.setText(comments.get(position).getCommentContent());
-        holder.name.setText(comments.get(position).getSendName());
-        holder.time.setText(comments.get(position).getCommentTime());
+        holder.comment.setText(comments.get(position).commentContent);
+        holder.name.setText(comments.get(position).sendName);
+        holder.time.setText(comments.get(position).commentTime);
 //        BitmapUtils bu = new BitmapUtils(context);
 //        bu.display(holder.avatar,comments.get(position).getSendAvatar());
-        Imageload.display(context,comments.get(position).getSendAvatar(),holder.avatar);
+        Imageload.display(context, comments.get(position).sendAvatar, holder.avatar);
         return view;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         private ImageView avatar;
         private TextView name;
         private TextView comment;

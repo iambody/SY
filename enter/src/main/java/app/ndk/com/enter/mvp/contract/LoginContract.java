@@ -40,6 +40,10 @@ public interface LoginContract {
          * @param headimgurl
          */
         void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
+        /**
+         * 获取登录公钥
+         */
+        void toGetPublicKey();
 
 //        /**
 //         * 获取融云Token id
@@ -60,5 +64,6 @@ public interface LoginContract {
         void loginFail();
 
         void toBindActivity();
+        void publicKeySuccess(String str);
     }
 }

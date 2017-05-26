@@ -17,8 +17,10 @@ public class AppManager implements AppinfConstant {
     private static SharedPreferences getBasePreference(Context context) {
         return context.getSharedPreferences(USER_SHARE_PREFERENCE_SET, Context.MODE_PRIVATE);
     }
+
     /**
      * 获取是否是理财师的标识
+     *
      * @param context
      * @return
      */
@@ -41,6 +43,13 @@ public class AppManager implements AppinfConstant {
      */
     public static String getUserAccount(Context scContext) {
         return getBasePreference(scContext).getString(USERACCOUNT, "");
+    }
+
+    /**
+     * 获取用户 的翻转V2TOKEN
+     */
+    public static String getUserV2Token(Context context) {
+        return getBasePreference(context).getString(USERV2TOKEN, "");
     }
 
     /**

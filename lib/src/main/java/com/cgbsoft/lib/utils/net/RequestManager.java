@@ -26,6 +26,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -574,6 +575,11 @@ interface RequestManager {
     @POST(NetConfig.MALL.MALL_SET_DEFAULT)
     Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
 
+
+    //获取直播签名
+    @GET(NetConfig.LIVE.GET_LIVE_SIGN)
+    Observable<ResponseBody> getLiveSign(@QueryMap Map<String, String> paramsMap);
+
     //获取房间ID
     @GET(NetConfig.LIVE.GET_ROOM_NUM)
     Observable<ResponseBody> getRoomNum(@QueryMap Map<String, String> paramsMap);
@@ -627,5 +633,18 @@ interface RequestManager {
     //云豆充值
     @GET(NetConfig.PAY.YD_RECHARGE)
     Observable<ResponseBody> ydRecharge(@QueryMap Map<String, String> paramsMap);
+
+    //获取每日任务完成情况
+    @GET(NetConfig.TASK.TASK_LIST)
+    Observable<ResponseBody> getDayTask(@QueryMap Map<String, String> paramsMap);
+
+    //添加云豆
+    @FormUrlEncoded
+    @POST(NetConfig.TASK.GET_COIN)
+    Observable<ResponseBody> taskAddCoin(@FieldMap Map<String, String> paramsMap);
+
+    //登录前获取公钥
+    @GET(NetConfig.AUTHOR.GET_PUBLIC_KEY)
+    Observable<ResponseBody> getPublicKey();
 
 }

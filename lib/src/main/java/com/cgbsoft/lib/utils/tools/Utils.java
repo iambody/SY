@@ -472,7 +472,16 @@ public class Utils {
             }
         }
     }
-
+    /**
+     * 过滤掉特色字符
+     * @return
+     */
+    public static String replaceSpeialStr(String resouceStr) {
+        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(resouceStr);
+        return m.replaceAll("").trim();
+    }
     /**
      * 是否微信安装了
      *

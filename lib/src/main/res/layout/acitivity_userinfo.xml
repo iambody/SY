@@ -32,7 +32,7 @@
                     android:id="@+id/title_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|center_vertical"
                     android:gravity="center"
                     android:text="@string/fc_college_title_str"
                     android:textColor="@android:color/black"
@@ -43,8 +43,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
                     android:textSize="@dimen/dimens_sp_15"
                     android:visibility="gone"
                     android:text="OK"
@@ -87,7 +88,7 @@
     <!--android:textSize="10sp" />-->
     <!--</LinearLayout>-->
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/menu_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,5 +97,5 @@
         android:layout_marginBottom="75dp"
         android:layout_marginRight="30dp"
         android:src="@drawable/yunjian_c"
-        android:visibility="gone" />
+        android:visibility="gone" />-->
 </RelativeLayout>

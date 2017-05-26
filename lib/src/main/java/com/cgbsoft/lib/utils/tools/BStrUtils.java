@@ -160,6 +160,64 @@ public class BStrUtils {
     }
 
     /**
+     *  对V2接口中获取的token进行处理的操作
+     * @param token
+     * @return
+     */
+    public static  String decodeSimpleEncrypt(String token) {
+        String fir = token.substring(0, 1);
+        String last = token.substring(1, 2);
+        token = token.substring(2, token.length());
+        String result = last + fir + token;
+
+        int total = token.length();
+        int half = Math.round(total / 2);
+        if(total%2 == 0){
+            half = Math.round(total / 2)-1;
+        }
+        token =  replaceBeginAndEnd(token, half);
+        return token;
+    }
+
+
+
+    /**
+     * 将一个数组以某一元素分界，将这个元素之前的部分与之后的部分互换位置
+     * 主要思路: 将之前的部分与之后的部分分别逆序，再将整体逆序即可
+     *
+     * @param str 要进行操作的字符串
+     * @param i 作为分界线的元素的下标
+     * @return 转化之后生成的字符串
+     */
+    public static String replaceBeginAndEnd(String str, int i) {
+        if (str == null || i < 0 || str.length() <= i) {
+            return str;
+        }
+        char[] chars = str.toCharArray();
+        reverseCharArray(chars, 0, i - 1);
+        reverseCharArray(chars, i + 1, chars.length - 1);
+        reverseCharArray(chars, 0, chars.length - 1);
+        return new String(chars);
+    }
+    /**
+     * 用来翻转一个数组的某一部分
+     *
+     * @param charArray 要进行操作的数组
+     * @param begin 要翻转的部分第一个元素的下标
+     * @param end 要翻转的部分最后一个元素的下标
+     */
+    public static void reverseCharArray(char[] charArray, int begin, int end) {
+        char tmp;
+        while (begin < end) {
+            tmp = charArray[begin];
+            charArray[begin] = charArray[end];
+            charArray[end] = tmp;
+            begin++;
+            end--;
+        }
+    }
+
+    /**
      * 去掉小数后面的0
      */
     public static String replacePoint(String count) {

@@ -26,7 +26,6 @@ public class DaoMaster extends AbstractDaoMaster {
         ToCBeanDao.createTable(db, ifNotExists);
         UserInfoDao.createTable(db, ifNotExists);
         VideoInfoDao.createTable(db, ifNotExists);
-        DayTaskBeanDao.createTable(db, ifNotExists);
         HistorySearchBeanDao.createTable(db, ifNotExists);
     }
 
@@ -37,7 +36,6 @@ public class DaoMaster extends AbstractDaoMaster {
         ToCBeanDao.dropTable(db, ifExists);
         UserInfoDao.dropTable(db, ifExists);
         VideoInfoDao.dropTable(db, ifExists);
-        DayTaskBeanDao.dropTable(db, ifExists);
         HistorySearchBeanDao.dropTable(db, ifExists);
     }
 
@@ -62,7 +60,6 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ToCBeanDao.class);
         registerDaoClass(UserInfoDao.class);
         registerDaoClass(VideoInfoDao.class);
-        registerDaoClass(DayTaskBeanDao.class);
         registerDaoClass(HistorySearchBeanDao.class);
     }
 

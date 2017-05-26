@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/video_product_icon"
+        android:drawablePadding="@dimen/ui_5_dip"
+        android:padding="@dimen/ui_10_dip"
+        android:text="@string/pinglun"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_sp_16"
+        android:textStyle="bold" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#d0d0d0" />
+
+    <RelativeLayout
+        android:id="@+id/video_view_comment_null_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/comment_null"
+            android:text="当前没有该视频的评论"
+            android:textColor="#666"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+    <com.cgbsoft.lib.widget.ls.ListViewForScrollView
+        android:id="@+id/video_view_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#d6d6d6"
+        android:dividerHeight="1px"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_z_dip"
+
+
+        android:src="#d6d6d6" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/video_view_check_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/comment_more"
+            android:gravity="center"
+            android:padding="@dimen/ui_6_dip"
+            android:text=" 查看更多"
+            android:textColor="#f47900"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>

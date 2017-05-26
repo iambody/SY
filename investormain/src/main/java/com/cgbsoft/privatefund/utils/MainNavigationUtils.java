@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
 import app.product.com.mvp.ui.ProductDetailActivity;
 
@@ -19,15 +20,10 @@ public class MainNavigationUtils {
      * 跳转到公用的web
      *
      * @param context
-     * @param url
-     * @param title
-     * @param isShowTitle
      */
-    public static void startCommonWebActivity(Context context, String url, String title, boolean isShowTitle) {
-        Intent intent = new Intent(context, ProductDetailActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, title);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowTitle);
+    public static void startCommonWebActivity(Context context ) {
+        Intent intent = new Intent(context, RiskEvaluationActivity.class);
+
         ((Activity) context).startActivity(intent);
 
     }

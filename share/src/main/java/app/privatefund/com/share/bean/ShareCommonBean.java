@@ -16,8 +16,6 @@ public class ShareCommonBean extends BaseShareBean {
     //网络图片
     private String ShareNetLog;
     private String ShareUrl;
-    //本地图片
-    private int ShareLocalLog;
 
     private boolean isNetLog;
 
@@ -26,21 +24,13 @@ public class ShareCommonBean extends BaseShareBean {
     }
     //微信分享 默认是本地
 
-    public ShareCommonBean(String shareTitle, String shareContent, String shareUrl, int shareLocalLog) {
+    public ShareCommonBean(String shareTitle, String shareContent, String shareUrl, String shareLog) {
         ShareTitle = shareTitle;
         ShareContent = shareContent;
         ShareUrl = shareUrl;
-        ShareLocalLog = shareLocalLog;
+        ShareNetLog = shareLog;
     }
 
-    //微信分享网络的log
-    public ShareCommonBean(String shareTitle, String shareContent, String shareNetLog, String shareUrl, boolean isNetLog) {
-        ShareTitle = shareTitle;
-        ShareContent = shareContent;
-        ShareNetLog = shareNetLog;
-        ShareUrl = shareUrl;
-        this.isNetLog = isNetLog;
-    }
 
     public boolean isNetLog() {
         return isNetLog;
@@ -82,11 +72,4 @@ public class ShareCommonBean extends BaseShareBean {
         ShareUrl = shareUrl;
     }
 
-    public int getShareLocalLog() {
-        return ShareLocalLog;
-    }
-
-    public void setShareLocalLog(int shareLocalLog) {
-        ShareLocalLog = shareLocalLog;
-    }
 }

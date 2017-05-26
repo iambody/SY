@@ -48,7 +48,7 @@ android {
         }
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a"
+            abiFilters "armeabi", "armeabi-v7a","x86_64","x86"
         }
     }
 
@@ -150,6 +150,7 @@ dependencies {
     compile project(':product')
     compile project(':live')
     compile project(':im')
+    compile project(':commonui')
     compile project(':video')
     compile project(':mall')
 }

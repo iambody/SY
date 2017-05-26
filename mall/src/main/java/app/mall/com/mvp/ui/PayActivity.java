@@ -21,10 +21,12 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.widget.MToast;
+import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.iapppay.alpha.interfaces.callback.IPayResultCallback;
 import com.iapppay.alpha.sdk.main.IAppPay;
@@ -49,6 +51,7 @@ import butterknife.OnClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
 
+@Route(RouteConfig.MALL_PAY)
 public class PayActivity extends BaseActivity<PayPresenter> implements PayContract.View {
 
     private ImageView title_left;

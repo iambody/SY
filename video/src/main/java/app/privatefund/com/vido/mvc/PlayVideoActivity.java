@@ -131,7 +131,7 @@ public class PlayVideoActivity extends BaseMvcActivity implements View.OnClickLi
     private String videoName = "";
     private RelativeLayout titleLayout;
     private ListViewForScrollView commentList;
-    private ArrayList<Comment> commentData;
+    private  List<Comment> commentData;
     private TextView creatTime;
     private TextView persenter;
     private LinearLayout presenterLayout;
@@ -714,7 +714,7 @@ public class PlayVideoActivity extends BaseMvcActivity implements View.OnClickLi
                 if (commentData != null && commentData.size() == 4) {
                     commentData.remove(3);
                 }
-                commentAdapter = new CommentAdapter(this, commentData);
+//                commentAdapter = new CommentAdapter(this, commentData);
                 commentList.setAdapter(commentAdapter);
                 creatTime.setText(schoolVideo.getCreateDate() + " | 播放次数 " + schoolVideo.getPlayCount());
 

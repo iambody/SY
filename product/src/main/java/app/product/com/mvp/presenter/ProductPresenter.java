@@ -53,6 +53,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             jsonObject.put("offset", "" + offset * Constant.LOAD_PRODUCT_lIMIT);
             jsonObject.put("limit", Constant.LOAD_PRODUCT_lIMIT + "");
             jsonObject.put("userId", AppManager.getUserId(getContext().getApplicationContext()));
+
             jsonObject.put("series", BStrUtils.StrToJsonArray(series));
             jsonObject.put("orderBy", BStrUtils.StrToJsonArray(orderBy));
             //单选的

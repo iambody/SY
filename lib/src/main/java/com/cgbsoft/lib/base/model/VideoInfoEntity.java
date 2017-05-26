@@ -13,8 +13,8 @@ import java.util.List;
 public class VideoInfoEntity extends BaseResult<VideoInfoEntity.Result> {
 
     public static class Result {
-        public   String videoId;
-        public   Rows rows;
+        public String videoId;
+        public Rows rows;
 
     }
 
@@ -42,6 +42,7 @@ public class VideoInfoEntity extends BaseResult<VideoInfoEntity.Result> {
         public String SDVideoUrl;
         public String HDVideoUrl;
         public List<CommentBean> comment;
+        public List<ProductBean>product;
     }
 
     // 评论的部分
@@ -54,4 +55,20 @@ public class VideoInfoEntity extends BaseResult<VideoInfoEntity.Result> {
         public String commentId;//":105
     }
 
+    public static class ProductBean {
+        public String productId;//":"9b768306e36348319b9f4d3547b3c8a1",
+        public String productName;//":"恒宇天泽长江二十七号私募投资基金",
+        public String incomeMax;//":"7.0%+浮动",
+        public String incomeMin;//":"7.0%+浮动",
+        public String netUnit;//":"7.0%+浮动",
+        public String netAll;//":"7.0%+浮动",
+        public String productType;//":"1",
+        public String remainingAmount;//":3900,
+        public String remainingAmountStr;//":"3900万",
+        public String raiseEndTime;//":"2017-05-26 17:00",
+        public String term;//":"最长60个月",
+        public String buyStart;//":100,
+        public String increaseAmt;//":10,
+        public String schemeId;//":"65b9e07d0337483286819c8878c684c9",
+    }
 }

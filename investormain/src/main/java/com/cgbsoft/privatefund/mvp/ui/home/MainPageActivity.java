@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
@@ -23,15 +24,15 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.service.FloatVideoService;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
-import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 
@@ -42,6 +43,10 @@ import java.util.HashMap;
 
 import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
+import app.live.com.mvp.ui.LiveActivity;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
@@ -85,6 +90,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
+    private LoginHelper loginHelper;
+    private Observable<Integer> showIndexObservable;
 
     @Override
     protected int layoutID() {
@@ -107,6 +114,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
+
+
+        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
+        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                onTabSelected(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         transaction.add(R.id.fl_main_content, mContentFragment);
 
         transaction.commitAllowingStateLoss();
@@ -118,6 +140,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initDialog();
 
         initRongInterface();
+
+        initDayTask();
     }
 
     /**
@@ -128,23 +152,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
         RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
+        initDayTask();
+
     }
 
     /**
      * 各种需要初始化判断是否显示dialog的 eg:风险测评
      */
     private void initDialog() {
+
         //是否需要风险评测d 弹出框
-        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
+        if (TextUtils.isEmpty(AppInfStore.getUserInfo(baseContext).getToC().getCustomerType())) {
             RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
             riskEvaluatDialog.show();
         }
     }
 
     private void loginLive() {
-        LoginHelper loginHelper = new LoginHelper(this, this);
-        //TODO 登录腾讯接口需要调试
-        loginHelper.iLiveLogin("yangyang", "eJxlj8tugzAQRfd8BWJdFfMw4O5aRKv0kco0Uh4b5IAxTlTHgKGQqv-ehESqpY40q3Nm7sy3YZqmtXj9uCV5fuiEytQoqWXemRawbv6glLzIiMq8pvgH6SB5QzNSKtpM0IEQugDoDi*oULzkV2Mkgp1bM9pin00xlxX*ad4NIx-pCmcTfEvW8QzHc5LY7LhOS6*IOsjfMXQJeiBdGrRlYj*Nj7gePVlvt-uvWXX-XIfLHUt2uErtViw42*QvA1r1GEo1BPa8qoZlsIJ9nG*0SMU-6fUg5CMQokj-qqdNyw9iElzgQMf1wLks48f4BfRDX1Y_");
+        loginHelper = new LoginHelper(this, this);
+        loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 
     @Override
@@ -200,6 +226,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
                 break;
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        int index = getIntent().getIntExtra("index", 0);
+        onTabSelected(index);
+
     }
 
     int switchID = -1;
@@ -301,6 +335,39 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         });
     }
 
+    private void initPlatformCustomer() {
+            Log.e("MainPageActivity", "start checkKefu()");
+            if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+                List<Conversation> conversationList =RongIMClient.getInstance().getConversationList();
+                if (conversationList != null) {
+                    for (int i = 0; i < conversationList.size(); i++) {
+                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+                            return;
+                        }
+                    }
+                }
+
+                ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+                    @Override
+                    protected void onEvent(String s) {
+                        List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                        if (null != conversationList) {
+                            Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
+                        }
+                        if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+//                            EventBus.getDefault().post(new RefreshKefu());
+                        }
+                        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+                    }
+
+                    @Override
+                    protected void onRxError(Throwable error) {
+                        Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
+                    }
+                });
+            }
+    }
+
     private void gesturePasswordJumpPage() {
         if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
             /*Intent intent = new Intent(context, GestureVerifyActivity.class);
@@ -341,9 +408,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
+            Intent intent = new Intent(this, LiveActivity.class);
+            intent.putExtra("liveJson", liveJsonData.toString());
+            startActivity(intent);
 
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -366,16 +437,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        startActivity(intent);
     }
 
+
+    private void initDayTask() {
+        getPresenter().initDayTask();
+    }
+
+    @Override
+    public void getLiveSignSuc(String sign) {
+        loginHelper.iLiveLogin(AppManager.getUserId(this), sign);
+    }
+
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
             try {
-                liveTitle.setText(jsonObject.getString("a"));
-
-//                liveIcon
-
+                liveTitle.setText(jsonObject.getString("title"));
+                Imageload.display(this, jsonObject.getString("image"), liveIcon);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -385,4 +464,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
     }
+
+    private void SsetBottomNavigation(){
+//        bottomNavigationBar.
+    }
+
+
 }

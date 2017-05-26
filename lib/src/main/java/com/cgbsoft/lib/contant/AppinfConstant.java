@@ -34,6 +34,10 @@ public interface AppinfConstant {
      */
     String USERTOKENSP = "usertokensp";
     /**
+     * 存储用户的v2token
+     */
+    String USERV2TOKEN="userv2token";
+    /**
      * 是否登录
      */
     String ISLOGIN = "isloginsp";

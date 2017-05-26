@@ -474,4 +474,11 @@ public class DataStatistApiParam{
         DataStatisticsUtils.push(BaseApplication.getContext(), data3);
     }
 
+    public static void onClickLiveRoomHeadImageToB(String videoName) {
+
+    }
+
+    public static void onClickLiveRoomHeadImageToC(String videoName) {
+
+    }
 }
