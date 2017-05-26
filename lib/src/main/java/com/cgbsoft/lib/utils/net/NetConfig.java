@@ -1,8 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
 /**
- *  * Created by xiaoyu.zhang on 2016/11/8 17:19
- *  
+ * Created by xiaoyu.zhang on 2016/11/8 17:19
  */
 public class NetConfig {
     public static final boolean isLocal = true;
@@ -24,8 +23,6 @@ public class NetConfig {
     public static final String API_URL = "api";
     public static final String LIVE_URL = "zhibo";
     public static final String AUTH_URL = "auth";
-
-    public static final String API_URL_V2 = "api/v2";
 
     // 基本传输结构
     public static class DefaultParams {
@@ -54,6 +51,29 @@ public class NetConfig {
     static class API {
         //客户风险评测提交接口
         static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
+
+        // 获取群组列表
+        static final String CHATE_GROUP_LIST = API_URL + "/chat/groupList";
+
+        // 用户手机号码
+        static final String GROUP_MEMBER_PHONE = API_URL + "/chat/memberPhoneNumber";
+
+        // 群成员
+        static final String GROUP_MEMBERS = API_URL + "/chat/groupMembers";
+
+        // 群信息
+        static final String GROUP_INFO = API_URL + "/chat/groupInformation";
+    }
+
+    static class Auth {
+        //获取容云token
+        static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+        // 获取融云用户信息
+        static final String RONGYUN_USERINFO = AUTH_URL + "/rc/userinfo";
+        //获取平台客服聊天
+        static final String PLATFORM_CUSTOMER = AUTH_URL + "/rc/greetingmessage";
+        //获取机构经理的聊天
+        static final String ORIGNATION_MANAGER = AUTH_URL +  "/rc/managerinfo";
     }
 
     static class MALL {

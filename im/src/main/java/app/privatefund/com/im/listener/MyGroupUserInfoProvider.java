@@ -1,6 +1,13 @@
 package app.privatefund.com.im.listener;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,34 +29,27 @@ public class MyGroupUserInfoProvider implements RongIM.GroupUserInfoProvider {
 
     @Override
     public GroupUserInfo getGroupUserInfo(final String groupID, final String userId) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            System.out.println("--------groupID=" + groupID + "--------userId==" + userId);
-            jsonObject.put("uid", userId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        final GroupUserInfo[] userInfo = new GroupUserInfo[1];
-        final String[] name = new String[1];
-        final String[] portraitUri = new String[1];
-//        new RCUserInfoTask(context).start(jsonObject.toString(), new HttpResponseListener() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    Log.i("MyUserInfoListener", "RCUserInfoTask=" + response.toString());
-//                    name[0] = response.getString("name");
-//                    portraitUri[0] = response.getString("portraitUri");
-//                    userInfo[0] = new GroupUserInfo(groupID, userId, name[0]);
-//                    RongIM.getInstance().refreshGroupUserInfoCache(userInfo[0]);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//            }
-//        });
-        return userInfo[0];
+        GroupUserInfo groupUserInfo = new GroupUserInfo(groupID, userId, "");
+        ApiClient.goTestGetRongUserInfo(userId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.i("MyGroupUserInfoProvider", "getGroupUserInfo=" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String imageUrl = jsonObject.getString("portraitUri");
+                    if (TextUtils.isEmpty(imageUrl)) {
+                        imageUrl = NetConfig.defaultRemoteLogin;
+                    }
+                    RongIM.getInstance().refreshGroupUserInfoCache(new GroupUserInfo(groupID, userId, jsonObject.getString("name")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+        return groupUserInfo;
     }
 }

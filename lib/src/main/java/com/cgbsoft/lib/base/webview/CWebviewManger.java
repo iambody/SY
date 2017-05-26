@@ -14,6 +14,8 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -142,8 +144,7 @@ public class CWebviewManger {
         } else if (action.contains("setUpHeadImage")) {// 上传头像
             startImagePage(action);
         } else if (action.contains("scanning")) {
-//            toQrCode();
-            goMyTask();
+            toQrCode();
         } else if (action.contains("toastStatus") || action.equals("toastSuccess")) {
             showToast(action);
         } else if (action.contains("showAlert")) {
@@ -885,7 +886,8 @@ public class CWebviewManger {
     }
 
     private void toMessageList() {
-        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", new Bundle(), Intent.FLAG_ACTIVITY_NEW_TASK);
+        NavigationUtils.startActivityByRouter(context, "immodule_messagelistactivity", null, Intent.FLAG_ACTIVITY_NEW_TASK);
+//        RxBus.get().post(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, true);
     }
 
     private void showToast(String action) {

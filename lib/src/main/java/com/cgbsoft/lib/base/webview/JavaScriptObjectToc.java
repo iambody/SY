@@ -1,14 +1,11 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
@@ -42,8 +39,8 @@ public class JavaScriptObjectToc {
         String token = AppManager.getUserToken(context);
         String userId = AppManager.getUserId(context);
         StringBuffer sb = new StringBuffer();
-        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1");
-        Log.e("getData",sb.toString());
+        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionName(BaseApplication.getContext())).append(":").append("1");
+        Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }
 

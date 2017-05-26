@@ -1,8 +1,5 @@
 package com.cgbsoft.lib;
 
-import android.content.Context;
-import android.support.multidex.MultiDex;
-
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.chenenyu.router.Router;
 
@@ -16,12 +13,22 @@ public class InvestorAppli extends BaseApplication {
 
     private UserInfo userInfo;
 
+    private boolean isRequestCustom;
+
     public UserInfo getUserInfo() {
         return userInfo;
     }
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public boolean isRequestCustom() {
+        return isRequestCustom;
+    }
+
+    public void setRequestCustom(boolean requestCustom) {
+        isRequestCustom = requestCustom;
     }
 
     @Override

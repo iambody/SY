@@ -1,20 +1,16 @@
 package com.cgbsoft.lib;
 
-import android.app.ActivityManager;
-import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.chenenyu.router.Router;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.QbSdk;

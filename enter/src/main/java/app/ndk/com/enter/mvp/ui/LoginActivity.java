@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -37,7 +38,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -80,7 +80,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R2.id.enter_login_wx_bt_lay)
     RelativeLayout enterLoginWxBtLay;
 
-
     private LoadingDialog mLoadingDialog;
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
@@ -103,7 +102,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (AppManager.isAdViser(this)) {
-            //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            // iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
             btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
             btn_al_login.setTextColor(0xff666666);
         } else {
@@ -181,7 +180,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     void loginClick() {//登录
 //        toDataStatistics(1002, 10005, "登录");
         getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), false);
-
     }
 
     private ArrayList<String> picLs = new ArrayList<>();
@@ -194,13 +192,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
         imageSelector.start(LoginActivity.this, REQUEST_CODE);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R2.id.tv_al_register)

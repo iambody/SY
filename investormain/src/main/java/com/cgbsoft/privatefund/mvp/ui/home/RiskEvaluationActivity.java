@@ -15,12 +15,10 @@ import com.cgbsoft.privatefund.R;
 
 import butterknife.BindView;
 
-
 /**
  * 风险承受能力评测 *
  */
 public class RiskEvaluationActivity extends BaseActivity {
-
 
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;

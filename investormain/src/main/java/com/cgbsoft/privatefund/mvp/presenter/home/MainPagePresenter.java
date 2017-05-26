@@ -34,39 +34,6 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     public void getDataList() {
 
     }
-
-    @Override
-    public void getRongToken() {
-        String rongExpired = OtherDataProvider.getRongTokenExpired(BaseApplication.getContext());
-        String rongUID = OtherDataProvider.getRongUid(BaseApplication.getContext());
-        String rongToken = OtherDataProvider.getRongToken(BaseApplication.getContext());
-
-        String userId = AppManager.getUserId(BaseApplication.getContext());
-
-        if (!TextUtils.equals(rongUID, userId) || !TextUtils.equals("2", rongExpired)) {
-            OtherDataProvider.saveRongUid(BaseApplication.getContext(), userId);
-            OtherDataProvider.saveRongExpired(BaseApplication.getContext(), "2");
-
-            String needExpired = TextUtils.equals(rongExpired, "1") ? "1" : null;
-            ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
-                @Override
-                protected void onEvent(String s) {
-                    RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
-                    OtherDataProvider.saveRongToken(BaseApplication.getContext(), result.rcToken);
-                }
-
-                @Override
-                protected void onRxError(Throwable error) {
-
-                }
-            });
-        } else {
-            if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
-
-            }
-        }
-    }
-
     /**
      * 获取直播列表
      */

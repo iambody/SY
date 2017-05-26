@@ -12,6 +12,7 @@ public class ApiBusParam {
 
     /**
      * 设置手势密码
+     *
      * @param userId
      * @param gesturePassword
      * @return
@@ -26,6 +27,7 @@ public class ApiBusParam {
 
     /**
      * 关闭手势密码
+     *
      * @param userId
      * @return
      */
@@ -38,6 +40,7 @@ public class ApiBusParam {
 
     /**
      * 验证登录密码
+     *
      * @param userId
      * @param logPassword
      * @return
@@ -51,6 +54,7 @@ public class ApiBusParam {
 
     /**
      * 风险评测提交
+     *
      * @param userId
      * @param result
      * @param riskEvaluationName

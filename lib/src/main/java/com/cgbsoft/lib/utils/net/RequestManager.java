@@ -3,7 +3,11 @@ package com.cgbsoft.lib.utils.net;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
+import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -98,10 +102,10 @@ interface RequestManager {
      * @param map
      * @return
      */
-    @GET(NetConfig.GET_RONG_TOKEN)
+    @GET(NetConfig.Auth.GET_RONG_TOKEN)
     Observable<BaseResult<RongTokenEntity.Result>> getRongToken(@QueryMap Map<String, String> map);
 
-    @GET(NetConfig.GET_RONG_TOKEN)
+    @GET(NetConfig.Auth.GET_RONG_TOKEN)
     Observable<ResponseBody> getTestRongToken(@QueryMap Map<String, String> map);
 
     /**
@@ -378,6 +382,67 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.API.RISK_EVALUTION)
     Observable<ResponseBody> toTestRiskEvalutionCommit(@FieldMap Map<String, String> paramsMap);
+
+    /**
+     * 获取融云用户信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.RONGYUN_USERINFO)
+    Observable<BaseResult<RongUserEntity.Result>> getRongUserInfo(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.RONGYUN_USERINFO)
+    Observable<ResponseBody> getTestGetRongUserInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群组信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_INFO)
+    Observable<BaseResult<GroupInfoEntity.Result>> getGroupInfo(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_INFO)
+    Observable<ResponseBody> getTestGetGroupInfo(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群成员信息
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBERS)
+    Observable<BaseResult<GroupMemberEntity.Result>> getGroupMember(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBERS)
+    Observable<ResponseBody> getTestGetGroupMember(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取平台客户
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<BaseResult<CommonEntity.Result>> getPlatformCustomer(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
+    Observable<ResponseBody> getTestGetPlatformCustomer(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取机构经理
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
+
 
     //获取产品筛选条件
 

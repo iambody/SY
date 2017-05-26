@@ -65,6 +65,12 @@ public class BaseWebview extends WebView {
         initView(context);
     }
 
+    public BaseWebview(Context context, boolean isInitData) {
+        super(context);
+        this.isInitData = isInitData;
+        initView(context);
+    }
+
     public BaseWebview(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.wcontext = context;
@@ -111,13 +117,10 @@ public class BaseWebview extends WebView {
         } : cWebClient);
     }
 
-
     //进度显示
     private class WVChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-
-
             if (newProgress == 100) {
 //                progressbar.setVisibility(GONE);
             } else {
@@ -129,7 +132,6 @@ public class BaseWebview extends WebView {
 //            if (mListener != null) {
 //                mListener.onProgressChange(view, newProgress);
 //            }
-
             super.onProgressChanged(view, newProgress);
         }
 
@@ -197,8 +199,8 @@ public class BaseWebview extends WebView {
  //                EventBus.getDefault().post(new ShangxueyuanBackBean());
             }
         }, 500);
-
     }
+
     //这个是之前webview需要有的live和认购的特殊回调  @陈龙
     public void setClick(CWebClient.WebviewOnClick click) {
         this.click = click;
