@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -416,10 +415,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         Wechat.ShareParams sp = new Wechat.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);// 一定要设置分享属性
         sp.setTitle(WxShareData.getShareTitle());
-        sp.setText(BStrUtils.isEmpty(WxShareData.getShareContent())?WxShareData.getShareTitle():WxShareData.getShareContent());
+        sp.setText(BStrUtils.isEmpty(WxShareData.getShareContent()) ? WxShareData.getShareTitle() : WxShareData.getShareContent());
         sp.setUrl(WxShareData.getShareUrl());
         sp.setImageData(null);
-        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog())? Constant.SHARE_LOG:WxShareData.getShareNetLog());
+        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog()) ? Constant.SHARE_LOG : WxShareData.getShareNetLog());
 
         sp.setImagePath(null);
 
@@ -443,7 +442,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         sp.setText(WxShareData.getShareContent());
         sp.setUrl(WxShareData.getShareUrl());
         sp.setImageData(null);
-        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog())? Constant.SHARE_LOG:WxShareData.getShareNetLog());
+        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog()) ? Constant.SHARE_LOG : WxShareData.getShareNetLog());
         sp.setImagePath(null);
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享
@@ -459,7 +458,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
+        if (null != commentShareListener) commentShareListener.completShare();
     }
 
     /**
@@ -544,6 +543,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      * 预留的回调接口哦
      */
     public interface CommentShareListener {
-        void onclick();
+        //分享成功
+        void completShare();
     }
 }

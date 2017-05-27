@@ -1,5 +1,6 @@
 package app.product.com.mvp.ui;
 
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.chenenyu.router.annotation.Route;
@@ -18,6 +19,12 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 public class ProductDetailActivity extends BaseWebViewActivity {
     private CommonShareDialog commonShareDialog;
     private ShareCommonBean shareCommonBean;
+
+    @Override
+    protected void data() {
+        super.data();
+        TaskInfo.complentTask("查看产品");
+    }
 
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
@@ -41,9 +48,10 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
             shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
-                @Override
-                public void onclick() {
 
+                @Override
+                public void completShare() {
+                    TaskInfo.complentTask("分享产品");
                 }
             });
             commonShareDialog.show();

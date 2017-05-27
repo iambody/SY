@@ -8,6 +8,9 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -86,6 +89,17 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
                 toast.show();
             }
             oneTime = twoTime;
+        }
+    }
+
+    protected String getV2String(String resultStr) {
+
+        try {
+            JSONObject obj = new JSONObject(resultStr);
+            return obj.getString("result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 

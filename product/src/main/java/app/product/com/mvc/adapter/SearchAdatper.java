@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -354,7 +354,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                                 break;
                             case XUN_ITEM:
 
-                                String informationUrl = "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
+                                String informationUrl = BaseWebNetConfig.baseParentUrl+"discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
                                 NavigationUtils.startVideoInformationActivityu(context, informationUrl, resultBean.getTitle());
 //                                NavigationUtils.startZiXunActivity(context, resultBean);
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
@@ -365,10 +365,10 @@ public class SearchAdatper extends RecyclerView.Adapter {
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.INFOMATION, resultBean);
                                 String url;
                                 if (TextUtils.equals("1", resultBean.getIsMore())) {
-                                    url = "https://app.simuyun.com/app5.0/apptie/notice_toB.html?id=" + resultBean.getCategoryId();
+                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_toB.html?id=" + resultBean.getCategoryId();
 
                                 } else {
-                                    url = "https://app.simuyun.com/app5.0/apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
+                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }
                                 HashMap hashMap = new HashMap();
                                 hashMap.put(WebViewConstant.push_message_url, url);

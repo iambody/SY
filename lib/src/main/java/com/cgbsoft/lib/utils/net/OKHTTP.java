@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.tools.NetUtils;
@@ -83,6 +82,10 @@ public class OKHTTP {
             Request.Builder builder = originalRequest.newBuilder();
             builder.addHeader(NetConfig.DefaultParams.uid, uid);
             builder.addHeader(NetConfig.DefaultParams.token, token);
+            //*******V2测试**
+            builder.addHeader(NetConfig.DefaultParams.dev, "DEBUG");
+            builder.addHeader(NetConfig.DefaultParams.client, AppManager.isInvestor(context) ? "C" : "B");
+            //*******V2测试**
             builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
             builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");

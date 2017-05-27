@@ -9,7 +9,7 @@ public class NetConfig {
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
 //    private static final String START_APP = "https://app";
-    private static final String START_APP = "https://app";
+    private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -28,11 +28,13 @@ public class NetConfig {
 
     // 基本传输结构
     public static class DefaultParams {
-        public static final String token = "token";
+        public static final String client = "client";
         public static final String uid = "adviserId";
         public static final String deviceId = "deviceId";
         public static final String appVersion = "version";
         public static final String appPlatform = "appPlatform";
+        public static final String token = "token";
+        public static final String dev = "dev";
     }
 
     //登录
