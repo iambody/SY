@@ -60,12 +60,15 @@ public class ToCBean {
     private int isEvaluated;
     private String customerRiskEvaluation;
     private String stockAssetsImage;
-    @Generated(hash = 1737232974)
+    private String gesturePassword;
+    private String gestureSwitch;
+    @Generated(hash = 1018212650)
     public ToCBean(String id, String customerName, String customerType, String stockAssetsTime, String riskEvaluationIdnum,
             String bandingAdviserId, String riskEvaluationPhone, String bandingTime, String customerState, String customerIdPhoto,
             String investmentType, String customerPhone, String stockAssetsId, String assetsCertificationImage,
             String riskEvaluationName, String customerIdNumber, String customerIdType, int stockAssetsStatus,
-            int assetsCertificationStatus, int isEvaluated, String customerRiskEvaluation, String stockAssetsImage) {
+            int assetsCertificationStatus, int isEvaluated, String customerRiskEvaluation, String stockAssetsImage,
+            String gesturePassword, String gestureSwitch) {
         this.id = id;
         this.customerName = customerName;
         this.customerType = customerType;
@@ -88,6 +91,8 @@ public class ToCBean {
         this.isEvaluated = isEvaluated;
         this.customerRiskEvaluation = customerRiskEvaluation;
         this.stockAssetsImage = stockAssetsImage;
+        this.gesturePassword = gesturePassword;
+        this.gestureSwitch = gestureSwitch;
     }
     @Generated(hash = 1961999522)
     public ToCBean() {
@@ -224,4 +229,17 @@ public class ToCBean {
     public void setStockAssetsImage(String stockAssetsImage) {
         this.stockAssetsImage = stockAssetsImage;
     }
+    public String getGesturePassword() {
+        return this.gesturePassword;
+    }
+    public void setGesturePassword(String gesturePassword) {
+        this.gesturePassword = gesturePassword;
+    }
+    public String getGestureSwitch() {
+        return this.gestureSwitch;
+    }
+    public void setGestureSwitch(String gestureSwitch) {
+        this.gestureSwitch = gestureSwitch;
+    }
+
 }

@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
@@ -80,10 +81,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 //        addSubscription(ApiClient.toV2TestLogin(RsaStr).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                //
                 LogUtils.Log("login", s);
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), loginBean.token);
+                AppInfStore.saveUserId(getContext(), loginBean.userId);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                 AppInfStore.saveUserAccount(getContext().getApplicationContext(), un);
                 Log.i("LoginPresenter", "-------userid=" + loginBean.userId + "------rongYunToken=" + loginBean.token);

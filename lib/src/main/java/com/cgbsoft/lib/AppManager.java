@@ -106,6 +106,14 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 判断用户是否首次登录
+     * @param context
+     */
+    public static boolean getUserFirstLogin(Context context) {
+        return getBasePreference(context).getBoolean(USER_FIRST_LOGIN.concat(getUserId(context)), false);
+    }
+
+    /**
      * 获取融云token有效期
      * @param context
      * @return

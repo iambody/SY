@@ -18,6 +18,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -254,6 +255,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this),
+                AppManager.getUserAccount(this).equals(et_al_username.getText().toString()))) {
+            finish();
+            return;
+        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }

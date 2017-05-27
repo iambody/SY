@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -30,14 +29,11 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import app.privatefund.com.im.bean.ProductMessage;
-import app.privatefund.com.im.listener.ProductInputModule;
 import butterknife.BindView;
-import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.message.TextMessage;
 import rx.Observable;
 
 public class ConversationActivity extends BaseActivity {

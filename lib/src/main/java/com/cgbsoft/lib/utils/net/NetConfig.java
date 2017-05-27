@@ -9,7 +9,7 @@ public class NetConfig {
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
 //    private static final String START_APP = "https://app";
-    private static final String START_APP = "https://app";
+    private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
@@ -25,10 +25,13 @@ public class NetConfig {
     public static final String AUTH_URL = "auth";
 
     public static final String API_URL_V2 = "api/v2";
+    public static final String LIVE_URL_V2 = "zhibo/v2";
+    public static final String AUTH_URL_V2 = "auth/v2";
 
     // 基本传输结构
     public static class DefaultParams {
         public static final String token = "token";
+        public static final String client = "client";
         public static final String uid = "adviserId";
         public static final String deviceId = "deviceId";
         public static final String appVersion = "version";
@@ -43,14 +46,13 @@ public class NetConfig {
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
-    //获取容云token
-    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
     //客户风险评测提交接口
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
     static class API {
+
         //客户风险评测提交接口
         static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
 
@@ -75,13 +77,14 @@ public class NetConfig {
 
     static class Auth {
         //获取容云token
-        static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+        //获取容云token
+        static final String GET_RONG_TOKEN = AUTH_URL_V2 + "/rc/gettoken";
         // 获取融云用户信息
-        static final String RONGYUN_USERINFO = AUTH_URL + "/rc/userinfo";
+        static final String RONGYUN_USERINFO = AUTH_URL_V2 + "/rc/userinfo";
         //获取平台客服聊天
-        static final String PLATFORM_CUSTOMER = AUTH_URL + "/rc/greetingmessage";
+        static final String PLATFORM_CUSTOMER = AUTH_URL_V2 + "/rc/greetingmessage";
         //获取机构经理的聊天
-        static final String ORIGNATION_MANAGER = AUTH_URL +  "/rc/managerinfo";
+        static final String ORIGNATION_MANAGER = AUTH_URL_V2 +  "/rc/managerinfo";
     }
 
     static class MALL {

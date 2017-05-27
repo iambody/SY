@@ -83,6 +83,7 @@ public class OKHTTP {
             Request.Builder builder = originalRequest.newBuilder();
             builder.addHeader(NetConfig.DefaultParams.uid, uid);
             builder.addHeader(NetConfig.DefaultParams.token, token);
+//            builder.addHeader(NetConfig.DefaultParams.client, AppManager.isAdViser(context) ? "C" : "B");
             builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
             builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
