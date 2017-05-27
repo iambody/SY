@@ -109,6 +109,8 @@ public class NetConfig {
         static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
         //获取视频详情
         static final String GET_VIDEO_INFO = API_URL + information + "/video/2c/5.0";
+        //获取视频详情
+//        static final String GET_VIDEO_INFO = API_URL_V2 + information + "/video/2c";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
