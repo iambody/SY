@@ -62,6 +62,11 @@ public interface AppinfConstant {
      */
     String RONGYUN_TOKEN_EXPIRED = "rongyun_token_expired_sp";
 
+    /**
+     * 用户是否首次登录 和用户名称绑定
+     */
+    String USER_FIRST_LOGIN = "user_first_login";
+
     //产品搜搜记录
     String SOUSOUHISTORY = "historysp";
 

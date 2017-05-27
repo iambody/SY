@@ -184,6 +184,16 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存用户是否首次登录，用用户id区别
+     * @param context
+     */
+    public static void saveUserFirstLogin(Context context, boolean isLogin) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(USER_FIRST_LOGIN.concat(AppManager.getUserId(context)), isLogin);
+        ed.commit();
+    }
+
+    /**
      * 保存是否有用户所属群
      * @param context
      * @return

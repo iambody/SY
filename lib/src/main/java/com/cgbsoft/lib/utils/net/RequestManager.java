@@ -500,7 +500,6 @@ interface RequestManager {
     @GET(NetConfig.Auth.ORIGNATION_MANAGER)
     Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
 
-
     //获取产品筛选条件
     /**
      * 获取产品筛选条件

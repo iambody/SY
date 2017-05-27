@@ -14,11 +14,12 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
- * 产品消息
  * Created by lee on 2016/5/23.
  */
 @MessageTag(value = "YT:productMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class ProductMessage extends MessageContent {
+
+
     private String productName;
     private String productType;
     private String productId;
@@ -40,13 +41,18 @@ public class ProductMessage extends MessageContent {
 
         try {
             jsonStr = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+
+        }
+        try {
             JSONObject jsonObj = new JSONObject(jsonStr);
             productId = jsonObj.optString("productId");
             schemeId = jsonObj.optString("schemeId");
             productName = jsonObj.optString("productName");
             productType = jsonObj.optString("productType");
             typeCode = jsonObj.optString("typeCode");
-        } catch (Exception e) {
+
+        } catch (JSONException e) {
             RLog.e("JSONException", e.getMessage());
         }
 

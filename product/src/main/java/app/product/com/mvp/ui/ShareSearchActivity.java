@@ -127,6 +127,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_henshan)
@@ -146,6 +147,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_songshan)
@@ -165,6 +167,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_kunlunshan)
@@ -184,6 +187,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_huanghe)
@@ -203,6 +207,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_changjiang)
@@ -222,6 +227,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_lanchangjiang)
@@ -241,6 +247,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @OnClick(R2.id.search_yamaxun)
@@ -260,6 +267,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
             i.putExtra("isShare", isShare);
         }
         startActivity(i);
+        finish();
     }
 
     @Override
@@ -324,6 +332,7 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
         }
         // i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TASK);
         startActivity(i);
+        finish();
     }
 
     @Override

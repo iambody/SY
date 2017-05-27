@@ -20,6 +20,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -42,7 +43,7 @@ import butterknife.OnClick;
 /**
  * @author chenlong
  */
-@Route("investornmain_gestureverifyactivity")
+@Route(RouteConfig.VALIDATE_GESTURE_PASSWORD)
 public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View{
     public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";

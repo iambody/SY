@@ -46,6 +46,8 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
         public final static Property IsEvaluated = new Property(19, int.class, "isEvaluated", false, "IS_EVALUATED");
         public final static Property CustomerRiskEvaluation = new Property(20, String.class, "customerRiskEvaluation", false, "CUSTOMER_RISK_EVALUATION");
         public final static Property StockAssetsImage = new Property(21, String.class, "stockAssetsImage", false, "STOCK_ASSETS_IMAGE");
+        public final static Property GesturePassword = new Property(22, String.class, "gesturePassword", false, "GESTURE_PASSWORD");
+        public final static Property GestureSwitch = new Property(23, String.class, "gestureSwitch", false, "GESTURE_SWITCH");
     }
 
 
@@ -82,7 +84,9 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
                 "\"ASSETS_CERTIFICATION_STATUS\" INTEGER NOT NULL ," + // 18: assetsCertificationStatus
                 "\"IS_EVALUATED\" INTEGER NOT NULL ," + // 19: isEvaluated
                 "\"CUSTOMER_RISK_EVALUATION\" TEXT," + // 20: customerRiskEvaluation
-                "\"STOCK_ASSETS_IMAGE\" TEXT);"); // 21: stockAssetsImage
+                "\"STOCK_ASSETS_IMAGE\" TEXT," + // 21: stockAssetsImage
+                "\"GESTURE_PASSWORD\" TEXT," + // 22: gesturePassword
+                "\"GESTURE_SWITCH\" TEXT);"); // 23: gestureSwitch
     }
 
     /** Drops the underlying database table. */
@@ -192,6 +196,16 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
         if (stockAssetsImage != null) {
             stmt.bindString(22, stockAssetsImage);
         }
+ 
+        String gesturePassword = entity.getGesturePassword();
+        if (gesturePassword != null) {
+            stmt.bindString(23, gesturePassword);
+        }
+ 
+        String gestureSwitch = entity.getGestureSwitch();
+        if (gestureSwitch != null) {
+            stmt.bindString(24, gestureSwitch);
+        }
     }
 
     @Override
@@ -295,6 +309,16 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
         if (stockAssetsImage != null) {
             stmt.bindString(22, stockAssetsImage);
         }
+ 
+        String gesturePassword = entity.getGesturePassword();
+        if (gesturePassword != null) {
+            stmt.bindString(23, gesturePassword);
+        }
+ 
+        String gestureSwitch = entity.getGestureSwitch();
+        if (gestureSwitch != null) {
+            stmt.bindString(24, gestureSwitch);
+        }
     }
 
     @Override
@@ -326,7 +350,9 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
             cursor.getInt(offset + 18), // assetsCertificationStatus
             cursor.getInt(offset + 19), // isEvaluated
             cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // customerRiskEvaluation
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21) // stockAssetsImage
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // stockAssetsImage
+            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // gesturePassword
+            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23) // gestureSwitch
         );
         return entity;
     }
@@ -355,6 +381,8 @@ public class ToCBeanDao extends AbstractDao<ToCBean, String> {
         entity.setIsEvaluated(cursor.getInt(offset + 19));
         entity.setCustomerRiskEvaluation(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
         entity.setStockAssetsImage(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setGesturePassword(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
+        entity.setGestureSwitch(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
      }
     
     @Override

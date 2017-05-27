@@ -42,14 +42,14 @@ public class RongConnect {
             AppInfStore.saveUserId(BaseApplication.getContext(), userId);
             AppInfStore.saveRongTokenExpired(BaseApplication.getContext(), 2);
             String needExpired = rongExpired == 1 ? "1" : null;
-            ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
+            ApiClient.getRongToken(needExpired, userId).subscribe(new RxSubscriber<RongTokenEntity.Result>() {
                 @Override
-                protected void onEvent(String s) {
-                    Log.i("RongConnect", "getRongToken=" + s);
-                    RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
-                    AppInfStore.saveRongToken(BaseApplication.getContext(), result.rcToken);
+                protected void onEvent(RongTokenEntity.Result rongTokenEntity) {
+                    Log.i("RongConnect", "getRongToken=" + rongTokenEntity.rcToken);
+//                    RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
+                    AppInfStore.saveRongToken(BaseApplication.getContext(), rongTokenEntity.rcToken);
                     if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
-                        initRongConnect(result.rcToken);
+                        initRongConnect(rongTokenEntity.rcToken);
                     }
                 }
 
@@ -58,6 +58,22 @@ public class RongConnect {
                     Log.e("RongConnect", error.getMessage());
                 }
             });
+//            ApiClient.getTestRongToken(needExpired, userId).subscribe(new RxSubscriber<String>() {
+//                @Override
+//                protected void onEvent(String s) {
+//                    Log.i("RongConnect", "getRongToken=" + s);
+//                    RongTokenEntity.Result result = new Gson().fromJson(s, RongTokenEntity.Result.class);
+//                    AppInfStore.saveRongToken(BaseApplication.getContext(), result.rcToken);
+//                    if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
+//                        initRongConnect(result.rcToken);
+//                    }
+//                }
+//
+//                @Override
+//                protected void onRxError(Throwable error) {
+//                    Log.e("RongConnect", error.getMessage());
+//                }
+//            });
         } else {
             if (SPreference.getUserInfoData(BaseApplication.getContext()) != null) {
                 initRongConnect(AppManager.getRongToken(BaseApplication.getContext()));
