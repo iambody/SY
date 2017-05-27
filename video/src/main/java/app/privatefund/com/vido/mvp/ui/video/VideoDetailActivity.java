@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -224,6 +225,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private boolean isFullscreen, isDisplayCover;
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
     private Observable<Boolean> isPlayVideoLocalDeleteObservable;
+    //监听播放五分钟
+    private Observable<Long>isPlayFiveMinteObservable;
 
     private boolean isOnPause;
     private int onPausePlayStauts = -1;//默认为-1，没在播放为0 在播放为1
@@ -324,6 +327,21 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
             }
         });
+        //播放五分钟的监听
+        isPlayFiveMinteObservable=RxBus.get().register(VIDEO_PLAY5MINUTES_OBSERVABLE,Long.class);
+        isPlayFiveMinteObservable.subscribe(new RxSubscriber<Long>() {
+            @Override
+            protected void onEvent(Long aLong) {
+                TaskInfo.complentTask("查看视频");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -734,6 +752,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 pw_mvv_wait.setVisibility(View.GONE);
                 seekToPlay(playerCurrentTime);
                 isPlaying = true;
+
+
+//                allPlayTime += System.currentTimeMillis() - startPlayTime;
+//                if (allPlayTime > fiveMinutes) {
+//                    RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
+//                }
                 break;
             case 4:
                 if (isOnPause) {

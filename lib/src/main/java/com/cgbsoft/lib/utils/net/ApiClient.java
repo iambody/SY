@@ -116,15 +116,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
-    public static Observable<String> toV2TestLogin(String rsaString) {
+    public static Observable<String > toV2TestLogin(String rsaString) {
    JSONObject obj=new JSONObject();
         try {
             obj.put("sign",rsaString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),obj.toString());
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(body).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 

@@ -18,7 +18,7 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
 
 
-        String ssss = BStrUtils.decodeSimpleEncrypt("ABCDEF");
+        String ssss = BStrUtils.decodeSimpleEncrypt("FEGDABC");
         LogUtils.Log("s", "sssss");
 
     }

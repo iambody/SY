@@ -30,12 +30,13 @@ public class NetConfig {
 
     // 基本传输结构
     public static class DefaultParams {
-        public static final String token = "token";
         public static final String client = "client";
+        public static final String token = "token";
         public static final String uid = "adviserId";
         public static final String deviceId = "deviceId";
         public static final String appVersion = "version";
         public static final String appPlatform = "appPlatform";
+        public static final String dev = "dev";
     }
 
     //登录
