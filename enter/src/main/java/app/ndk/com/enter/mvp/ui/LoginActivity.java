@@ -255,8 +255,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
-        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this),
-                AppManager.getUserAccount(this).equals(et_al_username.getText().toString()))) {
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
             finish();
             return;
         }

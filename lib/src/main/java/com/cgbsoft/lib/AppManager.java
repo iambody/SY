@@ -110,7 +110,7 @@ public class AppManager implements AppinfConstant {
      * @param context
      */
     public static boolean getUserFirstLogin(Context context) {
-        return getBasePreference(context).getBoolean(USER_FIRST_LOGIN.concat(getUserId(context)), false);
+        return getBasePreference(context).getBoolean(USER_FIRST_LOGIN.concat(getUserId(context)), true);
     }
 
     /**
