@@ -73,8 +73,6 @@ public class OKHTTP {
             Context context = BaseApplication.getContext();
             okhttp3.Request originalRequest = chain.request();
 
-//            String uid = SPreference.getUserId(context);
-//            String token = SPreference.getToken(context);
             String uid = AppManager.getUserId(context);
             String token = AppManager.getUserToken(context);
             uid = TextUtils.isEmpty(uid) ? "" : uid;

@@ -26,33 +26,14 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
 
     @Override
     public void modifyUserInfo(HashMap<String, String> hashMap, boolean isFiveTimes) {
-//        ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
-//            @Override
-//            protected void onEvent(CommonEntity.Result result) {
-//                if ("suc".equals(result.results)) {
-//                    getView().modifyUserSuccess(isFiveTimes);
-//                } else {
-//                    getView().modifyUserFailure();
-//                }
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {}
-//        });
-        ApiClient.toTestUpdateUserInfo(hashMap).subscribe(new RxSubscriber<String>() {
+        ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
-            protected void onEvent(String result) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(result);
-                    String results = jsonObject.get("result").toString();
-                    if ("suc".equals(results)) {
-                        getView().modifyUserSuccess(isFiveTimes);
-                    } else {
-                        getView().modifyUserFailure();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            protected void onEvent(CommonEntity.Result result) {
+                String results = result.results;
+                if ("suc".equals(results)) {
+                    getView().modifyUserSuccess(isFiveTimes);
+                } else {
+                    getView().modifyUserFailure();
                 }
             }
 
@@ -61,39 +42,40 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
                 getView().modifyUserFailure();
             }
         });
-    }
-
-    @Override
-    public void validateUserPassword(HashMap<String, String> hashMap) {
-//        ApiClient.validateUserPassword(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//        ApiClient.toTestUpdateUserInfo(hashMap).subscribe(new RxSubscriber<String>() {
 //            @Override
-//            protected void onEvent(CommonEntity.Result result) {
-//                if ("1".equals(result.results)) {
-//                    getView().validatePasswordSuccess();
-//                } else {
-//                    getView().validatePasswordFailure();
+//            protected void onEvent(String result) {
+//                JSONObject jsonObject = null;
+//                try {
+//                    jsonObject = new JSONObject(result);
+//                    String results = jsonObject.get("result").toString();
+//                    if ("suc".equals(results)) {
+//                        getView().modifyUserSuccess(isFiveTimes);
+//                    } else {
+//                        getView().modifyUserFailure();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
 //                }
 //            }
 //
 //            @Override
 //            protected void onRxError(Throwable error) {
-//                getView().validatePasswordError(error.getMessage());
+//                getView().modifyUserFailure();
 //            }
 //        });
-        ApiClient.toTestValidateUserPassword(hashMap).subscribe(new RxSubscriber<String>() {
+    }
+
+    @Override
+    public void validateUserPassword(HashMap<String, String> hashMap) {
+        ApiClient.validateUserPassword(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
-            protected void onEvent(String result) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(result);
-                    String results = jsonObject.get("result").toString();
-                    if ("1".equals(results)) {
-                        getView().validatePasswordSuccess();
-                    } else {
-                        getView().validatePasswordFailure();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            protected void onEvent(CommonEntity.Result result) {
+                String results = result.results;
+                if ("1".equals(results)) {
+                    getView().validatePasswordSuccess();
+                } else {
+                    getView().validatePasswordFailure();
                 }
             }
 
@@ -102,6 +84,28 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
                 getView().validatePasswordError(error.getMessage());
             }
         });
+//        ApiClient.toTestValidateUserPassword(hashMap).subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String result) {
+//                JSONObject jsonObject = null;
+//                try {
+//                    jsonObject = new JSONObject(result);
+//                    String results = jsonObject.get("result").toString();
+//                    if ("1".equals(results)) {
+//                        getView().validatePasswordSuccess();
+//                    } else {
+//                        getView().validatePasswordFailure();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                getView().validatePasswordError(error.getMessage());
+//            }
+//        });
 
     }
 }

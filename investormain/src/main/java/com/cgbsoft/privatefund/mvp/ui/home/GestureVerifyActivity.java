@@ -128,7 +128,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                             @Override
                             public void OnClickPositive() {
                                 super.OnClickPositive();
-                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
+//                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
                                 closeGesturePassword(true);
                             }
                         });

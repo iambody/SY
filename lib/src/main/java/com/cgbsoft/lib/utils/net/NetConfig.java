@@ -20,9 +20,9 @@ public class NetConfig {
 
     public static final String SERVER_IP = "http://pv.sohu.com";
 
-    public static final String API_URL = "api";
-    public static final String LIVE_URL = "zhibo";
-    public static final String AUTH_URL = "auth";
+    public static final String API_URL = "api/v2";
+    public static final String LIVE_URL = "zhibo/v2";
+    public static final String AUTH_URL = "auth/v2";
 
     public static final String API_URL_V2 = "api/v2";
     public static final String LIVE_URL_V2 = "zhibo/v2";
