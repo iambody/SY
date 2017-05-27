@@ -9,19 +9,24 @@ import android.util.Log;
 import android.view.View;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
