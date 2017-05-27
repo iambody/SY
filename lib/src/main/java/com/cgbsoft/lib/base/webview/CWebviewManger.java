@@ -815,6 +815,7 @@ public class CWebviewManger {
     }
 
     private void toQrCode() {
+        NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
 //        Intent intent3 = new Intent(context, CaptureActivity.class);
 //        context.startActivity(intent3);
     }

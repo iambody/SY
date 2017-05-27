@@ -39,6 +39,7 @@ import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
+import com.cn.hugo.android.scanner.QrCodeBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -100,6 +101,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
+    private Observable<QrCodeBean> twoCodeObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
@@ -368,6 +370,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             protected void onRxError(Throwable error) {
             }
         });
+        twoCodeObservable = RxBus.get().register(RxConstant.LOOK_TWO_CODE_OBSERVABLE, QrCodeBean.class);
+        twoCodeObservable.subscribe(new RxSubscriber<QrCodeBean>() {
+            @Override
+            protected void onEvent(QrCodeBean qrCodeBean) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void initPlatformCustomer() {
@@ -428,6 +442,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         if (openMessageListObservable != null) {
             RxBus.get().unregister(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, openMessageListObservable);
+        }
+
+        if (twoCodeObservable != null) {
+            RxBus.get().unregister(RxConstant.LOOK_TWO_CODE_OBSERVABLE, twoCodeObservable);
         }
 
         MainTabManager.getInstance().destory();

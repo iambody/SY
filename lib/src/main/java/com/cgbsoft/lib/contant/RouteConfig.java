@@ -41,4 +41,7 @@ public class RouteConfig {
     public static final String GOTO_APP_RISKEVALUATIONACTIVITY = "app_riskevaluate";
     //video的module的information资讯页
     public static final String GOTO_VIDEO_INFORMATIOON = "video_information";
+
+    // 二维码
+    public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
 }

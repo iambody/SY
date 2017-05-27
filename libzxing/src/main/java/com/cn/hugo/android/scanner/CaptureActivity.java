@@ -18,9 +18,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataUtils;
 import com.cgbsoft.lib.utils.tools.Des3;
+import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.cn.hugo.android.scanner.common.BitmapUtils;
 import com.cn.hugo.android.scanner.config.Config;
@@ -40,7 +42,6 @@ import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.Map;
 
-
 /**
  * This activity opens the camera and does the actual scanning on a background
  * thread. It draws a viewfinder to help the user place the barcode correctly,
@@ -51,6 +52,7 @@ import java.util.Map;
  * 此Activity所做的事： 1.开启camera，在后台独立线程中完成扫描任务；
  * 2.绘制了一个扫描区（viewfinder）来帮助用户将条码置于其中以准确扫描； 3.扫描成功后会将扫描结果展示在界面上。
  */
+@Route(RouteConfig.GOTO_TWO_CODE_ACTIVITY)
 public final class CaptureActivity extends Activity implements
         SurfaceHolder.Callback, View.OnClickListener {
 
