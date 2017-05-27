@@ -815,10 +815,8 @@ public class CWebviewManger {
     }
 
     private void toQrCode() {
-        private void toQrCode() {
-            Intent intent3 = new Intent(context, CaptureActivity.class);
-            context.startActivity(intent3);
-        }
+//        Intent intent3 = new Intent(context, CaptureActivity.class);
+//        context.startActivity(intent3);
     }
 
     private void showComfirmDialog(String action) {
