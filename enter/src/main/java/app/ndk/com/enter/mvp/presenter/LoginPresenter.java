@@ -28,6 +28,8 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.privatefund.com.im.utils.RongConnect;
@@ -72,13 +74,15 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             loadingDialog.dismiss();
             return;
         }
+        HashMap<String ,String>paramMap=new HashMap<>();
+        paramMap.put("sign",RsaStr);
         //todo 测试时候调用该接口，
 //        addSubscription(ApiClient.toTestLogin(un, pwd).subscribe(new RxSubscriber<String>() {
-        //测试V2登录接口
-        addSubscription(ApiClient.toV2TestLogin(RsaStr).subscribe(new RxSubscriber<String>() {
+            //测试V2登录接口
+        addSubscription(ApiClient.toV2Login(paramMap).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(String s)  {
-                //
+            protected void onEvent(String s) {
+//                //
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
                 AppInfStore.saveUserId(getContext(), loginBean.userId);
@@ -121,7 +125,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
     /**
      * 微信登录
-     *
      * @param loadingDialog
      * @param unionid
      * @param sex
@@ -129,30 +132,28 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param headimgurl
      */
     @Override
-    public void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl) {
+    public void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl,String openId,String publicKey) {
         addSubscription(ApiClient.wxTestUnioIDCheck(unionid).flatMap(s -> {
-            WXUnionIDCheckEntity.Result result = new Gson().fromJson(s, WXUnionIDCheckEntity.Result.class);
+            WXUnionIDCheckEntity.Result result = new Gson().fromJson(getV2String(s), WXUnionIDCheckEntity.Result.class);
             if (TextUtils.equals(result.isExist, "0")) {
                 UserInfoDataEntity.Result r = new UserInfoDataEntity.Result();
                 r.token = "-1";
                 return Observable.just(new Gson().toJson(r));
             } else {
-                return ApiClient.toTestWxLogin(sex, nickName, unionid, headimgurl);
+                return ApiClient.toTestWxLogin(getContext(),sex, nickName, unionid, headimgurl,openId,publicKey);
             }
         }).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
+                UserInfoDataEntity.Result result = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
                 if (TextUtils.equals(result.token, "-1")) {
                     loadingDialog.dismiss();
                     builder.setMessage(getContext().getString(R.string.la_cd_content_str, nickName));
                     builder.create().show();
                 } else {
-                    AppInfStore.saveUserId(getContext().getApplicationContext(), result.token);
+                    AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
-                    AppInfStore.saveUserV2Token(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
-
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
@@ -180,10 +181,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param headimgurl
      */
     @Override
-    public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl) {
+    public void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl,String openId,String publicKey) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
-        addSubscription(ApiClient.toTestWxLogin(sex, nickName, unionid, headimgurl).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.toTestWxLogin(getContext(),sex, nickName, unionid, headimgurl,openId,publicKey).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);

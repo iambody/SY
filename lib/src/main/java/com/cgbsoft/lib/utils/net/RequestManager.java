@@ -144,6 +144,10 @@ interface RequestManager {
     @POST(NetConfig.USER.WX_LOGIN_URL)
     Observable<ResponseBody> toTestWxLogin(@FieldMap Map<String, String> paramsMap);
 
+
+    @POST(NetConfig.USER.WX_LOGIN_URL)
+    Observable<ResponseBody> toV2WxLogin(@Body RequestBody paramsbody);
+
     /**
      * 获取协议
      *
@@ -166,6 +170,9 @@ interface RequestManager {
     @POST(NetConfig.USER.REGISTER_URL)
     Observable<ResponseBody> toTestRegister(@FieldMap Map<String, String> paramsMap);
 
+
+    @POST(NetConfig.USER.REGISTER_URL)
+    Observable<ResponseBody> toV2Register(@Body RequestBody paramsMap);
     /**
      * 发送验证码
      *
@@ -179,6 +186,9 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
     Observable<ResponseBody> sendTestCode(@FieldMap Map<String, String> paramsMap);
+
+    @POST(NetConfig.USER.SENDCODE_URL)
+    Observable<ResponseBody> sendV2Code(@Body RequestBody paramsMap);
 
     /**
      * 验证验证码

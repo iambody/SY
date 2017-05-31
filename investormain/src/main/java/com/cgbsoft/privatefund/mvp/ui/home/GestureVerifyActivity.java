@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -128,7 +126,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                             @Override
                             public void OnClickPositive() {
                                 super.OnClickPositive();
-                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
+//                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
                                 closeGesturePassword(true);
                             }
                         });

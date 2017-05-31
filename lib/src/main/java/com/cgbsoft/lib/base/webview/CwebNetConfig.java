@@ -16,7 +16,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 俱乐部
     public static String clubPage;
 
-    public static String pageInit;
+    public static String  pageInit;
 
     public static String productDetail;
 
