@@ -11,6 +11,8 @@
         <activity android:name=".mvc.ui.SearchBaseActivity" />
         <activity android:name=".mvp.ui.ProductDetailActivity" />
         <activity android:name=".mvc.SearchResultListActivity" />
+        <activity android:name=".mvc.ui.SelectProductActivity"/>
+        <activity android:name=".mvp.ui.ShareSearchActivity"/>
     </application>
 
 </manifest>

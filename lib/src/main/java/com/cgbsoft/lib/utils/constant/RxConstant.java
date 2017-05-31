@@ -54,4 +54,6 @@ public interface RxConstant {
 
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
+    String SHARE_PRODUCT_SEND = "share_product_send";
+
 }

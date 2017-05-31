@@ -20,19 +20,23 @@ public class NetConfig {
 
     public static final String SERVER_IP = "http://pv.sohu.com";
 
-    public static final String API_URL = "api";
-    public static final String LIVE_URL = "zhibo";
-    public static final String AUTH_URL = "auth";
+    public static final String API_URL = "api/v2";
+    public static final String LIVE_URL = "zhibo/v2";
+    public static final String AUTH_URL = "auth/v2";
 
     public static final String API_URL_V2 = "api/v2";
+    public static final String LIVE_URL_V2 = "zhibo/v2";
+    public static final String AUTH_URL_V2 = "auth/v2";
 
     // 基本传输结构
     public static class DefaultParams {
+        public static final String client = "client";
         public static final String token = "token";
         public static final String uid = "adviserId";
         public static final String deviceId = "deviceId";
         public static final String appVersion = "version";
         public static final String appPlatform = "appPlatform";
+        public static final String dev = "dev";
     }
 
     //登录
@@ -43,14 +47,13 @@ public class NetConfig {
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip
     static final String GETIP_URL = "cityjson";
-    //获取容云token
-    static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
     //客户风险评测提交接口
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
     static class API {
+
         //客户风险评测提交接口
         static final String RISK_EVALUTION = API_URL + "/riskEvaluation";
 
@@ -65,17 +68,24 @@ public class NetConfig {
 
         // 群信息
         static final String GROUP_INFO = API_URL + "/chat/groupInformation";
+
+        //群成員列表 新接口
+        static final String GROUP_MEMBER_BY_DATE = API_URL + "/chat/groupMembersByDate";
+
+        // 获取热门搜索列表
+        static final String HOT_SEARCH_PRODUCT = API_URL + "/products/hotNames";
     }
 
     static class Auth {
         //获取容云token
-        static final String GET_RONG_TOKEN = AUTH_URL + "/rc/gettoken";
+        //获取容云token
+        static final String GET_RONG_TOKEN = AUTH_URL_V2 + "/rc/gettoken";
         // 获取融云用户信息
-        static final String RONGYUN_USERINFO = AUTH_URL + "/rc/userinfo";
+        static final String RONGYUN_USERINFO = AUTH_URL_V2 + "/rc/userinfo";
         //获取平台客服聊天
-        static final String PLATFORM_CUSTOMER = AUTH_URL + "/rc/greetingmessage";
+        static final String PLATFORM_CUSTOMER = AUTH_URL_V2 + "/rc/greetingmessage";
         //获取机构经理的聊天
-        static final String ORIGNATION_MANAGER = AUTH_URL +  "/rc/managerinfo";
+        static final String ORIGNATION_MANAGER = AUTH_URL_V2 +  "/rc/managerinfo";
     }
 
     static class MALL {
@@ -99,6 +109,8 @@ public class NetConfig {
         static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
         //获取视频详情
         static final String GET_VIDEO_INFO = API_URL + information + "/video/2c/5.0";
+        //获取视频详情
+//        static final String GET_VIDEO_INFO = API_URL_V2 + information + "/video/2c";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
     }
@@ -138,9 +150,9 @@ public class NetConfig {
         // 修改密码
         static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
         // 关联资产
-        static final String RELATED_ASSET_URL = AUTH_URL + user + "/assetCertificate";
+        static final String RELATED_ASSET_URL = AUTH_URL + user + "/connectedMyAsset";
         // 资产证明
-        static final String ASSET_PROVET_URL = AUTH_URL + user + "/connectedMyAsset";
+        static final String ASSET_PROVET_URL = AUTH_URL + user + "/assetCertificate";
         // 更新用户信息
         static final String UPDATE_USER_INFO_URL = AUTH_URL + user + "/updateUserInfo";
         // 验证用户密码

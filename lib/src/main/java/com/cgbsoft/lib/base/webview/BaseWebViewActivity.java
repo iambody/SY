@@ -17,6 +17,7 @@ import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -27,6 +28,7 @@ import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ import rx.Observable;
  *
  * @author chenlong
  */
+@Route(RouteConfig.GOTO_BASE_WEBVIEW)
 public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
     public static final int SAVE_REQUST = 300;
@@ -105,14 +108,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
-    }
-
-    @Override
-    protected void after() {
-        super.after();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
     }
 
     @Override

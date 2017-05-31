@@ -48,11 +48,43 @@ public interface AppinfConstant {
     String RONGYUN_TOKEN = "rongyun_tokoen_sp";
 
     /**
+     * 聊天名称
+     */
+    String CHAT_NAME = "chatName";
+
+    /**
+     * 聊天名称
+     */
+    String CONVERSATION_TYPE = "conversationType";
+
+    /**
      * 融云token有效期
      */
     String RONGYUN_TOKEN_EXPIRED = "rongyun_token_expired_sp";
 
+    /**
+     * 用户是否首次登录 和用户名称绑定
+     */
+    String USER_FIRST_LOGIN = "user_first_login";
+
     //产品搜搜记录
     String SOUSOUHISTORY = "historysp";
 
+    // 机构经理ID
+    String ORG_MANAGER_UID = "managerUid";
+
+    // 机构经理电话
+    String ORG_MANAGER_MOBILE = "managerMobile";
+
+    // 团队长ID
+    String TEAM_MANAGER_UID = "teamManagerUid";
+
+    // 是否有团队长
+    String HAS_TEAM_MANAGER = "hasTeamManage";
+
+    // 是否有机构
+    String HAS_ORG_MANAGER = "hasManage";
+
+    // 是否有用户所属群
+    String HAS_USER_GROUP = "hasGroup";
 }

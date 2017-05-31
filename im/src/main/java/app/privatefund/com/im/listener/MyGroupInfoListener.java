@@ -1,7 +1,6 @@
 package app.privatefund.com.im.listener;
 
 import android.net.Uri;
-import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -27,15 +26,15 @@ public class MyGroupInfoListener implements RongIM.GroupInfoProvider {
     }
 
     public Group getGroupInfo(String groupID) {
-        Group group = new Group(groupID, "", null);
+        final Group[] groups = new Group[1];
         ApiClient.getTestGetGroupInfo(groupID).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.i("MyGroupInfoListener", "RCGroupInfoTask=" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    group.setId(jsonObject.getString("id"));
-                    group.setName(jsonObject.getString("name"));
+                    String id = jsonObject.getString("id");
+                    String name = jsonObject.getString("name");
                     String imageUrl = jsonObject.getString("headImgUrl");
                     if (!TextUtils.isEmpty(imageUrl)) {
                         if (imageUrl.startsWith("[")) {
@@ -44,7 +43,7 @@ public class MyGroupInfoListener implements RongIM.GroupInfoProvider {
                     } else {
                         imageUrl = NetConfig.defaultRemoteLogin;
                     }
-                    group.setPortraitUri(Uri.parse(imageUrl));
+                    Group group = new Group(id, name, Uri.parse(imageUrl));
                     RongIM.getInstance().refreshGroupInfoCache(group);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -55,7 +54,7 @@ public class MyGroupInfoListener implements RongIM.GroupInfoProvider {
             protected void onRxError(Throwable error) {
             }
         });
-        return group;
+        return groups[0];
     }
 
     private String getUrlFromHead(String url) throws JSONException {

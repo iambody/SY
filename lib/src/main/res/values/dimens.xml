@@ -30,6 +30,7 @@
     <dimen name="ui_20_dip">20dip</dimen>
     <dimen name="ui_30_dip">30dip</dimen>
     <dimen name="ui_40_dip">40dip</dimen>
+    <dimen name="ui_45_dip">45dip</dimen>
     <dimen name="ui_50_dip">50dip</dimen>
     <dimen name="ui_60_dip">60dip</dimen>
     <dimen name="ui_6_dip">6dip</dimen>

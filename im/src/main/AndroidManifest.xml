@@ -7,6 +7,38 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <activity
+            android:name="app.privatefund.com.im.MessageListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.cgbsoft.privatefund"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="app.privatefund.com.im.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.cgbsoft.privatefund"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".GroupChatGridListActivity"/>
+        <activity android:name=".GroupChatMemberListActivity"/>
 
         <!-- 容云离线消息推送 -->
         <receiver

@@ -36,16 +36,14 @@ public class MyGroupMembersProvider implements RongIM.IGroupMembersProvider {
 
     @Override
     public void getGroupMembers(String groupId, final RongIM.IGroupMemberCallback iGroupMemberCallback) {
-        ApiClient.getTestGetGroupInfo(groupId).subscribe(new RxSubscriber<String>() {
+        ApiClient.getTestGetGroupMember(groupId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.i(MyGroupMembersProvider.this.getClass().getName(), "getGroupMemberst=" + s);
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    String string = jsonObject.get("result").toString();
-                    if (!TextUtils.isEmpty(string)) {
-                        Gson g = new Gson();
-                        List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {}.getType());
+                    if (!TextUtils.isEmpty(s)) {
+                        Gson g = new Gson();{}
+                        List<GroupMember> datas = g.fromJson(s, new TypeToken<List<GroupMember>>() {}.getType());
                         iGroupMemberCallback.onGetGroupMembersResult(formatGroupInfoToUserList(datas));
                     }
                 } catch (Exception e) {

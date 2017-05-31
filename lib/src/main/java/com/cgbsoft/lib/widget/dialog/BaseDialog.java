@@ -2,7 +2,6 @@ package com.cgbsoft.lib.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -32,11 +31,6 @@ public class BaseDialog extends Dialog {
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-			//透明导航栏
-			if (getWindow() != null)
-				getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		}
-	}
 
+	}
 }

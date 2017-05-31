@@ -1,7 +1,6 @@
 package app.privatefund.com.im.listener;
 
 import android.net.Uri;
-import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -25,7 +24,7 @@ public class MyUserInfoListener implements RongIM.UserInfoProvider {
     @Override
     public UserInfo getUserInfo(final String userId) {
         Log.i(this.getClass().getName(), "getUserInfo");
-        UserInfo userInfo = new UserInfo(userId, "", null);
+        UserInfo[] userInfos = new UserInfo[1];
         ApiClient.goTestGetRongUserInfo(userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -36,9 +35,7 @@ public class MyUserInfoListener implements RongIM.UserInfoProvider {
                     if (TextUtils.isEmpty(imageUrl)) {
                         imageUrl = NetConfig.defaultRemoteLogin;
                     }
-                    userInfo.setUserId(userId);
-                    userInfo.setName(jsonObject.getString("name"));
-                    userInfo.setPortraitUri(Uri.parse(imageUrl));
+                    UserInfo userInfo = new UserInfo(userId, jsonObject.getString("name"), Uri.parse(imageUrl));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -49,6 +46,6 @@ public class MyUserInfoListener implements RongIM.UserInfoProvider {
             protected void onRxError(Throwable error) {
             }
         });
-        return userInfo;
+        return userInfos[0];
     }
 }

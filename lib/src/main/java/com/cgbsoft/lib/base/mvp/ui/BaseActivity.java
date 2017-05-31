@@ -46,7 +46,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用
     private boolean mIsNeedAdapterPhone = true;
-    private boolean mIsNeedGoneNavigationBar;
+    private boolean mIsNeedGoneNavigationBar ;
     private long mExitPressedTime = 0;
 
     protected void onCreate(Bundle savedInstanceState) {

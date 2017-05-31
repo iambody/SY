@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
@@ -41,7 +43,7 @@ import app.product.com.utils.ViewUtil;
 public class SearchAdatper extends RecyclerView.Adapter {
     private Context context;
     private List<SearchResultBean.ResultBean> dataList;
-//    private BitmapUtil bitmapUtil;
+    //    private BitmapUtil bitmapUtil;
     private String keyName;
     private List<String> returnKeys = new ArrayList<>();
     private String currentType;
@@ -345,15 +347,15 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         switch (resultBean.getIsPart()) {
                             case PRODUCT_ITEM:
-                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.getTargetId(),resultBean.getTitle(),200);
+                                ProductNavigationUtils.startProductDetailActivity(context, resultBean.getTargetId(), resultBean.getTitle(), 200);
 //                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.get);
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
                                 break;
                             case XUN_ITEM:
 
-                           String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();
-                                NavigationUtils.startVideoInformationActivityu(context,informationUrl,resultBean.getTitle());
+                                String informationUrl = BaseWebNetConfig.baseParentUrl+"discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
+                                NavigationUtils.startVideoInformationActivityu(context, informationUrl, resultBean.getTitle());
 //                                NavigationUtils.startZiXunActivity(context, resultBean);
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
 //                                NavigationUtils.startVideoInformationActivityu()
@@ -361,6 +363,20 @@ public class SearchAdatper extends RecyclerView.Adapter {
                             case INFO_ITEM:
 //                                NavigationUtils.startMessageActivity(context, resultBean, keyName);
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.INFOMATION, resultBean);
+                                String url;
+                                if (TextUtils.equals("1", resultBean.getIsMore())) {
+                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_toB.html?id=" + resultBean.getCategoryId();
+
+                                } else {
+                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
+                                }
+                                HashMap hashMap = new HashMap();
+                                hashMap.put(WebViewConstant.push_message_url, url);
+                                hashMap.put(WebViewConstant.push_message_title, resultBean.getTitle());
+                                hashMap.put(WebViewConstant.PAGE_SHARE_WITH_EMAIL, true);
+                                hashMap.put(WebViewConstant.RIGHT_SAVE, false);
+                                hashMap.put(WebViewConstant.PAGE_INIT, false);
+                                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                                 break;
                             case VIDEO_ITEM://todo 热门搜索的adapter
 //                                ToolsUtils.toPlayVideoActivity(context, resultBean.getTargetId());
@@ -417,7 +433,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (v.getTag() != null) {
-                        PromptManager.ShowCustomToast(context,"在searchAdapter 里面的 FooterViewHolder 找我填补");
+                        PromptManager.ShowCustomToast(context, "在searchAdapter 里面的 FooterViewHolder 找我填补");
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         List<SearchResultBean.ResultBean> list = hashMap.get(resultBean.getIsPart());
                         Intent intent = new Intent(context, SearchResultListActivity.class);
@@ -768,7 +784,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
 //                    imageView.setImageResource(R.drawable.logoshare);
 //                }
 //            });
-            Imageload.display( context,resultBean.getUrl(),videoImage);
+            Imageload.display(context, resultBean.getUrl(), videoImage);
             timeView.setText(resultBean.getTime());
             boolean titleSuc = ViewUtil.setTextColor(context, headView, returnKeys);
             ViewUtil.setTextColor(context, timeView, returnKeys);

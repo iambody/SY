@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,27 +17,31 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
-import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
+import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
+import com.cn.hugo.android.scanner.QrCodeBean;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tencent.TIMUserProfile;
 
 import org.json.JSONException;
@@ -45,13 +50,21 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
+import app.live.com.mvp.presenter.LoginHelper;
+import app.live.com.mvp.presenter.viewinface.LoginView;
+import app.live.com.mvp.ui.LiveActivity;
+import app.privatefund.com.im.Contants;
+import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.im.listener.MyConnectionStatusListener;
+import app.privatefund.com.im.utils.PushPreference;
+import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -64,8 +77,8 @@ import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
 import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
 
-@Route("investornmain_mainpageactivity")
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView,ProfileView{
+@Route(RouteConfig.GOTOCMAINHONE)
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -94,6 +107,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
+    private Observable<QrCodeBean> twoCodeObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
@@ -122,8 +136,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
 
-
-
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -150,15 +162,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initRongInterface();
 
         initDayTask();
+
+        initPlatformCustomer();
+
+        showInfoDialog();
     }
 
     /**
      * 初始化融云的接口信息
      */
     private void initRongInterface() {
-        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
-        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
-        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), true);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
         initDayTask();
 
@@ -169,7 +185,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      */
     private void initDialog() {
 
-
+        //是否需要风险评测d 弹出框
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
+            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
+            riskEvaluatDialog.show();
+        }
     }
 
     private void loginLive() {
@@ -206,6 +226,26 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
+    private void showInfoDialog() {
+        String pushInfo = PushPreference.getPushInfo(this);
+        if (!TextUtils.isEmpty(pushInfo)) {
+            Gson gson = new Gson();
+            List<SMMessage> smMessageList = gson.fromJson(pushInfo, new TypeToken<List<SMMessage>>() {
+            }.getType());
+            SMMessage smMessage = smMessageList.get(smMessageList.size() == 0 ? 0 : smMessageList.size() - 1);
+            android.os.Message message2 = android.os.Message.obtain();
+            Bundle bundle2 = new Bundle();
+            message2.what = TextUtils.isEmpty(smMessage.getShowType()) ? 0 : Integer.parseInt(smMessage.getShowType());
+            bundle2.putString("jumpUrl", smMessage.getJumpUrl());
+            bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
+            bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
+            bundle2.putString("shareType", smMessage.getShareType());
+            message2.setData(bundle2);
+            ReceiveInfoManager.getInstance().getHandler().sendMessage(message2);
+            PushPreference.savePushInfo(this, "");
+        }
+    }
+
     private void todo() {
 //        if (mContentFragment instanceof StarFragment) {
 //            RxBus.get().post(RELEASE_STAR_OBSERVABLE, true);
@@ -234,22 +274,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-            /**
-             * 设置连接状态变化的监听器.
-             */
-            if (RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus() == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)
-                RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
-        }
-    }
-
-    @Override
     protected void onRestart() {
         super.onRestart();
-        int index = getIntent().getIntExtra("index", 0);
-        onTabSelected(index);
+//        int index = getIntent().getIntExtra("index", 0);
+//        onTabSelected(index);
 
     }
 
@@ -296,7 +324,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                RongIM.getInstance().disconnect();
+                 RongIM.getInstance().disconnect();
                 finish();
             }
 
@@ -325,7 +353,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 Log.i("MainPageActivity", String.valueOf(aBoolean));
-                initPlatformCustomer();
                 baseWebview.loadUrls(WebViewConstant.PAGE_INIT);
             }
 
@@ -351,6 +378,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             protected void onRxError(Throwable error) {
             }
         });
+        twoCodeObservable = RxBus.get().register(RxConstant.LOOK_TWO_CODE_OBSERVABLE, QrCodeBean.class);
+        twoCodeObservable.subscribe(new RxSubscriber<QrCodeBean>() {
+            @Override
+            protected void onEvent(QrCodeBean qrCodeBean) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void initPlatformCustomer() {
@@ -364,7 +403,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                         }
                     }
                 }
-
                 ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
                     @Override
                     protected void onEvent(String s) {
@@ -414,6 +452,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             RxBus.get().unregister(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, openMessageListObservable);
         }
 
+        if (twoCodeObservable != null) {
+            RxBus.get().unregister(RxConstant.LOOK_TWO_CODE_OBSERVABLE, twoCodeObservable);
+        }
+
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         if (isOnlyClose) {
@@ -429,10 +471,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             startActivity(intent);
-
         }
     }
-
 
     @Override
     public void onBackPressed() {

@@ -97,7 +97,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存用户信息
-     *
      * @param context
      * @param userInfo
      */
@@ -106,13 +105,103 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
-     * 得到用户信息
+     * 保存机构经理ID
+     *
      *
      * @param context
      * @return
      */
-    public static UserInfoDataEntity.UserInfo getUserInfo(Context context) {
-        return SPreference.getUserInfoData(context);
+    public static void saveOrgManagerUid(Context context, String uid) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(ORG_MANAGER_UID, uid);
+        ed.commit();
+    }
+
+    /**
+     * 保存机构经理手机号
+     * @param context
+     * @return
+     */
+    public static void saveOrgManagerMobile(Context context, String mobileNumber) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(ORG_MANAGER_MOBILE, mobileNumber);
+        ed.commit();
+    }
+
+    /**
+     * 保存团队长ID
+     * @param context
+     * @return
+     */
+    public static void saveTeamManagerUid(Context context, String teamUid) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(TEAM_MANAGER_UID, teamUid);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有团队长
+     * @param context
+     * @return
+     */
+    public static void saveHasTeamManager(Context context, boolean hasTeamManager) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_TEAM_MANAGER, hasTeamManager);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有机构经理
+     * @param context
+     * @return
+     */
+    public static void saveHasOrgManager(Context context, boolean hasOrgManager) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_ORG_MANAGER, hasOrgManager);
+        ed.commit();
+    }
+
+    /**
+     * 保存聊天名称 －－产品分享需要用到
+     * @param context
+     * @param chatName
+     */
+    public static void saveChatName(Context context, String chatName) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(CHAT_NAME, chatName);
+        ed.commit();
+    }
+
+    /**
+     * 保存聊天名称 －－产品分享需要用到
+     * @param context
+     * @param conversationName
+     */
+    public static void saveConversation(Context context, String conversationName) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(CONVERSATION_TYPE, conversationName);
+        ed.commit();
+    }
+
+    /**
+     * 保存用户是否首次登录，用用户id区别
+     * @param context
+     */
+    public static void saveUserFirstLogin(Context context, boolean isLogin) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(USER_FIRST_LOGIN.concat(AppManager.getUserId(context)), isLogin);
+        ed.commit();
+    }
+
+    /**
+     * 保存是否有用户所属群
+     * @param context
+     * @return
+     */
+    public static void saveHasUserGroup(Context context, boolean hasGroup) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(HAS_USER_GROUP, hasGroup);
+        ed.commit();
     }
 
     //保存数据
@@ -124,7 +213,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产状态
-     *
      * @param context
      * @param stockAssetStaus
      */
@@ -136,7 +224,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产图片信息
-     *
      * @param context
      * @param imageUrl
      */
@@ -148,7 +235,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
-     *
      * @param context
      * @param assetCertificationStatus
      */
@@ -160,7 +246,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明图片信息
-     *
      * @param context
      * @param assetCertificationImageUrl
      */
@@ -172,7 +257,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
-     *
      * @param context
      * @param investmentType
      */
@@ -184,7 +268,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新手势密码值
-     *
      * @param context
      * @param getsturePassword
      */

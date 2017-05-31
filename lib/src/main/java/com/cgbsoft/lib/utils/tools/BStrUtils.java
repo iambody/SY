@@ -2,8 +2,10 @@ package com.cgbsoft.lib.utils.tools;
 /**
  * Created by datutu on 17/3/20.
  */
+
 import android.content.Context;
 import android.widget.TextView;
+
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 
@@ -170,12 +172,12 @@ public class BStrUtils {
         token = token.substring(2, token.length());
         String result = last + fir + token;
 
-        int total = token.length();
+        int total = result.length();
         int half = Math.round(total / 2);
-        if(total%2 == 0){
-            half = Math.round(total / 2)-1;
+        if (total % 2 == 0) {
+            half = Math.round(total / 2) - 1;
         }
-        token =  replaceBeginAndEnd(token, half);
+        token =   replaceBeginAndEnd(result, half);
         return token;
     }
 

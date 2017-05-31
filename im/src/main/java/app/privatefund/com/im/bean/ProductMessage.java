@@ -14,7 +14,6 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
- * 产品消息
  * Created by lee on 2016/5/23.
  */
 @MessageTag(value = "YT:productMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

@@ -11,9 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
-import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import app.privatefund.com.im.R;
 import app.privatefund.com.im.bean.ProductMessage;
@@ -56,9 +60,9 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
         }
         holder.message.setText(content.getProductName());
         if (content.getProductType().equals("2")) {
-            holder.imageView.setBackgroundResource(R.drawable.rivers_large);
+            holder.imageView.setBackgroundResource(R.drawable.ic_rivers_large);
         } else if (content.getProductType().equals("1")) {
-            holder.imageView.setBackgroundResource(R.drawable.mountain_large);
+            holder.imageView.setBackgroundResource(R.drawable.ic_mountain_large);
         } else {
             holder.imageView.setBackgroundResource(R.drawable.moren_large);
         }
@@ -75,12 +79,12 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
     public void onItemClick(View view, int i, ProductMessage productMessage, UIMessage uiMessage) {
         final String schemeId = productMessage.getSchemeId();
         if (!AppManager.isInvestor(view.getContext())) {
-            JSONObject j = new JSONObject();
-            try {
-                j.put("schemeId", schemeId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            JSONObject j = new JSONObject();
+//            try {
+//                j.put("schemeId", schemeId);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 //            new ProductDetailTask(MApplication.mContext).start(j.toString(), new HttpResponseListener() {
 //                @Override
 //                public void onResponse(JSONObject response) {
@@ -99,14 +103,14 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
 //                }
 //            });
         } else {
-//            Intent intent = new Intent(MApplication.mContext, PushMsgActivity.class);
-//            intent.putExtra(Contant.push_message_url, Domain.product + schemeId);
-//            intent.putExtra(Contant.push_message_title, "产品详情");
-//            intent.putExtra(Contant.PAGE_SHOW_TITLE, true);
-//            intent.putExtra(Contant.RIGHT_SAVE, false);
-//            intent.putExtra(Contant.RIGHT_SHARE, false);
-//            intent.putExtra(Contant.PAGE_INIT, false);
-//            MApplication.mCurrentActivityContext.startActivityForResult(intent,300);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.product + schemeId);
+            hashMap.put(WebViewConstant.push_message_title, "产品详情");
+            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
+            hashMap.put(WebViewConstant.RIGHT_SAVE, false);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+            hashMap.put(WebViewConstant.PAGE_INIT, false);
+            NavigationUtils.startActivityByRouter(view.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap, 300);
         }
     }
 

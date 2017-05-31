@@ -48,24 +48,22 @@ public class CNetConfig {
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
-    static class INFORMATION {
-        private static final String information = "/information";
-        //获取学院推荐视频
-        static final String GET_COLLEGE_RECOMMEND_VIDEO = API_URL + information + "/video/recommend/5.0";
-        //获取学院其他视频
-        static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
-        //获取视频详情
-        static final String GET_VIDEO_INFO = API_URL + information + "/video/5.0";
-        //点赞
-        static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
-    }
-
+//    static class INFORMATION {
+//        private static final String information = "/information";
+//        //获取学院推荐视频
+//        static final String GET_COLLEGE_RECOMMEND_VIDEO = API_URL + information + "/video/recommend/5.0";
+//        //获取学院其他视频
+//        static final String GET_COLLEGE_OTHER_VIDEO = API_URL + information + "/videos/5.0";
+//        //获取视频详情
+//        static final String GET_VIDEO_INFO = API_URL + information + "/video/5.0";
+//        //点赞
+//        static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+//    }
+//
     //c端视频播放
     static class VIDEO {
         //获取视频的信息
           static final String GetVideoDetail = API_URL+"/information/video/2c/5.0/";
-
-
     }
 
 }

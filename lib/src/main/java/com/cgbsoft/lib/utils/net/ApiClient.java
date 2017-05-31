@@ -12,7 +12,10 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -36,6 +39,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -114,9 +118,21 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    public static Observable<String > toV2TestLogin(String rsaString) {
+   JSONObject obj=new JSONObject();
+        try {
+            obj.put("sign",rsaString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),obj.toString());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(body).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+
+    }
+
     /**
      * 获取用户信息
-     *
      * @param userid 用户id
      * @return
      */
@@ -572,6 +588,72 @@ public class ApiClient {
     }
 
     /**
+     * 获取群成员 新增接口，返回数据结构不一样
+     *
+     * @param groupId
+     */
+    public static Observable<GroupMemberNewEntity.Result> getGroupMemberNew(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager().getGroupMemberByBytes(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupMemberNew(String groupId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("groupId", groupId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupMemberByBytes(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 获取用户所属群组列表
+     *
+     * @param userId
+     */
+    public static Observable<GroupListEntity.Result> getGroupList(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager().getGroupList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetGroupList(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetGroupList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取用户手机号码
+     *
+     * @param memberId
+     */
+    public static Observable<CommonEntity.Result> getUserPhoneNumber(String memberId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("memberId", memberId);
+        return OKHTTP.getInstance().getRequestManager().getUserPhoneNumber(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetUserPhoneNumber(String memberId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("memberId", memberId);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetUserPhoneNumber(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取热门产品
+     *
+     */
+    public static Observable<CommonEntity.Result> getHotProduct() {
+        Map<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getHotProduct(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<String> getTestGetHotProduct() {
+        Map<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestGetHotProduct(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取平台客户
      *
      * @param userId
@@ -593,11 +675,12 @@ public class ApiClient {
      *
      * @param userId
      */
-//    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("uid", userId);
-//        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
-//    }
+    public static Observable<OrgManagerEntity.Result> getOrgManager(String userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", userId);
+        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
     public static Observable<String> getTestOrgManager(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("uid", userId);
@@ -707,11 +790,11 @@ public class ApiClient {
      * 评论列表
      */
     public static Observable<String> videoCommentLs(String id, String commentId) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("commentId", commentId);
-        map.put("limit", Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        map.put("limit", "" + Contant.VIDEO_COMMENT_LIMIT);
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

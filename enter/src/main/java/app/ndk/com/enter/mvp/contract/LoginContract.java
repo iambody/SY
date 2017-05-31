@@ -23,7 +23,7 @@ public interface LoginContract {
          * @param pwd  密码
          * @param isWx 是否微信登录
          */
-        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
+        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey,boolean isWx);
 
         /**
          * 微信登录
@@ -45,17 +45,17 @@ public interface LoginContract {
          */
         void toGetPublicKey();
 
-        /**
-         * 获取融云Token id
-         * @param userId
-         */
-        void getRongToken(String userId);
-
-        /**
-         * 初始化融云连接
-         * @param RongToken
-         */
-        void initRongConnect(String RongToken);
+//        /**
+//         * 获取融云Token id
+//         * @param userId
+//         */
+//        void getRongToken(String userId);
+//
+//        /**
+//         * 初始化融云连接
+//         * @param RongToken
+//         */
+//        void initRongConnect(String RongToken);
     }
 
     interface View extends BaseView {

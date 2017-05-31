@@ -26,6 +26,12 @@ public class RouteConfig {
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
+    // 选择产品
+    public static final String GOTO_SELECT_PRODUCT = "product_select_product_activity";
+
+    // 基本webview页面
+    public static final String GOTO_BASE_WEBVIEW = "lib_basewebviewactivity";
+
     //充值
     public static final String MALL_PAY = "mall_pay";
 
@@ -35,4 +41,7 @@ public class RouteConfig {
     public static final String GOTO_APP_RISKEVALUATIONACTIVITY = "app_riskevaluate";
     //video的module的information资讯页
     public static final String GOTO_VIDEO_INFORMATIOON = "video_information";
+
+    // 二维码
+    public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
 }

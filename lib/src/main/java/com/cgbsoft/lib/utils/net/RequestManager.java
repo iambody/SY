@@ -4,7 +4,10 @@ import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
+import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
+import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
@@ -18,14 +21,14 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -81,6 +84,13 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.LOGIN_URL)
     Observable<ResponseBody> toTestLogin(@FieldMap() Map<String, String> paramsMap);
+
+    /**
+     * V2
+     */
+//    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
+    Observable<ResponseBody> toTestV2Login(@Body RequestBody paramsMap);
 
     /**
      * 获取用户信息
@@ -420,6 +430,53 @@ interface RequestManager {
     Observable<ResponseBody> getTestGetGroupMember(@QueryMap Map<String, String> map);
 
     /**
+     * 获取用户手机号码
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBER_PHONE)
+    Observable<BaseResult<CommonEntity.Result>> getUserPhoneNumber(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBER_PHONE)
+    Observable<ResponseBody> getTestGetUserPhoneNumber(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取群组成员新的接口，返回数据结构不一样
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.GROUP_MEMBER_BY_DATE)
+    Observable<BaseResult<GroupMemberNewEntity.Result>> getGroupMemberByBytes(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.GROUP_MEMBER_BY_DATE)
+    Observable<ResponseBody> getTestGetGroupMemberByBytes(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取用户所属群组列表
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.CHATE_GROUP_LIST)
+    Observable<BaseResult<GroupListEntity.Result>> getGroupList(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.CHATE_GROUP_LIST)
+    Observable<ResponseBody> getTestGetGroupList(@QueryMap Map<String, String> map);
+
+    /**
+     * 获取热门产品
+     *
+     *  @param map
+     * @return
+     */
+    @GET(NetConfig.API.HOT_SEARCH_PRODUCT)
+    Observable<BaseResult<CommonEntity.Result>> getHotProduct(@QueryMap Map<String, String> map);
+
+    @GET(NetConfig.API.HOT_SEARCH_PRODUCT)
+    Observable<ResponseBody> getTestGetHotProduct(@QueryMap Map<String, String> map);
+
+    /**
      * 获取平台客户
      *
      *  @param map
@@ -437,12 +494,11 @@ interface RequestManager {
      *  @param map
      * @return
      */
-//    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
-//    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
+    @GET(NetConfig.Auth.ORIGNATION_MANAGER)
+    Observable<BaseResult<OrgManagerEntity.Result>> getOrgMnager(@QueryMap Map<String, String> map);
 
     @GET(NetConfig.Auth.ORIGNATION_MANAGER)
     Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
-
 
     //获取产品筛选条件
     /**

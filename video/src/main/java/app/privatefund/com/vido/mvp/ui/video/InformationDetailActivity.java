@@ -1,5 +1,6 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -25,6 +26,12 @@ public class InformationDetailActivity extends BaseWebViewActivity {
     @Override
     protected int layoutID() {
         return R.layout.activity_information_detail;
+    }
+
+    @Override
+    protected void data() {
+        super.data();
+        TaskInfo.complentTask("查看资讯");
     }
 
     @Override
@@ -57,8 +64,13 @@ public class InformationDetailActivity extends BaseWebViewActivity {
 //            https://app.simuyun.com/app5.0/apptie/detail.html?schemeId=04c9dff066ab41499e2a189052ca6d94&type=1&share=1
 //            https://app.simuyun.com/app5.0/discover/details.html?id=cf2e0d629cf143c0b3e5a6f0b2415ded&category=4&share=1
         if (null != commonShareDialog) commonShareDialog = null;
-        ShareCommonBean shareCommonBean = new ShareCommonBean(title, subTitle, link , "");
-         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean,null);
+        ShareCommonBean shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
+        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+            @Override
+            public void completShare() {
+                TaskInfo.complentTask("分享资讯");
+            }
+        });
         commonShareDialog.show();
     }
 

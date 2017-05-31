@@ -19,7 +19,9 @@ import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
 import app.privatefund.com.im.listener.MyReceiveMessageListener;
 import app.privatefund.com.im.listener.NewMessageItemProvider;
 import app.privatefund.com.im.listener.PdfMessageItemProvider;
+import app.privatefund.com.im.listener.ProductInputModule;
 import app.privatefund.com.im.listener.ProductMessageItemProvider;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
 import qcloud.liveold.mvp.utils.SxbLogImpl;
@@ -56,13 +58,14 @@ public class InitApplication extends InvestorAppli {
             RongIM.registerMessageType(ProductMessage.class);
             RongIM.registerMessageType(PdfMessage.class);
             RongIM.registerMessageType(NewsMessage.class);
-            RongIM.getInstance().registerMessageTemplate(new ProductMessageItemProvider());
-            RongIM.getInstance().registerMessageTemplate(new PdfMessageItemProvider());
-            RongIM.getInstance().registerMessageTemplate(new NewMessageItemProvider());
+            RongIM.registerMessageTemplate(new ProductMessageItemProvider());
+            RongIM.registerMessageTemplate(new PdfMessageItemProvider());
+            RongIM.registerMessageTemplate(new NewMessageItemProvider());
             RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
             RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
+            RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
         }
     }
 
