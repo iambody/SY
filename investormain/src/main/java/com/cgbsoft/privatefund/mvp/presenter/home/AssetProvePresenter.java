@@ -29,7 +29,7 @@ public class AssetProvePresenter extends BasePresenterImpl<AssetProveContract.Vi
         ApiClient.assertProve(AppManager.getUserId(getContext()), assertImage, investmentType).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
-                if ("suc".equals(result.results)) {
+                if ("suc".equals(result.result)) {
                     getView().requestSuccess();
                 } else {
                     getView().requestFailure();

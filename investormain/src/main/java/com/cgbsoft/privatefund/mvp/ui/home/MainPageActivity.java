@@ -48,9 +48,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
-import app.live.com.mvp.presenter.LoginHelper;
-import app.live.com.mvp.presenter.viewinface.LoginView;
-import app.live.com.mvp.ui.LiveActivity;
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;

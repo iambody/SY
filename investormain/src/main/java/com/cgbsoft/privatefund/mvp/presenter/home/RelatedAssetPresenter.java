@@ -9,10 +9,6 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.RelativeAssetContract;
-import org.json.JSONObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author chenlong
@@ -29,7 +25,7 @@ public class RelatedAssetPresenter extends BasePresenterImpl<RelativeAssetContra
         ApiClient.relatedAsset(AppManager.getUserId(getContext()), imageUrl).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
-                if ("suc".equals(result.results)) {
+                if ("suc".equals(result.result)) {
                     getView().requestSuccess();
                 } else {
                    getView().requestFailure();

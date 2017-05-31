@@ -26,7 +26,7 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
         ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
-                String results = result.results;
+                String results = result.result;
                 if ("suc".equals(results)) {
                     getView().modifyUserSuccess(isFiveTimes);
                 } else {
@@ -68,7 +68,7 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
         ApiClient.validateUserPassword(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
-                String results = result.results;
+                String results = result.result;
                 if ("1".equals(results)) {
                     getView().validatePasswordSuccess();
                 } else {
