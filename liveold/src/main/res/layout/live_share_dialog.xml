@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/live_share_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00ffffff"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:layout_gravity="bottom"
+        android:background="#f6f6f6">
+
+        <TextView
+            android:id="@+id/share_text"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="分享"
+            android:textColor="#333"
+            android:textSize="17sp" />
+
+        <View
+            android:id="@+id/live_dialog_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/share_text"
+            android:background="#d0d0d0" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_below="@id/live_dialog_line"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/share_weixin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:drawableTop="@drawable/live_wexin_share"
+                android:drawablePadding="9dp"
+                android:textSize="13sp"
+                android:textColor="#333"
+                android:text="微信"/>
+
+            <TextView
+                android:id="@+id/share_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="63dp"
+                android:gravity="center_horizontal"
+                android:drawablePadding="9dp"
+                android:textSize="13sp"
+                android:textColor="#333"
+                android:drawableTop="@drawable/live_pengyouquan_share"
+                android:text="朋友圈"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
