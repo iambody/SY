@@ -522,6 +522,14 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         }
     };
 
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
     private void registerReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION_SURFACE_CREATED);
