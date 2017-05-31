@@ -470,6 +470,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 quiteLivePassively();
             }
 
+
             if (action.equals(Util.ACTION_LIVE_RECEVER_MSG)) {
                 String text = intent.getStringExtra(Util.ACTION_LIVE_SEND_CONTENT);
                 String senderId = intent.getStringExtra(Util.ACTION_LIVE_SEND_ID);
