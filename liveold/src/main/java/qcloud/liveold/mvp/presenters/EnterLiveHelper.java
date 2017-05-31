@@ -338,7 +338,7 @@ public class EnterLiveHelper extends Presenter {
      * 2_2加入一个聊天室
      */
     private void joinIMChatRoom(final int chatRoomId) {
-        String headImageUrl = AppInfStore.getUserInfo(BaseApplication.getContext()).getHeadImageUrl();
+        String headImageUrl = AppManager.getUserInfo(BaseApplication.getContext()).getHeadImageUrl();
         TIMFriendshipManager.getInstance().setFaceUrl(headImageUrl.startsWith("http") ? headImageUrl : NetConfig.UPLOAD_FILE + headImageUrl, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {

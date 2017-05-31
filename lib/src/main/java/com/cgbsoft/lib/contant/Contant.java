@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.contant;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 
 /**
@@ -15,6 +16,6 @@ public class Contant {
     public static final int VIDEO_COMMENT_LIMIT = 20;
 
     public static final String LIVE_SHARE_TITLE = String.format("盈泰财富云财富大讲堂正在直播，%s邀请你来一起看！",
-            AppInfStore.getUserInfo(BaseApplication.getContext()).getNickName() != null ? AppInfStore.getUserInfo(BaseApplication.getContext()).getNickName() : "私募云用户");
+            AppManager.getUserInfo(BaseApplication.getContext()).getNickName() != null ? AppManager.getUserInfo(BaseApplication.getContext()).getNickName() : "私募云用户");
 
 }

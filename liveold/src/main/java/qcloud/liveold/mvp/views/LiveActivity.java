@@ -53,7 +53,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 
-import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -1742,7 +1742,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
         } else if (i == R.id.send_comment) {
             sendViewChange();
-//                String[] param = new String[]{"评论", AppInfStore.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppInfStore.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
+//                String[] param = new String[]{"评论", AppManager.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppManager.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
 //                DataStatisticsUtils.push(LiveActivity.this, DataStatisticsUtils.getParams("1023", "10107", param));
             String videoName = CurLiveInfo.getTitle();
             if (AppManager.isInvestor(LiveActivity.this)) {
@@ -1820,7 +1820,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             //TODO
 //            fragmentTransaction.add(R.id.fragment_contain, new PDFListFragment()).addToBackStack(null);
             fragmentTransaction.commit();
-//                String[] param1 = new String[]{"PDF", AppInfStore.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppInfStore.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
+//                String[] param1 = new String[]{"PDF", AppManager.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppManager.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
 //                HashMap<String, String> params = DataStatisticsUtils.getParams("1023", "10108", param1);
 //                DataStatisticsUtils.push(LiveActivity.this, params);
             String vaName = CurLiveInfo.getTitle();
@@ -1845,7 +1845,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 CurLiveInfo.getShareUrl(),
                 Contant.LIVE_SHARE_TITLE,
                 CurLiveInfo.getSlogan(),
-                AppInfStore.getUserInfo(BaseApplication.getContext()).getHeadImageUrl()
+                AppManager.getUserInfo(BaseApplication.getContext()).getHeadImageUrl()
         );
         liveShareDialog.show();
     }
@@ -1879,7 +1879,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 }
                 getPresenter().hostCloseLive(CurLiveInfo.getRoomNum() + "", AppManager.getUserId(BaseApplication.getContext()));
 
-//                String[] param = new String[]{"关闭", AppInfStore.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppInfStore.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
+//                String[] param = new String[]{"关闭", AppManager.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppManager.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
 //                HashMap<String, String> params = DataStatisticsUtils.getParams("1023", "10109", param);
 //                DataStatisticsUtils.push(LiveActivity.this, params);
                 String videoName = CurLiveInfo.getTitle();
@@ -1926,27 +1926,27 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("user_id", AppManager.getUserId(BaseApplication.getContext()));
-            if (TextUtils.isEmpty(AppInfStore.getUserInfo(LiveActivity.this).getNickName())) {
+            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getNickName())) {
                 hashMap.put("user_name", "私募云用户");
             } else {
-                hashMap.put("user_name", AppInfStore.getUserInfo(LiveActivity.this).getNickName());
+                hashMap.put("user_name", AppManager.getUserInfo(LiveActivity.this).getNickName());
             }
             hashMap.put("room_id", CurLiveInfo.getRoomNum());
             hashMap.put("wechat_id", CurLiveInfo.getRoomNum() + "");
-            if (TextUtils.isEmpty(AppInfStore.getUserInfo(LiveActivity.this).getPhoneNum())) {
+            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getPhoneNum())) {
                 hashMap.put("telephone", "未知");
             } else {
-                hashMap.put("telephone", AppInfStore.getUserInfo(LiveActivity.this).getPhoneNum());
+                hashMap.put("telephone", AppManager.getUserInfo(LiveActivity.this).getPhoneNum());
             }
-//            if (TextUtils.isEmpty(AppInfStore.getUserInfo(LiveActivity.this).getOrganizationName())) {
+//            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getOrganizationName())) {
                 hashMap.put("org_name", "未知");
 //            } else {
-//                hashMap.put("org_name", AppInfStore.getUserInfo(LiveActivity.this).getOrganizationName());
+//                hashMap.put("org_name", AppManager.getUserInfo(LiveActivity.this).getOrganizationName());
 //            }
-//            if (TextUtils.isEmpty(AppInfStore.getUserInfo(LiveActivity.this).getOrganizationId())) {
+//            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getOrganizationId())) {
                 hashMap.put("org_id", "未知");
 //            } else {
-//                hashMap.put("org_id", AppInfStore.getUserInfo(LiveActivity.this).getOrganizationId());
+//                hashMap.put("org_id", AppManager.getUserInfo(LiveActivity.this).getOrganizationId());
 //            }
             hashMap.put("message", msg);
             getPresenter().sendMsg(hashMap);
@@ -2702,8 +2702,8 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     public void sendMsgSuc(String s) {
         mButtonSendMsg.setEnabled(true);
         ChatEntity entity = new ChatEntity();
-        entity.setContext(AppInfStore.getUserInfo(LiveActivity.this).getNickName() + "&" + editCommit.getText().toString());
-        entity.setSenderName(AppInfStore.getUserInfo(LiveActivity.this).getNickName());
+        entity.setContext(AppManager.getUserInfo(LiveActivity.this).getNickName() + "&" + editCommit.getText().toString());
+        entity.setSenderName(AppManager.getUserInfo(LiveActivity.this).getNickName());
         entity.setSendId(AppManager.getUserId(BaseApplication.getContext()));
 
         Log.d(TAG, "showTextMessage  isSelf " + true);
