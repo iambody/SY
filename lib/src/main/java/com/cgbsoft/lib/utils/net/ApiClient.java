@@ -28,7 +28,6 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -727,7 +726,6 @@ public class ApiClient {
 
     /**
      * 获取热门产品
-     *
      */
     public static Observable<CommonEntity.Result> getHotProduct() {
         Map<String, String> map = new HashMap<>();
