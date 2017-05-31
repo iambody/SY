@@ -370,19 +370,15 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i("BaseWebViewActivity", "onCreateOptionsMenu");
         if (hasRightShare || hasRightSave) {
-            menu.clear();
-            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                getMenuInflater().inflate(R.menu.page_menu, menu);
-                MenuItem firstItem = menu.findItem(R.id.firstBtn);
-                MenuItem secItem = menu.findItem(R.id.secondBtn);
-                firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-                firstItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.shape_white);
-                secItem.setVisible(false);
-            }
+            getMenuInflater().inflate(R.menu.page_menu, menu);
+            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            MenuItem secItem = menu.findItem(R.id.secondBtn);
+            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+//            firstItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.fenxiang_share_nor);
+            secItem.setVisible(false);
         }
-        return false;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
