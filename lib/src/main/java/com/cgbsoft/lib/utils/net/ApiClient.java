@@ -252,14 +252,14 @@ public class ApiClient {
     }
 
     public static Observable<String> toTestWxLogin(Context context, String sex, String nickName, String unionid, String headimgurl, String openId, String publicKey) {
-        Map<String, String> map = new HashMap<>();
-        map.put("sex", sex);
-        map.put("nickName", nickName);
-        map.put("unionid", unionid);
-        map.put("headImageUrl", headimgurl);
-        map.put("openId", openId);
-        map.put("recommendId", "");
-        map.put("client", AppManager.isInvestor(context) ? "C" : "B");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("sex", sex);
+//        map.put("nickName", nickName);
+//        map.put("unionid", unionid);
+//        map.put("headImageUrl", headimgurl);
+//        map.put("openId", openId);
+//        map.put("recommendId", "");
+//        map.put("client", AppManager.isInvestor(context) ? "C" : "B");
 
         JSONObject obj = new JSONObject();
         try {
@@ -313,10 +313,6 @@ public class ApiClient {
     }
 
     public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("userName", userName);
-//        map.put("password", pwdMd5);
-//        map.put("captcha", code);
         JSONObject object = new JSONObject();
         try {
             object.put("userName", userName);
@@ -342,9 +338,6 @@ public class ApiClient {
     }
 
     public static Observable<String> sendTestCode(String phone, int which) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("phone", phone);
-//        map.put("checkPhoneDuplicate", String.valueOf(which));
         JSONObject object = new JSONObject();
         try {
             object.put("phone", phone);
