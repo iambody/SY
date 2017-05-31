@@ -45,12 +45,12 @@ public class AppManager implements AppinfConstant {
         return getBasePreference(scContext).getString(USERACCOUNT, "");
     }
 
-    /**
-     * 获取用户 的翻转V2TOKEN
-     */
-    public static String getUserV2Token(Context context) {
-        return getBasePreference(context).getString(USERV2TOKEN, "");
-    }
+//    /**
+//     * 获取用户 的翻转V2TOKEN
+//     */
+//    public static String getUserV2Token(Context context) {
+//        return getBasePreference(context).getString(USERV2TOKEN, "");
+//    }
 
     /**
      * 获取用户id

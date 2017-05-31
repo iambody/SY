@@ -28,7 +28,7 @@ public interface LoginContract {
         /**
          * 微信登录
          */
-        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl);
+        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl,String openid,String toWxLogin);
 
         /**
          * 微信登录
@@ -39,7 +39,7 @@ public interface LoginContract {
          * @param nickName
          * @param headimgurl
          */
-        void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl);
+        void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl,String openid,String toWxLogin);
         /**
          * 获取登录公钥
          */

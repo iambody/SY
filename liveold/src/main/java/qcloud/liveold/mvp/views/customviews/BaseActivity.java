@@ -7,10 +7,10 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.cgbsoft.privatefund.live.model.MySelfInfo;
-import com.cgbsoft.privatefund.live.utils.Constants;
-import com.cgbsoft.privatefund.live.utils.LogConstants;
-import com.cgbsoft.privatefund.live.utils.SxbLog;
+import qcloud.liveold.mvp.model.MySelfInfo;
+import qcloud.liveold.mvp.utils.Constants;
+import qcloud.liveold.mvp.utils.LogConstants;
+import qcloud.liveold.mvp.utils.SxbLog;
 
 
 /**

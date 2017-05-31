@@ -58,20 +58,20 @@ public class InitBusinessHelper {
         TIMManager.getInstance().disableBeaconReport();
         MySelfInfo.getInstance().getCache(context);
         switch(MySelfInfo.getInstance().getLogLevel()){
-        case OFF:
-            TIMManager.getInstance().setLogLevel(TIMLogLevel.OFF);
-            break;
-        case WARN:
-            TIMManager.getInstance().setLogLevel(TIMLogLevel.WARN);
-            break;
-        case DEBUG:
-            TIMManager.getInstance().setLogLevel(TIMLogLevel.DEBUG);
-            break;
-        case INFO:
-            TIMManager.getInstance().setLogLevel(TIMLogLevel.INFO);
-            break;
-        default:
-            break;
+            case OFF:
+                TIMManager.getInstance().setLogLevel(TIMLogLevel.OFF);
+                break;
+            case WARN:
+                TIMManager.getInstance().setLogLevel(TIMLogLevel.WARN);
+                break;
+            case DEBUG:
+                TIMManager.getInstance().setLogLevel(TIMLogLevel.DEBUG);
+                break;
+            case INFO:
+                TIMManager.getInstance().setLogLevel(TIMLogLevel.INFO);
+                break;
+            default:
+                break;
         }
 //        TIMManager.getInstance().setEnv(1);
         TIMManager.getInstance().init(context);

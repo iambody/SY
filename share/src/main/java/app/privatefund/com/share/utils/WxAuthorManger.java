@@ -132,6 +132,7 @@ public class WxAuthorManger {
 
         Platform weixinplatform = ShareSDK.getPlatform( Wechat.NAME);// Wechat.NAME);
         weixinplatform.removeAccount(true);
+//        ShareSDK.removeCookieOnAuthorize(true);// 清理cookie
         weixinplatform.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int arg0, HashMap<String, Object> hashMap) {

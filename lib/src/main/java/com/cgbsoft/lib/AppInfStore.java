@@ -46,14 +46,14 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
-    /**
-     * 保存V2的混淆的Token
-     */
-    public static void saveUserV2Token(Context sContext, String v2Token) {
-        SharedPreferences.Editor ed = getBasePreference(sContext).edit();
-        ed.putString(USERV2TOKEN, v2Token);
-        ed.commit();
-    }
+//    /**
+//     * 保存V2的混淆的Token
+//     */
+//    public static void saveUserV2Token(Context sContext, String v2Token) {
+//        SharedPreferences.Editor ed = getBasePreference(sContext).edit();
+//        ed.putString(USERV2TOKEN, v2Token);
+//        ed.commit();
+//    }
 
     /**
      * 保存用户账号

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import qcloud.liveold.R;
 import qcloud.liveold.mvp.holder.MemberInfoHolder;
 import qcloud.liveold.mvp.model.MemberInfo;
+import qcloud.liveold.mvp.views.LiveUserInfoDialog;
 
 
 /**

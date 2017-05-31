@@ -25,6 +25,7 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
 
@@ -33,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +48,55 @@ import rx.Observable;
  *  
  */
 public class ApiClient {
+
+    /**
+     * map转换为json 用于生成RequestBody用于V2接口是使用
+     *
+     * @param map
+     * @return
+     */
+    public static RequestBody mapToBody(Map<String, String> map) {
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        JSONObject object = new JSONObject();
+        try {
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                object.put(entry.getKey(), entry.getValue());
+            }
+        } catch (Exception e) {
+
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), object.toString());
+        return body;
+    }
+
+    /**
+     * Json 转换为RequestBody
+     *
+     * @param object
+     * @return
+     */
+    public static RequestBody jsonToBody(JSONObject object) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), object.toString());
+        return body;
+    }
+
+    /**
+     * hashMap转换成string
+     */
+    public static String mapToObjStr(Map<String, String> map) {
+        JSONObject obj = new JSONObject();
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        try {
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                obj.put(entry.getKey(), entry.getValue());
+            }
+        } catch (Exception e) {
+        }
+
+        return obj.toString();
+    }
 
     /**
      * 获取服务器资源
@@ -116,21 +167,16 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
-    public static Observable<String > toV2TestLogin(String rsaString) {
-   JSONObject obj=new JSONObject();
-        try {
-            obj.put("sign",rsaString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),obj.toString());
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(body).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> toV2Login(HashMap<String, String> rsaString) {
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(mapToBody(rsaString)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
 
     }
 
+
     /**
      * 获取用户信息
+     *
      * @param userid 用户id
      * @return
      */
@@ -205,13 +251,40 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> toTestWxLogin(String sex, String nickName, String unionid, String headimgurl) {
+    public static Observable<String> toTestWxLogin(Context context, String sex, String nickName, String unionid, String headimgurl, String openId, String publicKey) {
         Map<String, String> map = new HashMap<>();
         map.put("sex", sex);
         map.put("nickName", nickName);
         map.put("unionid", unionid);
         map.put("headImageUrl", headimgurl);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        map.put("openId", openId);
+        map.put("recommendId", "");
+        map.put("client", AppManager.isInvestor(context) ? "C" : "B");
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("sex", sex);
+            obj.put("nickName", nickName);
+            obj.put("unionid", unionid);
+            obj.put("headImageUrl", headimgurl);
+            obj.put("openId", openId);
+            obj.put("recommendId", "");
+            obj.put("client", AppManager.isInvestor(context) ? "C" : "B");
+
+        } catch (Exception e) {
+        }
+
+        Map<String, String> mapParate = new HashMap<>();
+
+        try {
+            mapParate.put("sign", RSAUtils.GetRsA(context, obj.toString(), publicKey));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2WxLogin(mapToBody(mapParate)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestWxLogin(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -240,11 +313,19 @@ public class ApiClient {
     }
 
     public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
-        Map<String, String> map = new HashMap<>();
-        map.put("userName", userName);
-        map.put("password", pwdMd5);
-        map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        Map<String, String> map = new HashMap<>();
+//        map.put("userName", userName);
+//        map.put("password", pwdMd5);
+//        map.put("captcha", code);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userName", userName);
+            object.put("password", pwdMd5);
+            object.put("captcha", code);
+        } catch (Exception e) {
+
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toV2Register(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -261,10 +342,16 @@ public class ApiClient {
     }
 
     public static Observable<String> sendTestCode(String phone, int which) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("checkPhoneDuplicate", String.valueOf(which));
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).sendTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        Map<String, String> map = new HashMap<>();
+//        map.put("phone", phone);
+//        map.put("checkPhoneDuplicate", String.valueOf(which));
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phone", phone);
+            object.put("checkPhoneDuplicate", String.valueOf(which));
+        } catch (Exception e) {
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).sendV2Code(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -651,7 +738,6 @@ public class ApiClient {
 
     /**
      * 获取热门产品
-     *
      */
     public static Observable<CommonEntity.Result> getHotProduct() {
         Map<String, String> map = new HashMap<>();
@@ -1045,4 +1131,93 @@ public class ApiClient {
     public static Observable<String> getLoginPublic() {
         return OKHTTP.getInstance().getRequestManager().getPublicKey().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /**
+     * 成员进入直播
+     */
+    public static Observable<String> memberJoinRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().customJoin(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 成员退出直播
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> memberExitRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().custonExit(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取房间号
+     *
+     * @return
+     */
+    public static Observable<String> getLiveRoomNum(HashMap<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().getRoomNum(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播开房间
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> hostCreatRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播结束直播
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> hostCloseRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取房间成员
+     *
+     * @return
+     */
+    public static Observable<String> getLiveMember(HashMap<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().getRoomMenber(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播心跳
+     */
+    public static Observable<String> hostHeart(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().liveHostHeart(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 发评论
+     */
+    public static Observable<String> sendLiveMsg(HashMap<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().sendLiveMsg(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
 }

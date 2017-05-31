@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
@@ -34,18 +35,17 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
         addSubscription(ApiClient.toTestRegister(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                UserInfoDataEntity.Result result = new Gson().fromJson(s, UserInfoDataEntity.Result.class);
+                UserInfoDataEntity.Result result = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
 //                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
 //                SPreference.saveToken(getContext().getApplicationContext(), result.token);
-
 //                SPreference.saveLoginFlag(getContext(), true);
-                AppInfStore.saveUserId(getContext().getApplicationContext(),result.userId);
+                AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), result.token);
-                AppInfStore.saveIsLogin(getContext().getApplicationContext(),true);
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
 
                 if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(result.userInfo));
-                    AppInfStore.saveUserAccount(getContext(),  un);
+                    AppInfStore.saveUserAccount(getContext(), un);
                 }
                 loadingDialog.setResult(true, getContext().getString(R.string.ra_register_success_str), 1000, () -> getView().regSucc());
             }
@@ -64,11 +64,13 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
         addSubscription(ApiClient.sendTestCode(un, 1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                LogUtils.Log("s", "s");
                 loadingDialog.setResult(true, getContext().getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
             }
 
             @Override
             protected void onRxError(Throwable error) {
+                LogUtils.Log("s", error.toString());
                 loadingDialog.setResult(false, getContext().getString(R.string.sending_fail_str), 1000);
             }
         }));

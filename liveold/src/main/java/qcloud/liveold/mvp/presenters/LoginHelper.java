@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMManager;
 import com.tencent.TIMUser;
@@ -72,7 +74,7 @@ public class LoginHelper extends Presenter {
                         SxbLog.e(TAG, "IMLogin fail ：" + i + " msg " + s);
 //                        Toast.makeText(mContext, "IMLogin fail ：" + i + " msg " + s, Toast.LENGTH_SHORT).show();
                         if (mLoginView != null) {
-                            mLoginView.loginFail();
+                            mLoginView.loginLiveFail();
                         }
                     }
 
@@ -114,6 +116,27 @@ public class LoginHelper extends Presenter {
             }
         });
 
+    }
+
+
+    public void getLiveSign(String userId){
+        ApiClient.getLiveSign(userId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject js = new JSONObject(s);
+                    String sig = js.getString("user_sig");
+                    mLoginView.getLiveSignSuc(sig);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     /**
@@ -197,11 +220,11 @@ public class LoginHelper extends Presenter {
      */
     private void getMyRoomNum() {
         if (MySelfInfo.getInstance().getMyRoomNum() == -1) {
-//                    OKhttpHelper.getInstance().getMyRoomId(mContext);
-            new LiveGetRoomIdTask(mContext).start(null, new HttpResponseListener() {
+            ApiClient.getLiveRoomNum(null).subscribe(new RxSubscriber<String>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                protected void onEvent(String s) {
                     try {
+                        JSONObject response =  new JSONObject(s);
                         int roomNum = response.getInt("room_id");
                         MySelfInfo.getInstance().setMyRoomNum(roomNum);
                         Log.d(TAG, "roomnum = " + roomNum);
@@ -211,8 +234,8 @@ public class LoginHelper extends Presenter {
                 }
 
                 @Override
-                public void onErrorResponse(String error, int statueCode) {
-
+                protected void onRxError(Throwable error) {
+                    error.toString();
                 }
             });
         }else{
@@ -229,7 +252,7 @@ public class LoginHelper extends Presenter {
         QavsdkControl.getInstance().setAvConfig(Constants.SDK_APPID, "" + Constants.ACCOUNT_TYPE, MySelfInfo.getInstance().getId(), MySelfInfo.getInstance().getUserSig());
         QavsdkControl.getInstance().startContext();
         if (mLoginView != null)
-            mLoginView.loginSucc();
+            mLoginView.loginLiveSucc();
     }
 
 

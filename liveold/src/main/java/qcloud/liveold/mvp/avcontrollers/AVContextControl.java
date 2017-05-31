@@ -8,6 +8,7 @@ import com.tencent.av.sdk.AVContext;
 import com.tencent.av.sdk.AVError;
 import com.tencent.openqq.IMSdkInt;
 
+import qcloud.liveold.mvp.utils.Constants;
 import qcloud.liveold.mvp.utils.SxbLog;
 
 /**

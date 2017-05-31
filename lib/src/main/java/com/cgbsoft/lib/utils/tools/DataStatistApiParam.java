@@ -481,4 +481,36 @@ public class DataStatistApiParam{
     public static void onClickLiveRoomHeadImageToC(String videoName) {
 
     }
+
+    public static void liveShareC(String title) {
+
+    }
+
+    public static void liveShareB(String title) {
+
+    }
+
+    public static void onClickLiveRoomCloseToC(String videoName) {
+        
+    }
+
+    public static void onClickLiveRoomCloseToB(String videoName) {
+        
+    }
+
+    public static void onClickLivePDFToC(String vaName, String s) {
+        
+    }
+
+    public static void onClickLivePDFToB(String vaName, String s) {
+        
+    }
+
+    public static void onClickLiveCommentToC(String videoName) {
+        
+    }
+
+    public static void onClickLiveCommentToB(String videoName) {
+
+    }
 }

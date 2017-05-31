@@ -6,7 +6,9 @@ package qcloud.liveold.mvp.presenters.viewinface;
  */
 public interface LoginView extends MvpView{
 
-    void loginSucc();
+    void loginLiveSucc();
 
-    void loginFail();
+    void loginLiveFail();
+
+    void getLiveSignSuc(String s);
 }

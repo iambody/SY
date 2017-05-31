@@ -2,6 +2,8 @@ package com.cgbsoft.lib.encrypt;
 
 import android.content.Context;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,10 +58,10 @@ public final class RSAUtils {
 		// 从字符串中得到公钥
 		// PublicKey publicKey = RSAUtils.loadPublicKey(PUCLIC_KEY);
 		// 从文件中得到公钥
-		InputStream inPublic;
+//		InputStream inPublic;
 		PublicKey publicKey = null;
 		try {
-			inPublic = x.getResources().getAssets().open("pubkey.pem");
+//			inPublic = x.getResources().getAssets().open("pubkey.pem");
 //			publicKey = RSAUtils.loadPublicKey(inPublic);
 			publicKey = RSAUtils.loadPublicKesssy(publicky);
 
@@ -108,18 +110,29 @@ public final class RSAUtils {
 	 * 
 	 * @param data
 	 *            需加密数据的byte数据
-	 * @param pubKey
+	 * @param
 	 *            公钥
 	 * @return 加密后的byte型数据
 	 */
 	public static byte[] encryptData(byte[] data, PublicKey publicKey) {
+		byte[] enBytes = null;
+
 		try {
 			Cipher cipher = Cipher.getInstance(RSA1);
 			// 编码前设定编码方式及密钥
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
+			for (int i = 0; i < data.length; i += 64) {
+
+// 注意要使用2的倍数，否则会出现加密后的内容再解密时为乱码
+				byte[] doFinal = cipher.doFinal(ArrayUtils.subarray(data, i,i + 64));
+				enBytes = ArrayUtils.addAll(enBytes, doFinal);
+			}
+
+
 			// 传入编码数据并返回编码结果
-			return cipher.doFinal(data);
+//			return cipher.doFinal(data);
+			return enBytes;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -295,8 +308,8 @@ public final class RSAUtils {
 	/**
 	 * 从文件中加载私钥
 	 * 
-	 * @param keyFileName
-	 *            私钥文件名
+	 * @param
+	 *
 	 * @return 是否成功
 	 * @throws Exception
 	 */

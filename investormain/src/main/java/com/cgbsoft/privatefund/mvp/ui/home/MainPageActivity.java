@@ -40,6 +40,7 @@ import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tencent.TIMUserProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +52,9 @@ import app.live.com.mvp.presenter.LoginHelper;
 import app.live.com.mvp.presenter.viewinface.LoginView;
 import app.live.com.mvp.ui.LiveActivity;
 import app.privatefund.com.im.bean.SMMessage;
+import app.privatefund.com.im.utils.PushPreference;
+import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
@@ -63,10 +67,15 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import qcloud.liveold.mvp.presenters.LoginHelper;
+import qcloud.liveold.mvp.presenters.ProfileInfoHelper;
+import qcloud.liveold.mvp.presenters.viewinface.LoginView;
+import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
+import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
 
 @Route(RouteConfig.GOTOCMAINHONE)
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView,ProfileView{
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -100,6 +109,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int currentResId;
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
+    private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable;
 
     @Override
@@ -468,27 +478,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             exitBy2Click();
     }
 
-    @Override
-    public void liveLoginSucc() {
-        getPresenter().getLiveList();
-    }
-
-    @Override
-    public void liveLoginFail(String module, int errCode, String errMsg) {
-//        getPresenter().toSignIn();
-//        Intent intent = new Intent(this, LiveActivity.class);
-//        intent.putExtra("liveJson",liveJsonData.toString());
-//        startActivity(intent);
-    }
-
-
     private void initDayTask() {
         getPresenter().initDayTask();
     }
 
     @Override
+    public void loginLiveSucc() {
+        getPresenter().getLiveList();
+    }
+
+    @Override
+    public void loginLiveFail() {
+        getPresenter().getLiveList();
+    }
+
+    @Override
     public void getLiveSignSuc(String sign) {
-        loginHelper.iLiveLogin(AppManager.getUserId(this), sign);
+        profileInfoHelper.setMyNickName(AppManager.getUserInfo(this).getNickName());
+        profileInfoHelper.setMyAvator(AppManager.getUserInfo(this).getHeadImageUrl());
+        loginHelper.imLogin(AppManager.getUserId(this), sign);
     }
 
     @Override
@@ -509,4 +517,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     }
 
+    private void SsetBottomNavigation(){
+//        bottomNavigationBar.
+    }
+
+
+    @Override
+    public void updateProfileInfo(TIMUserProfile profile) {
+
+    }
+
+    @Override
+    public void updateUserInfo(int requestCode, List<TIMUserProfile> profiles) {
+
+    }
 }

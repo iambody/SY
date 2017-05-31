@@ -6,14 +6,15 @@ import android.view.Gravity;
 import android.view.Window;
 import android.widget.ListView;
 
-import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.live.adapters.MembersAdapter;
-import com.cgbsoft.privatefund.live.model.MemberInfo;
-import com.cgbsoft.privatefund.live.presenters.GetMemberListHelper;
-import com.cgbsoft.privatefund.live.presenters.viewinface.LiveView;
-import com.cgbsoft.privatefund.live.presenters.viewinface.MembersDialogView;
 
 import java.util.ArrayList;
+
+import qcloud.liveold.R;
+import qcloud.liveold.mvp.adapters.MembersAdapter;
+import qcloud.liveold.mvp.model.MemberInfo;
+import qcloud.liveold.mvp.presenters.GetMemberListHelper;
+import qcloud.liveold.mvp.presenters.viewinface.LiveView;
+import qcloud.liveold.mvp.presenters.viewinface.MembersDialogView;
 
 /**
  * 成员列表

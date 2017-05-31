@@ -297,24 +297,25 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
                 switch (type) {
                     case WxAuthorManger.WxAuthorOk:
-                        String userId = platform.getDb().getUserId();
+                        String unionid = platform.getDb().get("unionid");
                         String userIcon = platform.getDb().getUserIcon();
                         String userGender = platform.getDb().getUserGender();
                         String userName = platform.getDb().getUserName();
-                        LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
+                        String openid = platform.getDb().getUserId();
+//                        LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
 
                         String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
 
                         if (!mCustomBuilder.isSetPositiveListener()) {
                             mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                                getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
+                                getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon,openid,publicKey);
                                 dialog.dismiss();
                             });
                         }
 //
 //                        getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
 
-                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, userId, SexStr, userName, userIcon);
+                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon,openid,publicKey);
                         break;
                     case WxAuthorManger.WxAuthorCANCLE:
                         mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
