@@ -70,8 +70,8 @@
         app:lock9_lineWidth="5dp"
         app:lock9_nodeOnSrc="@drawable/gesture_node_pressed"
         app:lock9_nodeSrc="@drawable/gesture_node_normal"
-        app:lock9_padding="28dp"
-        app:lock9_spacing="28dp"
+        app:lock9_padding="50dp"
+        app:lock9_spacing="60dp"
         app:lock9_vibrateTime="20" />
 
     <!--<FrameLayout-->

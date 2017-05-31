@@ -92,7 +92,7 @@ public class OKHTTP {
             builder.addHeader("X-HTTP-Method-Override", "no-cache");
             builder.addHeader("Accept", "application/json");
             okhttp3.Request authorised = builder.build();
-            Utils.log("OkHttp", "uid:" + uid + "\n" +
+            Utils.log("okHttp", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
                     "deviceId:" + Utils.getIMEI(BaseApplication.getContext()) + "\n" +
                     "version:" + Utils.getVersionCode(context), "d");
@@ -105,7 +105,7 @@ public class OKHTTP {
             ResponseBody responseBody = response.body();
             Charset UTF8 = Charset.forName("UTF-8");
 
-            Utils.log("OkHttp", response.request().url().toString() + " " + response.toString(), "d");
+            Utils.log("okHttp", response.request().url().toString() + " " + response.toString(), "d");
             String message = "";
             if (response.code() != 200) {
                 if (response.code() == 500) {

@@ -1,15 +1,14 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -34,7 +33,6 @@ import com.jhworks.library.ImageSelector;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Observable;
 
 /**
@@ -61,8 +59,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
 
-    @BindView(R2.id.title_right_btn)
-    protected TextView rightTextBtn;
+//    @BindView(R2.id.title_right_btn)
+//    protected TextView rightTextBtn;
 
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
@@ -142,7 +140,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
         mallChoiceObservable = RxBus.get().register(RxConstant.MALL_CHOICE_ADDRESS, MallAddress.class);
         mallChoiceObservable.subscribe(new RxSubscriber<MallAddress>() {
-
             @Override
             protected void onEvent(MallAddress myAddress) {
                 mWebview.loadUrl("javaScript:products.setAddress('" + myAddress.getId() + "','" + myAddress.getName() + "','" + myAddress.getPhone() + "','" + myAddress.getAddress() + "')");
@@ -197,12 +194,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
         toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
-        rightTextBtn.setVisibility(hasRightShare || hasRightSave ? View.VISIBLE : View.GONE);
-        if (hasRightShare) {
-            ViewUtils.setTextViewLeftIv(baseContext, rightTextBtn, R.drawable.fenxiang_share_nor);
-        } else {
-            ViewUtils.cancleTextViewLeftIv(rightTextBtn);
-        }
+//        rightTextBtn.setVisibility(hasRightShare || hasRightSave ? View.VISIBLE : View.GONE);
+//        if (hasRightShare) {
+//            ViewUtils.setTextViewLeftIv(baseContext, rightTextBtn, R.drawable.fenxiang_share_nor);
+//        } else {
+//            ViewUtils.cancleTextViewLeftIv(rightTextBtn);
+//        }
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {
                 String javascript = "javascript:Tools.init('" + pushMessageValue + "')";
@@ -210,7 +207,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             }, 1000);
         }
     }
-//
+
 //    @OnClick(R2.id.menu_cloud)
 //    void cloudMenuClick() {
 //        if (SPreference.getToCBean(this) != null && TextUtils.isEmpty(SPreference.getToCBean(this).getBandingAdviserId())) {
@@ -225,16 +222,15 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 //        }
 //    }
 
-    @OnClick(R2.id.title_right_btn)
-   protected void rightTextBtnClick() {
-        if (hasRightSave) {
-            String jascript = "javascript:Tools.save()";
-            mWebview.loadUrl(jascript);
-        } else if (hasRightShare) {
-            pageShare();
-        }
-    }
-
+//    @OnClick(R2.id.title_right_btn)
+//   protected void rightTextBtnClick() {
+//        if (hasRightSave) {
+//            String jascript = "javascript:Tools.save()";
+//            mWebview.loadUrl(jascript);
+//        } else if (hasRightShare) {
+//            pageShare();
+//        }
+//    }
 
     /**
      * @param url
@@ -318,7 +314,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
@@ -377,15 +372,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i("BaseWebViewActivity", "onCreateOptionsMenu");
         if (hasRightShare || hasRightSave) {
-//            getMenuInflater().inflate(R.menu.page_menu, menu);
-//            rightItem = menu.findItem(R.id.firstBtn);
-//            MenuItem secItem = menu.findItem(R.id.secondBtn);
-//            rightItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-//            rightItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.shape_white);
-//            secItem.setVisible(false);
-            rightTextBtn.setText(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+            menu.clear();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                getMenuInflater().inflate(R.menu.page_menu, menu);
+                MenuItem firstItem = menu.findItem(R.id.firstBtn);
+                MenuItem secItem = menu.findItem(R.id.secondBtn);
+                firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+                firstItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.shape_white);
+                secItem.setVisible(false);
+            }
         }
-        return true;
+        return false;
     }
 
     @Override

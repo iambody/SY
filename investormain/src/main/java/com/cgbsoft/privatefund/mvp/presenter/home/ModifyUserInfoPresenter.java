@@ -9,9 +9,6 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.mvp.contract.home.ModifyUserInfoContract;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 /**

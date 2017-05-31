@@ -34,7 +34,6 @@ class RxResultHelper {
         });
     }
 
-
     static <T> Observable.Transformer<BaseResult<T>, T> handleResult() {
         return tObservable -> tObservable.flatMap(
                 new Func1<BaseResult<T>, Observable<T>>() {

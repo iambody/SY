@@ -242,7 +242,9 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         if (loading == null) {
             loading = new LoadingDialog(this);
         }
-        loading.show();
+        if (!loading.isShowing()) {
+            loading.show();
+        }
         new Thread(() -> {
             isloading = true;
             String newTargetFile = com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.compressFileToUpload(imagePath, false);
@@ -301,6 +303,13 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
 
     private void uploadCertification() {
         getPresenter().uploadAssetRelatedFile(NetConfig.UPLOAD_FILE + imageId);
+    }
+
+    protected void onDestroy() {
+        if(loading != null) {
+            loading.dismiss();
+        }
+        super.onDestroy();
     }
 
 }
