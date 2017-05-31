@@ -131,7 +131,6 @@ public class ApiClient {
 
     /**
      * 获取用户信息
-     *
      * @param userid 用户id
      * @return
      */
