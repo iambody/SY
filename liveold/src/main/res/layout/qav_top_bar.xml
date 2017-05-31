@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/qav_top_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignWithParentIfMissing="true"
+    android:background="@color/truns">
+
+    <RelativeLayout
+        android:id="@+id/head_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/top_bar_time_bg">
+
+        <com.cgbsoft.lib.widget.RoundImageView
+            android:id="@+id/host_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/live_head_nor" />
+
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@id/host_head"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/look_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在线人数"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/btn_member_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/look_string"
+                android:layout_below="@id/look_string"
+                android:layout_marginTop="2dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/member_recycler_view"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="33.5dp"
+        android:layout_toRightOf="@id/head_layout"
+        android:layout_marginLeft="20dp"
+        />
+
+
+    <TextView
+        android:id="@+id/live_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="22dp"
+        android:gravity="center_vertical"
+        android:text="直播中"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/qav_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@id/live_label"
+        android:gravity="center_vertical"
+        android:text="00:00:00"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/param_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="23dp"
+        android:layout_toLeftOf="@id/mic_btn"
+        android:visibility="gone" />
+    <!--android:background="@drawable/icon_param_button"-->
+
+
+
+    <TextView
+        android:id="@+id/beauty_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="23dp"
+        android:layout_toLeftOf="@id/param_video"
+        android:visibility="gone" />
+    <!--android:background="@drawable/icon_beauty_button"-->
+</RelativeLayout>

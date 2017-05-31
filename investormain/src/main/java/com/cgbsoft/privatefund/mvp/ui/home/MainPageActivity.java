@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,7 +22,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -39,8 +37,10 @@ import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
+import com.cn.hugo.android.scanner.QrCodeBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tencent.TIMUserProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,13 +48,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
-import app.live.com.mvp.presenter.LoginHelper;
-import app.live.com.mvp.presenter.viewinface.LoginView;
-import app.live.com.mvp.ui.LiveActivity;
-import app.privatefund.com.im.Contants;
 import app.privatefund.com.im.bean.SMMessage;
-import app.privatefund.com.im.listener.MyConnectionStatusListener;
-import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.vido.service.FloatVideoService;
@@ -62,16 +56,20 @@ import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
-import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import qcloud.liveold.mvp.presenters.LoginHelper;
+import qcloud.liveold.mvp.presenters.ProfileInfoHelper;
+import qcloud.liveold.mvp.presenters.viewinface.LoginView;
+import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
+import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
 
 @Route(RouteConfig.GOTOCMAINHONE)
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView,ProfileView{
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -100,10 +98,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
+    private Observable<QrCodeBean> twoCodeObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
+    private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable;
 
     @Override
@@ -185,6 +185,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void loginLive() {
         loginHelper = new LoginHelper(this, this);
+        profileInfoHelper = new ProfileInfoHelper(this);
         loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 
@@ -368,6 +369,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             protected void onRxError(Throwable error) {
             }
         });
+        twoCodeObservable = RxBus.get().register(RxConstant.LOOK_TWO_CODE_OBSERVABLE, QrCodeBean.class);
+        twoCodeObservable.subscribe(new RxSubscriber<QrCodeBean>() {
+            @Override
+            protected void onEvent(QrCodeBean qrCodeBean) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void initPlatformCustomer() {
@@ -430,6 +443,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             RxBus.get().unregister(RxConstant.OPEN_MESSAGE_LIST_PAGE_OBSERVABLE, openMessageListObservable);
         }
 
+        if (twoCodeObservable != null) {
+            RxBus.get().unregister(RxConstant.LOOK_TWO_CODE_OBSERVABLE, twoCodeObservable);
+        }
+
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         if (isOnlyClose) {
@@ -456,27 +473,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             exitBy2Click();
     }
 
-    @Override
-    public void liveLoginSucc() {
-        getPresenter().getLiveList();
-    }
-
-    @Override
-    public void liveLoginFail(String module, int errCode, String errMsg) {
-//        getPresenter().toSignIn();
-//        Intent intent = new Intent(this, LiveActivity.class);
-//        intent.putExtra("liveJson",liveJsonData.toString());
-//        startActivity(intent);
-    }
-
-
     private void initDayTask() {
         getPresenter().initDayTask();
     }
 
     @Override
+    public void loginLiveSucc() {
+        getPresenter().getLiveList();
+    }
+
+    @Override
+    public void loginLiveFail() {
+        getPresenter().getLiveList();
+    }
+
+    @Override
     public void getLiveSignSuc(String sign) {
-        loginHelper.iLiveLogin(AppManager.getUserId(this), sign);
+        profileInfoHelper.setMyNickName(AppManager.getUserInfo(this).getNickName());
+        profileInfoHelper.setMyAvator(AppManager.getUserInfo(this).getHeadImageUrl());
+        loginHelper.imLogin(AppManager.getUserId(this), sign);
     }
 
     @Override
@@ -497,4 +512,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     }
 
+    private void SsetBottomNavigation(){
+//        bottomNavigationBar.
+    }
+
+
+    @Override
+    public void updateProfileInfo(TIMUserProfile profile) {
+
+    }
+
+    @Override
+    public void updateUserInfo(int requestCode, List<TIMUserProfile> profiles) {
+
+    }
 }

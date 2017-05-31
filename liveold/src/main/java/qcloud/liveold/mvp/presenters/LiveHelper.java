@@ -530,10 +530,11 @@ public class LiveHelper extends Presenter {
                         handleTextMessage(elem, MySelfInfo.getInstance().getNickName());
                     } else {
                         TIMTextElem textElem = (TIMTextElem) elem;
-                        MApplication.mContext.sendBroadcast(new Intent(Util.ACTION_LIVE_RECEVER_MSG)
-                                .putExtra(Util.ACTION_LIVE_SEND_CONTENT, textElem.getText())
-                                .putExtra(Util.ACTION_LIVE_SEND_ID, sendId)
-                        );
+                        //TODO 联调
+//                        MApplication.mContext.sendBroadcast(new Intent(Util.ACTION_LIVE_RECEVER_MSG)
+//                                .putExtra(Util.ACTION_LIVE_SEND_CONTENT, textElem.getText())
+//                                .putExtra(Util.ACTION_LIVE_SEND_ID, sendId)
+//                        );
                     }
                 }
 

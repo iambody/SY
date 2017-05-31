@@ -55,7 +55,7 @@ public class NavigationUtils {
     }
 
     public static void toMainActivity(Context context) {
-        Router.build("investornmain_mainpageactivity").go(context);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
     }
 
     /**

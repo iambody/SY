@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/qav_tips_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="80dp"
+        android:maxLength="2000"
+        android:singleLine="false"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/qav_topbar_streamtype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:text="HLS"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/qav_topbar_push"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_toLeftOf="@+id/qav_topbar_streamtype"
+        android:padding="5dp"
+        android:text="旁路直播"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/qav_topbar_record"
+        android:layout_width="wrap_content"
+        android:layout_height="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_toLeftOf="@+id/qav_topbar_push"
+        android:padding="5dp"
+        android:text="录制"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+
+    <include
+        android:id="@+id/qav_top_bar"
+        layout="@layout/qav_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <include
+        android:id="@+id/qav_bottom_bar"
+        layout="@layout/qav_bottom_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+
+    <TextView
+        android:id="@+id/qav_show_tips"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="100dp"
+        android:background="@null"
+        android:singleLine="false"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/btn_member_list_old"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="20dp"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/icon_memberlist_button"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+
+    <FrameLayout
+        android:id="@+id/inviteMaskItem3"
+        android:layout_width="60dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="350dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/inviteMaskHead3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop" />
+
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/mask" />
+
+        <TextView
+            android:id="@+id/inviteMaskInfo3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="呼叫中"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/inviteMaskItem2"
+        android:layout_width="60dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="230dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/inviteMaskHead2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/mask" />
+
+        <TextView
+            android:id="@+id/inviteMaskInfo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="呼叫中"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/inviteMaskItem1"
+        android:layout_width="60dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/inviteMaskHead1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/mask" />
+
+        <TextView
+            android:id="@+id/inviteMaskInfo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="呼叫中"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/send_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/msg_normal" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/live_share_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:visibility="invisible"
+            android:background="@drawable/live_share_sel" />
+
+        <ImageButton
+            android:id="@+id/pdf_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/pdf_normal" />
+
+        <ImageButton
+            android:id="@+id/open_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/menu_normal" />
+
+        <ImageButton
+            android:id="@+id/qav_topbar_hangup"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/close_av_style" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_more"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/mic_btn"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/mic1"
+            android:gravity="center"
+            android:text="麦克风"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/qav_topbar_switchcamera"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/switch_camera_style"
+            android:gravity="center"
+            android:text="翻转"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/comment_list"
+        android:layout_width="280dp"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="66dp"
+        android:layout_marginLeft="10dp"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:stackFromBottom="true"></ListView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/live_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:background="#f6f6f6"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/edit_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_commit_bg"
+                android:hint="向主播提问"
+                android:maxLength="100"
+                android:maxLines="4"
+                android:minHeight="33dp"
+                android:minLines="1"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#999"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/qav_bottombar_send_msg"
+                android:layout_width="60dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rc_btn_send"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

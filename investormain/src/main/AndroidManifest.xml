@@ -78,7 +78,10 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <!--处理拨出电话-->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-<uses-permission android:name="android.permission.BODY_SENSORS"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -201,8 +204,8 @@
 
         <!--视频列表-->
         <!--<activity-->
-            <!--android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"-->
+        <!--android:screenOrientation="portrait" />-->
         <!--视频下载列表-->
         <activity
             android:name="com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity"
@@ -315,10 +318,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--分享编辑页-->
-      <!--  <activity
-            android:name="com.umeng.socialize.editorpage.ShareActivity"
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.UMDefault" />-->
+        <!--  <activity
+              android:name="com.umeng.socialize.editorpage.ShareActivity"
+              android:excludeFromRecents="true"
+              android:theme="@style/Theme.UMDefault" />-->
         <!--=================================================-->
         <!-- X5内核的key -->
         <meta-data
@@ -351,23 +354,23 @@
         <!-- 三方登录结束 -->
         <!--ShareSdk需要的 -->
         <activity
-            android:multiprocess="true"
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:multiprocess="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent100371282"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <data android:scheme="tencent100371282" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <!-- 新浪微博-->
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <!--新浪微博-->
@@ -375,6 +378,44 @@
         </activity>
 
         <!--<activity android:name=".widget.InverstorBaseWebviewActivity" />-->
+        <!-- 直播相关 1.8.2 -->
+        <!-- TLS Qal 一些服务 -->
+        <service
+            android:name="com.tencent.qalsdk.service.QalService"
+            android:exported="false"
+            android:process=":QALSERVICE" />
+
+        <receiver
+            android:name="com.tencent.qalsdk.QALBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.tencent.qalsdk.broadcast.qal" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+            android:process=":QALSERVICE">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <!--  消息收发辅助service -->
+        <service
+            android:name="com.tencent.qalsdk.service.QalAssistService"
+            android:exported="false"
+            android:process=":QALSERVICE" >
+        </service>
+
+
     </application>
 
 </manifest>

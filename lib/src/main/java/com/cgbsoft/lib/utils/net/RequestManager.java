@@ -650,6 +650,11 @@ interface RequestManager {
     @GET(NetConfig.LIVE.GET_LIVE_PDF)
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
 
+    //直播发送评论
+    @FormUrlEncoded
+    @POST(NetConfig.LIVE.SENT_COMMENT)
+    Observable<ResponseBody> sendLiveMsg(@FieldMap Map<String,String>paramsMap);
+
     //支付配置
     @GET(NetConfig.PAY.GET_PAY_CONFIG)
     Observable<ResponseBody> getRechargeConfig(@QueryMap Map<String, String> paramsMap);

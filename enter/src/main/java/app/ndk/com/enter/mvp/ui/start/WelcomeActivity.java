@@ -134,7 +134,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
         welecomePage();

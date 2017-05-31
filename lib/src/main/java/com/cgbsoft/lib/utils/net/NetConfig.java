@@ -8,7 +8,7 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-    //    private static final String START_APP = "https://app";
+//    private static final String START_APP = "https://app";
     private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
@@ -20,9 +20,9 @@ public class NetConfig {
 
     public static final String SERVER_IP = "http://pv.sohu.com";
 
-    public static final String API_URL = "api";
-    public static final String LIVE_URL = "zhibo";
-    public static final String AUTH_URL = "auth";
+    public static final String API_URL = "api/v2";
+    public static final String LIVE_URL = "zhibo/v2";
+    public static final String AUTH_URL = "auth/v2";
 
     public static final String API_URL_V2 = "api/v2";
     public static final String LIVE_URL_V2 = "zhibo/v2";
@@ -85,7 +85,7 @@ public class NetConfig {
         //获取平台客服聊天
         static final String PLATFORM_CUSTOMER = AUTH_URL_V2 + "/rc/greetingmessage";
         //获取机构经理的聊天
-        static final String ORIGNATION_MANAGER = AUTH_URL_V2 + "/rc/managerinfo";
+        static final String ORIGNATION_MANAGER = AUTH_URL_V2 +  "/rc/managerinfo";
     }
 
     static class MALL {
@@ -126,7 +126,7 @@ public class NetConfig {
 
     //用户相关
     static class USER {
-        private static final String user = "/v2/user";
+        private static final String user = "/user";
         //获取用户信息
         static final String GET_USERINFO_URL = AUTH_URL + user + "/userInfo";
         //验证微信验证unionid是否已存在
@@ -150,9 +150,9 @@ public class NetConfig {
         // 修改密码
         static final String MODIFY_PASSWORD_URL = AUTH_URL + user + "/updatePassword";
         // 关联资产
-        static final String RELATED_ASSET_URL = AUTH_URL + user + "/assetCertificate";
+        static final String RELATED_ASSET_URL = AUTH_URL + user + "/connectedMyAsset";
         // 资产证明
-        static final String ASSET_PROVET_URL = AUTH_URL + user + "/connectedMyAsset";
+        static final String ASSET_PROVET_URL = AUTH_URL + user + "/assetCertificate";
         // 更新用户信息
         static final String UPDATE_USER_INFO_URL = AUTH_URL + user + "/updateUserInfo";
         // 验证用户密码
@@ -161,22 +161,22 @@ public class NetConfig {
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
     }
 
-    //搜索相关
-    static class SOUSOU {
-        private static final String sousou = "/search";
-        //产品全局搜索
-        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
-        //热门搜索
-        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
-    }
+  //搜索相关
+    static class SOUSOU{
+      private static final String sousou = "/search";
+      //产品全局搜索
+      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
+      //热门搜索
+      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
+  }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
+        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
         //获取产品列表
-        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
+        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
     }
 
     //直播相关
@@ -237,8 +237,8 @@ public class NetConfig {
     static class AUTHOR {
         private static final String auth = "/auth";
         //登录前获取publickey公钥
-        static final String GET_PUBLIC_KEY = auth + "/v2/publicKey";
+        static final String GET_PUBLIC_KEY = auth  + "/v2/publicKey";
         //V2登录
-        static final String LOGIN_V2_URL = auth + "/v2/appAuthenticate";
+        static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
     }
 }
