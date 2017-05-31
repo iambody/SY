@@ -2,9 +2,10 @@ package qcloud.liveold.mvp.utils;
 
 import android.util.Log;
 
-import com.cgbsoft.privatefund.live.model.MySelfInfo;
 
 import java.util.Calendar;
+
+import qcloud.liveold.mvp.model.MySelfInfo;
 
 /**
  * 日志输出

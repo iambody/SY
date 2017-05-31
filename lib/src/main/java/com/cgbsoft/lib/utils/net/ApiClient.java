@@ -143,7 +143,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         if (rongExpired != null)
             map.put("tokenExpired", rongExpired);
-            map.put("uid", rongUID);
+        map.put("uid", rongUID);
         return OKHTTP.getInstance().getRequestManager().getRongToken(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
@@ -598,7 +598,6 @@ public class ApiClient {
 //        map.put("uid", userId);
 //        return OKHTTP.getInstance().getRequestManager().getOrgMnager(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 //    }
-
     public static Observable<String> getTestOrgManager(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("uid", userId);
@@ -946,10 +945,100 @@ public class ApiClient {
         map.put("taskType", taskType);
         return OKHTTP.getInstance().getRequestManager().taskAddCoin(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     /**
      * 获取登录前的publickey
      */
     public static Observable<String> getLoginPublic() {
         return OKHTTP.getInstance().getRequestManager().getPublicKey().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /**
+     * 成员进入直播
+     */
+    public static Observable<String> memberJoinRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().customJoin(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 成员退出直播
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> memberExitRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().custonExit(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取房间号
+     *
+     * @return
+     */
+    public static Observable<String> getLiveRoomNum(HashMap<String, String> map) {
+        return OKHTTP.getInstance().getRequestManager().getRoomNum(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播开房间
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> hostCreatRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播结束直播
+     *
+     * @param roomId
+     * @param userId
+     * @return
+     */
+    public static Observable<String> hostCloseRoom(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取房间成员
+     *
+     * @return
+     */
+    public static Observable<String> getLiveMember(HashMap<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().getRoomMenber(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 主播心跳
+     */
+    public static Observable<String> hostHeart(String roomId, String userId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        return OKHTTP.getInstance().getRequestManager().liveHostHeart(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 发评论
+     */
+    public static Observable<String> sendLiveMsg(HashMap<String, Object> map) {
+        return OKHTTP.getInstance().getRequestManager().sendLiveMsg(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
@@ -292,74 +293,35 @@ public class EnterLiveHelper extends Presenter {
      * 1_5上传房间信息
      */
     public void notifyServerCreateRoom() {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                JSONObject liveInfo = null;
-//                try {
-//                    liveInfo = new JSONObject();
-//                    if (TextUtils.isEmpty(CurLiveInfo.getTitle())) {
-//                        liveInfo.put("title", mContext.getString(R.string.text_live_default_title));
-//                    } else {
-//                        liveInfo.put("title", CurLiveInfo.getTitle());
-//                    }
-//                    liveInfo.put("cover", CurLiveInfo.getCoverurl());
-//                    liveInfo.put("chatRoomId", CurLiveInfo.getChatRoomId());
-//                    liveInfo.put("avRoomId", CurLiveInfo.getRoomNum());
-//                    JSONObject hostinfo = new JSONObject();
-//                    hostinfo.put("uid", MySelfInfo.getInstance().getId());
-//                    hostinfo.put("avatar", MySelfInfo.getInstance().getAvatar());
-//                    hostinfo.put("username", MySelfInfo.getInstance().getNickName());
-//
-//                    liveInfo.put("host", hostinfo);
-//                    JSONObject lbs = new JSONObject();
-//                    lbs.put("longitude", CurLiveInfo.getLong1());
-//                    lbs.put("latitude", CurLiveInfo.getLat1());
-//                    lbs.put("address", CurLiveInfo.getAddress());
-//                    liveInfo.put("lbs", lbs);
-//                    liveInfo.put("appid",Constants.SDK_APPID);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if (liveInfo != null) {
-//                    SxbLog.standardEnterRoomLog(TAG, "upload room info to serve", "", "room id " + CurLiveInfo.getRoomNum());
-////                    OKhttpHelper.getInstance().notifyServerNewLiveInfo(liveInfo);
-//                }
-//
+        //TODO 开直播告知serever
+//        JSONObject j = new JSONObject();
+//        try {
+//            j.put("id", CurLiveInfo.getRoomNum() + "");   //roomId
+//            j.put("chat", CurLiveInfo.getRoomNum() + "");        //房间群组ID
+//            if (TextUtils.isEmpty(CurLiveInfo.getTitle())) {   //直播标题
+//                j.put("title", mContext.getString(R.string.text_live_default_title));
+//            } else {
+//                j.put("title", CurLiveInfo.getTitle());
 //            }
-//        }).start();
-
-
-        JSONObject j = new JSONObject();
-        try {
-            j.put("id", CurLiveInfo.getRoomNum() + "");   //roomId
-            j.put("chat", CurLiveInfo.getRoomNum() + "");        //房间群组ID
-            if (TextUtils.isEmpty(CurLiveInfo.getTitle())) {   //直播标题
-                j.put("title", mContext.getString(R.string.text_live_default_title));
-            } else {
-                j.put("title", CurLiveInfo.getTitle());
-            }
-            j.put("user_id", AppManager.getUserId(BaseApplication.getContext()));  //用户ID
-            j.put("room_type", CurLiveInfo.getCheck_num() + "");  //直播观众类型
-            j.put("image", "");  //封面
-            j.put("equipment", 2);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        new CreatLiveRoomTask(mContext).start(j.toString(), new HttpResponseListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String s = response.toString();
-                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onErrorResponse(String error, int statueCode) {
-                String er = error;
-            }
-        });
+//            j.put("user_id", AppManager.getUserId(BaseApplication.getContext()));  //用户ID
+//            j.put("room_type", CurLiveInfo.getCheck_num() + "");  //直播观众类型
+//            j.put("image", "");  //封面
+//            j.put("equipment", 2);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        new CreatLiveRoomTask(mContext).start(j.toString(), new HttpResponseListener() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                String s = response.toString();
+//                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onErrorResponse(String error, int statueCode) {
+//                String er = error;
+//            }
+//        });
 
 
     }
@@ -377,7 +339,7 @@ public class EnterLiveHelper extends Presenter {
      */
     private void joinIMChatRoom(final int chatRoomId) {
         String headImageUrl = AppInfStore.getUserInfo(BaseApplication.getContext()).getHeadImageUrl();
-        TIMFriendshipManager.getInstance().setFaceUrl(headImageUrl.startsWith("http") ? headImageUrl : Domain.urlStr + headImageUrl, new TIMCallBack() {
+        TIMFriendshipManager.getInstance().setFaceUrl(headImageUrl.startsWith("http") ? headImageUrl : NetConfig.UPLOAD_FILE + headImageUrl, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
                 SxbLog.w(TAG, "setMyAvator->error:" + i + "," + s);
