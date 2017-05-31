@@ -95,7 +95,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         addSubscription(ApiClient.getTestVideoInfo(videoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                VideoInfoEntity.Result result = new Gson().fromJson(s, VideoInfoEntity.Result.class);
+                VideoInfoEntity.Result result =new Gson().fromJson(getV2String(s), VideoInfoEntity.Result.class);
 
                 viModel.videoId = result.videoId;
                 viModel.videoCoverUrl = result.rows.coverImageUrl;
@@ -122,7 +122,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
             @Override
             protected void onRxError(Throwable error) {
-
+                LogUtils.Log("s", error.toString());
             }
         }));
     }

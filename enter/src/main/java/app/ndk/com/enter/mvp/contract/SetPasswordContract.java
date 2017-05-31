@@ -22,7 +22,7 @@ public interface SetPasswordContract {
          * @param pwd
          * @param code
          */
-        void resetPwd(LoadingDialog loadingDialog, String un, String pwd, String code);
+        void resetPwd(LoadingDialog loadingDialog, String un, String pwd, String code,String publickeys);
 
         /**
          * 登录
@@ -31,11 +31,17 @@ public interface SetPasswordContract {
          * @param pwd
          * @param isWx
          */
-        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx);
+        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, boolean isWx,String publickeys);
 
+
+        /**
+         * 获取登录公钥
+         */
+        void toGetPublicKey();
     }
 
     interface View extends BaseView{
         void toFinish();
+        void publicKeySuccess(String publicKey);
     }
 }

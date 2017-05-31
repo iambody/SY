@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +33,6 @@ import java.util.List;
 import app.product.com.R;
 import app.product.com.R2;
 import app.product.com.adapter.ProductlsAdapter;
-import app.product.com.listener.RecyclerViewScrollDetector;
 import app.product.com.model.EventFiltBean;
 import app.product.com.model.FilterItem;
 import app.product.com.model.ProductFilterBean;
@@ -51,9 +48,7 @@ import app.product.com.widget.OrderbyPop;
 import app.product.com.widget.ProductSeriesLayout;
 import app.product.com.widget.SimpleItemDecoration;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.Observable;
 
 /**
@@ -339,12 +334,11 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 productFilterBean = new Gson().fromJson(str.trim(), ProductFilterBean.class);
                 initFilterDate(productFilterBean.getSeries().getItems());
                 CurrentFilter = productFilterBean.getFilter();
-
                 break;
             case ProductContract.LOAD_PRODUCT_LISTDATA://获取到列表数据
 //                PromptManager.ShowCustomToast(getContext(), "请求列表成功" + str);
                 //开始解析数据
-                productlsBeen = new Gson().fromJson(str, new TypeToken<ArrayList<ProductlsBean>>() {
+                productlsBeen = new Gson().fromJson(str, new TypeToken<List<ProductlsBean>>() {
                 }.getType());
                 fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
 

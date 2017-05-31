@@ -199,7 +199,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 } else
                     loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
             }
-
             @Override
             protected void onRxError(Throwable error) {
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());

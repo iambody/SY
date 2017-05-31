@@ -362,10 +362,17 @@ public class ApiClient {
     }
 
     public static Observable<String> checkTestCode(String phone, String code) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phoneNum", phone);
-        map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        Map<String, String> map = new HashMap<>();
+//        map.put("phoneNum", phone);
+//        map.put("captcha", code);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phoneNum", phone);
+            object.put("captcha", code);
+        } catch (Exception e) {
+
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkV2Code(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -386,10 +393,18 @@ public class ApiClient {
 
     public static Observable<String> resetTestPwd(String un, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
-        map.put("userName", un);
-        map.put("newPassword", pwdMd5);
-        map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetTestPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        map.put("userName", un);
+//        map.put("newPassword", pwdMd5);
+//        map.put("captcha", code);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userName", un);
+            object.put("newPassword", pwdMd5);
+            object.put("captcha", code);
+        } catch (Exception e) {
+
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetV2Pwd(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

@@ -204,6 +204,11 @@ interface RequestManager {
     @POST(NetConfig.USER.CHECKCODE_URL)
     Observable<ResponseBody> checkTestCode(@FieldMap Map<String, String> paramsMap);
 
+
+
+
+    @POST(NetConfig.USER.CHECKCODE_URL)
+    Observable<ResponseBody> checkV2Code(@Body RequestBody paramsMap);
     /**
      * 重置密码
      *
@@ -217,6 +222,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<ResponseBody> resetTestPwd(@FieldMap Map<String, String> paramsMap);
+
+
+    @POST(NetConfig.USER.RESETPWD_URL)
+    Observable<ResponseBody> resetV2Pwd(@Body RequestBody paramsMap);
 
     /**
      * 修改密码

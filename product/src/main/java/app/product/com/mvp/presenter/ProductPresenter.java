@@ -69,7 +69,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             @Override
             protected void onEvent(String s) {
                 if (!BStrUtils.isEmpty(s)) {
-                    getView().getDataSucc(ProductContract.LOAD_PRODUCT_LISTDATA, s);
+                    getView().getDataSucc(ProductContract.LOAD_PRODUCT_LISTDATA, getV2String(s));
                 } else {
                     getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, getContext().getString(R.string.resultempty));
                 }
@@ -126,9 +126,9 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
         addSubscription(ApiClient.getProductFiltrtDate().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String result) {
-                getView().getDataSucc(ProductContract.LOAD_FILTER, result);
+                getView().getDataSucc(ProductContract.LOAD_FILTER, getV2String(result));
                 if (!BStrUtils.isEmpty(result)) {
-                    CacheInvestor.saveProductFilterCache(getContext(), result);
+                    CacheInvestor.saveProductFilterCache(getContext(), getV2String(result));
                 } else {
                     getView().getDataFail(ProductContract.LOAD_FILTER, getContext().getString(R.string.resultempty));
                 }
