@@ -28,6 +28,12 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 风险评测结果页面
     public static String riskEvaluationQuestion;
 
+    // 我的投顾
+    public static String mineTouGu;
+
+    // 未绑定信息天蝎页面
+    public static String noBindUserInfo;
+
     static {
         initApi();
     }
@@ -43,5 +49,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
         product = baseParentUrl +  "/apptie/detail.html?schemeId=";
+        mineTouGu = baseParentUrl + "/myAdviser/index.html";
+        noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
     }
 }

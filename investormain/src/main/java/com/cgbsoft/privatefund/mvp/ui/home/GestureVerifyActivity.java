@@ -48,12 +48,10 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
     public static final String PARAM_FROM_SWITCH = "PARAM_FROM_SWITCH";
 
-
     private int count = 5;
     private boolean isFromResumeIntercepter;
     private boolean isFromCloseGesturePassword;
     private boolean modifyGesturePassword;
-    private boolean isFromSwitch;
     private Dialog dialog;
 
     @BindView(R.id.lock_9_view)
@@ -74,7 +72,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         isFromResumeIntercepter = getIntent().getBooleanExtra(FROM_EXCCEED_TIIME, false);
         isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
         modifyGesturePassword = getIntent().getBooleanExtra(GestureEditActivity.PARAM_FROM_MODIFY, false);
-        isFromSwitch = getIntent().getBooleanExtra(PARAM_FROM_SWITCH, false);
     }
 
     @Override
@@ -106,10 +103,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                         finish();
                     } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
                         NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-                        return;
-                    } else if (isFromSwitch) {
-                        NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-                        finish();
                         return;
                     }
 
@@ -217,7 +210,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         Toast.makeText(GestureVerifyActivity.this, "关闭手势密码失败", Toast.LENGTH_SHORT).show();
     }
 
-
     private void resetGesturePasswordDialog(Context context) {
         final Dialog dialog = new Dialog(context, R.style.gesture_password_dialog);
         LinearLayout layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dialog_reset_gesture_password, null);
@@ -258,9 +250,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             finish();
         } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
             NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-            return;
-        } else if (isFromSwitch) {
-            NavigationUtils.toMainActivity(this);
             return;
         }
 

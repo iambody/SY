@@ -99,7 +99,6 @@ public class UserInfo implements Serializable {
 
     private String adviserPhone;
 
-
     public void setIsEvaluated(String isEvaluated) {
         this.isEvaluated = isEvaluated;
     }

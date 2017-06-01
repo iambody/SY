@@ -56,4 +56,6 @@ public interface RxConstant {
 
     String SHARE_PRODUCT_SEND = "share_product_send";
 
+    String Open_PAGE_LIVE_OBSERVABLE = "open_page_live_observable";
+
 }

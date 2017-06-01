@@ -223,12 +223,11 @@ interface RequestManager {
     /**
      * 修改密码
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<BaseResult<String>> modifyPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> modifyPassword(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
