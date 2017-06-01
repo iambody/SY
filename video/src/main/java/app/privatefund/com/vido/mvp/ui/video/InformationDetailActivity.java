@@ -58,12 +58,8 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         }
         String baseWebsite = "https://app.simuyun.com/app5.0";
         link = link.startsWith("/") ? baseWebsite + link : baseWebsite + "/" + link;
-
-
         String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-//            https://app.simuyun.com/app5.0/apptie/detail.html?schemeId=04c9dff066ab41499e2a189052ca6d94&type=1&share=1
-//            https://app.simuyun.com/app5.0/discover/details.html?id=cf2e0d629cf143c0b3e5a6f0b2415ded&category=4&share=1
-        if (null != commonShareDialog) commonShareDialog = null;
+        if (null != commonShareDialog && commonShareDialog.isShowing()) return;
         ShareCommonBean shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override

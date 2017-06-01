@@ -3,8 +3,6 @@ package app.ndk.com.enter.mvp.presenter.start;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -30,7 +28,6 @@ import com.lzy.okserver.download.DownloadService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -75,7 +72,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         addSubscription(ApiClient.getTestAppResources().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                AppResourcesEntity.Result appResources = new Gson().fromJson(s, AppResourcesEntity.Result.class);
+                AppResourcesEntity.Result appResources = new Gson().fromJson(getV2String(s), AppResourcesEntity.Result.class);
                 if (appResources != null) {
                     daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
                     String imgUrl = appResources.img916;

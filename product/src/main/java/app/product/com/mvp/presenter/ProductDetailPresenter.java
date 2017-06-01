@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ProductDetailPresenter extends BasePresenterImpl<ProductContract.vi
     }
 
     @Override
-    public void getProductData(int offset, String series, String orderBy, List<FilterItem> datas) {
+    public void getProductData(LoadingDialog loadingDialo,int offset, String series, String orderBy, List<FilterItem> datas) {
 
     }
 

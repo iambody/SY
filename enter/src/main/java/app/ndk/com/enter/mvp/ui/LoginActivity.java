@@ -307,14 +307,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
                         if (!mCustomBuilder.isSetPositiveListener()) {
                             mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                                getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon,openid,publicKey);
+                                getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon, openid, publicKey);
                                 dialog.dismiss();
                             });
                         }
 //
 //                        getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
 
-                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon,openid,publicKey);
+                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
                         break;
                     case WxAuthorManger.WxAuthorCANCLE:
                         mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);

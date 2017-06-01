@@ -4,6 +4,7 @@ import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 
 /**
@@ -18,7 +19,7 @@ public interface VideoDetailContract {
          *
          * @param videoId
          */
-        void getVideoDetailInfo(String videoId);
+        void getVideoDetailInfo(LoadingDialog loadingDialog, String videoId);
 
         /**
          * 保存播放进度

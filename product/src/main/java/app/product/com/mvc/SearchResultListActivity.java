@@ -228,7 +228,7 @@ public class SearchResultListActivity extends BaseMvcActivity implements View.On
             protected void onEvent(String s) {
                 Gson gson = new Gson();
                 try {
-                    JSONObject ja = new JSONObject(s);
+                    JSONObject ja = new JSONObject(getV2String(s));
                     JSONArray jsonArray = ja.getJSONArray("items");
                     JSONArray keys = ja.getJSONArray("keywords");
                     List<String> keysList = gson.fromJson(keys.toString(), new TypeToken<List<String>>() {

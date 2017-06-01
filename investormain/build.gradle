@@ -54,16 +54,16 @@ android {
 
     signingConfigs {
         debug {
-//            storeFile file("/workspace/signe/privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
         }
         release {
-//            storeFile file("/workspace/signe/privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
         }
     }
 
@@ -108,7 +108,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
         //// 不检查给定的问题id
-        disable 'TypographyFractions', 'TypographyQuotes','MissingTranslation'
+        disable 'TypographyFractions', 'TypographyQuotes', 'MissingTranslation'
         // 如果为 true，则将所有警告视为错误
         warningsAsErrors false
     }

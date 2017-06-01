@@ -71,6 +71,8 @@ public class CWebClient extends WebViewClient {
                     url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
                     url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE) ||
                     url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
+                    url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE)||
+                    url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
                     url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE))) {
                 webviewOnClick.onClick(url);
             } else {

@@ -12,9 +12,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
@@ -66,6 +65,8 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     @BindView(R2.id.btn_as_ok)
     Button btn_as_ok;
 
+
+    private String myPublicKey;
     private LoadingDialog mLoadingDialog;
     private boolean isPassword1Input, isPassword2Input;
     private final int PASSWORD1_KEY = 1, PASSWORD2_KEY = 2;
@@ -100,6 +101,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         et_as_password1.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD1_KEY));
         et_as_password2.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD2_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.reseting_str), false, false);
+        getPresenter().toGetPublicKey();
     }
 
     @OnClick(R2.id.iv_as_back)
@@ -145,7 +147,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
             return;
         }
 
-        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code);
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code,myPublicKey);
 
     }
 
@@ -157,6 +159,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     @Override
     public void toFinish() {
         finish();
+    }
+
+    @Override
+    public void publicKeySuccess(String publickey) {
+        myPublicKey=publickey;
     }
 
     private class SetPasswordTextWatcher implements TextWatcher {

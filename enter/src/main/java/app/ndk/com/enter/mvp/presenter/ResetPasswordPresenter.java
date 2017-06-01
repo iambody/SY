@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import app.ndk.com.enter.R;
@@ -30,11 +31,13 @@ private  Context context;
         addSubscription(ApiClient.sendTestCode(un, 0).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                LogUtils.Log("s",s);
                 loadingDialog.setResult(true, context.getString(R.string.sending_succ_str), 1000, () -> getView().sendSucc());
             }
 
             @Override
             protected void onRxError(Throwable error) {
+                LogUtils.Log("s",error.toString());
                 loadingDialog.setResult(false, error.getMessage(), 1000);
             }
         }));

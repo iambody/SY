@@ -20,7 +20,7 @@ public class ProductlsBean implements Serializable {
     //累计净值
     public String cumulativeNet;
     //收益基准
-    public double expectedYield;
+    public String expectedYield;
     //资产标签
     public String label;
     //开户行

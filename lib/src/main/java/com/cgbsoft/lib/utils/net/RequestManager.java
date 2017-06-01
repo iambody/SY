@@ -206,6 +206,11 @@ interface RequestManager {
     @POST(NetConfig.USER.CHECKCODE_URL)
     Observable<ResponseBody> checkTestCode(@FieldMap Map<String, String> paramsMap);
 
+
+
+
+    @POST(NetConfig.USER.CHECKCODE_URL)
+    Observable<ResponseBody> checkV2Code(@Body RequestBody paramsMap);
     /**
      * 重置密码
      *
@@ -219,6 +224,10 @@ interface RequestManager {
     @FormUrlEncoded
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<ResponseBody> resetTestPwd(@FieldMap Map<String, String> paramsMap);
+
+
+    @POST(NetConfig.USER.RESETPWD_URL)
+    Observable<ResponseBody> resetV2Pwd(@Body RequestBody paramsMap);
 
     /**
      * 修改密码
@@ -247,6 +256,9 @@ interface RequestManager {
     @POST(NetConfig.USER.WXMERGECHECK_URL)
     Observable<ResponseBody> wxTestMergePhone(@FieldMap Map<String, String> paramsMap);
 
+    @POST(NetConfig.USER.WXMERGECHECK_URL)
+    Observable<ResponseBody> wxV2MergePhone(@Body RequestBody paramsMap);
+
     /**
      * 合并帐号--确认合并
      *
@@ -256,7 +268,9 @@ interface RequestManager {
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
     Observable<BaseResult<String>> wxMergeConfirm();
 
-    @FormUrlEncoded
+
+
+//    @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
     Observable<ResponseBody> wxTestMergeConfirm();
 
@@ -565,6 +579,8 @@ interface RequestManager {
     @POST(NetConfig.VIDEO.VIDEO_COMMENT_ADD)
     Observable<ResponseBody> videoCommentAdd(@QueryMap Map<String, String> parmsMap);
 
+    @POST(NetConfig.VIDEO.VIDEO_COMMENT_ADD)
+    Observable<ResponseBody> videoV2CommentAdd(@Body RequestBody parms);
     /**
      * 视频评论列表
      */

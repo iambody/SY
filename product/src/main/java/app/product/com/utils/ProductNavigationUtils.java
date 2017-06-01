@@ -15,6 +15,14 @@ import app.product.com.mvp.ui.ProductDetailActivity;
  * 日期 2017/5/6-18:16
  */
 public class ProductNavigationUtils {
+    /**
+     * 跳转到商品详情
+     *
+     * @param context
+     * @param schemeId
+     * @param productName
+     * @param requestCode
+     */
     public static void startProductDetailActivity(Context context, String schemeId, String productName, int requestCode) {
         String url = CwebNetConfig.productDetail.concat(schemeId);
         Intent intent = new Intent(context, ProductDetailActivity.class);
@@ -24,6 +32,18 @@ public class ProductNavigationUtils {
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
+    /**
+     * 跳转到pdf详情
+     */
+    public static void startProductPdf(Context context, String pdfUrl, String pdfName) {
+        Intent intent = new Intent(context, ProductDetailActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, pdfUrl);
+        intent.putExtra(WebViewConstant.push_message_title, pdfName);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        ((Activity) context).startActivity(intent);
+
+
+    }
 //    public static void startMessageActivity (Context context, SearchResultBean.ResultBean resultBean, String keyWords) {
 ////        if (resultBean.getTargetId().contains("INTIME") && !resultBean.getTargetId().contains("INTIME40006")) {
 ////            if (targetId.equals("INTIME40001")) { //  直CHENLONG播动态消息直接到二级列表页面
