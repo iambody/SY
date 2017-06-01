@@ -289,7 +289,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         mWebview.loadUrl("javascript:refresh()");
         if (url.contains("apptie/detail.html")) {
 //            cloudImage.setVisibility(View.VISIBLE);
-//        }
+        }
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
 //
 //        } else
