@@ -561,7 +561,7 @@ public class ApiClient {
     }
 
     private static RequestBody formatRequestBody(JSONObject jsonObject) {
-        return RequestBody.create(MediaType.parse("application/json;charset=utf-8"),jsonObject.toString());
+        return RequestBody.create(MediaType.parse("application/json;charset=utf-8"), jsonObject.toString());
     }
 
     /**
@@ -875,6 +875,12 @@ public class ApiClient {
 
         return OKHTTP.getInstance().getRequestManager().getHotSousouResult(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
+    }
+
+    public static Observable<String> getProductDetail(String SchemeId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("schemeId", SchemeId);
+        return OKHTTP.getInstance().getRequestManager().getProductDetail(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

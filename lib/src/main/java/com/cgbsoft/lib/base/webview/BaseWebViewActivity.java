@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -23,14 +22,15 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -375,6 +375,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             }
         }
         return false;
+    }
+
+    protected String getV2String(String resultStr) {
+
+        try {
+            JSONObject obj = new JSONObject(resultStr);
+            return obj.getString("result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 //	public void onEventMainThread(EventBusUpdateHeadImage event) {
 //		String laun = "javascript:setHeadImage('" + event.getRemoteAddress() + "');";

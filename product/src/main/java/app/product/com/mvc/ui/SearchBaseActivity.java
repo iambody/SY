@@ -248,7 +248,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                NavigationUtils.startMessageActivity(context, resultBean, currentKey);
                 break;
             case PRODUCT:
-                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200);
+                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200 );
                 break;
             case ZIXUN:
                 String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();

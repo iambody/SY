@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
@@ -36,7 +35,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     @BindView(R2.id.pdf_title_left)
     ImageView pdfTitleLeft;
     @BindView(R2.id.pdf_title_right)
-    ImageView pdfTitleRight;
+    TextView pdfTitleRight;
     @BindView(R2.id.pdf_title)
     TextView pdfTitle;
 
@@ -118,7 +117,9 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     public void onPdfTitleLeftClicked() {
     }
 
+    //分享按钮
     @OnClick(R2.id.pdf_title_right)
     public void onPdfTitleRightClicked() {
+
     }
 }
