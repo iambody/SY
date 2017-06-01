@@ -163,9 +163,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
             return;
         }
 
-        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, isFromVerify);
-        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code,myPublicKey);
-
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, myPublicKey, isFromVerify);
     }
 
     @Override
