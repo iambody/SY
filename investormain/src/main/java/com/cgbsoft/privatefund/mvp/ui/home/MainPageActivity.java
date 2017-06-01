@@ -190,6 +190,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void loginLive() {
         loginHelper = new LoginHelper(this, this);
+        profileInfoHelper = new ProfileInfoHelper(this);
         loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 

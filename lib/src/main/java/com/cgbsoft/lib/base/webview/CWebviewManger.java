@@ -12,10 +12,18 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.bean.OtherInfo;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.db.DBConstant;
+import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -26,6 +34,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
@@ -78,7 +87,7 @@ public class CWebviewManger {
      * @param action
      */
     public void setAction(String action) {
-        LogUtils.Log("webview",action);
+        LogUtils.Log("webview", action);
         if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
         } else if (action.contains("filing")) { // TOB
@@ -213,6 +222,23 @@ public class CWebviewManger {
         } else if (action.contains("openSharePage")) {
             openpage(action, false, false, true);
         } else if (action.contains("checkVersion")) {
+            DaoUtils daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
+            OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
+            String values = SPreference.getBoolean(context,Contant.VISITE_LOOK_NAVIGATION) ? "1" : "0";
+            if (otherInfo != null) {
+                String json = otherInfo.getContent();
+                AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
+                String newVersion = result.version;
+                String oldVersion = Utils.getVersionName(context);
+                String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
+                webview.loadUrl(language);
+            } else {
+                String oldVersion = String.valueOf(Utils.getVersionName(context));
+                String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
+                webview.loadUrl(language);
+            }
+
+//
         } else if (action.contains("updated")) {
 //            VersonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转
@@ -728,7 +754,7 @@ public class CWebviewManger {
 
     private void shareToC(String action) {
         // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-        PromptManager.ShowCustomToast(context,"shareToC分享的代码需要挪到业务module中 不要写在lib里面");
+        PromptManager.ShowCustomToast(context, "shareToC分享的代码需要挪到业务module中 不要写在lib里面");
 //        String actionDecode = URLDecoder.decode(action);
 //        String[] split = actionDecode.split(":");
 //        String sharePYQtitle = "";

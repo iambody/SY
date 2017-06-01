@@ -793,7 +793,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             mButtonSwitchCamera.setOnClickListener(this);
             mButtonPraise.setEnabled(false);
 
-            initBackDialog();
         } else {
             mButtonSwitchCamera.setOnClickListener(this);
         }
@@ -1148,42 +1147,10 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
      */
     private void quiteLiveByPurpose() {
         if (MySelfInfo.getInstance().getIdStatus() == Constants.HOST) {
-            if (backDialog.isShowing() == false)
-                backDialog.show();
         } else {
             mLiveHelper.perpareQuitRoom(true);
 //            mEnterRoomHelper.quiteLive();
         }
-    }
-
-
-    private Dialog backDialog;
-
-    private void initBackDialog() {
-//        backDialog = new Dialog(this, R.style.dialog);
-//        backDialog.setContentView(R.layout.dialog_end_live);
-//        TextView tvSure = (TextView) backDialog.findViewById(R.id.btn_sure);
-//        tvSure.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //如果是直播，发消息
-//                if (null != mLiveHelper) {
-//                    mLiveHelper.perpareQuitRoom(true);
-//                    if (isPushed) {
-//                        mLiveHelper.stopPushAction();
-//                    }
-//                }
-//                backDialog.dismiss();
-//            }
-//        });
-//        TextView tvCancel = (TextView) backDialog.findViewById(R.id.btn_cancel);
-//        tvCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                backDialog.cancel();
-//            }
-//        });
-//        backDialog.show();
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -28,6 +29,7 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,13 +57,34 @@ public class ApiClient {
      * @param map
      * @return
      */
-    public static RequestBody mapToBody(Map<String, String> map) {
-        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+//    public static RequestBody mapToBody(Map<String, String> map) {
+//        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+//        JSONObject object = new JSONObject();
+//        try {
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> entry = iterator.next();
+//                object.put(entry.getKey(), entry.getValue());
+//            }
+//        } catch (Exception e) {
+//
+//        }
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), object.toString());
+//        return body;
+//    }
+
+    /**
+     * map转换为json 用于生成RequestBody用于V2接口是使用
+     *
+     * @param map
+     * @return
+     */
+    public static RequestBody mapToBody(Map map) {
+        Iterator<Map.Entry> iterator = map.entrySet().iterator();
         JSONObject object = new JSONObject();
         try {
             while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                object.put(entry.getKey(), entry.getValue());
+                Map.Entry entry = iterator.next();
+                object.put(entry.getKey().toString(), entry.getValue());
             }
         } catch (Exception e) {
 
@@ -169,8 +192,6 @@ public class ApiClient {
 
     public static Observable<String> toV2Login(HashMap<String, String> rsaString) {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestV2Login(mapToBody(rsaString)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
-
     }
 
 
@@ -1020,25 +1041,17 @@ public class ApiClient {
 
     //保存商城收货地址信息
     public static Observable<String> saveMallAddress(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().saveAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().saveAddress(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //删除商城收货地址
     public static Observable<String> deleteMallAddress(Map<String, String> map) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("user_id", map.get("user_id"));
-            js.put("id", map.get("id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return OKHTTP.getInstance().getRequestManager().deleteAddress(js.toString()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().deleteAddress(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //新增商城收货地址
     public static Observable<String> addAddress(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().addAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().addAddress(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //获取商城收货地址列表
@@ -1053,7 +1066,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().setDefaultMallAddress(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().setDefaultMallAddress(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     //获取直播列表
@@ -1075,7 +1088,7 @@ public class ApiClient {
      * equipment --> 2
      */
     public static Observable<String> hostOpenLive(Map<String, String> map) {
-        return OKHTTP.getInstance().getRequestManager().hostOpenLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1087,7 +1100,7 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().hostCloseLive(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1139,7 +1152,7 @@ public class ApiClient {
         HashMap<String, Object> map = new HashMap<>();
         map.put("taskName", taskName);
         map.put("taskType", taskType);
-        return OKHTTP.getInstance().getRequestManager().taskAddCoin(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().taskAddCoin(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1156,7 +1169,7 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().customJoin(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().customJoin(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1170,7 +1183,7 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().custonExit(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().custonExit(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1193,7 +1206,7 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().hostOpenLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().hostOpenLive(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1207,7 +1220,7 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().hostCloseLive(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().hostCloseLive(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1226,14 +1239,14 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         map.put("user_id", userId);
-        return OKHTTP.getInstance().getRequestManager().liveHostHeart(map).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().liveHostHeart(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
      * 发评论
      */
     public static Observable<String> sendLiveMsg(HashMap<String, Object> map) {
-        return OKHTTP.getInstance().getRequestManager().sendLiveMsg(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().sendLiveMsg(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 

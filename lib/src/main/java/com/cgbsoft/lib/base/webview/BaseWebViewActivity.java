@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
