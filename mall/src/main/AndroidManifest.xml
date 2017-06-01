@@ -10,7 +10,28 @@
         <activity android:name="app.mall.com.mvp.ui.MallEditAddressActivity" />
         <activity android:name="app.mall.com.mvp.ui.PayActivity" />
         <activity android:name="app.mall.com.mvp.ui.RechargeResultActivity" />
-        <activity android:name="app.mall.com.mvp.ui.PayMethodActivity"></activity>
+        <activity android:name="app.mall.com.mvp.ui.PayMethodActivity" />
+        <!-- 微支付SDK界面 -->
+        <!-- 显示网页界面 -->
+        <activity
+            android:name="com.iapppay.alpha.sdk.main.WebActivity"
+            android:configChanges="screenSize|orientation|keyboard|navigation|layoutDirection"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- alipay sdk begin (新的支付宝) -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <!-- alipay sdk end -->
     </application>
 
 </manifest>

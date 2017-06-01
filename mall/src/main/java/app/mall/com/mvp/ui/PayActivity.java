@@ -485,7 +485,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         orderUtils.setCporderid(cporderid);
         orderUtils.setAppuserid(appuserid);
         orderUtils.setPrice(price);//单位 元
-        orderUtils.setWaresname("云豆充值");//开放价格名称(用户可自定义，如果不传以后台配置为准)
+        if (AppManager.isInvestor(this)) {
+            orderUtils.setWaresname("云豆-安卓-C");//开放价格名称(用户可自定义，如果不传以后台配置为准)
+        }else {
+            orderUtils.setWaresname("云豆-安卓-B");//开放价格名称(用户可自定义，如果不传以后台配置为准)
+        }
         orderUtils.setCpprivateinfo(cpprivateinfo);
         return orderUtils.getTransdata(PayConfig.privateKey);
     }

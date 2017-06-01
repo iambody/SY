@@ -523,8 +523,6 @@ interface RequestManager {
      * @param paramsMap
      * @return
      */
-
-
     @GET(NetConfig.PRODUCT.Get_PRODUCTLS_TAG)
     Observable<ResponseBody> getProductls(@QueryMap Map<String, String> paramsMap);
 
@@ -534,7 +532,6 @@ interface RequestManager {
      * @param paramsMap
      * @return
      */
-
     @GET(NetConfig.SOUSOU.Get_PRODUCTLS_SOU)
     Observable<ResponseBody> getSousouResult(@QueryMap Map<String, String> paramsMap);
 
@@ -544,7 +541,6 @@ interface RequestManager {
      * @param paramsMap
      * @return
      */
-
     @GET(NetConfig.SOUSOU.Get_HOT_SOU)
     Observable<ResponseBody> getHotSousouResult(@QueryMap Map<String, String> paramsMap);
 
@@ -577,18 +573,16 @@ interface RequestManager {
     Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, String> parmsMap);
 
     //编辑商城收货地址
-    @FormUrlEncoded
     @POST(NetConfig.MALL.MALL_SAVE_ADDRESS)
-    Observable<ResponseBody> saveAddress(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> saveAddress(@Body RequestBody responseBody);
 
     //新增商城收货地址
-    @FormUrlEncoded
     @POST(NetConfig.MALL.MALL_ADD_ADDRESS)
-    Observable<ResponseBody> addAddress(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> addAddress(@Body RequestBody responseBody);
 
     //删除商城收货地址
-    @DELETE(NetConfig.MALL.MALL_DETELE_ADDRESS)
-    Observable<ResponseBody> deleteAddress(@Query("param") String param);
+    @POST(NetConfig.MALL.MALL_DETELE_ADDRESS)
+    Observable<ResponseBody> deleteAddress(@Body RequestBody requestBody);
 
 
     //获取商城收货地址列表
@@ -596,9 +590,8 @@ interface RequestManager {
     Observable<ResponseBody> getAddressList(@QueryMap Map<String, String> paramsMap);
 
     //设置默认收货地址
-    @FormUrlEncoded
     @POST(NetConfig.MALL.MALL_SET_DEFAULT)
-    Observable<ResponseBody> setDefaultMallAddress(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> setDefaultMallAddress(@Body RequestBody responseBody);
 
 
     //获取直播签名
@@ -614,30 +607,28 @@ interface RequestManager {
     Observable<ResponseBody> getLiveList(@QueryMap Map<String, String> paramsMap);
 
     //主播开房间
-    @FormUrlEncoded
     @POST(NetConfig.LIVE.HOST_OPEN_LIVE)
-    Observable<ResponseBody> hostOpenLive(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> hostOpenLive(@Body RequestBody responseBody);
 
     //主播关闭房间
-    @FormUrlEncoded
     @POST(NetConfig.LIVE.HOST_CLOSE_LIVE)
-    Observable<ResponseBody> hostCloseLive(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> hostCloseLive(@Body RequestBody responseBody);
 
     //获取房间成员
     @GET(NetConfig.LIVE.GET_ROOM_MEMBER)
     Observable<ResponseBody> getRoomMenber(@QueryMap Map<String, String> paramsMap);
 
     //主播心跳
-    @GET(NetConfig.LIVE.LIVE_HOST_HEART)
-    Observable<ResponseBody> liveHostHeart(@QueryMap Map<String, String> paramsMap);
+    @POST(NetConfig.LIVE.LIVE_HOST_HEART)
+    Observable<ResponseBody> liveHostHeart(@Body RequestBody requestBody);
 
     //客户进入房间
-    @GET(NetConfig.LIVE.CUSTOM_JOIN_ROOM)
-    Observable<ResponseBody> customJoin(@QueryMap Map<String, String> paramsMap);
+    @POST(NetConfig.LIVE.CUSTOM_JOIN_ROOM)
+    Observable<ResponseBody> customJoin(@Body RequestBody requestBody);
 
     //客户退出房间
-    @GET(NetConfig.LIVE.CUSTOM_EXIT_ROOM)
-    Observable<ResponseBody> custonExit(@QueryMap Map<String, String> paramsMap);
+    @POST(NetConfig.LIVE.CUSTOM_EXIT_ROOM)
+    Observable<ResponseBody> custonExit(@Body RequestBody requestBody);
 
     //获取预告
     @GET(NetConfig.LIVE.GET_LIVE_NOTICE)
@@ -648,9 +639,8 @@ interface RequestManager {
     Observable<ResponseBody> getLivePdf(@QueryMap Map<String, String> paramsMap);
 
     //直播发送评论
-    @FormUrlEncoded
     @POST(NetConfig.LIVE.SENT_COMMENT)
-    Observable<ResponseBody> sendLiveMsg(@FieldMap Map<String,String>paramsMap);
+    Observable<ResponseBody> sendLiveMsg(@Body RequestBody responseBody);
 
     //支付配置
     @GET(NetConfig.PAY.GET_PAY_CONFIG)
@@ -669,9 +659,8 @@ interface RequestManager {
     Observable<ResponseBody> getDayTask(@QueryMap Map<String, String> paramsMap);
 
     //添加云豆
-    @FormUrlEncoded
     @POST(NetConfig.TASK.GET_COIN)
-    Observable<ResponseBody> taskAddCoin(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> taskAddCoin(@Body RequestBody responseBody);
 
     //登录前获取公钥
     @GET(NetConfig.AUTHOR.GET_PUBLIC_KEY)

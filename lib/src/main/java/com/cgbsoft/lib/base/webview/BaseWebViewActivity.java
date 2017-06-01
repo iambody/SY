@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -106,6 +108,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
+    }
+
+    @Override
+    protected void after() {
+        super.after();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     @Override

@@ -7,6 +7,9 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import app.mall.com.mvp.contract.PayContract;
@@ -28,7 +31,11 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
         addSubscription(ApiClient.getRechargeConfig().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().getRechargeConfigSuc(s);
+                try {
+                    getView().getRechargeConfigSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -43,7 +50,11 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
         addSubscription(ApiClient.checkRecharge(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().checkRecharge(s);
+                try {
+                    getView().checkRecharge(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -59,7 +70,11 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
         addSubscription(ApiClient.ydRecharge(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().rechargeResult(s);
+                try {
+                    getView().rechargeResult(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

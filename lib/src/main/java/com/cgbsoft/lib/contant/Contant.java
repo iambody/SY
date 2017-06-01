@@ -15,6 +15,9 @@ public class Contant {
     //视频评论默认条数
     public static final int VIDEO_COMMENT_LIMIT = 20;
 
+    //
+    public static final String VISITE_LOOK_NAVIGATION = "VISITE_LOOK_NAVIGATION";
+
     public static final String LIVE_SHARE_TITLE = String.format("盈泰财富云财富大讲堂正在直播，%s邀请你来一起看！",
             AppManager.getUserInfo(BaseApplication.getContext()).getNickName() != null ? AppManager.getUserInfo(BaseApplication.getContext()).getNickName() : "私募云用户");
 
