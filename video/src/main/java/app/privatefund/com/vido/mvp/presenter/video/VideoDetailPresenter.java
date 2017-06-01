@@ -16,6 +16,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.request.GetRequest;
@@ -48,8 +49,8 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
 
-    public void getLocalVideoDetailInfo(String videoId) {
-        getVideoDetailInfo(videoId);
+    public void getLocalVideoDetailInfo(LoadingDialog loadingDialog,String videoId) {
+        getVideoDetailInfo(loadingDialog,videoId);
         getView().getLocalVideoInfoSucc(viModel);
     }
 
@@ -82,7 +83,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     @Override
-    public void getVideoDetailInfo(String videoId) {
+    public void getVideoDetailInfo(LoadingDialog loadingDialog, String videoId) {
         getLocalVideoInfo(videoId);
 
         if (viModel != null) {
@@ -91,11 +92,12 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             viModel = new VideoInfoModel();
             isInitData = true;
         }
-
+        loadingDialog.show();
         addSubscription(ApiClient.getTestVideoInfo(videoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                VideoInfoEntity.Result result =new Gson().fromJson(getV2String(s), VideoInfoEntity.Result.class);
+                loadingDialog.dismiss();
+                VideoInfoEntity.Result result = new Gson().fromJson(getV2String(s), VideoInfoEntity.Result.class);
 
                 viModel.videoId = result.videoId;
                 viModel.videoCoverUrl = result.rows.coverImageUrl;
@@ -122,6 +124,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
             @Override
             protected void onRxError(Throwable error) {
+                loadingDialog.dismiss();
                 LogUtils.Log("s", error.toString());
             }
         }));
@@ -215,7 +218,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().addCommontSucc(s);
+                getView().addCommontSucc(getV2String(s));
 
             }
 

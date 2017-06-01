@@ -27,6 +27,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
@@ -84,7 +85,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private LinearLayout emptyLinearLayout;
     private String currentKey;
     private DaoUtils daoUtils;
-
+    private LoadingDialog mLoadingDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         setContentView(R.layout.acitivity_search_base);
         daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
         currentType = getIntent().getStringExtra(TYPE_PARAM);
+        mLoadingDialog= LoadingDialog.getLoadingDialog(this, getString(R.string.searching), false, false);
         initListView();
         initHistory();
         initHotSearch();
@@ -200,12 +202,14 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         map.put("infoType", formateType());
         map.put("keywords", name);
         map.put("userId", AppManager.getUserId(baseContext));
+        mLoadingDialog.show();
         addSubscription(ApiClient.getSousouData(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                mLoadingDialog.dismiss();
                 Gson gson = new Gson();
                 try {
-                    JSONObject ja = new JSONObject(s);
+                    JSONObject ja = new JSONObject(getV2String(s));
                     JSONArray keys = ja.getJSONArray("keywords");
                     JSONArray jsonArray = ja.getJSONArray("items");
                     List<SearchResultBean> list = gson.fromJson(jsonArray.toString(), new TypeToken<List<SearchResultBean>>() {
@@ -227,6 +231,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
             @Override
             protected void onRxError(Throwable error) {
+                mLoadingDialog.dismiss();
                 LogUtils.Log("s", "s");
             }
         }));

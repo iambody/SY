@@ -49,13 +49,14 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
         loadingDialog.show();
         addSubscription(ApiClient.wxTestMergePhone(un, code).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(String s) {
-                if (TextUtils.equals(s, "1")) {//之前没有手机号账号，不需要合并数据。
+            protected void onEvent(String ss) {
+
+                if (TextUtils.equals(getV2String(getV2String(ss).trim()).trim(), "1")) {//之前没有手机号账号，不需要合并数据。
                     loadingDialog.setResult(true, getContext().getString(R.string.bing_phone_succ_str), 1000, () -> getView().margeSucc());
-                } else if (TextUtils.equals(s, "2")) {//有手机号账号，需要对合并数据进行确认
+                } else if (TextUtils.equals(getV2String(getV2String(ss).trim()).trim(), "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);
                     loadingDialog.dismiss();
-                    new DefaultDialog(getContext(), vas,
+                    DefaultDialog defaultDialog=  new DefaultDialog(getContext(), vas,
                             getContext().getString(R.string.bpna_marge_no_str), getContext().getString(R.string.bpna_marge_yes_str)) {
                         @Override
                         public void left() {
@@ -71,7 +72,8 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                             wxMergeConfirm(loadingDialog);
                         }
                     };
-                } else if (TextUtils.equals(s, "3")) {//绑定中
+                    defaultDialog.show();
+                } else if (TextUtils.equals(getV2String(getV2String(ss).trim()).trim(), "3")) {//绑定中
                     loadingDialog.dismiss();
                     showToast(R.string.bind_phone_not_repeat_str);
                 } else {
@@ -92,7 +94,8 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
         addSubscription(ApiClient.wxTestMergeConfirm().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                if (TextUtils.equals(s, "suc")) {
+
+                if (TextUtils.equals(getV2String(getV2String(s)).trim(), "suc")) {
                     loadingDialog.setResult(true, "合并成功", 1000, () -> getView().margeSucc());
                 } else {
                     loadingDialog.setResult(false, "合并手机号错误", 1000);

@@ -449,7 +449,10 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("mergePhone", un);
         map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxV2MergePhone(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -875,7 +878,9 @@ public class ApiClient {
         map.put("commentContent", commnetContent);
         map.put("senderId", SenderId);
         map.put("id", id);
-        return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().videoV2CommentAdd(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

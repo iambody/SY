@@ -13,8 +13,6 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -89,7 +87,7 @@ public class CWebviewManger {
 //            openSingleTaskPage(action, false, false, true);
         } else if (action.contains("closepage") || action.contains("closePage")) {
             closepage(action);
-        } else if (action.contains("secretviewpdf")) { // 预留，可能后端直接写好
+//        } else if (action.contains("viewpdf")) { //  todo 之前写的是secretviewpdf V2 d10环境是viewpd
 //            secretviewpdf(action);
         } else if (action.contains("viewpdf")) {
 //            viewpdf(action);
@@ -947,7 +945,8 @@ public class CWebviewManger {
         ((Activity) context).startActivityForResult(i, 300);
     }
 
-//    public void secretviewpdf(String action) {
+    public void secretviewpdf(String action) {
+        PromptManager.ShowCustomToast(context,"展示PDF事件");
 //        try {
 //            String baseParams = URLDecoder.decode(action, "utf-8");
 //            String[] split = baseParams.split(":");
@@ -960,7 +959,7 @@ public class CWebviewManger {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//    }
+    }
 
 //    private void drawAlert(String action) {
 //        EventBus.getDefault().post(new Redeem("chexiao"));

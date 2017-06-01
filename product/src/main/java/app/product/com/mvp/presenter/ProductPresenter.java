@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
      * @param series         系列 字符串数组
      */
     @Override
-    public void getProductData(int offset, String series, String orderBy, List<FilterItem> datas) {
+    public void getProductData(final LoadingDialog loadingDialog, int offset, String series, String orderBy, List<FilterItem> datas) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("offset", "" + offset * Constant.LOAD_PRODUCT_lIMIT);
@@ -65,9 +66,11 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
         }
         HashMap<String, String> map1 = new HashMap<>();
         map1.put("param", jsonObject.toString());
+        if(null!=loadingDialog)loadingDialog.show();
         addSubscription(ApiClient.getProductlsDate(map1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                if(null!=loadingDialog)loadingDialog.dismiss();
                 if (!BStrUtils.isEmpty(s)) {
                     getView().getDataSucc(ProductContract.LOAD_PRODUCT_LISTDATA, getV2String(s));
                 } else {
@@ -77,6 +80,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
 
             @Override
             protected void onRxError(Throwable error) {
+                if(null!=loadingDialog)loadingDialog.dismiss();
                 getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, error.toString());
             }
         }));

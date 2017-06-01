@@ -42,7 +42,7 @@ public class NetConfig {
     //登录
     static final String LOGIN_URL = AUTH_URL + "/appAuthenticate";
     //App通过该接口可以欢迎图片和AppStore开关以及版本检测
-    static final String GET_RES_URL = API_URL + "/startup/5.1";
+    static final String GET_RES_URL = API_URL + "/startup";
     //数据统计埋点
     static final String DATASTATISTICS_URL = "simuyun-munin/training";
     //获取ip

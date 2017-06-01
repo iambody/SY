@@ -18,7 +18,6 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 import com.chenenyu.router.Router;
@@ -433,7 +432,6 @@ public class SearchAdatper extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (v.getTag() != null) {
-                        PromptManager.ShowCustomToast(context, "在searchAdapter 里面的 FooterViewHolder 找我填补");
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         List<SearchResultBean.ResultBean> list = hashMap.get(resultBean.getIsPart());
                         Intent intent = new Intent(context, SearchResultListActivity.class);

@@ -197,7 +197,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     ImageView viewTitleBackIv;
     @BindView(R2.id.view_title_right_txt)
     TextView viewTitleRightTxt;
-
+    //加载时候的dialog
+    private LoadingDialog mLoadingDialog;
     //C端分享的dialog
     private CommonShareDialog commonShareDialog;
     //C端评论的列表Adapter
@@ -226,7 +227,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
     private Observable<Boolean> isPlayVideoLocalDeleteObservable;
     //监听播放五分钟
-    private Observable<Long>isPlayFiveMinteObservable;
+    private Observable<Long> isPlayFiveMinteObservable;
 
     private boolean isOnPause;
     private int onPausePlayStauts = -1;//默认为-1，没在播放为0 在播放为1
@@ -283,11 +284,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
-
         FloatVideoService.stopService();
     }
 
     private void findview() {
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.getvidoingloading), false, false);
         videplay_produxt_view = findViewById(R.id.videplay_produxt_view);
         view_video_comment_lay = findViewById(R.id.view_video_comment_lay);
         videplay_produxt_view.setOnClickListener(new View.OnClickListener() {
@@ -328,7 +329,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             }
         });
         //播放五分钟的监听
-        isPlayFiveMinteObservable=RxBus.get().register(VIDEO_PLAY5MINUTES_OBSERVABLE,Long.class);
+        isPlayFiveMinteObservable = RxBus.get().register(VIDEO_PLAY5MINUTES_OBSERVABLE, Long.class);
         isPlayFiveMinteObservable.subscribe(new RxSubscriber<Long>() {
             @Override
             protected void onEvent(Long aLong) {
@@ -456,7 +457,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     .subscribe(new RxSubscriber<Integer>() {
                         @Override
                         protected void onEvent(Integer integer) {
-                            getPresenter().getVideoDetailInfo(videoId);
+                            getPresenter().getVideoDetailInfo(mLoadingDialog,videoId);
                             sv_avd.setVisibility(View.VISIBLE);
                         }
 
@@ -466,7 +467,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                         }
                     });
         } else {
-            getPresenter().getVideoDetailInfo(videoId);
+            getPresenter().getVideoDetailInfo(mLoadingDialog,videoId);
         }
     }
 
@@ -568,18 +569,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @Override
     public void addCommontSucc(String commontsucc) {
         //添加视频成功后需要先判断原本是否有评论过的
-        JSONObject response = null;
+        if (BStrUtils.isEmpty(commontsucc)) return;
         VideoInfoEntity.CommentBean comment;
-        try {
-            response = new JSONObject(commontsucc);
-            JSONObject rows = response.getJSONObject("rows");
-            Gson g = new Gson();
-            comment = g.fromJson(rows.toString(), VideoInfoEntity.CommentBean.class);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
+        comment = new Gson().fromJson(commontsucc.toString(), VideoInfoEntity.CommentBean.class);
         if (null == comment) return;
         List<VideoInfoEntity.CommentBean> commentBeanList = new ArrayList<>();
         commentBeanList.add(comment);
@@ -1043,8 +1035,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         if (null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
-        ShareCommonBean commonShareBean = new ShareCommonBean(  videoAllInf.rows.videoName, videoAllInf.rows.videoSummary,videoAllInf.rows.shareUrl ,"");
-        commonShareDialog = new CommonShareDialog(baseContext,CommonShareDialog.Tag_Style_WeiXin,commonShareBean,null);
+        ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
+        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, commonShareBean, null);
         commonShareDialog.show();
     }
 

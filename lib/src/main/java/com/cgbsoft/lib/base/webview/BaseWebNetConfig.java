@@ -11,4 +11,8 @@ public class BaseWebNetConfig extends NetConfig {
     //基础host
     public static String baseParentUrl = SERVER_ADD + "/app5.0/";
 
+    //基础pdf路径
+    public static String basePdfUrl = baseParentUrl + "pdfjs/web/viewer.html?";
+    //c侧product模块中的路径
+    public static String pdfUrlToC = basePdfUrl + "file=";
 }

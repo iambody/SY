@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 
 import rx.Subscription;
@@ -125,6 +128,22 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                     finish();
                 }
             });
+        }
+    }
+
+    /**
+     * 获取result数据
+     * @param resultStr
+     * @return
+     */
+    protected String getV2String(String resultStr) {
+
+        try {
+            JSONObject obj = new JSONObject(resultStr);
+            return obj.getString("result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 }
