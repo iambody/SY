@@ -12,7 +12,6 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -86,7 +85,7 @@ public class RiskResultActivity extends BaseActivity {
         switch (value) {
             case 1:
                 str = "[ 保守型 ]";
-                image.setBackgroundResource(visitor ? R.drawable.baoshou_nor : R.drawable.ic_risk_result_conservative);
+                image.setBackgroundResource(visitor ? R.drawable.ic_baoshou_nor : R.drawable.ic_risk_result_conservative);
                 break;
             case 2:
                 str = "[ 稳健型 ]";

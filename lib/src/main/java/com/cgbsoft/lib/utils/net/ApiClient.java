@@ -407,12 +407,16 @@ public class ApiClient {
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
-        Map<String, String> map = new HashMap<>();
-        map.put("userName", userName);
-        map.put("oldPassword", pwdMd5Old);
-        map.put("newPassword", pwdMd5New);
-        return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<CommonEntity.Result> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userName", userName);
+            jsonObject.put("oldPassword", pwdMd5Old);
+            jsonObject.put("newPassword", pwdMd5New);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().modifyPassword(formatRequestBody(jsonObject)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {

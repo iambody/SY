@@ -6,18 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -521,14 +523,13 @@ public class CWebviewManger {
     }
 
     private void isTouGuOnline(String action) {
-        Log.i("touguxinxi", "isTouGuOnline");
-//        String[] split = action.split(":");
-//        try {
-//            String value = URLDecoder.decode(split[2], "utf-8");
-//            ((BaseApplication)BaseApplication.getContext()).setTouGuOnline("1".equals(value) ? true : false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        String[] split = action.split(":");
+        try {
+            String value = URLDecoder.decode(split[2], "utf-8");
+            ((InvestorAppli)InvestorAppli.getContext()).setTouGuOnline("1".equals(value) ? true : false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    private void startVideoLive(String action) {
@@ -1079,64 +1080,33 @@ public class CWebviewManger {
      * @param action
      */
     private void changepassword(String action) {
-        try {
-            String[] splits = URLDecoder.decode(action, "utf-8").split(":");
-            String newPassword = splits[3];
-            Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
-            context.finish();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        String[] split = action.split(":");
-//        String password = split[2];
-//        final String newPassword = URLDecoder.decode(split[3]);
-//        JSONObject j = new JSONObject();
-//        try {
-//            j.put("userName", MApplication.getUser().getUserName());
-//            j.put("oldPassword", MD5.getShortMD5(password));
-//            j.put("newPassword", MD5.getShortMD5(newPassword));
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        final String failure = "修改失败";
-//        new ChangePasswordTask(context).start(j.toString(), new HttpResponseListener() {
-//
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Intent i = new Intent();
-//                try {
-//                    String string = response.getString("result");
-//                    boolean contains = string.contains("success");
-//                    if (contains) {
-//                        string = "";
-//                        SPSave.getInstance(context).putString(Contant.password, newPassword);
-////                         web.loadUrl("javascript:setData('null')");
-//                    } else {
-//                        // web.loadUrl("javascript:setData('" + string + "')");
-//                    }
-//
-//                    i.putExtra(Contant.msg, string);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    // web.loadUrl("javascript:setData('" + failure +
-//                    // "')");
-//                    i.putExtra(Contant.msg, failure);
-//                }
-//
-//                ((Activity) context).setResult(0, i);
-//                ((Activity) context).finish();
-//            }
-//
-//            @Override
-//            public void onErrorResponse(String error, int statueCode) {
-//                web.loadUrl("javascript:setData('" + failure + "')");
-//                Intent i = new Intent();
-//                i.putExtra(Contant.msg, failure);
-//                ((Activity) context).setResult(0, i);
-//                ((Activity) context).finish();
-//            }
-//        });
+        String[] split = action.split(":");
+        String password = split[2];
+        final String newPassword = URLDecoder.decode(split[3]);
+        final String failure = "修改失败";
+        ApiClient.modifyPassword(AppManager.getUserInfo(context).getUserName(), MD5Utils.getShortMD5(password), MD5Utils.getShortMD5(newPassword)).subscribe(new RxSubscriber<CommonEntity.Result>() {
+            @Override
+            protected void onEvent(CommonEntity.Result result) {
+                try {
+                    String string = result.result;
+                    if (!TextUtils.isEmpty(string) && string.contains("suc")) {
+                        Toast.makeText(context, "密码修改成功", Toast.LENGTH_SHORT).show();
+                        context.finish();
+                    } else {
+                        Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                Toast.makeText(context, failure, Toast.LENGTH_SHORT).show();
+                webview.loadUrl("javascript:setData('" + failure + "')");
+                context.finish();
+            }
+        });
     }
 
     /**

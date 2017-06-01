@@ -15,6 +15,8 @@ public class InvestorAppli extends BaseApplication {
 
     private boolean isRequestCustom;
 
+    private boolean isTouGuOnline;
+
     public UserInfo getUserInfo() {
         return userInfo;
     }
@@ -29,6 +31,14 @@ public class InvestorAppli extends BaseApplication {
 
     public void setRequestCustom(boolean requestCustom) {
         isRequestCustom = requestCustom;
+    }
+
+    public boolean isTouGuOnline() {
+        return isTouGuOnline;
+    }
+
+    public void setTouGuOnline(boolean touGuOnline) {
+        isTouGuOnline = touGuOnline;
     }
 
     @Override

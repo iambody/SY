@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -24,13 +23,14 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
-import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -58,9 +58,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
-
-//    @BindView(R2.id.title_right_btn)
-//    protected TextView rightTextBtn;
 
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
@@ -147,7 +144,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
     }
@@ -194,43 +190,31 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
         toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
-//        rightTextBtn.setVisibility(hasRightShare || hasRightSave ? View.VISIBLE : View.GONE);
-//        if (hasRightShare) {
-//            ViewUtils.setTextViewLeftIv(baseContext, rightTextBtn, R.drawable.fenxiang_share_nor);
-//        } else {
-//            ViewUtils.cancleTextViewLeftIv(rightTextBtn);
-//        }
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {
                 String javascript = "javascript:Tools.init('" + pushMessageValue + "')";
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-    }
-
-//    @OnClick(R2.id.menu_cloud)
-//    void cloudMenuClick() {
-//        if (SPreference.getToCBean(this) != null && TextUtils.isEmpty(SPreference.getToCBean(this).getBandingAdviserId())) {
-//            NavigationUtils.startActivityByRouter(this, "investormain_bindvisiteactivity");
-//        } else {
-//            if (isLive  && !isLookZhiBao) {
-//                isLookZhiBao = true;
-//                //joinLive();
-//            } else {
-//                NavigationUtils.startActivityByRouter(this, "investormain_cloudmenuactivity", "product_detail", true);
+//        cloudImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
+//                    HashMap<String, Object> hashMap = new HashMap<>();
+//                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+//                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
+//                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+//                } else {
+//                    if (isLive  && !isLookZhiBao) {
+//                        isLookZhiBao = true;
+//                        //joinLive();
+//                    } else {
+//                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true);
+//                    }
+//                }
 //            }
-//        }
-//    }
-
-//    @OnClick(R2.id.title_right_btn)
-//   protected void rightTextBtnClick() {
-//        if (hasRightSave) {
-//            String jascript = "javascript:Tools.save()";
-//            mWebview.loadUrl(jascript);
-//        } else if (hasRightShare) {
-//            pageShare();
-//        }
-//    }
+//        });
+    }
 
     /**
      * @param url
@@ -301,9 +285,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void onResume() {
         super.onResume();
         mWebview.loadUrl("javascript:refresh()");
-//        if (url.contains("apptie/detail.html")) {
+        if (url.contains("apptie/detail.html")) {
 //            cloudImage.setVisibility(View.VISIBLE);
-//        }
+        }
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
 //
 //        } else
@@ -375,7 +359,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             MenuItem firstItem = menu.findItem(R.id.firstBtn);
             MenuItem secItem = menu.findItem(R.id.secondBtn);
             firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-//            firstItem.setIcon(hasRightShare ? R.drawable.fenxiang_share_nor : R.drawable.fenxiang_share_nor);
             secItem.setVisible(false);
         }
         return super.onCreateOptionsMenu(menu);

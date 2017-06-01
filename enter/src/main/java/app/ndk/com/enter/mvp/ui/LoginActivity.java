@@ -242,7 +242,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
-
     //点击微信上边布局 显示微信登录的按钮页面
     @OnClick(R2.id.enter_login_wxlogin_lay)
     public void onViewClickedlayout() {

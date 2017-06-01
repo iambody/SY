@@ -112,7 +112,7 @@
     <!--android:textSize="10sp" />-->
     <!--</LinearLayout>-->
 
-    <!--<ImageView
+    <ImageView
         android:id="@+id/menu_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,5 +121,5 @@
         android:layout_marginBottom="75dp"
         android:layout_marginRight="30dp"
         android:src="@drawable/yunjian_c"
-        android:visibility="gone" />-->
+        android:visibility="gone" />
 </RelativeLayout>
