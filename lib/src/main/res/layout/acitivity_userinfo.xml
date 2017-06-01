@@ -17,8 +17,6 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:paddingTop="20dp"
             app:elevation="0dp">
 
             <android.support.v7.widget.Toolbar
@@ -26,32 +24,58 @@
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.ActionBar"
                 app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
                 <TextView
                     android:id="@+id/title_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center|center_vertical"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/fc_college_title_str"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/dimens_sp_18" />
-
-                <TextView
-                    android:id="@+id/title_right_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:textSize="@dimen/dimens_sp_15"
-                    android:visibility="gone"
-                    android:text="OK"
-                    />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
+        <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fitsSystemWindows="true"-->
+            <!--android:paddingTop="20dp"-->
+            <!--app:elevation="0dp">-->
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/toolbar"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?attr/actionBarSize"-->
+                <!--app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/title_mid"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_gravity="center|center_vertical"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/fc_college_title_str"-->
+                    <!--android:textColor="@android:color/black"-->
+                    <!--android:textSize="@dimen/dimens_sp_18" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/title_right_btn"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:textSize="@dimen/dimens_sp_15"-->
+                    <!--android:visibility="gone"-->
+                    <!--android:text="OK"-->
+                    <!--/>-->
+            <!--</android.support.v7.widget.Toolbar>-->
+        <!--</android.support.design.widget.AppBarLayout>-->
 
         <include layout="@layout/acitivity_divide_online"/>
 
@@ -88,7 +112,7 @@
     <!--android:textSize="10sp" />-->
     <!--</LinearLayout>-->
 
-    <!--<ImageView
+    <ImageView
         android:id="@+id/menu_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,5 +121,5 @@
         android:layout_marginBottom="75dp"
         android:layout_marginRight="30dp"
         android:src="@drawable/yunjian_c"
-        android:visibility="gone" />-->
+        android:visibility="gone" />
 </RelativeLayout>

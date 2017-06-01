@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -27,8 +28,10 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
@@ -56,6 +59,9 @@ import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
+import app.privatefund.com.im.utils.PushPreference;
+import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -168,7 +174,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
         initDayTask();
-
     }
 
     /**
@@ -185,7 +190,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void loginLive() {
         loginHelper = new LoginHelper(this, this);
-        profileInfoHelper = new ProfileInfoHelper(this);
         loginHelper.getLiveSign(AppManager.getUserId(this));
     }
 
@@ -243,23 +247,37 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        }
     }
 
-    @Override
+    //    @Override
     public void onCloudMenuClick(int position) {
         switch (position) {
             case 0://呼叫投资顾问
-
+                NavigationUtils.startDialgTelephone(this, AppManager.getUserInfo(this).getAdviserPhone());
+                bottomNavigationBar.closeCloudeMenu();
                 break;
             case 1://对话
-
+                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(this).getToC().getBandingAdviserId(), AppManager.getUserInfo(this).getAdviserRealName());
+                bottomNavigationBar.closeCloudeMenu();
                 break;
             case 2://直播
-
+                if (((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline()) {
+                    Intent i = new Intent(this, BaseWebViewActivity.class);
+                    i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
+                    i.putExtra(WebViewConstant.push_message_title, "我的投顾");
+                    startActivityForResult(i, 300);
+                } else {
+                    Intent intent = new Intent(this, LiveActivity.class);
+                    intent.putExtra("liveJson", liveJsonData.toString());
+                    startActivity(intent);
+                }
+                bottomNavigationBar.closeCloudeMenu();
                 break;
             case 3://短信
-
+                NavigationUtils.startDialogSendMessage(this, AppManager.getUserInfo(this).getAdviserPhone());
+                bottomNavigationBar.closeCloudeMenu();
                 break;
             case 4://客服
-
+                RongIM.getInstance().startPrivateChat(this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
+                bottomNavigationBar.closeCloudeMenu();
                 break;
         }
     }

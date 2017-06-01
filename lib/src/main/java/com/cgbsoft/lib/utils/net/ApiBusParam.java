@@ -2,7 +2,12 @@ package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author chenlong
@@ -70,5 +75,18 @@ public class ApiBusParam {
         hashMap.put("riskEvaluationIdnum", riskEvaluationIdnum);
         hashMap.put("riskEvaluationPhone", riskEvaluationPhone);
         return hashMap;
+    }
+
+    public static JSONObject formatHashMapToJSONObject(HashMap hashMap) {
+        Set<Map.Entry> set = hashMap.entrySet();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (Map.Entry entry : set) {
+                jsonObject.putOpt((String)entry.getKey(), entry.getValue());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }

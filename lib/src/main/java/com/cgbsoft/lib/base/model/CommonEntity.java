@@ -10,6 +10,6 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 public class CommonEntity extends BaseResult<CommonEntity.Result> {
 
     public static class Result{
-        public String results;
+        public String result;
     }
 }

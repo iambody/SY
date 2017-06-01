@@ -415,12 +415,16 @@ public class ApiClient {
      * @param pwdMd5New 新的密码 md5加密后
      * @return
      */
-    public static Observable<String> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
-        Map<String, String> map = new HashMap<>();
-        map.put("userName", userName);
-        map.put("oldPassword", pwdMd5Old);
-        map.put("newPassword", pwdMd5New);
-        return OKHTTP.getInstance().getRequestManager().modifyPassword(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<CommonEntity.Result> modifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userName", userName);
+            jsonObject.put("oldPassword", pwdMd5Old);
+            jsonObject.put("newPassword", pwdMd5New);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().modifyPassword(formatRequestBody(jsonObject)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestModifyPassword(String userName, String pwdMd5Old, String pwdMd5New) {
@@ -539,10 +543,14 @@ public class ApiClient {
      * @return
      */
     public static Observable<CommonEntity.Result> relatedAsset(String customId, String assertImage) {
-        Map<String, String> map = new HashMap<>();
-        map.put("customerId", customId);
-        map.put("myAssetImage", assertImage);
-        return OKHTTP.getInstance().getRequestManager().relatedAsset(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        JSONObject map = new JSONObject();
+        try {
+            map.put("customerId", customId);
+            map.put("myAssetImage", assertImage);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().relatedAsset(formatRequestBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestRelatedAsset(String customId, String assertImage) {
@@ -550,6 +558,10 @@ public class ApiClient {
         map.put("customerId", customId);
         map.put("myAssetImage", assertImage);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).toTestRelatedAsset(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    private static RequestBody formatRequestBody(JSONObject jsonObject) {
+        return RequestBody.create(MediaType.parse("application/json;charset=utf-8"),jsonObject.toString());
     }
 
     /**
@@ -560,11 +572,15 @@ public class ApiClient {
      * @return
      */
     public static Observable<CommonEntity.Result> assertProve(String customId, JSONArray assertImage, String investmentType) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("customerId", customId);
-        map.put("assetImage", assertImage);
-        map.put("investmentType", investmentType);
-        return OKHTTP.getInstance().getRequestManager().assetProve(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("customerId", customId);
+            jsonObject.put("assetImage", assertImage);
+            jsonObject.put("investmentType", investmentType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().assetProve(formatRequestBody(jsonObject)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestassertProve(String customId, JSONArray assertImage, String investmentType) {
@@ -582,7 +598,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<CommonEntity.Result> updateUserInfo(HashMap<String, String> hashMap) {
-        return OKHTTP.getInstance().getRequestManager().updateUserInfo(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().updateUserInfo(formatRequestBody(ApiBusParam.formatHashMapToJSONObject(hashMap))).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestUpdateUserInfo(HashMap<String, String> hashMap) {
@@ -610,7 +626,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<CommonEntity.Result> feedBackUser(HashMap<String, Object> hashMap) {
-        return OKHTTP.getInstance().getRequestManager().feedBackUser(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().feedBackUser(formatRequestBody(ApiBusParam.formatHashMapToJSONObject(hashMap))).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestFeedBackUser(HashMap<String, Object> hashMap) {
@@ -624,7 +640,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<TypeNameEntity.Result> commitRistResult(HashMap<String, String> hashMap) {
-        return OKHTTP.getInstance().getRequestManager().riskEvalutionCommit(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().riskEvalutionCommit(formatRequestBody(ApiBusParam.formatHashMapToJSONObject(hashMap))).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> toTestCommitRistResult(HashMap<String, Object> hashMap) {

@@ -106,13 +106,11 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
              System.out.println("------inputCode=" + inputCode);
             if (!isInputPassValidate(inputCode)) {
                 mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
-//                    mGestureContentView.clearDrawlineState(0L);
                 return;
             }
             if (mIsFirstInput) {
                 mFirstPassword = inputCode;
                 updateCodeList(inputCode);
-//                    mGestureContentView.clearDrawlineState(0L);
                 mTextTip.setText(isModifyPassword ? R.string.please_target_gesture_password_again : R.string.reset_gesture_code);
             } else {
                 if (inputCode.equals(mFirstPassword)) {
@@ -121,7 +119,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
                     mTextTip.setText(Html.fromHtml(getResources().getString(R.string.set_gesture_agin)));
                     Animation shakeAnimation = AnimationUtils.loadAnimation(GestureEditActivity.this, R.anim.shake);
                     mTextTip.startAnimation(shakeAnimation);
-//                        mGestureContentView.clearDrawlineState(1300L);
                 }
             }
             mIsFirstInput = false;
@@ -131,11 +128,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         mTextJump.setVisibility(fromRegistOrLoginPage ? View.VISIBLE : View.GONE);
         mBackTitle.setVisibility(fromRegistOrLoginPage ? View.GONE : View.VISIBLE);
     }
-
-//    private void setUpListeners() {
-//        mBackTitle.setOnClickListener(this);
-//        mTextJump.setOnClickListener(this);
-//    }
 
     private void updateCodeList(String inputCode) {
         mLockIndicator.setPath(inputCode);

@@ -26,6 +26,9 @@ public class RouteConfig {
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
+    // 云健菜单
+    public static final String GOTO_CLOUD_MENU_ACTIVITY = "investormain_cloudmenuactivity";
+
     // 选择产品
     public static final String GOTO_SELECT_PRODUCT = "product_select_product_activity";
 
@@ -44,4 +47,7 @@ public class RouteConfig {
 
     // 二维码
     public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
+
+    // 未绑定页面
+    public static final String GOTO_NO_BIND_TOUGU_ACTIVITY = "investormain_bindvisiteactivity";
 }

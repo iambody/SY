@@ -16,8 +16,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -79,7 +77,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
-    //关闭背景
+//    //关闭背景
     @BindView(R.id.view_bottom_navigation_close)
     View view_bottom_navigation_close;
     //中间的按钮
@@ -131,9 +129,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             }
 
             @Override
-            protected void onRxError(Throwable error) {
-
-            }
+            protected void onRxError(Throwable error) {}
         });
     }
 
@@ -159,7 +155,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 .setEndAngle(340)
                 .setRadius(400)
                 .build();
-
+//
         view_bottom_navigation_close.setOnClickListener(v -> {
             long toTime = System.currentTimeMillis() - nowSystemTime;
             if (toTime > doubleClickTime * 4 && floatingActionMenu.isOpen()) {
@@ -167,6 +163,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 view_bottom_navigation_close.setVisibility(GONE);
                 iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
             }
+//                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_CLOUD_MENU_ACTIVITY);
         });
 
         callView.setOnClickListener(v -> {
@@ -194,7 +191,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         doubleClickDetect(doubleClickTime, fl_bottom_nav_left_second);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
-        if (AppManager.isInvestor(activity)) {
+        if (AppManager.isInvestor(getContext())) {
             doubleClickDetect(doubleClickTime * 4, iv_bottom_navigation_cloud);
         } else {
             doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
@@ -342,8 +339,15 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 4;
                                         changeResWithIdtentify();
                                     }
-
                                     if (isIdtentifyWithInvestor) {
+//                                        if (SPreference.getToCBean(getContext()) != null && TextUtils.isEmpty(SPreference.getToCBean(getContext()).getBandingAdviserId())) {
+//                                            HashMap<String, Object> hashMap = new HashMap<>();
+//                                            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+//                                            hashMap.put(WebViewConstant.push_message_title, "填写信息");
+//                                            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+//                                        } else {
+//                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
+//                                        }
                                         boolean needOpen;
                                         if (floatingActionMenu.isOpen()) {
                                             needOpen = false;
@@ -369,6 +373,11 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                     protected void onRxError(Throwable error) {
                     }
                 });
+    }
+
+    public void closeCloudeMenu() {
+        view_bottom_navigation_close.setVisibility(GONE);
+        floatingActionMenu.toggle(false);
     }
 
     /**

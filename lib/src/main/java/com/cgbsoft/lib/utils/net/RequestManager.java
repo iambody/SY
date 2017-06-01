@@ -19,6 +19,8 @@ import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -88,7 +90,7 @@ interface RequestManager {
     /**
      * V2
      */
-//    @Headers({"Content-Type: application/json","Accept: application/json"})
+//    @Headers({"'","Accept: application/json"})
     @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
     Observable<ResponseBody> toTestV2Login(@Body RequestBody paramsMap);
 
@@ -230,12 +232,11 @@ interface RequestManager {
     /**
      * 修改密码
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
-    Observable<BaseResult<String>> modifyPassword(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> modifyPassword(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.MODIFY_PASSWORD_URL)
@@ -338,12 +339,11 @@ interface RequestManager {
     /**
      * 关联资产
      *
-     * @param paramsMap
+     * @param requestBody
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.RELATED_ASSET_URL)
-    Observable<BaseResult<CommonEntity.Result>> relatedAsset(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> relatedAsset(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.RELATED_ASSET_URL)
@@ -352,12 +352,11 @@ interface RequestManager {
     /**
      * 资产证明
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.ASSET_PROVET_URL)
-    Observable<BaseResult<CommonEntity.Result>> assetProve(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> assetProve(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.ASSET_PROVET_URL)
@@ -366,12 +365,11 @@ interface RequestManager {
     /**
      * 更新用户信息
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.UPDATE_USER_INFO_URL)
-    Observable<BaseResult<CommonEntity.Result>> updateUserInfo(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> updateUserInfo(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.UPDATE_USER_INFO_URL)
@@ -392,12 +390,11 @@ interface RequestManager {
     /**
      * 用户反馈信息
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.USER_FEED_BACK_URL)
-    Observable<BaseResult<CommonEntity.Result>> feedBackUser(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<CommonEntity.Result>> feedBackUser(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.USER_FEED_BACK_URL)
@@ -406,12 +403,11 @@ interface RequestManager {
     /**
      * 风险评测提交
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.API.RISK_EVALUTION)
-    Observable<BaseResult<TypeNameEntity.Result>> riskEvalutionCommit(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<TypeNameEntity.Result>> riskEvalutionCommit(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.API.RISK_EVALUTION)

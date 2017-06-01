@@ -1,5 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
+import android.text.TextUtils;
+
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.exception.ApiException;
 
@@ -34,13 +36,12 @@ class RxResultHelper {
         });
     }
 
-
     static <T> Observable.Transformer<BaseResult<T>, T> handleResult() {
         return tObservable -> tObservable.flatMap(
                 new Func1<BaseResult<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(BaseResult<T> entity) {
-                        if(entity != null && entity.isOk()){
+                        if(entity != null && TextUtils.isEmpty(entity.message) && entity.result != null && !"".equals(entity.result)) {
                             return createData(entity.result);
                         }else {
                             //todo 测试用

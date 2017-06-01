@@ -32,7 +32,7 @@ public class FeedBackUserPresenter extends BasePresenterImpl<FeedBackUserContrac
         ApiClient.feedBackUser(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
-                if ("suc".equals(result.results)) {
+                if ("suc".equals(result.result)) {
                     getView().requestSuccess();
                 } else {
                     getView().requestFailure("提交意见失败");
