@@ -93,7 +93,7 @@ public class CWebviewManger {
             closepage(action);
         } else if (action.contains("secretviewpdf")) { // 预留，可能后端直接写好
 //            secretviewpdf(action);
-        } else if (action.contains("viewpdf")) {
+//        } else if (action.contains("viewpdf")) {
 //            viewpdf(action);
         } else if (action.contains("changepassword")) {
             changepassword(action);
@@ -948,21 +948,21 @@ public class CWebviewManger {
         ((Activity) context).startActivityForResult(i, 300);
     }
 
-    public void secretviewpdf(String action) {
-        PromptManager.ShowCustomToast(context,"展示PDF事件");
-//        try {
-//            String baseParams = URLDecoder.decode(action, "utf-8");
-//            String[] split = baseParams.split(":");
-//            String padUrl = split[2];
-//            Intent i = new Intent(context, PDFActivity.class);
-//            i.putExtra(WebViewConstant.pdf_url, padUrl);
-//            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
-//            i.putExtra("isSecret", 1);
-//            context.startActivity(i);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }
+//    public void secretviewpdf(String action) {
+//        PromptManager.ShowCustomToast(context,"展示PDF事件");
+////        try {
+////            String baseParams = URLDecoder.decode(action, "utf-8");
+////            String[] split = baseParams.split(":");
+////            String padUrl = split[2];
+////            Intent i = new Intent(context, PDFActivity.class);
+////            i.putExtra(WebViewConstant.pdf_url, padUrl);
+////            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
+////            i.putExtra("isSecret", 1);
+////            context.startActivity(i);
+////        } catch (Exception e) {
+////            e.printStackTrace();
+////        }
+//    }
 
 //    private void drawAlert(String action) {
 //        EventBus.getDefault().post(new Redeem("chexiao"));

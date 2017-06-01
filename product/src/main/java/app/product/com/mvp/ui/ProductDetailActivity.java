@@ -7,7 +7,6 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.chenenyu.router.annotation.Route;
 
 import java.io.UnsupportedEncodingException;
@@ -39,7 +38,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             shareToC(actionUrl);
         }
         if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_PDF)) {
-            PromptManager.ShowCustomToast(baseContext, "开始展示pdf");
             showPdf(actionUrl);
         }
     }
@@ -93,7 +91,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 
             String pdfurl = BaseWebNetConfig.pdfUrlToC + url;
 //            ProductNavigationUtils.startProductPdf(baseContext, pdfurl, title);
-            startActivity(new Intent(baseContext, PdfActivity.class).putExtra("pdfurl", url).putExtra("pdftitle",title));
+            startActivity(new Intent(baseContext, PdfActivity.class).putExtra("pdfurl", url).putExtra("pdftitle", title));
         } catch (UnsupportedEncodingException e) {
 
             e.printStackTrace();
