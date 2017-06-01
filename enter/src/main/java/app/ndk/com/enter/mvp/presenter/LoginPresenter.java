@@ -82,7 +82,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         addSubscription(ApiClient.toV2Login(paramMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-//                //
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
                 AppInfStore.saveUserId(getContext(), loginBean.userId);

@@ -62,8 +62,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
 
-//    @BindView(R2.id.menu_cloud)
-//    protected ImageView cloudImage;
+    @BindView(R2.id.menu_cloud_id)
+    protected ImageView cloudImage;
 
     protected boolean hasEmailShare;
 
@@ -196,24 +196,27 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-//        cloudImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
-//                    HashMap<String, Object> hashMap = new HashMap<>();
-//                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
-//                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
-//                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-//                } else {
-//                    if (isLive  && !isLookZhiBao) {
-//                        isLookZhiBao = true;
-//                        //joinLive();
-//                    } else {
-//                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true);
-//                    }
-//                }
-//            }
-//        });
+        if (url.contains("apptie/detail.html")) {
+            cloudImage.setVisibility(View.VISIBLE);
+        }
+        cloudImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
+                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                } else {
+                    if (isLive  && !isLookZhiBao) {
+                        isLookZhiBao = true;
+                        //joinLive();
+                    } else {
+                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -285,11 +288,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void onResume() {
         super.onResume();
         mWebview.loadUrl("javascript:refresh()");
-        if (url.contains("apptie/detail.html")) {
-//            cloudImage.setVisibility(View.VISIBLE);
-        }
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
-//
 //        } else
         try {
             mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);

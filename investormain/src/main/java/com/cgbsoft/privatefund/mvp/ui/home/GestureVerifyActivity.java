@@ -35,6 +35,8 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -237,7 +239,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         reset_gesture_password_dialog_forget_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, "investornmain_forgetpasswordctivity", "password", "1");
+                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "password", "1");
             }
         });
     }

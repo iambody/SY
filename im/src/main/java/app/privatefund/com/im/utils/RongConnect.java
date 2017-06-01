@@ -33,7 +33,6 @@ public class RongConnect {
      * @param userId
      */
     public static void initRongTokenConnect(String userId) {
-
         int rongExpired = AppManager.getRongTokenExpired(BaseApplication.getContext());
         String UID = AppManager.getUserId(BaseApplication.getContext());
         String rongToken = AppManager.getRongToken(BaseApplication.getContext());

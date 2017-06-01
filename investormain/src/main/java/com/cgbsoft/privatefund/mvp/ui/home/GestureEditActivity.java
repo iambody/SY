@@ -30,6 +30,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
+import app.ndk.com.enter.mvp.ui.ResetPasswordActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -43,6 +44,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";
     public static final String PARAM_FROM_MODIFY = "PARAM_FROM_MODIFY";
+    public static final String PARAM_FROM_FORGET = "PARAM_FROM_FORGET";
     /**
      * 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后=》重新设置密码（本界面）的流程进来的
      * 注意 理论上是 手势密码忘记密码进来的需要重新设置手势密码时候直接进入main页面 去掉存在手势密码的标识@TODO需要问龙哥 标识是怎么存储形式！！！！
@@ -52,6 +54,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     private String mFirstPassword = null;
     private boolean fromRegistOrLoginPage = false;
     private boolean isModifyPassword = false;
+    private boolean fromForgetPassword = false;
     private String password;
 
     @BindView(R.id.lock_9_view)
@@ -75,8 +78,9 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         fromRegistOrLoginPage = getIntent().getBooleanExtra(PARAM_FROM_REGIST_OR_LOGIN, false);
         isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
         //判断是否是 手势密码=》忘记密码=》重置密码=》重置密码成功后=》重新设置密码 流程进来的 标识
-//        if (getIntent().getExtras().containsKey(ForgetPasswordActivity.FROMVERIFYTAG))
-//            isFromVerifyForget = getIntent().getStringExtra(ForgetPasswordActivity.FROMVERIFYTAG).equals("1");
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)) {
+            isFromVerifyForget = getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
+        }
     }
 
     @Override
