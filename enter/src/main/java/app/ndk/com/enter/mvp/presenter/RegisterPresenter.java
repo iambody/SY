@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -36,11 +37,8 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result result = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
-//                SPreference.saveUserId(getContext().getApplicationContext(), result.userId);
-//                SPreference.saveToken(getContext().getApplicationContext(), result.token);
-//                SPreference.saveLoginFlag(getContext(), true);
                 AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
-                AppInfStore.saveUserToken(getContext().getApplicationContext(), result.token);
+                AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
 
                 if (result.userInfo != null) {

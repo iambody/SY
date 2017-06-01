@@ -18,6 +18,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import java.util.HashMap;
 
@@ -77,6 +78,8 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     @BindView(R2.id.btn_as_ok)
     Button btn_as_ok;
 
+
+    private String myPublicKey;
     private LoadingDialog mLoadingDialog;
     private boolean isPassword1Input, isPassword2Input;
     private final int PASSWORD1_KEY = 1, PASSWORD2_KEY = 2;
@@ -114,6 +117,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         et_as_password1.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD1_KEY));
         et_as_password2.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD2_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.reseting_str), false, false);
+        getPresenter().toGetPublicKey();
     }
 
     @OnClick(R2.id.iv_as_back)
@@ -160,6 +164,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         }
 
         getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, isFromVerify);
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code,myPublicKey);
 
     }
 
@@ -179,6 +184,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         parms.put(ResetPasswordActivity.FROMVERIFYTAG,"1");//标识 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后 是这个流程
         NavigationUtils.startActivityByRouter(this, RouteConfig.SET_GESTURE_PASSWORD, parms);
         finish();
+    }
+
+    @Override
+    public void publicKeySuccess(String publickey) {
+        myPublicKey=publickey;
     }
 
     private class SetPasswordTextWatcher implements TextWatcher {

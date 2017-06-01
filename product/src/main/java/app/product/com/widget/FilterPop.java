@@ -5,11 +5,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,11 +19,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
-import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
-import com.cgbsoft.lib.widget.FloatView;
-import com.cgbsoft.lib.widget.FlowLayoutView;
 import com.cgbsoft.lib.widget.taglayout.FlowTagLayout;
 import com.cgbsoft.lib.widget.taglayout.OnTagSelectListener;
 
@@ -37,9 +32,6 @@ import app.product.com.model.EventFiltBean;
 import app.product.com.model.FilterItem;
 import app.product.com.model.Series;
 import app.product.com.mvp.presenter.ProductPresenter;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * desc  ${DESC}
@@ -54,8 +46,9 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
     //多选
     private final String CHECKBOX = "checkbox";
 
-    Button product_filtepop_reset_filter;
-    Button product_filtepop_enter_filter;
+    private Button product_filtepop_reset_filter;
+    private Button product_filtepop_enter_filter;
+    private ImageView filter_pop_down_view;
 
     LinearLayout product_filte_linear_layout;
     //数据
@@ -104,8 +97,16 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         product_filte_linear_layout = (LinearLayout) baseView.findViewById(R.id.product_filte_linear_layout);
         product_filtepop_reset_filter = (Button) baseView.findViewById(R.id.product_filtepop_reset_filter);
         product_filtepop_enter_filter = (Button) baseView.findViewById(R.id.product_filtepop_enter_filter);
+        filter_pop_down_view = (ImageView) baseView.findViewById(R.id.filter_pop_down_view);
         product_filtepop_reset_filter.setOnClickListener(this);
         product_filtepop_enter_filter.setOnClickListener(this);
+        filter_pop_down_view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                FilterPop.this.dismiss();
+                return true;
+            }
+        });
     }
 
     /**
@@ -249,7 +250,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
         @Override
         public void afterTextChanged(Editable s) {
-                 filterItemList.get(0);
+            filterItemList.get(0);
             if (0 == editType) filterItem.setMinNumber(s.toString());
             if (1 == editType) filterItem.setMaxNumber(s.toString());
         }

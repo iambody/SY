@@ -58,9 +58,11 @@
             android:textColor="#fff"
             android:textSize="15sp" />
     </LinearLayout>
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/ui_50_dip"
-    android:background="@color/transparent"/>
+
+    <ImageView
+        android:id="@+id/filter_pop_down_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_50_dip"
+        android:background="@color/transparent" />
 
 </LinearLayout>

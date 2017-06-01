@@ -2,6 +2,7 @@ package app.product.com.mvp.contract;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ProductContract {
          * @param orderBy        排序 字符串数组
          * @param series         系列 字符串数组
          */
-        void getProductData(int offset,  String series,  String  orderBy,List<FilterItem> datas);
+        void getProductData(LoadingDialog loadingDialog,int offset, String series, String  orderBy, List<FilterItem> datas);
 
 
         void getProductFilterData(   );

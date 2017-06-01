@@ -252,14 +252,14 @@ public class ApiClient {
     }
 
     public static Observable<String> toTestWxLogin(Context context, String sex, String nickName, String unionid, String headimgurl, String openId, String publicKey) {
-        Map<String, String> map = new HashMap<>();
-        map.put("sex", sex);
-        map.put("nickName", nickName);
-        map.put("unionid", unionid);
-        map.put("headImageUrl", headimgurl);
-        map.put("openId", openId);
-        map.put("recommendId", "");
-        map.put("client", AppManager.isInvestor(context) ? "C" : "B");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("sex", sex);
+//        map.put("nickName", nickName);
+//        map.put("unionid", unionid);
+//        map.put("headImageUrl", headimgurl);
+//        map.put("openId", openId);
+//        map.put("recommendId", "");
+//        map.put("client", AppManager.isInvestor(context) ? "C" : "B");
 
         JSONObject obj = new JSONObject();
         try {
@@ -313,10 +313,6 @@ public class ApiClient {
     }
 
     public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("userName", userName);
-//        map.put("password", pwdMd5);
-//        map.put("captcha", code);
         JSONObject object = new JSONObject();
         try {
             object.put("userName", userName);
@@ -342,9 +338,6 @@ public class ApiClient {
     }
 
     public static Observable<String> sendTestCode(String phone, int which) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("phone", phone);
-//        map.put("checkPhoneDuplicate", String.valueOf(which));
         JSONObject object = new JSONObject();
         try {
             object.put("phone", phone);
@@ -369,10 +362,17 @@ public class ApiClient {
     }
 
     public static Observable<String> checkTestCode(String phone, String code) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phoneNum", phone);
-        map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkTestCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        Map<String, String> map = new HashMap<>();
+//        map.put("phoneNum", phone);
+//        map.put("captcha", code);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phoneNum", phone);
+            object.put("captcha", code);
+        } catch (Exception e) {
+
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).checkV2Code(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -393,10 +393,18 @@ public class ApiClient {
 
     public static Observable<String> resetTestPwd(String un, String pwdMd5, String code) {
         Map<String, String> map = new HashMap<>();
-        map.put("userName", un);
-        map.put("newPassword", pwdMd5);
-        map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetTestPwd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+//        map.put("userName", un);
+//        map.put("newPassword", pwdMd5);
+//        map.put("captcha", code);
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userName", un);
+            object.put("newPassword", pwdMd5);
+            object.put("captcha", code);
+        } catch (Exception e) {
+
+        }
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).resetV2Pwd(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -445,7 +453,10 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("mergePhone", un);
         map.put("captcha", code);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxV2MergePhone(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).wxTestMergePhone(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -883,7 +894,9 @@ public class ApiClient {
         map.put("commentContent", commnetContent);
         map.put("senderId", SenderId);
         map.put("id", id);
-        return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().videoV2CommentAdd(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager().videoCommentAdd(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

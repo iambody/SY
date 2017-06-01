@@ -207,20 +207,7 @@
         <!--android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"-->
         <!--android:screenOrientation="portrait" />-->
         <!--视频下载列表-->
-        <activity
-            android:name="com.cgbsoft.lib.mvp.ui.video.VideoDownloadListActivity"
-            android:screenOrientation="portrait" />
 
-        <!--视频播放历史列表-->
-        <activity
-            android:name="com.cgbsoft.lib.mvp.ui.video.VideoHistoryListActivity"
-            android:screenOrientation="portrait" />
-
-        <!--视频详情-->
-        <activity
-            android:name="com.cgbsoft.lib.mvp.ui.video.VideoDetailActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
 
         <!--关联资产activity-->
         <activity

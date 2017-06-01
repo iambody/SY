@@ -36,13 +36,33 @@ android {
             javaMaxHeapSize = "8g"
         }
     }
+    signingConfigs {
+        debug {
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+        release {
+            storeFile file("/workspace/signe/privatefund.keystore")
+            storePassword "privatefund"
+            keyAlias "beijing"
+            keyPassword "privatefund"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            manifestPlaceholders = [ DATABASE_VER:"1" ]
+            //签名配置
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
+
 
     lintOptions {
 //        checkReleaseBuilds false

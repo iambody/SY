@@ -24,4 +24,6 @@
     <string name="wancheng">完成</string>
     <string name="nofiltedate">暂无筛选条件信息</string>
     <string name="zhinengpaixu">智能排序</string>
+    <string name="searching">搜索中....</string>
+    <string name="getproductloading">加载中</string>
 </resources>
