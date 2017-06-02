@@ -17,11 +17,6 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
 
     @Override
-    protected boolean getCallBack() {
-        return true;
-    }
-
-    @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
         if (actionUrl.contains(WebViewConstant.AppCallBack.INVITE_CUSTOM)) {
             String[] split = actionUrl.split(":");

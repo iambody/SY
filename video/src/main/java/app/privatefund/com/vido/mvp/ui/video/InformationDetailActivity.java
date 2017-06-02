@@ -42,11 +42,6 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         }
     }
 
-    @Override
-    protected boolean getCallBack() {
-        return true;
-    }
-
     private void shareToc(String actionUrl) {
         LogUtils.Log("mm", actionUrl);
         // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
