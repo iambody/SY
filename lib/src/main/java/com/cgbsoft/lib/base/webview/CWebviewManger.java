@@ -25,6 +25,7 @@ import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
@@ -195,7 +196,7 @@ public class CWebviewManger {
         } else if (action.contains("toast") || action.contains("toastInfo")) {
             showToast(action);
         } else if (action.contains("mobClick")) {
-//            mobClick(action);
+            mobClick(action);
         } else if (action.contains("presentPage")) {
             startActivityOverridePendingTransition(action);
         } else if (action.contains("dismissPage")) {
@@ -796,24 +797,24 @@ public class CWebviewManger {
         context.finish();
     }
 
-//    private void mobClick(String action) {
-//        if (MApplication.getUser().getToC() == null) {
-//            return;
-//        }
-//        String decode = URLDecoder.decode(action);
-//        String[] split = decode.split(":");
-//        String args = split[4] + ",$";
-//        String[] split1 = args.split(",");
+    private void mobClick(String action) {
+        if (AppManager.getUserInfo(context).getToC() == null) {
+            return;
+        }
+        String decode = URLDecoder.decode(action);
+        String[] split = decode.split(":");
+        String args = split[4] + ",$";
+        String[] split1 = args.split(",");
 //        if (split[3].startsWith("1")) {
-//            split1[1] = MApplication.getUser().getToB().isColorCloud();
+//            split1[1] = AppManager.getUserInfo(context).getToB().isColorCloud();
 //            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
 //            DataStatisticsUtils.push(context, params);
 //        } else {
-//            split1[1] = MApplication.getUser().getToC().getBindTeacher();
+//            split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
 //            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
 //            DataStatisticsUtils.push(context, params);
 //        }
-//    }
+    }
 
     private void startActivityOverridePendingTransition(String action) {
         String[] split = action.split(":");

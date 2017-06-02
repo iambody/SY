@@ -378,6 +378,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     public void closeCloudeMenu() {
         view_bottom_navigation_close.setVisibility(GONE);
         floatingActionMenu.toggle(false);
+        iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
     }
 
     /**

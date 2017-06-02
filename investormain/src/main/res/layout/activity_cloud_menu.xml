@@ -3,7 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/root_window"
-    android:background="@android:color/transparent"
+    android:background="@color/half_large_transparent"
     android:gravity="bottom|center_horizontal">
 
 </LinearLayout>

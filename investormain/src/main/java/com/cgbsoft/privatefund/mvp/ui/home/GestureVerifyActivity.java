@@ -239,7 +239,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         reset_gesture_password_dialog_forget_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "password", "1");
+                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "from_verify_forget_pwd", "1");
             }
         });
     }

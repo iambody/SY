@@ -44,6 +44,7 @@ public interface SetPasswordContract {
         void toFinish();
 
         void setGesturePassword();
+
         void publicKeySuccess(String publicKey);
     }
 }

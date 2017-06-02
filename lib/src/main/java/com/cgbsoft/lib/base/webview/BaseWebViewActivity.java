@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -55,6 +54,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     String url = "";
     private String title;
 
+    @BindView(R2.id.cloud_menu_imagevew)
+    protected ImageView cloudImage;
+
     @BindView(R2.id.toolbar)
     protected Toolbar toolbar;
 
@@ -63,9 +65,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
-
-    @BindView(R2.id.menu_cloud_id)
-    protected ImageView cloudImage;
 
     protected boolean hasEmailShare;
 
@@ -214,7 +213,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                         isLookZhiBao = true;
                         //joinLive();
                     } else {
-                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true);
+                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, R.anim.home_fade_in, R.anim.home_fade_out);
                     }
                 }
             }

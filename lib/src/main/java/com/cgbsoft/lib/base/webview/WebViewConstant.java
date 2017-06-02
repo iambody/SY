@@ -35,7 +35,6 @@ public class WebViewConstant {
         public static final String OPEN_SHAREPAGE ="app:openSharePage";
         public static final String TOC_SHARE ="app:tocShare";
         public static final String TOC_PDF ="app:viewpdf";
-
     }
 
     /**
@@ -43,7 +42,7 @@ public class WebViewConstant {
      */
     public class IntecepterActivity {
         public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
-
+        public static final String DISCOVER_DETAILS = "/discover/details.html";
     }
 
 }

@@ -169,6 +169,11 @@ public class NavigationUtils {
         Router.build(routerType).with(key, object).addFlags(flag).go(context);
     }
 
+    public static void startActivityByRouter(Context context, String routerType, String key, Object object, int enterAnim, int outerAnim) {
+        Router.build(routerType).with(key, object).anim(enterAnim, outerAnim).go(context);
+    }
+
+
     public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap, int flag) {
         IRouter iRouter = Router.build(routerType);
         Set<Map.Entry<String, Object>> set = hashMap.entrySet();

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".base.webview.BaseWebViewActivity">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +18,9 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
                 android:theme="@style/AppTheme.ActionBar"
                 app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
@@ -39,45 +36,7 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <!--<android.support.design.widget.AppBarLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--android:paddingTop="20dp"-->
-            <!--app:elevation="0dp">-->
-
-            <!--<android.support.v7.widget.Toolbar-->
-                <!--android:id="@+id/toolbar"-->
-                <!--android:background="@color/white"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="?attr/actionBarSize"-->
-                <!--app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/title_mid"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_gravity="center|center_vertical"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="@string/fc_college_title_str"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:textSize="@dimen/dimens_sp_18" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/title_right_btn"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:layout_marginRight="20dp"-->
-                    <!--android:textSize="@dimen/dimens_sp_15"-->
-                    <!--android:visibility="gone"-->
-                    <!--android:text="OK"-->
-                    <!--/>-->
-            <!--</android.support.v7.widget.Toolbar>-->
-        <!--</android.support.design.widget.AppBarLayout>-->
-
-        <include layout="@layout/acitivity_divide_online"/>
+        <include layout="@layout/acitivity_divide_online" />
 
         <com.cgbsoft.lib.base.webview.BaseWebview
             android:id="@+id/webview"
@@ -85,41 +44,14 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/share_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_below="@+id/title_title"-->
-    <!--android:background="#88000000"-->
-    <!--android:orientation="vertical"-->
-    <!--android:paddingRight="8dp"-->
-    <!--android:visibility="invisible">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/share"-->
-    <!--android:layout_width="137dp"-->
-    <!--android:layout_height="47dp"-->
-    <!--android:layout_gravity="right"-->
-    <!--android:background="@drawable/bg_fenxiang_xiangqing"-->
-    <!--android:drawableLeft="@drawable/bg_fenxiangtubiao_sel"-->
-    <!--android:drawablePadding="6dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingLeft="5dp"-->
-    <!--android:paddingTop="10dp"-->
-    <!--android:text="分享"-->
-    <!--android:textColor="@color/fenxiang_color_sel"-->
-    <!--android:textSize="10sp" />-->
-    <!--</LinearLayout>-->
-
     <ImageView
-        android:id="@+id/menu_cloud_id"
+        android:id="@+id/cloud_menu_imagevew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_marginBottom="75dp"
-        android:layout_marginRight="30dp"
-        android:src="@drawable/yunjian_c"
-        android:visibility="gone" />
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/yunjian_c" />
+
 </RelativeLayout>
