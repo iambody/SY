@@ -47,7 +47,7 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
     }
 
     //订阅
-    protected void addSubscription(Subscription subscription) {
+    public void addSubscription(Subscription subscription) {
         mCompositeSubscription.add(subscription);
     }
 

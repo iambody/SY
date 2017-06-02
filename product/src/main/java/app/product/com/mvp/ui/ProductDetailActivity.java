@@ -31,6 +31,7 @@ import rx.subscriptions.CompositeSubscription;
 public class ProductDetailActivity extends BaseWebViewActivity {
     //main产品列表传递进来的
     public static final String PRODUCTID_TAG = "productid";
+
     private CompositeSubscription mCompositeSubscription;
 
     //需要的分享dialog
@@ -62,6 +63,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             protected void onEvent(String s) {
                 productlsBean = new Gson().fromJson(getV2String(s), ProductlsBean.class);
                 LogUtils.Log("s", "s");
+
             }
 
             @Override
@@ -110,12 +112,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             String subTitle = split[3];
             String imageTitle = split[4];
             String link = split[5];
-            if (split.length >= 7) {
-                sharePYQtitle = split[6];
-            }
+
             link = link.startsWith("/") ? " https://app.simuyun.com/app5.0" + link : " https://app.simuyun.com/app5.0" + "/" + link;
 
-            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
             shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
 
@@ -136,16 +135,14 @@ public class ProductDetailActivity extends BaseWebViewActivity {
      */
     private void showPdf(String action) {
         String actionDecode = null;
-//d8-app.simuyun.com/app5.0/pdfjs/web/viewer.html?file=
         try {
             actionDecode = URLDecoder.decode(action, "utf-8");
             String[] split = actionDecode.split(":");
             String url = split[2] + ":" + split[3];
             String title = split[4];
-
             String pdfurl = BaseWebNetConfig.pdfUrlToC + url;
 //            ProductNavigationUtils.startProductPdf(baseContext, pdfurl, title);
-            startActivity(new Intent(baseContext, PdfActivity.class).putExtra("pdfurl", url).putExtra("pdftitle", title));
+            startActivity(new Intent(baseContext, PdfActivity.class).putExtra("pdfurl", url).putExtra("pdftitle", title).putExtra("productbean", productlsBean));
         } catch (UnsupportedEncodingException e) {
 
             e.printStackTrace();

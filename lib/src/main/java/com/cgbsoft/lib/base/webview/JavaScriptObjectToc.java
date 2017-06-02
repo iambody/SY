@@ -58,7 +58,7 @@ public class JavaScriptObjectToc {
         });
     }
 
-//  PromptManager.ShowCustomToast(context,"拉动和打火机");
+////  PromptManager.ShowCustomToast(context,"拉动和打火机");
 //    @JavascriptInterface
 //    public boolean hasAddCarlender(String title, String startTime) {
 //        Log.i("JavaScriptObject", "hasAddCarlender----=" + CalendarManamger.isExist(context, startTime, title));

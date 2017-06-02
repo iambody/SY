@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -16,6 +17,8 @@ import com.lzy.okgo.callback.FileCallback;
 
 import java.io.File;
 
+import app.privatefund.com.share.bean.ShareCommonBean;
+import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.R2;
 import butterknife.BindView;
@@ -24,7 +27,6 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
-//import com.github.barteksc.pdfviewer.PDFView;
 
 /**
  * desc  ${DESC}
@@ -46,6 +48,10 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     private String pdfurl;
     //标题
     private String pdfTitleStr;
+    //产品详情传进来的产品的详情
+    private ProductlsBean productlsBean;
+
+    private CommonShareDialog commonShareDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +59,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
         setContentView(R.layout.activity_pdf);
         ButterKnife.bind(this);
         initRegisterTitleBar();
-        pdfurl = getIntent().getStringExtra("pdfurl");
-        pdfTitleStr = getIntent().getStringExtra("pdftitle");
+        initExtras();
         pdfView = (PDFView) findViewById(R.id.pdfView);
         BStrUtils.SetTxt(pdfTitle, pdfTitleStr);
 
@@ -73,6 +78,13 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
                         //这里回调下载进度(该回调在主线程,可以直接更新ui)
                     }
                 });
+    }
+
+    //获取传参
+    private void initExtras() {
+        pdfurl = getIntent().getStringExtra("pdfurl");
+        pdfTitleStr = getIntent().getStringExtra("pdftitle");
+        productlsBean = (ProductlsBean) getIntent().getSerializableExtra("productbean");
     }
 
     private void loadpdf(File file) {
@@ -120,6 +132,15 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     //分享按钮
     @OnClick(R2.id.pdf_title_right)
     public void onPdfTitleRightClicked() {
+
+        String shareTitle = "产品简版" + pdfTitleStr;
+        String shareContent = String.format("私募云平台浮收项目%s开始募集，%s万起投", null != productlsBean ? productlsBean.productName : pdfTitleStr, null != productlsBean ? productlsBean.buyStart : "");//"私募云平台浮收项目" + productlsBean.productName+ "开始募集，" + "" + productlsBean.buyStart + "万起投";
+        String shareUrl = pdfurl;
+
+        ShareCommonBean shareCommonBean = new ShareCommonBean(shareTitle, shareContent, shareUrl, null);
+
+        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, null);
+        if (null != commonShareDialog && !commonShareDialog.isShowing()) commonShareDialog.show();
 
     }
 }
