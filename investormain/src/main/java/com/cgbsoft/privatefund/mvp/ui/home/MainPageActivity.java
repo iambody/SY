@@ -29,7 +29,6 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -53,9 +52,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.privatefund.com.im.bean.SMMessage;
-import app.privatefund.com.im.utils.PushPreference;
-import app.privatefund.com.im.utils.ReceiveInfoManager;
-import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
 import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
@@ -76,7 +72,7 @@ import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
 
 @Route(RouteConfig.GOTOCMAINHONE)
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView,ProfileView{
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView, ProfileView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -261,7 +257,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 bottomNavigationBar.closeCloudeMenu();
                 break;
             case 2://直播
-                if (((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline()) {
+                if (((InvestorAppli) InvestorAppli.getContext()).isTouGuOnline()) {
                     Intent i = new Intent(this, BaseWebViewActivity.class);
                     i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
                     i.putExtra(WebViewConstant.push_message_title, "我的投顾");
@@ -335,7 +331,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                 RongIM.getInstance().disconnect();
+                RongIM.getInstance().disconnect();
                 finish();
             }
 
@@ -404,35 +400,35 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initPlatformCustomer() {
-            Log.e("MainPageActivity", "start checkKefu()");
-            if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-                List<Conversation> conversationList =RongIMClient.getInstance().getConversationList();
-                if (conversationList != null) {
-                    for (int i = 0; i < conversationList.size(); i++) {
-                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
-                            return;
-                        }
+        Log.e("MainPageActivity", "start checkKefu()");
+        if (RongIMClient.getInstance() != null && !((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
+            List<Conversation> conversationList = RongIMClient.getInstance().getConversationList();
+            if (conversationList != null) {
+                for (int i = 0; i < conversationList.size(); i++) {
+                    if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+                        return;
                     }
                 }
-                ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
-                    @Override
-                    protected void onEvent(String s) {
-                        List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-                        if (null != conversationList) {
-                            Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
-                        }
-                        if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-//                            EventBus.getDefault().post(new RefreshKefu());
-                        }
-                        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
-                    }
-
-                    @Override
-                    protected void onRxError(Throwable error) {
-                        Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
-                    }
-                });
             }
+            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String s) {
+                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                    if (null != conversationList) {
+                        Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
+                    }
+                    if (!((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
+//                            EventBus.getDefault().post(new RefreshKefu());
+                    }
+                    ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(true);
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
+                }
+            });
+        }
     }
 
     private void gesturePasswordJumpPage() {
@@ -536,7 +532,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     }
 
-    private void SsetBottomNavigation(){
+    private void SsetBottomNavigation() {
 //        bottomNavigationBar.
     }
 
