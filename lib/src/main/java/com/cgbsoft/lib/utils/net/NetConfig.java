@@ -177,6 +177,8 @@ public class NetConfig {
         static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
         //获取产品列表
         static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
+        //获取产品详情
+        static  final String Get_PRODUCTDETAIL_URL=API_URL+product+"/single";
     }
 
     //直播相关

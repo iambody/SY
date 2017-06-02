@@ -248,7 +248,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                NavigationUtils.startMessageActivity(context, resultBean, currentKey);
                 break;
             case PRODUCT:
-                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200);
+                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200 );
                 break;
             case ZIXUN:
                 String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();
@@ -279,14 +279,13 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         addSubscription(ApiClient.getHotSousouData(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
                 try {
 //                    JSONObject response = new JSONObject(s);
 //                    Log.i("hot search task ", "-------search hot=" + response.toString());
 //                    JSONArray jsonArray = response.getJSONArray("result");
                     Gson g = new Gson();
                     if (!BStrUtils.isEmpty(s)) {
-                        List<SearchResultBean.ResultBean> list = g.fromJson(s, new TypeToken<List<SearchResultBean.ResultBean>>() {
+                        List<SearchResultBean.ResultBean> list = g.fromJson(getV2String(s), new TypeToken<List<SearchResultBean.ResultBean>>() {
                         }.getType());
                         if (!BUtils.isEmpty(list)) {
                             listView.setHeaderDividersEnabled(false);
