@@ -106,6 +106,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
     }
 
+    protected boolean needCallBack() {
+        return false;
+    }
+
     @Override
     protected void data() {
         titleMid.setText(title);

@@ -159,7 +159,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-        GestureVerifyActivity.this.finish();
+//        GestureVerifyActivity.this.finish();
         return;
     }
 
