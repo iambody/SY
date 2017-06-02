@@ -1,9 +1,11 @@
 package app.privatefund.com.im.listener;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -37,7 +39,8 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         if (message.getSenderUserId().equals("0003fce75cd122ceaf1ac2d721a5f78e")) {
             CommandMessage content = (CommandMessage) message.getContent();
             Log.e("RongReceived", content.getData());
-//            MApplication.mContext.sendBroadcast(new Intent(Constant.ACTION_LIVE_SEND_MSG).putExtra(Constant.ACTION_LIVE_SEND_CONTENT, content.getData()));
+
+            BaseApplication.getContext().sendBroadcast(new Intent(Constant.ACTION_LIVE_SEND_MSG).putExtra(Constant.ACTION_LIVE_SEND_CONTENT, content.getData()));
             return true;
         }
 

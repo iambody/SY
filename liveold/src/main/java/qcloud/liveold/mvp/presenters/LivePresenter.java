@@ -141,7 +141,7 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
             @Override
             protected void onEvent(String s) {
                 try {
-                    getView().getMemberSuc(new JSONObject(s).getJSONObject("result").toString());
+                    getView().sendMsgSuc(new JSONObject(s).getJSONObject("result").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -149,7 +149,7 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         });
     }
