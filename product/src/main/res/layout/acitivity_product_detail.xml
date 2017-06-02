@@ -44,4 +44,15 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/cloud_menu_imagevew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:visibility="gone"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/yunjian_c" />
+
 </RelativeLayout>

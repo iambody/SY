@@ -80,6 +80,8 @@ public class CWebClient extends WebViewClient {
                     url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
                     url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
                     (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)))) {
+                CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
+                cWebClient.setWeb((BaseWebview) webView);
                 webviewOnClick.onClick(url);
             } else {
                 /**

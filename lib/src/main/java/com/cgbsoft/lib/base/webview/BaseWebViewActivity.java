@@ -54,11 +54,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     public static final int BACK_CAMERA_CODE = 402;
     public static final String SAVE_PARAM = "saveValue";
     public static final String BACK_PARAM = "backValue";
-    String url = "";
-    private String title;
 
-    @BindView(R2.id.cloud_menu_imagevew)
-    protected ImageView cloudImage;
+    protected String url = "";
+    protected String title;
 
     @BindView(R2.id.toolbar)
     protected Toolbar toolbar;
@@ -208,27 +206,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-        if (url.contains("apptie/detail.html")) {
-            cloudImage.setVisibility(View.VISIBLE);
-        }
-        cloudImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
-                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
-                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-                } else {
-                    if (isLive  && !isLookZhiBao) {
-                        isLookZhiBao = true;
-                        //joinLive();
-                    } else {
-                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, R.anim.home_fade_in, R.anim.home_fade_out);
-                    }
-                }
-            }
-        });
     }
 
     /**

@@ -1,24 +1,34 @@
 package app.product.com.mvp.ui;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import app.privatefund.com.share.bean.ShareCommonBean;
 import app.privatefund.com.share.dialog.CommonShareDialog;
+import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
 import rx.subscriptions.CompositeSubscription;
 
@@ -46,7 +56,33 @@ public class ProductDetailActivity extends BaseWebViewActivity {
     @Override
     protected int layoutID() {
         initParams();
-        return super.layoutID();
+        return R.layout.acitivity_product_detail;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
+        if (url.contains("apptie/detail.html")) {
+            findViewById(R.id.cloud_menu_imagevew).setVisibility(View.VISIBLE);
+        }
+        findViewById(R.id.cloud_menu_imagevew).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SPreference.getToCBean(ProductDetailActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(ProductDetailActivity.this).getBandingAdviserId())) {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
+                    NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                } else {
+                    if (isLive  && !isLookZhiBao) {
+                        isLookZhiBao = true;
+                        //joinLive();
+                    } else {
+                        NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
+                    }
+                }
+            }
+        });
     }
 
     /**
