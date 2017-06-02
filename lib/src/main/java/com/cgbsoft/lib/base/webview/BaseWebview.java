@@ -54,6 +54,8 @@ public class BaseWebview extends WebView {
 
     private boolean isInitData;
 
+    private boolean isNeedCallBack;
+
     /**
      * 加载url
      * @param context
@@ -202,9 +204,10 @@ public class BaseWebview extends WebView {
     }
 
     //这个是之前webview需要有的live和认购的特殊回调  @陈龙
-    public void setClick(CWebClient.WebviewOnClick click) {
+    public void setClick(CWebClient.WebviewOnClick click, boolean isNeedCallBack) {
         this.click = click;
         cWebClient.setWebviewOnClick(click);
+        cWebClient.setNeedCallBack(isNeedCallBack);
     }
 
     public boolean isShangxueyuan() {

@@ -39,6 +39,11 @@ public class CWebClient extends WebViewClient {
     private boolean isShangxueyuanc = false;
 
     /**
+     * 是否需要回调
+     */
+    private boolean needCallBack = false;
+
+    /**
      * BaseWebview
      */
     private BaseWebview baseWebview;
@@ -59,6 +64,10 @@ public class CWebClient extends WebViewClient {
         this.webviewOnClick = webviewOnClick;
     }
 
+    public void setNeedCallBack (boolean needCallBack) {
+        this.needCallBack = needCallBack;
+    }
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 //        return super.shouldOverrideUrlLoading(webView, s);
@@ -67,30 +76,27 @@ public class CWebClient extends WebViewClient {
         if (url.startsWith("app:")) {
             /**
              * 认购按钮的特殊处理
+             * (
+             url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
+             url.startsWith(WebViewConstant.AppCallBack.CAN_BUY) ||
+             url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
+             url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
+             url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
+             url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
+             url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE)||
+             url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
+             url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
+             (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE) && !URLDecoder.decode(url, "utf-8").contains(DISCOVER_DETAILS)))
              */
-            try {
-                if (null != webviewOnClick && (
-                        url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
-                        url.startsWith(WebViewConstant.AppCallBack.CAN_BUY) ||
-                        url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
-                        url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
-                        url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
-                        url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
-                        url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE)||
-                        url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
-                        url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
-                        (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE) && !URLDecoder.decode(url, "utf-8").contains(DISCOVER_DETAILS)))) {
-                    webviewOnClick.onClick(url);
-                } else {
-                    /**
-                     * 统一指令操作
-                     */
-                    CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
-                    cWebClient.setWeb((BaseWebview) webView);
-                    cWebClient.setAction(url);
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            if (null != webviewOnClick && needCallBack) {
+                webviewOnClick.onClick(url);
+            } else {
+                /**
+                 * 统一指令操作
+                 */
+                CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
+                cWebClient.setWeb((BaseWebview) webView);
+                cWebClient.setAction(url);
             }
             // view.loadUrl(loadUrl);
             loadUrl = loadUrl;

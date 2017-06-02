@@ -106,7 +106,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
     }
 
-    protected boolean needCallBack() {
+    /**
+     * 根据次字方法来判断是否需要回调，默认是不需要回调
+     * @return
+     */
+    protected boolean getCallBack() {
         return false;
     }
 
@@ -189,7 +193,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
-        mWebview.setClick(result -> executeOverideUrlCallBack(result));
+        mWebview.setClick(result -> {
+            executeOverideUrlCallBack(result);
+        }, getCallBack());
 
         // 装配url数据
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));

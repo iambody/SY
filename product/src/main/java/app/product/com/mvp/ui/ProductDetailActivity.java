@@ -42,6 +42,11 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         }
     }
 
+    @Override
+    protected boolean getCallBack() {
+        return true;
+    }
+
     /**
      * 分享产品
      *

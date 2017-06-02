@@ -229,16 +229,12 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                 Toast.makeText(GestureVerifyActivity.this, "请输入登录密码!", Toast.LENGTH_LONG).show();
                 return;
             }
-
             validateResetPassword(dialog, vaus);
         });
         telPhone.setOnClickListener(v -> NavigationUtils.startDialgTelephone(GestureVerifyActivity.this, GestureVerifyActivity.this.getString(R.string.hotline)));
-        reset_gesture_password_dialog_forget_pwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "from_verify_forget_pwd", "1");
-            }
+        reset_gesture_password_dialog_forget_pwd.setOnClickListener(v -> {
+            dialog.dismiss();
+            NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "from_verify_forget_pwd", "1");
         });
     }
 
