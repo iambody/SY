@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +40,15 @@ import rx.android.schedulers.AndroidSchedulers;
  * Email:zhangxyfs@126.com
  *  
  */
+@Route(RouteConfig.FORGAT_PASSWORD)
 public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> implements ResetPasswordContract.View {
+
+    public static final String FROMVERIFYTAG = "from_verify_forget_pwd";
+    /**
+     * 标记是否从手势密码弹出框中的忘记密码进来的  需要在完成一些列操作之后重新设置一遍手势密码
+     **/
+    private boolean isFromVerifyFogetPwd;
+
     private final int COOL_DOWN_TIME = 60;
 
     @BindView(R2.id.iv_af_back)
@@ -83,6 +93,10 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        //获取是否从手势密码弹出框忘记密码进来的
+        if (getIntent().getExtras().containsKey(FROMVERIFYTAG)) {
+            isFromVerifyFogetPwd = getIntent().getStringExtra(FROMVERIFYTAG).equals("1");
+        }
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (AppManager.isAdViser(this)) {
             iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
@@ -210,6 +224,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         Intent intent = new Intent(this, SetPasswordActivity.class);
         intent.putExtra("userName", et_af_username.getText().toString());
         intent.putExtra("code", et_af_check.getText().toString());
+        intent.putExtra(FROMVERIFYTAG, isFromVerifyFogetPwd?"1":"0");
         startActivity(intent);
         finish();
     }

@@ -90,15 +90,15 @@ public class NetConfig {
 
     static class MALL {
         //新增商城收货地址
-        static final String MALL_ADD_ADDRESS = API_URL + "/ydInsertAddress";
+        static final String MALL_ADD_ADDRESS = API_URL_V2 + "/ydInsertAddress";
         //保存商城收获地址
-        static final String MALL_SAVE_ADDRESS = API_URL + "/ydUpdateAddress";
+        static final String MALL_SAVE_ADDRESS = API_URL_V2 + "/ydUpdateAddress";
         //删除商城收货地址
-        static final String MALL_DETELE_ADDRESS = API_URL + "/YdDeleteAddress";
+        static final String MALL_DETELE_ADDRESS = API_URL_V2 + "/YdDeleteAddress";
         //获取商城收货地址列表
-        static final String MALL_ADDRESS_LIST = API_URL + "/getYdAddressList";
+        static final String MALL_ADDRESS_LIST = API_URL_V2 + "/getYdAddressList";
         //设置商城默认收货地址
-        static final String MALL_SET_DEFAULT = API_URL + "/ydDefaultAddress";
+        static final String MALL_SET_DEFAULT = API_URL_V2 + "/ydDefaultAddress";
     }
 
     static class INFORMATION {
@@ -185,29 +185,29 @@ public class NetConfig {
     static class LIVE {
         private static final String live = "/live";
         //获取直播签名
-        static final String GET_LIVE_SIGN = LIVE_URL + live + "/user/sig/5.0";
+        static final String GET_LIVE_SIGN = LIVE_URL_V2 + live + "/user/sig";
         //获取直播列表
-        static final String GET_LIVE_LIST = LIVE_URL + live + "/rooms/5.0";
+        static final String GET_LIVE_LIST = LIVE_URL_V2 + live + "/rooms";
         //获取房间号
-        static final String GET_ROOM_NUM = LIVE_URL + live + "/room/id/5.0";
+        static final String GET_ROOM_NUM = LIVE_URL_V2 + live + "/room/id";
         //发送直播评论
-        static final String SENT_COMMENT = LIVE_URL + live + "/room/sendMessage/5.0";
+        static final String SENT_COMMENT = LIVE_URL_V2 + live + "/room/sendMessage";
         //获取直播附件
-        static final String GET_LIVE_PDF = LIVE_URL + live + "/room/attachment/5.0";
+        static final String GET_LIVE_PDF = LIVE_URL_V2 + live + "/room/attachment";
         //主播心跳
-        static final String LIVE_HOST_HEART = LIVE_URL + live + "/room/activate/5.0";
+        static final String LIVE_HOST_HEART = LIVE_URL_V2 + live + "/room/activate";
         //进入房间
-        static final String CUSTOM_JOIN_ROOM = LIVE_URL + live + "/room/enter/5.0";
+        static final String CUSTOM_JOIN_ROOM = LIVE_URL_V2 + live + "/room/enter";
         //退出房间
-        static final String CUSTOM_EXIT_ROOM = LIVE_URL + live + "/room/exit/5.0";
+        static final String CUSTOM_EXIT_ROOM = LIVE_URL_V2 + live + "/room/exit";
         //主播开房间
-        static final String HOST_OPEN_LIVE = LIVE_URL + live + "/room/5.0";
+        static final String HOST_OPEN_LIVE = LIVE_URL_V2 + live + "/room";
         //主播关闭房间
-        static final String HOST_CLOSE_LIVE = LIVE_URL + live + "/room/close/5.0";
+        static final String HOST_CLOSE_LIVE = LIVE_URL_V2 + live + "/room/close";
         //获取房间用户
-        static final String GET_ROOM_MEMBER = LIVE_URL + live + "/users/5.0";
+        static final String GET_ROOM_MEMBER = LIVE_URL_V2 + live + "/users";
         //直播预告
-        static final String GET_LIVE_NOTICE = LIVE_URL + live + "/preview/latest/5.0";
+        static final String GET_LIVE_NOTICE = LIVE_URL_V2 + live + "/preview/latest";
     }
 
     //支付

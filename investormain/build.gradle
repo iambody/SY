@@ -48,22 +48,22 @@ android {
         }
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a"//,"x86_64","x86"
+            abiFilters "armeabi", "armeabi-v7a" //,"x86_64","x86"
         }
     }
 
     signingConfigs {
         debug {
-            storeFile file("/workspace/signe/privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
+//            storeFile file("D:/privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
         }
         release {
-            storeFile file("/workspace/signe/privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
+//            storeFile file("D:/privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
         }
     }
 

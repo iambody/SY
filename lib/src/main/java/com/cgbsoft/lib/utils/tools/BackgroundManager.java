@@ -21,10 +21,9 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
   public static final int EXPIRE_DAN_WEI = Calendar.SECOND;
   private static final int EXPIRE_IN_MINUTE = 5;
 
-  private Calendar expireDate = Calendar.getInstance();
+  private Calendar expireDate;
   private boolean isDisplay = false;
   private Activity currentActivity;
-
 
   public Activity getCurrentActivity() {
     return currentActivity;
@@ -36,6 +35,9 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
 
   @Override
   public void onActivityResumed(Activity activity) {
+    if (activity.getClass().getSimpleName().equals("MainPageActivity")) {
+      expireDate = Calendar.getInstance();
+    }
     currentActivity = activity;
     if (expireDate != null && Calendar.getInstance().after(expireDate) && isDisplay && "MainPageActivity".equals(activity.getClass().getSimpleName())) {
       RxBus.get().post(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE);
@@ -46,9 +48,11 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
 
   @Override
   public void onActivityPaused(Activity activity) {
-    expireDate = Calendar.getInstance();
-    expireDate.add(Calendar.SECOND, EXPIRE_IN_SECOND);
-    isDisplay = true;
+    if (expireDate != null) {
+      expireDate = Calendar.getInstance();
+      expireDate.add(Calendar.SECOND, EXPIRE_IN_SECOND);
+      isDisplay = true;
+    }
     Log.i("onActivityPaused", "--------isDisplay=" + isDisplay);
   }
 

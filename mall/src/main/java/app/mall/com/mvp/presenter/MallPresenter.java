@@ -87,7 +87,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         }));
     }
@@ -116,8 +116,9 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
             @Override
             protected void onEvent(String s) {
                 try {
-                    JSONArray ja = new JSONArray(s);
-                    List<MallAddressBean> rows = new Gson().fromJson(s, new TypeToken<List<MallAddressBean>>() {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray ja = jsonObject.getJSONArray("result");
+                    List<MallAddressBean> rows = new Gson().fromJson(ja.toString(), new TypeToken<List<MallAddressBean>>() {
                     }.getType());
                     getView().getMallAddressLitSuc((ArrayList<MallAddressBean>) rows);
                 } catch (JSONException e) {

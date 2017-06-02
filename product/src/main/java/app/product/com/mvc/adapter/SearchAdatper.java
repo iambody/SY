@@ -352,7 +352,6 @@ public class SearchAdatper extends RecyclerView.Adapter {
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
                                 break;
                             case XUN_ITEM:
-
                                 String informationUrl = BaseWebNetConfig.baseParentUrl+"discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
                                 NavigationUtils.startVideoInformationActivityu(context, informationUrl, resultBean.getTitle());
 //                                NavigationUtils.startZiXunActivity(context, resultBean);

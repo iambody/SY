@@ -22,7 +22,7 @@ public interface SetPasswordContract {
          * @param pwd
          * @param code
          */
-        void resetPwd(LoadingDialog loadingDialog, String un, String pwd, String code,String publickeys);
+        void resetPwd(LoadingDialog loadingDialog, String un, String pwd, String code,String publickeys, boolean isGesture);
 
         /**
          * 登录
@@ -42,6 +42,9 @@ public interface SetPasswordContract {
 
     interface View extends BaseView{
         void toFinish();
+
+        void setGesturePassword();
+
         void publicKeySuccess(String publicKey);
     }
 }

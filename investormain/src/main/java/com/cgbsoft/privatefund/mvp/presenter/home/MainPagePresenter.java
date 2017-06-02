@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * 首页功能实现，数据调用
@@ -44,7 +45,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(String s) {
                 JSONArray jsonArray = null;
                 try {
-                    jsonArray = new JSONArray(s);
+                    jsonArray = new JSONObject(s).getJSONArray("result");
                 } catch (JSONException e) {
                     getView().hasLive(false, null);
                     e.printStackTrace();

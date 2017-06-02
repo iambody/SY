@@ -45,13 +45,17 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
     }
 
     @Override
-    public void resetPwd(final LoadingDialog loadingDialog, String un, String pwd, String code, String publickeys) {
+    public void resetPwd(final LoadingDialog loadingDialog, String un, String pwd, String code, String publickeys, boolean isFromGesture) {
         loadingDialog.setLoading(getContext().getString(R.string.reseting_str));
         loadingDialog.show();
         addSubscription(ApiClient.resetTestPwd(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false, publickeys));
+                if (isFromGesture) {//是从忘记手势密码进来的、
+                    getView().setGesturePassword();
+                } else {
+                    loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false, publickeys));
+                }
             }
 
             @Override

@@ -36,12 +36,16 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         ApiClient.memberJoinRoom(roomNum, userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().joinLiveSuc(s);
+                try {
+                    getView().joinLiveSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         });
     }
@@ -57,7 +61,11 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         ApiClient.hostHeart(roomNum, userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().joinLiveSuc(s);
+                try {
+                    getView().joinLiveSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -87,11 +95,16 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         ApiClient.memberExitRoom(roomNum, userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().memberExitSuc(s);
+                try {
+                    getView().memberExitSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
+                error.toString();
 
             }
         });
@@ -100,14 +113,18 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
     @Override
     public void getMemberList(String roomId, String userId, long offsetOrderId, long orderId) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("room_id",roomId);
-        map.put("user_id",userId);
-        map.put("offsetOrderId",offsetOrderId);
-        map.put("orderId",orderId);
+        map.put("room_id", roomId);
+        map.put("user_id", userId);
+        map.put("offsetOrderId", offsetOrderId);
+        map.put("orderId", orderId);
         ApiClient.getLiveMember(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().getMemberSuc(s);
+                try {
+                    getView().getMemberSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -123,12 +140,16 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         ApiClient.sendLiveMsg(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().getMemberSuc(s);
+                try {
+                    getView().sendMsgSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         });
     }

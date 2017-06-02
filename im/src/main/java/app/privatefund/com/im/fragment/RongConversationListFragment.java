@@ -215,7 +215,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 protected void onRxError(Throwable error) {}
             });
             ThreadUtils.runOnMainThreadDelay(() -> {
-                addNoticeItem();
+                //addNoticeItem();
             },1000);
         }
     }

@@ -1,5 +1,6 @@
 package app.ndk.com.enter.mvp.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,8 +13,14 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+
+import java.util.HashMap;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
@@ -29,6 +36,12 @@ import butterknife.OnClick;
  *  
  */
 public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordContract.View {
+
+    /**
+     * 标记是否从手势密码中的忘记密码进来
+     **/
+    private boolean isFromVerify;
+
     /**
      * 返回按钮
      */
@@ -86,6 +99,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        if(getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)){
+            isFromVerify =getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
+        }
         userName = getIntent().getStringExtra("userName");
         code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);
@@ -147,8 +163,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
             return;
         }
 
-        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code,myPublicKey);
-
+        getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, myPublicKey, isFromVerify);
     }
 
     @Override
@@ -158,6 +173,14 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @Override
     public void toFinish() {
+        finish();
+    }
+
+    @Override
+    public void setGesturePassword() {
+        HashMap<String,Object> parms=new HashMap<>();
+        parms.put(ResetPasswordActivity.FROMVERIFYTAG,"1");//标识 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后 是这个流程
+        NavigationUtils.startActivityByRouter(this, RouteConfig.SET_GESTURE_PASSWORD, parms);
         finish();
     }
 

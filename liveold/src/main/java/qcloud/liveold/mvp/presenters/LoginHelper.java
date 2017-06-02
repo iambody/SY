@@ -124,7 +124,7 @@ public class LoginHelper extends Presenter {
             @Override
             protected void onEvent(String s) {
                 try {
-                    JSONObject js = new JSONObject(s);
+                    JSONObject js = new JSONObject(new JSONObject(s).getJSONObject("result").toString());
                     String sig = js.getString("user_sig");
                     mLoginView.getLiveSignSuc(sig);
                 } catch (JSONException e) {

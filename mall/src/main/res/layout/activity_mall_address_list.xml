@@ -21,6 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/newaddress"
-        android:background="@color/mred"/>
+        style="@style/red1_btn"/>
 
 </LinearLayout>

@@ -94,7 +94,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             @Override
             public void onFinish(String password) {
                 if (!TextUtils.isEmpty(password) && password.equals(SPreference.getToCBean(GestureVerifyActivity.this).getGesturePassword())) {
-//                        mGestureContentView.clearDrawlineState(0L);
                     Toast.makeText(GestureVerifyActivity.this, "密码校验成功", Toast.LENGTH_SHORT).show();
                     if (modifyGesturePassword) {
                         Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
@@ -157,7 +156,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-        GestureVerifyActivity.this.finish();
+//        GestureVerifyActivity.this.finish();
         return;
     }
 
@@ -237,7 +236,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         reset_gesture_password_dialog_forget_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, "investornmain_forgetpasswordctivity", "password", "1");
+                dialog.dismiss();
+                NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "from_verify_forget_pwd", "1");
             }
         });
     }

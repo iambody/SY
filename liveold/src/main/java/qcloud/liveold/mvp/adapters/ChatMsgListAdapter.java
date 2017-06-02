@@ -88,7 +88,10 @@ public class ChatMsgListAdapter extends BaseAdapter {
             sendId = "asd";
         }
         String liveHostId = SPreference.getString(context,"liveHostId");
-        if (sendId.equals(liveHostId)) {
+        if (entity.getContext().startsWith("<font")){
+            CharSequence charSequence = Html.fromHtml(entity.getContext());
+            holder.text.setText(charSequence);
+        } else if (sendId.equals(liveHostId)) {
             //是主播
             String msg = entity.getContext();
             String content = msg.substring(msg.indexOf("&") + 1);
@@ -110,7 +113,7 @@ public class ChatMsgListAdapter extends BaseAdapter {
             if (b) {
                 userName = "私募云用户";
             }
-            String html = "<font color='#5ba8f3'>" + userName + ":" + "</font>" + "<font color='@" + android.R.color.white + "'>" + content + "</font>";
+            String html = "<font color='#5ba8f3'>" + userName + ":" + "</font>" + "<font color='#ffffff'>" + content + "</font>";
             CharSequence charSequence = Html.fromHtml(html);
             holder.text.setText(charSequence);
         }

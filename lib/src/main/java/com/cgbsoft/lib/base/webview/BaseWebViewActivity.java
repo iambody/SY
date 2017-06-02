@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -53,6 +54,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     String url = "";
     private String title;
 
+    @BindView(R2.id.cloud_menu_imagevew)
+    protected ImageView cloudImage;
+
     @BindView(R2.id.toolbar)
     protected Toolbar toolbar;
 
@@ -61,9 +65,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
-
-//    @BindView(R2.id.menu_cloud)
-//    protected ImageView cloudImage;
 
     protected boolean hasEmailShare;
 
@@ -103,6 +104,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
+    }
+
+    protected boolean needCallBack() {
+        return false;
     }
 
     @Override
@@ -196,24 +201,27 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-//        cloudImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
-//                    HashMap<String, Object> hashMap = new HashMap<>();
-//                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
-//                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
-//                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-//                } else {
-//                    if (isLive  && !isLookZhiBao) {
-//                        isLookZhiBao = true;
-//                        //joinLive();
-//                    } else {
-//                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true);
-//                    }
-//                }
-//            }
-//        });
+        if (url.contains("apptie/detail.html")) {
+            cloudImage.setVisibility(View.VISIBLE);
+        }
+        cloudImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
+                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                } else {
+                    if (isLive  && !isLookZhiBao) {
+                        isLookZhiBao = true;
+                        //joinLive();
+                    } else {
+                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, R.anim.home_fade_in, R.anim.home_fade_out);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -285,11 +293,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void onResume() {
         super.onResume();
         mWebview.loadUrl("javascript:refresh()");
-        if (url.contains("apptie/detail.html")) {
-//            cloudImage.setVisibility(View.VISIBLE);
-        }
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
-//
 //        } else
         try {
             mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
