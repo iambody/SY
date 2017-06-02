@@ -1,5 +1,6 @@
 package qcloud.liveold.mvp.views;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -232,7 +234,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
     @Override
     protected LivePresenter createPresenter() {
-        return new LivePresenter(this,this);
+        return new LivePresenter(this, this);
     }
 
     private int screenChange;
@@ -253,7 +255,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     private void initChatList() {
         mArrayListChatEntity = new ArrayList<ChatEntity>();
         ChatEntity chatEntity = new ChatEntity();
-        chatEntity.setContext("平台公告&盈泰财富云本着“连接人与财富”的理念在财富管理领域独创了B2B2C的商业模式，服务于资产管理机构、财富管理机构和高净值客户。");
+        chatEntity.setContext("<font color='#ffde00'>平台公告&盈泰财富云本着“连接人与财富”的理念在财富管理领域独创了B2B2C的商业模式，服务于资产管理机构、财富管理机构和高净值客户。</font>");
         chatEntity.setSenderName(SPreference.getString(LiveActivity.this, "liveHostId"));
         chatEntity.setSendId(SPreference.getString(LiveActivity.this, "liveHostId"));
         Log.d(TAG, "showTextMessage  isSelf " + true);
@@ -512,7 +514,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                         sendMsg(nickName + "&" + message);
                     }
 
-                    //TODO
 //                    RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, "0003fce75cd122ceaf1ac2d721a5f78e");
 //                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, "0003fce75cd122ceaf1ac2d721a5f78e");
                 } catch (JSONException e) {
@@ -559,7 +560,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     private ListView mListViewMsgItems;
     private LinearLayout mHostCtrView, mNomalMemberCtrView, mVideoMemberCtrlView;
     private FrameLayout mFullControllerUi, mBackgound;
-//    private SeekBar mBeautyBar;
+    //    private SeekBar mBeautyBar;
     private int mBeautyRate, mWhiteRate;
     private TextView pushBtn, recordBtn, speedBtn;
 
@@ -1107,7 +1108,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         mEnterRoomHelper.onDestory();
         QavsdkControl.getInstance().clearVideoMembers();
         QavsdkControl.getInstance().onDestroy();
-        Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, screenChange);
+//        Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, screenChange);
     }
 
 
@@ -1906,12 +1907,12 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 hashMap.put("telephone", AppManager.getUserInfo(LiveActivity.this).getPhoneNum());
             }
 //            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getOrganizationName())) {
-                hashMap.put("org_name", "未知");
+            hashMap.put("org_name", "未知");
 //            } else {
 //                hashMap.put("org_name", AppManager.getUserInfo(LiveActivity.this).getOrganizationName());
 //            }
 //            if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getOrganizationId())) {
-                hashMap.put("org_id", "未知");
+            hashMap.put("org_id", "未知");
 //            } else {
 //                hashMap.put("org_id", AppManager.getUserInfo(LiveActivity.this).getOrganizationId());
 //            }
@@ -2471,21 +2472,23 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     }
 
     void checkPermission() {
-//        final List<String> permissionsList = new ArrayList<>();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if ((checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED))
-//                permissionsList.add(Manifest.permission.CAMERA);
-//            if ((checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED))
-//                permissionsList.add(Manifest.permission.RECORD_AUDIO);
-//            if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
-//                permissionsList.add(Manifest.permission.WAKE_LOCK);
-//            if ((checkSelfPermission(Manifest.permission.MODIFY_AUDIO_SETTINGS) != PackageManager.PERMISSION_GRANTED))
-//                permissionsList.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
-//            if (permissionsList.size() != 0) {
-//                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-//                        REQUEST_PHONE_PERMISSIONS);
-//            }
-//        }
+        final List<String> permissionsList = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED))
+                permissionsList.add(Manifest.permission.CAMERA);
+            if ((checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED))
+                permissionsList.add(Manifest.permission.RECORD_AUDIO);
+            if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
+                permissionsList.add(Manifest.permission.WAKE_LOCK);
+            if ((checkSelfPermission(Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                permissionsList.add(Manifest.permission.WRITE_SETTINGS);
+            if ((checkSelfPermission(Manifest.permission.MODIFY_AUDIO_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                permissionsList.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
+            if (permissionsList.size() != 0) {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_PHONE_PERMISSIONS);
+            }
+        }
     }
 
     // 清除老房间数据
