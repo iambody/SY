@@ -35,8 +35,6 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -96,7 +94,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             @Override
             public void onFinish(String password) {
                 if (!TextUtils.isEmpty(password) && password.equals(SPreference.getToCBean(GestureVerifyActivity.this).getGesturePassword())) {
-//                        mGestureContentView.clearDrawlineState(0L);
                     Toast.makeText(GestureVerifyActivity.this, "密码校验成功", Toast.LENGTH_SHORT).show();
                     if (modifyGesturePassword) {
                         Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
@@ -239,6 +236,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         reset_gesture_password_dialog_forget_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 NavigationUtils.startActivityByRouter(GestureVerifyActivity.this, RouteConfig.FORGAT_PASSWORD, "from_verify_forget_pwd", "1");
             }
         });
