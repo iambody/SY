@@ -29,20 +29,20 @@ public class ModifyPasswordActivity extends BaseWebViewActivity<ModifyPasswordPr
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-        mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
-        mWebview.setClick(result -> {
-            if (result.startsWith(WebViewConstant.AppCallBack.MODIFY_PASSWORD)) {// 修改密码
-                String params = null;
-                try {
-                    params = URLDecoder.decode(result, "utf-8");
-                    String[] values = params.split(":");
-                    ((ModifyPasswordPresenter) getPresenter()).modifyPassword(mLoadingDialog, SPreference.getUserInfoData(this).userName, values[2], values[3]);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        super.init(savedInstanceState);
+//        mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
+//        mWebview.setClick(result -> {
+//            if (result.startsWith(WebViewConstant.AppCallBack.MODIFY_PASSWORD)) {// 修改密码
+//                String params = null;
+//                try {
+//                    params = URLDecoder.decode(result, "utf-8");
+//                    String[] values = params.split(":");
+//                    ((ModifyPasswordPresenter) getPresenter()).modifyPassword(mLoadingDialog, SPreference.getUserInfoData(this).userName, values[2], values[3]);
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, );
     }
 
     @Override

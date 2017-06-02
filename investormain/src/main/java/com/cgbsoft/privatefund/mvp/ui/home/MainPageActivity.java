@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -431,10 +432,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void gesturePasswordJumpPage() {
+        System.out.println("------intercetpergesturePasswordJumpPage");
         if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
-            /*Intent intent = new Intent(context, GestureVerifyActivity.class);
+            Intent intent = new Intent(this, GestureVerifyActivity.class);
             intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
-            context.startActivity(intent);*/
+            startActivity(intent);
         }
     }
 
@@ -467,6 +469,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (isOnlyClose) {
             return;
         }
+        AppInfStore.saveLastExitTime(this, System.currentTimeMillis());
         Process.killProcess(Process.myPid());
         System.exit(1);
     }
@@ -487,6 +490,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else
             exitBy2Click();
     }
+
+
 
     private void initDayTask() {
         getPresenter().initDayTask();

@@ -32,4 +32,5 @@ public class CommonWebViewActivity extends BaseWebViewActivity {
     protected BasePresenterImpl createPresenter() {
         return super.createPresenter();
     }
+
 }

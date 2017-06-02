@@ -82,7 +82,9 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
 
     @Override
     public void onBackPressed() {
-        openActivity(LoginActivity.class);
+        if (!isFromVerifyFogetPwd) {
+            openActivity(LoginActivity.class);
+        }
         finish();
     }
 

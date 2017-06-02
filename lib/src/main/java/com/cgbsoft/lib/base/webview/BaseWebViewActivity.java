@@ -108,7 +108,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
     }
 
-    protected boolean needCallBack() {
+    /**
+     * 根据次字方法来判断是否需要回调，默认是不需要回调
+     * @return
+     */
+    protected boolean getCallBack() {
         return false;
     }
 
