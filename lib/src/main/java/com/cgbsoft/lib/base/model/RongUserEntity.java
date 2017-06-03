@@ -13,7 +13,7 @@ public class RongUserEntity extends BaseResult<RongUserEntity.Result> {
 
         private String id;
         private String name;
-        private Uri portraitUri;
+        private String portraitUri;
 
         public String getId() {
             return id;
@@ -31,11 +31,11 @@ public class RongUserEntity extends BaseResult<RongUserEntity.Result> {
             this.name = name;
         }
 
-        public Uri getPortraitUri() {
+        public String getPortraitUri() {
             return portraitUri;
         }
 
-        public void setPortraitUri(Uri portraitUri) {
+        public void setPortraitUri(String portraitUri) {
             this.portraitUri = portraitUri;
         }
     }

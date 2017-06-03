@@ -30,8 +30,8 @@ public class GestureManager {
         if (userInfo == null) {
             return false;
         }
-
-        if ((HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch())) && (resetLogin || isLargeTime(context))) {
+        boolean isLargeTime = isLargeTime(context);
+        if ((HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch())) && (resetLogin || isLargeTime)) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_LOGIN", true);
             return true;
         } else {
@@ -47,6 +47,7 @@ public class GestureManager {
     private static boolean isLargeTime(Context context) {
         long currentTime = System.currentTimeMillis();
         long preTime = AppManager.getLastExitTime(context);
+        System.out.println("-------time=" + (currentTime - preTime));
         return (currentTime - preTime)/1000 > 120;
     }
 }

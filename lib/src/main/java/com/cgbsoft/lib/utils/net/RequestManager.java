@@ -13,6 +13,7 @@ import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
@@ -456,7 +457,7 @@ interface RequestManager {
      * @return
      */
     @GET(NetConfig.API.GROUP_MEMBER_PHONE)
-    Observable<BaseResult<CommonEntity.Result>> getUserPhoneNumber(@QueryMap Map<String, String> map);
+    Observable<BaseResult<UserPhoneNumEntity.Result>> getUserPhoneNumber(@QueryMap Map<String, String> map);
 
     @GET(NetConfig.API.GROUP_MEMBER_PHONE)
     Observable<ResponseBody> getTestGetUserPhoneNumber(@QueryMap Map<String, String> map);

@@ -16,7 +16,7 @@
             android:id="@+id/product_product_filter_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ui_20_dip"
+            android:layout_marginTop="@dimen/ui_26_dip"
             android:background="@color/white"
             android:orientation="horizontal"
             android:padding="@dimen/ui_10_dip">

@@ -210,11 +210,44 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 } else {
 
                     ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
-                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100 );
+                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
                 }
             }
         });
+        fragmentProductrecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mScrollThreshold;
+            boolean isScorlling;
 
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+//                    case RecyclerView.SCROLL_STATE_IDLE:
+                        isScorlling = true;
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        isScorlling = false;
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                boolean isSignificantDelta = Math.abs(dy) > mScrollThreshold;
+                if (isSignificantDelta && isScorlling) {
+                    if (dy > 30) {//上滑动
+                        if (productProductFilterLay.getVisibility() == View.VISIBLE)
+                            productProductFilterLay.setVisibility(View.GONE);
+                    }
+                    if (dy < -5) {//下互动
+                        if (productProductFilterLay.getVisibility() == View.GONE)
+                            productProductFilterLay.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
         CurrentSeries = "0";//默认系列是全部  0代表全部
         CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
         if (!BStrUtils.isEmpty(CacheInvestor.getProductFilterCache(baseActivity))) {//判断是否有筛选条件的缓存

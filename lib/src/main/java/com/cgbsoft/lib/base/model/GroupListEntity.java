@@ -24,7 +24,7 @@ public class GroupListEntity extends BaseResult<GroupListEntity.Result> {
         }
     }
 
-    private static class Group {
+    public static class Group {
         private String id;
         private String name;
         private String headImgUrl;

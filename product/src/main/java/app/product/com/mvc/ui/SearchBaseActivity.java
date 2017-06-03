@@ -86,6 +86,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private String currentKey;
     private DaoUtils daoUtils;
     private LoadingDialog mLoadingDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         setContentView(R.layout.acitivity_search_base);
         daoUtils = new DaoUtils(baseContext, DaoUtils.W_SousouHistory);
         currentType = getIntent().getStringExtra(TYPE_PARAM);
-        mLoadingDialog= LoadingDialog.getLoadingDialog(this, getString(R.string.searching), false, false);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.searching), false, false);
         initListView();
         initHistory();
         initHotSearch();
@@ -248,11 +249,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                NavigationUtils.startMessageActivity(context, resultBean, currentKey);
                 break;
             case PRODUCT:
-                ProductNavigationUtils.startProductDetailActivity(baseContext,resultBean.getTargetId(),resultBean.getTitle(),200 );
+                ProductNavigationUtils.startProductDetailActivity(baseContext, resultBean.getTargetId(), resultBean.getInfoName(), 200);
                 break;
             case ZIXUN:
-                String informationUrl =    "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId()+ "&category=" + resultBean.getCategoryId();
-                NavigationUtils.startVideoInformationActivityu(baseContext,informationUrl,resultBean.getTitle());
+                String informationUrl = "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
+                NavigationUtils.startVideoInformationActivityu(baseContext, informationUrl, resultBean.getInfoName());
                 break;
             case VIDEO:
                 Router.build(RouteConfig.GOTOVIDEOPLAY).with("videoId", resultBean.getTargetId()).go(baseContext);

@@ -94,4 +94,7 @@
     <string name="modify_password_failure">修改失败</string>
     <string name="pw_lenth_str">请输入6-16位密码</string>
     <string name="rsa_encryput_error">RSA加密失败请退出程序重新进入登录界面</string>
+
+    <string name="bind_account_prompt">参照《移动互联网应用程序信息服务管理规定》，请您按提示要求填写您的手机号码和验证码完成校验，感谢您的配合！</string>
+
 </resources>
