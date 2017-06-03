@@ -20,6 +20,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -32,6 +33,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
@@ -103,6 +105,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
     private Observable<QrCodeBean> twoCodeObservable;
+    private Observable<ConversationBean> startConverstationObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
@@ -158,7 +161,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initDayTask();
 
-        initPlatformCustomer();
+//        initPlatformCustomer();
 
         showInfoDialog();
     }
@@ -390,7 +393,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         twoCodeObservable.subscribe(new RxSubscriber<QrCodeBean>() {
             @Override
             protected void onEvent(QrCodeBean qrCodeBean) {
-
+                toJumpTouziren(qrCodeBean);
             }
 
             @Override
@@ -398,6 +401,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+        startConverstationObservable = RxBus.get().register(RxConstant.START_CONVERSATION_OBSERVABLE, ConversationBean.class);
+        startConverstationObservable.subscribe(new RxSubscriber<ConversationBean>() {
+            @Override
+            protected void onEvent(ConversationBean conversationBean) {
+                RongIM.getInstance().startConversation(conversationBean.getContext(), Conversation.ConversationType.PRIVATE, conversationBean.getTargetId(), conversationBean.getName());
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    private void toJumpTouziren(QrCodeBean qrCodeBean) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_title, "投资者认证");
+        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.invistorCertify + "?advisorId=" + qrCodeBean.getFatherId());
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
     private void initPlatformCustomer() {
@@ -481,6 +503,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         if (twoCodeObservable != null) {
             RxBus.get().unregister(RxConstant.LOOK_TWO_CODE_OBSERVABLE, twoCodeObservable);
+        }
+
+        if (startConverstationObservable != null) {
+            RxBus.get().unregister(RxConstant.START_CONVERSATION_OBSERVABLE, startConverstationObservable);
         }
 
         MainTabManager.getInstance().destory();

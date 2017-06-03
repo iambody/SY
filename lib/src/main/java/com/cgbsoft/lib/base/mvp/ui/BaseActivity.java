@@ -1,11 +1,13 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
@@ -90,7 +92,9 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void after() {
         mUnbinder = ButterKnife.bind(this);
         mBaseHandler = new WeakHandler();
-        getWindow().setStatusBarColor(Color.BLACK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.BLACK);
+        }
         if (mPresenter == null)
             mPresenter = createPresenter();
 

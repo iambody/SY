@@ -13,6 +13,7 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -494,7 +495,11 @@ public class CWebviewManger {
         try {
             String targetId = URLDecoder.decode(split[2], "utf-8");
             String name = URLDecoder.decode(split[3], "utf-8");
-//            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, targetId, name);
+            ConversationBean conversationBean = new ConversationBean();
+            conversationBean.setName(name);
+            conversationBean.setContext(context);
+            conversationBean.setTargetId(targetId);
+            RxBus.get().post(RxConstant.START_CONVERSATION_OBSERVABLE, conversationBean);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -531,7 +536,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "确消", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
