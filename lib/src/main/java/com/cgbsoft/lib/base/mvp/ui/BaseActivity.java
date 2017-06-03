@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvp.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -89,15 +90,16 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void after() {
         mUnbinder = ButterKnife.bind(this);
         mBaseHandler = new WeakHandler();
+        getWindow().setStatusBarColor(Color.BLACK);
         if (mPresenter == null)
             mPresenter = createPresenter();
 
         if (mIsNeedAdapterPhone && !isNeedAdapterPhone()) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 //透明状态栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 //透明导航栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             }
         }
         if (mIsNeedGoneNavigationBar) {

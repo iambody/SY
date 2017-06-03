@@ -193,7 +193,7 @@ public class NetConfig {
         //发送直播评论
         static final String SENT_COMMENT = LIVE_URL_V2 + live + "/room/sendMessage";
         //获取直播附件
-        static final String GET_LIVE_PDF = LIVE_URL_V2 + live + "/room/attachment";
+        static final String GET_LIVE_PDF = LIVE_URL + live + "/room/attachment";
         //主播心跳
         static final String LIVE_HOST_HEART = LIVE_URL_V2 + live + "/room/activate";
         //进入房间

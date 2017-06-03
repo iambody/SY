@@ -87,7 +87,7 @@ public class OKHTTP {
             builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
             builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
-            builder.addHeader("Accept", "application/json");
+            builder.addHeader("Accept", "*/*");
             builder.addHeader("Content-Type", "application/json; charset=UTF-8");
             builder.addHeader("X-HTTP-Method-Override", "no-cache");
             builder.addHeader("Accept", "application/json");

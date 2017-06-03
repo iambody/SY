@@ -7,7 +7,6 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/ui_20_dip"
         android:layout_height="50dp">
 
         <TextView

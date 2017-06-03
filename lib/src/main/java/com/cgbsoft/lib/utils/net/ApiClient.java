@@ -853,7 +853,7 @@ public class ApiClient {
     public static Observable<String> testSignIn(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userId);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1120,6 +1120,12 @@ public class ApiClient {
         HashMap<String, String> map = new HashMap<>();
         map.put("uid", userId);
         return OKHTTP.getInstance().getRequestManager().getLiveSign(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    public static Observable<String> getLivePDF(String roomId){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        return OKHTTP.getInstance().getRequestManager().getLivePdf(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

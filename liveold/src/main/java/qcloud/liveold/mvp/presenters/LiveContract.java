@@ -29,6 +29,8 @@ public interface LiveContract {
 
         void sendMsg(HashMap<String,Object> map);
 
+        void getLivePdf(String roomId);
+
     }
 
     interface view extends BaseView{
@@ -42,5 +44,7 @@ public interface LiveContract {
         void getMemberSuc(String s);
 
         void sendMsgSuc(String s);
+
+        void getPDFSuc(String s);
     }
 }
