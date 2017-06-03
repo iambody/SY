@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.AppinfConstant;
@@ -135,6 +137,25 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
                 }
             }
 
+//            ApiClient.getPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<CommonEntity.Result>() {
+//                @Override
+//                protected void onEvent(CommonEntity.Result result) {
+//                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+//                    if (null != conversationList) {
+//                        Log.i("MainMessageFragment", "7 RongYun conversationList size= " + conversationList.size());
+//                    }
+//                    if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+////                            EventBus.getDefault().post(new RefreshKefu());
+//                    }
+//                    ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+//                }
+//
+//                @Override
+//                protected void onRxError(Throwable error) {
+//                    Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
+//                }
+//            });
+
             ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
@@ -175,7 +196,36 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             if (AppManager.getUserInfo(getContext()) != null &&
                     !AppManager.isInvestor(getContext()) &&
                     "0".equals(AppManager.getUserInfo(getContext()).getToB().adviserState)) {
-
+//                ApiClient.getOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<OrgManagerEntity.Result>() {
+//                    @Override
+//                    protected void onEvent(OrgManagerEntity.Result result) {
+//                        String managerMobile = result.getManagerMobile();
+//                        String managerUid = result.getManagerUid();
+//                        String teamManagerUid = result.getTeamManagerUid();
+//                        AppInfStore.saveOrgManagerUid(getContext(), managerUid);
+//                        AppInfStore.saveTeamManagerUid(getContext(), teamManagerUid);
+//                        AppInfStore.saveOrgManagerMobile(getContext(), managerMobile);
+//                        if (managerUid != null && managerUid.length() > 0) {
+//                            if (AppManager.hasTeamManager(getContext())) {
+//                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
+//                                AppInfStore.saveHasTeamManager(getContext(), false);
+//                            }
+//                            AppInfStore.saveHasOrgManager(getContext(), true);
+//                        }
+//                        if (teamManagerUid != null && teamManagerUid.length() > 0) {
+//                            if (AppManager.hasTeamManager(getContext())) {
+//                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
+//                                AppInfStore.saveHasOrgManager(getContext(), false);
+//                            }
+//                            AppInfStore.saveHasTeamManager(getContext(), true);
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onRxError(Throwable error) {
+//                        Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
+//                    }
+//                });
                 ApiClient.getTestOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                     @Override
                     protected void onEvent(String s) {

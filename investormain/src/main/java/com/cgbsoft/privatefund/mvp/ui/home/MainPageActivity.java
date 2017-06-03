@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -166,9 +167,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 初始化融云的接口信息
      */
     private void initRongInterface() {
-        RongIM.setUserInfoProvider(new MyUserInfoListener(), true);
-        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
-        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
         initDayTask();
     }
@@ -410,9 +411,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     }
                 }
             }
-            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+            ApiClient.getPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<CommonEntity.Result>() {
                 @Override
-                protected void onEvent(String s) {
+                protected void onEvent(CommonEntity.Result result) {
                     List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
                     if (null != conversationList) {
                         Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
@@ -428,12 +429,30 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
                 }
             });
+//            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
+//                @Override
+//                protected void onEvent(String s) {
+//                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+//                    if (null != conversationList) {
+//                        Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
+//                    }
+//                    if (!((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
+////                            EventBus.getDefault().post(new RefreshKefu());
+//                    }
+//                    ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(true);
+//                }
+//
+//                @Override
+//                protected void onRxError(Throwable error) {
+//                    Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
+//                }
+//            });
         }
     }
 
     private void gesturePasswordJumpPage() {
         System.out.println("------intercetpergesturePasswordJumpPage");
-        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
+        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch())) {
             Intent intent = new Intent(this, GestureVerifyActivity.class);
             intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
             startActivity(intent);
