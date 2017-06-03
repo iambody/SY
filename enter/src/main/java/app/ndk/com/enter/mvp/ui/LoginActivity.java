@@ -283,7 +283,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginFail() {
         //todo 测试用
 //        openActivity(MainPageActivity.class);
-        finish();
+//        finish();
     }
 
     @Override

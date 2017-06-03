@@ -21,10 +21,6 @@
             android:orientation="vertical"
             android:paddingBottom="17dp"
             android:background="#fff">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#d0d0d0" />
             <EditText
                 android:id="@+id/mall_receiving_name"
                 android:layout_width="match_parent"

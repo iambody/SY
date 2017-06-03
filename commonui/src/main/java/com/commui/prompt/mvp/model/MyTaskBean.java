@@ -19,6 +19,13 @@ public class MyTaskBean extends BaseModel {
     public static final int ITEM_SHARE_INFO = 5;
     public static final int ITEM_SIGN = 6;
 
+    public static final String ITEM_VIDEO_STR = "学习视频";
+    public static final String ITEM_PROD_STR = "查看产品";
+    public static final String ITEM_SHARE_PROD_STR = "分享产品";
+    public static final String ITEM_INFO_STR = "查看资讯";
+    public static final String ITEM_SHARE_INFO_STR = "分享资讯";
+    public static final String ITEM_SIGN_STR = "每日签到";
+
     public static final int TASK_STATE_FINISH = 1;
     public static final int TASK_STATE_UNFINISH = 0;
 

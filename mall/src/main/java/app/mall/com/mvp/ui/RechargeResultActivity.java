@@ -3,6 +3,7 @@ package app.mall.com.mvp.ui;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,7 +17,9 @@ import com.iapppay.alpha.pay.channel.alipay.PayResult;
 
 import app.mall.com.mvp.contract.PayResultContract;
 import app.mall.com.mvp.presenter.PayResultPresenter;
+import butterknife.BindView;
 import qcloud.mall.R;
+import qcloud.mall.R2;
 
 public class RechargeResultActivity extends BaseActivity<PayResultPresenter> implements PayResultContract.View {
 
@@ -28,6 +31,10 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
     private TextView ydCount;
     private Button goMall;
     private TextView titleMid;
+
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_recharge_result;
@@ -43,6 +50,14 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         titleMid = (TextView) findViewById(R.id.title_mid);
         rechargeSuc = (LinearLayout) findViewById(R.id.recharge_suc);
         disRecharge = (LinearLayout) findViewById(R.id.disrecharge);

@@ -19,7 +19,7 @@
         android:id="@+id/mall_new_address"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="44dp"
         android:text="@string/newaddress"
         style="@style/red1_btn"/>
 

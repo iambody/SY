@@ -77,7 +77,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
-//    //关闭背景
+    private List<TextView> bottomls;
+    //    //关闭背景
     @BindView(R.id.view_bottom_navigation_close)
     View view_bottom_navigation_close;
     //中间的按钮
@@ -129,8 +130,14 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
             }
 
             @Override
-            protected void onRxError(Throwable error) {}
+            protected void onRxError(Throwable error) {
+            }
         });
+        bottomls = new ArrayList<>();
+        bottomls.add(tv_bottom_nav_left_first);
+        bottomls.add(tv_bottom_nav_left_second);
+        bottomls.add(tv_bottom_nav_right_first);
+        bottomls.add(tv_bottom_nav_right_second);
     }
 
     public void setOnClickListener(BottomClickListener bottomClickListener) {
@@ -220,7 +227,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         void onTabSelected(int position);
     }
 
-    private void changeResWithIdtentify() {
+    public void changeResWithIdtentify() {
         int centerRes = 0, leftFirstRes = 0, leftSecRes = 0, rightFirstRes = 0, rightSecRes = 0;
         int leftFirstStr, leftSecStr, rightFirstStr, rightSecStr;
         if (isIdtentifyWithInvestor) {
@@ -272,6 +279,25 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         tv_bottom_nav_left_second.setText(leftSecStr);
         tv_bottom_nav_right_first.setText(rightFirstStr);
         tv_bottom_nav_right_second.setText(rightSecStr);
+    }
+
+    public void selectNavaigationPostion(int index) {
+//        int leftFirstRes = 0, leftSecRes = 0, rightFirstRes = 0, rightSecRes = 0;
+//        leftFirstRes = index == 0 ? R.drawable.ic_bottom_select_mine_down : R.drawable.ic_bottom_select_mine_up;
+//        leftSecRes = index == 1 ? R.drawable.ic_bottom_select_investor_product_down : R.drawable.ic_bottom_select_investor_product_up;
+//        rightFirstRes = index == 2 ? R.drawable.ic_bottom_select_inverstor_discovery_down : R.drawable.ic_bottom_select_inverstor_discovery_up;
+//        rightSecRes = index == 3 ? R.drawable.ic_bottom_club_down : R.drawable.ic_bottom_club_up;
+//
+//        requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
+//        requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
+//        requestManager.load(rightFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightFirstRes).into(iv_bottom_nav_right_first);
+//        requestManager.load(rightSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightSecRes).into(iv_bottom_nav_right_second);
+//        for (int i = 0; i < bottomls.size(); i++) {
+//            bottomls.get(i).setSelected(index == i );
+//        }
+
+        nowPosition=index;
+        changeResWithIdtentify();
     }
 
     //双击后发送消息，单击后跳转页面

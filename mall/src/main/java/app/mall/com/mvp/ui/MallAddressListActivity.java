@@ -5,8 +5,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -44,6 +46,10 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     @BindView(R2.id.mall_new_address)
     Button mall_new_address;
 
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+
+
     private MallListAdapter mallListAdapter;
     private ArrayList<MallAddressBean> mallAddressBeans;
     private LinearLayoutManager linearLayoutManager;
@@ -56,6 +62,14 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         getPresenter().getMallAddressList();
         titleMid.setText("收货地址");
         mallListAdapter = new MallListAdapter(this);

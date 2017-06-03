@@ -399,7 +399,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     public void getDataFail(int Type, String str) {
         clodLsAnim(swipeToLoadLayout);
-        PromptManager.ShowCustomToast(getContext(), str);
+//        PromptManager.ShowCustomToast(getContext(), str);
         switch (Type) {
             case ProductContract.LOAD_FILTER://请求筛选条件失败
 

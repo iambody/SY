@@ -14,11 +14,12 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
 
@@ -166,6 +167,10 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
+        }
+        if(!Utils.isMobileNO(et_ar_check.getText().toString().trim())){
+            PromptManager.ShowCustomToast(baseContext,getResources().getString(R.string.phone_noright_str));
+            return ;
         }
         defaultDialog.show();
     }

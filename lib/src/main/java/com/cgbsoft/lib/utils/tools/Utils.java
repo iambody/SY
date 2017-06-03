@@ -529,4 +529,14 @@ public class Utils {
             }
         }.show();
     }
+    /**
+     * 判断手机号
+     */
+    public static boolean isMobileNO(String mobiles) {// ^1[358]\\d{9}$
+        Pattern p = Pattern.compile("^1[24635879]\\d{9}$");
+
+        Matcher m = p.matcher(mobiles);
+        System.out.println(m.matches() + "---");
+        return m.matches();
+    }
 }

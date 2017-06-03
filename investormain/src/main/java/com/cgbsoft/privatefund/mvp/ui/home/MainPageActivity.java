@@ -40,7 +40,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
-import com.cgbsoft.privatefund.widget.dialog.RiskEvaluatDialog;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
@@ -139,6 +138,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Integer integer) {
                 onTabSelected(integer);
+                bottomNavigationBar.selectNavaigationPostion(integer);
             }
 
             @Override
@@ -183,10 +183,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private void initDialog() {
 
         //是否需要风险评测d 弹出框
-        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
-            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
-            riskEvaluatDialog.show();
-        }
+//        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
+//            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
+//            riskEvaluatDialog.show();
+//        }
     }
 
     private void loginLive() {
@@ -535,7 +535,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else
             exitBy2Click();
     }
-
 
 
     private void initDayTask() {
