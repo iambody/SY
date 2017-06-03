@@ -34,6 +34,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 未绑定信息天蝎页面
     public static String noBindUserInfo;
 
+    // 投资人认证
+    public static String invistorCertify;
+
     static {
         initApi();
     }
@@ -51,5 +54,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         product = baseParentUrl +  "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
+        invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
 }

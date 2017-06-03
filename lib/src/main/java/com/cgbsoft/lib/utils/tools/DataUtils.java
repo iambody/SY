@@ -2,11 +2,17 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.text.TextUtils;
 
+import java.security.Key;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
  * Created by yangzonghui on 2015/9/24.
@@ -19,6 +25,13 @@ public class DataUtils {
     private static final long ONE_YEAR = 31104000;
 
     public static Calendar calendar = Calendar.getInstance();
+
+    // 密钥
+    private final static String secretKey = "yingtaicaifuyun2016simuyun";
+    // 向量
+    private final static String iv = "01234567";
+    // 加解密统一使用的编码方式
+    private final static String encoding = "utf-8";
 
     /**
      * @return yyyy-mm-dd
@@ -489,5 +502,26 @@ public class DataUtils {
                 return minute + ":" + second;
             }
         }
+    }
+
+    /**
+     * 3DES解密
+     *
+     * @param encryptText 加密文本
+     * @return
+     * @throws Exception
+     */
+    public static String decode(String encryptText) throws Exception {
+        Key deskey = null;
+        DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
+        SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
+        deskey = keyfactory.generateSecret(spec);
+        Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
+        IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
+        cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
+
+        byte[] decryptData = cipher.doFinal(Base64.decode(encryptText));
+
+        return new String(decryptData, encoding);
     }
 }

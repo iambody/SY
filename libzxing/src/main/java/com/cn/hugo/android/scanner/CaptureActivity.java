@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -18,10 +19,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataUtils;
 import com.cgbsoft.lib.utils.tools.Des3;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.camera.CameraManager;
 import com.cn.hugo.android.scanner.common.BitmapUtils;
@@ -40,6 +45,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -374,33 +380,79 @@ public final class CaptureActivity extends Activity implements
             try {
                 String aa = result.substring(result.indexOf("?") + 1);
                 String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
+//                new MToast(this).show(deresult,0);
                 JSONObject j = new JSONObject(deresult);
                 String party_id = j.getString("party_id");
                 String party_name = j.getString("party_name");
                 String father_id = j.getString("uid");
                 String deadline = j.getString("deadline");
                 String father_name = j.getString("nickName");
-                if (deadline.equals(DataUtils.getDay()) || (DataUtils.compareNow(deadline) != -1)) {
-                    RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
-//                    if (!SPreference.isVisitorRole(getApplicationContext())) {
-//                        upload(party_id, party_name, father_id, father_name);
-//                    } else {
-//                        // toJumpTouziren(result);
-//                    }
+                if (deadline.equals(DataUtils.getDay1()) || (DataUtils.compareNow(deadline) != -1)) {
+                    if (!AppManager.isInvestor(this)) {
+                        //upload(party_id, party_name, father_id, father_name);
+                    } else {
+                        RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
+                    }
                 } else {
                     Toast.makeText(this, "该二维码已过期", Toast.LENGTH_SHORT).show();
                     restartPreviewAfterDelay(0L);
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        } else if (result.contains(CwebNetConfig.baseParentUrl)) {
+            String isCallBack = getIntent().getStringExtra("isCallBack");
+            if ((!TextUtils.isEmpty(isCallBack)) && isCallBack.equals("Y")) {
+//                EventBus.getDefault().post(new WebViewCallBack(result));
+                this.finish();
+            } else {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(WebViewConstant.push_message_title, "投资-与未来对话");
+                hashMap.put(WebViewConstant.push_message_url, result);
+                NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                this.finish();
             }
         } else {
             Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
             restartPreviewAfterDelay(0L);
         }
     }
+
+//    public void parser(String result) {
+//        if (result.contains(Config.qr_codeUrl)) {
+//            try {
+//                String aa = result.substring(result.indexOf("?") + 1);
+//                String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));
+//                JSONObject j = new JSONObject(deresult);
+//                String party_id = j.getString("party_id");
+//                String party_name = j.getString("party_name");
+//                String father_id = j.getString("uid");
+//                String deadline = j.getString("deadline");
+//                String father_name = j.getString("nickName");
+//                if (deadline.equals(DataUtils.getDay()) || (DataUtils.compareNow(deadline) != -1)) {
+//                    RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
+////                    if (!SPreference.isVisitorRole(getApplicationContext())) {
+////                        upload(party_id, party_name, father_id, father_name);
+////                    } else {
+////                        // toJumpTouziren(result);
+////                    }
+//                } else {
+//                    Toast.makeText(this, "该二维码已过期", Toast.LENGTH_SHORT).show();
+//                    restartPreviewAfterDelay(0L);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
+//            restartPreviewAfterDelay(0L);
+//        }
+//    }
 //    private void toJumpTouziren(String result) {
 //        try {
 //            String deresult = Des3.decode(result.substring(result.indexOf("?") + 1));

@@ -49,11 +49,9 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
 
-
     private MallListAdapter mallListAdapter;
     private ArrayList<MallAddressBean> mallAddressBeans;
     private LinearLayoutManager linearLayoutManager;
-
 
     @Override
     protected int layoutID() {
