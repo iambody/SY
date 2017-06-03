@@ -35,7 +35,6 @@ public class BaseActivity extends FragmentActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.BD_EXIT_APP);
-
         registerReceiver(recv, filter);
     }
 

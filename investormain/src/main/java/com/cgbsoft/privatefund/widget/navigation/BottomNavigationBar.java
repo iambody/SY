@@ -220,7 +220,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         void onTabSelected(int position);
     }
 
-    private void changeResWithIdtentify() {
+    public void changeResWithIdtentify() {
         int centerRes = 0, leftFirstRes = 0, leftSecRes = 0, rightFirstRes = 0, rightSecRes = 0;
         int leftFirstStr, leftSecStr, rightFirstStr, rightSecStr;
         if (isIdtentifyWithInvestor) {

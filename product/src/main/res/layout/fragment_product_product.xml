@@ -61,14 +61,17 @@
                 android:text="筛选" />
         </LinearLayout>
         <!-- 上边的筛选布局。。。。。-->
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_z_dip"
+            android:src="@color/gray_font" />
         <!--产品筛选里面的筛选 -->
         <LinearLayout
+            android:id="@+id/series_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
-            android:id="@+id/series_layout"
             android:paddingBottom="10dp"
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
@@ -122,5 +125,5 @@
     <include
         android:id="@+id/product_product_riskevalust"
         layout="@layout/view_riskevalust"
-          android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>
