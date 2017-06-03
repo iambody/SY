@@ -132,7 +132,6 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     private Context context = PayActivity.this;
 
 
-
     @Override
     protected int layoutID() {
         return R.layout.activity_pay;

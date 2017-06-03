@@ -2,9 +2,11 @@ package app.mall.com.mvp.ui;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +47,10 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
     Button btn_address_save;
     private MallAddressBean addressBean;
 
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+
+
     @Override
     protected int layoutID() {
         return R.layout.activity_mall_edit_address;
@@ -52,6 +58,14 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         addressBean = (MallAddressBean) getIntent().getSerializableExtra("addressBean");
         if (addressBean != null) {
             et_recever_name.setText(addressBean.getShopping_name());
