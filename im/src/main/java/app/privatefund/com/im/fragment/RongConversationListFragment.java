@@ -21,12 +21,14 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 
@@ -173,7 +175,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
 
         if (!isNoticeList) {
             showUserBelongGroupList();
-            // showNoticeItem();
         }
     }
 
@@ -185,20 +186,19 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
      */
     private void showUserBelongGroupList() {
         if (getActivity() != null) {
-            ApiClient.getTestGetGroupList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+            ApiClient.getGroupList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<GroupListEntity.Result>() {
                 @Override
-                protected void onEvent(String s) {
+                protected void onEvent(GroupListEntity.Result result) {
+                    RLog.i("ConversationListFragment", "----GroupList=" + result);
                     try {
-                        if (!"null".equals(s) && !TextUtils.isEmpty(s)) {
-                            RLog.i("ConversationListFragment", "----GroupList=" + s);
-                            JSONArray jsonArray = new JSONArray(s);
-                            AppInfStore.saveHasUserGroup(getContext(), jsonArray.length() > 0 ? true : false);
-//                            JSONArray jsonArray = new JSONArray(vas);
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                                String id = jsonObject.optString("id");
-                                String name = jsonObject.optString("name");
-                                String headImageUrl = jsonObject.optString("headImgUrl");
+                        if (result != null) {
+                            List<GroupListEntity.Group> list = result.getResult();
+                            AppInfStore.saveHasUserGroup(getContext(), !CollectionUtils.isEmpty(list) ? true : false);
+                            for (int i = 0; i < list.size(); i++) {
+                                GroupListEntity.Group group = list.get(i);
+                                String id = group.getId();
+                                String name = group.getName();
+                                String headImageUrl = group.getHeadImgUrl();
                                 if (headImageUrl.contains("name")) {
                                     JSONArray jsonArray1 = new JSONArray(headImageUrl);
                                     headImageUrl = jsonArray1.getJSONObject(0).optString("url");
@@ -215,7 +215,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 protected void onRxError(Throwable error) {}
             });
             ThreadUtils.runOnMainThreadDelay(() -> {
-                //addNoticeItem();
+                addNoticeItem();
             },1000);
         }
     }
@@ -232,7 +232,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         } else {
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.GROUP, id);
         }
-
         conversation.setConversationTitle(name);
         UIConversation uiConversation;
         if(position < 0) {

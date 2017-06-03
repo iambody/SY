@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
-import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;

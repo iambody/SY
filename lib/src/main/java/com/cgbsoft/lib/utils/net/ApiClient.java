@@ -21,6 +21,7 @@ import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
@@ -760,7 +761,7 @@ public class ApiClient {
      *
      * @param memberId
      */
-    public static Observable<CommonEntity.Result> getUserPhoneNumber(String memberId) {
+    public static Observable<UserPhoneNumEntity.Result> getUserPhoneNumber(String memberId) {
         Map<String, String> map = new HashMap<>();
         map.put("memberId", memberId);
         return OKHTTP.getInstance().getRequestManager().getUserPhoneNumber(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());

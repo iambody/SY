@@ -12,8 +12,6 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 

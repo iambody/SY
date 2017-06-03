@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.RongUserEntity;
+import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -171,13 +174,15 @@ public class ConversationActivity extends BaseActivity {
     }
 
     private void initTelDialog() {
-        ApiClient.goTestGetRongUserInfo(mTargetId).subscribe(new RxSubscriber<String>() {
+//        ApiClient.goTestGetRongUserInfo(mTargetId).subscribe(new RxSubscriber<String>() {
+        ApiClient.getRongUserInfo(mTargetId).subscribe(new RxSubscriber<RongUserEntity.Result>() {
             @Override
-            protected void onEvent(String s) {
-                Log.i("MyUserInfoListener", "RCUserInfoTask=" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    conversationName = jsonObject.getString("name");
+            protected void onEvent(RongUserEntity.Result result) {
+                Log.i("MyUserInfoListener", "RCUserInfoTask=" + result);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    conversationName = jsonObject.getString("name");
+                    conversationName = result.getName();
                     AppInfStore.saveChatName(ConversationActivity.this, conversationName);
                     String bindMobileNumber = AppManager.getUserInfo(ConversationActivity.this).getAdviserPhone();
                     right.setVisibility(Constant.msgSecretary.equals(mTargetId) ? View.GONE : View.VISIBLE);
@@ -251,9 +256,9 @@ public class ConversationActivity extends BaseActivity {
                             }
                         }
                     });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override
@@ -271,21 +276,31 @@ public class ConversationActivity extends BaseActivity {
 //    }
 
     private void getUserPhoneNumber() {
-        ApiClient.getTestGetUserPhoneNumber(mTargetId).subscribe(new RxSubscriber<String>() {
+        ApiClient.getUserPhoneNumber(mTargetId).subscribe(new RxSubscriber<UserPhoneNumEntity.Result>() {
             @Override
-            protected void onEvent(String s) {
-                try {
-                    Log.i("ConversationActivity", "-----getUserPhoneNumber=" + s);
-                    JSONObject jsonObject = new JSONObject(s);
-                    userPhoneNumber = jsonObject.optString("phoneNumber");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            protected void onEvent(UserPhoneNumEntity.Result result) {
+                Log.i("ConversationActivity", "-----getUserPhoneNumber=" + result);
+                userPhoneNumber = result.phoneNumber;
             }
 
             @Override
             protected void onRxError(Throwable error) {}
         });
+//        ApiClient.getTestGetUserPhoneNumber(mTargetId).subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String s) {
+//                try {
+//                    Log.i("ConversationActivity", "-----getUserPhoneNumber=" + s);
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    userPhoneNumber = jsonObject.optString("phoneNumber");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {}
+//        });
     }
 
 
