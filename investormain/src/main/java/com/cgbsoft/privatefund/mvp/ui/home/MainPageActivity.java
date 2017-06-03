@@ -135,6 +135,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Integer integer) {
                 onTabSelected(integer);
+                bottomNavigationBar.selectNavaigationPostion(integer);
             }
 
             @Override
