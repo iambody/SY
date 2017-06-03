@@ -87,4 +87,7 @@ public interface AppinfConstant {
 
     // 是否有用户所属群
     String HAS_USER_GROUP = "hasGroup";
+
+    // 最后返回时间
+    String LAST_EXIT_BACK_TIME = "last_exit_back_time";
 }

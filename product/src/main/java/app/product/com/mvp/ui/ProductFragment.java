@@ -208,8 +208,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 if (fromShare) {
                     openShareProductDialog(position);
                 } else {
+
                     ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
-                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100 );
                 }
             }
         });
@@ -403,7 +404,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 } else {
 //                    Series series = (Series) textView.getTag();
                     CurrentSeries = ((Series) textView.getTag()).getKey();
-                    isInitData=true;
+                    isInitData = true;
                     reSetConditionAction();
                 }
             }

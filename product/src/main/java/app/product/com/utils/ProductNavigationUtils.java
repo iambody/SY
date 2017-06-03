@@ -29,6 +29,8 @@ public class ProductNavigationUtils {
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        //如果是main产品列表进去的 传产品列表的数据 如果是搜索进去的传搜索的数据bean
+        intent.putExtra(ProductDetailActivity.PRODUCTID_TAG, schemeId);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 

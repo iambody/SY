@@ -20,6 +20,8 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -27,8 +29,10 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
+import com.cgbsoft.privatefund.bean.StrResult;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
+import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
@@ -196,8 +200,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //            e.printStackTrace();
 //        }
 //        LogUtils.Log("s", sss);
+        if (!BStrUtils.isEmpty(publicKey))
+            getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
+        else {
+            getPresenter().addSubscription(ApiClient.getLoginPublic().subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String s) {
+                    StrResult result = new Gson().fromJson(s, StrResult.class);
+                    publicKey = result.result;
+                    getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
+                }
 
-        getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
+                @Override
+                protected void onRxError(Throwable error) {
+                }
+            }));
+        }
 
     }
 

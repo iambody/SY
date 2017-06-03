@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -251,7 +249,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onRestart() {
         super.onRestart();
         boolean isCurrentRunningForeground = SPreference.isCurrentRunningForeground(this);
-
 //        Observable.just(1).filter(v-> !isCurrentRunningForeground)
 
     }
@@ -347,8 +344,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
      * 双击退出。
      */
     protected boolean exitBy2Click() {
-        long mNowTime = System.currentTimeMillis();//获取第一次按键时间
-        if ((mNowTime - mExitPressedTime) > 2000) {//比较两次按键时间差
+        long mNowTime = System.currentTimeMillis(); //获取第一次按键时间
+        if ((mNowTime - mExitPressedTime) > 2000) { //比较两次按键时间差
             MToast.makeText(this, getString(R.string.nav_back_again_finish), Toast.LENGTH_SHORT);
             mExitPressedTime = mNowTime;
         } else {
@@ -363,7 +360,5 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
         if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
     }
-
-
 }
 

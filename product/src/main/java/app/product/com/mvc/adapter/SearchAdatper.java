@@ -346,7 +346,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         switch (resultBean.getIsPart()) {
                             case PRODUCT_ITEM:
-                                ProductNavigationUtils.startProductDetailActivity(context, resultBean.getTargetId(), resultBean.getTitle(), 200);
+                                ProductNavigationUtils.startProductDetailActivity(context, resultBean.getTargetId(), resultBean.getTitle(), 200 );
 //                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.get);
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);

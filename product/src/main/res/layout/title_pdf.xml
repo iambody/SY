@@ -28,11 +28,14 @@
         android:paddingBottom="@dimen/ui_8_dip"
         android:paddingTop="@dimen/ui_8_dip"
         android:layout_gravity="center_horizontal"  />
-    <ImageView
+    <TextView
         android:id="@+id/pdf_title_right"
-        android:layout_width="@dimen/ui_40_dip"
-        android:layout_height="@dimen/ui_40_dip"
-        android:layout_centerVertical="true"
-        android:scaleType="center"
-        android:src="@drawable/product_plus" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/ui_10_dip"
+        android:text="@string/share"
+        android:padding="@dimen/ui_5_dip"
+        android:textSize="@dimen/dimens_sp_16"
+        android:drawableLeft="@drawable/fenxiang_share_nor"  />
 </LinearLayout>

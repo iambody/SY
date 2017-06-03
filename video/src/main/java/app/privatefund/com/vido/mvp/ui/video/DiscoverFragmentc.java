@@ -50,12 +50,7 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         videoDiscoverWeb.loadUrls(CwebNetConfig.discoverPage);
-        videoDiscoverWeb.setClick(new CWebClient.WebviewOnClick() {
-            @Override
-            public void onClick(String result) {
-                goDetail(result);
-            }
-        });
+        videoDiscoverWeb.setClick(result -> goDetail(result));
     }
 
     public void goDetail(String res) {

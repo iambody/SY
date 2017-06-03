@@ -1,7 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -30,6 +29,9 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,11 +53,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     public static final int BACK_CAMERA_CODE = 402;
     public static final String SAVE_PARAM = "saveValue";
     public static final String BACK_PARAM = "backValue";
-    String url = "";
-    private String title;
 
-    @BindView(R2.id.cloud_menu_imagevew)
-    protected ImageView cloudImage;
+    protected String url = "";
+    protected String title;
 
     @BindView(R2.id.toolbar)
     protected Toolbar toolbar;
@@ -104,6 +104,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
+    }
+
+    /**
+     * 根据次字方法来判断是否需要回调，默认是不需要回调
+     * @return
+     */
+    protected boolean getCallBack() {
+        return false;
     }
 
     @Override
@@ -197,27 +205,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-        if (url.contains("apptie/detail.html")) {
-            cloudImage.setVisibility(View.VISIBLE);
-        }
-        cloudImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SPreference.getToCBean(BaseWebViewActivity.this) != null && TextUtils.isEmpty(SPreference.getToCBean(BaseWebViewActivity.this).getBandingAdviserId())) {
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
-                    hashMap.put(WebViewConstant.push_message_title, "填写信息");
-                    NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-                } else {
-                    if (isLive  && !isLookZhiBao) {
-                        isLookZhiBao = true;
-                        //joinLive();
-                    } else {
-                        NavigationUtils.startActivityByRouter(BaseWebViewActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, R.anim.home_fade_in, R.anim.home_fade_out);
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -375,6 +362,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             }
         }
         return false;
+    }
+
+    protected String getV2String(String resultStr) {
+
+        try {
+            JSONObject obj = new JSONObject(resultStr);
+            return obj.getString("result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 //	public void onEventMainThread(EventBusUpdateHeadImage event) {
 //		String laun = "javascript:setHeadImage('" + event.getRemoteAddress() + "');";

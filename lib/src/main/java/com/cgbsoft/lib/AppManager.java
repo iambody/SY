@@ -184,4 +184,13 @@ public class AppManager implements AppinfConstant {
     public static boolean hasUserGroup(Context context) {
         return getBasePreference(context).getBoolean(HAS_USER_GROUP, false);
     }
+
+    /**
+     * 得到最后一次退出时间
+     * @param context
+     * @return
+     */
+    public static long getLastExitTime(Context context) {
+        return getBasePreference(context).getLong(LAST_EXIT_BACK_TIME, 0);
+    }
 }

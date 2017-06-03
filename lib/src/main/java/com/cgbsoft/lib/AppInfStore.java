@@ -211,6 +211,13 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
+    //最后退出时间
+    public static void saveLastExitTime(Context pcContext, long time) {
+        SharedPreferences.Editor ed = getBasePreference(pcContext).edit();
+        ed.putLong(LAST_EXIT_BACK_TIME, time);
+        ed.commit();
+    }
+
     /**
      * 更新关联资产状态
      * @param context
