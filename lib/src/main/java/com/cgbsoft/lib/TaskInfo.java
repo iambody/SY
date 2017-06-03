@@ -85,7 +85,7 @@ public class TaskInfo {
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         });
 
