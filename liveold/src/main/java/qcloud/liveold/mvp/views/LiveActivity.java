@@ -61,6 +61,9 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -107,6 +110,7 @@ import qcloud.liveold.mvp.utils.GlideCircleTransform;
 import qcloud.liveold.mvp.utils.LogConstants;
 import qcloud.liveold.mvp.utils.SxbLog;
 import qcloud.liveold.mvp.utils.UIUtils;
+import rx.Observable;
 
 
 /**
@@ -170,6 +174,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     private ArrayList<String> mRenderUserList = new ArrayList<>();
     private RecyclerView memberList;
     private MembersAdapter membersAdapter;
+    private Observable<String> getLiveObservable;
 
 
     @Override
@@ -530,6 +535,21 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
+        getLiveObservable = RxBus.get().register(RxConstant.GET_LIVE_PDF_LIST_TASK, String.class);
+        getLiveObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                getPresenter().getLivePdf(CurLiveInfo.getRoomNum()+"");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+
     }
 
     private void registerReceiver() {
@@ -1096,6 +1116,9 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             paramTimer.cancel();
             paramTimer = null;
         }
+        if (null != getLiveObservable){
+            RxBus.get().unregister(RxConstant.GET_LIVE_PDF_LIST_TASK, getLiveObservable);
+        }
         mLiveHelper.stopRecord();
 
         inviteViewCount = 0;
@@ -1586,8 +1609,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         } else {
             Log.i(TAG, "cancelInviteView inviteView3 is null");
         }
-
-
     }
 
     @Override
@@ -1786,7 +1807,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             String strTips = QavsdkControl.getInstance().getQualityTips();
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             //TODO
-//            fragmentTransaction.add(R.id.fragment_contain, new PDFListFragment()).addToBackStack(null);
+            fragmentTransaction.add(R.id.fragment_contain, new PDFListFragment()).addToBackStack(null);
             fragmentTransaction.commit();
 //                String[] param1 = new String[]{"PDF", AppManager.getUserInfo(LiveActivity.this).getToB().isColorCloud(), AppManager.getUserInfo(LiveActivity.this).getToB().getOrganizationName()};
 //                HashMap<String, String> params = DataStatisticsUtils.getParams("1023", "10108", param1);
@@ -2622,10 +2643,8 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
     @Override
     public void getMemberSuc(String s) {
-
         try {
-            JSONObject response = new JSONObject(s);
-            JSONArray result = response.getJSONArray("result");
+            JSONArray result = new JSONArray(s);
             for (int i = 0; i < result.length(); i++) {
                 JSONObject js = (JSONObject) result.get(i);
                 if (js.getInt("user_type") == 9) {
@@ -2681,5 +2700,10 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         refreshChatAdapter();
         editCommit.setText("");
         closeEdit();
+    }
+
+    @Override
+    public void getPDFSuc(String s) {
+        RxBus.get().post(RxConstant.LIVE_PDF_SUC,s);
     }
 }

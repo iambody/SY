@@ -1115,6 +1115,12 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getLiveSign(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    public static Observable<String> getLivePDF(String roomId){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("room_id", roomId);
+        return OKHTTP.getInstance().getRequestManager().getLivePdf(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 获取支付配置
      */

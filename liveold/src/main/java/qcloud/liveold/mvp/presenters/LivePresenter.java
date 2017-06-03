@@ -121,7 +121,7 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
             @Override
             protected void onEvent(String s) {
                 try {
-                    getView().getMemberSuc(new JSONObject(s).getJSONObject("result").toString());
+                    getView().getMemberSuc(new JSONObject(s).getJSONArray("result").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -134,6 +134,8 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         });
     }
 
+
+
     @Override
     public void sendMsg(HashMap<String, Object> map) {
 
@@ -142,6 +144,25 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
             protected void onEvent(String s) {
                 try {
                     getView().sendMsgSuc(new JSONObject(s).getJSONObject("result").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        });
+    }
+
+    @Override
+    public void getLivePdf(String roomId) {
+        ApiClient.getLivePDF(roomId).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    getView().getPDFSuc(new JSONObject(s).getJSONArray("result").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

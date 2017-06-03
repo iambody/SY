@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.cgbsoft.privatefund.view.RoundImageView
+    <com.cgbsoft.lib.widget.RoundImageView
         android:id="@+id/title_view"
         android:layout_width="40dp"
         android:layout_height="40dp"

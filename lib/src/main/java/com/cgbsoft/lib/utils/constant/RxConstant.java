@@ -58,4 +58,10 @@ public interface RxConstant {
 
     String Open_PAGE_LIVE_OBSERVABLE = "open_page_live_observable";
 
+    //直播获取pdf请求
+    String GET_LIVE_PDF_LIST_TASK = "get_live_pdf_list_task";
+
+    //直播获取pdf成功
+    String LIVE_PDF_SUC = "lice_pdf_suc";
+
 }

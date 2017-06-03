@@ -20,7 +20,7 @@
             android:background="@drawable/shape_dialog"
             android:orientation="vertical">
 
-            <com.cgbsoft.privatefund.view.RoundImageView
+            <com.cgbsoft.lib.widget.RoundImageView
                 android:id="@+id/title_view"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
