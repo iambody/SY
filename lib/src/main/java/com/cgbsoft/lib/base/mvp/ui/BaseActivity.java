@@ -90,7 +90,9 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void after() {
         mUnbinder = ButterKnife.bind(this);
         mBaseHandler = new WeakHandler();
-        getWindow().setStatusBarColor(Color.BLACK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.BLACK);
+        }
         if (mPresenter == null)
             mPresenter = createPresenter();
 
