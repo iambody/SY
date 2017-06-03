@@ -158,24 +158,23 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         if (model.getStatus().equals("1")) {
             return;
         }
-        switch (model.getTaskType()) {
-            case MyTaskBean.ITEM_INFO + ""://查看资讯  增加需要跳转到C的页面
+        switch (model.getTaskName()) {
+            case MyTaskBean.ITEM_INFO_STR://查看资讯  增加需要跳转到C的页面
                 infoTaskClick();
                 break;
-            case MyTaskBean.ITEM_PROD + "":// 查看产品   增加需要跳转到C的页面
+            case MyTaskBean.ITEM_PROD_STR:// 查看产品   增加需要跳转到C的页面
                 productTaskClick();
-
                 break;
-            case MyTaskBean.ITEM_SHARE_INFO + ""://分享资讯   增加需要跳转到C的页面
+            case MyTaskBean.ITEM_SHARE_INFO_STR://分享资讯   增加需要跳转到C的页面
                 infoTaskClick();
                 break;
-            case MyTaskBean.ITEM_SHARE_PROD + "":// 分享产品   增加需要跳转到C的页面
+            case MyTaskBean.ITEM_SHARE_PROD_STR:// 分享产品   增加需要跳转到C的页面
                 productTaskClick();
                 break;
-            case MyTaskBean.ITEM_VIDEO + ""://跳转到学习视频    增加需要跳转到C的页面
+            case MyTaskBean.ITEM_VIDEO_STR://跳转到学习视频    增加需要跳转到C的页面
                 videoTaskClick();
                 break;
-            case MyTaskBean.ITEM_SIGN + ""://每日签到
+            case MyTaskBean.ITEM_SIGN_STR://每日签到
                 signTask();
                 break;
         }
