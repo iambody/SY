@@ -433,7 +433,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private void gesturePasswordJumpPage() {
         System.out.println("------intercetpergesturePasswordJumpPage");
-        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch()) && mContentFragment == MainTabManager.getInstance().getFragmentByIndex(0)) {
+        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch())) {
             Intent intent = new Intent(this, GestureVerifyActivity.class);
             intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
             startActivity(intent);
