@@ -8,6 +8,22 @@
     android:animateLayoutChanges="true"
     tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity">
 
+    <View
+        android:id="@+id/view_bottom_navigation_close"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7F000000"
+        android:fitsSystemWindows="true"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_bottom_navigation_cloud"
+        tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="5dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -153,20 +169,4 @@
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
-
-    <View
-        android:id="@+id/view_bottom_navigation_close"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#7F000000"
-        android:fitsSystemWindows="true"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/iv_bottom_navigation_cloud"
-        tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="5dp" />
 </FrameLayout>

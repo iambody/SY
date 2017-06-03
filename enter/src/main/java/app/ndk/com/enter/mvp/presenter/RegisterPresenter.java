@@ -50,7 +50,7 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, getContext().getString(R.string.ra_register_fail_str), 1000, () -> getView().regFail());
+                loadingDialog.setResult(false,error.getMessage(), 1000, () -> getView().regFail());
             }
         }));
     }
