@@ -135,7 +135,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Integer integer) {
                 onTabSelected(integer);
-                RxBus.get().post("main_bottom_navigation_double_click_left_sec", true);
             }
 
             @Override
