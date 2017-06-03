@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -116,6 +117,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     @BindView(R2.id.title_mid)
     TextView titleMid;
 
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+
     private int totleCount = 500;
 
     private List<TextView> up_bttag_txts = new ArrayList<>();
@@ -128,6 +132,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     private Context context = PayActivity.this;
 
 
+
     @Override
     protected int layoutID() {
         return R.layout.activity_pay;
@@ -135,6 +140,14 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         IAppPay.init(this, IAppPay.PORTRAIT, PayConfig.appid);
         getPresenter().getRechargeConfig();
         up_bt_txts.add(recharge_up_bt1);

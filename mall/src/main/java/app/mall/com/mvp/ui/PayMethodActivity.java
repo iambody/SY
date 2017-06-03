@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -32,7 +35,7 @@ import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
 
-public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implements PayMethodContract.View, View.OnClickListener {
+public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implements PayMethodContract.View, Toolbar.OnMenuItemClickListener {
 
     //返回键
     private ImageView title_left;
@@ -59,8 +62,8 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
     @BindView(R2.id.title_mid)
     TextView titleMid;
 
-    @BindView(R2.id.title_right)
-    TextView title_right;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected int layoutID() {
@@ -79,17 +82,22 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         payMethods = (ArrayList<PayMethod>) getIntent().getSerializableExtra("payList");
         paymethod_tag = (TextView) findViewById(R.id.paymethod_tag);
-        title_left = (ImageView) findViewById(R.id.title_left);
-        title_right = (TextView) findViewById(R.id.title_right);
         titleMid = (TextView) findViewById(R.id.title_mid);
         payList = (ListView) findViewById(R.id.pay_method_lv);
 
 
         titleMid.setText("支付方式");
-        title_right.setText("确认");
 
 //        showTileLeft();
 //        showTileMid("支付方式");
@@ -116,33 +124,6 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
                 payMethod = payMethods.get(position);
             }
         });
-
-        title_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < payMethods.size(); i++) {
-                    if (payMethods.get(i).getTypeCode() == adapter.getCheck()) {
-                        payMethod = payMethods.get(i);
-                    }
-                }
-                Intent intent = new Intent(PayMethodActivity.this, PayActivity.class);
-                JSONObject ja = new JSONObject();
-                try {
-                    ja.put("name", payMethod.getName());
-                    ja.put("maxLimit", payMethod.getMaxLimit());
-                    ja.put("typeCode", String.format("%d", payMethod.getTypeCode()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                SPreference.putString(PayMethodActivity.this, "payConfig", ja.toString());
-                intent.putExtra("paymethod", payMethods.get(checkPosition));
-                setResult(RESULT_OK, intent); //intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
-                choiceMethodStasist(payMethod.getName());
-                finish();
-
-
-            }
-        });
     }
 
     @Override
@@ -158,27 +139,39 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.title_right) {
-            Intent intent = new Intent(PayMethodActivity.this, PayActivity.class);
-            JSONObject ja = new JSONObject();
-            try {
-                ja.put("name", payMethod.getName());
-                ja.put("maxLimit", payMethod.getMaxLimit());
-                ja.put("typeCode", String.format("%d", payMethod.getTypeCode()));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            SPreference.putString(this, "payConfig", ja.toString());
-            intent.putExtra("paymethod", payMethods.get(checkPosition));
-            setResult(RESULT_OK, intent); //intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
-            finish();
 
-        } else if (i == R.id.title_left) {
-            finish();
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(com.cgbsoft.lib.R.menu.page_menu, menu);
+        MenuItem firstItem = menu.findItem(com.cgbsoft.lib.R.id.firstBtn);
+        MenuItem secItem = menu.findItem(com.cgbsoft.lib.R.id.secondBtn);
+        firstItem.setTitle("确认");
+        secItem.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        for (int i = 0; i < payMethods.size(); i++) {
+            if (payMethods.get(i).getTypeCode() == adapter.getCheck()) {
+                payMethod = payMethods.get(i);
+            }
+        }
+        Intent intent = new Intent(PayMethodActivity.this, PayActivity.class);
+        JSONObject ja = new JSONObject();
+        try {
+            ja.put("name", payMethod.getName());
+            ja.put("maxLimit", payMethod.getMaxLimit());
+            ja.put("typeCode", String.format("%d", payMethod.getTypeCode()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        SPreference.putString(PayMethodActivity.this, "payConfig", ja.toString());
+        intent.putExtra("paymethod", payMethods.get(checkPosition));
+        setResult(RESULT_OK, intent); //intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
+        choiceMethodStasist(payMethod.getName());
+        finish();
+        return false;
+    }
 }
