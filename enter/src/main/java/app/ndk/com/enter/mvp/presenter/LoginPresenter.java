@@ -98,9 +98,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
             @Override
             protected void onRxError(Throwable error) {
+
                 LogUtils.Log("LoginPresenter", "----error=" + error.toString());
-                loadingDialog.dismiss();
-//              loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
+//                loadingDialog.dismiss();
+              loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
             }
         }));
 
@@ -168,6 +169,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
             @Override
             protected void onRxError(Throwable error) {
+
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));

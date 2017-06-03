@@ -27,7 +27,6 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
 import app.ndk.com.enter.mvp.presenter.BindPhonePresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -90,8 +89,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
             iv_ab_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
             btn_ab_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
             btn_ab_ok.setTextColor(0xffffffff);
-            tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-            tv_ab_next.setTextColor(0xffffffff);
+//            tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
+//            tv_ab_next.setTextColor(0xffffffff);
         }
         et_ab_username.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
         et_ab_check.addTextChangedListener(new BindTextWatcher(CHECK_KEY));

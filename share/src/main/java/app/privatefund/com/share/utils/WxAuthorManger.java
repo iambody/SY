@@ -5,8 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.utils.tools.PromptManager;
-
 import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
@@ -93,7 +91,7 @@ public class WxAuthorManger {
                 case WxAuthorOk:
                     Platform platform = (Platform) msg.obj;
                     authorUtilsResultListenr.getAuthorResult(WxAuthorOk, platform);
-                    PromptManager.ShowCustomToast(wxContext,"获取的名字"+platform.getDb().getUserName());
+//                    PromptManager.ShowCustomToast(wxContext,"获取的名字"+platform.getDb().getUserName());
 
 
 //                    final String nickname = platform.getDb().getUserName();
