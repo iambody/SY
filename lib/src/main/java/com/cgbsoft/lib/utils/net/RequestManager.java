@@ -30,6 +30,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -90,8 +91,6 @@ interface RequestManager {
     /**
      * V2
      */
-//    @Headers({"'","Accept: application/json"})
-    @Headers({"Content-Type: application/json","Accept: */*"})
     @POST(NetConfig.AUTHOR.LOGIN_V2_URL)
     Observable<ResponseBody> toTestV2Login(@Body RequestBody paramsMap);
 
@@ -333,9 +332,8 @@ interface RequestManager {
     @POST(NetConfig.USER.SIGNIN_URL)
     Observable<BaseResult<SignInEntity.Result>> signIn(@FieldMap Map<String, String> paramsMap);
 
-    @FormUrlEncoded
     @POST(NetConfig.USER.SIGNIN_URL)
-    Observable<ResponseBody> testSignIn(@FieldMap Map<String, String> paramsMap);
+    Observable<ResponseBody> testSignIn(@Body RequestBody requestBody);
 
     /**
      * 关联资产

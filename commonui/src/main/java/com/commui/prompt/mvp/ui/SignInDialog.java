@@ -1,11 +1,16 @@
 package com.commui.prompt.mvp.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
@@ -21,6 +26,9 @@ import app.privatefund.com.cmmonui.R;
  *  
  */
 public class SignInDialog extends BaseDialog {
+
+    private NewsBean newsBean;
+
     public SignInDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
@@ -78,7 +86,7 @@ public class SignInDialog extends BaseDialog {
                     try {
                         JSONObject information = j.getJSONObject("information");
                         Gson g = new Gson();
-                        NewsBean newsBean = g.fromJson(information.toString(), NewsBean.class);
+                        newsBean = g.fromJson(information.toString(), NewsBean.class);
                         openWebPage();
 
                         SignInDialog.this.dismiss();
@@ -97,6 +105,7 @@ public class SignInDialog extends BaseDialog {
     private void openWebPage() {
         //TODO 打开早知道
         if (!AppManager.isInvestor(getContext())) {
+            NavigationUtils.startVideoInformationActivityu(getContext(), CwebNetConfig.baseParentUrl + "/apptie/new_detail_toc.html?id=" + newsBean.getInfoId() + "&category=4", newsBean.getTitle());
             //newsBean.setUrl(Domain.foundNews + newsBean.getInfoId() + "&category=" + newsBean.getCategory());
 //                            Intent i = new Intent(getContext(), FoundNewsDetailActivity.class);
 //                            Bundle bundle = new Bundle();

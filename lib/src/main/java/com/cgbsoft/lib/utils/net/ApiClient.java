@@ -853,7 +853,7 @@ public class ApiClient {
     public static Observable<String> testSignIn(String userId) {
         Map<String, String> map = new HashMap<>();
         map.put("adviserId", userId);
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).testSignIn(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
