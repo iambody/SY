@@ -54,7 +54,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     private String mFirstPassword = null;
     private boolean fromRegistOrLoginPage = false;
     private boolean isModifyPassword = false;
-    private boolean fromForgetPassword = false;
     private String password;
 
     @BindView(R.id.lock_9_view)

@@ -20,7 +20,9 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
+import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -101,6 +103,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     private Observable<Boolean> closeMainObservable;
     private Observable<Boolean> gestruePwdObservable;
+    private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
     private Observable<QrCodeBean> twoCodeObservable;
@@ -170,9 +173,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 初始化融云的接口信息
      */
     private void initRongInterface() {
-        RongIM.setUserInfoProvider(new MyUserInfoListener(), false);
-        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), false);
-        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), false);
+        RongIM.setUserInfoProvider(new MyUserInfoListener(), true);
+        RongIM.setGroupInfoProvider(new MyGroupInfoListener(), true);
+        RongIM.setGroupUserInfoProvider(new MyGroupUserInfoProvider(this), true);
         RongIM.getInstance().setGroupMembersProvider(new MyGroupMembersProvider(this));
         initDayTask();
     }
@@ -359,6 +362,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
+        // 刷新用户信息
+        reRefrushUserInfoObservable = RxBus.get().register(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, Boolean.class);
+        reRefrushUserInfoObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (aBoolean) {
+                    getPresenter().getUserInfo();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
         rongTokenRefushObservable = RxBus.get().register(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, Boolean.class);
         rongTokenRefushObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
@@ -487,6 +505,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         if (closeMainObservable != null) {
             RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, closeMainObservable);
+        }
+
+        if (reRefrushUserInfoObservable != null) {
+            RxBus.get().unregister(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, reRefrushUserInfoObservable);
         }
 
         if (gestruePwdObservable != null) {

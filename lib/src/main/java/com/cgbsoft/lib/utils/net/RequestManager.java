@@ -97,12 +97,11 @@ interface RequestManager {
     /**
      * 获取用户信息
      *
-     * @param paramsMap
+     * @param
      * @return
      */
-    @FormUrlEncoded
     @POST(NetConfig.USER.GET_USERINFO_URL)
-    Observable<BaseResult<UserInfo>> getUserInfo(@FieldMap() Map<String, String> paramsMap);
+    Observable<BaseResult<UserInfoDataEntity.UserInfo>> getUserInfo(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.GET_USERINFO_URL)

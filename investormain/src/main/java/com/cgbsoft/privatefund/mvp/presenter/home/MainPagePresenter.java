@@ -3,11 +3,14 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -116,4 +119,23 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             }
         });
     }
+
+    @Override
+    public void getUserInfo(){
+        ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
+            @Override
+            protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
+                if (userInfo != null) {
+                    AppInfStore.saveUserInfo(getContext(), userInfo);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+
 }

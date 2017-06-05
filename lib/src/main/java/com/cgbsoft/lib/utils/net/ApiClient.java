@@ -202,10 +202,15 @@ public class ApiClient {
      * @param userid 用户id
      * @return
      */
-    public static Observable<UserInfo> getUserInfo(String userid) {
-        Map<String, String> map = new HashMap<>();
-        map.put("adviserId", userid);
-        return OKHTTP.getInstance().getRequestManager(true).getUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    public static Observable<UserInfoDataEntity.UserInfo> getUserInfo(String userid) {
+//        Map<String, String> map = new HashMap<>();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("adviserId", userid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager(true).getUserInfo(formatRequestBody(jsonObject)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> getTestUserInfo(String userid) {
