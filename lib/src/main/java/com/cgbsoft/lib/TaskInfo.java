@@ -58,7 +58,6 @@ public class TaskInfo {
 
     /**
      * 完成任务领豆
-     *
      * @param taskName
      * @param taskBean
      */

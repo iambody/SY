@@ -1,6 +1,5 @@
 package app.ndk.com.enter.mvp.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,9 +13,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
@@ -86,11 +83,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     private int identity;
     private String userName, code;
 
-    @Override
-    public void onBackPressed() {
-        openActivity(ResetPasswordActivity.class);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+////        openActivity(ResetPasswordActivity.class);
+//        finish();
+//    }
 
     @Override
     protected int layoutID() {
@@ -122,7 +119,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @OnClick(R2.id.iv_as_back)
     void backClick() {
-        openActivity(ResetPasswordActivity.class);
+//        openActivity(ResetPasswordActivity.class);
         finish();
     }
 
