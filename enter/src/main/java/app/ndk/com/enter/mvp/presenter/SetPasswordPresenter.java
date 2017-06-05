@@ -54,13 +54,13 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
                 if (isFromGesture) {//是从忘记手势密码进来的、
                     getView().setGesturePassword();
                 } else {
-                    loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, pwd, false, publickeys));
+                    loadingDialog.setResult(true, "重置成功", 1000, () -> toNormalLogin(loadingDialog, un, MD5Utils.getShortMD5(pwd), false, publickeys));
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(true, "重置失败", 1000);
+                loadingDialog.setResult(false, error.getMessage(), 1000);
             }
         }));
     }
@@ -76,7 +76,7 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
     public void toNormalLogin(@NonNull final LoadingDialog loadingDialog, final String un, String pwd, boolean isWx, String publicKeys) {
         loadingDialog.setLoading(getContext().getString(R.string.la_login_loading_str));
         loadingDialog.show();
-        pwd = isWx ? pwd : MD5Utils.getShortMD5(pwd);
+//        pwd =   MD5Utils.getShortMD5(pwd);
         //******* 登录
         JSONObject object = new JSONObject();
         String RsaStr = "";
@@ -115,7 +115,7 @@ public class SetPasswordPresenter extends BasePresenterImpl<SetPasswordContract.
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000);
+                loadingDialog.setResult(false, error.getMessage(), 1000);
             }
         }));
     }

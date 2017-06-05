@@ -58,7 +58,6 @@ public class TaskInfo {
 
     /**
      * 完成任务领豆
-     *
      * @param taskName
      * @param taskBean
      */
@@ -67,7 +66,7 @@ public class TaskInfo {
             @Override
             protected void onEvent(String s) {
                 try {
-                    JSONObject ja = new JSONObject(s);
+                    JSONObject ja = new JSONObject(s).getJSONObject("result");
                     String ratio = ja.getString("ratio");
                     int coinRatioNum = ja.getInt("coinRatioNum");
                     int coinNum = ja.getInt("coinNum");
