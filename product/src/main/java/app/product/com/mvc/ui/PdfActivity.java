@@ -127,6 +127,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
 
     @OnClick(R2.id.pdf_title_left)
     public void onPdfTitleLeftClicked() {
+        PdfActivity.this.finish();
     }
 
     //分享按钮

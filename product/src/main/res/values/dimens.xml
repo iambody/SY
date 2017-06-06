@@ -11,4 +11,5 @@
     <dimen name="text_size_large_more">17sp</dimen>
     <dimen name="list_item_margin">1dp</dimen>
     <dimen name="ui_26_dip">26dp</dimen>
+    <dimen name="ui_12_dip">12dp</dimen>
 </resources>
