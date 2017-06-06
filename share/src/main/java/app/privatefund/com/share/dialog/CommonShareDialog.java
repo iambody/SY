@@ -374,7 +374,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
 
             }
+            CommonShareDialog.this.dismiss();
         }
+
     }
 
 
