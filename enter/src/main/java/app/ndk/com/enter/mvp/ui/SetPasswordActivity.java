@@ -119,7 +119,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @OnClick(R2.id.iv_as_back)
     void backClick() {
-//        openActivity(ResetPasswordActivity.class);
+//        openActivity(LoginActivity.class);
         finish();
     }
 

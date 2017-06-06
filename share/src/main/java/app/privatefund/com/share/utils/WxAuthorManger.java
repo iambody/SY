@@ -50,7 +50,6 @@ public class WxAuthorManger {
     private WxAuthorManger() {
     }
 
-    ;
 
     //静态工厂方法
     public static WxAuthorManger getInstance(Context wxContextx, AuthorUtilsResultListenr authorUtilsResultListenrss) {

@@ -168,7 +168,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!Utils.isMobileNO(et_ar_check.getText().toString().trim())){
+        if(!Utils.isMobileNO(et_ar_username.getText().toString().trim())){
             PromptManager.ShowCustomToast(baseContext,getResources().getString(R.string.phone_noright_str));
             return ;
         }

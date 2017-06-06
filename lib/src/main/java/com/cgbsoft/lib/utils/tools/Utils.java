@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Created by user on 2016/11/4.
@@ -530,13 +531,31 @@ public class Utils {
         }.show();
     }
     /**
+     * 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
+     * 此方法中前三位格式有：
+     * 13+任意数
+     * 15+除4的任意数
+     * 18+除1和4的任意数
+     * 17+除9的任意数
+     * 147
+     */
+    /**
      * 判断手机号
      */
     public static boolean isMobileNO(String mobiles) {// ^1[358]\\d{9}$
-        Pattern p = Pattern.compile("^1[24635879]\\d{9}$");
+        Pattern p = Pattern.compile("^1[0-9]{10}$");
 
         Matcher m = p.matcher(mobiles);
         System.out.println(m.matches() + "---");
+        return m.matches();
+    }
+    /**
+     * 香港手机号码8位数，5|6|8|9开头+7位任意数
+     */
+    public static boolean isHKPhoneLegal(String str)throws PatternSyntaxException {
+        String regExp = "^(5|6|8|9)\\d{7}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
         return m.matches();
     }
 }

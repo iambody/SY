@@ -1,1 +1,27 @@
 分享说明
+//微信  朋友圈 分享的行为操作
+ShareCommonBean shareCommonBean = new ShareCommonBean("分享title", "分享内容", "分享链接", "此为分享的左侧log图片的网络url（以后每个分享都要根据场景显示不同的log;eg：某些节日需要展示该节日风格的log）,如果有就添加如果没有就传null");
+
+        //先获取一个manger实体类
+        ShareManger manger = ShareManger.getInstance(context, shareCommonBean, new ShareManger.ShareResultListenr() {
+            @Override
+            public void completShare() {//分享成功
+
+            }
+
+            @Override
+            public void errorShare() {//分享失败
+
+            }
+
+            @Override
+            public void cancelShare() {//分享取消
+
+            }
+        });
+
+        //进行操作
+        manger.goShareWx(ShareManger.CIRCLESHARE);//朋友圈分享
+        manger.goShareWx(ShareManger.WXSHARE);//微信 分享
+        //如果生成了实体类就在ondestroy里面进行注销
+          manger.unbindShare();
