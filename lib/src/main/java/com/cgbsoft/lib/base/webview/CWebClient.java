@@ -8,11 +8,6 @@ import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import static com.cgbsoft.lib.base.webview.WebViewConstant.IntecepterActivity.DISCOVER_DETAILS;
-
 /**
  * desc  所有C的交互全部在这里进行
  * author wangyongkui  wangyongkui@simuyun.com
@@ -71,15 +66,17 @@ public class CWebClient extends WebViewClient {
              */
             if (null != webviewOnClick && (
                     url.startsWith(WebViewConstant.AppCallBack.BUY_NEW) ||
-                    url.startsWith(WebViewConstant.AppCallBack.CAN_BUY) ||
-                    url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
-                    url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
-                    url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
-                    url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
-                    url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE)||
-                    url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
-                    url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
-                    (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)))) {
+                            url.startsWith(WebViewConstant.AppCallBack.CAN_BUY) ||
+                            url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
+                            url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
+                            url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
+                            url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
+                            url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
+                            url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
+                            url.startsWith(WebViewConstant.AppCallBack.TOC_PRODUCT_TOUTIAO) ||
+                            url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
+                            url.startsWith(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS)||
+                            (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)))) {
                 CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
                 cWebClient.setWeb((BaseWebview) webView);
                 webviewOnClick.onClick(url);

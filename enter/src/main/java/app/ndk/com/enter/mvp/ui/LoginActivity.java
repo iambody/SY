@@ -235,7 +235,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
-//        Toast.makeText(LoginActivity.this,"返回来了",Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R2.id.tv_al_register)
@@ -311,7 +310,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
             @Override
             public void getAuthorResult(int type, Platform platform) {
-
                 switch (type) {
                     case WxAuthorManger.WxAuthorOk:
                         String unionid = platform.getDb().get("unionid");
@@ -319,8 +317,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                         String userGender = platform.getDb().getUserGender();
                         String userName = platform.getDb().getUserName();
                         String openid = platform.getDb().getUserId();
-//                        LogUtils.Log("weixindenglu", "用户id" + userId + "；；；用户图标" + userIcon + ";用户性别" + userGender + ";用户名字" + userName);
-
                         String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
 
                         if (!mCustomBuilder.isSetPositiveListener()) {
@@ -329,9 +325,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                                 dialog.dismiss();
                             });
                         }
-//
-//                        getPresenter().toDialogWxLogin(mLoadingDialog, userId, SexStr, userName, userIcon);
-
                         getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
                         break;
                     case WxAuthorManger.WxAuthorCANCLE:

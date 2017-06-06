@@ -6,7 +6,11 @@ import android.view.View;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.privatefund.R;
 
 import butterknife.BindView;
@@ -30,6 +34,15 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         baseWebview.loadUrls(CwebNetConfig.minePgge);
+
+        baseWebview.setClick(new CWebClient.WebviewOnClick() {
+            @Override
+            public void onClick(String result) {
+                if(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS.equals(result)){
+                    RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+                }
+            }
+        });
     }
 
     @Override

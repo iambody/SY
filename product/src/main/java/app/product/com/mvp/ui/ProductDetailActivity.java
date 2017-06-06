@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
@@ -19,6 +17,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
@@ -74,7 +73,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
                     hashMap.put(WebViewConstant.push_message_title, "填写信息");
                     NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 } else {
-                    if (isLive  && !isLookZhiBao) {
+                    if (isLive && !isLookZhiBao) {
                         isLookZhiBao = true;
                         //joinLive();
                     } else {
@@ -132,6 +131,35 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_PDF)) {
             showPdf(actionUrl);
         }
+        if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_PRODUCT_TOUTIAO)) {
+            gotoZiXun(actionUrl);
+        }
+    }
+
+    /**
+     * 跳转到资讯
+     *
+     * @param actionUrl
+     */
+    private void gotoZiXun(String actionUrl) {
+        String[] split = actionUrl.split(":");
+        try {
+            String infoId = URLDecoder.decode(split[2], "utf-8");
+            String category = URLDecoder.decode(split[3], "utf-8");
+            String title = URLDecoder.decode(split[4], "utf-8");
+            String Url = BaseWebNetConfig.detailToZiXun + infoId + "&category=" + category;
+            Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
+                    .with(WebViewConstant.push_message_url,Url)
+                    .with(WebViewConstant.push_message_title,title)
+                    .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                    .with(WebViewConstant.RIGHT_SHARE,true)
+                    .go(baseContext);
+        } catch (Exception e) {
+
+        }
+
+
+//        Domain.foundNews + newsBean.getInfoId() + "&category=" + newsBean.getCategory();
     }
 
     /**
