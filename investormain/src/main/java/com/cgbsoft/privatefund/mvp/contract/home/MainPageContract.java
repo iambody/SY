@@ -17,6 +17,8 @@ public interface MainPageContract {
         void getLiveList();
 
         void initDayTask();
+
+        void getUserInfo();
     }
 
     interface View extends BaseView{

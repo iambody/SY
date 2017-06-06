@@ -18,6 +18,7 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.google.gson.Gson;
@@ -97,7 +98,8 @@ public class ReceiveInfoManager {
                             infoDialog.dismiss();
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        infoDialog = new PushDialog(InvestorAppli.getContext(), title, detail, "返回", rightText, jumpUrl) {
+                        BackgroundManager backgroundManager = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager();
+                        infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, "返回", rightText, jumpUrl) {
                             @Override
                             public void left() {
                                 dismiss();
@@ -123,7 +125,7 @@ public class ReceiveInfoManager {
                             if (infoDialog != null && infoDialog.isShowing()) {
                                 infoDialog.dismiss();
                             }
-                            infoDialog = new PushDialog(InvestorAppli.getContext(), smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText(), smMessage.getJumpUrl()) {
+                            infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText(), smMessage.getJumpUrl()) {
                                 @Override
                                 public void left() {
                                     dismiss();

@@ -28,7 +28,6 @@ import io.rong.push.notification.PushNotificationMessage;
  */
 public class MyPushMessageReceive extends PushMessageReceiver {
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
         Log.i(this.getClass().getName(), "messageinfo=----isPUsh=" + pushNotificationMessage.getPushFlag());
