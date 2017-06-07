@@ -97,6 +97,7 @@ public class DataStatisticsUtils {
                 for (DataStatisticsBean dataStatisticsBean : datastisticList) {
                     jsonArray.put(dataStatisticsBean.getJsonObject());
                 }
+
                 subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
                     @Override
                     protected void onEvent(String string) {
