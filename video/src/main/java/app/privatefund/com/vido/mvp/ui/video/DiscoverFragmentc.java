@@ -1,5 +1,6 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,10 +11,12 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
 
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
@@ -55,15 +58,21 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     public void goDetail(String res) {
         try {
             String baseParams = URLDecoder.decode(res, "utf-8");
-
             String[] split = baseParams.split(":");
-            String url = split[2];
-            String title = split[3];
-            if (!url.contains("http")) {
-                url = BaseWebNetConfig.baseParentUrl + url;
-            }
+            if (split[1].contains("liveVideo")){
+                HashMap<String,Object>map = new HashMap<>();
+                map.put("liveJson",split[2]);
+                map.put("type","webJoinLive");
+                NavigationUtils.startActivityByRouter(getActivity(),RouteConfig.GOTOLIVE,map);
+            }else {
+                String url = split[2];
+                String title = split[3];
+                if (!url.contains("http")) {
+                    url = BaseWebNetConfig.baseParentUrl + url;
+                }
 
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
+                VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

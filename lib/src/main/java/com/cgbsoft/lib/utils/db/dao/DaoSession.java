@@ -8,6 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.ToBBean;
 import com.cgbsoft.lib.base.model.bean.ToCBean;
@@ -15,6 +16,7 @@ import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 
+import com.cgbsoft.lib.utils.db.dao.DataStatisticsBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.ToBBeanDao;
 import com.cgbsoft.lib.utils.db.dao.ToCBeanDao;
@@ -31,6 +33,7 @@ import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig dataStatisticsBeanDaoConfig;
     private final DaoConfig otherInfoDaoConfig;
     private final DaoConfig toBBeanDaoConfig;
     private final DaoConfig toCBeanDaoConfig;
@@ -38,6 +41,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig videoInfoDaoConfig;
     private final DaoConfig historySearchBeanDaoConfig;
 
+    private final DataStatisticsBeanDao dataStatisticsBeanDao;
     private final OtherInfoDao otherInfoDao;
     private final ToBBeanDao toBBeanDao;
     private final ToCBeanDao toCBeanDao;
@@ -48,6 +52,9 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        dataStatisticsBeanDaoConfig = daoConfigMap.get(DataStatisticsBeanDao.class).clone();
+        dataStatisticsBeanDaoConfig.initIdentityScope(type);
 
         otherInfoDaoConfig = daoConfigMap.get(OtherInfoDao.class).clone();
         otherInfoDaoConfig.initIdentityScope(type);
@@ -67,6 +74,7 @@ public class DaoSession extends AbstractDaoSession {
         historySearchBeanDaoConfig = daoConfigMap.get(HistorySearchBeanDao.class).clone();
         historySearchBeanDaoConfig.initIdentityScope(type);
 
+        dataStatisticsBeanDao = new DataStatisticsBeanDao(dataStatisticsBeanDaoConfig, this);
         otherInfoDao = new OtherInfoDao(otherInfoDaoConfig, this);
         toBBeanDao = new ToBBeanDao(toBBeanDaoConfig, this);
         toCBeanDao = new ToCBeanDao(toCBeanDaoConfig, this);
@@ -74,6 +82,7 @@ public class DaoSession extends AbstractDaoSession {
         videoInfoDao = new VideoInfoDao(videoInfoDaoConfig, this);
         historySearchBeanDao = new HistorySearchBeanDao(historySearchBeanDaoConfig, this);
 
+        registerDao(DataStatisticsBean.class, dataStatisticsBeanDao);
         registerDao(OtherInfo.class, otherInfoDao);
         registerDao(ToBBean.class, toBBeanDao);
         registerDao(ToCBean.class, toCBeanDao);
@@ -83,12 +92,17 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
+        dataStatisticsBeanDaoConfig.clearIdentityScope();
         otherInfoDaoConfig.clearIdentityScope();
         toBBeanDaoConfig.clearIdentityScope();
         toCBeanDaoConfig.clearIdentityScope();
         userInfoDaoConfig.clearIdentityScope();
         videoInfoDaoConfig.clearIdentityScope();
         historySearchBeanDaoConfig.clearIdentityScope();
+    }
+
+    public DataStatisticsBeanDao getDataStatisticsBeanDao() {
+        return dataStatisticsBeanDao;
     }
 
     public OtherInfoDao getOtherInfoDao() {

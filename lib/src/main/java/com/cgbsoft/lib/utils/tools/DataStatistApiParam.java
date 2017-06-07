@@ -8,32 +8,32 @@ import java.util.HashMap;
 /**
  * @author chenlong on 16/10/13.
  */
-public class DataStatistApiParam{
+public class DataStatistApiParam {
 
-/*    public static void onStatisToBStartLogin() {
+    public static void onStatisToBStartLogin() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1000");
         data3.put("act", "10121");
         data3.put("arg1", "登录");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
-    }*/
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+    }
 
-/*    public static void onStatisToBStartRegeist() {
+    public static void onStatisToBStartRegeist() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1000");
         data3.put("act", "10122");
         data3.put("arg1", "注册");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
-    }*/
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+    }
 
-    /*public static void onStatisToBPhoto() {
+    public static void onStatisToBPhoto() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1004");
         data3.put("act", "10025");
         data3.put("arg1", "头像");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBYeji() {
@@ -41,9 +41,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10026");
         data3.put("arg1", "业绩");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBqiandao() {
@@ -51,9 +51,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10027");
         data3.put("arg1", "签到");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBRili() {
@@ -61,9 +61,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10028");
         data3.put("arg1", "日历");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBCustom() {
@@ -71,9 +71,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10029");
         data3.put("arg1", "我的客户");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBOrder() {
@@ -81,9 +81,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10030");
         data3.put("arg1", "我的订单");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBYundou() {
@@ -91,9 +91,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10031");
         data3.put("arg1", "我的云豆");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBBobao() {
@@ -101,9 +101,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10032");
         data3.put("arg1", "播报");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBTeam() {
@@ -111,9 +111,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10033");
         data3.put("arg1", "我的团队");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBTask() {
@@ -121,9 +121,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10034");
         data3.put("arg1", "我的任务");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBCollection() {
@@ -131,9 +131,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10035");
         data3.put("arg1", "我的收藏");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBCaifuCourse() {
@@ -141,9 +141,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10036");
         data3.put("arg1", "财富讲堂");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBMineCourse() {
@@ -151,9 +151,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10037");
         data3.put("arg1", "我的课程");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBSet() {
@@ -161,9 +161,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1004");
         data3.put("act", "10038");
         data3.put("arg1", "设置");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectImage() {
@@ -171,9 +171,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10039");
         data3.put("arg1", "选择照片");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectCarme() {
@@ -181,9 +181,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10040");
         data3.put("arg1", "拍照上传");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectUpdateInfo() {
@@ -191,9 +191,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10041");
         data3.put("arg1", "修改资料");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectErweima() {
@@ -201,9 +201,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10042");
         data3.put("arg1", "二维码");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectCloudMind() {
@@ -211,9 +211,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10043");
         data3.put("arg1", "云口令");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBselectSaomiao() {
@@ -221,9 +221,9 @@ public class DataStatistApiParam{
         data3.put("grp", "1005");
         data3.put("act", "10044");
         data3.put("arg1", "扫描");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCTabMine() {
@@ -231,8 +231,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2006");
         data3.put("act", "20013");
         data3.put("arg1", "我的");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCTabProduct() {
@@ -240,8 +240,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2006");
         data3.put("act", "20014");
         data3.put("arg1", "产品");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+//        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCTabCloudKey() {
@@ -249,8 +249,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2006");
         data3.put("act", "20015");
         data3.put("arg1", "云键");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCTabDiscover() {
@@ -258,8 +258,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2006");
         data3.put("act", "20016");
         data3.put("arg1", "发现");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCTabClub() {
@@ -267,8 +267,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2006");
         data3.put("act", "20017");
         data3.put("arg1", "club");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCMenuCallCustom() {
@@ -276,8 +276,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2015");
         data3.put("act", "20074");
         data3.put("arg1", "一键呼叫");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCMenuMessage() {
@@ -285,8 +285,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2015");
         data3.put("act", "20075");
         data3.put("arg1", "短信");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCMenuCallDuihua() {
@@ -294,8 +294,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2015");
         data3.put("act", "20076");
         data3.put("arg1", "对话");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCMenuZhibo() {
@@ -303,8 +303,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2015");
         data3.put("act", "20077");
         data3.put("arg1", "直播");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCMenuKefu() {
@@ -312,8 +312,8 @@ public class DataStatistApiParam{
         data3.put("grp", "2015");
         data3.put("act", "20078");
         data3.put("arg1", "客服");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToCViskTest() {
@@ -321,24 +321,24 @@ public class DataStatistApiParam{
         data3.put("grp", "2017");
         data3.put("act", "20085");
         data3.put("arg1", "重填");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
-    }*/
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+    }
 
-/*    public static void onStaticToCNowStart() {
+    public static void onStaticToCNowStart() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2001");
         data3.put("act", "20001");
         data3.put("arg1", "立即启动");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
-    }*/
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+    }
 
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2002");
         data3.put("act", "20006");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStaticToCRegeistBack() {
@@ -346,7 +346,7 @@ public class DataStatistApiParam{
         data3.put("grp", "2003");
         data3.put("act", "20008");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStaticToCFindPasswordBack() {
@@ -354,7 +354,7 @@ public class DataStatistApiParam{
         data3.put("grp", "2004");
         data3.put("act", "20010");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStaticToCSetPasswordNext() {
@@ -362,7 +362,7 @@ public class DataStatistApiParam{
         data3.put("grp", "2005");
         data3.put("act", "20011");
         data3.put("arg1", "下一步");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStaticToCSetPasswordBack() {
@@ -370,16 +370,16 @@ public class DataStatistApiParam{
         data3.put("grp", "2005");
         data3.put("act", "20012");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
-    /*public static void onStatisToCProductDetailMenu() {
+    public static void onStatisToCProductDetailMenu() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2012");
         data3.put("act", "20056");
         data3.put("arg1", "云键");
-        data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onStatisToBDiscoveryBanner(String id, String name) {
@@ -387,12 +387,12 @@ public class DataStatistApiParam{
         data3.put("grp", "1013");
         data3.put("act", "10087");
         data3.put("arg1", "Banner");
-        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
+        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
         data3.put("arg4", id);
-        data3.put("arg3", name);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
-    }*/
+        //data3.put("arg3", name);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+    }
 
 
     /**
@@ -404,8 +404,8 @@ public class DataStatistApiParam{
         data3.put("act", "10147");
         data3.put("arg1", "充值云豆");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-//        DataStatisticsUtils.getInstance().push(context, data3);
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        DataStatisticsUtils.getInstance().push(context, data3,false);
     }
 
     /**
@@ -417,9 +417,9 @@ public class DataStatistApiParam{
         data3.put("act", "10148");
         data3.put("arg1", "选择金额");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
 //        data3.put("arg4", zengjia);
-//        DataStatisticsUtils.getInstance().push(context, data3);
+//        DataStatisticsUtils.getInstance().push(context, data3,false);
     }
 
     /**
@@ -431,9 +431,9 @@ public class DataStatistApiParam{
         data3.put("act", "10149");
         data3.put("arg1", "支付方式");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-//        data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
+//        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
 //        data3.put("arg4", payname);
-//        DataStatisticsUtils.getInstance().push(context, data3);
+//        DataStatisticsUtils.getInstance().push(context, data3,false);
     }
 
     /**
@@ -445,7 +445,7 @@ public class DataStatistApiParam{
         data3.put("act", "20258");
         data3.put("arg1", "充值云豆");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     /**
@@ -458,7 +458,7 @@ public class DataStatistApiParam{
         data3.put("arg1", "选择金额");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
         data3.put("arg4", zengjia);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     /**
@@ -471,7 +471,7 @@ public class DataStatistApiParam{
         data3.put("arg1", "支付方式");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
         data3.put("arg4", payname);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
     public static void onClickLiveRoomHeadImageToB(String videoName) {
@@ -491,23 +491,23 @@ public class DataStatistApiParam{
     }
 
     public static void onClickLiveRoomCloseToC(String videoName) {
-        
+
     }
 
     public static void onClickLiveRoomCloseToB(String videoName) {
-        
+
     }
 
     public static void onClickLivePDFToC(String vaName, String s) {
-        
+
     }
 
     public static void onClickLivePDFToB(String vaName, String s) {
-        
+
     }
 
     public static void onClickLiveCommentToC(String videoName) {
-        
+
     }
 
     public static void onClickLiveCommentToB(String videoName) {

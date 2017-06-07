@@ -62,7 +62,7 @@ public class SignInDialog extends BaseDialog {
     public void initViews() {
         try {
 
-            final JSONObject j = data;
+            final JSONObject j = data.getJSONObject("result");
             if (null == j) {
                 return;
             }
@@ -104,7 +104,7 @@ public class SignInDialog extends BaseDialog {
 
     private void openWebPage() {
         //TODO 打开早知道
-        if (!AppManager.isInvestor(getContext())) {
+        if (AppManager.isInvestor(getContext())) {
             NavigationUtils.startVideoInformationActivityu(getContext(), CwebNetConfig.baseParentUrl + "/apptie/new_detail_toc.html?id=" + newsBean.getInfoId() + "&category=4", newsBean.getTitle());
             //newsBean.setUrl(Domain.foundNews + newsBean.getInfoId() + "&category=" + newsBean.getCategory());
 //                            Intent i = new Intent(getContext(), FoundNewsDetailActivity.class);

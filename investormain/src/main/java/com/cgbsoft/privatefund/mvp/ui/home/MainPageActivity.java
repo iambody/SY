@@ -156,6 +156,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initRxObservable();
 
+        initUserInfo();
+
         loginLive();
 
         initDialog();
@@ -167,6 +169,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        initPlatformCustomer();
 
         showInfoDialog();
+
+        autoSign();
+    }
+
+    private void initUserInfo() {
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
+    }
+
+    private void autoSign() {
+        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())){
+            getPresenter().toSignIn();
+        }
     }
 
     /**
@@ -290,6 +304,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onRestart() {
         super.onRestart();
+        initUserInfo();
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
 
@@ -550,6 +565,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
+    @OnClick(R.id.video_live_close)
+    public void closeLiveDialog(){
+        liveDialog.setVisibility(View.GONE);
+    }
+
     @Override
     public void onBackPressed() {
         if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
@@ -596,6 +616,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             liveDialog.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void signInSuc() {
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
     }
 
     private void SsetBottomNavigation() {

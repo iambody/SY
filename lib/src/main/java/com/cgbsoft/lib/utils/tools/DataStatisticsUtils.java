@@ -1,13 +1,20 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
@@ -15,8 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import rx.Subscription;
 
@@ -28,8 +39,9 @@ import rx.Subscription;
  */
 public class DataStatisticsUtils {
     public static Subscription subscription;
+    private static DaoUtils daoUtils;
 
-    public static void push(Context context, final HashMap<String, String> param) {
+    public static void push(Context context, final HashMap<String, String> param, boolean isRealTime) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
         try {
@@ -59,25 +71,54 @@ public class DataStatisticsUtils {
                 e.printStackTrace();
             }
         }
-        jsonArray.put(js);
+        if (isRealTime) {
 
-        subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
-            @Override
-            protected void onEvent(String string) {
-                subscription.unsubscribe();
+            jsonArray.put(js);
+
+            subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String string) {
+                    subscription.unsubscribe();
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    subscription.unsubscribe();
+                }
+            });
+        } else {
+            if (daoUtils == null) {
+                daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
             }
+            //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
+            List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
+            if (datastisticList.size() == 4) {
+                jsonArray.put(js);
+                for (DataStatisticsBean dataStatisticsBean : datastisticList) {
+                    jsonArray.put(dataStatisticsBean.getJsonObject());
+                }
+                subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                    @Override
+                    protected void onEvent(String string) {
+                        subscription.unsubscribe();
+                    }
 
-            @Override
-            protected void onRxError(Throwable error) {
-                subscription.unsubscribe();
+                    @Override
+                    protected void onRxError(Throwable error) {
+                        subscription.unsubscribe();
+                    }
+                });
+                daoUtils.deleteDataStatitic();
+            }else {
+                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
+                daoUtils.saveDataStatistic(dataStatisticsBean);
             }
-        });
-
+        }
     }
 
 
     private static String getUniqueCode() {
-        return Build.BOARD.length() % 10 + "" +
+        String m_szDevIDShort = Build.BOARD.length() % 10 + "" +
                 Build.BRAND.length() % 10 + "" +
                 Build.CPU_ABI.length() % 10 + "" +
                 Build.DEVICE.length() % 10 + "" +
@@ -90,6 +131,42 @@ public class DataStatisticsUtils {
                 Build.TAGS.length() % 10 + "" +
                 Build.TYPE.length() % 10 + "" +
                 Build.USER.length() % 10; //13 digits;
+
+        TelephonyManager TelephonyMgr = (TelephonyManager) BaseApplication.getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        String m_szImei = TelephonyMgr.getDeviceId();
+
+        String m_szAndroidID = Settings.Secure.getString(BaseApplication.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        WifiManager wm = (WifiManager) BaseApplication.getContext().getSystemService(Context.WIFI_SERVICE);
+        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+
+        BluetoothAdapter m_BluetoothAdapter = null; // Local Bluetooth adapter
+        m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        String m_szBTMAC = m_BluetoothAdapter.getAddress();
+
+        String m_szLongID = m_szImei + m_szDevIDShort
+                + m_szAndroidID + m_szWLANMAC + m_szBTMAC;
+        // compute md5
+        MessageDigest m = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        m.update(m_szLongID.getBytes(), 0, m_szLongID.length());
+        // get md5 bytes
+        byte p_md5Data[] = m.digest();
+        // create a hex string
+        String m_szUniqueID = new String();
+        for (int i = 0; i < p_md5Data.length; i++) {
+            int b = (0xFF & p_md5Data[i]);
+            // if it is a single digit, make sure it have 0 in front (proper padding)
+            if (b <= 0xF)
+                m_szUniqueID += "0";
+            // add number to string
+            m_szUniqueID += Integer.toHexString(b);
+        }   // hex string to uppercase
+        return m_szUniqueID.toUpperCase();
     }
 
     private static boolean isToC(Context context) {

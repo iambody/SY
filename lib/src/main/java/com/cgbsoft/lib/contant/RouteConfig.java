@@ -53,4 +53,7 @@ public class RouteConfig {
 
     // 未绑定页面
     public static final String GOTO_NO_BIND_TOUGU_ACTIVITY = "investormain_bindvisiteactivity";
+
+    //进入直播
+    public static final String GOTOLIVE = "live_join";
 }

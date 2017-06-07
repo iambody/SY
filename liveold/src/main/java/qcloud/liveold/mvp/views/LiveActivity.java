@@ -205,6 +205,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
             CurLiveInfo.setMembers(0);
             CurLiveInfo.setAdmires(11);
+            CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("is_share")));
             CurLiveInfo.setChatId(liveJson.getString("chat"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -540,7 +541,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         getLiveObservable.subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getPresenter().getLivePdf(CurLiveInfo.getRoomNum()+"");
+                getPresenter().getLivePdf(CurLiveInfo.getRoomNum() + "");
             }
 
             @Override
@@ -695,7 +696,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         BitmapUtils bitmapUtils = new BitmapUtils(this);
         bitmapUtils.display(hostHead, SPreference.getString(LiveActivity.this, "liveHostUrl"));
 
-        if (CurLiveInfo.isShare == 1) {
+        if ("1".equals(CurLiveInfo.isShare+"")) {
             shareLive.setVisibility(View.VISIBLE);
         } else {
             shareLive.setVisibility(View.INVISIBLE);
@@ -1116,7 +1117,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             paramTimer.cancel();
             paramTimer = null;
         }
-        if (null != getLiveObservable){
+        if (null != getLiveObservable) {
             RxBus.get().unregister(RxConstant.GET_LIVE_PDF_LIST_TASK, getLiveObservable);
         }
         mLiveHelper.stopRecord();
@@ -2704,6 +2705,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
     @Override
     public void getPDFSuc(String s) {
-        RxBus.get().post(RxConstant.LIVE_PDF_SUC,s);
+        RxBus.get().post(RxConstant.LIVE_PDF_SUC, s);
     }
 }

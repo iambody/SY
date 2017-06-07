@@ -155,7 +155,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(getContext().getApplicationContext(), data);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data,false);
     }
 
     protected void toDataStatistics(int grp, int act, String[] args) {
@@ -165,7 +165,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(getContext().getApplicationContext(), data);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data,false);
     }
 
 

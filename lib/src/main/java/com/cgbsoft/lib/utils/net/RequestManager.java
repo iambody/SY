@@ -22,6 +22,7 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -100,8 +101,8 @@ interface RequestManager {
      * @param
      * @return
      */
-    @POST(NetConfig.USER.GET_USERINFO_URL)
-    Observable<BaseResult<UserInfoDataEntity.UserInfo>> getUserInfo(@Body RequestBody requestBody);
+    @GET(NetConfig.USER.GET_USERINFO_URL)
+    Observable<BaseResult<UserInfoDataEntity.UserInfo>> getUserInfo(@QueryMap Map<String,String> map);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.GET_USERINFO_URL)
