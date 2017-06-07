@@ -68,6 +68,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取聊天页面名称－－产品分享需要用到
+     *
      * @param context
      * @return
      */
@@ -77,6 +78,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取聊天类型－－产品分享需要用到
+     *
      * @param context
      * @return
      */
@@ -98,6 +100,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取融云Token
+     *
      * @param context
      * @return
      */
@@ -107,6 +110,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 判断用户是否首次登录
+     *
      * @param context
      */
     public static boolean getUserFirstLogin(Context context) {
@@ -115,6 +119,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取融云token有效期
+     *
      * @param context
      * @return
      */
@@ -124,6 +129,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 得到用户信息
+     *
      * @param context
      * @return
      */
@@ -133,6 +139,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取机构经理ID
+     *
      * @param context
      * @return
      */
@@ -142,6 +149,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取机构经理手机号
+     *
      * @param context
      * @return
      */
@@ -151,6 +159,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取团队长ID
+     *
      * @param context
      * @return
      */
@@ -160,6 +169,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 是否有团队长
+     *
      * @param context
      * @return
      */
@@ -169,6 +179,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 是否有机构经理
+     *
      * @param context
      * @return
      */
@@ -178,6 +189,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 是否有用户所属群
+     *
      * @param context
      * @return
      */
@@ -187,10 +199,18 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 得到最后一次退出时间
+     *
      * @param context
      * @return
      */
     public static long getLastExitTime(Context context) {
         return getBasePreference(context).getLong(LAST_EXIT_BACK_TIME, 0);
+    }
+
+    /**
+     * 获取保存的登录公钥
+     */
+    public static String getPublicKey(Context context) {
+        return getBasePreference(context).getString(PUBLIC_KEY, "");
     }
 }

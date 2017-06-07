@@ -123,9 +123,9 @@ public class NavigationUtils {
 
     /**
      * 跳转到video -->informaton资讯页
-     * @param context
-     * @param routerType
-     * @param bundle
+     * @param
+     * @param
+     * @param
      */
     public static void startVideoInformationActivityu(Context context,String url,String title){
         Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)

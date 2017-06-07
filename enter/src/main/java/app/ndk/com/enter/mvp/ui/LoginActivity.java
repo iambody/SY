@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -208,6 +209,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 protected void onEvent(String s) {
                     StrResult result = new Gson().fromJson(s, StrResult.class);
                     publicKey = result.result;
+                    AppInfStore.savePublicKey(baseContext.getApplicationContext(), publicKey);
                     getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
                 }
 
@@ -296,12 +298,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void publicKeySuccess(String str) {
         publicKey = str;
+        AppInfStore.savePublicKey(baseContext.getApplicationContext(), str);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 
     @OnClick(R2.id.enter_login_wx_bt_lay)
     public void onViewClicked() {
-//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-//        mLoadingDialog.show();
+        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+        mLoadingDialog.show();
+        if (BStrUtils.isEmpty(publicKey)) {
+            //开始获取公钥publicKey
+            getPresenter().toGetPublicKey();
+        }
 
         if (!Utils.isWeixinAvilible(this)) {
             mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
@@ -310,6 +323,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
             @Override
             public void getAuthorResult(int type, Platform platform) {
+                mLoadingDialog.dismiss();
                 switch (type) {
                     case WxAuthorManger.WxAuthorOk:
                         String unionid = platform.getDb().get("unionid");

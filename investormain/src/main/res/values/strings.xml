@@ -53,7 +53,7 @@
     <string name="la_cd_content_str">您将使用微信号%1$s创建私募云账号</string>
     <string name="enter_str">确认</string>
     <string name="ra_register_loading_str">注册中……</string>
-    <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。", "取消", "确认接收</string>
+    <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。 </string>
     <string name="btn_cancel_str">取消</string>
     <string name="ra_enter_code_str">确认接收</string>
     <string name="code_null_str">请输入您的验证码</string>

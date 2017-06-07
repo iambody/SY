@@ -75,6 +75,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存融云token
+     *
      * @param context
      * @param rongYunToken
      */
@@ -86,6 +87,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 融云token有效期
+     *
      * @param context
      * @param rongYunTokenExpired
      */
@@ -97,6 +99,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存用户信息
+     *
      * @param context
      * @param userInfo
      */
@@ -106,7 +109,6 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存机构经理ID
-     *
      *
      * @param context
      * @return
@@ -119,6 +121,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存机构经理手机号
+     *
      * @param context
      * @return
      */
@@ -130,6 +133,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存团队长ID
+     *
      * @param context
      * @return
      */
@@ -141,6 +145,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存是否有团队长
+     *
      * @param context
      * @return
      */
@@ -152,6 +157,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存是否有机构经理
+     *
      * @param context
      * @return
      */
@@ -163,6 +169,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存聊天名称 －－产品分享需要用到
+     *
      * @param context
      * @param chatName
      */
@@ -174,6 +181,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存聊天名称 －－产品分享需要用到
+     *
      * @param context
      * @param conversationName
      */
@@ -185,6 +193,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存用户是否首次登录，用用户id区别
+     *
      * @param context
      */
     public static void saveUserFirstLogin(Context context, boolean isLogin) {
@@ -195,6 +204,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存是否有用户所属群
+     *
      * @param context
      * @return
      */
@@ -220,6 +230,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产状态
+     *
      * @param context
      * @param stockAssetStaus
      */
@@ -231,6 +242,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新关联资产图片信息
+     *
      * @param context
      * @param imageUrl
      */
@@ -242,6 +254,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
+     *
      * @param context
      * @param assetCertificationStatus
      */
@@ -253,6 +266,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明图片信息
+     *
      * @param context
      * @param assetCertificationImageUrl
      */
@@ -264,6 +278,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新资产证明状态
+     *
      * @param context
      * @param investmentType
      */
@@ -275,6 +290,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 更新手势密码值
+     *
      * @param context
      * @param getsturePassword
      */
@@ -284,4 +300,15 @@ public class AppInfStore implements AppinfConstant {
         userInfo.getToC().setGestureSwitch(TextUtils.isEmpty(getsturePassword) ? "2" : "1");
         SPreference.saveUserInfoData(context, userInfo);
     }
+
+
+    /**
+     * 保存获取的公钥
+     */
+    public static void savePublicKey(Context context, String publicKey) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(PUBLIC_KEY, publicKey);
+        ed.commit();
+    }
+
 }

@@ -90,4 +90,8 @@ public interface AppinfConstant {
 
     // 最后返回时间
     String LAST_EXIT_BACK_TIME = "last_exit_back_time";
+
+
+    //登录前的token
+    String PUBLIC_KEY="publickey";
 }

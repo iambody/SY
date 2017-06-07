@@ -33,6 +33,7 @@ import app.product.com.mvp.contract.ProductContract;
  */
 public class ProductPresenter extends BasePresenterImpl<ProductContract.view> implements ProductContract.Presenter {
 
+    public boolean isFristRequest=true;
 
     public ProductPresenter(@NonNull Context context, @NonNull ProductContract.view view) {
         super(context, view);
@@ -48,7 +49,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
      * @param series         系列 字符串数组
      */
     @Override
-    public void getProductData(final LoadingDialog loadingDialog, int offset, String series, String orderBy, List<FilterItem> datas) {
+    public void getProductData(final LoadingDialog loadingDialog, final int offset, final String series, final String orderBy, final List<FilterItem> datas) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("offset", "" + offset * Constant.LOAD_PRODUCT_lIMIT);
@@ -66,22 +67,30 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
         }
         HashMap<String, String> map1 = new HashMap<>();
         map1.put("param", jsonObject.toString());
-        if(null!=loadingDialog)loadingDialog.show();
+        if (null != loadingDialog) loadingDialog.show();
         addSubscription(ApiClient.getProductlsDate(map1).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                if(null!=loadingDialog)loadingDialog.dismiss();
+
+                if (null != loadingDialog) loadingDialog.dismiss();
                 if (!BStrUtils.isEmpty(s)) {
+                    if (0 == offset && (BStrUtils.isEmpty(series) || "0".equals(series)) && BStrUtils.isEmpty(orderBy) && isFristRequest) {//缓存第一页
+                        CacheInvestor.saveProductls(getContext().getApplicationContext(), getV2String(s));
+                    }
                     getView().getDataSucc(ProductContract.LOAD_PRODUCT_LISTDATA, getV2String(s));
                 } else {
                     getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, getContext().getString(R.string.resultempty));
                 }
+
+                isFristRequest=false;
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                if(null!=loadingDialog)loadingDialog.dismiss();
+                if (null != loadingDialog) loadingDialog.dismiss();
                 getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, error.getMessage());
+
+                isFristRequest=false;
             }
         }));
     }
@@ -97,6 +106,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
 
         }
     }
+
 
     /**
      * 单选多选是需要判断标识的
@@ -130,9 +140,10 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
         addSubscription(ApiClient.getProductFiltrtDate().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String result) {
-                getView().getDataSucc(ProductContract.LOAD_FILTER, getV2String(result));
                 if (!BStrUtils.isEmpty(result)) {
                     CacheInvestor.saveProductFilterCache(getContext(), getV2String(result));
+                    getView().getDataSucc(ProductContract.LOAD_FILTER, getV2String(result));
+
                 } else {
                     getView().getDataFail(ProductContract.LOAD_FILTER, getContext().getString(R.string.resultempty));
                 }

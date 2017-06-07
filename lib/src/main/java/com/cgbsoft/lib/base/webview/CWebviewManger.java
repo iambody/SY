@@ -8,25 +8,26 @@ import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
-import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
@@ -217,6 +218,9 @@ public class CWebviewManger {
             shareToC(action);
         } else if (action.contains("riskTest")) {
             String[] split = action.split(":");
+            UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
+            userInfo.getToC().setCustomerType(split[2]);
+            AppInfStore.saveUserInfo(context,userInfo);
             NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
             context.finish();
         } else if (action.contains("tel:")) {
@@ -226,7 +230,7 @@ public class CWebviewManger {
         } else if (action.contains("checkVersion")) {
             DaoUtils daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
             OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
-            String values = SPreference.getBoolean(context,Contant.VISITE_LOOK_NAVIGATION) ? "1" : "0";
+            String values = SPreference.getBoolean(context, Contant.VISITE_LOOK_NAVIGATION) ? "1" : "0";
             if (otherInfo != null) {
                 String json = otherInfo.getContent();
                 AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
@@ -558,7 +562,7 @@ public class CWebviewManger {
         String[] split = action.split(":");
         try {
             String value = URLDecoder.decode(split[2], "utf-8");
-            ((InvestorAppli)InvestorAppli.getContext()).setTouGuOnline("1".equals(value) ? true : false);
+            ((InvestorAppli) InvestorAppli.getContext()).setTouGuOnline("1".equals(value) ? true : false);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -59,7 +59,7 @@
     <string name="btn_cancel_str">取消</string>
     <string name="aa_login_str">登录</string>
     <string name="vbnb_msg_str">消息</string>
-    <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。", "取消", "确认接收</string>
+    <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。</string>
 
     <string name="permission_help">帮助</string>
     <string name="permission_help_text">私募云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>

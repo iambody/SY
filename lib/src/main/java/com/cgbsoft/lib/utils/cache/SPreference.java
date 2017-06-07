@@ -216,6 +216,13 @@ public class SPreference implements Constant {
         LogUtils.Log("ta","操作");
     }
 
+    /**
+     * 保存用户信息
+     * @param context
+     * @param userInfo
+     */
+
+
     public static void saveUserInfoData(@NonNull Context context, UserInfoDataEntity.UserInfo userInfo) {
         if (userInfo == null) {
             getBase(context).edit().putString(USER_INFO_BEAN_PROPERTY, "").apply();

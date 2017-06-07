@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * desc 任务完成情况，以及做完任务获取云豆
  * Created by yangzonghui on 2017/5/25 14:42
@@ -26,6 +28,10 @@ public class TaskInfo {
 
     private static final String TASK_INFO_XML = "task_info_xml";
     private static final String TASK_INFO = "task_info";
+
+
+    //网络订阅器
+    protected static CompositeSubscription mCompositeSubscription;
 
     private static SharedPreferences getBasePreference(Context context) {
         return context.getSharedPreferences("TASK_INFO", Context.MODE_PRIVATE);
@@ -58,11 +64,14 @@ public class TaskInfo {
 
     /**
      * 完成任务领豆
+     *
      * @param taskName
      * @param taskBean
      */
     private static void getCoinTask(String taskName, DayTaskBean taskBean) {
-        ApiClient.addTaskCoin(taskBean.getTaskType(), taskName).subscribe(new RxSubscriber<String>() {
+        //确定是同一个订阅器
+        if (null == mCompositeSubscription) mCompositeSubscription = new CompositeSubscription();
+        mCompositeSubscription.add(ApiClient.addTaskCoin(taskBean.getTaskType(), taskName).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
@@ -80,14 +89,25 @@ public class TaskInfo {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 error.toString();
             }
-        });
+        }));
 
+    }
+
+    /**
+     * 接触订阅器的订阅
+     */
+    public static void unbind() {
+        if (null != mCompositeSubscription && mCompositeSubscription.hasSubscriptions()) {
+            mCompositeSubscription.unsubscribe();
+            mCompositeSubscription = null;
+        }
     }
 
     /**

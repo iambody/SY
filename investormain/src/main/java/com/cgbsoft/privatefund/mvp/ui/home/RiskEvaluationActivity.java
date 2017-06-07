@@ -63,6 +63,14 @@ public class RiskEvaluationActivity extends BaseActivity {
             }.show();
         });
         titleMid.setText(getString(R.string.risk_evaluating_title));
+//        mWebview.setClick(new CWebClient.WebviewOnClick() {
+//            @Override
+//            public void onClick(String result) {
+//                if(result.startsWith(WebViewConstant.AppCallBack.TOC_RISKTEST)){
+//
+//                }
+//            }
+//        });
     }
 
     @Override

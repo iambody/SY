@@ -121,6 +121,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             mCompositeSubscription.unsubscribe();
         }
         mCompositeSubscription = null;
+        TaskInfo.unbind();
     }
 
     @Override

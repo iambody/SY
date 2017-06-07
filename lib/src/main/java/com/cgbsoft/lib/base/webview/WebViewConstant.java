@@ -37,6 +37,8 @@ public class WebViewConstant {
         public static final String TOC_PDF ="app:viewpdf";
         public static final String TOC_GO_PRODUCTLS ="app:jumpProductList";
         public static final String TOC_PRODUCT_TOUTIAO ="app:openInformation";
+        //风险评测结果
+//        public static final String TOC_RISKTEST = "app:riskTest";
     }
 
     /**

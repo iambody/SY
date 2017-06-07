@@ -139,7 +139,29 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      * 产品的缓存处理  进来勿忘状态OR请求数据前需要展示的
      */
     private void initCache() {
+/////筛选条件
+        if (!BStrUtils.isEmpty(CacheInvestor.getProductFilterCache(baseActivity.getApplicationContext()))) {//筛选条件有缓存
+            productFilterBean = new Gson().fromJson(CacheInvestor.getProductFilterCache(baseActivity.getApplicationContext()).trim(), ProductFilterBean.class);
+            initFilterDate(productFilterBean.getSeries().getItems());
+            CurrentFilter = productFilterBean.getFilter();
+        }
+        //第一页缓存
+        if (!BStrUtils.isEmpty(CacheInvestor.getProductls(baseActivity.getApplicationContext()))) {
+            productlsBeen = new Gson().fromJson(CacheInvestor.getProductls(baseActivity.getApplicationContext()), new TypeToken<List<ProductlsBean>>() {
+            }.getType());
+            fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
 
+            productProductfragmentEmptyIv.setVisibility(View.GONE);
+            swipeToLoadLayout.setVisibility(View.VISIBLE);
+
+            if (0 == productlsBeen.size()) {
+                productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
+                swipeToLoadLayout.setVisibility(View.GONE);
+            }
+            productlsAdapter.freshAp(productlsBeen);
+
+
+        }
     }
 
     /**
