@@ -165,6 +165,10 @@ public class NavigationUtils {
         Router.build(routerType).with(bundle).addFlags(flag).go(context);
     }
 
+    public static void startActivityByRouter(Context context, String routerType, int flag) {
+        Router.build(routerType).addFlags(flag).go(context);
+    }
+
     public static void startActivityByRouter(Context context, String routerType, String key, Object object, int flag) {
         Router.build(routerType).with(key, object).addFlags(flag).go(context);
     }

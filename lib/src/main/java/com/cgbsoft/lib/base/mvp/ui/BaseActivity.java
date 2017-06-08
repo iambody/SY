@@ -320,7 +320,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(getApplicationContext(), data);
+        DataStatisticsUtils.push(getApplicationContext(), data,false);
     }
 
     protected void toDataStatistics(int grp, int act, String[] args) {
@@ -330,7 +330,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(getApplicationContext().getApplicationContext(), data);
+        DataStatisticsUtils.push(getApplicationContext().getApplicationContext(), data,false);
     }
 
     /**

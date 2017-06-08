@@ -1,6 +1,8 @@
 package qcloud.liveold.mvp.views;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +25,9 @@ public class EndLiveActivity extends AppCompatActivity implements View.OnClickLi
         backMain.setOnClickListener(this);
         TextView count = (TextView) findViewById(R.id.count);
         count.setText(String.format("%d", getIntent().getIntExtra("userNum", 0)));
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.BLACK);
+        }
     }
 
     @Override

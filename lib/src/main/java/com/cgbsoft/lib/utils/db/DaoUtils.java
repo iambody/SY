@@ -4,14 +4,17 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
+import com.cgbsoft.lib.utils.db.dao.DataStatisticsBeanDao;
 import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
 
 import org.greenrobot.greendao.query.Query;
@@ -32,6 +35,7 @@ public class DaoUtils {
     private UserInfoDao userInfoDao;
     private VideoInfoDao videoInfoDao;
     private HistorySearchBeanDao historySearchBeanDao;
+    private DataStatisticsBeanDao dataStatisticsBeanDao;
 
     public static final int W_OTHER = 1;
     public static final int W_USER = 2;
@@ -40,6 +44,7 @@ public class DaoUtils {
     public static final int W_SousouHistory = 101;
 
     public static final int W_TASK = 4;
+    public static final int W_DATASTISTICS = 5;
 
     public DaoUtils(Context context, int which) {
         switch (which) {
@@ -55,6 +60,8 @@ public class DaoUtils {
             case W_SousouHistory:
                 historySearchBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getHistorySearchBeanDao();
                 break;
+            case W_DATASTISTICS:
+                dataStatisticsBeanDao = ((BaseApplication)context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
         }
     }
 
@@ -326,11 +333,23 @@ public void clearnHistoryByID(String Type, String userId){
         return model;
     }
 
+    public List<DataStatisticsBean> getDatastisticList(){
+        return dataStatisticsBeanDao.queryBuilder().build().list();
+    }
+
+    public void deleteDataStatitic(){
+        dataStatisticsBeanDao.deleteAll();
+    }
+
+    public void saveDataStatistic(DataStatisticsBean dataStatisticsBean){
+        dataStatisticsBeanDao.save(dataStatisticsBean);
+    }
 
     public void destory() {
         otherInfoDao = null;
         userInfoDao = null;
         videoInfoDao = null;
+        dataStatisticsBeanDao = null;
     }
 
 }

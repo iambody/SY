@@ -91,6 +91,7 @@ public class CloudMenuActivity extends Activity {
 		final FloatingActionButton actionButton = new FloatingActionButton.Builder(activity).setLayoutParams(layoutParams).
 				setContentView(icon, contentParams).setPosition(isProductDetail ? FloatingActionButton.POSITION_BOTTOM_RIGHT : FloatingActionButton.POSITION_BOTTOM_CENTER).build();
 
+
 		TextView one = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
 		one.setText(R.string.vbnb_call_str);
 		showCompoundDrawable(one, ContextCompat.getDrawable(activity, R.drawable.selector_bottom_call));

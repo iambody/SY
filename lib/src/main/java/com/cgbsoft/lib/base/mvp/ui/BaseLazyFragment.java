@@ -199,7 +199,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data);
+        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data,false);
     }
 
     protected void toDataStatistics(int grp, int act, String[] args){
@@ -209,7 +209,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data);
+        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data,false);
     }
 
 

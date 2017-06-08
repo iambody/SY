@@ -27,6 +27,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UserInfoDao.createTable(db, ifNotExists);
         VideoInfoDao.createTable(db, ifNotExists);
         HistorySearchBeanDao.createTable(db, ifNotExists);
+        DataStatisticsBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -37,6 +38,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UserInfoDao.dropTable(db, ifExists);
         VideoInfoDao.dropTable(db, ifExists);
         HistorySearchBeanDao.dropTable(db, ifExists);
+        DataStatisticsBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -61,6 +63,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(UserInfoDao.class);
         registerDaoClass(VideoInfoDao.class);
         registerDaoClass(HistorySearchBeanDao.class);
+        registerDaoClass(DataStatisticsBeanDao.class);
     }
 
     public DaoSession newSession() {

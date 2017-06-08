@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.widget.navigation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -16,17 +17,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.FestivalUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.FloatingActionMenu;
+import com.cgbsoft.privatefund.widget.CloudMenuActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -92,6 +100,9 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private RequestManager requestManager;
     private boolean isIdtentifyWithInvestor;
 
+    private boolean isLookZhiBao;
+    private boolean isLive;
+
     private int nowPosition = 0, doubleClickTime = 200;
     private long nowSystemTime;
     private boolean isSpringFestival;//是否春节
@@ -148,9 +159,12 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         //如果是投资者
         View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call);
         View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet);
-        View liveView = buildSubButton(activity, getResources().getString(R.string.vbnb_live_str), R.drawable.selector_bottom_live);
+        View liveView = buildSubButton(activity,
+                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? getResources().getString(R.string.vbnb_tougu_dangan) : getResources().getString(R.string.vbnb_live_str),
+                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live);
         View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms);
         View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs);
+
 
         floatingActionMenu = new FloatingActionMenu.Builder(activity).addSubActionView(callView)
                 .addSubActionView(meetView)
@@ -374,18 +388,31 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                        } else {
 //                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
 //                                        }
-                                        boolean needOpen;
-                                        if (floatingActionMenu.isOpen()) {
-                                            needOpen = false;
-                                            view_bottom_navigation_close.setVisibility(GONE);
-                                            iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
+                                        if (AppManager.getUserInfo(getContext()).getToC() != null && TextUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())) {
+                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+                                            hashMap.put(WebViewConstant.push_message_title, "填写信息");
+                                            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                                         } else {
-                                            needOpen = true;
-                                            nowSystemTime = System.currentTimeMillis();
-                                            view_bottom_navigation_close.setVisibility(VISIBLE);
-                                            iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
+                                            if (isLive && !isLookZhiBao) {
+                                                isLookZhiBao = true;
+                                                //joinLive();
+                                            } else {
+                                                boolean needOpen;
+                                                if (floatingActionMenu.isOpen()) {
+                                                    needOpen = false;
+                                                    view_bottom_navigation_close.setVisibility(GONE);
+                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
+                                                } else {
+                                                    needOpen = true;
+                                                    nowSystemTime = System.currentTimeMillis();
+                                                    view_bottom_navigation_close.setVisibility(VISIBLE);
+                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
+                                                }
+                                                floatingActionMenu.toggle(needOpen);
+                                            }
                                         }
-                                        floatingActionMenu.toggle(needOpen);
+
                                     } else {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4);

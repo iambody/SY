@@ -103,8 +103,8 @@ public class CWebClient extends WebViewClient {
 
     @Override
     public void onReceivedError(WebView webView, int i, String s, String s1) {
-        super.onReceivedError(webView, i, s, s1);
         javaScriptObjectToc.setUrl(webView.getUrl());
+        System.out.println("-----url= " + webView.getUrl());
         webView.loadUrl("file:///android_asset/404.html");
     }
 

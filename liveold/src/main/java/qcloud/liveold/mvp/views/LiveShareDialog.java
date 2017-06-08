@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
+import app.privatefund.com.share.bean.ShareCommonBean;
+import app.privatefund.com.share.utils.ShareManger;
 import qcloud.liveold.R;
 
 /**
@@ -29,6 +31,7 @@ public class LiveShareDialog extends BaseDialog implements View.OnClickListener 
     private String shareContent;
     private String shareImg;
     private LinearLayout liveShareHide;
+    private ShareManger manger;
 
     public LiveShareDialog(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
@@ -47,6 +50,35 @@ public class LiveShareDialog extends BaseDialog implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_share_dialog);
         bindView();
+
+        ShareCommonBean shareCommonBean;
+        if (shareImg.startsWith("?")) {
+            shareCommonBean = new ShareCommonBean(shareTitle, shareContent, shareUrl, null);
+        } else {
+            shareCommonBean = new ShareCommonBean(shareTitle, shareContent, shareUrl, shareImg);
+        }
+
+        //先获取一个manger实体类
+        //分享成功
+        //分享失败
+        //分享取消
+        manger = ShareManger.getInstance(context, shareCommonBean, new ShareManger.ShareResultListenr() {
+            @Override
+            public void completShare() {//分享成功
+
+            }
+
+            @Override
+            public void errorShare() {//分享失败
+
+            }
+
+            @Override
+            public void cancelShare() {//分享取消
+
+            }
+        });
+
         // 添加微信平台
 //        UMWXHandler wxHandler = new UMWXHandler(getContext(),
 //                Contant.weixin_appID, Contant.weixin_appSecret);
@@ -68,22 +100,31 @@ public class LiveShareDialog extends BaseDialog implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.share_weixin) {//                if (!CheckApk.isWeixinAvilible(getContext())) {
-//                    Toast.makeText(getContext(), "未安装微信", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                shareWeixin(shareTitle, shareContent, shareImg, shareUrl);
 
-        } else if (i == R.id.share_friend) {//                if (!CheckApk.isWeixinAvilible(getContext())) {
-//                    Toast.makeText(getContext(), "未安装微信", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                sharePengyouquan(shareTitle, shareContent, shareImg, shareUrl);
+        if (i == R.id.share_weixin) {
 
+            //进行操作
+            manger.goShareWx(ShareManger.WXSHARE);//微信 分享
+            //如果生成了实体类就在ondestroy里面进行注销
+//            if (!CheckApk.isWeixinAvilible(getContext())) {
+//                Toast.makeText(getContext(), "未安装微信", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+            shareWeixin(shareTitle, shareContent, shareImg, shareUrl);
+//
+        } else if (i == R.id.share_friend) {
+            manger.goShareWx(ShareManger.CIRCLESHARE);//朋友圈分享
+
+//            if (!CheckApk.isWeixinAvilible(getContext())) {
+//                Toast.makeText(getContext(), "未安装微信", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            sharePengyouquan(shareTitle, shareContent, shareImg, shareUrl);
+//
         } else if (i == R.id.live_share_layout) {
-            this.dismiss();
-
-
+//            this.dismiss();
+//
+//
         } else {
         }
     }
@@ -114,6 +155,14 @@ public class LiveShareDialog extends BaseDialog implements View.OnClickListener 
         ).start();
 
         this.dismiss();
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        if (null != manger) {
+            manger.unbindShare();
+        }
     }
 
     /**

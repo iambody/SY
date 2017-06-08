@@ -26,7 +26,6 @@ import io.rong.imlib.model.Conversation;
  * 融云连接初始化
  */
 public class RongConnect {
-
     /**
      * 获取融云token
      * @param userId

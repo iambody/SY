@@ -99,18 +99,18 @@ public class ReceiveInfoManager {
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
                         BackgroundManager backgroundManager = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager();
-                        infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, "返回", rightText, jumpUrl) {
+                        infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, rightText, "返回", jumpUrl) {
                             @Override
                             public void left() {
                                 dismiss();
-                                if ("1".equals(type)) {
-                                    onClickConfirm(jumpUrl, title, shareType);
-                                }
                             }
 
                             @Override
                             public void right() {
                                 dismiss();
+                                if ("1".equals(type)) {
+                                    onClickConfirm(jumpUrl, title, shareType);
+                                }
                             }
                         };
 
@@ -125,16 +125,16 @@ public class ReceiveInfoManager {
                             if (infoDialog != null && infoDialog.isShowing()) {
                                 infoDialog.dismiss();
                             }
-                            infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText(), smMessage.getJumpUrl()) {
+                            infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), smMessage.getButtonText(), "返回", smMessage.getJumpUrl()) {
                                 @Override
                                 public void left() {
                                     dismiss();
-                                    onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
                                 }
 
                                 @Override
                                 public void right() {
                                     dismiss();
+                                    onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
                                 }
                             };
                             if (!infoDialog.isShowing()) {
@@ -145,8 +145,7 @@ public class ReceiveInfoManager {
                             String saveValue = PushPreference.getPushInfo(InvestorAppli.getContext());
                             List<SMMessage> messageList = new ArrayList<>();
                             if (!TextUtils.isEmpty(saveValue)) {
-                                messageList = gson.fromJson(saveValue, new TypeToken<List<SMMessage>>() {
-                                }.getType());
+                                messageList = gson.fromJson(saveValue, new TypeToken<List<SMMessage>>() {}.getType());
                             }
                             messageList.add(smMessage);
                             String values = gson.toJson(messageList, new TypeToken<List<SMMessage>>() {}.getType());

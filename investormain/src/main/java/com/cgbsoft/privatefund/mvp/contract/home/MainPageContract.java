@@ -25,5 +25,7 @@ public interface MainPageContract {
         //判断是否有直播
         void hasLive(boolean hasLive, JSONObject jsonObject);
 
+        void signInSuc();
+
     }
 }

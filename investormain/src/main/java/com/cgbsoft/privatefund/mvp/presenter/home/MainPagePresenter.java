@@ -16,7 +16,9 @@ import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
+import com.commui.prompt.mvp.ui.SignInDialog;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -38,6 +40,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     public void getDataList() {
 
     }
+
     /**
      * 获取直播列表
      */
@@ -82,25 +85,35 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
         });
     }
 
-    //todo 测试用
-    public void toSignIn(){
-        String uid = AppManager.getUserId(BaseApplication.getContext());
-        ApiClient.testSignIn(uid).subscribe(new RxSubscriber<String>() {
-            @Override
+    public void toSignIn() {
+        addSubscription(ApiClient.testSignIn(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             protected void onEvent(String s) {
-                SignInEntity.Result result = new Gson().fromJson(s, SignInEntity.Result.class);
+                try {
+                    JSONObject response = new JSONObject(s);
+                    if (response.has("msg")) {
+                        new MToast(getContext()).show(response.getString("msg"), 0);
+                    } else {
 
+                        SignInDialog signDialog = new SignInDialog(getContext());
+                        signDialog.setData(response);
+                        signDialog.show();
+                        getView().signInSuc();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
 
             }
-        });
+        }));
     }
 
     @Override
-    public void initDayTask(){
+    public void initDayTask() {
         ApiClient.initDayTask().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -121,7 +134,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     }
 
     @Override
-    public void getUserInfo(){
+    public void getUserInfo() {
         ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
             @Override
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
@@ -132,7 +145,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
             @Override
             protected void onRxError(Throwable error) {
-
+                error.toString();
             }
         });
     }
