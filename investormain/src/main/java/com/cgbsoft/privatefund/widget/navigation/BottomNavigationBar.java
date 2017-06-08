@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.widget.navigation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -16,17 +17,23 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.FestivalUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.FloatingActionMenu;
+import com.cgbsoft.privatefund.widget.CloudMenuActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -91,6 +98,9 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private Observable<Boolean> changeIdtentifyObservable;
     private RequestManager requestManager;
     private boolean isIdtentifyWithInvestor;
+
+    private boolean isLookZhiBao;
+    private boolean isLive;
 
     private int nowPosition = 0, doubleClickTime = 200;
     private long nowSystemTime;
@@ -374,18 +384,31 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                        } else {
 //                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
 //                                        }
-                                        boolean needOpen;
-                                        if (floatingActionMenu.isOpen()) {
-                                            needOpen = false;
-                                            view_bottom_navigation_close.setVisibility(GONE);
-                                            iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
+                                        if (AppManager.getUserInfo(getContext()).getToC() != null && TextUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())) {
+                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
+                                            hashMap.put(WebViewConstant.push_message_title, "填写信息");
+                                            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                                         } else {
-                                            needOpen = true;
-                                            nowSystemTime = System.currentTimeMillis();
-                                            view_bottom_navigation_close.setVisibility(VISIBLE);
-                                            iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
+                                            if (isLive && !isLookZhiBao) {
+                                                isLookZhiBao = true;
+                                                //joinLive();
+                                            } else {
+                                                boolean needOpen;
+                                                if (floatingActionMenu.isOpen()) {
+                                                    needOpen = false;
+                                                    view_bottom_navigation_close.setVisibility(GONE);
+                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
+                                                } else {
+                                                    needOpen = true;
+                                                    nowSystemTime = System.currentTimeMillis();
+                                                    view_bottom_navigation_close.setVisibility(VISIBLE);
+                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
+                                                }
+                                                floatingActionMenu.toggle(needOpen);
+                                            }
                                         }
-                                        floatingActionMenu.toggle(needOpen);
+
                                     } else {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4);

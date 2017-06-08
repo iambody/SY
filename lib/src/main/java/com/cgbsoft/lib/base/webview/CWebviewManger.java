@@ -220,7 +220,7 @@ public class CWebviewManger {
             String[] split = action.split(":");
             UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
             userInfo.getToC().setCustomerType(split[2]);
-            AppInfStore.saveUserInfo(context,userInfo);
+            AppInfStore.saveUserInfo(context, userInfo);
             NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
             context.finish();
         } else if (action.contains("tel:")) {
@@ -307,6 +307,8 @@ public class CWebviewManger {
 //            sharePoster();
         } else if (action.contains("ydPay")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
+        } else if (action.contains("rootPage")) {
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
     }
 

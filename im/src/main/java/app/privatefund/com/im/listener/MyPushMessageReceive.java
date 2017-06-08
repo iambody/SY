@@ -1,6 +1,5 @@
 package app.privatefund.com.im.listener;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,7 +29,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
-        Log.i(this.getClass().getName(), "messageinfo=----isPUsh=" + pushNotificationMessage.getPushFlag());
+        Log.i(this.getClass().getName(), "messageinfo=----isPush=" + pushNotificationMessage.getPushFlag());
         //if (RongCouldUtil.getInstance().hideConversation(pushNotificationMessage.getSenderId())) {
             // PushNotificationManager.getInstance().onReceivePush(pushNotificationMessage);
 //            Intent intent = new Intent();

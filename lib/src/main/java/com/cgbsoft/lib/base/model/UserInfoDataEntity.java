@@ -18,6 +18,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
     }
 
     public static class UserInfo {
+        public String userNewId;
         public String birthday;
         public String sex;
         public String headImageUrl;
@@ -243,6 +244,14 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
 
         public void setMemoToFather(String memoToFather) {
             this.memoToFather = memoToFather;
+        }
+
+        public String getUserNewId() {
+            return userNewId;
+        }
+
+        public void setUserNewId(String userNewId) {
+            this.userNewId = userNewId;
         }
     }
 
