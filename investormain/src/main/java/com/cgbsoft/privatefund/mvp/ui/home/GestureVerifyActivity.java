@@ -214,7 +214,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         LinearLayout layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dialog_reset_gesture_password, null);
         dialog.setContentView(layout);
         TextView textView = (TextView) layout.findViewById(R.id.accuont);
-        textView.setText("当前账号：" + SPreference.getToCBean(this).getCustomerPhone());
+        textView.setText("当前账号：" + AppManager.getUserInfo(this).getPhoneNum());
         final EditText et_password = (EditText) layout.findViewById(R.id.input_login_password);
         TextView reset_gesture_password_dialog_forget_pwd = ViewHolders.get(layout, R.id.reset_gesture_password_dialog_forget_pwd);
         TextView telPhone = (TextView) layout.findViewById(R.id.tel_phone);

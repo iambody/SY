@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -158,9 +159,12 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         //如果是投资者
         View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call);
         View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet);
-        View liveView = buildSubButton(activity, getResources().getString(R.string.vbnb_live_str), R.drawable.selector_bottom_live);
+        View liveView = buildSubButton(activity,
+                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? getResources().getString(R.string.vbnb_tougu_dangan) : getResources().getString(R.string.vbnb_live_str),
+                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live);
         View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms);
         View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs);
+
 
         floatingActionMenu = new FloatingActionMenu.Builder(activity).addSubActionView(callView)
                 .addSubActionView(meetView)
