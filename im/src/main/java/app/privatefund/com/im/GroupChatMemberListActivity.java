@@ -108,9 +108,9 @@ public class GroupChatMemberListActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String string = jsonObject.get("result").toString();
-                    if (!TextUtils.isEmpty(s)) {
+                    if (!TextUtils.isEmpty(string)) {
                         Gson g = new Gson();
-                        List<GroupMember> datas = g.fromJson(s, new TypeToken<List<GroupMember>>() {}.getType());
+                        List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {}.getType());
                         if (!CollectionUtils.isEmpty(datas)) {
                             groupMemberListAdapter.add(datas);
                         } else {
