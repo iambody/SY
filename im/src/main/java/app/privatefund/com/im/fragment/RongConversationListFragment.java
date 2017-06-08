@@ -30,6 +30,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,19 +181,20 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
      */
     private void showUserBelongGroupList() {
         if (getActivity() != null) {
-            ApiClient.getGroupList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<GroupListEntity.Result>() {
+            ApiClient.getTestGetGroupList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                 @Override
-                protected void onEvent(GroupListEntity.Result result) {
+                protected void onEvent(String result) {
                     RLog.i("ConversationListFragment", "----GroupList=" + result);
                     try {
-                        if (result != null) {
-                            List<GroupListEntity.Group> list = result.getResult();
-                            AppInfStore.saveHasUserGroup(getContext(), !CollectionUtils.isEmpty(list) ? true : false);
-                            for (int i = 0; i < list.size(); i++) {
-                                GroupListEntity.Group group = list.get(i);
-                                String id = group.getId();
-                                String name = group.getName();
-                                String headImageUrl = group.getHeadImgUrl();
+                        JSONObject reslet = new JSONObject(result);
+                        JSONArray jsonArray = reslet.getJSONArray("result");
+                        if (jsonArray != null) {
+                            AppInfStore.saveHasUserGroup(getContext(), jsonArray.length() > 0 ? true : false);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                                String id = jsonObject.getString("id");
+                                String name = jsonObject.getString("name");
+                                String headImageUrl = jsonObject.getString("headImgUrl");
                                 if (headImageUrl.contains("name")) {
                                     JSONArray jsonArray1 = new JSONArray(headImageUrl);
                                     headImageUrl = jsonArray1.getJSONObject(0).optString("url");
