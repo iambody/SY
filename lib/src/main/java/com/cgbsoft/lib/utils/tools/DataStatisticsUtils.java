@@ -117,7 +117,6 @@ public class DataStatisticsUtils {
         }
     }
 
-
     private static String getUniqueCode() {
         String m_szDevIDShort = Build.BOARD.length() % 10 + "" +
                 Build.BRAND.length() % 10 + "" +

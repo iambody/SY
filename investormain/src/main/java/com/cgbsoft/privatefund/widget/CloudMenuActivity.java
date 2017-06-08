@@ -1,7 +1,6 @@
 package com.cgbsoft.privatefund.widget;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +20,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
@@ -102,6 +102,8 @@ public class CloudMenuActivity extends Activity {
 				NavigationUtils.startDialgTelephone(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
 				CloudMenuActivity.this.finish();
 				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+				DataStatistApiParam.onStatisToCMenuCallCustom();
+
 			}
 		});
 
@@ -115,6 +117,7 @@ public class CloudMenuActivity extends Activity {
 				RongIM.getInstance().startConversation(CloudMenuActivity.this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(CloudMenuActivity.this).getToC().getBandingAdviserId(), AppManager.getUserInfo(CloudMenuActivity.this).getAdviserRealName());
 				CloudMenuActivity.this.finish();
 				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+				DataStatistApiParam.onStatisToCMenuCallDuihua();
 			}
 		});
 
@@ -129,14 +132,15 @@ public class CloudMenuActivity extends Activity {
                 hashMap.put(WebViewConstant.push_message_title, "我的投顾");
                 NavigationUtils.startActivityByRouter(CloudMenuActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 CloudMenuActivity.this.finish();
-            } else {
+			} else {
                 RxBus.get().post(RxConstant.Open_PAGE_LIVE_OBSERVABLE, true);
 //					Intent intent2 = new Intent(CloudMenuActivity.this, AVLiveListActivity.class);
 //					intent2.putExtra(AVLiveListActivity.ZHIBO_PARAMS, true);
 //					startActivity(intent2);
                 CloudMenuActivity.this.finish();
                 CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-            }
+			}
+			DataStatistApiParam.onStatisToCMenuZhibo();
         });
 
 		TextView four = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
@@ -149,6 +153,7 @@ public class CloudMenuActivity extends Activity {
 				NavigationUtils.startDialogSendMessage(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
 				CloudMenuActivity.this.finish();
 				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+				DataStatistApiParam.onStatisToCMenuMessage();
 			}
 		});
 
@@ -162,6 +167,7 @@ public class CloudMenuActivity extends Activity {
 				RongIM.getInstance().startPrivateChat(CloudMenuActivity.this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
 				CloudMenuActivity.this.finish();
 				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+				DataStatistApiParam.onStatisToCMenuKefu();
 			}
 		});
 
@@ -181,27 +187,21 @@ public class CloudMenuActivity extends Activity {
 
 			@Override
 			public void onMenuClosed(FloatingActionMenu floatingActionMenu) {
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						actionMenu.close(true);
-						CloudMenuActivity.this.finish();
-						CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-					}
-				}, 100);
+				new Handler().postDelayed(() -> {
+                    actionMenu.close(true);
+                    CloudMenuActivity.this.finish();
+                    CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+                }, 100);
 			}
 		});
 
-		actionButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (actionMenu.isOpen()) {
-					actionMenu.close(true);
-					CloudMenuActivity.this.finish();
-					CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-				}
-			}
-		});
+		actionButton.setOnClickListener(v -> {
+            if (actionMenu.isOpen()) {
+                actionMenu.close(true);
+                CloudMenuActivity.this.finish();
+                CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+            }
+        });
 		return actionMenu;
 	}
 

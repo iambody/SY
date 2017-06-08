@@ -11,6 +11,7 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
@@ -103,12 +104,13 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @OnClick(R2.id.video_discover_history_txt)
     public void onVideoDiscoverHistoryTxtClicked() {//
 //        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
-
         UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListActivity.class);
+        DataStatistApiParam.onVideoPlayHistoryToC();
     }
 
     @OnClick(R2.id.video_discover_download_txt)
     public void onVideoDiscoverDownloadTxtClicked() {
         UiSkipUtils.toNextActivity(baseActivity, VideoDownloadListActivity.class);
+        DataStatistApiParam.onVideoPlayDownToC();
     }
 }

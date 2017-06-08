@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
@@ -179,6 +180,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         } else {
             resetGesturePasswordDialog(GestureVerifyActivity.this);
         }
+        DataStatistApiParam.onForgetGesturePassword();
     }
 
     @OnClick(R.id.text_cancel)

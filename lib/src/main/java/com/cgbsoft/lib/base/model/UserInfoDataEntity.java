@@ -1,5 +1,7 @@
 package com.cgbsoft.lib.base.model;
 
+import android.text.TextUtils;
+
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
 /**
@@ -499,6 +501,13 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
 
         public void setGestureSwitch(String gestureSwitch) {
             this.gestureSwitch = gestureSwitch;
+        }
+
+        public String getBindTeacher(){
+            if (!TextUtils.isEmpty(bandingAdviserId)){
+                return "1";
+            }
+            return "0";
         }
     }
 }

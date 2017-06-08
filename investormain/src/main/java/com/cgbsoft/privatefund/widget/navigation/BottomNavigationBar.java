@@ -24,6 +24,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.FestivalUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
@@ -412,7 +413,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                                 floatingActionMenu.toggle(needOpen);
                                             }
                                         }
-
+                                        DataStatistApiParam.onStatisToCProductDetailMenu();
                                     } else {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4);
