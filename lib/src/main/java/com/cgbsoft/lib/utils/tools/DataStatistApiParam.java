@@ -203,6 +203,17 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    public static void onClickLiveRoomHeadImageToB(String liveName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "1023");
+        data3.put("act", "10106");
+        data3.put("arg1", "头像");
+//        data3.put("arg2", AppManager.getUserInfo(BaseApplication.getContext()).getToB().isColorCloud());
+//        data3.put("arg3", AppManager.getUserInfo(BaseApplication.getContext()).getToB().getOrganizationName());
+        data3.put("arg4", liveName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
     /**
      * B云豆充值 充值云豆按钮点击
      */
@@ -282,5 +293,27 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
+
+    public static void liveShareC(String title) {
+
+    }
+
+    public static void liveShareB(String title) {
+
+    }
+
+    public static void onClickLiveRoomCloseToB(String videoName) {
+
+    }
+
+
+    public static void onClickLivePDFToB(String vaName, String s) {
+
+    }
+
+
+    public static void onClickLiveCommentToB(String videoName) {
+
+    }
 
 }
