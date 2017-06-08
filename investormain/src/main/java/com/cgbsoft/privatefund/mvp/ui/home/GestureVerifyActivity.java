@@ -35,6 +35,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -150,7 +151,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     private void closeGesturePassword(final boolean isFiveTimesError) {
         Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-        finish();
         getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(AppManager.getUserId(this)), isFiveTimesError);
     }
 
@@ -197,6 +197,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             finish();
         } else {
             LogOutAccount logOutAccount = new LogOutAccount();
