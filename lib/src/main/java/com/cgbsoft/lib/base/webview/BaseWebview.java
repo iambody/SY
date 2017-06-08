@@ -3,11 +3,9 @@ package com.cgbsoft.lib.base.webview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -93,8 +91,8 @@ public class BaseWebview extends WebView {
         getSettings().setUseWideViewPort(true);
         getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         getSettings().setLoadWithOverviewMode(true);
-        getSettings().setSupportZoom(true);
-        getSettings().setBuiltInZoomControls(true);
+//        getSettings().setSupportZoom(true);
+//        getSettings().setBuiltInZoomControls(true);
 //        getSettings().setDisplayZoomControls(false);
         getSettings().setSavePassword(true);
         getSettings().setSaveFormData(true);
