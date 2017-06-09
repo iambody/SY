@@ -248,4 +248,20 @@ public class BStrUtils {
         BigDecimal b = new BigDecimal(d);
         return b.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
+
+    /**
+     * 对象转整数
+     *
+     * @param obj
+     * @return 转换异常返回 0
+     */
+    public static long toLong(String obj) {
+        try {
+            return Long.parseLong(obj);
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
 }

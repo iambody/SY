@@ -20,9 +20,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
-import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -35,7 +33,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.DataUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
@@ -174,11 +172,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initUserInfo() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
     }
 
     private void autoSign() {
-        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())){
+        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
     }
@@ -324,9 +322,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-//                if (1 == currentPostion && isHaveClickProduct) {
-//                    MainTabManager.getInstance().getProductFragment().resetAllData();
-//                }
+                if (1 == position && isHaveClickProduct) {
+                    MainTabManager.getInstance().getProductFragment().resetAllData();
+                }
                 isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
@@ -345,6 +343,31 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
+        buryPoint(position);
+    }
+
+    /**
+     * 埋点
+     */
+    private void buryPoint(int postion) {
+        switch (postion) {
+            case 0:
+                DataStatistApiParam.onStatisToCTabMine();
+                break;
+            case 1:
+                DataStatistApiParam.onStatisToCTabProduct();
+                break;
+            case 2:
+                DataStatistApiParam.onStatisToCTabDiscover();
+                break;
+            case 3:
+                DataStatistApiParam.onStatisToCTabClub();
+                break;
+            case 4:
+                DataStatistApiParam.onStatisToCTabCloudKey();
+                break;
+
+        }
     }
 
     private void initRxObservable() {
@@ -566,7 +589,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @OnClick(R.id.video_live_close)
-    public void closeLiveDialog(){
+    public void closeLiveDialog() {
         liveDialog.setVisibility(View.GONE);
     }
 
@@ -620,7 +643,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void signInSuc() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
     }
 
     private void SsetBottomNavigation() {

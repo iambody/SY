@@ -7,6 +7,12 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * desc  app的各种配置信息的存储 使用sp  eg 保存B/C的标识  ，application等
@@ -14,6 +20,27 @@ import com.cgbsoft.lib.utils.cache.SPreference;
  * 日期 17/4/5-17:39
  */
 public class AppInfStore implements AppinfConstant {
+    public static final int CLZ_BYTE = 1;
+    public static final int CLZ_SHORT = 2;
+    public static final int CLZ_INTEGER = 3;
+    public static final int CLZ_LONG = 4;
+    public static final int CLZ_STRING = 5;
+    public static final int CLZ_BOOLEAN = 6;
+    public static final int CLZ_FLOAT = 7;
+    public static final int CLZ_DOUBLE = 8;
+    public static final Map<Class<?>, Integer> TYPES;
+
+    static {
+        TYPES = new HashMap<Class<?>, Integer>();
+        TYPES.put(byte.class, CLZ_BYTE);
+        TYPES.put(short.class, CLZ_SHORT);
+        TYPES.put(int.class, CLZ_INTEGER);
+        TYPES.put(long.class, CLZ_LONG);
+        TYPES.put(String.class, CLZ_STRING);
+        TYPES.put(boolean.class, CLZ_BOOLEAN);
+        TYPES.put(float.class, CLZ_FLOAT);
+        TYPES.put(double.class, CLZ_DOUBLE);
+    }
 
     private static SharedPreferences getBasePreference(Context context) {
         return context.getSharedPreferences(USER_SHARE_PREFERENCE_SET, Context.MODE_PRIVATE);
@@ -306,9 +333,33 @@ public class AppInfStore implements AppinfConstant {
      * 保存获取的公钥
      */
     public static void savePublicKey(Context context, String publicKey) {
+
         SharedPreferences.Editor ed = getBasePreference(context).edit();
         ed.putString(PUBLIC_KEY, publicKey);
         ed.commit();
     }
 
+    /**
+     * 保存定位城市信息
+     */
+    public static void saveLocationInf(Context context, LocationBean locationBean) {
+
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("loctaioninf", new Gson().toJson(locationBean));
+        ed.commit();
+
+    }
+
+    /**
+     * 获取location
+     */
+    public static LocationBean getLocationInf(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        String loaction = sp.getString("loctaioninf", "");
+        if (BStrUtils.isEmpty(loaction)) return new LocationBean();
+        LocationBean locationBean = new Gson().fromJson(loaction, LocationBean.class);
+        return locationBean;
+
+    }
 }

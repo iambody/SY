@@ -80,7 +80,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/delete_str"
-            android:textColor="#999"
+            android:textColor="@color/orange"
             android:textSize="12sp" />
     </LinearLayout>
 

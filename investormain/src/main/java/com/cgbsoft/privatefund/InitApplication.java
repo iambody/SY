@@ -4,7 +4,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
@@ -33,6 +35,8 @@ import qcloud.liveold.mvp.utils.SxbLogImpl;
  *  
  */
 public class InitApplication extends InvestorAppli {
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -96,5 +100,7 @@ public class InitApplication extends InvestorAppli {
         }
         return false;
     }
+
+
 
 }

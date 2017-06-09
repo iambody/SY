@@ -89,6 +89,10 @@ public interface Constant {
     // 存储
     String PERMISSION_READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     String PERMISSION_WRITE_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    //地图位置
+    String PERMISSION_LOCATION_COARSE=Manifest.permission.ACCESS_COARSE_LOCATION;
+    String PERMISSION_FINE_COARSE=Manifest.permission.ACCESS_FINE_LOCATION;
+
     // 录音 
     String PERMISSION_AUDIO = Manifest.permission.RECORD_AUDIO;
     // 短信 

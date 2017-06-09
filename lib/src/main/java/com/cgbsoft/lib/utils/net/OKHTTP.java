@@ -81,7 +81,7 @@ public class OKHTTP {
             builder.addHeader(NetConfig.DefaultParams.uid, uid);
             builder.addHeader(NetConfig.DefaultParams.token, token);
             //*******V2测试**
-//            builder.addHeader(NetConfig.DefaultParams.dev, "DEBUG");
+            builder.addHeader(NetConfig.DefaultParams.dev, "DEBUG");
             builder.addHeader(NetConfig.DefaultParams.client, AppManager.isInvestor(context) ? "C" : "B");
             //*******V2测试**
             builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));

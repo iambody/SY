@@ -69,7 +69,7 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
             @Override
             protected void onRxError(Throwable error) {
                 LogUtils.Log("s", error.toString());
-                loadingDialog.setResult(false, getContext().getString(R.string.sending_fail_str), 1000);
+                loadingDialog.setResult(false, error.getMessage(), 1000);
             }
         }));
     }

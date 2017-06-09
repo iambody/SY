@@ -286,6 +286,8 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         for (FilterItem h : resetFilterDate) {
             for (int i = 0; i < h.getItems().size(); i++) {
                 h.getItems().get(i).setChecked(false);
+                 h.setMinNumber("");
+                h.setMaxNumber("");
             }
         }
         return resetFilterDate;

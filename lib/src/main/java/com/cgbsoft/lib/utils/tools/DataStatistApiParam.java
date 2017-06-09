@@ -15,7 +15,7 @@ public class DataStatistApiParam {
         data3.put("grp", "1000");
         data3.put("act", "10121");
         data3.put("arg1", "登录");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBStartRegeist() {
@@ -23,7 +23,7 @@ public class DataStatistApiParam {
         data3.put("grp", "1000");
         data3.put("act", "10122");
         data3.put("arg1", "注册");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBPhoto() {
@@ -33,7 +33,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "头像");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBYeji() {
@@ -43,7 +43,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "业绩");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBqiandao() {
@@ -53,7 +53,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "签到");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBRili() {
@@ -63,7 +63,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "日历");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBCustom() {
@@ -73,7 +73,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的客户");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBOrder() {
@@ -83,7 +83,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的订单");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBYundou() {
@@ -93,7 +93,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的云豆");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBBobao() {
@@ -103,7 +103,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "播报");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBTeam() {
@@ -113,7 +113,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的团队");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBTask() {
@@ -123,7 +123,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的任务");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBCollection() {
@@ -133,7 +133,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的收藏");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBCaifuCourse() {
@@ -143,7 +143,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "财富讲堂");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBMineCourse() {
@@ -153,7 +153,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "我的课程");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBSet() {
@@ -163,7 +163,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "设置");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectImage() {
@@ -173,7 +173,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "选择照片");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectCarme() {
@@ -183,7 +183,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "拍照上传");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectUpdateInfo() {
@@ -193,7 +193,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "修改资料");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectErweima() {
@@ -203,7 +203,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "二维码");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectCloudMind() {
@@ -213,7 +213,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "云口令");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToBselectSaomiao() {
@@ -223,7 +223,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "扫描");
 //        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
 //        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCTabMine() {
@@ -232,7 +232,7 @@ public class DataStatistApiParam {
         data3.put("act", "20013");
         data3.put("arg1", "我的");
 //        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCTabProduct() {
@@ -241,7 +241,7 @@ public class DataStatistApiParam {
         data3.put("act", "20014");
         data3.put("arg1", "产品");
 //        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCTabCloudKey() {
@@ -250,7 +250,7 @@ public class DataStatistApiParam {
         data3.put("act", "20015");
         data3.put("arg1", "云键");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCTabDiscover() {
@@ -259,7 +259,7 @@ public class DataStatistApiParam {
         data3.put("act", "20016");
         data3.put("arg1", "发现");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCTabClub() {
@@ -268,7 +268,7 @@ public class DataStatistApiParam {
         data3.put("act", "20017");
         data3.put("arg1", "club");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCMenuCallCustom() {
@@ -277,7 +277,7 @@ public class DataStatistApiParam {
         data3.put("act", "20074");
         data3.put("arg1", "一键呼叫");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCMenuMessage() {
@@ -286,7 +286,7 @@ public class DataStatistApiParam {
         data3.put("act", "20075");
         data3.put("arg1", "短信");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCMenuCallDuihua() {
@@ -295,7 +295,7 @@ public class DataStatistApiParam {
         data3.put("act", "20076");
         data3.put("arg1", "对话");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCMenuZhibo() {
@@ -304,7 +304,7 @@ public class DataStatistApiParam {
         data3.put("act", "20077");
         data3.put("arg1", "直播");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCMenuKefu() {
@@ -313,7 +313,7 @@ public class DataStatistApiParam {
         data3.put("act", "20078");
         data3.put("arg1", "客服");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCViskTest() {
@@ -322,7 +322,7 @@ public class DataStatistApiParam {
         data3.put("act", "20085");
         data3.put("arg1", "重填");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStaticToCNowStart() {
@@ -330,7 +330,7 @@ public class DataStatistApiParam {
         data3.put("grp", "2001");
         data3.put("act", "20001");
         data3.put("arg1", "立即启动");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStaticToCLoginBack() {
@@ -338,7 +338,16 @@ public class DataStatistApiParam {
         data3.put("grp", "2002");
         data3.put("act", "20006");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    //点击注册按钮
+    public static void onStaticToCRegeistClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2003");
+        data3.put("act", "20007");
+        data3.put("arg1", "注册");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStaticToCRegeistBack() {
@@ -346,31 +355,51 @@ public class DataStatistApiParam {
         data3.put("grp", "2003");
         data3.put("act", "20008");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+    /**
+     * 忘记密码 点击下一步
+     */
+    public static void onStaticToCFindPasswordNext() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2004");
+        data3.put("act", "20009");
+        data3.put("arg1", "返回");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    /**
+     * 忘记密码 点击返回
+     */
     public static void onStaticToCFindPasswordBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2004");
         data3.put("act", "20010");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+    /**
+     * C端 设置密码 点击下一步
+     */
     public static void onStaticToCSetPasswordNext() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2005");
         data3.put("act", "20011");
         data3.put("arg1", "下一步");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+    /**
+     * C端 设置密码 点击返回
+     */
     public static void onStaticToCSetPasswordBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2005");
         data3.put("act", "20012");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onStatisToCProductDetailMenu() {
@@ -379,8 +408,49 @@ public class DataStatistApiParam {
         data3.put("act", "20056");
         data3.put("arg1", "云键");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
+
+    //c端登录 点击登录按钮
+    public static void onStatisToCLoginClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2002");
+        data3.put("act", "20002");
+        data3.put("arg1", "登录");
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    //c端登录 点击注册按钮
+    public static void onStatisToCRegistClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2002");
+        data3.put("act", "20003");
+        data3.put("arg1", "新用户");
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    //c端登录 点击忘记密码按钮
+    public static void onStatisToForgetPwdClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2002");
+        data3.put("act", "20004");
+        data3.put("arg1", "忘记密码");
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    //c端登录  点击微信登录
+    public static void onStatisToWXLoginClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2002");
+        data3.put("act", "20005");
+        data3.put("arg1", "微信");
+        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
 
     public static void onStatisToBDiscoveryBanner(String id, String name) {
         HashMap<String, String> data3 = new HashMap<>();
@@ -391,9 +461,161 @@ public class DataStatistApiParam {
         //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
         data3.put("arg4", id);
         //data3.put("arg3", name);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+    /**
+     * C端点击观看历史按钮点击
+     */
+    public static void onStatisToCLookSchool() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2027");
+        data3.put("act", "20217");
+        data3.put("arg1", "历史");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    /**
+     * C端点击观看历史按钮点击
+     */
+    public static void onStatisToCLookHistory() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2027");
+        data3.put("act", "20218");
+        data3.put("arg1", "历史");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    /**
+     * C端点击视频详情中的缓存按钮
+     */
+    public static void onStatisToCVideoDetailDownLoadClick(String videoName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2029");
+        data3.put("act", "20226");
+        data3.put("arg1", "下载");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", videoName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+    /**
+     * C端点击视频详情中的分享按钮点击事件
+     */
+    public static void onStatisToCVideoDetailShareClick(String videoName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2029");
+        data3.put("act", "20227");
+        data3.put("arg1", "分享");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", videoName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+    /**
+     * C端点击视频详情中的缩小点击事件
+     */
+    public static void onStatisToCVideoDetailZoomClick(String videoName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2029");
+        data3.put("act", "20225");
+        data3.put("arg1", "缩小");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", videoName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+    /**
+     * C端点击视频详情视频关闭的事件
+     */
+    public static void onStatisToCVideoDetailClose(String videoName, long time) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2028");
+        data3.put("act", "20225");
+        data3.put("arg1", "视频关闭");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", videoName);
+        data3.put("arg5", time + "");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+    /**
+     * C端点击视频详情视频关闭的事件
+     */
+    public static void onStatisToCLookVideoDetail(String videoName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2028");
+        data3.put("act", "20224");
+        data3.put("arg1", "视频查看");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", videoName);
+
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+
+    /**
+     * C产品列表点击顶部各个Tab页标签
+     */
+    public static void onStatisToCProductTabTag(String seriseName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2011");
+        data3.put("act", "200394");
+        data3.put("arg1", "产品系列");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", seriseName);
+
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+
+    }
+
+    /**
+     * C端产品点击产品顶部搜索的事件
+     */
+    public static void onStatisToCProductItemClick(String productId,String productName,boolean isHot) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2011");
+        data3.put("act", "200109");
+        data3.put("arg1", "产品详情");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4",productId);
+        data3.put("arg5",productName);
+        data3.put("arg6",isHot?"热销产品":"非热销产品");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+    /**
+     * C端产品列表点击item的记录事件
+     */
+    public static void onStatisToCProductSearchClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2011");
+        data3.put("act", "200040");
+        data3.put("arg1", "搜索");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+    /**
+     * C端产品详情的返回事件
+     */
+    public static void onStatisToCProductDetailBack() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2012");
+        data3.put("act", "200041");
+        data3.put("arg1", "返回");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+/**
+ * C端点击预约
+ */
 
     /**
      * B云豆充值 充值云豆按钮点击
@@ -445,7 +667,7 @@ public class DataStatistApiParam {
         data3.put("act", "20258");
         data3.put("arg1", "充值云豆");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     /**
@@ -458,7 +680,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "选择金额");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
         data3.put("arg4", zengjia);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     /**
@@ -471,7 +693,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "支付方式");
 //        data3.put("arg2", MApplication.getUser().getToC().getBindTeacher());
         data3.put("arg4", payname);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
     public static void onClickLiveRoomHeadImageToB(String videoName) {

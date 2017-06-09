@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -28,8 +29,6 @@ import butterknife.OnClick;
 
 /**
  * 重新设置密码
- * Created by xiaoyu.zhang on 2016/11/23 15:49
- * Email:zhangxyfs@126.com
  *  
  */
 public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> implements SetPasswordContract.View {
@@ -120,6 +119,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
     @OnClick(R2.id.iv_as_back)
     void backClick() {
 //        openActivity(LoginActivity.class);
+        DataStatistApiParam.onStaticToCSetPasswordBack();
         finish();
     }
 
@@ -161,6 +161,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         }
 
         getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, myPublicKey, isFromVerify);
+        DataStatistApiParam.onStaticToCSetPasswordNext();
     }
 
     @Override

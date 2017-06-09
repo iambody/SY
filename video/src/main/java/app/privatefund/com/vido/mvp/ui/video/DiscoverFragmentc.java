@@ -1,6 +1,5 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +10,7 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
@@ -72,6 +72,8 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
                 }
 
                 VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
+
+                DataStatistApiParam.onStatisToCLookVideoDetail(title);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,10 +107,13 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
 //        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
 
         UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListActivity.class);
+
+        DataStatistApiParam.onStatisToCLookSchool();
     }
 
     @OnClick(R2.id.video_discover_download_txt)
     public void onVideoDiscoverDownloadTxtClicked() {
         UiSkipUtils.toNextActivity(baseActivity, VideoDownloadListActivity.class);
+        DataStatistApiParam.onStatisToCLookHistory();
     }
 }

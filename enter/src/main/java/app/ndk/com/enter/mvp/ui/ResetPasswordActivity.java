@@ -14,11 +14,11 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.MToast;
 import com.chenenyu.router.annotation.Route;
 
 import java.util.concurrent.TimeUnit;
@@ -133,6 +133,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     @OnClick(R2.id.iv_af_back)
     void backClick() {
         openActivity(LoginActivity.class);
+        DataStatistApiParam.onStaticToCFindPasswordBack();
         finish();
     }
 
@@ -184,6 +185,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             toDataStatistics(2005, 20011, "下一步");
         }
         getPresenter().checkCode(mLoadingDialog, userName, code);
+        DataStatistApiParam.onStaticToCFindPasswordNext();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.lzy.okgo.OkGo;
@@ -102,7 +103,13 @@ public class BaseApplication extends MultiDexApplication {
             }
         });
     }
-
+    /**
+     * 供埋点使用
+     * @return
+     */
+    public static String BindAdviserState(){
+        return !BStrUtils.isEmpty( AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())?"1":"0";
+    }
     public static Context getContext() {
         return context;
     }
