@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_mine_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_product_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_discovery_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_club_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>

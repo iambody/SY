@@ -139,9 +139,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             mTextTip.setText(R.string.please_target_gesture_password);
             mTextTip.setVisibility(View.VISIBLE);
         }
-        if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-            mTextTip.setVisibility(View.INVISIBLE);
-        }
+//        if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
+//            mTextTip.setVisibility(View.INVISIBLE);
+//        }
     }
 
     @Override

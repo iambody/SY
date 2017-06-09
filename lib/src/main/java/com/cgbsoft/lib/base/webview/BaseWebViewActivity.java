@@ -191,6 +191,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void init(Bundle savedInstanceState) {
          // toolbar事件设置
+        toolbar.setTitle("");
         titleMid.setText(title);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
