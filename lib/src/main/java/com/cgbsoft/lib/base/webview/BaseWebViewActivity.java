@@ -105,6 +105,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
+        url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
+        title = getIntent().getStringExtra(WebViewConstant.push_message_title);
     }
 
     /**
@@ -117,7 +119,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void data() {
-        titleMid.setText(title);
         mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
             executeObservable = RxBus.get().register(getRegeistRxBusId(), Object.class);
@@ -190,6 +191,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void init(Bundle savedInstanceState) {
          // toolbar事件设置
+        titleMid.setText(title);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
@@ -197,8 +199,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
-        url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
-        title = getIntent().getStringExtra(WebViewConstant.push_message_title);
+
         toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {

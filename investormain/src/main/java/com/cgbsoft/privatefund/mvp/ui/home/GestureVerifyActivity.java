@@ -140,7 +140,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             mTextTip.setVisibility(View.VISIBLE);
         }
         if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-            mTextTip.setVisibility(View.GONE);
+            mTextTip.setVisibility(View.INVISIBLE);
         }
     }
 

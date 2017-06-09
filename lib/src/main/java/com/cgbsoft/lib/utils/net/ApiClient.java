@@ -690,6 +690,8 @@ public class ApiClient {
     /**
      * 获取群组信息
      *
+     *
+     *
      * @param groupId
      */
     public static Observable<GroupInfoEntity.Result> getGroupInfo(String groupId) {
