@@ -54,6 +54,7 @@ public class SelectProductActivity extends BaseActivity implements Toolbar.OnMen
                 finish();
             }
         });
+        toolbar.setTitle("");
         titleMid.setText("选择要分享的产品");
         contain = (FrameLayout) findViewById(R.id.contain);
         ProductFragment productproductragment = new ProductFragment();

@@ -19,6 +19,7 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -166,6 +167,7 @@ public class ConversationActivity extends BaseActivity {
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         mTargetIds = intent.getData().getQueryParameter("targetIds");
         enterFragment(mConversationType, mTargetId);
+        AppInfStore.saveConversation(this, mConversationType.getName());
         if (mConversationType == Conversation.ConversationType.GROUP) {
             AppInfStore.saveChatName(this, name);
             return;
