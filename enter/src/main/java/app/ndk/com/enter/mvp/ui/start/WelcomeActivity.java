@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -79,7 +80,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this,  false);
-
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
         } else {

@@ -12,6 +12,7 @@ import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;

@@ -4,8 +4,10 @@ import android.os.Bundle;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.chenenyu.router.Router;
 
@@ -24,6 +26,7 @@ public class LoadCustomerActivity extends BaseActivity {
     @Override
     protected void configApp() {
         //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
+        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM,"");
         AppInfStore.saveAdvise(baseActivity, false);
         if (AppManager.getIsLogin(getApplicationContext())) {
             RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
@@ -43,8 +46,4 @@ public class LoadCustomerActivity extends BaseActivity {
     protected void initView(Bundle state) {
         setContentView(R.layout.activity_customer_loadcustomer);
     }
-
-
-
-
 }
