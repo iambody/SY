@@ -22,6 +22,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
@@ -233,7 +234,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
                     ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+
+
+                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.productName, "1".equals(productlsBean.isHotProduct));
                 }
+
+
             }
         });
         fragmentProductrecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -291,6 +297,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentOderBy = series.getKey();
                 CurrentOffset = 0;
                 isLoadmore = false;
+                productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.orange));
                 reSetConditionAction();
             }
 
@@ -353,19 +360,19 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
         baseActivity.startActivity(i);
 
+        DataStatistApiParam.onStatisToCProductSearchClick();
+
     }
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
         if (null != orderbyPop && orderbyPop.isShowing()) {
             orderbyPop.dismiss();
-
-
             return;
 
         }
-
-        orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems());
+//        if (!BStrUtils.isEmpty(CurrentOderBy))
+            orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems(),CurrentOderBy);
         orderbyPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
 
     }
@@ -457,10 +464,13 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                         initFilterDate(filterDate);
                     }
                 } else {
-//                    Series series = (Series) textView.getTag();
+                    Series series = (Series) textView.getTag();
                     CurrentSeries = ((Series) textView.getTag()).getKey();
                     isInitData = true;
                     reSetConditionAction();
+                    //埋点
+                    if (null != series)
+                        DataStatistApiParam.onStatisToCProductTabTag(series.getName());
                 }
             }
         });
@@ -536,6 +546,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             }
         }
         BStrUtils.SetTxt(productProductfragmentPaixu, getResources().getString(R.string.zhinengpaixu));
+        productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.black));
         orderbyPop = null;
         filterPop = null;
         if (null != productFilterBean) {

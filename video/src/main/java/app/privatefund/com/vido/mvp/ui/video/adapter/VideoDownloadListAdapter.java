@@ -4,12 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import  app.privatefund.com.vido.R;
 
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
 
+import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.mvp.ui.video.holder.VideoDownloadListHolder;
 import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
@@ -67,7 +67,7 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.ll_avd_pause.setVisibility(View.VISIBLE);
 
             if (model.status == VideoStatus.DOWNLOADING || model.status == VideoStatus.WAIT) {//正在下载
-                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_start);
+                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_cache);
                 vdlh.tv_avd_pause.setText(R.string.caching_str);
             } else if (model.status == VideoStatus.NONE) {//未下载
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);

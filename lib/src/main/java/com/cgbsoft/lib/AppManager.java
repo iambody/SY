@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
 
 /**
  * desc  进行不同application的管理 注意 防止误操作无修改 此处只能取状态不能村状态
@@ -212,5 +213,12 @@ public class AppManager implements AppinfConstant {
      */
     public static String getPublicKey(Context context) {
         return getBasePreference(context).getString(PUBLIC_KEY, "");
+    }
+
+    /**
+     * 获取定位信息
+     */
+    public static LocationBean getLocation(Context context) {
+        return AppInfStore.getLocationInf(context.getApplicationContext());
     }
 }

@@ -19,11 +19,14 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -31,6 +34,7 @@ import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -96,6 +100,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //公钥直接存内存中
     private String publicKey;
 
+    private LocationManger locationManger;
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
@@ -155,6 +160,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
+        initLocation();
+
+    }
+
+    private void initLocation() {
+
+        locationManger = LocationManger.getInstanceLocationManger(baseContext);
+        locationManger.startLocation(new BdLocationListener() {
+            @Override
+            public void getLocation(LocationBean locationBean) {
+                LogUtils.Log("S","sss");
+
+            }
+
+            @Override
+            public void getLocationerror() {
+                LogUtils.Log("S","sss");
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManger.unregistLocation();
     }
 
     @Override
@@ -188,19 +218,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-//        toDataStatistics(1002, 10005, "登录");
 
-//        String publickey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCp8pDxAhjGPMxxU4VCWo1if4djzyqxM6dScGhb5q+/wqKfY/3SvPH7XKhtF1Q/0kRjCM3tFFpdGJyqXl0Bl34o3RlGoCeCGbUxVRj2IXvsryaOeF1yi8vW7DtOu2VPePS+Hv69SUCDaJYRdSz1+bhaa1ltFoYIvyTjhr+V8umjNQIDAQAB";
-//        String privatekey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKnykPECGMY8zHFThUJajWJ/h2PPKrEzp1JwaFvmr7/Cop9j/dK88ftcqG0XVD/SRGMIze0UWl0YnKpeXQGXfijdGUagJ4IZtTFVGPYhe+yvJo54XXKLy9bsO067ZU949L4e/r1JQINolhF1LPX5uFprWW0Whgi/JOOGv5Xy6aM1AgMBAAECgYBg9z7N1GVwTmZTztS83E/JQHxubVitjIxOlEZnEUN7xUDmcrXzVM04n1CWFfaDB6TvYKmmOLOqZI2XA4pLizV2iV3YaJUzv7M0kioZ/0+QG5NwGhaF4wCNOPK9MSmNcSX5qLm0PbOixDc/+E/YY8N9XwfmWgi/CxQs58vBK7Fo7QJBAO0ZafOd841e8YXT9pxZ6jIUAocgKWds9U7SJbxCN4VHHX+cvAUsLS/L9hWfZx0ejBcWrIFuW7hka2mrJfYnP28CQQC3fsIEzt2RVb9klmC4NyJdEA6M8fNF/wTuVwmLvUCPCUWhvEW34//Z5qlBxfPHA/uXuKsq/UiC+0O0xD+FH/WbAkEAlXCuOjG1H8bW3i4CQvvdQ+Ee0sJvtlOTrjGAPU9TJTr0mclVLMFyXazlly1YVZ86VxcgdZf0UZ1hokGQdLy6GwJAQ6OoJVmT9yTinlOIZ597PU7T7kSp5l1xFeJjlG04xQEn98yM7pJPF6WdMq+jgvMG5RCfmAMxnYa9mH7W4126jQJAOoXPUTZoGP1LYtIEUrNLIM5GsngmktrgjVj2HbzYhdvAVk8Zcbu0BoexC8Gg7Ka17sWWuCKqxGoKqLaV56X0Jw==";
-//        String sss = null;
-//        try {
-//            sss = RSAUtils.encryptByPublicKey("{\"userName\":\"18900000001\",\"password\":\"9def65456fc2a68a\",\"client\":\"C\"}", publickey);
-//            String dddd = new String(RSAUtils.decryptByPrivateKey(sss, privatekey));
-//            LogUtils.Log("s", sss);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        LogUtils.Log("s", sss);
         if (!BStrUtils.isEmpty(publicKey))
             getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
         else {
@@ -218,7 +236,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 }
             }));
         }
-
+        DataStatistApiParam.onStatisToCLoginClick();
     }
 
     private ArrayList<String> picLs = new ArrayList<>();
@@ -241,9 +259,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.tv_al_register)
     void registerClick() {//注册
-        toDataStatistics(1002, 10007, "注册用户");
-        toDataStatistics(1002, 10017, "选择注册");
-
+//        toDataStatistics(1002, 10007, "注册用户");
+//        toDataStatistics(1002, 10017, "选择注册");
+        DataStatistApiParam.onStatisToCRegistClick();
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
@@ -252,9 +270,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.tv_al_forget)
     void forgetClick() {//忘记密码
-        toDataStatistics(1002, 10006, "忘记密码");
-        toDataStatistics(1002, 10018, "选择登录");
-
+//        toDataStatistics(1002, 10006, "忘记密码");
+//        toDataStatistics(1002, 10018, "选择登录");
+        DataStatistApiParam.onStatisToForgetPwdClick();
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
@@ -351,6 +369,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             }
         });
         wxAuthorManger.startAuth();
+        DataStatistApiParam.onStatisToWXLoginClick();
     }
 
 

@@ -36,6 +36,7 @@ Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合�
  Router.build("test").go(context);
 
 3 // 其他部分api
+
  Router.build("user")
      .requestCode(int) // 调用startActivityForResult
      .extras(bundle)  // 携带跳转参数
@@ -43,3 +44,8 @@ Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合�
      .anim(enter, exit)  // 添加跳转动画
      .callback(calback)  // 跳转结果回调
      .go(context);
+
+
+ // 获取定位信息bean    用前需要判断  locationBean.getLocationcity() 是否为 null或者空 BStrUtils.isEmpty(locationBean.getLocationcity())（为安全起见 一般情况下是肯定不为空的）
+  LocationBean locationBean= AppManager.getLocation(Context);
+

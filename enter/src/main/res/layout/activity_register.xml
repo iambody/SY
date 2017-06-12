@@ -36,7 +36,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="98dp"
                 android:background="@drawable/bg_choice_ids_logo"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <RelativeLayout

@@ -13,6 +13,21 @@
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+
+        <!-- ****************百度定位****************-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="FoKChG57zGF9QOZvcIomgNUzLW0YpcLP" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" />
+            </intent-filter>
+        </service>
+        <!-- ****************百度****************-->
     </application>
 
 </manifest>

@@ -29,16 +29,22 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
@@ -114,6 +120,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable;
+    private LocationManger locationManger;
+
+    /**
+     * 定位管理器
+     */
+
 
     @Override
     protected int layoutID() {
@@ -171,6 +183,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         showInfoDialog();
 
         autoSign();
+        initLocation();
+
     }
 
     private void initUserInfo() {
@@ -330,9 +344,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-//                if (1 == currentPostion && isHaveClickProduct) {
-//                    MainTabManager.getInstance().getProductFragment().resetAllData();
-//                }
+                if (1 == position && isHaveClickProduct) {
+                    MainTabManager.getInstance().getProductFragment().resetAllData();
+                }
                 isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
@@ -351,6 +365,31 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
+        buryPoint(position);
+    }
+
+    /**
+     * 埋点
+     */
+    private void buryPoint(int postion) {
+        switch (postion) {
+            case 0:
+                DataStatistApiParam.onStatisToCTabMine();
+                break;
+            case 1:
+                DataStatistApiParam.onStatisToCTabProduct();
+                break;
+            case 2:
+                DataStatistApiParam.onStatisToCTabDiscover();
+                break;
+            case 3:
+                DataStatistApiParam.onStatisToCTabClub();
+                break;
+            case 4:
+                DataStatistApiParam.onStatisToCTabCloudKey();
+                break;
+
+        }
     }
 
     private void initRxObservable() {
@@ -558,6 +597,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             return;
         }
         AppInfStore.saveLastExitTime(this, System.currentTimeMillis());
+        locationManger.unregistLocation();
         Process.killProcess(Process.myPid());
         System.exit(1);
     }
@@ -647,6 +687,28 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void updateUserInfo(int requestCode, List<TIMUserProfile> profiles) {
+
+    }
+
+    public void initLocation() {
+        LocationBean a=AppManager.getLocation(baseContext);
+        locationManger = LocationManger.getInstanceLocationManger(baseContext);
+        locationManger.startLocation(new BdLocationListener() {
+            @Override
+            public void getLocation(LocationBean locationBean) {
+
+//                PromptManager.ShowCustomToast(baseContext,"定位成功");
+                locationManger.unregistLocation();
+//                LogUtils.Log("S", "s");
+//                LogUtils.Log("location", "定位成功 城市：" + null == locationBean.getLocationcity() ? "空" : locationBean.getLocationcity());
+
+            }
+
+            @Override
+            public void getLocationerror() {
+//                LogUtils.Log("location", "定位失败");
+            }
+        });
 
     }
 }

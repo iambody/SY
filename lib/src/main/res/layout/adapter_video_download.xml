@@ -18,8 +18,8 @@
             <CheckBox
                 android:id="@+id/cb_avd"
                 style="@style/CustomCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="8dp"
                 android:checked="false"
@@ -48,8 +48,8 @@
 
                 <ImageView
                     android:id="@+id/iv_avd_pause"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_video_download_pause" />
 
                 <TextView

@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -38,6 +39,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -366,8 +368,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @OnClick(R2.id.iv_avd_back_play)
     void iv_avd_back_play() {
-        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+//        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         FloatVideoService.startService(videoId);
+        DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
         finish();
     }
 
@@ -457,7 +460,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     .subscribe(new RxSubscriber<Integer>() {
                         @Override
                         protected void onEvent(Integer integer) {
-                            getPresenter().getVideoDetailInfo(mLoadingDialog,videoId);
+                            getPresenter().getVideoDetailInfo(mLoadingDialog, videoId);
                             sv_avd.setVisibility(View.VISIBLE);
                         }
 
@@ -467,7 +470,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                         }
                     });
         } else {
-            getPresenter().getVideoDetailInfo(mLoadingDialog,videoId);
+            getPresenter().getVideoDetailInfo(mLoadingDialog, videoId);
         }
     }
 
@@ -535,7 +538,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     public void toVideoLikeSucc(int likeRes, int likeNum) {
         iv_avd_like.setImageResource(likeRes);
         tv_avd_like_num.setText(String.valueOf(likeNum));
-        toDataStatistics(1021, 10104, new String[]{videoInfoModel.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+//        toDataStatistics(1021, 10104, new String[]{videoInfoModel.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
     }
 
     @Override
@@ -564,6 +567,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
         tv_avd_cache.setText(R.string.caching_str);
         iv_avd_cache.setImageResource(R.drawable.ic_caching);
+
+        DataStatistApiParam.onStatisToCVideoDetailDownLoadClick(videoInfoModel.videoName);
     }
 
     @Override
@@ -872,9 +877,19 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setTextColor(0xffe6e6e6);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && rl_avd_download.getVisibility() == View.VISIBLE) {
+            rl_avd_download.setVisibility(View.GONE);
+            rl_avd_download.startAnimation(closeAnimationSet);
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onDestroy() {
+
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
@@ -908,7 +923,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (isPlayVideoLocalDeleteObservable != null) {
             RxBus.get().unregister(IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE, isPlayVideoLocalDeleteObservable);
         }
-
+        if (null != videoInfoModel)
+            DataStatistApiParam.onStatisToCVideoDetailClose(videoInfoModel.videoName, allPlayTime);
         super.onDestroy();
     }
 
@@ -1038,6 +1054,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, commonShareBean, null);
         commonShareDialog.show();
+
+        DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName);
     }
 
 

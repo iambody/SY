@@ -124,6 +124,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         }
         mCompositeSubscription = null;
         TaskInfo.unbind();
+        //返回按钮的埋点
+//        DataStatistApiParam.onStatisToCProductDetailBack();
+
     }
 
     @Override
@@ -191,6 +194,8 @@ public class ProductDetailActivity extends BaseWebViewActivity {
                 }
             });
             commonShareDialog.show();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -216,4 +221,5 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         }
 
     }
+
 }

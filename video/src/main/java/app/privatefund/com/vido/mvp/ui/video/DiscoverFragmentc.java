@@ -1,6 +1,5 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -63,7 +62,8 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
             if (split[1].contains("liveVideo")){
                 String liveJson = baseParams.substring(14);
                 HashMap<String,Object>map = new HashMap<>();
-                map.put("liveJson",liveJson);
+                map.put("liveJson",split[2]);
+//                map.put("liveJson",liveJson);
                 map.put("type","webJoinLive");
                 NavigationUtils.startActivityByRouter(getActivity(),RouteConfig.GOTOLIVE,map);
             }else {
@@ -74,6 +74,8 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
                 }
 
                 VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
+
+                DataStatistApiParam.onStatisToCLookVideoDetail(title);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,13 +107,15 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @OnClick(R2.id.video_discover_history_txt)
     public void onVideoDiscoverHistoryTxtClicked() {//
 //        UiSkipUtils.toNextActivity(baseActivity, PlayRecordActivity.class);
+
         UiSkipUtils.toNextActivity(baseActivity, VideoHistoryListActivity.class);
-        DataStatistApiParam.onVideoPlayHistoryToC();
+
+        DataStatistApiParam.onStatisToCLookSchool();
     }
 
     @OnClick(R2.id.video_discover_download_txt)
     public void onVideoDiscoverDownloadTxtClicked() {
         UiSkipUtils.toNextActivity(baseActivity, VideoDownloadListActivity.class);
-        DataStatistApiParam.onVideoPlayDownToC();
+        DataStatistApiParam.onStatisToCLookHistory();
     }
 }

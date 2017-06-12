@@ -318,9 +318,9 @@
               android:theme="@style/Theme.UMDefault" />-->
         <!--=================================================-->
         <!-- X5内核的key -->
-        <meta-data
+       <!-- <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />
+            android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />-->
         <!--三方登录-->
         <!-- 三方登录 -->
 

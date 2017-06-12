@@ -15,6 +15,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
@@ -131,18 +132,19 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @OnClick(R2.id.iv_ar_back)
     void backClick() {
+        DataStatistApiParam.onStaticToCRegeistBack();
         openActivity(LoginActivity.class);
         finish();
     }
 
     @OnClick(R2.id.et_ar_username)
     void usernameEtClick() {
-        toDataStatistics(1002, 10009, "注册手机");
+//        toDataStatistics(1002, 10009, "注册手机");
     }
 
     @OnClick(R2.id.et_ar_password)
     void passwordEtClick() {
-        toDataStatistics(1002, 10011, "注册手机");
+//        toDataStatistics(1002, 10011, "注册手机");
     }
 
     @OnClick(R2.id.iv_ar_del_un)
@@ -202,6 +204,9 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         }
         toDataStatistics(1002, 10012, "提交注册");
         getPresenter().toRegister(mLoadingDialog, userName, password, code);
+
+
+        DataStatistApiParam.onStaticToCRegeistClick();
     }
 
     @OnClick(R2.id.tv_ar_proto)

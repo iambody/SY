@@ -1,15 +1,11 @@
 package app.product.com.widget;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -17,11 +13,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
-import com.cgbsoft.lib.widget.lPopListview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +39,13 @@ public class OrderbyPop extends PopupWindow {
     private ListView lPopListview;
     private OrderbyAp orderbyAp;
 
-    public OrderbyPop(Context context, List<Series> data) {
+    private String OderBy;
+    public OrderbyPop(Context context, List<Series> data,String CurrentOderBy) {
 //        super(context,R.style.style_product_oderby_dialog);
         super(context);
         this.dcContext = context;
         this.prductoderby = data;
+        this.OderBy=CurrentOderBy;
         baseView = LayoutInflater.from(dcContext).inflate(R.layout.product_orderbydialog, null);
         initConfig();
         initview();
@@ -146,6 +142,9 @@ public class OrderbyPop extends PopupWindow {
             }
             Series da = mBeans.get(position);
             BStrUtils.SetTxt(mItem.product_item_orderby_orderbytxt, da.getName());
+
+                mItem.product_item_orderby_orderbytxt.setTextColor(dcContext.getResources().getColor(!BStrUtils.isEmpty(OderBy)&&OderBy.equals(da.getKey())?R.color.orange:R.color.black));
+
             return convertView;
         }
 
