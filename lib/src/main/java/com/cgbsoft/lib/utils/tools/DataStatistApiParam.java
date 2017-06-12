@@ -10,13 +10,13 @@ import java.util.HashMap;
  */
 public class DataStatistApiParam {
 
-    public static void onVideoPlayHistoryToC() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "1000");
-        data3.put("act", "10121");
-        data3.put("arg1", "登录");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-    }
+//    public static void onVideoPlayHistoryToC() {
+//        HashMap<String, String> data3 = new HashMap<>();
+//        data3.put("grp", "1000");
+//        data3.put("act", "10121");
+//        data3.put("arg1", "登录");
+//        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+//    }
     public static void onVideoPlayHistoryToC() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2027");
@@ -49,15 +49,7 @@ public class DataStatistApiParam {
         data3.put("arg4", searizableName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
-    public static void onClickVideoToC(String videoName, String searizableName) {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2028");
-        data3.put("act", "20224");
-        data3.put("arg1", videoName);
-        data3.put("arg2", AppManager.getUserInfo(BaseApplication.getContext()).getToC().getBindTeacher());
-        data3.put("arg4", searizableName);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
-    }
+
 
     public static void onStatisToBPhoto() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -162,16 +154,7 @@ public class DataStatistApiParam {
         data3.put("arg5", pdfName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
-    public static void onClickLivePDFToC(String liveName, String pdfName) {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2031");
-        data3.put("act", "20231");
-        data3.put("arg1", "PDF");
-        data3.put("arg2", AppManager.getUserInfo(BaseApplication.getContext()).getToC().getBindTeacher());
-        data3.put("arg4", liveName);
-        data3.put("arg5", pdfName);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
-    }
+
     public static void onStatisToBOrder() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "1004");
@@ -383,14 +366,7 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
     }
 
-    public static void onStatisToCMenuCallCustom() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2015");
-        data3.put("act", "20074");
-        data3.put("arg1", "一键呼叫");
-        //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
-    }
+
 
     public static void onStatisToCMenuMessage() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -462,13 +438,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "立即启动");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
-    public static void onStaticToCNowStart() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2001");
-        data3.put("act", "20001");
-        data3.put("arg1", "立即启动");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3,false);
-    }
+
 
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -494,13 +464,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "注册");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
-    public static void onStaticToCLoginBack() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2002");
-        data3.put("act", "20006");
-        data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-    }
+
     public static void onStaticToCRegeistBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2003");
@@ -623,17 +587,6 @@ public class DataStatistApiParam {
     }
 
 
-    public static void onStatisToBDiscoveryBanner(String id, String name) {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "1013");
-        data3.put("act", "10087");
-        data3.put("arg1", "Banner");
-//        data3.put("arg2", MApplication.getUser().getToB().isColorCloud());
-        //data3.put("arg3", MApplication.getUser().getToB().getOrganizationName());
-        data3.put("arg4", id);
-        //data3.put("arg3", name);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-    }
 
     /**
      * C端点击观看历史按钮点击
