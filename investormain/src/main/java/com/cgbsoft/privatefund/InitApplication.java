@@ -17,6 +17,7 @@ import app.privatefund.com.im.listener.MyConnectionStatusListener;
 import app.privatefund.com.im.listener.MyConversationBehaviorListener;
 import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
 import app.privatefund.com.im.listener.MyReceiveMessageListener;
+import app.privatefund.com.im.listener.MySendMessageListener;
 import app.privatefund.com.im.listener.NewMessageItemProvider;
 import app.privatefund.com.im.listener.PdfMessageItemProvider;
 import app.privatefund.com.im.listener.ProductInputModule;
@@ -66,6 +67,7 @@ public class InitApplication extends InvestorAppli {
             RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
             RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
+            RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
         }
     }
 

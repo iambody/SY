@@ -9,9 +9,6 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.GroupUserInfo;
 
