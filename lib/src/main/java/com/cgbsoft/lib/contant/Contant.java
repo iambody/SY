@@ -15,6 +15,8 @@ public class Contant {
     //视频评论默认条数
     public static final int VIDEO_COMMENT_LIMIT = 20;
 
+    public static final String CUR_LIVE_ROOM_NUM = "CUR_LIVE_ROOM_NUM";
+
     //
     public static final String VISITE_LOOK_NAVIGATION = "VISITE_LOOK_NAVIGATION";
 

@@ -28,6 +28,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -58,8 +59,10 @@ import com.tencent.TIMUserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
@@ -80,6 +83,9 @@ import qcloud.liveold.mvp.presenters.viewinface.LoginView;
 import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
 import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 @Route(RouteConfig.GOTOCMAINHONE)
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView, ProfileView {
@@ -121,6 +127,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable;
     private LocationManger locationManger;
+    private Subscription liveTimerObservable;
 
     /**
      * 定位管理器
@@ -188,11 +195,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initUserInfo() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
     }
 
     private void autoSign() {
-        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())){
+        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
     }
@@ -563,6 +570,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onDestroy() {
         super.onDestroy();
 
+        if (null != liveTimerObservable) {
+            liveTimerObservable.unsubscribe();
+        }
+
         if (closeMainObservable != null) {
             RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, closeMainObservable);
         }
@@ -606,15 +617,32 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void joinLive() {
         if (liveJsonData != null) {
             liveDialog.setVisibility(View.GONE);
+            liveDialog.clearAnimation();
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             intent.putExtra("type", "");
             startActivity(intent);
+            try {
+                SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
     @OnClick(R.id.video_live_close)
-    public void closeLiveDialog(){
+    public void closeLiveDialog() {
         liveDialog.setVisibility(View.GONE);
     }
 
@@ -633,12 +661,22 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
-        getPresenter().getLiveList();
+        liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
+                //延时3000 ，每间隔3000，时间单位
+                .compose(this.<Long>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        getPresenter().getLiveList();
+                    }
+                });
+
     }
 
     @Override
     public void loginLiveFail() {
-        getPresenter().getLiveList();
+//        getPresenter().getLiveList();
     }
 
     @Override
@@ -650,6 +688,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
+        Log.e("liveState", hasLive + "");
+        try {
+            if ((SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM)+"").equals(jsonObject.getString("id"))) {
+                hasLive = false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
@@ -672,7 +718,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void signInSuc() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
     }
 
     private void SsetBottomNavigation() {
@@ -691,7 +737,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     public void initLocation() {
-        LocationBean a=AppManager.getLocation(baseContext);
+        LocationBean a = AppManager.getLocation(baseContext);
         locationManger = LocationManger.getInstanceLocationManger(baseContext);
         locationManger.startLocation(new BdLocationListener() {
             @Override

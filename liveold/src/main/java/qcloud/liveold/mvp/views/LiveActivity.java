@@ -1325,7 +1325,6 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         SxbLog.d(TAG, LogConstants.ACTION_VIEWER_ENTER_ROOM + LogConstants.DIV + MySelfInfo.getInstance().getId() + LogConstants.DIV + "on member join" +
                 LogConstants.DIV + "join room " + id);
         watchCount++;
-        //TODO
         MemberInfo memberInfo = new MemberInfo();
         memberInfo.setUserId(id);
         memberInfo.setAvatar(headImg);
@@ -1400,6 +1399,8 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             if (CurLiveInfo.getHostID().equals(id)) {
                 if (MySelfInfo.getInstance().getIdStatus() == Constants.MEMBER)
                     quiteLivePassively();
+            }else {
+                memberQuit(id,"");
             }
         }
     }
@@ -1412,6 +1413,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
      */
     @Override
     public void memberJoinLive(final String[] list) {
+
     }
 
     @Override

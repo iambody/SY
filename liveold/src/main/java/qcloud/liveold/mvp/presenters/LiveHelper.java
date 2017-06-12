@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.BaseApplication;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
@@ -530,11 +531,10 @@ public class LiveHelper extends Presenter {
                         handleTextMessage(elem, MySelfInfo.getInstance().getNickName());
                     } else {
                         TIMTextElem textElem = (TIMTextElem) elem;
-                        //TODO 联调
-//                        MApplication.mContext.sendBroadcast(new Intent(Util.ACTION_LIVE_RECEVER_MSG)
-//                                .putExtra(Util.ACTION_LIVE_SEND_CONTENT, textElem.getText())
-//                                .putExtra(Util.ACTION_LIVE_SEND_ID, sendId)
-//                        );
+                        BaseApplication.getContext().sendBroadcast(new Intent(Util.ACTION_LIVE_RECEVER_MSG)
+                                .putExtra(Util.ACTION_LIVE_SEND_CONTENT, textElem.getText())
+                                .putExtra(Util.ACTION_LIVE_SEND_ID, sendId)
+                        );
                     }
                 }
 

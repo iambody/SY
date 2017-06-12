@@ -17,6 +17,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,13 @@ public class DataStatisticsUtils {
     public static void push(Context context, final HashMap<String, String> param, boolean isRealTime) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
+        LocationBean locationBean= AppManager.getLocation(context);
+
         try {
+            if (locationBean!=null){
+                js.put("lat",locationBean.getLocationlatitude());
+                js.put("lon",locationBean.getLocationlontitude());
+            }
             js.put("uid", AppManager.getUserId(context.getApplicationContext()));
             js.put("ip", OtherDataProvider.getIP(context.getApplicationContext()));
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
