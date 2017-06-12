@@ -73,7 +73,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
                         .build();
             }
             NotificationManager nm = (NotificationManager) RongContext.getInstance().getSystemService(RongContext.getInstance().NOTIFICATION_SERVICE);
-        nm.notify((int) (100 * Math.random()), notification);
+            nm.notify((int) (100 * Math.random()), notification);
             return true;
         //}
         //return false;

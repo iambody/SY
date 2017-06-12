@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cgbsoft.lib.base.model.bean.UnReadCMSG;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
@@ -14,6 +15,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.privatefund.R;
 
 import butterknife.BindView;
+import io.rong.eventbus.EventBus;
 
 /**
  *  个人页
@@ -23,6 +25,7 @@ import butterknife.BindView;
  */
 public class MineFragment extends BaseFragment {
 
+    private int cUnread;
     @BindView(R.id.webView)
     BaseWebview baseWebview;
 
@@ -33,8 +36,8 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         baseWebview.loadUrls(CwebNetConfig.minePgge);
-
         baseWebview.setClick(new CWebClient.WebviewOnClick() {
             @Override
             public void onClick(String result) {
@@ -54,5 +57,31 @@ public class MineFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         baseWebview.loadUrl("javascript:refresh()");
+        baseWebview.loadUrl("javascript:message('" + cUnread + "')");
+    }
+
+//    public void onEventMainThread(RCConnect rcConnect) {
+//        refrushUnreadMessage();
+//        if (cUnread != 0) {
+//            mWebview.getWebView().loadUrl("javascript:message('" + cUnread + "')");
+//        }
+//        if (rcConnect.getConnectStatus().equals("CONNECTED")) {
+//            checkMessage();
+//        }
+//    }
+//
+//    public void onEventMainThread(RefreshMsgCount refreshMsgCount) {
+//        mWebview.getWebView().loadUrl("javascript:message('" + cUnread + "')");
+//    }
+//
+//    public void onEventMainThread(CheckManager rcConnect) {
+//        refrushUnreadMessage();
+//        mWebview.getWebView().loadUrl("javascript:message('" + cUnread + "')");
+////        checkMessage();
+//    }
+
+    public void onEventMainThread(UnReadCMSG unReadMSG) {
+        cUnread = unReadMSG.getUnreadCount();
+        baseWebview.loadUrl("javascript:message('" + cUnread + "')");
     }
 }

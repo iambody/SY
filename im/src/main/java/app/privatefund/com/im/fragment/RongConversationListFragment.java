@@ -375,11 +375,14 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         cacheConversationList.clear();
         this.getConversationList(conversationTypes, new IHistoryDataResultCallback<List<Conversation>>() {
             public void onResult(List<Conversation> data) {
-                for (Conversation conversation : data) {
-                    if (isFilterNoticeInfo(conversation.getSenderUserId())) {
-                        cacheConversationList.add(UIConversation.obtain(conversation, false));
+                if (!CollectionUtils.isEmpty(data)) {
+                    for (Conversation conversation : data) {
+                        if (isFilterNoticeInfo(conversation.getSenderUserId())) {
+                            cacheConversationList.add(UIConversation.obtain(conversation, false));
+                        }
                     }
                 }
+
                 if(data != null && data.size() > 0) {
                     RongConversationListFragment.this.makeUiConversationList(data);
                     RongConversationListFragment.this.mAdapter.notifyDataSetChanged();

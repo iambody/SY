@@ -2,7 +2,6 @@ package app.privatefund.com.im.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,8 +53,10 @@ public class ReceiveInfoManager {
         @Override
         public void handleMessage(Message msg) {
             Activity mCurrentActivityContext = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
-            if (("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) && mainHandler != null )) {
+            if ((("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null )) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
                 message.what = msg.what;
@@ -72,21 +73,6 @@ public class ReceiveInfoManager {
                         String detail = bundle.getString("detail");
                         String jumpUrl = bundle.getString("jumpUrl");
                         String shareType = bundle.getString("shareType");
-                        if ("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) || "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) {
-                            SharedPreferences sharedPreferences = PushPreference.getBase(InvestorAppli.getContext());
-                            SharedPreferences.Editor edit = sharedPreferences.edit();
-                            int unreadTotal = sharedPreferences.getInt("unreadTotal", 0);
-                            edit.putInt("unreadTotal", (unreadTotal + 1));//未读总消息数
-                            unreadTotal++;
-                            edit.putString("unreadItem" + unreadTotal, bundle.toString());  //未读消息
-                            edit.putString("type" + unreadTotal, type);
-                            edit.putString("jumpUrl" + unreadTotal, jumpUrl);
-                            edit.putString("detail" + unreadTotal, detail);
-                            edit.putString("title" + unreadTotal, title);
-                            edit.commit();
-                            return;
-                        }
-
                         if (detail == null || detail.equals("") || "".equals(title)) {
                             return;
                         }
