@@ -84,7 +84,6 @@ public class MyPushMessageReceive extends PushMessageReceiver {
         if (!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversation(pushNotificationMessage.getSenderId())) {
             // PageJumpMananger.jumpPageFromToMainActivity(context, pushNotificationMessage);
             Intent notificationIntent = Router.build(Uri.parse("jumpmodule://com.cgbsoft.privatefund/welcomeactivity")).getIntent(context);
-
             notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
