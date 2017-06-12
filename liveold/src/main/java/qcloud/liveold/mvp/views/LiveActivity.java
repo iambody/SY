@@ -60,13 +60,17 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.ImageUtil;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.chenenyu.router.annotation.Route;
 import com.lidroid.xutils.BitmapUtils;
 import com.tencent.TIMMessage;
 import com.tencent.TIMTextElem;
@@ -116,6 +120,7 @@ import rx.Observable;
 /**
  * Live直播类
  */
+@Route(RouteConfig.GOTOLIVE)
 public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQuiteRoomView, LiveView, View.OnClickListener, ProfileView, QavsdkControl.onSlideListener, LiveListView, LiveContract.view {
     private static final String TAG = LiveActivity.class.getSimpleName();
     private static final int GETPROFILE_JOIN = 0x200;
@@ -196,17 +201,35 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         String liveJsonStr = getIntent().getStringExtra("liveJson");
         JSONObject liveJson = null;
         try {
-            liveJson = new JSONObject(liveJsonStr);
-            MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
-            MySelfInfo.getInstance().setJoinRoomWay(false);
-            CurLiveInfo.setHostID(liveJson.getString("user_id"));
-            CurLiveInfo.setHostName(liveJson.getString("nick_name"));
-            CurLiveInfo.setHostAvator(liveJson.getString("head_image_url"));
-            CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
-            CurLiveInfo.setMembers(0);
-            CurLiveInfo.setAdmires(11);
-            CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("is_share")));
-            CurLiveInfo.setChatId(liveJson.getString("chat"));
+            if (getIntent().getStringExtra("type").equals("webJoinLive")) {
+                liveJson = new JSONObject(liveJsonStr);
+                MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
+                MySelfInfo.getInstance().setJoinRoomWay(false);
+                CurLiveInfo.setHostID(liveJson.getString("user_id"));
+                CurLiveInfo.setHostName(liveJson.getString("title"));
+                CurLiveInfo.setHostAvator(liveJson.getString("head_portrait"));
+                CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
+                CurLiveInfo.setMembers(0);
+                CurLiveInfo.setAdmires(11);
+                CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("isShare")));
+                CurLiveInfo.setChatId(liveJson.getString("chat"));
+                CurLiveInfo.setSlogan(liveJson.getString("slogan"));
+                CurLiveInfo.setAllowChat(liveJson.getInt("allow_chat"));
+            } else {
+                liveJson = new JSONObject(liveJsonStr);
+                MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
+                MySelfInfo.getInstance().setJoinRoomWay(false);
+                CurLiveInfo.setHostID(liveJson.getString("user_id"));
+                CurLiveInfo.setHostName(liveJson.getString("nick_name"));
+                CurLiveInfo.setHostAvator(liveJson.getString("head_image_url"));
+                CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
+                CurLiveInfo.setMembers(0);
+                CurLiveInfo.setAdmires(11);
+                CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("is_share")));
+                CurLiveInfo.setChatId(liveJson.getString("chat"));
+                CurLiveInfo.setSlogan(liveJson.getString("slogan"));
+                CurLiveInfo.setAllowChat(liveJson.getInt("allow_chat"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -696,22 +719,24 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         BitmapUtils bitmapUtils = new BitmapUtils(this);
         bitmapUtils.display(hostHead, SPreference.getString(LiveActivity.this, "liveHostUrl"));
 
-        if ("1".equals(CurLiveInfo.isShare+"")) {
+        if ("1".equals(CurLiveInfo.isShare + "")) {
             shareLive.setVisibility(View.VISIBLE);
         } else {
             shareLive.setVisibility(View.INVISIBLE);
         }
+        Imageload.display(this, CurLiveInfo.getHostAvator(), hostHead);
+
+//        hostHead
         hostHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeEdit();
-                //TODO
-//                new LiveUserInfoDialog(LiveActivity.this, CurLiveInfo.getHostName()) {
-//                    @Override
-//                    public void left() {
-//                        this.dismiss();
-//                    }
-//                }.show();
+                new LiveUserInfoDialog(LiveActivity.this, CurLiveInfo.getHostAvator(), CurLiveInfo.getHostName()) {
+                    @Override
+                    public void left() {
+                        this.dismiss();
+                    }
+                }.show();
                 String videoName = CurLiveInfo.getTitle();
                 if (AppManager.isInvestor(BaseApplication.getContext())) {
                     DataStatistApiParam.onClickLiveRoomHeadImageToC(videoName);
@@ -727,6 +752,9 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         } else {
             openMenu.setVisibility(View.GONE);
             sendImg.setVisibility(View.VISIBLE);
+        }
+        if (CurLiveInfo.getAllowChat() == 0) {
+            sendImg.setVisibility(View.INVISIBLE);
         }
 //        if (allowChat.equals("0")) {
 //            mListViewMsgItems.setVisibility(View.GONE);

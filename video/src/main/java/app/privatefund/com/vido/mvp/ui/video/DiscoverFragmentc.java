@@ -61,8 +61,9 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
             String baseParams = URLDecoder.decode(res, "utf-8");
             String[] split = baseParams.split(":");
             if (split[1].contains("liveVideo")){
+                String liveJson = baseParams.substring(14);
                 HashMap<String,Object>map = new HashMap<>();
-                map.put("liveJson",split[2]);
+                map.put("liveJson",liveJson);
                 map.put("type","webJoinLive");
                 NavigationUtils.startActivityByRouter(getActivity(),RouteConfig.GOTOLIVE,map);
             }else {

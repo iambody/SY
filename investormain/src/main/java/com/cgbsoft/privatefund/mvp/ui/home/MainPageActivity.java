@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -563,8 +565,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
+            liveDialog.setVisibility(View.GONE);
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
+            intent.putExtra("type", "");
             startActivity(intent);
         }
     }
@@ -609,6 +613,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
+            Animation animation = AnimationUtils.loadAnimation(
+                    this, R.anim.live_dialog_anim);
+            liveDialog.startAnimation(animation);
             try {
                 liveTitle.setText(jsonObject.getString("title"));
                 Imageload.display(this, jsonObject.getString("image"), liveIcon);
@@ -618,6 +625,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             liveJsonData = null;
             liveDialog.setVisibility(View.GONE);
+            liveDialog.clearAnimation();
         }
 
     }

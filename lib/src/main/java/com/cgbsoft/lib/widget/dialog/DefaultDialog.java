@@ -5,12 +5,15 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -21,6 +24,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 public abstract class DefaultDialog extends BaseDialog {
     private String content, left, right;
     private boolean showTitle = false;
+    private LinearLayout doubleBottomLayout,singleBottomLayout;
 
     public DefaultDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
@@ -43,7 +47,7 @@ public abstract class DefaultDialog extends BaseDialog {
         this.content = content;
         this.left = left;
         this.right = right;
-        if (TextUtils.isEmpty(left)){
+        if (TextUtils.isEmpty(left)) {
             setSingleBtn();
         }
     }
@@ -52,7 +56,8 @@ public abstract class DefaultDialog extends BaseDialog {
      * 设置单个按钮
      */
     private void setSingleBtn() {
-
+        singleBottomLayout.setVisibility(View.VISIBLE);
+        doubleBottomLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -67,7 +72,14 @@ public abstract class DefaultDialog extends BaseDialog {
         mContent.setText(content);
         mQuxiao.setText(left);
         mQueren.setText(right);
+        mQueren1.setText(right);
 
+        mQueren1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                right();
+            }
+        });
         mQuxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,11 +97,15 @@ public abstract class DefaultDialog extends BaseDialog {
     private TextView mContent;
     private TextView mQuxiao;
     private TextView mQueren;
+    private TextView mQueren1;
 
     private void bindViews() {
-            mContent = (TextView) findViewById(R.id.default_dialog_content);
+        mContent = (TextView) findViewById(R.id.default_dialog_content);
         mQuxiao = (TextView) findViewById(R.id.default_dialog_quxiao);
         mQueren = (TextView) findViewById(R.id.default_dialog_queren);
+        mQueren1 = (TextView) findViewById(R.id.default_dialog_queren1);
+        doubleBottomLayout = (LinearLayout) findViewById(R.id.dialog_bottom_layout);
+        singleBottomLayout = (LinearLayout) findViewById(R.id.dialog_single_layout);
 
         if (AppManager.isAdViser(getContext())) {
             mQueren.setBackgroundResource(R.drawable.default_dialog_right_btn_select_adviser);
