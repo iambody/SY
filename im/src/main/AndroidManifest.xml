@@ -42,8 +42,8 @@
 
         <!-- 容云离线消息推送 -->
         <receiver
-            android:exported="true"
-            android:name="app.privatefund.com.im.listener.MyPushMessageReceive">
+            android:name="app.privatefund.com.im.listener.MyPushMessageReceive"
+            android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
                 <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />

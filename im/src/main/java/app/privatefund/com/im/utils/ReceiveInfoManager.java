@@ -1,8 +1,6 @@
 package app.privatefund.com.im.utils;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,9 +12,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -57,14 +53,15 @@ public class ReceiveInfoManager {
     private Handler mainHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-//            if ((InvestorAppli.mCurrentActivityContext instanceof GestureVerifyActivity ||
-//                    MApplication.mCurrentActivityContext instanceof GestureEditActivity) && myHandler != null ) {
-//                Message message = Message.obtain();
-//                message.setData(msg.getData());
-//                message.what = msg.what;
-//                myHandler.sendMessageDelayed(message, 1000 * 30);
-//                return;
-//            }
+            Activity mCurrentActivityContext = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+            if (("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) && mainHandler != null )) {
+                Message message = Message.obtain();
+                message.setData(msg.getData());
+                message.what = msg.what;
+                mainHandler.sendMessageDelayed(message, 1000 * 30);
+                return;
+            }
             // 进行相应操作
             try {
                 Bundle bundle = msg.getData();
@@ -75,8 +72,7 @@ public class ReceiveInfoManager {
                         String detail = bundle.getString("detail");
                         String jumpUrl = bundle.getString("jumpUrl");
                         String shareType = bundle.getString("shareType");
-                        Activity mCurrentActivityContext = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
-                        if ("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) || "WelcomeActivity".equals(mCurrentActivityContext)) {
+                        if ("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) || "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) {
                             SharedPreferences sharedPreferences = PushPreference.getBase(InvestorAppli.getContext());
                             SharedPreferences.Editor edit = sharedPreferences.edit();
                             int unreadTotal = sharedPreferences.getInt("unreadTotal", 0);
