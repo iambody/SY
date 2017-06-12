@@ -20,6 +20,7 @@ import app.privatefund.com.im.utils.RongConnect;
  */
 public class LoadCustomerActivity extends BaseActivity {
 
+
     @Override
     protected void configApp() {
         //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
@@ -42,4 +43,8 @@ public class LoadCustomerActivity extends BaseActivity {
     protected void initView(Bundle state) {
         setContentView(R.layout.activity_customer_loadcustomer);
     }
+
+
+
+
 }

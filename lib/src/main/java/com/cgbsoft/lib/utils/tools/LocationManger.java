@@ -6,6 +6,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.service.LocationService;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -16,6 +17,8 @@ import com.cgbsoft.privatefund.bean.location.LocationBean;
  * 日期 2017/6/9-15:56
  */
 public class LocationManger {
+
+    private static LocationManger locationManger;
     /**
      * 定位的service
      */
@@ -23,22 +26,32 @@ public class LocationManger {
     /**
      * 定位结果的反馈接口
      */
-    private static  BdLocationListener bdLocationResultListener;
+    private static BdLocationListener bdLocationResultListener;
     /**
      * 需要的上下文
      */
     private static Context context;
+
+    private LocationManger (){}
+
+    public static LocationManger getInstanceLocationManger(Context contes){
+        if(null==locationManger){
+            locationManger=new LocationManger();
+        }
+        context = contes;
+        locationService = new LocationService(context.getApplicationContext());
+
+        return  locationManger;
+    }
 
     /**
      * 开始定位 方法
      *
      * @param
      */
-    public static void startLocation(Context contes,BdLocationListener bdLocationListenesssr) {
-        context = contes;
-        locationService = new LocationService(context.getApplicationContext());
-        bdLocationResultListener=bdLocationListenesssr;
+    public static void startLocation( BdLocationListener bdLocationListenesssr) {
         locationService.registerListener(bdLocationListener);
+        bdLocationResultListener = bdLocationListenesssr;
         locationService.setLocationOption(locationService.getDefaultLocationClientOption());
         locationService.start();// 定位SDK
     }
@@ -47,6 +60,7 @@ public class LocationManger {
      * 注销定位
      */
     public static void unregistLocation() {
+        if (null == locationService) return;
         locationService.unregisterListener(bdLocationListener); //注销掉监听
         locationService.stop(); //停止定位服务
     }
@@ -143,15 +157,17 @@ public class LocationManger {
                 }
 //                logMsg(sb.toString());
                 if (!BStrUtils.isEmpty(location.getCity())) {//获取成功
-                    LocationBean locationBean=new LocationBean(location.getLatitude(),location.getLongitude(),location.getCity());
-                    AppInfStore.saveLocationInf(context,locationBean);
-                    if(null!=bdLocationResultListener)
+                    LocationBean locationBean = new LocationBean(location.getLatitude(), location.getLongitude(), location.getCity());
+                    AppInfStore.saveLocationInf(context, locationBean);
+                    if (null != bdLocationResultListener)
                         bdLocationResultListener.getLocation(locationBean);
-
-
                 } else {//获取失败
-                    if(null!=bdLocationResultListener)
-                        bdLocationResultListener.getLocationerror();
+                    if (null != bdLocationResultListener) {
+                        if (null != AppManager.getLocation(context) && !BStrUtils.isEmpty(AppManager.getLocation(context).getLocationcity()))
+                            bdLocationResultListener.getLocation(AppManager.getLocation(context));
+                        else
+                            bdLocationResultListener.getLocationerror();
+                    }
 
                 }
             }

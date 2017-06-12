@@ -100,6 +100,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //公钥直接存内存中
     private String publicKey;
 
+    private LocationManger locationManger;
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
@@ -159,18 +160,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
-        LocationBean locationBean = AppInfStore.getLocationInf(baseContext);
-        LocationManger.startLocation(baseContext, new BdLocationListener() {
+        initLocation();
+
+    }
+
+    private void initLocation() {
+
+        locationManger = LocationManger.getInstanceLocationManger(baseContext);
+        locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-                LogUtils.Log("s", "sss");
+                LogUtils.Log("S","sss");
+
             }
 
             @Override
             public void getLocationerror() {
-
+                LogUtils.Log("S","sss");
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManger.unregistLocation();
     }
 
     @Override

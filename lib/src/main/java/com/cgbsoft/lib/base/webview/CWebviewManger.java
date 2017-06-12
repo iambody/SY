@@ -1231,6 +1231,9 @@ public class CWebviewManger {
             String title = split[3];
             if (!url.contains("http")) {
                 url = BaseWebNetConfig.baseParentUrl + url;
+            }else{
+                title=split[4];
+                url=split[2]+":"+split[3];
             }
             Intent i = new Intent(context, BaseWebViewActivity.class);
 
