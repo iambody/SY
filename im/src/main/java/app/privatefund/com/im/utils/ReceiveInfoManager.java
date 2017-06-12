@@ -149,11 +149,7 @@ public class ReceiveInfoManager {
 //                EventBus.getDefault().post(new RefreshUserinfo());
                 JSONObject js = new JSONObject(jumpUrl);
                 String android = js.getString("Android");
-                if (android.contains("RenzhengActivity")) {
-//                    Intent intent = new Intent(context, RenzhengActivity.class);
-//                    intent.putExtra(Con.ADVISER_STATE, Contant.ADVISER_STATE_SUCCESS);
-//                    context.startActivity(intent);
-                } else if (android.contains("?")) {
+                if (!TextUtils.isEmpty(android) && android.contains("?")) {
                     final String jumpActivityName = android.substring(0, android.indexOf("?"));
                     final String id = android.substring(android.indexOf("?") + 1);
                     JSONObject j = new JSONObject();
@@ -227,10 +223,11 @@ public class ReceiveInfoManager {
             hashMap.put(WebViewConstant.push_message_title, formatCodeToName(InvestorAppli.getContext(), title));
             if ("0".equals(shareType) || TextUtils.isEmpty(shareType)) { // 资讯详情添加分享按钮
                 hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+                NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
             } else {
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+                NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WITHSHARE_WEBVIEW, hashMap);
             }
-            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
         }
         RongIMClient.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, "INTIME49999");
         RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, "INTIME49999");

@@ -1,4 +1,4 @@
-package app.privatefund.com.vido.mvp.ui.video;
+package com.cgbsoft.privatefund.widget;
 
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
@@ -12,21 +12,19 @@ import java.net.URLDecoder;
 
 import app.privatefund.com.share.bean.ShareCommonBean;
 import app.privatefund.com.share.dialog.CommonShareDialog;
-import app.privatefund.com.vido.R;
 
 /**
- * desc  ${DESC}
- * author wangyongkui  wangyongkui@simuyun.com
- * 日期 2017/5/24-22:01
+ * @author chenlong
  */
-@Route(RouteConfig.GOTO_VIDEO_INFORMATIOON)
-public class InformationDetailActivity extends BaseWebViewActivity {
+
+@Route(RouteConfig.GOTO_BASE_WITHSHARE_WEBVIEW)
+public class WebviewWithShareActivity extends BaseWebViewActivity {
 
     CommonShareDialog commonShareDialog;
 
     @Override
     protected int layoutID() {
-        return R.layout.activity_information_detail;
+        return app.privatefund.com.vido.R.layout.activity_information_detail;
     }
 
     @Override
@@ -76,3 +74,4 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         mWebview.loadUrl(javascript);
     }
 }
+

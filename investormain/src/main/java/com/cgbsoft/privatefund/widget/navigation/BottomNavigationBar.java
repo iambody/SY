@@ -389,6 +389,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                        } else {
 //                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
 //                                        }
+
                                         if (AppManager.getUserInfo(getContext()).getToC() != null && TextUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())) {
                                             HashMap<String, Object> hashMap = new HashMap<>();
                                             hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);

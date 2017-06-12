@@ -72,6 +72,7 @@ public class InitApplication extends InvestorAppli {
             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
             RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
             RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
+            RongIM.getInstance().setMessageAttachedUserInfo(true);
         }
     }
 

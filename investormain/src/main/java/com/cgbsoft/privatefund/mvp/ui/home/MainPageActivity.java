@@ -388,7 +388,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 4:
                 DataStatistApiParam.onStatisToCTabCloudKey();
                 break;
-
         }
     }
 
@@ -590,6 +589,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (startConverstationObservable != null) {
             RxBus.get().unregister(RxConstant.START_CONVERSATION_OBSERVABLE, startConverstationObservable);
         }
+
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();

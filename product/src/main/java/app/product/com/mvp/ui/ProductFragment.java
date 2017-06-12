@@ -160,16 +160,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 swipeToLoadLayout.setVisibility(View.GONE);
             }
             productlsAdapter.freshAp(productlsBeen);
-
-
         }
     }
 
     /**
-     *
      */
     private void initRiskEvaluat() {
-
     }
 
     @Override
@@ -231,11 +227,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 if (fromShare) {
                     openShareProductDialog(position);
                 } else {
-
                     ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-
-
                     DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.productName, "1".equals(productlsBean.isHotProduct));
                 }
 
@@ -264,7 +257,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 boolean isSignificantDelta = Math.abs(dy) > mScrollThreshold;
-                if (isSignificantDelta && isScorlling) {
+                if (isSignificantDelta && isScorlling && !fromShare) {
                     if (dy > 30) {//上滑动
                         if (productProductFilterLay.getVisibility() == View.VISIBLE)
                             productProductFilterLay.setVisibility(View.GONE);
@@ -402,8 +395,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             case ProductContract.LOAD_PRODUCT_LISTDATA://获取到列表数据
 //                PromptManager.ShowCustomToast(getContext(), "请求列表成功" + str);
                 //开始解析数据
-                productlsBeen = new Gson().fromJson(str, new TypeToken<List<ProductlsBean>>() {
-                }.getType());
+                productlsBeen = new Gson().fromJson(str, new TypeToken<List<ProductlsBean>>() {}.getType());
                 fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
 
                 productProductfragmentEmptyIv.setVisibility(View.GONE);
@@ -487,6 +479,10 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         } else {
             productProductfragmentProductserieslayout.setLables(dataList, false);
         }
+    }
+
+    public void setParamFiLter(String currentSeries) {
+        getPresenter().getProductData(loadingDialog, 0, currentSeries, null, null);
     }
 
     /**

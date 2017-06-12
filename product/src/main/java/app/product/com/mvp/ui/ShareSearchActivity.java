@@ -326,11 +326,10 @@ public class ShareSearchActivity extends BaseActivity implements OnItemClickList
     private void SearchProduct(String searchValue, int type) {
         Intent i = new Intent(this, SelectProductActivity.class);
         i.putExtra(searchProduct, searchValue);
-        i.putExtra("type", type);
+        i.putExtra("productType", type);
         if (!TextUtils.isEmpty(isShare)) {
             i.putExtra("isShare", isShare);
         }
-        // i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TASK);
         startActivity(i);
         finish();
     }

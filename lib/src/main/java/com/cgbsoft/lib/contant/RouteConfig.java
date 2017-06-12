@@ -51,6 +51,9 @@ public class RouteConfig {
     // 二维码
     public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
 
+    // 带分享的webview
+    public static final String GOTO_BASE_WITHSHARE_WEBVIEW = "goto_base_withshare_webview";
+
     // 未绑定页面
     public static final String GOTO_NO_BIND_TOUGU_ACTIVITY = "investormain_bindvisiteactivity";
 

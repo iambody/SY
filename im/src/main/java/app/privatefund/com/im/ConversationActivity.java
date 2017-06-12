@@ -104,13 +104,7 @@ public class ConversationActivity extends BaseActivity {
 
     private void sendProduct(ProductlsBean productlsBean) {
         ProductMessage productMessage = ProductMessage.obtain(productlsBean.series, productlsBean.productId, productlsBean.schemeId, productlsBean.productName, productlsBean.productType);
-        String conversationType = AppManager.getConversationType(this);
-        Conversation.ConversationType Type = Conversation.ConversationType.GROUP;
-        if (conversationType.equals("PRIVATE")) {
-            Type = Conversation.ConversationType.PRIVATE;
-        }
-        final Conversation.ConversationType finalType = Type;
-        RongIM.getInstance().sendMessage(Type, mTargetId, productMessage, "[链接]" + productlsBean.productName, "", new RongIMClient.SendMessageCallback() {
+        RongIM.getInstance().sendMessage(mConversationType, mTargetId, productMessage, "[链接]" + productlsBean.productName, "", new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
                 Toast.makeText(ConversationActivity.this, "发送失败", Toast.LENGTH_SHORT).show();

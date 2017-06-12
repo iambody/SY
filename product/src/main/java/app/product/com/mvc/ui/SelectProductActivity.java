@@ -15,10 +15,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.chenenyu.router.annotation.Route;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import app.product.com.R;
 import app.product.com.R2;
 import app.product.com.mvp.ui.ProductFragment;
@@ -38,13 +34,29 @@ public class SelectProductActivity extends BaseActivity implements Toolbar.OnMen
     protected TextView titleMid;
     private FrameLayout contain;
 
+    private ProductFragment productproductragment;
+
+    private String searchProduct;
+    private String searchType;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_select_product;
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        searchProduct = intent.getStringExtra(ShareSearchActivity.searchProduct);
+        searchType = intent.getStringExtra(ShareSearchActivity.productType);
+        System.out.println("-----searchTyp=" + searchType);
+        productproductragment.setParamFiLter(searchType);
+    }
+
+    @Override
     protected void init(Bundle savedInstanceState) {
+        toolbar.setTitle("");
+        titleMid.setText("选择要分享的产品");
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
@@ -54,25 +66,13 @@ public class SelectProductActivity extends BaseActivity implements Toolbar.OnMen
                 finish();
             }
         });
-        toolbar.setTitle("");
-        titleMid.setText("选择要分享的产品");
         contain = (FrameLayout) findViewById(R.id.contain);
-        ProductFragment productproductragment = new ProductFragment();
-//        productproductragment.setSearchValue("");
-//        productproductragment.setFrom("share");
-        JSONObject filterParam = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        try {
-            filterParam.put("series", jsonArray.put("0"));
-//            productproductragment.setParams(filterParam);
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(ProductFragment.FROM_SEND_PRODUCT, true);
-            productproductragment.setArguments(bundle);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.contain, productproductragment).commit();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+         productproductragment = new ProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ProductFragment.FROM_SEND_PRODUCT, true);
+        productproductragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.contain, productproductragment).commit();
     }
 
     @Override

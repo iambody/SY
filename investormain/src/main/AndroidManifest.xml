@@ -210,7 +210,6 @@
         <!--android:screenOrientation="portrait" />-->
         <!--视频下载列表-->
 
-
         <!--关联资产activity-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity"
@@ -244,7 +243,6 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity"
             android:screenOrientation="portrait" />
-        RiskEvaluationActivity
 
         <!-- 风险评测结果-->
         <activity
@@ -255,6 +253,11 @@
         <!-- app module 通用的webview -->
         <activity
             android:name="com.cgbsoft.privatefund.widget.InverstorBaseWebviewActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- app module-->
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.WebviewWithShareActivity"
             android:screenOrientation="portrait" />
 
         <activity

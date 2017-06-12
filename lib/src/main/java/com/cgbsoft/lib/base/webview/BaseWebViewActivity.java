@@ -32,6 +32,7 @@ import com.jhworks.library.ImageSelector;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -176,7 +177,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     /**
      * 点击分享按钮操作，具体子类覆盖次方法，如果子类没有分享功能则不需要复写此方法
      */
-    protected void pageShare() {}
+    protected void pageShare() {
+    }
 
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
@@ -200,7 +202,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
-
         toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {

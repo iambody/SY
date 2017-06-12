@@ -51,7 +51,7 @@ public class MySendMessageListener implements RongIM.OnSendMessageListener {
                 //你在他的黑名单中
             }
         }
-        Log.d(TAG, "onSent-UserID/ONReceiver-UserID:" + message.getSenderUserId() + "/target=" + message.getTargetId() + "---" + message.getTargetId() + "----userid=" + message.getUId());
+        Log.d(TAG, "onSent-UserID/ONReceiver-UserID:" + message.getSenderUserId() + "/target=---" + message.getTargetId() + "----userid=" + message.getUId());
 
         MessageContent messageContent = message.getContent();
         if (messageContent instanceof TextMessage) {//文本消息

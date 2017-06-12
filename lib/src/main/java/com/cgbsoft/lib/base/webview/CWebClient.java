@@ -3,6 +3,8 @@ package com.cgbsoft.lib.base.webview;
 import android.app.Activity;
 import android.content.Context;
 
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
@@ -117,7 +119,7 @@ public class CWebClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView webView, String s) {
-//        EventBus.getDefault().post(new RefreshMsgCount());
+        RxBus.get().post(RxConstant.REFRUSH_UNREAD_INFOMATION);
         super.onPageFinished(webView, s);
     }
 
