@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/ic_bg_bottom_navbar">
 
         <FrameLayout
             android:id="@+id/fl_bottom_nav_left_first"
@@ -40,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_mine_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
 
@@ -83,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_product_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
@@ -118,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_discovery_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
@@ -148,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/vbnb_club_str"
-                    android:textColor="@color/ic_color_text_bottom_bar"
+                    android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>

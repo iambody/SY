@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,6 +38,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -183,13 +186,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     }
 
-
     private void initUserInfo() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
     }
 
     private void autoSign() {
-        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
+        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())){
             getPresenter().toSignIn();
         }
     }
@@ -283,10 +285,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 0://呼叫投资顾问
                 NavigationUtils.startDialgTelephone(this, AppManager.getUserInfo(this).getAdviserPhone());
                 bottomNavigationBar.closeCloudeMenu();
+                DataStatistApiParam.onStatisToCMenuCallCustom();
                 break;
             case 1://对话
                 RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(this).getToC().getBandingAdviserId(), AppManager.getUserInfo(this).getAdviserRealName());
                 bottomNavigationBar.closeCloudeMenu();
+                DataStatistApiParam.onStatisToCMenuCallDuihua();
                 break;
             case 2://直播
                 if (((InvestorAppli) InvestorAppli.getContext()).isTouGuOnline()) {
@@ -294,20 +298,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
                     i.putExtra(WebViewConstant.push_message_title, "我的投顾");
                     startActivityForResult(i, 300);
+
                 } else {
                     Intent intent = new Intent(this, LiveActivity.class);
                     intent.putExtra("liveJson", liveJsonData.toString());
                     startActivity(intent);
                 }
+                DataStatistApiParam.onStatisToCMenuZhibo();
                 bottomNavigationBar.closeCloudeMenu();
                 break;
             case 3://短信
                 NavigationUtils.startDialogSendMessage(this, AppManager.getUserInfo(this).getAdviserPhone());
                 bottomNavigationBar.closeCloudeMenu();
+                DataStatistApiParam.onStatisToCMenuMessage();
                 break;
             case 4://客服
                 RongIM.getInstance().startPrivateChat(this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
                 bottomNavigationBar.closeCloudeMenu();
+                DataStatistApiParam.onStatisToCMenuKefu();
                 break;
         }
     }
@@ -596,14 +604,16 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
+            liveDialog.setVisibility(View.GONE);
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
+            intent.putExtra("type", "");
             startActivity(intent);
         }
     }
 
     @OnClick(R.id.video_live_close)
-    public void closeLiveDialog() {
+    public void closeLiveDialog(){
         liveDialog.setVisibility(View.GONE);
     }
 
@@ -642,6 +652,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
+            Animation animation = AnimationUtils.loadAnimation(
+                    this, R.anim.live_dialog_anim);
+            liveDialog.startAnimation(animation);
             try {
                 liveTitle.setText(jsonObject.getString("title"));
                 Imageload.display(this, jsonObject.getString("image"), liveIcon);
@@ -651,13 +664,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             liveJsonData = null;
             liveDialog.setVisibility(View.GONE);
+            liveDialog.clearAnimation();
         }
 
     }
 
     @Override
     public void signInSuc() {
-        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE,true);
     }
 
     private void SsetBottomNavigation() {

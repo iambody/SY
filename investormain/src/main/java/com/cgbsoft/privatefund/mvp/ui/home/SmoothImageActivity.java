@@ -55,6 +55,7 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 		toolbar.setOnMenuItemClickListener(this);
 		toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 		toolbar.setNavigationOnClickListener(v -> finish());
+		toolbar.setTitle("");
 		titleMid.setText("图片预览");
 		initImage();
 	}

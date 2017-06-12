@@ -2,13 +2,17 @@ package com.cgbsoft.lib.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
@@ -62,6 +66,7 @@ public abstract class PushDialog extends BaseDialog {
         super(context, theme);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +74,16 @@ public abstract class PushDialog extends BaseDialog {
         init();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void init() {
         tv_vcd_title = (TextView) findViewById(R.id.tv_vcd_title);
         tv_vcd_message = (TextView) findViewById(R.id.tv_vcd_message);
         btn_vcd_sure = (Button) findViewById(R.id.btn_vcd_sure);
         iv_vcd_cancel = (ImageView) findViewById(R.id.iv_vcd_cancel);
         push_dlg_img = (ImageView) findViewById(R.id.push_dialog_image);
-
+        if (AppManager.isInvestor(_context)){
+            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
+        }
         btn_vcd_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

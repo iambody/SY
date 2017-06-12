@@ -48,6 +48,15 @@
         dialog的背景是否昏暗
     </style>
 
+    <style name="RCTheme.TextView.BottomBarStyle">
+        <!-- <item name="android:background">@drawable/c_bg_selector_tabbar_btn</item>-->
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/c_selector_text_bottom_bar</item>
+    </style>
+
     <style name="transcutestyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@android:color/transparent</item><!--边框-->
         <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->

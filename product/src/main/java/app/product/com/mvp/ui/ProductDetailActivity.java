@@ -15,6 +15,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.chenenyu.router.Router;
@@ -80,6 +81,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
                         NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
                     }
                 }
+                DataStatistApiParam.onStatisToCProductDetailMenu();
             }
         });
     }

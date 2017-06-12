@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
@@ -253,9 +254,12 @@ public class CWebviewManger {
 //            SignIn();
         } else if (action.contains("setGestruePassword")) { //设置手势密码
             NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD);
+            String valuse = "1".equals(AppManager.getUserInfo(context).getToC().getGestureSwitch()) ? "2" : "1";
+            DataStatistApiParam.onSwitchGesturePassword(valuse);
         } else if (action.contains("modifyGestruePassword")) { // 修改手势密码
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
-//            context.finish();
+            DataStatistApiParam.onModifyGesturePassword();
+            context.finish();
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {

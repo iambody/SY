@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
@@ -35,6 +36,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -137,9 +139,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             mTextTip.setText(R.string.please_target_gesture_password);
             mTextTip.setVisibility(View.VISIBLE);
         }
-        if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-            mTextTip.setVisibility(View.GONE);
-        }
+//        if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
+//            mTextTip.setVisibility(View.INVISIBLE);
+//        }
     }
 
     @Override
@@ -150,7 +152,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     private void closeGesturePassword(final boolean isFiveTimesError) {
         Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-        finish();
         getPresenter().modifyUserInfo(ApiBusParam.gesturePasswordCloseParams(AppManager.getUserId(this)), isFiveTimesError);
     }
 
@@ -179,6 +180,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         } else {
             resetGesturePasswordDialog(GestureVerifyActivity.this);
         }
+        DataStatistApiParam.onForgetGesturePassword();
     }
 
     @OnClick(R.id.text_cancel)
@@ -197,6 +199,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             finish();
         } else {
             LogOutAccount logOutAccount = new LogOutAccount();

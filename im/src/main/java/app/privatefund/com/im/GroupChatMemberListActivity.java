@@ -17,6 +17,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -105,9 +106,11 @@ public class GroupChatMemberListActivity extends BaseActivity {
                 Log.i(GroupChatMemberListActivity.this.getClass().getName(), "---=" + s);
                 isLoading = false;
                 try {
-                    if (!TextUtils.isEmpty(s)) {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String string = jsonObject.get("result").toString();
+                    if (!TextUtils.isEmpty(string)) {
                         Gson g = new Gson();
-                        List<GroupMember> datas = g.fromJson(s, new TypeToken<List<GroupMember>>() {}.getType());
+                        List<GroupMember> datas = g.fromJson(string, new TypeToken<List<GroupMember>>() {}.getType());
                         if (!CollectionUtils.isEmpty(datas)) {
                             groupMemberListAdapter.add(datas);
                         } else {

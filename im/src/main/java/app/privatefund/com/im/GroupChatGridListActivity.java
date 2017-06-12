@@ -21,6 +21,8 @@ import com.cgbsoft.lib.widget.ToggleButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -192,13 +194,22 @@ public class GroupChatGridListActivity extends BaseActivity {
                 try {
                     Log.i("groupnumberlist", "----" + s);
                     if (!TextUtils.isEmpty(s)) {
-                        Gson g = new Gson();
-                        datas = g.fromJson(s, new TypeToken<List<GroupMember.GroupMemberPerson>>() {}.getType());
-                        if (datas.size() >= 15) {
-                            moreMember.setVisibility(View.VISIBLE);
+                        try {
+                            JSONObject response = new JSONObject(s);
+                            String string = response.get("result").toString();
+                            if (!TextUtils.isEmpty(string)) {
+                                Gson g = new Gson();
+                                datas = g.fromJson(string, new TypeToken<List<GroupMember.GroupMemberPerson>>() {
+                                }.getType());
+                                if (datas.size() >= 15) {
+                                    moreMember.setVisibility(View.VISIBLE);
+                                }
+                                groupMemberListAdapter = new MemberGridViewAdapter(GroupChatGridListActivity.this, datas);
+                                memberList.setAdapter(groupMemberListAdapter);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        groupMemberListAdapter = new MemberGridViewAdapter(GroupChatGridListActivity.this, datas);
-                        memberList.setAdapter(groupMemberListAdapter);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
