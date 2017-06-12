@@ -1,4 +1,4 @@
-package app.privatefund.com.vido.mvc.adapter;
+package app.privatefund.com.vido.mvp.ui.video.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -9,9 +9,7 @@
         <activity android:name=".mvp.ui.video.VideoDownloadListActivity" />
         <activity android:name=".mvp.ui.video.VideoHistoryListActivity" />
         <activity android:name=".mvp.ui.video.VideoDetailActivity" />
-        <activity android:name=".mvc.PlayVideoActivity"  android:configChanges="orientation|screenSize" />
-        <activity android:name=".mvc.LocalVideoActivity" />
-        <activity android:name=".mvc.PlayRecordActivity" />
+
         <activity android:name=".mvp.ui.video.InformationDetailActivity" />
 
         <service android:name=".mvc.services.PlayerService">

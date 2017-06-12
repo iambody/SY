@@ -161,7 +161,9 @@
                 android:value="0"></meta-data>
         </activity>
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
-        <activity android:name=".mvp.ui.start.WelcomeActivity">
+        <activity
+            android:name=".mvp.ui.start.WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -174,15 +176,17 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".mvp.ui.LoginActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".mvp.ui.LoginActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".mvp.ui.AnimActivity"></activity>
         <activity android:name=".mvp.ui.ChoiceIdentityActivity" />
         <activity android:name=".mvp.ui.start.PermissionsActivity" />
         <activity android:name=".mvp.ui.RegisterActivity" />
         <activity android:name=".test.TestWebview" />
-        <activity android:name=".mvp.ui.ResetPasswordActivity"/>
-        <activity android:name=".mvp.ui.SetPasswordActivity"/>
-        <activity android:name=".mvp.ui.BindPhoneActivity"/>
+        <activity android:name=".mvp.ui.ResetPasswordActivity" />
+        <activity android:name=".mvp.ui.SetPasswordActivity" />
+        <activity android:name=".mvp.ui.BindPhoneActivity" />
     </application>
 
 
