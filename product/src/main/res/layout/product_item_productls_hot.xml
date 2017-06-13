@@ -166,10 +166,10 @@
                     android:id="@+id/product_item_productls_hot_mujicount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:text="300"
-                    android:textColor="@color/mred"
-                    android:textSize="17sp"
-                    android:layout_marginRight="5dp"/>
+                    android:textColor="@color/orange"
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/product_item_productls_hot_wan"

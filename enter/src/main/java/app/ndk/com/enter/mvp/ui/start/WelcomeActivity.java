@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -22,6 +23,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
+import com.chenenyu.router.Router;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +46,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE,PERMISSION_CAMERA,PERMISSION_VIBRATE,PERMISSION_LOCATION_COARSE,PERMISSION_FINE_COARSE};
+    private String[] PERMISSIONS = new String[]{PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
@@ -68,6 +70,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private ImageView iv_wel_bottom;
     //跳过按钮
     private Button btn_wel_cancle;
+    private boolean isLoad;
 
     @Override
     protected boolean getIsNightTheme() {
@@ -80,6 +83,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this,  false);
+
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
         } else {
@@ -100,7 +104,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        isLoad = getIntent().getBooleanExtra("isloade", false);
     }
 
     @Override
@@ -232,7 +236,11 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
-
+        if (isLoad) {
+            Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
+            WelcomeActivity.this.finish();
+            return;
+        }
         if ((!AppManager.getIsLogin(this) || SPreference.getUserInfoData(this) == null)) {
             if (AppManager.isAdViser(this)) {
                 openActivity(ChoiceIdentityActivity.class);

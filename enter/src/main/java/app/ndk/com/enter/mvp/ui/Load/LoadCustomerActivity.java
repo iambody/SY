@@ -9,9 +9,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
-import com.chenenyu.router.Router;
 
-import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.ui.start.WelcomeActivity;
 import app.privatefund.com.im.utils.RongConnect;
 
@@ -21,7 +19,6 @@ import app.privatefund.com.im.utils.RongConnect;
  * 日期 17/4/7-17:03
  */
 public class LoadCustomerActivity extends BaseActivity {
-
 
     @Override
     protected void configApp() {
@@ -34,8 +31,13 @@ public class LoadCustomerActivity extends BaseActivity {
                 finish();
                 return;
             }
-            Router.build(RouteConfig.GOTOCMAINHONE).go(LoadCustomerActivity.this);
-            LoadCustomerActivity.this.finish();
+
+//            Router.build(RouteConfig.GOTOCMAINHONE).go(LoadCustomerActivity.this);
+//            UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
+            Intent intent=new Intent(this,WelcomeActivity.class);
+            intent.putExtra("isloade",true);
+            UiSkipUtils.toNextActivityWithIntent(this,intent);
+            baseActivity.finish();
             return;
         }
         UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
@@ -46,4 +48,8 @@ public class LoadCustomerActivity extends BaseActivity {
     protected void initView(Bundle state) {
         setContentView(R.layout.activity_customer_loadcustomer);
     }
+
+
+
+
 }
