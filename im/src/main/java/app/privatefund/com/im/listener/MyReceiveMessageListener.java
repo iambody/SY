@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.bean.UnReadCMSG;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -45,9 +47,9 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         }
 
         if (Constant.msgNoKnowInformation.equals(message.getSenderUserId())) {
-//            UnReadCMSG unReadCMSG = new UnReadCMSG();
-//            unReadCMSG.setUnreadCount(1);
-//            EventBus.getDefault().post(unReadCMSG);
+            UnReadCMSG unReadCMSG = new UnReadCMSG();
+            unReadCMSG.setUnreadCount(1);
+            EventBus.getDefault().post(unReadCMSG);
             RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, "INTIME49999");
             RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, "INTIME49999");
         }
@@ -124,13 +126,9 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
 
         int cUnread = i - intime40003 - intime40004 - intime40006;
-        int bUnread = i - intime40007;
 
-//        UnReadBMSG unReadBMSG = new UnReadBMSG();
-//        unReadBMSG.setUnreadCount(bUnread);
-//        UnReadCMSG unReadCMSG = new UnReadCMSG();
-//        unReadCMSG.setUnreadCount(cUnread);
-//        EventBus.getDefault().post(unReadBMSG);
-//        EventBus.getDefault().post(unReadCMSG);
+        UnReadCMSG unReadCMSG = new UnReadCMSG();
+        unReadCMSG.setUnreadCount(cUnread);
+        EventBus.getDefault().post(unReadCMSG);
     }
 }

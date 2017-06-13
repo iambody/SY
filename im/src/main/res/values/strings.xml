@@ -4,4 +4,12 @@
     <string name="org_member_show">展开</string>
     <string name="simuyun_server">私募云客服</string>
     <string name="call_phone_no">暂无联系方式</string>
+
+    <string name="search_result_empty">没有更多的搜索结果</string>
+    <string name="search_notice_name">公告</string>
+    <string name="search_notice_title">搜一搜 公告</string>
+    <string name="search_notice_content">产品、运营、直播等消息</string>
+
+    <string name="message_relative">%s条相关记录消息</string>
+
 </resources>

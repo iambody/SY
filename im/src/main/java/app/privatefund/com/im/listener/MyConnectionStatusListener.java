@@ -6,6 +6,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 
 import app.privatefund.com.im.bean.RCConnect;
+import io.rong.eventbus.EventBus;
 import io.rong.imlib.RongIMClient;
 
 /**
@@ -19,6 +20,7 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                 Log.e("Conn", "onChanged: CONNECTED");
                 RCConnect rcConnect = new RCConnect();
                 rcConnect.setConnectStatus("CONNECTED");
+                EventBus.getDefault().post(rcConnect);
                 RxBus.get().post(RxConstant.RC_CONNECT_STATUS_OBSERVABLE, true);
                 break;
             case DISCONNECTED://断开连接。

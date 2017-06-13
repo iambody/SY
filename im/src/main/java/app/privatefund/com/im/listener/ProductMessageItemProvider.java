@@ -97,7 +97,6 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
 //                    SPSave.getInstance(MApplication.mContext).putString("myProductName", productBean.getSchemeId());
 //                    SPSave.getInstance(MApplication.mContext).putString("myProductID", schemeId);
 //                }
-//
 //                @Override
 //                public void onErrorResponse(String error, int statueCode) {
 //                }
@@ -106,16 +105,14 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.product + schemeId);
             hashMap.put(WebViewConstant.push_message_title, "产品详情");
-            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
+            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, false);
             hashMap.put(WebViewConstant.RIGHT_SAVE, false);
-            hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
             hashMap.put(WebViewConstant.PAGE_INIT, false);
             NavigationUtils.startActivityByRouter(view.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap, 300);
         }
     }
 
     @Override
-    public void onItemLongClick(View view, int i, ProductMessage productMessage, UIMessage uiMessage) {
-
-    }
+    public void onItemLongClick(View view, int i, ProductMessage productMessage, UIMessage uiMessage) {}
 }

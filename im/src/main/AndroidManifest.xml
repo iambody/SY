@@ -39,6 +39,8 @@
 
         <activity android:name=".GroupChatGridListActivity"/>
         <activity android:name=".GroupChatMemberListActivity"/>
+        <activity android:name=".MessageSearchActivity"/>
+        <activity android:name=".MessageSearchListActivity"/>
 
         <!-- 容云离线消息推送 -->
         <receiver

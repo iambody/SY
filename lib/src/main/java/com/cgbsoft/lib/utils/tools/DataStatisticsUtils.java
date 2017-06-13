@@ -17,6 +17,8 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.jhworks.library.utils.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +46,14 @@ public class DataStatisticsUtils {
     public static void push(Context context, final HashMap<String, String> param, boolean isRealTime) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
+        LocationBean locationBean= AppManager.getLocation(context);
+
         try {
+            if (locationBean!=null){
+                js.put("lat",locationBean.getLocationlatitude());
+                js.put("lng",locationBean.getLocationlontitude());
+            }
+            js.put("clicktime", TimeUtils.format(System.currentTimeMillis()));
             js.put("uid", AppManager.getUserId(context.getApplicationContext()));
             js.put("ip", OtherDataProvider.getIP(context.getApplicationContext()));
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
@@ -87,33 +96,33 @@ public class DataStatisticsUtils {
                 }
             });
         } else {
-//            if (daoUtils == null) {
-//                daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
-//            }
-//            //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
-//            List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
-//            if (datastisticList.size() == 4) {
-//                jsonArray.put(js);
-//                for (DataStatisticsBean dataStatisticsBean : datastisticList) {
-//                    jsonArray.put(dataStatisticsBean.getJsonObject());
-//                }
-//
-//                subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
-//                    @Override
-//                    protected void onEvent(String string) {
-//                        subscription.unsubscribe();
-//                    }
-//
-//                    @Override
-//                    protected void onRxError(Throwable error) {
-//                        subscription.unsubscribe();
-//                    }
-//                });
-//                daoUtils.deleteDataStatitic();
-//            }else {
-//                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
-//                daoUtils.saveDataStatistic(dataStatisticsBean);
-//            }
+            if (daoUtils == null) {
+                daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
+            }
+            //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
+            List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
+            if (datastisticList.size() == 4) {
+                jsonArray.put(js);
+                for (DataStatisticsBean dataStatisticsBean : datastisticList) {
+                    jsonArray.put(dataStatisticsBean.getJsonObject());
+                }
+
+                subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                    @Override
+                    protected void onEvent(String string) {
+                        subscription.unsubscribe();
+                    }
+
+                    @Override
+                    protected void onRxError(Throwable error) {
+                        subscription.unsubscribe();
+                    }
+                });
+                daoUtils.deleteDataStatitic();
+            }else {
+                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
+                daoUtils.saveDataStatistic(dataStatisticsBean);
+            }
         }
     }
 

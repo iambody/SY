@@ -44,7 +44,7 @@ import butterknife.OnClick;
  * @author chenlong
  */
 @Route(RouteConfig.VALIDATE_GESTURE_PASSWORD)
-public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View{
+public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
     public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";

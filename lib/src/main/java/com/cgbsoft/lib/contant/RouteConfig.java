@@ -23,7 +23,9 @@ public class RouteConfig {
     // 设置手势密码
     public static final String SET_GESTURE_PASSWORD = "investornmain_gestureeditactivity";
 
-    // 验证手势密码
+    // 搜索解决过
+    public static final String SEARCH_RESULT_ACTIVITY = "PRODUCT_SEARCH_RESULT_ACTIVITY";
+
     public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
 
     //我的任务
@@ -50,6 +52,9 @@ public class RouteConfig {
 
     // 二维码
     public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
+
+    // 带分享的webview
+    public static final String GOTO_BASE_WITHSHARE_WEBVIEW = "goto_base_withshare_webview";
 
     // 未绑定页面
     public static final String GOTO_NO_BIND_TOUGU_ACTIVITY = "investormain_bindvisiteactivity";

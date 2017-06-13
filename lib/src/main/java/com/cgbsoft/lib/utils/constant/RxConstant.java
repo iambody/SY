@@ -60,6 +60,8 @@ public interface RxConstant {
 
     String SHARE_PRODUCT_SEND = "share_product_send";
 
+    String REFRUSH_UNREAD_INFOMATION = "refrush_unread_infomation";
+
     String Open_PAGE_LIVE_OBSERVABLE = "open_page_live_observable";
 
     //直播获取pdf请求

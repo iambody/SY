@@ -2,7 +2,6 @@ package app.privatefund.com.im.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,8 +53,10 @@ public class ReceiveInfoManager {
         @Override
         public void handleMessage(Message msg) {
             Activity mCurrentActivityContext = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
-            if (("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) && mainHandler != null )) {
+            if ((("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null )) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
                 message.what = msg.what;
@@ -72,21 +73,6 @@ public class ReceiveInfoManager {
                         String detail = bundle.getString("detail");
                         String jumpUrl = bundle.getString("jumpUrl");
                         String shareType = bundle.getString("shareType");
-                        if ("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) || "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) {
-                            SharedPreferences sharedPreferences = PushPreference.getBase(InvestorAppli.getContext());
-                            SharedPreferences.Editor edit = sharedPreferences.edit();
-                            int unreadTotal = sharedPreferences.getInt("unreadTotal", 0);
-                            edit.putInt("unreadTotal", (unreadTotal + 1));//未读总消息数
-                            unreadTotal++;
-                            edit.putString("unreadItem" + unreadTotal, bundle.toString());  //未读消息
-                            edit.putString("type" + unreadTotal, type);
-                            edit.putString("jumpUrl" + unreadTotal, jumpUrl);
-                            edit.putString("detail" + unreadTotal, detail);
-                            edit.putString("title" + unreadTotal, title);
-                            edit.commit();
-                            return;
-                        }
-
                         if (detail == null || detail.equals("") || "".equals(title)) {
                             return;
                         }
@@ -163,11 +149,7 @@ public class ReceiveInfoManager {
 //                EventBus.getDefault().post(new RefreshUserinfo());
                 JSONObject js = new JSONObject(jumpUrl);
                 String android = js.getString("Android");
-                if (android.contains("RenzhengActivity")) {
-//                    Intent intent = new Intent(context, RenzhengActivity.class);
-//                    intent.putExtra(Con.ADVISER_STATE, Contant.ADVISER_STATE_SUCCESS);
-//                    context.startActivity(intent);
-                } else if (android.contains("?")) {
+                if (!TextUtils.isEmpty(android) && android.contains("?")) {
                     final String jumpActivityName = android.substring(0, android.indexOf("?"));
                     final String id = android.substring(android.indexOf("?") + 1);
                     JSONObject j = new JSONObject();
@@ -241,10 +223,11 @@ public class ReceiveInfoManager {
             hashMap.put(WebViewConstant.push_message_title, formatCodeToName(InvestorAppli.getContext(), title));
             if ("0".equals(shareType) || TextUtils.isEmpty(shareType)) { // 资讯详情添加分享按钮
                 hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+                NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
             } else {
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+                NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WITHSHARE_WEBVIEW, hashMap);
             }
-            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
         }
         RongIMClient.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, "INTIME49999");
         RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, "INTIME49999");

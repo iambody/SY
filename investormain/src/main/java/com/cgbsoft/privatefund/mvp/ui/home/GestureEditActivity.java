@@ -149,6 +149,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @OnClick(R.id.title_right)
     void rightJumpClick() {
         NavigationUtils.toMainActivity(this);
+        finish();
     }
 
     @OnClick(R.id.text_reset)

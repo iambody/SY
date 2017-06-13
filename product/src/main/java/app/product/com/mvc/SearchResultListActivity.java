@@ -14,11 +14,14 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.ClearEditText;
 import com.cgbsoft.lib.widget.MToast;
+import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,7 +37,6 @@ import app.product.com.R;
 import app.product.com.model.SearchResultBean;
 import app.product.com.mvc.adapter.SearchAdatper;
 import app.product.com.mvc.ui.SearchBaseActivity;
-import app.product.com.widget.ClearEditText;
 import app.product.com.widget.SimpleItemDecoration;
 
 /**
@@ -42,6 +44,7 @@ import app.product.com.widget.SimpleItemDecoration;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/25-18:00
  */
+@Route(RouteConfig.SEARCH_RESULT_ACTIVITY)
 public class SearchResultListActivity extends BaseMvcActivity implements View.OnClickListener {
 
     public static final String LIST_PARAM = "LIST_PARAMS";

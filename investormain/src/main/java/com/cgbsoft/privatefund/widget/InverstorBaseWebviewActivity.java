@@ -1,7 +1,7 @@
 package com.cgbsoft.privatefund.widget;
 
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.chenenyu.router.annotation.Route;
 
@@ -25,7 +25,7 @@ public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
                 String type = URLDecoder.decode(split[2], "utf-8");
                 String content = URLDecoder.decode(split[4], "utf-8");
                 String link = URLDecoder.decode(split[3], "utf-8");
-                link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
+                link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
                 ShareCommonBean commonShareBean = new ShareCommonBean();
                 commonShareBean.setShareTitle(title);
                 commonShareBean.setShareContent(content);

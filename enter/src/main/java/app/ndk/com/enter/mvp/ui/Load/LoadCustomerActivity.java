@@ -1,12 +1,13 @@
 package app.ndk.com.enter.mvp.ui.Load;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 
 import app.ndk.com.enter.mvp.ui.start.WelcomeActivity;
@@ -22,11 +23,10 @@ public class LoadCustomerActivity extends BaseActivity {
     @Override
     protected void configApp() {
         //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
+        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM,"");
         AppInfStore.saveAdvise(baseActivity, false);
         if (AppManager.getIsLogin(getApplicationContext())) {
-            LogUtils.Log("loadtime","当前时间"+System.currentTimeMillis()+"");
             RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
-            LogUtils.Log("loadtime","结束时间"+System.currentTimeMillis()+"");
             if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), false)) { // 手势密码验证
                 finish();
                 return;
@@ -46,7 +46,7 @@ public class LoadCustomerActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle state) {
-//        setContentView(R.layout.activity_customer_loadcustomer);
+        setContentView(R.layout.activity_customer_loadcustomer);
     }
 
 

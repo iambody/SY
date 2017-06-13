@@ -378,7 +378,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                 case R.id.iv_bottom_navigation_cloud:
                                     if (nowPosition != 4) {
                                         nowPosition = 4;
-                                        changeResWithIdtentify();
+                                        // changeResWithIdtentify(); 点击中间不需要改变颜色
                                     }
                                     if (isIdtentifyWithInvestor) {
 //                                        if (SPreference.getToCBean(getContext()) != null && TextUtils.isEmpty(SPreference.getToCBean(getContext()).getBandingAdviserId())) {
@@ -389,6 +389,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                        } else {
 //                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
 //                                        }
+
                                         if (AppManager.getUserInfo(getContext()).getToC() != null && TextUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())) {
                                             HashMap<String, Object> hashMap = new HashMap<>();
                                             hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
