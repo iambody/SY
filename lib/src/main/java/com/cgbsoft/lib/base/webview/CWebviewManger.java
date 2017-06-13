@@ -15,6 +15,7 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.model.bean.CalendarListBean;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.contant.Contant;
@@ -28,6 +29,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
+import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -412,6 +414,29 @@ public class CWebviewManger {
 //            return null;
 //        }
 //    }
+
+    private void livePrompt(String action) {
+        String[] split = action.split(":");
+        try {
+            String title = URLDecoder.decode(split[2], "utf-8");
+            String address = URLDecoder.decode(split[3], "utf-8");
+            String startTime = URLDecoder.decode(split[4], "utf-8");
+            String content = URLDecoder.decode(split[5], "utf-8");
+            CalendarListBean.CalendarBean calendarListBean = new CalendarListBean.CalendarBean();
+            calendarListBean.setTitle(title);
+            calendarListBean.setAddress(address);
+            calendarListBean.setStartTime(startTime);
+            calendarListBean.setEndTime(String.valueOf(Long.parseLong(startTime) + 1000 * 60 * 30));
+            calendarListBean.setContent(content);
+            calendarListBean.setAlert("10");
+            String eventId = String.valueOf(CalendarManamger.insertSystemCalendar(context, calendarListBean));
+            String laun = "javascript:Tools.saveSuccess('" + (TextUtils.isEmpty(eventId) ? 0 : 1) + "','" + title + "');";
+            webview.loadUrl(laun);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showContactImDialog(String action) {
         String[] split = action.split(":");
         try {

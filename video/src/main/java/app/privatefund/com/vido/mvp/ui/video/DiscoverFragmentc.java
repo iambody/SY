@@ -97,6 +97,7 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @Override
     public void onResume() {
         super.onResume();
+        videoDiscoverWeb.loadUrl("javascript:refresh()");
     }
 
     @OnClick(R2.id.video_discover_sousou_lay)
