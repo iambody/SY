@@ -202,7 +202,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //
         view_bottom_navigation_close.setOnClickListener(v -> {
             long toTime = System.currentTimeMillis() - nowSystemTime;
-            if (toTime > doubleClickTime * 4 && floatingActionMenu.isOpen()) {
+            if (toTime > doubleClickTime && floatingActionMenu.isOpen()) {
                 floatingActionMenu.close(true);
                 view_bottom_navigation_close.setVisibility(GONE);
                 iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
@@ -236,7 +236,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
         if (AppManager.isInvestor(getContext())) {
-            doubleClickDetect(doubleClickTime * 4, iv_bottom_navigation_cloud);
+            doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
         } else {
             doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
         }
