@@ -96,33 +96,33 @@ public class DataStatisticsUtils {
                 }
             });
         } else {
-//            if (daoUtils == null) {
-//                daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
-//            }
-//            //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
-//            List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
-//            if (datastisticList.size() == 4) {
-//                jsonArray.put(js);
-//                for (DataStatisticsBean dataStatisticsBean : datastisticList) {
-//                    jsonArray.put(dataStatisticsBean.getJsonObject());
-//                }
-//
-//                subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
-//                    @Override
-//                    protected void onEvent(String string) {
-//                        subscription.unsubscribe();
-//                    }
-//
-//                    @Override
-//                    protected void onRxError(Throwable error) {
-//                        subscription.unsubscribe();
-//                    }
-//                });
-//                daoUtils.deleteDataStatitic();
-//            }else {
-//                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
-//                daoUtils.saveDataStatistic(dataStatisticsBean);
-//            }
+            if (daoUtils == null) {
+                daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
+            }
+            //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
+            List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
+            if (datastisticList.size() == 4) {
+                jsonArray.put(js);
+                for (DataStatisticsBean dataStatisticsBean : datastisticList) {
+                    jsonArray.put(dataStatisticsBean.getJsonObject());
+                }
+
+                subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                    @Override
+                    protected void onEvent(String string) {
+                        subscription.unsubscribe();
+                    }
+
+                    @Override
+                    protected void onRxError(Throwable error) {
+                        subscription.unsubscribe();
+                    }
+                });
+                daoUtils.deleteDataStatitic();
+            }else {
+                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
+                daoUtils.saveDataStatistic(dataStatisticsBean);
+            }
         }
     }
 

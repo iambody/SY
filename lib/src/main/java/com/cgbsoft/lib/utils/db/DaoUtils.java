@@ -334,7 +334,7 @@ public void clearnHistoryByID(String Type, String userId){
     }
 
     public List<DataStatisticsBean> getDatastisticList(){
-        return dataStatisticsBeanDao.queryBuilder().build().list();
+        return dataStatisticsBeanDao.queryBuilder().list();
     }
 
     public void deleteDataStatitic(){
