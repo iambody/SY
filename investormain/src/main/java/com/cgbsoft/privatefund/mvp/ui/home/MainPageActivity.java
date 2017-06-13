@@ -128,6 +128,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Integer> showIndexObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
+    private boolean hasLive = false;
 
     /**
      * 定位管理器
@@ -301,7 +302,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 DataStatistApiParam.onStatisToCMenuCallDuihua();
                 break;
             case 2://直播
-                if (((InvestorAppli) InvestorAppli.getContext()).isTouGuOnline()) {
+                if (!hasLive) {
                     Intent i = new Intent(this, BaseWebViewActivity.class);
                     i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
                     i.putExtra(WebViewConstant.push_message_title, "我的投顾");
@@ -696,6 +697,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        this.hasLive = hasLive;
+        if (bottomNavigationBar != null) {
+            bottomNavigationBar.setLive(hasLive);
         }
         if (hasLive) {
             liveJsonData = jsonObject;

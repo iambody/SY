@@ -58,6 +58,8 @@ public interface RxConstant {
 
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
+    String ZHIBO_STATUES = "zhibo_status";
+
     String SHARE_PRODUCT_SEND = "share_product_send";
 
     String REFRUSH_UNREAD_INFOMATION = "refrush_unread_infomation";

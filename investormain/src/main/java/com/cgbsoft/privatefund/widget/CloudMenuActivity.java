@@ -43,6 +43,8 @@ public class CloudMenuActivity extends Activity {
 
 	private FloatingActionMenu floatingActionMenu;
 	public static final String PARAM_PRODUCT = "product_detail";
+	public static final String HAS_LIVE_STATUS = "hasLive";
+	private boolean hasLive;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -58,18 +60,16 @@ public class CloudMenuActivity extends Activity {
         });
 		getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		floatingActionMenu = initSatelliteMenu(this, getLayoutInflater(), getIntent().getBooleanExtra(PARAM_PRODUCT, false));
+		hasLive = getIntent().getBooleanExtra(HAS_LIVE_STATUS, false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				if (!floatingActionMenu.isOpen())
-					floatingActionMenu.open(true);
-			}
-		}, 100);
+		new Handler().postDelayed(() -> {
+            if (!floatingActionMenu.isOpen())
+                floatingActionMenu.open(true);
+        }, 100);
 	}
 
 	private FloatingActionMenu initSatelliteMenu(final Activity activity, LayoutInflater layoutInflater, boolean isProductDetail) {
@@ -122,8 +122,8 @@ public class CloudMenuActivity extends Activity {
 		});
 
 		TextView three = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
-		three.setText(((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.string.vbnb_tougu_dangan : R.string.vbnb_live_str);
-		showCompoundDrawable(three, ContextCompat.getDrawable(activity, ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live));
+		three.setText(!hasLive ? R.string.vbnb_tougu_dangan : R.string.vbnb_live_str);
+		showCompoundDrawable(three, ContextCompat.getDrawable(activity, !hasLive ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live));
 		View third = buildSubButton(activity, three, isProductDetail);
 		third.setOnClickListener(v -> {
             if (((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline()) {
