@@ -759,6 +759,28 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+
+    /**
+     * C端资讯分享到朋友圈
+     * type 1标识早知道 2标识大视野
+     */
+    public static void onStatisToCShareInfOnCircle(String infTitle,String type){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2016");
+        data3.put("act", "200265");
+        data3.put("arg1", "转发文章到朋友圈");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        data3.put("arg4", infTitle);
+        data3.put("arg5", type);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
+
+
+
+
+
+
     /**
      * B云豆充值 充值云豆按钮点击
      */

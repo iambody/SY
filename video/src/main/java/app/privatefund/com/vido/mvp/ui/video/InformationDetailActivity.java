@@ -5,6 +5,7 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.chenenyu.router.annotation.Route;
 
@@ -50,7 +51,7 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         String[] split = actionDecode.split(":");
         String sharePYQtitle = "";
 
-        String title = split[2];
+        String mytitle = split[2];
         String subTitle = split[3];
         String imageTitle = split[4];
         String link = split[5];
@@ -65,6 +66,9 @@ public class InformationDetailActivity extends BaseWebViewActivity {
             @Override
             public void completShare( int shareType) {
                 TaskInfo.complentTask("分享资讯");
+                //分享微信朋友圈成功
+                if(CommonShareDialog.SHARE_WXCIRCLE==shareType)
+                DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle,title );
             }
         });
         commonShareDialog.show();
