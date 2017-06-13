@@ -62,6 +62,9 @@ public class WebviewWithShareActivity extends BaseWebViewActivity {
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
+            }
+
+            public void completShare() {
                 TaskInfo.complentTask("分享资讯");
             }
         });
