@@ -189,8 +189,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
 
                 @Override
-                public void completShare() {
+                public void completShare( int shareType) {
                     TaskInfo.complentTask("分享产品");
+
                 }
             });
             commonShareDialog.show();

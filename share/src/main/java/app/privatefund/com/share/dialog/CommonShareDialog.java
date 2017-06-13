@@ -48,6 +48,20 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  */
 
 public class CommonShareDialog extends Dialog implements PlatformActionListener, View.OnClickListener {
+
+    /**
+     * 微信分享标识
+     */
+    public static final int SHARE_WX = 101;
+    /**
+     * 微信朋友圈分享标识
+     */
+    public static final int SHARE_WXCIRCLE = 102;
+
+    /**
+     * 记载分享标识
+     */
+    private int share_Type;
     /**
      * 上下文
      */
@@ -360,10 +374,12 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                 case 0://联系人
                     break;
                 case 1://微信
+                    share_Type = SHARE_WX;
                     WeChatShare(commonShareBean);
 
                     break;
                 case 2://朋友圈
+                    share_Type = SHARE_WXCIRCLE;
                     WxCircleShare(commonShareBean);
                     break;
                 case 3://邮件
@@ -372,7 +388,6 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
                 case 5://复制链接
                     break;
-
             }
             CommonShareDialog.this.dismiss();
         }
@@ -460,7 +475,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        if (null != commentShareListener) commentShareListener.completShare();
+        if (null != commentShareListener) commentShareListener.completShare(share_Type);
     }
 
     /**
@@ -546,6 +561,6 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     public interface CommentShareListener {
         //分享成功
-        void completShare();
+        void completShare(int shareType);
     }
 }
