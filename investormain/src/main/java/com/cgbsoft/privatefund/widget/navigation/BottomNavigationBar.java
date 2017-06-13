@@ -378,7 +378,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                 case R.id.iv_bottom_navigation_cloud:
                                     if (nowPosition != 4) {
                                         nowPosition = 4;
-                                        changeResWithIdtentify();
+                                        // changeResWithIdtentify(); 点击中间不需要改变颜色
                                     }
                                     if (isIdtentifyWithInvestor) {
 //                                        if (SPreference.getToCBean(getContext()) != null && TextUtils.isEmpty(SPreference.getToCBean(getContext()).getBandingAdviserId())) {

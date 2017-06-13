@@ -23,7 +23,9 @@ public class RouteConfig {
     // 设置手势密码
     public static final String SET_GESTURE_PASSWORD = "investornmain_gestureeditactivity";
 
-    // 验证手势密码
+    // 搜索解决过
+    public static final String SEARCH_RESULT_ACTIVITY = "PRODUCT_SEARCH_RESULT_ACTIVITY";
+
     public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
 
     //我的任务

@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -93,8 +94,10 @@ public class CWebClient extends WebViewClient {
             // view.loadUrl(loadUrl);
             loadUrl = loadUrl;
         } else {
-            webView.loadUrl(url);
-            loadUrl = url;
+            if (url.startsWith("http") || url.startsWith("https")) {
+                webView.loadUrl(url);
+                loadUrl = url;
+            }
         }
 
         if (isShangxueyuanc) {
@@ -105,8 +108,10 @@ public class CWebClient extends WebViewClient {
 
     @Override
     public void onReceivedError(WebView webView, int i, String s, String s1) {
-        javaScriptObjectToc.setUrl(webView.getUrl());
-        System.out.println("-----url= " + webView.getUrl());
+        if (!TextUtils.isEmpty(s1) && !s1.endsWith("404.html")) {
+            javaScriptObjectToc.setUrl(s1);
+        }
+        System.out.println("-----url= " + s1);
         webView.loadUrl("file:///android_asset/404.html");
     }
 

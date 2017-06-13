@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="rc_picsel_toolbar_send_text_normal">#FFFFFF</color>
+    <color name="orange">#f47900</color>
+    <color name="main_list_bg">#f6f6f6</color>
+
 </resources>

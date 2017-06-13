@@ -1,5 +1,6 @@
 package app.privatefund.com.im.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,13 +14,13 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.base.model.CommonEntity;
-import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.AppinfConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.im.MessageListActivity;
+import app.privatefund.com.im.MessageSearchActivity;
 import app.privatefund.com.im.R;
 import app.privatefund.com.im.R2;
 import app.privatefund.com.im.adapter.TeamPageAdapter;
@@ -70,7 +72,6 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         List<Fragment> fragments = new ArrayList<>();
          conversationListFragment = new RongConversationListFragment();
 //       conversationListFragment = new RCConversationListFragment();
-//       conversationListFragment = new RCConversationListFragment();
         Bundle bundle = new Bundle();
         isMessageList = getArguments() != null && getArguments().getBoolean(MessageListActivity.IS_MESSAGE_LIST, false);
         if (isMessageList) {
@@ -102,18 +103,19 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         pager.setOnPageChangeListener(this);
 
         view.findViewById(R.id.search).setOnClickListener(v -> {
-//                if (getArguments() != null && getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false)) {
-//                    Intent intent = new Intent(getActivity(), SearchResultListActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.INFOMATION);
-//                    bundle.putString(SearchBaseActivity.SUB_TYPE_PARAM, SearchBaseActivity.INFOMATION);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                } else {
-//                    Intent intent = new Intent(getActivity(), MessageSearchActivity.class);
-//                    getActivity().startActivity(intent);
-//                    getActivity().overridePendingTransition(R.anim.message_search_in_bottom, 0);
-//                }
+            if (getArguments() != null && getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false)) {
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("SEARCH_TYPE_PARAMS", "4");
+                bundle1.putString("SEARCH_TYPE_PARAMS", "4");
+                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.SEARCH_RESULT_ACTIVITY, bundle1);
+//                Intent intent = new Intent(getActivity(), SearchResultListActivity.class);
+//                        bundle.putBoolean(SearchResultListActivity.NOTICE_SEARCH, true);
+//                        bundle.putString(SearchResultListActivity.NOTICE_SEARCH_TITLE, textEdit.getText().toString());
+            } else {
+                Intent intent = new Intent(getActivity(), MessageSearchActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.message_search_in_bottom, 0);
+            }
         });
         initPlatformCustomer();
         initOrgManager();

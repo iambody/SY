@@ -1,4 +1,4 @@
-package app.product.com.widget;
+package com.cgbsoft.lib.widget;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -10,9 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.listener.listener.SimpleTextWatcher;
-
-import app.product.com.R;
 
 
 /**
