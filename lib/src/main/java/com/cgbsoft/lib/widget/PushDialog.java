@@ -82,6 +82,7 @@ public abstract class PushDialog extends BaseDialog {
         iv_vcd_cancel = (ImageView) findViewById(R.id.iv_vcd_cancel);
         push_dlg_img = (ImageView) findViewById(R.id.push_dialog_image);
         if (AppManager.isInvestor(_context)){
+            push_dlg_img.setImageResource(R.drawable.bg_investor_dialog);
             btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
         }
         btn_vcd_sure.setOnClickListener(new View.OnClickListener() {
