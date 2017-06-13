@@ -28,4 +28,13 @@ public class TimeUtils {
         }
         return "1970-01-01";
     }
+
+    /**
+     *
+     * @param time
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    public static String format(long time){
+        return timeFormat(time,"yyyy-MM-dd HH:mm:ss");
+    }
 }

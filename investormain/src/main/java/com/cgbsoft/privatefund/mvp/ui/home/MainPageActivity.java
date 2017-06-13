@@ -635,7 +635,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onPause() {
         super.onPause();
         try {
-            SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
+            if (liveJsonData != null)
+                SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -690,7 +691,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
         try {
-            if ((SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM)+"").equals(jsonObject.getString("id"))) {
+            if ((SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM) + "").equals(jsonObject.getString("id"))) {
                 hasLive = false;
             }
         } catch (JSONException e) {

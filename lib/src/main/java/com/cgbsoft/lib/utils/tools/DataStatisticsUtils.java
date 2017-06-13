@@ -18,6 +18,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.jhworks.library.utils.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,8 +51,9 @@ public class DataStatisticsUtils {
         try {
             if (locationBean!=null){
                 js.put("lat",locationBean.getLocationlatitude());
-                js.put("lon",locationBean.getLocationlontitude());
+                js.put("lng",locationBean.getLocationlontitude());
             }
+            js.put("clicktime", TimeUtils.format(System.currentTimeMillis()));
             js.put("uid", AppManager.getUserId(context.getApplicationContext()));
             js.put("ip", OtherDataProvider.getIP(context.getApplicationContext()));
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
