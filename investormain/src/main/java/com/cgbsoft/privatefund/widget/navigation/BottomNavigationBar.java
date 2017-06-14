@@ -101,12 +101,12 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private RequestManager requestManager;
     private boolean isIdtentifyWithInvestor;
 
-    private boolean isLookZhiBao;
     private boolean isLive;
 
     private int nowPosition = 0, doubleClickTime = 200;
     private long nowSystemTime;
     private boolean isSpringFestival;//是否春节
+    private TextView centerView;
 
     public BottomNavigationBar(Context context) {
         super(context);
@@ -121,6 +121,28 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     public BottomNavigationBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+    }
+
+    public void setLive(boolean live) {
+        if (isLive == live) {
+            return;
+        }
+        isLive = live;
+        int drawableId;
+        int strRe;
+        if (centerView != null) {
+            if (live) {
+                drawableId = R.drawable.selector_bottom_live;
+                strRe = R.string.vbnb_live_str;
+            } else {
+                drawableId = R.drawable.select_mine_tougu;
+                strRe = R.string.vbnb_tougu_dangan;
+            }
+            Drawable drawable = ContextCompat.getDrawable(getContext(), drawableId);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            centerView.setCompoundDrawables(null, drawable, null, null);
+            centerView.setText(strRe);
+        }
     }
 
     private void init(Context context) {
@@ -158,13 +180,13 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
     public void setActivity(Activity activity) {
         //如果是投资者
-        View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call);
-        View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet);
+        View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call, false);
+        View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet, false);
         View liveView = buildSubButton(activity,
                 ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? getResources().getString(R.string.vbnb_tougu_dangan) : getResources().getString(R.string.vbnb_live_str),
-                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live);
-        View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms);
-        View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs);
+                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live, true);
+        View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms, false);
+        View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs, false);
 
 
         floatingActionMenu = new FloatingActionMenu.Builder(activity).addSubActionView(callView)
@@ -180,7 +202,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //
         view_bottom_navigation_close.setOnClickListener(v -> {
             long toTime = System.currentTimeMillis() - nowSystemTime;
-            if (toTime > doubleClickTime * 4 && floatingActionMenu.isOpen()) {
+            if (toTime > doubleClickTime && floatingActionMenu.isOpen()) {
                 floatingActionMenu.close(true);
                 view_bottom_navigation_close.setVisibility(GONE);
                 iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
@@ -214,20 +236,22 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
         doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
         if (AppManager.isInvestor(getContext())) {
-            doubleClickDetect(doubleClickTime * 4, iv_bottom_navigation_cloud);
+            doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
         } else {
             doubleClickDetect(doubleClickTime, iv_bottom_navigation_cloud);
         }
     }
 
 
-    private View buildSubButton(Activity activity, String str, int drawableId) {
+    private View buildSubButton(Activity activity, String str, int drawableId, boolean isCenterView) {
         TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_text, null);
         Drawable drawable = ContextCompat.getDrawable(getContext(), drawableId);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(null, drawable, null, null);
         textView.setText(str);
-
+        if (isCenterView) {
+            centerView = textView;
+        }
         FrameLayout.LayoutParams frameLP = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(activity);
         itemBuilder.setBackgroundDrawable(ContextCompat.getDrawable(activity, android.R.color.transparent));
@@ -389,17 +413,16 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                        } else {
 //                                            getContext().startActivity(new Intent(getContext(), CloudMenuActivity.class));
 //                                        }
-
                                         if (AppManager.getUserInfo(getContext()).getToC() != null && TextUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())) {
                                             HashMap<String, Object> hashMap = new HashMap<>();
                                             hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.noBindUserInfo);
                                             hashMap.put(WebViewConstant.push_message_title, "填写信息");
                                             NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                                         } else {
-                                            if (isLive && !isLookZhiBao) {
-                                                isLookZhiBao = true;
-                                                //joinLive();
-                                            } else {
+//                                            if (isLive && !isLookZhiBao) {
+//                                                isLookZhiBao = true;
+//                                                //joinLive();
+//                                            } else {
                                                 boolean needOpen;
                                                 if (floatingActionMenu.isOpen()) {
                                                     needOpen = false;
@@ -412,7 +435,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                                     iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
                                                 }
                                                 floatingActionMenu.toggle(needOpen);
-                                            }
+//                                            }
                                         }
                                         DataStatistApiParam.onStatisToCProductDetailMenu();
                                     } else {

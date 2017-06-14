@@ -43,6 +43,8 @@ public class CloudMenuActivity extends Activity {
 
 	private FloatingActionMenu floatingActionMenu;
 	public static final String PARAM_PRODUCT = "product_detail";
+	public static final String HAS_LIVE_STATUS = "hasLive";
+	private boolean hasLive;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -58,18 +60,16 @@ public class CloudMenuActivity extends Activity {
         });
 		getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		floatingActionMenu = initSatelliteMenu(this, getLayoutInflater(), getIntent().getBooleanExtra(PARAM_PRODUCT, false));
+		hasLive = getIntent().getBooleanExtra(HAS_LIVE_STATUS, false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				if (!floatingActionMenu.isOpen())
-					floatingActionMenu.open(true);
-			}
-		}, 100);
+		new Handler().postDelayed(() -> {
+            if (!floatingActionMenu.isOpen())
+                floatingActionMenu.open(true);
+        }, 100);
 	}
 
 	private FloatingActionMenu initSatelliteMenu(final Activity activity, LayoutInflater layoutInflater, boolean isProductDetail) {
@@ -96,34 +96,28 @@ public class CloudMenuActivity extends Activity {
 		one.setText(R.string.vbnb_call_str);
 		showCompoundDrawable(one, ContextCompat.getDrawable(activity, R.drawable.selector_bottom_call));
 		View first = buildSubButton(activity, one, isProductDetail);
-		first.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NavigationUtils.startDialgTelephone(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
-				CloudMenuActivity.this.finish();
-				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-				DataStatistApiParam.onStatisToCMenuCallCustom();
+		first.setOnClickListener(v -> {
+            NavigationUtils.startDialgTelephone(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
+            CloudMenuActivity.this.finish();
+            CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+            DataStatistApiParam.onStatisToCMenuCallCustom();
 
-			}
-		});
+        });
 
 		TextView two = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
 		two.setText(R.string.vbnb_meet_str);
 		showCompoundDrawable(two, ContextCompat.getDrawable(activity, R.drawable.selector_bottom_meet));
 		View second = buildSubButton(activity, two, isProductDetail);
-		second.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				RongIM.getInstance().startConversation(CloudMenuActivity.this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(CloudMenuActivity.this).getToC().getBandingAdviserId(), AppManager.getUserInfo(CloudMenuActivity.this).getAdviserRealName());
-				CloudMenuActivity.this.finish();
-				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-				DataStatistApiParam.onStatisToCMenuCallDuihua();
-			}
-		});
+		second.setOnClickListener(v -> {
+            RongIM.getInstance().startConversation(CloudMenuActivity.this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(CloudMenuActivity.this).getToC().getBandingAdviserId(), AppManager.getUserInfo(CloudMenuActivity.this).getAdviserRealName());
+            CloudMenuActivity.this.finish();
+            CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+            DataStatistApiParam.onStatisToCMenuCallDuihua();
+        });
 
 		TextView three = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
-		three.setText(((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.string.vbnb_tougu_dangan : R.string.vbnb_live_str);
-		showCompoundDrawable(three, ContextCompat.getDrawable(activity, ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live));
+		three.setText(!hasLive ? R.string.vbnb_tougu_dangan : R.string.vbnb_live_str);
+		showCompoundDrawable(three, ContextCompat.getDrawable(activity, !hasLive ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live));
 		View third = buildSubButton(activity, three, isProductDetail);
 		third.setOnClickListener(v -> {
             if (((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline()) {
@@ -147,29 +141,23 @@ public class CloudMenuActivity extends Activity {
 		four.setText(R.string.vbnb_sms_str);
 		showCompoundDrawable(four, ContextCompat.getDrawable(activity, R.drawable.selector_bottom_sms));
 		View fourth = buildSubButton(activity, four, isProductDetail);
-		fourth.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NavigationUtils.startDialogSendMessage(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
-				CloudMenuActivity.this.finish();
-				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-				DataStatistApiParam.onStatisToCMenuMessage();
-			}
-		});
+		fourth.setOnClickListener(v -> {
+            NavigationUtils.startDialogSendMessage(activity, AppManager.getUserInfo(CloudMenuActivity.this).getAdviserPhone());
+            CloudMenuActivity.this.finish();
+            CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+            DataStatistApiParam.onStatisToCMenuMessage();
+        });
 
 		TextView five = (TextView)layoutInflater.inflate(R.layout.item_textview_drawable, null);
 		five.setText(R.string.vbnb_cs_str);
 		showCompoundDrawable(five, ContextCompat.getDrawable(activity, R.drawable.selector_bottom_cs));
 		View fiveth = buildSubButton(activity, five, isProductDetail);
-		fiveth.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				RongIM.getInstance().startPrivateChat(CloudMenuActivity.this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
-				CloudMenuActivity.this.finish();
-				CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
-				DataStatistApiParam.onStatisToCMenuKefu();
-			}
-		});
+		fiveth.setOnClickListener(v -> {
+            RongIM.getInstance().startPrivateChat(CloudMenuActivity.this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
+            CloudMenuActivity.this.finish();
+            CloudMenuActivity.this.overridePendingTransition(R.anim.home_fade_in, R.anim.home_fade_out);
+            DataStatistApiParam.onStatisToCMenuKefu();
+        });
 
 		final FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(activity)
 				.addSubActionView(first)
@@ -182,8 +170,7 @@ public class CloudMenuActivity extends Activity {
 				.build();
 		actionMenu.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
 			@Override
-			public void onMenuOpened(FloatingActionMenu floatingActionMenu) {
-			}
+			public void onMenuOpened(FloatingActionMenu floatingActionMenu) {}
 
 			@Override
 			public void onMenuClosed(FloatingActionMenu floatingActionMenu) {

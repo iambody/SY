@@ -105,7 +105,7 @@ public class NavigationUtils {
         Intent intent = new Intent(context, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
@@ -131,7 +131,7 @@ public class NavigationUtils {
         Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
                 .with(WebViewConstant.push_message_url, url)
                 .with(WebViewConstant.push_message_title, title)
-                .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                .with(WebViewConstant.PAGE_SHOW_TITLE,false)
                 .with(WebViewConstant.RIGHT_SHARE,true)
                 .go(context);
     }
@@ -151,6 +151,15 @@ public class NavigationUtils {
             iRouter.with(entry.getKey(), entry.getValue());
         }
         iRouter.go(context);
+    }
+
+    public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap, int enterAnim, int outerAnim) {
+        IRouter iRouter = Router.build(routerType);
+        Set<Map.Entry<String, Object>> set = hashMap.entrySet();
+        for (Map.Entry<String, Object> entry : set) {
+            iRouter.with(entry.getKey(), entry.getValue());
+        }
+        iRouter.anim(enterAnim, outerAnim).go(context);
     }
 
     public static void startActivityByRouterForResult(Context context, String routerType, int requestCode) {
