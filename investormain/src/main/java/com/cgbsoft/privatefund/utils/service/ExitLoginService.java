@@ -95,7 +95,7 @@ public class ExitLoginService extends Service {
         AppInfStore.saveIsLogin(getApplicationContext(), false);
         AppInfStore.saveUserAccount(getApplicationContext(), null);
         AppInfStore.saveRongTokenExpired(this, 0);
-        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
         if(RongIM.getInstance().getRongIMClient()!=null){
             RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.PRIVATE);
             RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.GROUP);

@@ -21,7 +21,7 @@ public class LogOutAccount {
             AppInfStore.saveUserId(context, "");
             AppInfStore.saveUserToken(context, "");
             AppInfStore.saveRongTokenExpired(context, 0);
-            ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
+            ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity)context).finish();
