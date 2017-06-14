@@ -365,7 +365,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
         }
 //        if (!BStrUtils.isEmpty(CurrentOderBy))
-            orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems(),CurrentOderBy);
+        orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems(), CurrentOderBy);
         orderbyPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
 
     }
@@ -395,18 +395,24 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             case ProductContract.LOAD_PRODUCT_LISTDATA://获取到列表数据
 //                PromptManager.ShowCustomToast(getContext(), "请求列表成功" + str);
                 //开始解析数据
-                productlsBeen = new Gson().fromJson(str, new TypeToken<List<ProductlsBean>>() {}.getType());
+                productProductfragmentEmptyIv.setVisibility(View.GONE);
+                productlsBeen = new Gson().fromJson(str, new TypeToken<List<ProductlsBean>>() {
+                }.getType());
                 fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
 
                 productProductfragmentEmptyIv.setVisibility(View.GONE);
                 swipeToLoadLayout.setVisibility(View.VISIBLE);
                 if (isLoadmore) {
                     productlsAdapter.AddfreshAp(productlsBeen);
-
+                    if (null == productlsBeen || 0 == productlsBeen.size()) {
+                        PromptManager.ShowCustomToast(baseActivity, getResources().getString(R.string.no_more_product));
+                    }
                 } else {
                     if (0 == productlsBeen.size()) {
                         productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
                         swipeToLoadLayout.setVisibility(View.GONE);
+                        if (productProductFilterLay.getVisibility() == View.GONE)
+                            productProductFilterLay.setVisibility(View.VISIBLE);
                     }
                     productlsAdapter.freshAp(productlsBeen);
 

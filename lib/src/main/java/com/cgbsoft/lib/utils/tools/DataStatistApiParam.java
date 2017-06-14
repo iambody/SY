@@ -40,7 +40,7 @@ public class DataStatistApiParam {
         data3.put("grp", "1000");
         data3.put("act", "10122");
         data3.put("arg1", "注册");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     public static void onClickVideoToC(String videoName, String searizableName) {
@@ -479,7 +479,7 @@ public class DataStatistApiParam {
         data3.put("grp", "2003");
         data3.put("act", "20007");
         data3.put("arg1", "注册");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     public static void onStaticToCRegeistBack() {
@@ -532,7 +532,7 @@ public class DataStatistApiParam {
         data3.put("grp", "2005");
         data3.put("act", "20012");
         data3.put("arg1", "返回");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     public static void onStatisToCProductDetailMenu() {
@@ -574,7 +574,7 @@ public class DataStatistApiParam {
         data3.put("act", "20002");
         data3.put("arg1", "登录");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     //c端登录 点击注册按钮
@@ -584,7 +584,7 @@ public class DataStatistApiParam {
         data3.put("act", "20003");
         data3.put("arg1", "新用户");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     //c端登录 点击忘记密码按钮
@@ -604,7 +604,7 @@ public class DataStatistApiParam {
         data3.put("act", "20005");
         data3.put("arg1", "微信");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
 
@@ -621,13 +621,13 @@ public class DataStatistApiParam {
     }
 
     /**
-     * C端点击观看历史按钮点击
+     * C端点击缓存按钮点击
      */
     public static void onStatisToCLookHistory() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2027");
         data3.put("act", "20218");
-        data3.put("arg1", "历史");
+        data3.put("arg1", "缓存");
         data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
@@ -732,7 +732,7 @@ public class DataStatistApiParam {
         data3.put("arg4", productId);
         data3.put("arg5", productName);
         data3.put("arg6", isHot ? "热销产品" : "非热销产品");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     /**
@@ -744,7 +744,7 @@ public class DataStatistApiParam {
         data3.put("act", "200040");
         data3.put("arg1", "搜索");
         data3.put("arg2", BaseApplication.BindAdviserState());
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
     /**
@@ -772,7 +772,7 @@ public class DataStatistApiParam {
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", infTitle);
         data3.put("arg5", type);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
 

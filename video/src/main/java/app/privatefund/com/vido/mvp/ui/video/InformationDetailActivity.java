@@ -61,7 +61,7 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
         if (null != commonShareDialog && commonShareDialog.isShowing()) return;
-        ShareCommonBean shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
+        ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare( int shareType) {

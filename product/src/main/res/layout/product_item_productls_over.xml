@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:paddingBottom="@dimen/ui_5_dip"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="14dp">
 
         <RelativeLayout
             android:id="@+id/product_item_productls_over_title_layout"
@@ -32,55 +35,56 @@
 
 
         <LinearLayout
+            android:id="@+id/product_item_productls_over_inveister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@id/product_item_productls_over_title_layout"
-            android:id="@+id/product_item_productls_over_inveister"
             android:layout_marginTop="10dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/product_item_productls_over_inviste_biaodi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/c_high_black"
-                android:textSize="@dimen/text_size_small"
-                android:text="投资标的"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/shap_item_product_flag"
-                android:id="@+id/product_item_productls_over_inviste_biaodi"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp"
                 android:paddingTop="2dp"
-                android:paddingBottom="2dp"
+                android:text="投资标的"
                 android:textColor="@color/c_high_black"
-                android:textSize="@dimen/text_size_small"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/product_item_productls_over_inviste_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/shap_item_product_flag"
+                android:paddingBottom="2dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="2dp"
                 android:text="投资领域"
-                android:id="@+id/product_item_productls_over_inviste_area"/>
+                android:textColor="@color/c_high_black"
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_below="@id/product_item_productls_over_inveister"
             android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_below="@id/product_item_productls_over_inveister">
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/product_item_productls_over_leijijinzhi_text"
                     style="@style/product_item_context_text2"
@@ -110,10 +114,10 @@
                     style="@style/product_item_context_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#b3b3b3"
                     android:layout_gravity="center_horizontal|top"
                     android:layout_marginBottom="9dp"
-                    android:text="产品期限" />
+                    android:text="产品期限"
+                    android:textColor="#b3b3b3" />
 
                 <TextView
                     android:id="@+id/product_item_productls_over_qixian"
@@ -121,23 +125,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:textColor="#222222"
-                    android:text="6个月" />
+                    android:text="6个月"
+                    android:textColor="#222222" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="right|center_vertical">
+                android:gravity="right|center_vertical"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/product_item_productls_over_shengyuedu_text"
                     style="@style/product_item_context_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#b3b3b3"
                     android:layout_marginBottom="5dp"
-                    android:text="剩余额度" />
+                    android:text="剩余额度"
+                    android:textColor="#b3b3b3" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -148,17 +154,17 @@
                         android:id="@+id/product_item_productls_over_shengyuedu_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/mred"
-                        android:textSize="17sp"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/orange"
+                        android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/product_item_productls_over_wan"
                         style="@style/product_item_context_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#b3b3b3"
-                        android:text="万" />
+                        android:text="万"
+                        android:textColor="#b3b3b3" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

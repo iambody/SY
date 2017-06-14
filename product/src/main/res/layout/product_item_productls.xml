@@ -18,7 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:paddingTop="14dp"
+        android:paddingBottom="@dimen/ui_5_dip"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
 
         <RelativeLayout
             android:id="@+id/product_item_productls_title_layout"
@@ -83,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="0dp"
             android:id="@+id/product_item_productls_show_value"
             android:layout_below="@+id/product_item_productls_inveister"
             android:orientation="horizontal">
@@ -161,7 +164,7 @@
                         android:id="@+id/product_item_productls_shengyuedu_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/mred"
+                        android:textColor="@color/orange"
                         android:textSize="17sp"
                         android:layout_marginRight="5dp"/>
 

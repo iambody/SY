@@ -97,5 +97,6 @@
 
     <string name="bind_account_prompt">参照《移动互联网应用程序信息服务管理规定》，请您按提示要求填写您的手机号码和验证码完成校验，感谢您的配合！</string>
     <string name="phone_noright_str">请输入正确的手机号</string>
+    <string name="code_shixiao">验证码一分钟内有效,请尽快输入</string>
 
 </resources>

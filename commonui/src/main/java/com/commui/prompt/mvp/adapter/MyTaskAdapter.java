@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
 import com.commui.prompt.mvp.holder.MyTaskListHolder;
@@ -28,7 +27,6 @@ public class MyTaskAdapter extends BaseAdapter<DayTaskBean, MyTaskListener, Recy
     public MyTaskAdapter(MyTaskListener listener, boolean istoC) {
         super(listener);
         this.isToC = istoC;
-
     }
 
     @Override

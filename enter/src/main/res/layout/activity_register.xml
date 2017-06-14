@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".mvp.ui.RegisterActivity">
+    android:fitsSystemWindows="true" >
 
     <com.cgbsoft.lib.widget.ScrollingImageView
         android:id="@+id/siv_ar_bg"
@@ -150,11 +149,23 @@
                 android:layout_marginRight="0dp"
                 android:text="发送验证码"
                 android:textColor="@color/white"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:contextClickable="true"
+                android:focusable="true"
+                />
         </RelativeLayout>
 
         <View style="@style/normal_line" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_40_dip"
+            android:paddingBottom="@dimen/ui_5_dip"
+            android:paddingTop="@dimen/ui_5_dip"
+            android:textColor="@color/select_btn_normal"
+            android:textSize="@dimen/dimens_sp_10"
+            android:text="@string/code_shixiao"/>
 
         <Button
             android:id="@+id/btn_ar_register"

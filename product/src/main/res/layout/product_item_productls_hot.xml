@@ -56,7 +56,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/ic_jiezhi"
+                android:background="@drawable/jiezhi_c_bg"
                 android:gravity="center"
                 android:text="截止打款X天"
                 android:textColor="#fff"
@@ -75,7 +75,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:text="北京城区"
-        android:textColor="#ea1202"
+        android:textColor="@color/orange"
         android:textSize="@dimen/text_size_medium" />
 
     <View
