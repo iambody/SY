@@ -27,6 +27,7 @@ class RxResultHelper {
                 String string = "";
                 try {
                     string = responseBody.string();
+                    System.out.println("-----string=" + string);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

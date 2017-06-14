@@ -405,7 +405,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                RongIM.getInstance().disconnect();
+                if(RongIM.getInstance().getRongIMClient()!=null) {
+                    RongIMClient.getInstance().clearConversations(new RongIMClient.ResultCallback() {
+                        @Override
+                        public void onSuccess(Object o) {}
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {}
+                    }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
+                }
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().disconnect();
+                }
                 finish();
             }
 
@@ -448,6 +459,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         rongTokenRefushObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean aBoolean) {
+
                 Log.i("MainPageActivity", String.valueOf(aBoolean));
                 baseWebview.loadUrls(WebViewConstant.PAGE_INIT);
             }
