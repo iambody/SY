@@ -64,6 +64,8 @@ public class MineFragment extends BaseFragment {
             public void onClick(String result) {
                 if(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS.equals(result)){
                     RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+                }else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)){
+                    RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,1);
                 }
             }
         });

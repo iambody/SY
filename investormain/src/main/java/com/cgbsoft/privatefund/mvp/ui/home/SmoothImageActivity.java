@@ -51,12 +51,12 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	protected void init(Bundle savedInstanceState) {
 		localUrl = getIntent().getStringExtra(IMAGE_SAVE_PATH_LOCAL);
 		imageView.setImageResource(R.drawable.bg_white);
+		toolbar.setTitle("");
+		titleMid.setText("图片预览");
 		setSupportActionBar(toolbar);
 		toolbar.setOnMenuItemClickListener(this);
 		toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 		toolbar.setNavigationOnClickListener(v -> finish());
-		toolbar.setTitle("");
-		titleMid.setText("图片预览");
 		initImage();
 	}
 

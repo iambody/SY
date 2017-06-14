@@ -19,7 +19,7 @@ public class VideoNavigationUtils {
         Intent intent = new Intent(context, InformationDetailActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         intent.putExtra(WebViewConstant.RIGHT_SHARE, true);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }

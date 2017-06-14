@@ -64,8 +64,6 @@ public class WebviewWithShareActivity extends BaseWebViewActivity {
             public void completShare(int shareType) {
                 TaskInfo.complentTask("分享资讯");
             }
-
-
         });
         commonShareDialog.show();
     }

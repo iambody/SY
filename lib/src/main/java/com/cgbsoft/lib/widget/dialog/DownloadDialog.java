@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
@@ -64,6 +66,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private DownloadManagerPro downloadManagerPro;
     private int downloadApkToken;
     private String downloadApkPath;
+    private ImageView bg_dialog;
 
 
     public DownloadDialog(Context context, boolean isOpenWindow) {
@@ -89,6 +92,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         window.setWindowAnimations(R.style.AnimBottom);
 
         tv_vcd_title = (TextView) dialog.findViewById(R.id.tv_vcd_title);
+        bg_dialog = (ImageView) dialog.findViewById(R.id.bg_download);
         pb_vcd = (ProgressBar) dialog.findViewById(R.id.pb_vcd);
         tv_vcd_message = (TextView) dialog.findViewById(R.id.tv_vcd_message);
         btn_vcd_sure = (Button) dialog.findViewById(R.id.btn_vcd_sure);
@@ -96,7 +100,11 @@ public class DownloadDialog implements View.OnClickListener, Constant {
 
         btn_vcd_sure.setOnClickListener(this);
         iv_vcd_cancel.setOnClickListener(this);
-
+        if (AppManager.isInvestor(_context)){
+            bg_dialog.setImageResource(R.drawable.bg_investor_dialog);
+            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
+            pb_vcd.setProgressDrawable(_context.getResources().getDrawable(R.drawable.orange_progress_bar));
+        }
         tv_vcd_title.setText("升级提示");
         btn_vcd_sure.setText("现在升级");
         pb_vcd.setMax(100);

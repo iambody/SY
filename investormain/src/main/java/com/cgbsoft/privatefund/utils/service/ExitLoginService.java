@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -24,6 +25,8 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/21.
@@ -85,13 +88,21 @@ public class ExitLoginService extends Service {
 
     private void relogin() {
         floatView.removeFromWindow();
-
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         AppInfStore.saveIsLogin(getApplicationContext(), false);
         AppInfStore.saveUserAccount(getApplicationContext(), null);
+        AppInfStore.saveRongTokenExpired(this, 0);
+        ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
+        if(RongIM.getInstance().getRongIMClient()!=null){
+            RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.PRIVATE);
+            RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.GROUP);
+        }
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().disconnect();
+        }
 
         RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
 

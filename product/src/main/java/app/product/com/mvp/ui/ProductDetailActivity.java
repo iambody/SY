@@ -3,6 +3,7 @@ package app.product.com.mvp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.cgbsoft.lib.TaskInfo;
@@ -13,7 +14,9 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -30,6 +33,8 @@ import app.privatefund.com.share.bean.ShareCommonBean;
 import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
+import rx.Observable;
+import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -53,6 +58,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
     //
     private String productSchemeId;
 
+    private Observable<Boolean> liveObserver;
+    private boolean hasLive;
+
     @Override
     protected int layoutID() {
         initParams();
@@ -74,14 +82,28 @@ public class ProductDetailActivity extends BaseWebViewActivity {
                     hashMap.put(WebViewConstant.push_message_title, "填写信息");
                     NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 } else {
-                    if (isLive && !isLookZhiBao) {
-                        isLookZhiBao = true;
-                        //joinLive();
-                    } else {
-                        NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, "product_detail", true, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
-                    }
+//                    if (isLive && !isLookZhiBao) {
+//                        isLookZhiBao = true;
+//                        //joinLive();
+//                    } else {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("product_detail", true);
+                        hashMap.put("hasLive", hasLive);
+                        NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, hashMap, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
+//                    }
                 }
                 DataStatistApiParam.onStatisToCProductDetailMenu();
+            }
+        });
+        liveObserver = RxBus.get().register(RxConstant.ZHIBO_STATUES, Boolean.class);
+        liveObserver.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                hasLive = aBoolean;
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
             }
         });
     }
@@ -126,6 +148,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         TaskInfo.unbind();
         //返回按钮的埋点
 //        DataStatistApiParam.onStatisToCProductDetailBack();
+        if (liveObserver != null) {
+            RxBus.get().unregister(RxConstant.ZHIBO_STATUES, liveObserver);
+        }
 
     }
 
@@ -157,7 +182,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
                     .with(WebViewConstant.push_message_url,Url)
                     .with(WebViewConstant.push_message_title,title)
-                    .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                    .with(WebViewConstant.PAGE_SHOW_TITLE,false)
                     .with(WebViewConstant.RIGHT_SHARE,true)
                     .go(baseContext);
         } catch (Exception e) {

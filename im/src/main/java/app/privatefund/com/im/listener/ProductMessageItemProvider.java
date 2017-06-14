@@ -105,7 +105,7 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.product + schemeId);
             hashMap.put(WebViewConstant.push_message_title, "产品详情");
-            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, false);
+            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
             hashMap.put(WebViewConstant.RIGHT_SAVE, false);
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
             hashMap.put(WebViewConstant.PAGE_INIT, false);

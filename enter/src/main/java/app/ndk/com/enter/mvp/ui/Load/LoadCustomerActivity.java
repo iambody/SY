@@ -49,8 +49,4 @@ public class LoadCustomerActivity extends BaseActivity {
     protected void initView(Bundle state) {
         setContentView(R.layout.activity_customer_loadcustomer);
     }
-
-
-
-
 }

@@ -3,6 +3,8 @@ package com.cgbsoft.lib.utils.tools;
 import android.app.Activity;
 import android.content.Context;
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 
@@ -18,7 +20,8 @@ public class LogOutAccount {
             AppInfStore.saveUserInfo(context, null);
             AppInfStore.saveUserId(context, "");
             AppInfStore.saveUserToken(context, "");
-
+            AppInfStore.saveRongTokenExpired(context, 0);
+            ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity)context).finish();

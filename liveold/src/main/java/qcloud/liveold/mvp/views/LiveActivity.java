@@ -201,7 +201,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         String liveJsonStr = getIntent().getStringExtra("liveJson");
         JSONObject liveJson = null;
         try {
-            if (getIntent().getStringExtra("type").equals("webJoinLive")) {
+            if ("webJoinLive".equals(getIntent().getStringExtra("type"))) {
                 liveJson = new JSONObject(liveJsonStr);
                 MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
                 MySelfInfo.getInstance().setJoinRoomWay(false);
