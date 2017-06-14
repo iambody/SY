@@ -94,7 +94,7 @@
                 android:id="@+id/iv_vcd_cancel"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@drawable/custom_cancel_sel" />
+                android:background="@drawable/dialog_cancel_sel" />
         </RelativeLayout>
     </RelativeLayout>
 
