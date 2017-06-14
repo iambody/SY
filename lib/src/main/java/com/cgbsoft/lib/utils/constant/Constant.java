@@ -171,5 +171,5 @@ public interface Constant {
     };
 
     //分享时候的外网log地址
-    public static final String SHARE_LOG="http://simuyun-upload.oss-cn-beijing.aliyuncs.com/app/simuyunlogo20170613.png";
+    public static final String SHARE_LOG="http://www.simuyun.com/images/simuyunlogo.png";
 }

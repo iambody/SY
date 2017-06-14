@@ -209,6 +209,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
             RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
             finish();
         }
+
     }
 
     @Override

@@ -33,7 +33,7 @@ import app.product.com.mvp.contract.ProductContract;
  */
 public class ProductPresenter extends BasePresenterImpl<ProductContract.view> implements ProductContract.Presenter {
 
-    public boolean isFristRequest=true;
+    public boolean isFristRequest = true;
 
     public ProductPresenter(@NonNull Context context, @NonNull ProductContract.view view) {
         super(context, view);
@@ -55,7 +55,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             jsonObject.put("offset", "" + offset * Constant.LOAD_PRODUCT_lIMIT);
             jsonObject.put("limit", Constant.LOAD_PRODUCT_lIMIT + "");
             jsonObject.put("userId", AppManager.getUserId(getContext().getApplicationContext()));
-
+//            if (!"0".equals(series))
             jsonObject.put("series", BStrUtils.StrToJsonArray(series));
             jsonObject.put("orderBy", BStrUtils.StrToJsonArray(orderBy));
             //单选的
@@ -82,7 +82,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
                     getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, getContext().getString(R.string.resultempty));
                 }
 
-                isFristRequest=false;
+                isFristRequest = false;
             }
 
             @Override
@@ -90,7 +90,7 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
                 if (null != loadingDialog) loadingDialog.dismiss();
                 getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, error.getMessage());
 
-                isFristRequest=false;
+                isFristRequest = false;
             }
         }));
     }

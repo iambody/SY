@@ -101,6 +101,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private String publicKey;
 
     private LocationManger locationManger;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
@@ -170,13 +171,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-                LogUtils.Log("S","sss");
+                LogUtils.Log("S", "sss");
 
             }
 
             @Override
             public void getLocationerror() {
-                LogUtils.Log("S","sss");
+                LogUtils.Log("S", "sss");
             }
         });
     }
@@ -218,7 +219,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-
+        LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))
             getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
         else {
