@@ -105,7 +105,7 @@ public class NavigationUtils {
         Intent intent = new Intent(context, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
@@ -131,7 +131,7 @@ public class NavigationUtils {
         Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
                 .with(WebViewConstant.push_message_url, url)
                 .with(WebViewConstant.push_message_title, title)
-                .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                .with(WebViewConstant.PAGE_SHOW_TITLE,false)
                 .with(WebViewConstant.RIGHT_SHARE,true)
                 .go(context);
     }

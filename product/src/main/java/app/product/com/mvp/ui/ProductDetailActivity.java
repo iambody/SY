@@ -182,7 +182,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
                     .with(WebViewConstant.push_message_url,Url)
                     .with(WebViewConstant.push_message_title,title)
-                    .with(WebViewConstant.PAGE_SHOW_TITLE,true)
+                    .with(WebViewConstant.PAGE_SHOW_TITLE,false)
                     .with(WebViewConstant.RIGHT_SHARE,true)
                     .go(baseContext);
         } catch (Exception e) {

@@ -32,7 +32,6 @@ import com.jhworks.library.ImageSelector;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -100,7 +99,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
-        hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, false);
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
@@ -202,7 +201,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
-        toolbar.setVisibility(hasShowTitle ? View.VISIBLE : View.GONE);
+        toolbar.setVisibility(hasShowTitle ? View.GONE : View.VISIBLE);
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {
                 String javascript = "javascript:Tools.init('" + pushMessageValue + "')";
