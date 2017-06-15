@@ -31,5 +31,6 @@ public class AppResourcesEntity extends BaseResult<AppResourcesEntity.Result> {
         public String isMustUpdate;
         public String versionFlag;
         public String isStrict;
+        public int upgradeType;
     }
 }

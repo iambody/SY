@@ -40,6 +40,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
@@ -249,7 +250,7 @@ public class CWebviewManger {
 
 //
         } else if (action.contains("updated")) {
-//            VersonUpdate();
+            versonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转
             NavigationUtils.startActivityByRouter(context, "investornmain_feedbackctivity");
         } else if (action.contains("signEnt")) {
@@ -316,6 +317,14 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    private void versonUpdate() {
+        new DownloadDialog(context, true, true);
+//        if (MApplication.getAppUpdate() != null && !TextUtils.isEmpty(MApplication.getAppUpdate().getVersion())
+//                && !MApplication.getAppUpdate().getVersion().equals(new AppInfo().versionName(context))) {
+//            new AppUpdateDialog(context).show();
+//        }
     }
 
     /**
@@ -414,7 +423,6 @@ public class CWebviewManger {
 //            return null;
 //        }
 //    }
-
     private void livePrompt(String action) {
         String[] split = action.split(":");
         try {
@@ -925,13 +933,6 @@ public class CWebviewManger {
         return action;
     }
 
-//    private void VersonUpdate() {
-//        if (MApplication.getAppUpdate() != null && !TextUtils.isEmpty(MApplication.getAppUpdate().getVersion())
-//                && !MApplication.getAppUpdate().getVersion().equals(new AppInfo().versionName(context))) {
-//            new AppUpdateDialog(context).show();
-//        }
-//    }
-
     private void startImagePage(String action) {
         ImageSelector selector = ImageSelector.create();
         selector.single();  // 选择一张图片
@@ -1260,9 +1261,9 @@ public class CWebviewManger {
             String title = split[3];
             if (!url.contains("http")) {
                 url = BaseWebNetConfig.baseParentUrl + url;
-            }else{
-                title=split[4];
-                url=split[2]+":"+split[3];
+            } else {
+                title = split[4];
+                url = split[2] + ":" + split[3];
             }
             Intent i = new Intent(context, BaseWebViewActivity.class);
 
