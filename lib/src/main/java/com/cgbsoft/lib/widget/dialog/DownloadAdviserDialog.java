@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -38,12 +37,12 @@ import rx.Observable;
 import static com.cgbsoft.lib.utils.db.DBConstant.APP_DOWNLOAD_PATH;
 
 /**
- * 下载apkdialog
- * Created by xiaoyu.zhang on 2016/11/24 13:59
- * Email:zhangxyfs@126.com
+ * desc
+ * Created by yangzonghui on 2017/6/15 22:52
+ * Email:yangzonghui@simuyun.com
  *  
  */
-public class DownloadDialog implements View.OnClickListener, Constant {
+public class DownloadAdviserDialog implements View.OnClickListener, Constant {
     private Context _context;
     private boolean _isOpenWindow, _isCompel, _isCouldClickBack = true;
     private String _verName, _appName, _newVerUrl, _newVerPath, _newVerName;
@@ -70,7 +69,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private boolean formSetting;
 
 
-    public DownloadDialog(Context context, boolean isOpenWindow, boolean fromSetting) {
+    public DownloadAdviserDialog(Context context, boolean isOpenWindow, boolean fromSetting) {
         _isOpenWindow = isOpenWindow;
         _context = context;
         this.formSetting = fromSetting;
@@ -117,36 +116,14 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     }
 
     private void checkVersion() {
-        OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
-        if (otherInfo != null) {
-            String json = otherInfo.getContent();
-            AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
-            if (result != null && !TextUtils.equals(result.version, _verName)) {
-                if (TextUtils.isEmpty(result.adverts)&&_verName.equals(result.version)) {
-                    return;
-                }
-                if ((!formSetting) && result.upgradeType == 2) {
-                    return;
-                }
 
-                if (TextUtils.equals(result.isMustUpdate, "y")) {//强制更新
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.setCancelable(false);
-                    iv_vcd_cancel.setVisibility(View.GONE);
-                }
-                tv_vcd_message.setText(result.adverts);
-                downloadUrl = result.downUrl;
+        tv_vcd_message.setText("升级内容");
+        downloadUrl = "https://upload.simuyun.com/android/POF_Cloud_Adviser_V5.8.0.apk";
 
-                OtherInfo info = daoUtils.getOtherInfo(APP_DOWNLOAD_PATH);
-                if (info != null) {
-                    downloadApkPath = info.getContent();
-                    btn_vcd_sure.setText("现在安装");
-                }
+        downloadApkPath = "";
+        btn_vcd_sure.setText("现在安装");
 
-                if (_isOpenWindow)
-                    dialog.show();
-            }
-        }
+        dialog.show();
     }
 
 
@@ -225,3 +202,4 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         daoUtils = null;
     }
 }
+

@@ -71,6 +71,8 @@ public abstract class PushDialog extends BaseDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_push_dialog);
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
         init();
     }
 
@@ -99,8 +101,6 @@ public abstract class PushDialog extends BaseDialog {
         });
         if (!TextUtils.isEmpty(imgUrl)) {
             Imageload.display(_context, imgUrl, push_dlg_img);
-        } else {
-            Imageload.display(_context, R.drawable.bg_custom_dialog, push_dlg_img);
         }
         btn_vcd_sure.setText(right);
         tv_vcd_message.setText(content);
