@@ -699,7 +699,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void getLiveSignSuc(String sign) {
         profileInfoHelper.setMyNickName(AppManager.getUserInfo(this).getNickName());
         profileInfoHelper.setMyAvator(AppManager.getUserInfo(this).getHeadImageUrl());
-        loginHelper.imLogin(AppManager.getUserId(this), sign);
+        loginHelper.imLogin(AppManager.getUserId(this) + "_C", sign);
     }
 
     @Override
