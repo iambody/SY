@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -23,8 +24,10 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
@@ -84,6 +87,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected boolean isLive;
 
     protected boolean isLookZhiBao;
+
+    private ShakeListener mShakeListener;
 
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
@@ -208,7 +213,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
+        initShakeInSetPage();
     }
+
+    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
+        @Override
+        public void onShakeStart() {}
+
+        @Override
+        public void onShakeFinish() {
+            DialogUtils.createSwitchBcDialog(BaseWebViewActivity.this);
+        }
+    };
 
     /**
      * @param url
@@ -288,6 +304,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     }
 
+    private void initShakeInSetPage() {
+        if (TextUtils.equals("设置", title)) {
+            mShakeListener = new ShakeListener(this);
+            mShakeListener.setOnShakeListener(onShakeListener);
+            mShakeListener.register();
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
@@ -339,6 +363,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
         if (mallChoiceObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
             RxBus.get().unregister(getRegeistRxBusId(),mallChoiceObservable);
+        }
+        if (mShakeListener != null) {
+            mShakeListener.unregister();
         }
     }
 

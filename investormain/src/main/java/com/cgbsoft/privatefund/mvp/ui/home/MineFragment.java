@@ -7,14 +7,19 @@ import android.view.View;
 import com.cgbsoft.lib.base.model.bean.UnReadCMSG;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
-import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
+
+import java.net.URLDecoder;
+import java.util.HashMap;
 
 import app.privatefund.com.im.bean.RCConnect;
 import butterknife.BindView;
@@ -24,9 +29,9 @@ import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
- *  个人页
- *  Created by xiaoyu.zhang on 2016/11/15 14:08
- *  Email:zhangxyfs@126.com
+ * 个人页
+ * Created by xiaoyu.zhang on 2016/11/15 14:08
+ * Email:zhangxyfs@126.com
  *  
  */
 public class MineFragment extends BaseFragment {
@@ -44,7 +49,6 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-
         unreadInfomation = RxBus.get().register(RxConstant.REFRUSH_UNREAD_INFOMATION, Boolean.class);
         unreadInfomation.subscribe(new RxSubscriber<Boolean>() {
             @Override
@@ -59,16 +63,46 @@ public class MineFragment extends BaseFragment {
             }
         });
         baseWebview.loadUrls(CwebNetConfig.minePgge);
-        baseWebview.setClick(new CWebClient.WebviewOnClick() {
-            @Override
-            public void onClick(String result) {
-                if(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS.equals(result)){
-                    RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
-                }else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)){
-                    RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,1);
-                }
+        baseWebview.setClick(result -> {
+            if (WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS.equals(result)) {
+                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+            } else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)) {
+                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+            } else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
+                OpenSharePage(result, false, false, true);
             }
         });
+    }
+
+    private void OpenSharePage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+        try {
+            String baseParams = URLDecoder.decode(data, "utf-8");
+            String[] split = baseParams.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (!url.contains("http")) {
+                url = BaseWebNetConfig.baseParentUrl + url;
+            } else {
+                title = split[4];
+                url = split[2] + ":" + split[3];
+            }
+            HashMap hashMap = new HashMap();
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            if (initPage) {
+                String pushMessage = split[4];
+                hashMap.put(WebViewConstant.push_message_value, pushMessage);
+            }
+            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+            if (split.length >= 5) {
+                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+            }
+            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

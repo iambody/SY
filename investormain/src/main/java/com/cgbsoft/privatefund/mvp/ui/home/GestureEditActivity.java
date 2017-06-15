@@ -196,9 +196,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @Override
     public void modifyUserSuccess(boolean isFiveTimes) {
         Toast.makeText(GestureEditActivity.this, isModifyPassword ? R.string.modify_gesture_password_success : R.string.set_gesture_password_success, Toast.LENGTH_LONG).show();
-//        mGestureContentView.clearDrawlineState(0L);
         AppInfStore.updateUserGesturePassword(this, password);
-//        SaveBeanUtil.putBean(GestureEditActivity.this, "userInfo", MApplication.getUser());
         if(isFromVerifyForget){//是忘记密码进来的直接跳转首页
             NavigationUtils.toMainActivity(GestureEditActivity.this);
             return;

@@ -8,13 +8,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -39,7 +40,7 @@ import io.rong.message.TextMessage;
  *
  * 消息搜索
  */
-public class MessageSearchActivity extends Activity {
+public class MessageSearchActivity extends BaseActivity {
 
     private static final String NOTICE_SEARCH = "notice_search";
     private ListView listView;
@@ -52,10 +53,18 @@ public class MessageSearchActivity extends Activity {
     private String keyName;
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        setContentView(R.layout.acitivity_message_search);
+    protected void before() {
+        super.before();
         isNoticeSearch = getIntent().getBooleanExtra(NOTICE_SEARCH, false);
+    }
+
+    @Override
+    protected int layoutID() {
+        return R.layout.acitivity_message_search;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
         initView();
         initListView();
         textEdit.setTextChangedListener(new ClearEditText.TextChangedListener() {
@@ -90,8 +99,12 @@ public class MessageSearchActivity extends Activity {
         initData();
     }
 
+    @Override
+    protected BasePresenterImpl createPresenter() {
+        return null;
+    }
+
     private void initView() {
-//        imageButton_kong = (ImageButton) findViewById(R.id.image_button_kong);
         listView = (ListView) findViewById(R.id.message_list);
         textEdit = (ClearEditText) findViewById(R.id.search_title_ed);
         noticeSearchLinear = (RelativeLayout) findViewById(R.id.notice_search);
