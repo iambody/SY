@@ -67,11 +67,13 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private int downloadApkToken;
     private String downloadApkPath;
     private ImageView bg_dialog;
+    private boolean formSetting;
 
 
-    public DownloadDialog(Context context, boolean isOpenWindow) {
+    public DownloadDialog(Context context, boolean isOpenWindow, boolean fromSetting) {
         _isOpenWindow = isOpenWindow;
         _context = context;
+        this.formSetting = fromSetting;
         init();
     }
 
@@ -100,7 +102,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
 
         btn_vcd_sure.setOnClickListener(this);
         iv_vcd_cancel.setOnClickListener(this);
-        if (AppManager.isInvestor(_context)){
+        if (AppManager.isInvestor(_context)) {
             bg_dialog.setImageResource(R.drawable.bg_investor_dialog);
             btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
             pb_vcd.setProgressDrawable(_context.getResources().getDrawable(R.drawable.orange_progress_bar));
@@ -119,7 +121,10 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             String json = otherInfo.getContent();
             AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
             if (result != null && !TextUtils.equals(result.version, _verName)) {
-                if (TextUtils.isEmpty(result.adverts)) {
+                if (TextUtils.isEmpty(result.adverts)&&_verName.equals(result.version)) {
+                    return;
+                }
+                if ((!formSetting) && result.upgradeType == 2) {
                     return;
                 }
 
