@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 /**
  * @author chenlong
@@ -77,6 +78,22 @@ public class DialogUtils {
     });
     dialog.setCancelable(false);
     dialog.show();
+  }
+
+  public static Dialog createSwitchBcDialog(final Context context) {
+    String title = "您是否要切换至“投资顾问版”，可以去官网下载投资顾问版本";
+    DefaultDialog dialog = new DefaultDialog(context, title, "取消", "确认") {
+      @Override
+      public void left() {
+        dismiss();
+      }
+
+      @Override
+      public void right() {
+        dismiss();
+      }
+    };
+    return dialog;
   }
 
   /**
