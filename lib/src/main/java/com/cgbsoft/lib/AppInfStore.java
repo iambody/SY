@@ -333,7 +333,6 @@ public class AppInfStore implements AppinfConstant {
      * 保存获取的公钥
      */
     public static void savePublicKey(Context context, String publicKey) {
-
         SharedPreferences.Editor ed = getBasePreference(context).edit();
         ed.putString(PUBLIC_KEY, publicKey);
         ed.commit();

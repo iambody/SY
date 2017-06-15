@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -209,7 +208,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 String url =  (String)v.getTag();
                 Intent intent = new Intent(AssetProveActivity.this, SmoothImageActivity.class);
                 intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, url);
-                intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, TextUtils.isEmpty(SPreference.getToCBean(this).getAssetsCertificationImage()));
+                intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, "[]".equals(SPreference.getToCBean(this).getAssetsCertificationImage()) || TextUtils.isEmpty(SPreference.getToCBean(this).getAssetsCertificationImage()));
                 startActivityForResult(intent, SMOTH_CODE);
             });
             frameLayout.addView(view);
@@ -253,31 +252,28 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             loading = new LoadingDialog(this);
         }
         loading.show();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                remoteParams.clear();
-                for (final String localPath : imagePaths) {
-                    if (localPath.contains(Constant.UPLOAD_CERTIFICATE_TYPE) || localPath.startsWith("http")) {
-                        continue;
-                    }
-                    String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                    String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_CERTIFICATE_TYPE);
-                    FileUtils.deleteFile(newTargetFile);
-                    if (!TextUtils.isEmpty(paths)) {
-                        remoteParams.add(paths);
-                    } else {
-                        ThreadUtils.runOnMainThread(() -> new MToast(AssetProveActivity.this).show("证明文件上传失败，请重新上传", 0));
-                        loading.dismiss();
-                        return;
-                    }
+        new Thread(() -> {
+            remoteParams.clear();
+            for (final String localPath : imagePaths) {
+                if (localPath.contains(Constant.UPLOAD_CERTIFICATE_TYPE) || localPath.startsWith("http")) {
+                    continue;
                 }
-                uploadInfo();
+                String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
+                String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_CERTIFICATE_TYPE);
+                FileUtils.deleteFile(newTargetFile);
+                if (!TextUtils.isEmpty(paths)) {
+                    remoteParams.add(paths);
+                } else {
+                    ThreadUtils.runOnMainThread(() -> new MToast(AssetProveActivity.this).show("证明文件上传失败，请重新上传", 0));
+                    loading.dismiss();
+                    return;
+                }
             }
+            uploadInfo();
         }).start();
     }
 
-        private JSONArray getArrayParams(List<String> lists) {
+    private JSONArray getArrayParams(List<String> lists) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < lists.size() ; i++) {
             jsonArray.put(lists.get(i).startsWith("http") ? lists.get(i) : NetConfig.UPLOAD_FILE+ lists.get(i));
@@ -321,7 +317,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     }
 
     private String getSelectType() {
-        if (((RadioButton)viewGroup.getChildAt(0)).isChecked()) {
+        RadioButton radioButton = (RadioButton)viewGroup.getChildAt(0);
+        if (radioButton != null && radioButton.isChecked()) {
             return "1";
         }
         return "2";

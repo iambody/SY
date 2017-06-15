@@ -221,8 +221,6 @@ public class SPreference implements Constant {
      * @param context
      * @param userInfo
      */
-
-
     public static void saveUserInfoData(@NonNull Context context, UserInfoDataEntity.UserInfo userInfo) {
         if (userInfo == null) {
             getBase(context).edit().putString(USER_INFO_BEAN_PROPERTY, "").apply();
