@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
@@ -44,6 +45,7 @@ public class ExitLoginService extends Service {
     private ImageView iv_vcd_cancel;
 
     private static int mCode;
+    private ImageView bg_dialog;
 
     @Nullable
     @Override
@@ -69,7 +71,7 @@ public class ExitLoginService extends Service {
         tv_vcd_message = (TextView) childView.findViewById(R.id.tv_vcd_message);
         btn_vcd_sure = (Button) childView.findViewById(R.id.btn_vcd_sure);
         iv_vcd_cancel = (ImageView) childView.findViewById(R.id.iv_vcd_cancel);
-
+        bg_dialog = (ImageView) childView.findViewById(R.id.bg_download);
         rl_vcd.setBackgroundResource(R.color.color_89000000);
         tv_vcd_title.setText("");
         pb_vcd.setVisibility(View.GONE);
@@ -82,7 +84,10 @@ public class ExitLoginService extends Service {
         tv_vcd_message.setText(msg);
         iv_vcd_cancel.setVisibility(View.GONE);
         btn_vcd_sure.setOnClickListener(v -> relogin());
-
+        if (AppManager.isInvestor(getApplicationContext())){
+            bg_dialog.setImageResource(R.drawable.bg_investor_dialog);
+            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
+        }
         floatView.addToWindow();
     }
 

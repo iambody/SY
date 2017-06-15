@@ -85,7 +85,7 @@ public class LoginHelper extends Presenter {
                         SxbLog.d(TAG, LogConstants.ACTION_HOST_CREATE_ROOM + LogConstants.DIV + identify + LogConstants.DIV + "request room id");
                         MySelfInfo.getInstance().setId(AppManager.getUserId(mContext));
                         MySelfInfo.getInstance().setAvatar(AppManager.getUserInfo(mContext).getHeadImageUrl());
-                        if(AppManager.getUserInfo(mContext).getPhoneNum().equals("666666")||AppManager.getUserInfo(mContext).getPhoneNum().equals("18500139172")){
+                        if (AppManager.getUserInfo(mContext).getPhoneNum().equals("666666") || AppManager.getUserInfo(mContext).getPhoneNum().equals("18500139172")) {
                             getMyRoomNum();
                         }
                         startAVSDK();
@@ -119,7 +119,10 @@ public class LoginHelper extends Presenter {
     }
 
 
-    public void getLiveSign(String userId){
+    public void getLiveSign(String userId) {
+        if (AppManager.isInvestor(mContext)) {
+            userId = userId + "_C";
+        }
         ApiClient.getLiveSign(userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -224,7 +227,7 @@ public class LoginHelper extends Presenter {
                 @Override
                 protected void onEvent(String s) {
                     try {
-                        JSONObject response =  new JSONObject(s);
+                        JSONObject response = new JSONObject(s);
                         int roomNum = response.getInt("room_id");
                         MySelfInfo.getInstance().setMyRoomNum(roomNum);
                         Log.d(TAG, "roomnum = " + roomNum);
@@ -238,7 +241,7 @@ public class LoginHelper extends Presenter {
                     error.toString();
                 }
             });
-        }else{
+        } else {
             SxbLog.d(TAG, LogConstants.ACTION_HOST_CREATE_ROOM + LogConstants.DIV + MySelfInfo.getInstance().getId() + LogConstants.DIV + "request room id"
                     + LogConstants.DIV + LogConstants.STATUS.SUCCEED + LogConstants.DIV + "get room id from local " + MySelfInfo.getInstance().getMyRoomNum());
         }

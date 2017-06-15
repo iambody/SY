@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -23,8 +24,10 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
@@ -85,6 +88,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     protected boolean isLookZhiBao;
 
+    private ShakeListener mShakeListener;
+
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> refrushGestureObservable;
@@ -130,7 +135,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
                 @Override
                 protected void onRxError(Throwable error) {
-
                 }
             });
         }
@@ -177,6 +181,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
      * 点击分享按钮操作，具体子类覆盖次方法，如果子类没有分享功能则不需要复写此方法
      */
     protected void pageShare() {
+        String javascript = "javascript:shareClick()";
+        mWebview.loadUrl(javascript);
     }
 
     /**
@@ -208,7 +214,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
+        initShakeInSetPage();
     }
+
+    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
+        @Override
+        public void onShakeStart() {}
+
+        @Override
+        public void onShakeFinish() {
+            DialogUtils.createSwitchBcDialog(BaseWebViewActivity.this).show();
+        }
+    };
 
     /**
      * @param url
@@ -288,6 +305,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     }
 
+    private void initShakeInSetPage() {
+        if (TextUtils.equals("设置", title)) {
+            mShakeListener = new ShakeListener(this);
+            mShakeListener.setOnShakeListener(onShakeListener);
+            mShakeListener.register();
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
@@ -340,10 +365,22 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (mallChoiceObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
             RxBus.get().unregister(getRegeistRxBusId(),mallChoiceObservable);
         }
+        if (mShakeListener != null) {
+            mShakeListener.unregister();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if ("设置".equals(title)) {
+            getMenuInflater().inflate(R.menu.page_menu, menu);
+            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            MenuItem secItem = menu.findItem(R.id.secondBtn);
+            firstItem.setTitle("设置");
+            Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
+            firstItem.setIcon(drawable);
+            secItem.setVisible(false);
+        }
         if (hasRightShare || hasRightSave) {
             getMenuInflater().inflate(R.menu.page_menu, menu);
             MenuItem firstItem = menu.findItem(R.id.firstBtn);
@@ -362,8 +399,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else if(item.getTitle().equals(getString(R.string.save))) {
                 String jascript = "javascript:Tools.save()";
                 mWebview.loadUrl(jascript);
+            } else if (item.getTitle().equals("设置")) {
+                DialogUtils.createSwitchBcDialog(this).show();
             }
         }
+
+
         return false;
     }
 

@@ -104,6 +104,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                         finish();
                     } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
                         NavigationUtils.toMainActivity(GestureVerifyActivity.this);
+                        finish();
                         return;
                     }
 
@@ -265,7 +266,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void validatePasswordSuccess() {
-        if (dialog != null && dialog.isShowing()) {
+        if (dialog != null && !dialog.isShowing()) {
             dialog.dismiss();
         }
         processResult();

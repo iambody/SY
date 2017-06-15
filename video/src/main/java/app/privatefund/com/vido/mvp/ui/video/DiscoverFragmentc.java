@@ -26,7 +26,6 @@ import app.privatefund.com.vido.mvp.presenter.video.DiscoverTocPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
@@ -67,14 +66,13 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
                 map.put("type","webJoinLive");
                 NavigationUtils.startActivityByRouter(getActivity(),RouteConfig.GOTOLIVE,map);
             }else {
-                String url = split[2];
-                String title = split[3];
+                String[] vas = res.split(":");
+                String url = URLDecoder.decode(vas[2], "utf-8");
+                String title = URLDecoder.decode(vas[3], "utf-8");
                 if (!url.contains("http")) {
                     url = BaseWebNetConfig.baseParentUrl + url;
                 }
-
                 VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
-
                 DataStatistApiParam.onStatisToCLookVideoDetail(title);
             }
         } catch (Exception e) {

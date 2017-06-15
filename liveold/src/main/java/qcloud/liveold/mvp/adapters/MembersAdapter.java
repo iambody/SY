@@ -22,7 +22,7 @@ import qcloud.liveold.mvp.views.LiveUserInfoDialog;
 /**
  * 成员列表适配器
  */
-public class MembersAdapter  extends RecyclerView.Adapter<MemberInfoHolder> {
+public class MembersAdapter extends RecyclerView.Adapter<MemberInfoHolder> {
 
     private Context context;
     private ArrayList<MemberInfo> arrayList;
@@ -42,7 +42,7 @@ public class MembersAdapter  extends RecyclerView.Adapter<MemberInfoHolder> {
     public void onBindViewHolder(MemberInfoHolder holder, int position) {
         final MemberInfo memberInfo = arrayList.get(position);
 
-        if (!TextUtils.isEmpty(memberInfo.getAvatar())){
+        if (!TextUtils.isEmpty(memberInfo.getAvatar())) {
             Glide.with(context).load(memberInfo.getAvatar()).into(holder.imageView);
         }
 
@@ -55,7 +55,7 @@ public class MembersAdapter  extends RecyclerView.Adapter<MemberInfoHolder> {
                         this.dismiss();
                     }
                 }.show();
-                String videoName = SPreference.getString(context,"liveName");
+                String videoName = SPreference.getString(context, "liveName");
                 if (AppManager.isInvestor(context)) {
                     DataStatistApiParam.onClickLiveRoomHeadImageToC(videoName);
                 } else {

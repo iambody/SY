@@ -12,92 +12,116 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DownloadAdviserDialog;
+import com.lzy.okserver.download.DownloadInfo;
 
 /**
  * @author chenlong
  */
 public class DialogUtils {
 
-  /**
-   * 对话框中回调的接口
-   */
-  public static class SimpleDialogListener {
-    public void OnClickPositive() {}
-    public void OnClickNegative() {}
-  }
+    /**
+     * 对话框中回调的接口
+     */
+    public static class SimpleDialogListener {
+        public void OnClickPositive() {
+        }
 
-  public static class ItemDialogListener {
-    public void onClickItem(int item) {}
-  }
+        public void OnClickNegative() {
+        }
+    }
+
+    public static class ItemDialogListener {
+        public void onClickItem(int item) {
+        }
+    }
 
 
-  /**
-   * 确认提示单个对话框
-   */
-  public static Dialog DialogConfirmSingle(Context context, String titleRes, String butText, String canText,
-                                           final SimpleDialogListener dialogListener) {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    builder.setMessage(titleRes);
-    builder.setPositiveButton(butText, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-        dialogListener.OnClickPositive();
-      }
-    });
-    builder.setNegativeButton(canText, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-      }
-    });
-    builder.setCancelable(false);
-    builder.show();
-    Dialog dialog = builder.create();
-    return dialog;
-  }
+    /**
+     * 确认提示单个对话框
+     */
+    public static Dialog DialogConfirmSingle(Context context, String titleRes, String butText, String canText,
+                                             final SimpleDialogListener dialogListener) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(titleRes);
+        builder.setPositiveButton(butText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                dialogListener.OnClickPositive();
+            }
+        });
+        builder.setNegativeButton(canText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+        Dialog dialog = builder.create();
+        return dialog;
+    }
 
-  /**
-   * 确认提示单个对话框
-   */
-  public static void DialogSimplePrompt(Context context, @StringRes int res,
-                                        final SimpleDialogListener dialogListener) {
-    final Dialog dialog = new Dialog(context, R.style.gesture_password_dialog);
-    LinearLayout layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_simple_prompt, null);
-    dialog.setContentView(layout);
-    TextView textView = (TextView) layout.findViewById(R.id.content);
-    textView.setText(res);
-    Button button = (Button)layout.findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        dialog.dismiss();
-        dialogListener.OnClickPositive();
-      }
-    });
-    dialog.setCancelable(false);
-    dialog.show();
-  }
+    /**
+     * 确认提示单个对话框
+     */
+    public static void DialogSimplePrompt(Context context, @StringRes int res,
+                                          final SimpleDialogListener dialogListener) {
+        final Dialog dialog = new Dialog(context, R.style.gesture_password_dialog);
+        LinearLayout layout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_simple_prompt, null);
+        dialog.setContentView(layout);
+        TextView textView = (TextView) layout.findViewById(R.id.content);
+        textView.setText(res);
+        Button button = (Button) layout.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialogListener.OnClickPositive();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+    }
 
-  /**
-   * 日历添加提醒
-   */
-  public static void CalendarAddPrompt(Context context,
-                                     final ItemDialogListener dialogListener) {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.NoTitleAllTransDialog);
-    builder.setTitle("添加提醒");
-    String[] itmes = new String[]{"无", "5分钟", "10分钟", "30分钟"};
-    builder.setItems(itmes, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-        dialogListener.onClickItem(which);
-      }
-    });
-    builder.setCancelable(true);
-    builder.show();
-    Dialog dialog = builder.create();
-  }
+    public static Dialog createSwitchBcDialog(final Context context) {
+        String title = "您是否要切换至‘投资顾问版’，请点击‘确定’前往下载投资顾问版App。";
+        DefaultDialog dialog = new DefaultDialog(context, title, "取消", "确认") {
+            @Override
+            public void left() {
+                dismiss();
+            }
+
+            @Override
+            public void right() {
+                new DownloadAdviserDialog(context, true, true);
+                dismiss();
+            }
+        };
+        return dialog;
+    }
+
+    /**
+     * 日历添加提醒
+     */
+    public static void CalendarAddPrompt(Context context,
+                                         final ItemDialogListener dialogListener) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.NoTitleAllTransDialog);
+        builder.setTitle("添加提醒");
+        String[] itmes = new String[]{"无", "5分钟", "10分钟", "30分钟"};
+        builder.setItems(itmes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                dialogListener.onClickItem(which);
+            }
+        });
+        builder.setCancelable(true);
+        builder.show();
+        Dialog dialog = builder.create();
+    }
 
 
 }

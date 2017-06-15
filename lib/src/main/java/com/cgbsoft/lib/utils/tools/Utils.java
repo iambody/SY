@@ -27,6 +27,9 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -35,6 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -357,6 +361,37 @@ public class Utils {
         int height = windowManager.getDefaultDisplay().getHeight();
         int result[] = {width, height};
         return result;
+    }
+
+    public static void OpenSharePage(Context context, String routeConfig, String data, boolean rightSave, boolean initPage, boolean rightShare) {
+        try {
+            String baseParams = URLDecoder.decode(data, "utf-8");
+            String[] split = baseParams.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (!url.contains("http")) {
+                url = BaseWebNetConfig.baseParentUrl + url;
+            } else {
+                title = split[4];
+                url = split[2] + ":" + split[3];
+            }
+            HashMap hashMap = new HashMap();
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            if (initPage) {
+                String pushMessage = split[4];
+                hashMap.put(WebViewConstant.push_message_value, pushMessage);
+            }
+            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+            if (split.length >= 5) {
+                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+            }
+            NavigationUtils.startActivityByRouter(context, routeConfig, hashMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -245,7 +245,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setActivity(this);
 
         if (!SPreference.isThisRunOpenDownload(this))
-            new DownloadDialog(this, true);
+            new DownloadDialog(this, true, false);
     }
 
     private void switchFragment(Fragment to) {
@@ -405,13 +405,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 isOnlyClose = aBoolean;
-                if(RongIM.getInstance().getRongIMClient()!=null) {
+                if (RongIM.getInstance().getRongIMClient() != null) {
                     RongIMClient.getInstance().clearConversations(new RongIMClient.ResultCallback() {
                         @Override
-                        public void onSuccess(Object o) {}
+                        public void onSuccess(Object o) {
+                        }
 
                         @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {}
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                        }
                     }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
                 }
                 if (RongIM.getInstance() != null) {
@@ -697,7 +699,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void getLiveSignSuc(String sign) {
         profileInfoHelper.setMyNickName(AppManager.getUserInfo(this).getNickName());
         profileInfoHelper.setMyAvator(AppManager.getUserInfo(this).getHeadImageUrl());
-        loginHelper.imLogin(AppManager.getUserId(this), sign);
+        loginHelper.imLogin(AppManager.getUserId(this) + "_C", sign);
     }
 
     @Override
