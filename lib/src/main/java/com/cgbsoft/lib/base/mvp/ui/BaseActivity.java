@@ -1,13 +1,11 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
@@ -27,6 +25,9 @@ import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -366,5 +367,16 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
         if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
     }
+    protected String getV2String(String resultStr) {
+
+        try {
+            JSONObject obj = new JSONObject(resultStr);
+            return obj.getString("result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }
 

@@ -99,6 +99,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
         recyclerRefreshLayout.setOnRefreshListener(this);
+        recyclerRefreshLayout.setEnabled(false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoHistoryAdapter);
         recyclerView.setHasFixedSize(true);
@@ -176,13 +177,15 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
 
         recyclerControl.getDataComplete(isRef);
-        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.bg_no_video);
+        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.local_video_no);
+        recyclerRefreshLayout.setEnabled(false);
     }
 
     @Override
     public void getLocalListFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
         recyclerControl.setError(this, true, videoHistoryAdapter, new VideoHistoryModel());
+        recyclerRefreshLayout.setEnabled(false);
     }
 
     @Override

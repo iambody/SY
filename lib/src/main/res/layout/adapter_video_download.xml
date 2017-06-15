@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:alpha="0.7">
+             >
 
             <ImageView
                 android:id="@+id/iv_avd_cover"
@@ -48,8 +48,9 @@
 
                 <ImageView
                     android:id="@+id/iv_avd_pause"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="center"
                     android:src="@drawable/ic_video_download_pause" />
 
                 <TextView
@@ -60,7 +61,7 @@
                     android:gravity="center"
                     android:text="@string/paused_str"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
         </FrameLayout>

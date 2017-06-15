@@ -23,6 +23,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
@@ -127,6 +128,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
         recyclerRefreshLayout.setOnRefreshListener(this);
+        recyclerRefreshLayout.setEnabled(false);
+
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoDownloadListAdapter);
         recyclerView.setHasFixedSize(true);
@@ -266,6 +269,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     public void getLocalListSucc(List<VideoDownloadListModel> dataList, boolean isRef) {
         if (dataList.size() == 0) {//没做分页所以直接判断就行
             unVisableBottomLayout();
+            ll_avd_head.setVisibility(View.GONE);
+
         }
         if (isRef) {
             videoDownloadListAdapter.deleteAllData();
@@ -275,7 +280,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         }
 
         recyclerControl.getDataComplete(isRef);
-        recyclerControl.setError(this, false, videoDownloadListAdapter, new VideoDownloadListModel(), "", R.drawable.bg_no_video);
+        recyclerControl.setError(this, false, videoDownloadListAdapter, new VideoDownloadListModel(), "", R.drawable.local_video_no);
+        recyclerRefreshLayout.setEnabled(false);
 
         if (getPresenter().isStartAllDownloading(dataList)) {
             isAllDownloadStart = true;
@@ -288,6 +294,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     @Override
     public void getLocalListFail(boolean isRef) {
         recyclerControl.getDataComplete(isRef);
+        recyclerRefreshLayout.setEnabled(false);
         recyclerControl.setError(this, true, videoDownloadListAdapter, new VideoDownloadListModel());
     }
 
@@ -359,6 +366,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                     getPresenter().updateStatus(model.videoId, VideoStatus.WAIT);
                     getPresenter().startDownload(model);
                     changeStatus = true;
+                    PromptManager.ShowCustomToast(baseContext,"等待下载...");
                 }
             }
             changeStart(changeStatus, iv_avd_pause, tv_avd_pause);
@@ -435,6 +443,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     @Override
     public void onRefresh() {
         recyclerControl.onRefresh();
+        recyclerRefreshLayout.setEnabled(false);
     }
 
     @Override
@@ -460,7 +469,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private void choiceChangeText(int num) {
         tv_avd_choiceAll.setText(R.string.cancel_choice_all_str);
-        tv_avd_delete.setTextColor(getResources().getColor(R.color.color_f22502));
+        tv_avd_delete.setTextColor(getResources().getColor(R.color.orange));
         tv_avd_delete.setText(getString(R.string.delete_1_str, String.valueOf(num)));
     }
 
@@ -474,6 +483,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         setRefLayoutMarginBottom(44);
         deleteItem.setIcon(null);
         deleteItem.setTitle(R.string.cancel_str);
+
     }
 
     private void unVisableBottomLayout() {
@@ -484,10 +494,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private void changeAllStart() {
         if (isAllDownloadStart) {
-            iv_avd_start.setImageResource(R.drawable.ic_video_stop);
+            iv_avd_start.setImageResource(R.drawable.pause_c);
             tv_avd_start_title.setText(R.string.vdla_stop_all_str);
         } else {
-            iv_avd_start.setImageResource(R.drawable.ic_video_start);
+            iv_avd_start.setImageResource(R.drawable.play_c);
             tv_avd_start_title.setText(R.string.avd_start_all);
         }
     }

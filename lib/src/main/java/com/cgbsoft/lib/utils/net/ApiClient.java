@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.utils.net;
 
-import android.location.Address;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -25,12 +24,10 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -937,7 +934,22 @@ public class ApiClient {
         map.put("id", id);
         map.put("commentId", commentId);
         map.put("limit", "" + Contant.VIDEO_COMMENT_LIMIT);
-        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("id", id);
+            js.put("commentId", commentId);
+            js.put("limit",  Contant.VIDEO_COMMENT_LIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().videoCommentLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
