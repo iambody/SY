@@ -148,6 +148,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 if (TextUtils.isEmpty(vas)) {
                     frameLayout.addView(addImg());
                 }
+                hasStatus = true;
                 break;
             default:
                 checkResult.setVisibility(View.GONE);
@@ -170,10 +171,14 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         if (hasStatus) {
             if ("1".equals(userInfoC.getInvestmentType())) {
                 ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
-                viewGroup.getChildAt(1).setVisibility(View.GONE);
+                if (status != 3) {
+                    viewGroup.getChildAt(1).setVisibility(View.GONE);
+                }
             } else if ("2".equals(userInfoC.getInvestmentType())) {
                 ((RadioButton)viewGroup.getChildAt(1)).setChecked(true);
-                viewGroup.getChildAt(0).setVisibility(View.GONE);
+                if (status != 3) {
+                    viewGroup.getChildAt(0).setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -192,7 +197,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private void updateImageViewLayout() {
         frameLayout.removeAllViews();
         for (int i=0; i < imagePaths.size(); i++) {
-            String bean= imagePaths.get(i);
+            String bean = imagePaths.get(i);
             ImageView view = new ImageView(this);
             setImgLayoutParams(view);
             if (!TextUtils.isEmpty(bean) && !bean.startsWith("http") && bean.contains(Constant.UPLOAD_CERTIFICATE_TYPE)) {
@@ -208,7 +213,9 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 String url =  (String)v.getTag();
                 Intent intent = new Intent(AssetProveActivity.this, SmoothImageActivity.class);
                 intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, url);
-                intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, "[]".equals(SPreference.getToCBean(this).getAssetsCertificationImage()) || TextUtils.isEmpty(SPreference.getToCBean(this).getAssetsCertificationImage()));
+                intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, "[]".equals(SPreference.getToCBean(this).getAssetsCertificationImage()) ||
+                        TextUtils.isEmpty(SPreference.getToCBean(this).getAssetsCertificationImage()) ||
+                            3 == Integer.valueOf(SPreference.getToCBean(this).getAssetsCertificationStatus()));
                 startActivityForResult(intent, SMOTH_CODE);
             });
             frameLayout.addView(view);

@@ -283,6 +283,10 @@
             android:theme="@style/transcutestyle"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.MineAdviserWebViewActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />

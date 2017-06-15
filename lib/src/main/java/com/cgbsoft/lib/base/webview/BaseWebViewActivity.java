@@ -1,8 +1,8 @@
 package com.cgbsoft.lib.base.webview;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -135,7 +135,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
                 @Override
                 protected void onRxError(Throwable error) {
-
                 }
             });
         }
@@ -182,6 +181,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
      * 点击分享按钮操作，具体子类覆盖次方法，如果子类没有分享功能则不需要复写此方法
      */
     protected void pageShare() {
+        String javascript = "javascript:shareClick()";
+        mWebview.loadUrl(javascript);
     }
 
     /**
@@ -371,6 +372,15 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if ("设置".equals(title)) {
+            getMenuInflater().inflate(R.menu.page_menu, menu);
+            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            MenuItem secItem = menu.findItem(R.id.secondBtn);
+            firstItem.setTitle("设置");
+            Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
+            firstItem.setIcon(drawable);
+            secItem.setVisible(false);
+        }
         if (hasRightShare || hasRightSave) {
             getMenuInflater().inflate(R.menu.page_menu, menu);
             MenuItem firstItem = menu.findItem(R.id.firstBtn);
@@ -389,8 +399,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else if(item.getTitle().equals(getString(R.string.save))) {
                 String jascript = "javascript:Tools.save()";
                 mWebview.loadUrl(jascript);
+            } else if (item.getTitle().equals("设置")) {
+                DialogUtils.createSwitchBcDialog(this).show();
             }
         }
+
+
         return false;
     }
 

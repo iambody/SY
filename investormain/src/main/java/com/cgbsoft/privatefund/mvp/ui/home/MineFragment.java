@@ -7,19 +7,16 @@ import android.view.View;
 import com.cgbsoft.lib.base.model.bean.UnReadCMSG;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
-
-import java.net.URLDecoder;
-import java.util.HashMap;
+import com.cgbsoft.privatefund.widget.MineAdviserWebViewActivity;
 
 import app.privatefund.com.im.bean.RCConnect;
 import butterknife.BindView;
@@ -69,41 +66,11 @@ public class MineFragment extends BaseFragment {
             } else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)) {
                 RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
             } else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
-                OpenSharePage(result, false, false, true);
+                NavigationUtils.startActivity(getActivity(), MineAdviserWebViewActivity.class);
             }
         });
     }
 
-    private void OpenSharePage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
-        try {
-            String baseParams = URLDecoder.decode(data, "utf-8");
-            String[] split = baseParams.split(":");
-            String url = split[2];
-            String title = split[3];
-            if (!url.contains("http")) {
-                url = BaseWebNetConfig.baseParentUrl + url;
-            } else {
-                title = split[4];
-                url = split[2] + ":" + split[3];
-            }
-            HashMap hashMap = new HashMap();
-            hashMap.put(WebViewConstant.push_message_url, url);
-            hashMap.put(WebViewConstant.push_message_title, title);
-            if (initPage) {
-                String pushMessage = split[4];
-                hashMap.put(WebViewConstant.push_message_value, pushMessage);
-            }
-            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
-            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
-            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
-            if (split.length >= 5) {
-                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
-            }
-            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected BasePresenterImpl createPresenter() {
