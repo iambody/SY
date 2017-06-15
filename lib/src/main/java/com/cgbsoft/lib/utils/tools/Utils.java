@@ -363,7 +363,7 @@ public class Utils {
         return result;
     }
 
-    public static void OpenSharePage(Context context, String data, boolean rightSave, boolean initPage, boolean rightShare) {
+    public static void OpenSharePage(Context context, String routeConfig, String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
             String[] split = baseParams.split(":");
@@ -388,7 +388,7 @@ public class Utils {
             if (split.length >= 5) {
                 hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+            NavigationUtils.startActivityByRouter(context, routeConfig, hashMap);
         } catch (Exception e) {
             e.printStackTrace();
         }

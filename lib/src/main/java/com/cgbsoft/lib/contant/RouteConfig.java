@@ -37,6 +37,9 @@ public class RouteConfig {
     // 选择产品
     public static final String GOTO_SELECT_PRODUCT = "product_select_product_activity";
 
+    // 我的投顾
+    public static final String GOTO_MINE_ADVISER_ACTIVITY = "investornmain_mineadvise_activity";
+
     // 基本webview页面
     public static final String GOTO_BASE_WEBVIEW = "lib_basewebviewactivity";
 

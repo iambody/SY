@@ -10,6 +10,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -66,11 +67,10 @@ public class MineFragment extends BaseFragment {
             } else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)) {
                 RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
             } else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
-                NavigationUtils.startActivity(getActivity(), MineAdviserWebViewActivity.class);
+                Utils.OpenSharePage(getContext(), RouteConfig.GOTO_MINE_ADVISER_ACTIVITY, result, false ,false, true);
             }
         });
     }
-
 
     @Override
     protected BasePresenterImpl createPresenter() {
