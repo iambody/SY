@@ -10,5 +10,6 @@
         android:layout_height="40dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
+        android:background="@drawable/live_head_nor"
         />
 </LinearLayout>
