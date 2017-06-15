@@ -222,7 +222,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
         @Override
         public void onShakeFinish() {
-            DialogUtils.createSwitchBcDialog(BaseWebViewActivity.this);
+            DialogUtils.createSwitchBcDialog(BaseWebViewActivity.this).show();
         }
     };
 
