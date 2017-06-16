@@ -23,6 +23,7 @@ public class NetConfig {
     public static final String API_URL = "api/v2";
     public static final String LIVE_URL = "zhibo/v2";
     public static final String AUTH_URL = "auth/v2";
+    public static final String PROMOTION_URL = "promotion/v2";
 
     public static final String API_URL_V2 = "api/v2";
     public static final String LIVE_URL_V2 = "zhibo/v2";
@@ -51,6 +52,9 @@ public class NetConfig {
     static final String USERAGENT_URL = "/peyunupload/label/userAgree.json";
 
     static final String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
+
+    //
+    static final String ACTION_POINT = PROMOTION_URL + "/common/availableOp";
 
     static class API {
 
