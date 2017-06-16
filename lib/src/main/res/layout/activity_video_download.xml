@@ -11,7 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/c_background"
+        android:background="@color/white"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -28,19 +28,22 @@
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/dimens_sp_18" />
+
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_z_dip"
-        android:src="@color/font_grey_down" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_z_dip"
+            android:layout_alignParentTop="true"
+            android:src="@color/gray_font"
+            />
         <LinearLayout
             android:id="@+id/ll_avd_head"
             android:layout_width="match_parent"
