@@ -720,6 +720,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
         this.hasLive = hasLive;
+        RxBus.get().post(RxConstant.ZHIBO_STATUES, hasLive);
         if (bottomNavigationBar != null) {
             bottomNavigationBar.setLive(hasLive);
         }

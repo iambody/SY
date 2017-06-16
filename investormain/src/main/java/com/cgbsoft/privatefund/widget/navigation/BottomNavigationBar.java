@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.widget.navigation;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -29,7 +28,6 @@ import com.cgbsoft.lib.utils.tools.FestivalUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.FloatingActionMenu;
-import com.cgbsoft.privatefund.widget.CloudMenuActivity;
 import com.jakewharton.rxbinding.view.RxView;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
@@ -102,7 +100,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private boolean isIdtentifyWithInvestor;
 
     private boolean isLive;
-
     private int nowPosition = 0, doubleClickTime = 200;
     private long nowSystemTime;
     private boolean isSpringFestival;//是否春节
