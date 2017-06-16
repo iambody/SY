@@ -9,10 +9,12 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 
 import java.net.URLDecoder;
@@ -42,7 +44,6 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
     @BindView(R2.id.video_discover_web)
     BaseWebview videoDiscoverWeb;
 
-
     @Override
     protected int layoutID() {
         return R.layout.vido_layout_discoverfragment;
@@ -66,12 +67,18 @@ public class DiscoverFragmentc extends BaseFragment<DiscoverTocPresenter> implem
                 map.put("type","webJoinLive");
                 NavigationUtils.startActivityByRouter(getActivity(),RouteConfig.GOTOLIVE,map);
             }else {
+                if (res.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE) && res.contains("ack-index.html")) { // banner详情
+                    Utils.OpenSharePage(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, res, false ,false, true);
+                    return;
+                }
+
                 String[] vas = res.split(":");
                 String url = URLDecoder.decode(vas[2], "utf-8");
                 String title = URLDecoder.decode(vas[3], "utf-8");
                 if (!url.contains("http")) {
                     url = BaseWebNetConfig.baseParentUrl + url;
                 }
+//                https%3A%2F%2Fd8-app.simuyun.com%2Fapp5.0%2Fclient%2F
                 VideoNavigationUtils.startInfomationDetailActivity(baseActivity, url, title, 200);
                 DataStatistApiParam.onStatisToCLookVideoDetail(title);
             }

@@ -14,10 +14,8 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.widget.MineAdviserWebViewActivity;
 
 import app.privatefund.com.im.bean.RCConnect;
 import butterknife.BindView;
@@ -67,7 +65,7 @@ public class MineFragment extends BaseFragment {
             } else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)) {
                 RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
             } else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
-                Utils.OpenSharePage(getContext(), RouteConfig.GOTO_MINE_ADVISER_ACTIVITY, result, false ,false, true);
+                Utils.OpenSharePage(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, result, false ,false, true);
             }
         });
     }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebView;
@@ -93,6 +94,9 @@ public class CWebClient extends WebViewClient {
             }
             // view.loadUrl(loadUrl);
             loadUrl = loadUrl;
+        } else if (url.startsWith("tel:")) {
+            String[] vals = url.split(":");
+            NavigationUtils.startDialgTelephone(curretnAtivity, vals[1]);
         } else {
             if (url.startsWith("http") || url.startsWith("https")) {
                 webView.loadUrl(url);

@@ -14,8 +14,8 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 /**
  * @author chenlong
  */
-@Route(RouteConfig.GOTO_MINE_ADVISER_ACTIVITY)
-public class MineAdviserWebViewActivity extends BaseWebViewActivity {
+@Route(RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY)
+public class RightShareWebViewActivity extends BaseWebViewActivity {
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
         if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_SHARE)) {
@@ -31,7 +31,7 @@ public class MineAdviserWebViewActivity extends BaseWebViewActivity {
                 commonShareBean.setShareContent(content);
                 commonShareBean.setShareUrl(link);
                 if ("2".equals(type)) {
-                    CommonShareDialog commonShareDialog = new CommonShareDialog(MineAdviserWebViewActivity.this, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);
+                    CommonShareDialog commonShareDialog = new CommonShareDialog(RightShareWebViewActivity.this, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);
                     commonShareDialog.show();
                 } else {
                     CommonShareDialog commonShareDialog = new CommonShareDialog(this, CommonShareDialog.Tag_Style_WeiXin, commonShareBean, null);
