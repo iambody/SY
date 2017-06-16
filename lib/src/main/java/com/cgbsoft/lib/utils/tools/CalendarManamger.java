@@ -1,15 +1,17 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.text.format.Time;
-
 
 import com.cgbsoft.lib.base.model.bean.CalendarListBean;
 
@@ -27,15 +29,18 @@ public class CalendarManamger {
     private static String attendeuesesUriString = "content://com.android.calendar/attendees";
 
     public static long insertSystemCalendar(Context context, CalendarListBean.CalendarBean calendarBean) {
-        Calendar beginTime = Calendar.getInstance();
         String calId = "";
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            return 0;
+        }
         Cursor userCursor = context.getContentResolver().query(Uri.parse(calanderURL), null, null, null, null);
         if (userCursor.getCount() > 0) {
             userCursor.moveToFirst();
             calId = userCursor.getString(userCursor.getColumnIndex("_id"));
             userCursor.close();
         } else {
-           addCalendarAccount(context);
+            addCalendarAccount(context);
         }
         ContentValues l_event = new ContentValues();
         l_event.put("calendar_id", calId);
@@ -124,12 +129,12 @@ public class CalendarManamger {
         context.getContentResolver().insert(calendarUri, value);
     }
 
-    public static boolean isExist(Context context, String name, String content) {
+    public static boolean isExist(Context context, String name,  String content) {
         Cursor managedCursor = null;
         try {
             Uri calendars = Uri.parse(calanderEventURL);
             if (!TextUtils.isEmpty(content)) {
-                 managedCursor = context.getContentResolver().query(calendars, null,
+                managedCursor = context.getContentResolver().query(calendars, null,
                         CalendarContract.Events.TITLE.concat("=").concat("? and ").concat(CalendarContract.Events.DESCRIPTION).concat("=?"), new String[]{name, content}, null);
             } else {
                 managedCursor = context.getContentResolver().query(calendars, null,
