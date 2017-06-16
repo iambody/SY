@@ -14,7 +14,9 @@
         android:orientation="vertical">
 
 
-        <include layout="@layout/title_videoplay_lay" />
+        <include
+            android:id="@+id/title_videodetail_lay"
+            layout="@layout/title_videoplay_lay" />
 
         <LinearLayout
             android:id="@+id/coordinatorLayout"
@@ -176,14 +178,16 @@
 
                             <ImageView
                                 android:id="@+id/iv_avd_cache"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center_horizontal"
                                 android:src="@drawable/ic_cache" />
 
                             <TextView
                                 android:id="@+id/tv_avd_cache"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
                                 android:gravity="center"
                                 android:text="@string/cache_str"
                                 android:textColor="@drawable/select_avd_cache"
@@ -286,7 +290,7 @@
     <RelativeLayout
         android:id="@+id/rl_avd_download"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="360dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:visibility="gone">

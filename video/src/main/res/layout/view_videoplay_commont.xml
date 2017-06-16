@@ -74,7 +74,7 @@
             android:background="@color/white"
             android:drawableLeft="@drawable/comment_more"
             android:gravity="center"
-            android:padding="@dimen/ui_6_dip"
+            android:padding="@dimen/ui_10_dip"
             android:text=" 查看更多"
             android:textColor="#f47900"
             android:visibility="gone" />

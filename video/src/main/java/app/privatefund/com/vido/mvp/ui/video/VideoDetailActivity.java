@@ -199,6 +199,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     ImageView viewTitleBackIv;
     @BindView(R2.id.view_title_right_txt)
     TextView viewTitleRightTxt;
+
+
+    private View title_videodetail_lay;
     //加载时候的dialog
     private LoadingDialog mLoadingDialog;
     //C端分享的dialog
@@ -291,6 +294,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private void findview() {
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.getvidoingloading), false, false);
+        title_videodetail_lay = findViewById(R.id.title_videodetail_lay);
         videplay_produxt_view = findViewById(R.id.videplay_produxt_view);
         view_video_comment_lay = findViewById(R.id.view_video_comment_lay);
         videplay_produxt_view.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +308,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
             }
         });
+        initConfiguration();
     }
 
     @Override
@@ -602,9 +607,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
 
         try {
-            JSONObject obj = new JSONObject(moreCommontStr);
-            JSONArray rows = obj.getJSONArray("rows");
-            List<VideoInfoEntity.CommentBean> comments = new Gson().fromJson(rows.toString(), new TypeToken<List<VideoInfoEntity.CommentBean>>() {
+//            JSONObject obj = new JSONObject(moreCommontStr);
+//            JSONArray rows = obj.getJSONArray("rows");
+            List<VideoInfoEntity.CommentBean> comments = new Gson().fromJson(getV2String(moreCommontStr), new TypeToken<List<VideoInfoEntity.CommentBean>>() {
             }.getType());
             if (null == comments || 0 == comments.size()) {
                 PromptManager.ShowCustomToast(baseContext, getResources().getString(R.string.nomorecommont));
@@ -614,7 +619,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             commentAdapter.notifyDataSetChanged();
             videoViewCheckMore.setVisibility(comments.size() == Contant.VIDEO_COMMENT_LIMIT ? View.VISIBLE : View.GONE);
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -659,10 +664,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     sv_avd.setVisibility(View.VISIBLE);
                     iv_avd_back.setVisibility(View.VISIBLE);
+                    title_videodetail_lay.setVisibility(View.VISIBLE);
+
                 } else { // 横屏
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     sv_avd.setVisibility(View.GONE);
                     iv_avd_back.setVisibility(View.INVISIBLE);
+                    title_videodetail_lay.setVisibility(View.GONE);
                 }
             });
         }
@@ -725,10 +733,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     sv_avd.setVisibility(View.VISIBLE);
                     iv_avd_back.setVisibility(View.VISIBLE);
+                    title_videodetail_lay.setVisibility(View.VISIBLE);
                 } else { // 横屏
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     sv_avd.setVisibility(View.GONE);
                     iv_avd_back.setVisibility(View.INVISIBLE);
+                    title_videodetail_lay.setVisibility(View.GONE);
                 }
             });
         }
@@ -963,12 +973,17 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         //todo 评论列表
         if (null != videoAllInf && null != videoAllInf.rows && null != videoAllInf.rows.comment && videoAllInf.rows.comment.size() >= 1) {
             List<VideoInfoEntity.CommentBean> commentBeanList = videoAllInf.rows.comment;
-            videoViewCheckMore.setVisibility(commentBeanList.size() > 3 ? View.VISIBLE : View.INVISIBLE);
+            videoViewCheckMore.setVisibility(commentBeanList.size() > 3 ? View.VISIBLE : View.GONE);
 
 
             videoViewCommentList.setVisibility(View.VISIBLE);
             videoViewCommentNullLayout.setVisibility(View.GONE);
-            commentAdapter = new CommentAdapter(baseContext, commentBeanList);
+            List<VideoInfoEntity.CommentBean> datt = new ArrayList<>();
+            for (int i = 0; i < commentBeanList.size(); i++) {
+                if (i == 3) break;
+                datt.add(commentBeanList.get(i));
+            }
+            commentAdapter = new CommentAdapter(baseContext, datt);
             videoViewCommentList.setAdapter(commentAdapter);
 
         } else {
@@ -1150,11 +1165,31 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             sv_avd.setVisibility(View.GONE);
+            title_videodetail_lay.setVisibility(View.GONE);
             isFullscreen = true;
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             sv_avd.setVisibility(View.VISIBLE);
+            title_videodetail_lay.setVisibility(View.VISIBLE);
             isFullscreen = false;
         }
         changeVideoViewSize(newConfig.orientation);
+    }
+
+    /**
+     * 根据横竖屏相应操作
+     */
+    private void initConfiguration() {
+        Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+        int ori = mConfiguration.orientation; //获取屏幕方向
+
+        if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
+            title_videodetail_lay.setVisibility(View.GONE);
+            videoVideplayEditCommentLay.setVisibility(View.GONE);
+
+        } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
+            title_videodetail_lay.setVisibility(View.VISIBLE);
+            videoVideplayEditCommentLay.setVisibility(View.VISIBLE);
+        }
+
     }
 }
