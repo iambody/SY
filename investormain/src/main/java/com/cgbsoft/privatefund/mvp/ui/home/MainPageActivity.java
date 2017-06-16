@@ -695,7 +695,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                         getPresenter().getLiveList();
                     }
                 });
-
     }
 
     @Override

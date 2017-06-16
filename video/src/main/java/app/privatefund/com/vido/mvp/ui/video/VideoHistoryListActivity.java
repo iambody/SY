@@ -177,7 +177,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
 
         recyclerControl.getDataComplete(isRef);
-        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.local_video_no);
+        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.bfjl_kong);
         recyclerRefreshLayout.setEnabled(false);
     }
 
