@@ -37,6 +37,7 @@ import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -137,6 +138,8 @@ public class CWebviewManger {
             openMallPage(action);
         } else if (action.contains("openDialog")) {
             openDialog(action);
+        } else if (action.contains("resetIdentfy")) {
+            DialogUtils.createSwitchBcDialog(context).show();
         } else if (action.contains("addAddress")) {
             NavigationUtils.startActivityByRouter(context, "mall_address");
         } else if (action.contains("choiceAddress")) {
@@ -272,7 +275,7 @@ public class CWebviewManger {
         } else if (action.contains("openCustomerChat")) {
             openCustomerChat(action);
         } else if (action.contains("LivePrompt")) { // 直播提醒
-//            livePrompt(action);
+            livePrompt(action);
 //        } else if (action.contains("toVideoDetail")) { // 视频详情
 //            //startVideoDetail(action);
         } else if (action.contains("toVideoLive")) { // 视频直播
@@ -644,28 +647,6 @@ public class CWebviewManger {
 //            SchoolVideo schoolVideo = new SchoolVideo();
 //            schoolVideo.setVideoId(videoId);
 //            ToolsUtils.toPlayVideoActivity(context, schoolVideo);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private void livePrompt(String action) {
-//        String[] split = action.split(":");
-//        try {
-//            String title = URLDecoder.decode(split[2], "utf-8");
-//            String address = URLDecoder.decode(split[3], "utf-8");
-//            String startTime = URLDecoder.decode(split[4], "utf-8");
-//            String content = URLDecoder.decode(split[5], "utf-8");
-//            CalendarListBean.CalendarBean calendarListBean = new CalendarListBean.CalendarBean();
-//            calendarListBean.setTitle(title);
-//            calendarListBean.setAddress(address);
-//            calendarListBean.setStartTime(startTime);
-//            calendarListBean.setEndTime(String.valueOf(Long.parseLong(startTime) + 1000 * 60 * 30));
-//            calendarListBean.setContent(content);
-//            calendarListBean.setAlert("10");
-//            String eventId = String.valueOf(CalendarManamger.insertSystemCalendar(context, calendarListBean));
-//            String laun = "javascript:Tools.saveSuccess('" + (TextUtils.isEmpty(eventId) ? 0 : 1) + "','" + title + "');";
-//            getWeb().loadUrl(laun);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

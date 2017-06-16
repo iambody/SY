@@ -284,7 +284,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.cgbsoft.privatefund.widget.MineAdviserWebViewActivity"
+            android:name="com.cgbsoft.privatefund.widget.RightShareWebViewActivity"
             android:screenOrientation="portrait" />
 
         <receiver android:name=".utils.receiver.ExitLoginReceiver">
