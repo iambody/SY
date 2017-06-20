@@ -126,7 +126,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             String json = otherInfo.getContent();
             AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
             if (result != null && !TextUtils.equals(result.version, _verName)) {
-                if (TextUtils.isEmpty(result.adverts)&&_verName.equals(result.version)) {
+                if (TextUtils.isEmpty(result.adverts)||_verName.equals(result.version)) {
                     return;
                 }
                 if ((!formSetting) && result.upgradeType == 2) {

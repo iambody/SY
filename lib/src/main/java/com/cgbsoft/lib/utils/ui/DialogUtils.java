@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadAdviserDialog;
 import com.lzy.okserver.download.DownloadInfo;
@@ -87,7 +90,7 @@ public class DialogUtils {
     }
 
     public static Dialog createSwitchBcDialog(final Context context) {
-        String title = "您是否要切换至‘投资顾问版’，请点击‘确定’前往下载投资顾问版App。";
+        String title = "切换到投资顾问功能已下线，如有需要请点击确认前往下载'私募云-投顾版'";
         DefaultDialog dialog = new DefaultDialog(context, title, "取消", "确认") {
             @Override
             public void left() {
@@ -96,7 +99,15 @@ public class DialogUtils {
 
             @Override
             public void right() {
-                new DownloadAdviserDialog(context, true, true);
+                Intent i = new Intent(getContext(), BaseWebViewActivity.class);
+                i.putExtra(WebViewConstant.push_message_url, "http://www.simuyun.com");
+                i.putExtra(WebViewConstant.push_message_title, "下载投资顾问版");
+                i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+                i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+                i.putExtra(WebViewConstant.PAGE_INIT, false);
+                context.startActivity(i);
+
+//                new DownloadAdviserDialog(context, true, true);
                 dismiss();
             }
         };
