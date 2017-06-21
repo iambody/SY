@@ -1,9 +1,11 @@
 package app.ndk.com.enter.mvp.ui.start;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -93,6 +95,13 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             PermissionsActivity.startActivityForResult(this, REQUEST_CODE_ASK_PERMISSIONS, PERMISSIONS);
         } else {
             beforeInit();
+        }
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            透明状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 

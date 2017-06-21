@@ -109,9 +109,7 @@ public class CWebviewManger {
         } else if (action.contains("closepage") || action.contains("closePage")) {
             closepage(action);
         } else if (action.contains("secretviewpdf")) { // 预留，可能后端直接写好
-//            secretviewpdf(action);
-//        } else if (action.contains("viewpdf")) {
-//            viewpdf(action);
+            gotoScretPdf(action);
         } else if (action.contains("changepassword")) {
             changepassword(action);
         } else if (action.contains("copytoclipboard")) {
@@ -316,6 +314,30 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    /**
+     * 跳转到secretpdf
+     * @param action
+     */
+    private void gotoScretPdf(String action) {
+
+        try {
+            String urcodeAction=URLDecoder.decode(action,"utf-8");
+            String[] split = urcodeAction.split(":");
+            String string = split[2];
+
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("pdfurl_tag",split[2]+":"+split[3]);
+            map.put("pdftitle_tag", split[4] );
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SECRET_PDF_ACTIVITY,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
     private void versonUpdate() {
