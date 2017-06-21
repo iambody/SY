@@ -67,7 +67,7 @@
             android:id="@+id/product_product_wenjuan"
             android:layout_width="138dp"
             android:layout_height="33dp"
-            android:background="@drawable/queren_sel"
+            android:background="@drawable/queren_sel_c"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:gravity="center"
@@ -93,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#d73a2e"
+                android:textColor="#f47900"
                 android:textSize="15sp"
                 android:text="400-188-8848"/>
         </LinearLayout>

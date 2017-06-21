@@ -27,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.util.HashMap;
+
 /**
  * 首页功能实现，数据调用
  * Created by xiaoyu.zhang on 2016/11/10 16:18
@@ -84,6 +86,31 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 error.toString();
             }
         });
+    }
+
+    public void actionPoint(HashMap<String,Object> map){
+        addSubscription(ApiClient.ActionPoint(map).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject js = new JSONObject(s);
+                    JSONObject result = js.getJSONObject("result");
+                    int ydMallState = Integer.parseInt(result.getString("ydMallState"));
+                    if (ydMallState!=1){
+                        SPreference.putBoolean(getContext(),"ydMallState", false);
+                    }else{
+                        SPreference.putBoolean(getContext(),"ydMallState", true);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        }));
     }
 
     public void toSignIn() {

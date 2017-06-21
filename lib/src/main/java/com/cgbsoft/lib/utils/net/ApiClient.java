@@ -1277,4 +1277,11 @@ public class ApiClient {
     }
 
 
+    /**
+     * 首页活动红点
+     */
+    public static Observable<String> ActionPoint(HashMap<String,Object> map){
+        return OKHTTP.getInstance().getRequestManager().ActionPoint(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 }

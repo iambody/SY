@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -16,12 +17,24 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import app.mall.com.mvp.contract.MallContract;
 import app.mall.com.mvp.presenter.MallPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
+
+import static android.view.View.GONE;
 
 /**
  * 商城
@@ -33,6 +46,9 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     @BindView(R2.id.mall_web_view)
     BaseWebview videoDiscoverWeb;
 
+    @BindView(R2.id.title_layout)
+    RelativeLayout title_layout;
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_mall;
@@ -42,6 +58,15 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     protected void init(View view, Bundle savedInstanceState) {
         videoDiscoverWeb.loadUrls(CwebNetConfig.clubPage);
     }
+
+    @Override
+    protected void before() {
+        super.before();
+        if (SPreference.getBoolean(getActivity(),"ydMallState")){
+            title_layout.setVisibility(GONE);
+        }
+    }
+
 
     @Override
     protected MallPresenter createPresenter() {

@@ -170,6 +170,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
+        initActionPoint();
+
         transaction.add(R.id.fl_main_content, mContentFragment);
 
         transaction.commitAllowingStateLoss();
@@ -193,6 +195,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         autoSign();
         initLocation();
 
+    }
+
+    private void initActionPoint() {
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("client","c");
+        getPresenter().actionPoint(map);
     }
 
     private void initUserInfo() {
@@ -712,6 +720,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
         this.hasLive = hasLive;
+        RxBus.get().post(RxConstant.ZHIBO_STATUES, hasLive);
         if (bottomNavigationBar != null) {
             bottomNavigationBar.setLive(hasLive);
         }

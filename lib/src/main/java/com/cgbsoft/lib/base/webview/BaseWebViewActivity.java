@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.webview;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -31,6 +32,7 @@ import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
+import com.tencent.smtt.sdk.DownloadListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -124,6 +126,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void data() {
+        mWebview.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String s, String s1, String s2, String s3, long l) {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
         mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
             executeObservable = RxBus.get().register(getRegeistRxBusId(), Object.class);
