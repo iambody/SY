@@ -192,7 +192,6 @@ public class CWebviewManger {
                 public void left() {
                     dismiss();
                 }
-
                 @Override
                 public void right() {
                     dismiss();
@@ -250,8 +249,6 @@ public class CWebviewManger {
                 String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
                 webview.loadUrl(language);
             }
-
-//
         } else if (action.contains("updated")) {
             versonUpdate();
         } else if (action.contains("feedback")) {//意见反馈跳转
@@ -276,7 +273,6 @@ public class CWebviewManger {
             openCustomerChat(action);
         } else if (action.contains("LivePrompt")) { // 直播提醒
             livePrompt(action);
-//        } else if (action.contains("toVideoDetail")) { // 视频详情
 //            //startVideoDetail(action);
         } else if (action.contains("toVideoLive")) { // 视频直播
 //            startVideoLive(action);
@@ -376,7 +372,6 @@ public class CWebviewManger {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//
 //        ((Activity) context).startActivityForResult(i, 300);
 //        //ScreenManager.getScreenManager().pushActivity(context);
 //        if ("产品详情".equals(decodeTitle) && Utils.isVisteRole(context)) {
@@ -401,31 +396,11 @@ public class CWebviewManger {
 //        System.out.println("分享");
 //    }
 
-
     /**
      * 获取理财师名片分享bean数据
      *
      * @return
      */
-//    private BShare GetShareData(String action) {
-//        //获取需要的参数 &&一坨从原分享代码拷贝过来 照搬就行**************************************
-//        String[] split = action.split(":");
-//        String title = null;
-//        try {
-//            title = URLDecoder.decode(split[2], "utf-8");
-//            String content = URLDecoder.decode(split[3], "utf-8");// split[3];
-//            String url = URLDecoder.decode(split[5], "utf-8");
-//            ;//split[5];
-//            url = Domain.baseWebsite + url + "&advisertob=" + (UserInfManger.IsAdviser(context) ? MApplication.getUserid() : "");
-//            //获取需要的参数 ***********************************************************
-//            //初始化bean &&构造函数按照原分享代码的参数照搬过来
-//            BShare bShare = new BShare(title, content, R.drawable.logoshare, url);//(title, content, R.drawable.logoshare, url, url, title, content, url, null, "", productType, schemesId);
-//            return bShare;
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
     private void livePrompt(String action) {
         String[] split = action.split(":");
         try {

@@ -51,7 +51,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         DownloadManager downloadManager = DownloadService.getDownloadManager();
         downloadManager.getThreadPool().setCorePoolSize(1);
         downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
-        downloadManager.stopAllTask();
+//        downloadManager.stopAllTask();
         List<VideoInfoModel> list = daoVideoUtils.getAllVideoInfo();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
