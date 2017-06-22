@@ -152,7 +152,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                         BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "亿");
                     } else {
                         BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotMujicount, raised_amt);
-                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, raised_amt);
+                        BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotWan, "万");
                     }
                     BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotLeijijingzhititle, "业绩基准");
 
@@ -296,7 +296,9 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                         normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xff222222);
                         normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.daifaxing);
                     } else if (productlsBean.raiseEndTime != null) {
-                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xffea1202);
+//                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xffea1202);
+                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(acontext.getResources().getColor(R.color.orange));
+
 //                        h1.shengyuedu_count.setTextColor(0xff222222);
                         java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
                         long l = end_time.getTime() - System.currentTimeMillis();
