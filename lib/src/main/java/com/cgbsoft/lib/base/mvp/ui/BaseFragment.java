@@ -24,7 +24,7 @@ import butterknife.Unbinder;
 
 /**
  * 基本Fragment
- * Created by user on 2016/11/4.
+ *
  */
 
 public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {

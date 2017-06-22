@@ -230,7 +230,7 @@ public class CWebviewManger {
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
         } else if (action.contains("openSharePage")) {
-            openpage(action, false, false, true);
+            opensharepage(action, false, false, true);
         } else if (action.contains("checkVersion")) {
             DaoUtils daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
             OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
@@ -314,6 +314,10 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    private void opensharepage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+        Utils.OpenSharePage(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, data, rightSave ,initPage, rightShare);
     }
 
     /**
@@ -1229,6 +1233,7 @@ public class CWebviewManger {
      *             rightShare 右边是否有分享
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+//
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {

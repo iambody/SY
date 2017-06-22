@@ -53,8 +53,6 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_O
 
 /**
  * 视频下载列表 单线程下载
- * Created by xiaoyu.zhang on 2016/12/12 17:30
- * Email:zhangxyfs@126.com
  *  
  */
 public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, RecyclerControl.OnControlGetDataListListener, VideoDownloadListListener,
@@ -271,6 +269,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             unVisableBottomLayout();
             ll_avd_head.setVisibility(View.GONE);
 
+        }
+        if(getPresenter().isAllDownLoadOver(dataList)){
+            unVisableBottomLayout();
+            ll_avd_head.setVisibility(View.GONE);
         }
         if (isRef) {
             videoDownloadListAdapter.deleteAllData();
