@@ -58,10 +58,6 @@ import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -894,6 +890,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             rl_avd_download.startAnimation(closeAnimationSet);
 
         }
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -1192,4 +1192,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
 
     }
+
+
 }
