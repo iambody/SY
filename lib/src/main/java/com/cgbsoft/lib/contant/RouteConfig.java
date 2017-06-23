@@ -64,4 +64,7 @@ public class RouteConfig {
 
     //进入直播
     public static final String GOTOLIVE = "live_join";
+    //跳转到Secretpdfactivity
+
+    public static final String GOTO_SECRET_PDF_ACTIVITY = "commontview_secretpdf";
 }

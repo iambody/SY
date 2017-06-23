@@ -40,9 +40,6 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSE
 
 /**
  * 播放历史
- *
- *
- *  
  */
 public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, RecyclerControl.OnControlGetDataListListener, VideoHistoryListener,
         Toolbar.OnMenuItemClickListener, RecyclerRefreshLayout.OnRefreshListener {

@@ -14,10 +14,6 @@ import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
-import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
-import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
-
-import org.greenrobot.greendao.query.Query;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
 
 import java.io.File;
@@ -171,6 +167,7 @@ public void clearnHistoryByID(String Type, String userId){
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
+                if(0!=list.get(i).getDownloadTime())
                 results.add(getVideoInfoModel(list.get(i)));
             }
             return results;

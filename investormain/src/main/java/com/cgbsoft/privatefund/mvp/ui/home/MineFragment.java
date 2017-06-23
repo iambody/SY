@@ -64,9 +64,10 @@ public class MineFragment extends BaseFragment {
                 RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
             } else if (result.contains(WebViewConstant.AppCallBack.TOC_MALL_STATE)) {
                 RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
-            } else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
-                Utils.OpenSharePage(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, result, false ,false, true);
             }
+//            else if (result.contains(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)) {
+                Utils.OpenSharePage(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, result, false ,false, true);
+//            }
         });
     }
 

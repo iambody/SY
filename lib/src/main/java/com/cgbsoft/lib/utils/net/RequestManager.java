@@ -685,4 +685,7 @@ interface RequestManager {
     @GET(NetConfig.AUTHOR.GET_PUBLIC_KEY)
     Observable<ResponseBody> getPublicKey();
 
+    @GET(NetConfig.ACTION_POINT)
+    Observable<ResponseBody> ActionPoint(@QueryMap Map<String, String> paramsMap);
+
 }

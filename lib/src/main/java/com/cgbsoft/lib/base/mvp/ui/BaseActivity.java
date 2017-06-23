@@ -257,7 +257,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         super.onRestart();
         boolean isCurrentRunningForeground = SPreference.isCurrentRunningForeground(this);
 //        Observable.just(1).filter(v-> !isCurrentRunningForeground)
-
     }
 
     // 判断权限集合
@@ -290,7 +289,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected boolean needsPermission(String permission) {
         return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
     }
-
 
     /**
      * 打开activity

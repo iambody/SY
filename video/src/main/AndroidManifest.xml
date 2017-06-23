@@ -12,7 +12,7 @@
 
         <activity android:name=".mvp.ui.video.InformationDetailActivity" />
 
-        <service android:name=".mvc.services.PlayerService">
+      <!--  <service android:name=".mvc.services.PlayerService">
             <intent-filter>
                 <action android:name="com.cgbsoft.privatefund.service.player" />
 
@@ -25,7 +25,7 @@
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
-        </service>
+        </service>-->
 
     </application>
 

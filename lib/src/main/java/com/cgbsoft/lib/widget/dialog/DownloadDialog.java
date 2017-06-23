@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
+import android.os.StrictMode;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BuildConfig;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
@@ -122,7 +126,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             String json = otherInfo.getContent();
             AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
             if (result != null && !TextUtils.equals(result.version, _verName)) {
-                if (TextUtils.isEmpty(result.adverts)&&_verName.equals(result.version)) {
+                if (TextUtils.isEmpty(result.adverts)||_verName.equals(result.version)) {
                     return;
                 }
                 if ((!formSetting) && result.upgradeType == 2) {
@@ -195,6 +199,10 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             @Override
             public void onDownloadProcess(long taskId, double percent, long downloadedLength) {
                 pb_vcd.setProgress((int) percent);
+                Observable.just("已下载(" + (int) percent + "%)").compose(RxSchedulersHelper.io_main()).subscribe(strs -> {
+                    btn_vcd_sure.setText(strs);
+                }, error -> {
+                });
             }
         });
 
@@ -212,10 +220,19 @@ public class DownloadDialog implements View.OnClickListener, Constant {
      * @param file
      */
     private void installApk(File file) {
-        Uri uri = Uri.fromFile(file);
         Intent install = new Intent(Intent.ACTION_VIEW);
-        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        install.setDataAndType(uri, "application/vnd.android.package-archive");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+//            install.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            Uri uri = FileProvider.getUriForFile(_context, "com.cgbsoft.privatefund.fileProvider", file);
+//            install.setDataAndType(uri, "application/vnd.android.package-archive");
+        }
+//        else {
+            Uri uri = Uri.fromFile(file);
+            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            install.setDataAndType(uri, "application/vnd.android.package-archive");
+//        }
         // 执行意图进行安装
         _context.startActivity(install);
     }

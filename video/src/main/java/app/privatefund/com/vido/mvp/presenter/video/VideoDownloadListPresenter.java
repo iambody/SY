@@ -17,13 +17,13 @@ import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 import com.lzy.okserver.task.ExecutorWithListener;
-import app.privatefund.com.vido.R;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.mvp.contract.video.VideoDownloadListContract;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 
@@ -397,6 +397,25 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             downloadManager.getThreadPool().getExecutor().removeOnAllTaskEndListener(this);
             downloadManager = null;
         }
+    }
+
+    /**
+     * 判断是否全部下载完毕
+     * @param downloadListModels
+     * @return
+     */
+    public boolean isAllDownLoadOver(List<VideoDownloadListModel> downloadListModels) {
+        //默认并没有全部下完
+        boolean isAllOver = true;
+
+        if (null != downloadListModels && 0 != downloadListModels.size())
+            for (int i = 0; i < downloadListModels.size(); i++) {
+                if (VideoStatus.FINISH != downloadListModels.get(i).status) isAllOver = false;
+            }
+
+        return isAllOver;
+
+//
     }
 
 }

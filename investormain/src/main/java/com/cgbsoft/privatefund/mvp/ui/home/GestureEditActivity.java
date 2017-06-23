@@ -199,10 +199,12 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         AppInfStore.updateUserGesturePassword(this, password);
         if(isFromVerifyForget){//是忘记密码进来的直接跳转首页
             NavigationUtils.toMainActivity(GestureEditActivity.this);
+            finish();
             return;
         }
         if (fromRegistOrLoginPage) {
             NavigationUtils.toMainActivity(GestureEditActivity.this);
+            finish();
         } else {
             RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
             finish();

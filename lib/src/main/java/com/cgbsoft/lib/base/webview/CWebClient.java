@@ -79,8 +79,7 @@ public class CWebClient extends WebViewClient {
                             url.startsWith(WebViewConstant.AppCallBack.TOC_PDF) ||
                             url.startsWith(WebViewConstant.AppCallBack.TOC_PRODUCT_TOUTIAO) ||
                             url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
-                            url.startsWith(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS)||
-                            (url.startsWith(WebViewConstant.AppCallBack.OPEN_SHAREPAGE)))) {
+                            url.startsWith(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS) )) {
                 CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
                 cWebClient.setWeb((BaseWebview) webView);
                 webviewOnClick.onClick(url);
