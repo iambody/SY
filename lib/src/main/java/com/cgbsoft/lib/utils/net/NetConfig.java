@@ -117,6 +117,10 @@ public class NetConfig {
 //        static final String GET_VIDEO_INFO = API_URL_V2 + information + "/video/2c";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+
+
+        //私享云新增的获取视频列表的V2接口
+        static final String GET_VIDEO_LIST=API_URL + information+"/videos";
     }
 
     //每日任务
@@ -247,4 +251,9 @@ public class NetConfig {
         //V2登录
         static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
     }
+
+
+
+    /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
+
 }
