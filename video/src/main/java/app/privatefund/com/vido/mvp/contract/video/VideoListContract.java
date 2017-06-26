@@ -4,7 +4,7 @@ import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
 /**
- * desc  ${DESC}
+ * desc
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/23-14:43
  */

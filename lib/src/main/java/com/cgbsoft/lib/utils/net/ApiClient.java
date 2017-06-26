@@ -26,6 +26,7 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.Utils;
 
@@ -201,7 +202,7 @@ public class ApiClient {
      */
     public static Observable<UserInfoDataEntity.UserInfo> getUserInfo(String userid) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("adviserId",userid);
+        map.put("adviserId", userid);
         return OKHTTP.getInstance().getRequestManager(true).getUserInfo(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
@@ -687,8 +688,6 @@ public class ApiClient {
     /**
      * 获取群组信息
      *
-     *
-     *
      * @param groupId
      */
     public static Observable<GroupInfoEntity.Result> getGroupInfo(String groupId) {
@@ -940,7 +939,7 @@ public class ApiClient {
         try {
             js.put("id", id);
             js.put("commentId", commentId);
-            js.put("limit",  Contant.VIDEO_COMMENT_LIMIT);
+            js.put("limit", Contant.VIDEO_COMMENT_LIMIT);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -950,6 +949,28 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().videoCommentLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
 //        return OKHTTP.getInstance().getRequestManager().videoCommentLs(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+
+    /*************************************************6.0私享云增量Api************************************************************************/
+    /*************************************************6.0私享云增量Api************************************************************************/
+
+    /**
+     * 获取商学院外层的fragment的init全部数据
+     */
+    public static Observable<String> videoSchoolAllInd() {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", 0);
+            js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().videoSchoolAllInf(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -1136,7 +1157,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getLiveSign(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
-    public static Observable<String> getLivePDF(String roomId){
+    public static Observable<String> getLivePDF(String roomId) {
         HashMap<String, String> map = new HashMap<>();
         map.put("room_id", roomId);
         return OKHTTP.getInstance().getRequestManager().getLivePdf(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -1280,7 +1301,7 @@ public class ApiClient {
     /**
      * 首页活动红点
      */
-    public static Observable<String> ActionPoint(HashMap<String,Object> map){
+    public static Observable<String> ActionPoint(HashMap<String, Object> map) {
         return OKHTTP.getInstance().getRequestManager().ActionPoint(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 

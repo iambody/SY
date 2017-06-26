@@ -8,27 +8,21 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 
 import app.privatefund.com.vido.R;
-import app.privatefund.com.vido.mvp.contract.video.DiscoverTocContract;
-import app.privatefund.com.vido.mvp.presenter.video.DiscoverTocPresenter;
+import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
+import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-18:08
  */
-public class VidoListInfFragment extends BaseLazyFragment<DiscoverTocPresenter> implements DiscoverTocContract.view {
+public class VidoListInfFragment extends BaseLazyFragment<VideoSchoolAllInfPresenter> implements VideoSchoolAllInfContract.View {
 
 
     public String postionString;
 
     public VidoListInfFragment(String postionString) {
         this.postionString = postionString;
-    }
-
-    @Override
-
-    public void testview() {
-
     }
 
     @Override
@@ -67,7 +61,18 @@ public class VidoListInfFragment extends BaseLazyFragment<DiscoverTocPresenter> 
     }
 
     @Override
-    protected DiscoverTocPresenter createPresenter() {
-        return new DiscoverTocPresenter(fBaseActivity,this);
+    protected VideoSchoolAllInfPresenter createPresenter() {
+        return new VideoSchoolAllInfPresenter(fBaseActivity, this);
+    }
+
+
+    @Override
+    public void getSchoolAllDataSucc(String data) {
+
+    }
+
+    @Override
+    public void getSchoolAllDataError(String message) {
+
     }
 }

@@ -584,6 +584,9 @@ interface RequestManager {
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
     Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, String> parmsMap);
 
+    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_ALL_IND)
+    Observable<ResponseBody> videoSchoolAllInf(@QueryMap Map<String, String> parmsMap);
+
     //编辑商城收货地址
     @POST(NetConfig.MALL.MALL_SAVE_ADDRESS)
     Observable<ResponseBody> saveAddress(@Body RequestBody responseBody);
