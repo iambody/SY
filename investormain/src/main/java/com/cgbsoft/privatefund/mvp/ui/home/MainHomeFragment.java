@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 
@@ -16,7 +17,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     protected int layoutID() {
-        return 0;
+        return R.layout.fragment_mainhome;
     }
 
     @Override
