@@ -12,4 +12,5 @@ public class NdkUtils {
      * @return
      */
 //    public static native String getTestStringFormC();
+    //sss
 }
