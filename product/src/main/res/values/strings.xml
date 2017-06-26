@@ -27,4 +27,7 @@
     <string name="searching">搜索中....</string>
     <string name="getproductloading">加载中</string>
     <string name="no_more_product">暂无更多的产品</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
