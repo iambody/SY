@@ -14,12 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.cgbsoft.lib.R;
+
 
 /**
  * @author chenlong
@@ -28,12 +29,17 @@ import java.util.List;
  */
 public class BannerView extends RelativeLayout implements View.OnTouchListener, ViewPager.OnPageChangeListener {
 
+    public interface OnclickBannerItemView {
+        void clickBannerItem(int position);
+    }
+
     private ViewPager targetVp;
     private ArrayList<View> bannerList;
     private ArrayList<View> indicationList;
     private Context context;
     private int selectedBanner;
-    public final static int BANNER_CHANGE = 0;
+    private final static int BANNER_CHANGE = 0;
+    private OnclickBannerItemView onclickBannerItemView;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -52,6 +58,10 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     public BannerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+    }
+
+    public void setOnclickBannerItemView(OnclickBannerItemView onclickBannerItemView) {
+        this.onclickBannerItemView = onclickBannerItemView;
     }
 
     public BannerView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -83,33 +93,40 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         indicationList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             ImageView iv = new ImageView(activity);
+            BannerBean bannerBean = list.get(i);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            Imageload.display(context, list.get(i).getImageUrl(), iv);
+            Imageload.display(context, bannerBean.getImageUrl(), iv);
             bannerList.add(iv);
             ImageView iv2 = new ImageView(activity);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lp.setMargins(8, 0, 0, 0);
             iv2.setLayoutParams(lp);
             if (i == 0) {
-                iv2.setBackgroundResource(R.drawable.home_top_ic_point_on);
+                iv2.setBackgroundResource(BannerBean.ViewType.OVAL == bannerBean.getVierType() ? R.drawable.shape_banner_point_on : R.drawable.shape_banner_rectangle_on);
             } else {
-                iv2.setBackgroundResource(R.drawable.home_top_ic_point_off);
+                iv2.setBackgroundResource(BannerBean.ViewType.OVAL == bannerBean.getVierType() ? R.drawable.shape_banner_point_off : R.drawable.shape_banner_rectangle_off);
             }
+            final int postioan = i;
+            iv2.setOnClickListener(v -> {
+                if (onclickBannerItemView != null) {
+                    onclickBannerItemView.clickBannerItem(postioan);
+                }
+            });
             indicationList.add(iv2);
             ly_indication.addView(iv2);
         }
         HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList, activity);
         targetVp.setAdapter(bannerAdapter);
-        targetVp.setCurrentItem(bannerList.size() * 1000);
-        selectedBanner = bannerList.size() * 1000;
+        targetVp.setCurrentItem(bannerList.size() - 1);
+        selectedBanner = bannerList.size() - 1;
     }
 
     private void bannerPointLight(int currentPoint) {
         for (int i = 0; i < indicationList.size(); i++) {
             if (currentPoint == i) {
-                indicationList.get(i).setBackgroundResource(R.drawable.home_top_ic_point_on);
+                indicationList.get(i).setBackgroundResource(R.drawable.shape_banner_point_on);
             } else {
-                indicationList.get(i).setBackgroundResource(R.drawable.home_top_ic_point_off);
+                indicationList.get(i).setBackgroundResource(R.drawable.shape_banner_point_off);
             }
         }
     }

@@ -37,18 +37,18 @@ android {
         }
     }
     signingConfigs {
-//        debug {
+        debug {
 //            storeFile file("D:/privatefund.keystore")
 //            storePassword "privatefund"
 //            keyAlias "beijing"
 //            keyPassword "privatefund"
-//        }
-//        release {
+        }
+        release {
 //            storeFile file("/workspace/signe/privatefund.keystore")
 //            storePassword "privatefund"
 //            keyAlias "beijing"
 //            keyPassword "privatefund"
-//        }
+        }
     }
     buildTypes {
         release {
@@ -56,10 +56,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            manifestPlaceholders = [ DATABASE_VER:"1" ]
             //签名配置
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
         release {
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 
