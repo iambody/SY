@@ -32,29 +32,29 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/selector_bottom_mine" />
+                    android:src="@drawable/selector_bottom_home" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_left_first"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/vbnb_mine_str"
+                    android:text="@string/vbnb_firsts_str"
                     android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_bottom_nav_msgnum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/shape_round_msg"
-                android:padding="4dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimens_sp_8"
-                android:visibility="gone" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_bottom_nav_msgnum"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="top|right"-->
+                <!--android:layout_marginRight="8dp"-->
+                <!--android:background="@drawable/shape_round_msg"-->
+                <!--android:padding="4dp"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/dimens_sp_8"-->
+                <!--android:visibility="gone" />-->
         </FrameLayout>
 
         <FrameLayout
@@ -75,23 +75,48 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/selector_bottom_investor_product" />
+                    android:src="@drawable/selector_bottom_private" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_left_second"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/vbnb_product_str"
+                    android:text="@string/vbnb_private_str"
                     android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/fl_bottom_nav_center"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_weight="1" />
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_bottom_nav_center"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/selector_bottom_happy_life" />
+
+                <TextView
+                    android:id="@+id/tv_bottom_nav_center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/vbnb_happy_live_str"
+                    android:textColor="@color/c_selector_text_bottom_bar"
+                    android:textSize="@dimen/dimens_sp_11" />
+            </LinearLayout>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/fl_bottom_nav_right_first"
@@ -110,14 +135,14 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/selector_bottom_inverstor_discovery" />
+                    android:src="@drawable/selector_bottom_health_ok" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_right_first"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/vbnb_discovery_str"
+                    android:text="@string/vbnb_ever_ok_str"
                     android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
@@ -140,33 +165,33 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/selector_bottom_club" />
+                    android:src="@drawable/selector_bottom_mine" />
 
                 <TextView
                     android:id="@+id/tv_bottom_nav_right_second"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/vbnb_club_str"
+                    android:text="@string/vbnb_mine_str"
                     android:textColor="@color/c_selector_text_bottom_bar"
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
 
-    <View
-        android:id="@+id/view_bottom_navigation_close"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#7F000000"
-        android:fitsSystemWindows="true"
-        android:visibility="gone" />
+    <!--<View-->
+        <!--android:id="@+id/view_bottom_navigation_close"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#7F000000"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--android:visibility="gone" />-->
 
-    <ImageView
-        android:id="@+id/iv_bottom_navigation_cloud"
-        tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="5dp" />
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_bottom_navigation_cloud"-->
+        <!--tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
+        <!--android:layout_marginBottom="5dp" />-->
 </FrameLayout>

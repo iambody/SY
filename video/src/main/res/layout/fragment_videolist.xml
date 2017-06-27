@@ -2,13 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
+    <com.cgbsoft.lib.widget.BannerView
+        android:id="@+id/video_videolist_bannerview"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:visibility="gone"/>
 
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/video_videolist_indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_80_dip" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/video_videolist_pager"
         android:layout_width="match_parent"

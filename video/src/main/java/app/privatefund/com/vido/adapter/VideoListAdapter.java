@@ -69,7 +69,7 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
         lsViewHolder.itemView.setTag(position);
         VideoAllModel.VideoListModel videoListModel = listModelList.get(position);
         Imageload.display(ApContext, videoListModel.coverImageUrl, lsViewHolder.Item_fragment_videoschool_image_bg);
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%s阅读", videoListModel.shortName));
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%d阅读", videoListModel.likes));
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, videoListModel.shortName);
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, videoListModel.updateTime);
 

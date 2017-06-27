@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 
 import app.privatefund.com.vido.mvp.ui.video.InformationDetailActivity;
+import app.privatefund.com.vido.mvp.ui.video.VideoDetailActivity;
 
 /**
  * desc  ${DESC}
@@ -22,5 +23,12 @@ public class VideoNavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
         intent.putExtra(WebViewConstant.RIGHT_SHARE, true);
         ((Activity) context).startActivityForResult(intent, requestCode);
+    }
+    public static void stareVideoDetail(Activity activity,String videoId,String CoverUrl){
+        Intent intent = new Intent(activity, VideoDetailActivity.class);
+        intent.putExtra("videoId",videoId);
+        intent.putExtra("videoCoverUrl",CoverUrl);
+        activity.startActivity(intent);
+
     }
 }

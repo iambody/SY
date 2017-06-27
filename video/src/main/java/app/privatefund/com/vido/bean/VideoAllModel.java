@@ -50,7 +50,7 @@ public class VideoAllModel {
         public String tencentVideoId;//": "1234566231234123",
         public String createDate;//": "2017-06-23",
         public String isLiked;//": "0",
-        public String likes;//": 0,
+        public int likes;//": 0,
         public String keyword;//": "",
         public String filterKey;//": "产品培训",
         public String isPush;//": "",

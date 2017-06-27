@@ -10,7 +10,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  */
 public class VideoSchoolAllInfContract {
     public interface Presenter extends BasePresenter {
-        void getVideoSchoolAllInf(String category, int offset);
+        void getVideoSchoolAllInf( );
     }
 
     public interface View extends BaseView {
