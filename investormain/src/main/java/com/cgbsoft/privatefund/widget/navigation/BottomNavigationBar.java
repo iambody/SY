@@ -180,8 +180,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         View callView = buildSubButton(activity, getResources().getString(R.string.vbnb_call_str), R.drawable.selector_bottom_call, false);
         View meetView = buildSubButton(activity, getResources().getString(R.string.vbnb_meet_str), R.drawable.selector_bottom_meet, false);
         View liveView = buildSubButton(activity,
-                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? getResources().getString(R.string.vbnb_tougu_dangan) : getResources().getString(R.string.vbnb_live_str),
-                ((InvestorAppli)InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live, true);
+                ((InvestorAppli) InvestorAppli.getContext()).isTouGuOnline() ? getResources().getString(R.string.vbnb_tougu_dangan) : getResources().getString(R.string.vbnb_live_str),
+                ((InvestorAppli) InvestorAppli.getContext()).isTouGuOnline() ? R.drawable.select_mine_tougu : R.drawable.selector_bottom_live, true);
         View smsView = buildSubButton(activity, getResources().getString(R.string.vbnb_sms_str), R.drawable.selector_bottom_sms, false);
         View csView = buildSubButton(activity, getResources().getString(R.string.vbnb_cs_str), R.drawable.selector_bottom_cs, false);
 
@@ -277,10 +277,10 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 //todo 春节时候的样式
             }
 
-            leftFirstStr = R.string.vbnb_mine_str;
-            leftSecStr = R.string.vbnb_product_str;
-            rightFirstStr = R.string.vbnb_discovery_str;
-            rightSecStr = R.string.vbnb_club_str;
+            leftFirstStr = R.string.mainhome;
+            leftSecStr = R.string.privatebanck_str;
+            rightFirstStr = R.string.enjoylife_str;
+            rightSecStr = R.string.jiankang_str;
 
             if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)
                 tv_bottom_nav_msgnum.setVisibility(GONE);
@@ -332,7 +332,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //            bottomls.get(i).setSelected(index == i );
 //        }
 
-        nowPosition=index;
+        nowPosition = index;
         changeResWithIdtentify();
     }
 
@@ -420,18 +420,18 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //                                                isLookZhiBao = true;
 //                                                //joinLive();
 //                                            } else {
-                                                boolean needOpen;
-                                                if (floatingActionMenu.isOpen()) {
-                                                    needOpen = false;
-                                                    view_bottom_navigation_close.setVisibility(GONE);
-                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
-                                                } else {
-                                                    needOpen = true;
-                                                    nowSystemTime = System.currentTimeMillis();
-                                                    view_bottom_navigation_close.setVisibility(VISIBLE);
-                                                    iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
-                                                }
-                                                floatingActionMenu.toggle(needOpen);
+                                            boolean needOpen;
+                                            if (floatingActionMenu.isOpen()) {
+                                                needOpen = false;
+                                                view_bottom_navigation_close.setVisibility(GONE);
+                                                iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_cloud_investor);
+                                            } else {
+                                                needOpen = true;
+                                                nowSystemTime = System.currentTimeMillis();
+                                                view_bottom_navigation_close.setVisibility(VISIBLE);
+                                                iv_bottom_navigation_cloud.setImageResource(R.drawable.ic_bottom_close);
+                                            }
+                                            floatingActionMenu.toggle(needOpen);
 //                                            }
                                         }
                                         DataStatistApiParam.onStatisToCProductDetailMenu();

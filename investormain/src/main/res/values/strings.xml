@@ -123,6 +123,9 @@
     <string name="gesture_password_error_times">您已连续五次输错手势，手势密码已关闭，请重新登录</string>
     <string name="weixin_reset_gesture_password">忘记手势密码，请致电官方客户电话</string>
     <string name="forget_pwd">忘记密码?</string>
-
-
+    <string name="mainhome">首页</string>
+    <string name="privatebanck_str">尊享私行</string>
+    <string name="enjoylife_str">乐享生活</string>
+    <string name="jiankang_str">永享健康</string>
+    <string name="privatebank_title_str">搜索产品名称,投资标的,基金管理人</string>
 </resources>

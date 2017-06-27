@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/ui_5_dip">
+
+    <ImageView
+        android:layout_width="@dimen/ui_40_dip"
+        android:layout_height="@dimen/ui_40_dip"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/ui_10_dip"
+        android:src="@drawable/privatebank_title_left" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@drawable/shape_privatebank_title"
+        android:orientation="horizontal"
+        android:padding="@dimen/ui_10_dip">
+
+        <ImageView
+            android:layout_width="@dimen/ui_15_dip"
+            android:layout_height="@dimen/ui_15_dip"
+            android:src="@drawable/title_search" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_5_dip"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/privatebank_title_str" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/ui_40_dip"
+        android:layout_height="@dimen/ui_40_dip"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/ui_5_dip"
+        android:padding="@dimen/ui_10_dip"
+        android:src="@drawable/title_new" />
+</LinearLayout>

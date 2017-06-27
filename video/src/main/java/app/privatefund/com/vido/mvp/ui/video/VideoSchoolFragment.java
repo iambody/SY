@@ -98,9 +98,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     private void freashAp(VideoAllModel videoAllModel) {
 //        List<BannerBean> bannerBeen=new ArrayList<>();
-//        BannerBean bannerBean1=new BannerBean();
-//        bannerBean1.setImageUrl("https://upload.simuyun.com/videos/a5d16a47-17c9-4673-a658-bf2d9525d3d4.jpg");
-//        bannerBean1.setPositon(0);
+//        BannerBean bannerBean1=new BannerBean(false,"https://upload.simuyun.com/videos/a5d16a47-17c9-4673-a658-bf2d9525d3d4.jpg",BannerBean.ViewType.OVAL);
+//
 //        bannerBeen.add(bannerBean1);
 //        videoVideolistBannerview.initShowImageForNet(baseActivity,bannerBeen);
         //Navagation的数据填充

@@ -8,12 +8,10 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.PrivateBanksFragment;
 
 import app.mall.com.mvp.ui.MallFragment;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
-import app.privatefund.com.vido.mvp.ui.video.DiscoverFragmentc;
-import app.product.com.mvp.ui.CProductFragment;
-import app.product.com.mvp.ui.ProductFragment;
 
 /**
  * Created by win8 -1 on 2015/8/14.
@@ -32,15 +30,15 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
-//    private DiscoverFragmentc discoveryFragment;//发现
-    private VideoSchoolFragment discoveryFragment;//发现
+    //    private DiscoverFragmentc discoveryFragment;//发现
+//    private VideoSchoolFragment discoveryFragment;//发现
     //    private ProductFragment productFragment;//产品
-    private CProductFragment productFragment;//产品
+//    private CProductFragment productFragment;//产品
 //    private ProductFragment productFragment;//产品
     //    private DiscoverFragmentc discoveryFragment;//发现
     private VideoSchoolFragment discoveryFragment;//
     //    private ProductFragment productFragment;//产品
-    private ProductFragment productFragment;//产品
+    private PrivateBanksFragment productFragment;//产品
 
     private Bundle mBundle;
 
@@ -68,7 +66,7 @@ public class MainTabManager {
                 if (isInvestor()) {
                     if (mineFragment == null) {
 //                        mineFragment = new MineFragment();
-                        mineFragment = new  MainHomeFragment();
+                        mineFragment = new MainHomeFragment();
                     }
                     fragment = mineFragment;
                 } else {
@@ -80,7 +78,7 @@ public class MainTabManager {
                 break;
             case R.id.nav_left_second:
                 if (productFragment == null) {
-                    productFragment = new CProductFragment();
+                    productFragment = new PrivateBanksFragment();
                 }
                 fragment = productFragment;
                 break;
@@ -145,7 +143,7 @@ public class MainTabManager {
         productFragment = null;
     }
 
-    public CProductFragment getProductFragment() {
+    public PrivateBanksFragment getProductFragment() {
         return productFragment;
     }
 
