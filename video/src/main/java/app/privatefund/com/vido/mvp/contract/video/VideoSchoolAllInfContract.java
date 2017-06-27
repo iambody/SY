@@ -9,11 +9,11 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  * 日期 2017/6/26-20:58
  */
 public class VideoSchoolAllInfContract {
-   public interface Presenter extends BasePresenter {
-        void getVideoSchoolAllInf();
+    public interface Presenter extends BasePresenter {
+        void getVideoSchoolAllInf(String category, int offset);
     }
 
-   public interface View extends BaseView {
+    public interface View extends BaseView {
         void getSchoolAllDataSucc(String data);
 
         void getSchoolAllDataError(String message);

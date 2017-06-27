@@ -18,11 +18,20 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     public List<BaseLazyFragment> lazyFragments;
 
+    /**
+     * 刷新数据
+     * @param datas
+     */
+    public void freshAp(List<BaseLazyFragment> datas) {
+        lazyFragments = datas;
+        this.notifyDataSetChanged();
+    }
 
     public FragmentAdapter(FragmentManager fm, List<BaseLazyFragment> lazyFragments) {
         super(fm);
         this.lazyFragments = lazyFragments;
     }
+
     @Override
     public Fragment getItem(int position) {
         return lazyFragments.get(position);

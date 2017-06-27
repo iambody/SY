@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
 
@@ -19,6 +22,22 @@ public class VideoListPresenter extends BasePresenterImpl<VideoListContract.View
 
     @Override
     public void getVideoList() {
+        addSubscription(ApiClient.videoSchoolAllInf().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                if (!BStrUtils.isEmpty(s)) {
+                    getView().getVideoDataSucc(getV2String(s));
+                } else {
+                    getView().getVideoDataError("失败");
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().getVideoDataError(error.getMessage());
+
+            }
+        }));
 
     }
 }

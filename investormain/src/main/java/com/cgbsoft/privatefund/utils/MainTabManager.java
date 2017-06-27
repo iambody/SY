@@ -10,7 +10,7 @@ import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
 
 import app.mall.com.mvp.ui.MallFragment;
-import app.privatefund.com.vido.mvp.ui.video.VideoListFragment;
+import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
@@ -31,7 +31,7 @@ public class MainTabManager {
 //    private CollegeFragment collegeFragment;//学院
 
 //    private DiscoverFragmentc discoveryFragment;//发现
-    private  VideoListFragment discoveryFragment;//
+    private VideoSchoolFragment discoveryFragment;//
 //    private ProductFragment productFragment;//产品
 private ProductFragment productFragment;//产品
 
@@ -92,7 +92,7 @@ private ProductFragment productFragment;//产品
                 break;
             case R.id.nav_right_first:
                 if (discoveryFragment == null) {
-                    discoveryFragment = new VideoListFragment();
+                    discoveryFragment = new VideoSchoolFragment();
                 }
                 fragment = discoveryFragment;
                 break;

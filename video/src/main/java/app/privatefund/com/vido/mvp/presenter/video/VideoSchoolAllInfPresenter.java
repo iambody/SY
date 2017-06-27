@@ -19,7 +19,11 @@ public class VideoSchoolAllInfPresenter extends BasePresenterImpl<VideoSchoolAll
     }
 
     @Override
-    public void getVideoSchoolAllInf() {
+    public void getVideoSchoolAllInf(String category, int offset) {
 
     }
+
+
+
+
 }

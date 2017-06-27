@@ -953,28 +953,6 @@ public class ApiClient {
     }
 
 
-    /*************************************************6.0私享云增量Api************************************************************************/
-    /*************************************************6.0私享云增量Api************************************************************************/
-
-    /**
-     * 获取商学院外层的fragment的init全部数据
-     */
-    public static Observable<String> videoSchoolAllInd() {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("offset", 0);
-            js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString()))
-            params.put("param", js.toString());
-        return OKHTTP.getInstance().getRequestManager().videoSchoolAllInf(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
-    }
-
-
     /**
      * 重新生成Get 方式的value值
      *
@@ -1304,5 +1282,27 @@ public class ApiClient {
     public static Observable<String> ActionPoint(HashMap<String, Object> map) {
         return OKHTTP.getInstance().getRequestManager().ActionPoint(createProgramObject(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /*************************************************6.0私享云增量Api************************************************************************/
+    /*************************************************6.0私享云增量Api************************************************************************/
+
+    /**
+     * 获取商学院外层的fragment的init全部数据
+     */
+    public static Observable<String> videoSchoolAllInf() {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", 0);
+            js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().videoSchoolAllInf(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
 
 }

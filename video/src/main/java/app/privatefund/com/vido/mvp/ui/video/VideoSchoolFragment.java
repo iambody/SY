@@ -3,20 +3,18 @@ package app.privatefund.com.vido.mvp.ui.video;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
+import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -37,8 +35,6 @@ import app.privatefund.com.vido.bean.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
@@ -46,17 +42,23 @@ import butterknife.Unbinder;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期  2017/6/23-14:50
  */
-public class VideoListFragment extends BaseFragment<VideoListPresenter> implements VideoListContract.View {
+public class VideoSchoolFragment extends BaseFragment<VideoListPresenter> implements VideoListContract.View {
     @BindView(R2.id.video_videolist_indicator)
     MagicIndicator videoVideolistIndicator;
 
-    //导航器的Ap
-    VideoNavigationsAdapter videoNavigationAdapter;
+
     //导航器
     CommonNavigator commonNavigator;
     @BindView(R2.id.video_videolist_pager)
     ViewPager videoVideolistPager;
-    Unbinder unbinder;
+    //导航器的Ap
+    VideoNavigationsAdapter videoNavigationAdapter;
+
+    //Fragment的Ap
+    FragmentAdapter fragmentAdapter;
+    //所有需要的fragment的集合
+
+    List<BaseLazyFragment> lazyFragments = new ArrayList<>();
 
     @Override
     protected int layoutID() {
@@ -66,23 +68,31 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         commonNavigator = new CommonNavigator(baseActivity);
-        videoNavigationAdapter = new VideoNavigationsAdapter(baseActivity, null);
+        videoNavigationAdapter = new VideoNavigationsAdapter(baseActivity, new ArrayList<>());
+
         commonNavigator.setAdapter(videoNavigationAdapter);
+
         videoVideolistIndicator.setNavigator(commonNavigator);
 
 
-        List<BaseLazyFragment> lazyFragments = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            VidoListInfFragment baseLazyFragment = new VidoListInfFragment(i + "");
-            Bundle bundle = new Bundle();
-//            bundle.putString("postion", i + "");
-            baseLazyFragment.setArguments(bundle);
-            lazyFragments.add(baseLazyFragment);
-        }
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
+        fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
         videoVideolistPager.setOffscreenPageLimit(20);
+        //fragment的适配器填充
         videoVideolistPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
+        getPresenter().getVideoList();
+    }
+
+    private void freashAp(VideoAllModel videoAllModel) {
+        //Navagation的数据填充
+        List<BaseLazyFragment> lazyFragments = new ArrayList<>();
+        for (int i = 0; i < videoAllModel.category.size(); i++) {
+            VidoListFragment baseLazyFragment = new VidoListFragment(videoAllModel.category.get(i).value + "");
+            lazyFragments.add(baseLazyFragment);
+            if (0 == i) baseLazyFragment.freshData(videoAllModel.video);
+        }
+        videoNavigationAdapter.FreashAp(videoAllModel.category);
+        fragmentAdapter.freshAp(lazyFragments);
     }
 
     @Override
@@ -93,7 +103,8 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
 
     @Override
     public void getVideoDataSucc(String data) {
-
+        VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
+        freashAp(videoAllModel);
     }
 
     @Override
@@ -102,6 +113,9 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     }
 
 
+    /**
+     * Navigations的Ap
+     */
     public class VideoNavigationsAdapter extends CommonNavigatorAdapter {
         //上下文
         Context adapterContext;
@@ -116,37 +130,49 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
         public VideoNavigationsAdapter(Context adaptercontext, List<VideoAllModel.VideoCategory> categoryList) {
             super();
             this.categoryList = categoryList;
-
             this.adapterContext = adaptercontext;
             this.layoutInflater = LayoutInflater.from(adaptercontext);
         }
 
+        /**
+         * 刷新navagations的Ap
+         */
+
+        public void FreashAp(List<VideoAllModel.VideoCategory> videoCategories) {
+            this.categoryList = videoCategories;
+            this.notifyDataSetChanged();
+        }
+
         @Override
         public int getCount() {
-            return 8;
-//            return categoryList.size();
+            return null == categoryList ? 0 : categoryList.size();
         }
 
         @Override
         public IPagerTitleView getTitleView(Context context, int i) {
-            CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
+            VideoAllModel.VideoCategory videoCategory = categoryList.get(i);
 
+            CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
             View view = layoutInflater.inflate(R.layout.view_item_navigation, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.view_item_navigation_iv);
+
             TextView textViewdd = (TextView) view.findViewById(R.id.view_item_navigation_txt);
 
+            Imageload.display(adapterContext, 0 == i ? videoCategory.prelog : videoCategory.norlog, imageView);
+            BStrUtils.SetTxt(textViewdd, videoCategory.text);
             commonPagerTitleView.setContentView(view);
             commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                 @Override
                 public void onSelected(int i, int i1) {//被选中
-                    Imageload.display(adapterContext, R.drawable.bfjl_kong, imageView);
+                    Imageload.display(adapterContext, videoCategory.prelog, imageView);
+
+
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
                 }
 
                 @Override
                 public void onDeselected(int i, int i1) {//取消被选中状态
-//                Imageload.display(adapterContext, categoryList.get(i).norlog, imageView);
-                    Imageload.display(adapterContext, R.drawable.logo, imageView);
+                    Imageload.display(adapterContext, videoCategory.norlog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.black));
                 }
 
@@ -163,7 +189,6 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
             commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    videoVideolistIndicator.onPageSelected(i);
                     videoVideolistPager.setCurrentItem(i);
                 }
             });

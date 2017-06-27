@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/transparent">
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
     <com.romainpiel.shimmer.ShimmerTextView
         android:id="@+id/view_comment_head_txt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="私 募 云"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textColor="@color/gray_font"
-        android:textSize="@dimen/dimens_sp_28"
-         android:textStyle="italic"
-        android:layout_gravity="center_horizontal"/>
+        android:text="私 享 云"
+        android:textColor="@color/app_golden"
+        android:textSize="@dimen/dimens_sp_20"
+        android:textStyle="italic" />
 </LinearLayout>
