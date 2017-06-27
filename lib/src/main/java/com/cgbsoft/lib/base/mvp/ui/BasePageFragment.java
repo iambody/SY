@@ -42,7 +42,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     @BindView(R2.id.tab_layout)
     TabLayout tabLayout;
 
-    @BindView(R2.id.view_pager)
+    @BindView(R2.id.viewpager)
     ViewPager viewPager;
 
     protected abstract int titleLayoutId();
