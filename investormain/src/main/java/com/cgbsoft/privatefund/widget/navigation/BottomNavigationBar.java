@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -41,6 +42,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     //左面第二个按钮
     @BindView(R.id.fl_bottom_nav_left_second)
     FrameLayout fl_bottom_nav_left_second;
+    @BindView(R.id.fl_bottom_nav_center)
+    FrameLayout fl_bottom_nav_center;
     //右面第一个按钮
     @BindView(R.id.fl_bottom_nav_right_first)
     FrameLayout fl_bottom_nav_right_first;
@@ -114,6 +117,14 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         bottomls.add(tv_bottom_nav_left_second);
         bottomls.add(tv_bottom_nav_right_first);
         bottomls.add(tv_bottom_nav_right_second);
+    }
+
+    public void setActivity() {
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_left_first);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_left_second);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_center);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_right_first);
+        doubleClickDetect(doubleClickTime, fl_bottom_nav_right_second);
     }
 
     public void setOnClickListener(BottomClickListener bottomClickListener) {
