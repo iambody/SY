@@ -73,8 +73,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     private static final int doubleClickTime = 300;
     private List<TextView> bottomls;
     //消息文本
-    @BindView(R.id.tv_bottom_nav_msgnum)
-    TextView tv_bottom_nav_msgnum;
+//    @BindView(R.id.tv_bottom_nav_msgnum)
+//    TextView tv_bottom_nav_msgnum;
 
     private Observable<Boolean> changeIdtentifyObservable;
     private RequestManager requestManager;
@@ -133,8 +133,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
 
     public interface BottomClickListener {
-        void onCloudMenuClick(int position);
-
         void onTabSelected(int position);
     }
 
@@ -153,8 +151,8 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         rightFirstStr = R.string.vbnb_ever_ok_str;
         rightSecStr = R.string.vbnb_mine_str;
 
-        if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)
-            tv_bottom_nav_msgnum.setVisibility(GONE);
+//        if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)
+//            tv_bottom_nav_msgnum.setVisibility(GONE);
         requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
         requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
         requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_nav_left_second);
@@ -205,40 +203,40 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                     if (nowPosition != 0) {
                                         nowPosition = 0;
                                         changeResWithIdtentify();
-//                                        if (bottomClickListener != null)
-//                                            bottomClickListener.onTabSelected(0);
+                                        if (bottomClickListener != null)
+                                            bottomClickListener.onTabSelected(0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     if (nowPosition != 1) {
                                         nowPosition = 1;
                                         changeResWithIdtentify();
-//                                        if (bottomClickListener != null)
-//                                            bottomClickListener.onTabSelected(1);
+                                        if (bottomClickListener != null)
+                                            bottomClickListener.onTabSelected(1);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_center:
                                     if (nowPosition != 2) {
                                         nowPosition = 2;
                                         changeResWithIdtentify();
-//                                        if (bottomClickListener != null)
-//                                            bottomClickListener.onTabSelected(2);
+                                        if (bottomClickListener != null)
+                                            bottomClickListener.onTabSelected(2);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
                                     if (nowPosition != 3) {
                                         nowPosition = 3;
                                         changeResWithIdtentify();
-//                                        if (bottomClickListener != null)
-//                                            bottomClickListener.onTabSelected(2);
+                                        if (bottomClickListener != null)
+                                            bottomClickListener.onTabSelected(2);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
                                     if (nowPosition != 4) {
                                         nowPosition = 4;
                                         changeResWithIdtentify();
-//                                        if (bottomClickListener != null)
-//                                            bottomClickListener.onTabSelected(3);
+                                        if (bottomClickListener != null)
+                                            bottomClickListener.onTabSelected(3);
                                     }
                                     break;
                             }

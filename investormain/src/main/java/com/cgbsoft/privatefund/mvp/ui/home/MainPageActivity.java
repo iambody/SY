@@ -37,9 +37,12 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -84,7 +87,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 @Route(RouteConfig.GOTOCMAINHONE)
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements MainPageContract.View, LoginView, ProfileView {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView, ProfileView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -147,9 +150,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
+
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -243,7 +248,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void data() {
-//        bottomNavigationBar.setOnClickListener();
+        bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity();
 
         if (!SPreference.isThisRunOpenDownload(this))
@@ -290,7 +295,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        }
     }
 
-    //    @Override
+//    //    @Override
 //    public void onCloudMenuClick(int position) {
 //        switch (position) {
 //            case 0://呼叫投资顾问
@@ -354,24 +359,23 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-                if (1 == position && isHaveClickProduct) {
-                    //TODO
+//                if (1 == position && isHaveClickProduct) {
 //                    MainTabManager.getInstance().getProductFragment().resetAllData();
-                }
-                isHaveClickProduct = true;
+//                }
+//                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
             case 2://左3
-                switchID = R.id.nav_right_first;
+                switchID = R.id.nav_center;
                 currentPostion = 2;
                 break;
             case 3://左4
-                switchID = R.id.nav_right_second;
+                switchID = R.id.nav_right_first;
                 currentPostion = 3;
                 break;
             case 4://中间
                 // getPresenter().toSignIn();
-                switchID = R.id.nav_center;
+                switchID = R.id.nav_right_second;
                 currentPostion = 4;
                 break;
         }
@@ -667,7 +671,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void onBackPressed() {
-        //TODO
 //        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
 //            MainTabManager.getInstance().getProductFragment().backClick();
 //        } else
