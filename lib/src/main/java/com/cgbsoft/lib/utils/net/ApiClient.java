@@ -1304,5 +1304,23 @@ public class ApiClient {
 
     }
 
+    /**
+     * 获取商学院外层的fragment的init全部数据
+     */
+    public static Observable<String> videoSchoolLs(String category, int offset) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("category", category);
+            js.put("offset", offset);
+            js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().videoSchoolLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
 
 }

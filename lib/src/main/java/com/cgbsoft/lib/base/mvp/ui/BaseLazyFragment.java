@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -241,5 +242,10 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends Frag
             intent.putExtras(pBundle);
         }
         startActivity(intent);
+    }
+    protected void clodLsAnim(SwipeToLoadLayout swipeToLoadLayout) {
+        if (null == swipeToLoadLayout) return;
+        if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
+        if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
     }
 }

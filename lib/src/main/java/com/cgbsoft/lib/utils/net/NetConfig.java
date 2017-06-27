@@ -247,9 +247,12 @@ public class NetConfig {
 
         //********************私享云的fragment里面的视频初始化信息***********
         static final String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
+        //获取视频列表
+        static final String VIDEO_SCHOOL_LS = API_URL + video + "s";
 
 
     }
+
 
     //用户授权相关 V2********
     static class AUTHOR {

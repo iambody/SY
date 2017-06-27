@@ -14,6 +14,8 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,11 @@ public class VidoListFragment extends BaseLazyFragment<VideoSchoolAllInfPresente
      */
     public VideoListAdapter videoListAdapter;
 
+    //标记第几页的位置
     private int CurrentPostion = 0;
+    //标记是否是架子啊更多
+
+    private boolean isLoadMore;
 
 
     public VidoListFragment(String postionString) {
@@ -99,6 +105,12 @@ public class VidoListFragment extends BaseLazyFragment<VideoSchoolAllInfPresente
             }
         });
         swipeTarget.setAdapter(videoListAdapter);
+
+        //第一次显示的时候全部不需要加载数据  非全部需要进行请求网络数据
+        if (null == videoListModelList) {//
+            getPresenter().getVideoSchoolAllInf(CatoryValue, CurrentPostion);
+        }
+
     }
 
     @Override
@@ -126,11 +138,21 @@ public class VidoListFragment extends BaseLazyFragment<VideoSchoolAllInfPresente
     @Override
     public void getSchoolAllDataSucc(String data) {
 
+        clodLsAnim(swipeToLoadLayout);
+        List<VideoAllModel.VideoListModel> videoListModels = new Gson().fromJson(data, new TypeToken<List<VideoAllModel.VideoListModel>>() {
+        }.getType());
+        FreshAp(videoListModels, isLoadMore);
+
+
+        isLoadMore = false;
     }
 
     @Override
     public void getSchoolAllDataError(String message) {
+        clodLsAnim(swipeToLoadLayout);
 
+
+        isLoadMore = false;
     }
 
 
@@ -139,13 +161,27 @@ public class VidoListFragment extends BaseLazyFragment<VideoSchoolAllInfPresente
         CurrentPostion = 1;
     }
 
+
+    public void FreshAp(List<VideoAllModel.VideoListModel> videoListModels, boolean isAdd) {
+        if (null == videoListModelList) videoListModelList = new ArrayList<>();
+        if (isAdd)
+            videoListModelList.addAll(videoListModels);
+        else videoListModelList = videoListModels;
+
+        videoListAdapter.freshAp(videoListModels);
+    }
+
     @Override
     public void onLoadMore() {
-
+        CurrentPostion = CurrentPostion + 1;
+        getPresenter().getVideoSchoolAllInf(CatoryValue, CurrentPostion);
     }
 
     @Override
     public void onRefresh() {
 
+        CurrentPostion = 0;
+        isLoadMore = true;
+        getPresenter().getVideoSchoolAllInf(CatoryValue, CurrentPostion);
     }
 }
