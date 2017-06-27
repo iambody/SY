@@ -102,15 +102,12 @@ dependencies {
     //带下拉刷新的recyclerView https://github.com/dinuscxj/RecyclerRefreshLayout
     compile "com.dinuscxj:recyclerrefreshlayout:${recRefLayout_need_version}"
     //分页加载
-    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
     //facebook 动画
     compile "com.facebook.rebound:rebound:${fbRebound_need_version}"
     //页面跳转 图片移动动画
     compile "com.kogitune:pre-lollipop-activity-transition:${actvityTr_need_version}"
     //小红点
-    compile 'com.github.deano2390:android-viewbadger:1.0.0@aar'
     //
-    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
     //umeng统计
     //    compile 'com.umeng.analytics:analytics:latest.integration'
     //LeakCanary
@@ -126,4 +123,8 @@ dependencies {
     compile files('libs/commons-lang3-3.1.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/utdid4all-1.1.5.3_proguard.jar')
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+    compile 'com.github.deano2390:android-viewbadger:1.0.0@aar'
+    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
+    compile 'com.android.support:support-v4:24.2.1'
 }

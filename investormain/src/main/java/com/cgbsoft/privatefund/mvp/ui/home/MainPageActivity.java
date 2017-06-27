@@ -361,7 +361,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 1://左2
                 switchID = R.id.nav_left_second;
                 if (1 == position && isHaveClickProduct) {
-                    MainTabManager.getInstance().getProductFragment().resetAllData();
+                    //TODO
+//                    MainTabManager.getInstance().getProductFragment().resetAllData();
                 }
                 isHaveClickProduct = true;
                 currentPostion = 1;
@@ -672,9 +673,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void onBackPressed() {
-        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
-            MainTabManager.getInstance().getProductFragment().backClick();
-        } else
+        //TODO
+//        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
+//            MainTabManager.getInstance().getProductFragment().backClick();
+//        } else
             exitBy2Click();
     }
 
