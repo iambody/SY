@@ -9,14 +9,17 @@
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
+        android:background="@color/black"
         android:layout_height="@dimen/ui_50_dip" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
-        app:tabMode="scrollable"
-        app:tabIndicatorHeight="10dp"
-        app:tabSelectedTextColor="#ffffff"
-        app:tabTextColor="#000000"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@android:color/holo_orange_light"
+        app:tabTextColor="#ff000000"
+        app:tabIndicatorHeight="4dp"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@android:color/holo_orange_light"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
 
