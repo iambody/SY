@@ -70,6 +70,9 @@ ext {
     testRunner = 'android.support.test.runner.AndroidJUnitRunner'
     testC = '4.12'
     leakcanary_version = '1.5.1'
+    magicindicator_version='1.5.0'
+
+
 
     webview_java_script_bridge='1.0.4'
     routerVersion = "1.1.0"

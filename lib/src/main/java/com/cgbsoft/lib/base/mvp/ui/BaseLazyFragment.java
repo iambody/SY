@@ -1,10 +1,10 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
-import com.trello.rxlifecycle.components.RxFragment;
 
 import java.util.HashMap;
 
@@ -28,12 +27,21 @@ import butterknife.Unbinder;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 17/4/7-10:41
  */
-public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
+public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends Fragment implements Constant {
+
     protected View FBaseView;
-    protected Activity FBaseActivity;
+    protected Activity fBaseActivity;
     private boolean isFirstVisible = true;
     private boolean isFirstInvisible = true;
     private boolean isPrepared;
+
+
+    private BaseApplication mBaseApplication;
+    private WeakHandler mBaseHandler;//handler
+    private View mFragmentView;
+    private DaoSession mDaoSession;//数据库
+    private Unbinder mUnbinder;//用于butterKnife解绑
+    private P mPresenter;//功能调用
 
 
     //获取参数
@@ -45,47 +53,52 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
     //初始化
     protected abstract void initViewsAndEvents(View view);
 
-    //第一次可见
+
+    /**
+     * fragment第一次可见oncreate()方法
+     **/
     protected abstract void onFirstUserVisible();
 
-    //fragment可见
+    /**
+     * fragment可见onresum()方法
+     **/
     protected abstract void onUserVisible();
-    //fragment不可见
 
+    /**
+     * fragment不可见onpause()方法
+     **/
     protected abstract void onUserInvisible();
 
-    //fragment销毁
+
+    /**
+     * fragment销毁ondestory()方法
+     **/
     protected abstract void DetoryViewAndThing();
 
     /**
      * 获取P
+     *
      * @return
      */
     protected abstract P createPresenter();
 
-
-    private BaseApplication mBaseApplication;
-    private WeakHandler mBaseHandler;//handler
-    private View mFragmentView;
-    private DaoSession mDaoSession;//数据库
-    private Unbinder mUnbinder;//用于butterKnife解绑
-    private P mPresenter;//功能调用
-
-
+    /**
+     * 第一次不可见(第一次的onpause)
+     */
     private void onFirstUserInvisible() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FBaseActivity= getActivity();
+        fBaseActivity = getActivity();
         create(getArguments());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getContentViewLayoutID() != 0) {
-            FBaseView=inflater.inflate(getContentViewLayoutID(), null);
+            FBaseView = inflater.inflate(getContentViewLayoutID(), null);
 
             return FBaseView;
         } else {
@@ -93,10 +106,6 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
         }
     }
 
-    @Override
-    public void onAttach(Activity context) {
-        super.onAttach(context);
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -117,6 +126,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
             mBaseHandler = new WeakHandler();
             mPresenter = createPresenter();
             mUnbinder = ButterKnife.bind(this, FBaseView);
+            if (!getUserVisibleHint()) return;
             onFirstUserVisible();
         } else {
             isPrepared = true;
@@ -124,10 +134,10 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
     }
 
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
         if (isVisibleToUser) {
             if (isFirstVisible) {
                 isFirstVisible = false;
@@ -158,16 +168,19 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
 
     @Override
     public void onDestroy() {
+
         DetoryViewAndThing();
 
         super.onDestroy();
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        OtherDataProvider.addTopActivity(FBaseActivity .getApplicationContext(), getClass().getName());
+        OtherDataProvider.addTopActivity(fBaseActivity.getApplicationContext(), getClass().getName());
     }
+
     /**
      * 获取presenter
      *
@@ -199,17 +212,17 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data,false);
+        DataStatisticsUtils.push(fBaseActivity.getApplicationContext(), data, false);
     }
 
-    protected void toDataStatistics(int grp, int act, String[] args){
+    protected void toDataStatistics(int grp, int act, String[] args) {
         HashMap<String, String> data = new HashMap<>();
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(FBaseActivity.getApplicationContext(), data,false);
+        DataStatisticsUtils.push(fBaseActivity.getApplicationContext(), data, false);
     }
 
 
@@ -223,7 +236,7 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends RxFr
     }
 
     protected void openActivity(Class<?> pClass, Bundle pBundle) {
-        Intent intent = new Intent(FBaseActivity, pClass);
+        Intent intent = new Intent(fBaseActivity, pClass);
         if (pBundle != null) {
             intent.putExtras(pBundle);
         }

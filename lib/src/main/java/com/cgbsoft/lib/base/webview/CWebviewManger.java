@@ -109,9 +109,7 @@ public class CWebviewManger {
         } else if (action.contains("closepage") || action.contains("closePage")) {
             closepage(action);
         } else if (action.contains("secretviewpdf")) { // 预留，可能后端直接写好
-//            secretviewpdf(action);
-//        } else if (action.contains("viewpdf")) {
-//            viewpdf(action);
+            gotoScretPdf(action);
         } else if (action.contains("changepassword")) {
             changepassword(action);
         } else if (action.contains("copytoclipboard")) {
@@ -232,7 +230,7 @@ public class CWebviewManger {
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
         } else if (action.contains("openSharePage")) {
-            openpage(action, false, false, true);
+            opensharepage(action, false, false, true);
         } else if (action.contains("checkVersion")) {
             DaoUtils daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
             OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
@@ -316,6 +314,34 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    private void opensharepage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+        Utils.OpenSharePage(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, data, rightSave ,initPage, rightShare);
+    }
+
+    /**
+     * 跳转到secretpdf
+     * @param action
+     */
+    private void gotoScretPdf(String action) {
+
+        try {
+            String urcodeAction=URLDecoder.decode(action,"utf-8");
+            String[] split = urcodeAction.split(":");
+            String string = split[2];
+
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("pdfurl_tag",split[2]+":"+split[3]);
+            map.put("pdftitle_tag", split[4] );
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SECRET_PDF_ACTIVITY,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
     private void versonUpdate() {
@@ -1207,6 +1233,7 @@ public class CWebviewManger {
      *             rightShare 右边是否有分享
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+//
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {

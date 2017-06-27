@@ -5,14 +5,12 @@ import android.support.v4.app.Fragment;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
-import com.cgbsoft.privatefund.mvp.ui.home.ClubFragment;
-import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
 
 import app.mall.com.mvp.ui.MallFragment;
+import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.privatefund.com.vido.mvp.ui.video.DiscoverFragmentc;
 import app.product.com.mvp.ui.CProductFragment;
 import app.product.com.mvp.ui.ProductFragment;
@@ -23,7 +21,9 @@ import app.product.com.mvp.ui.ProductFragment;
 public class MainTabManager {
     private static MainTabManager mInstance;
     //投资人
-    private MineFragment mineFragment;//个人页
+//    private MineFragment mineFragment;//个人页
+
+    private MainHomeFragment mineFragment;//首页
     private CloudFragment cloudFragment;//云键
     private MallFragment clubFragment;//俱乐部
 
@@ -32,10 +32,13 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
+//    private DiscoverFragmentc discoveryFragment;//发现
+    private VideoSchoolFragment discoveryFragment;//
     private DiscoverFragmentc discoveryFragment;//发现
     //    private ProductFragment productFragment;//产品
     private CProductFragment productFragment;//产品
 //    private ProductFragment productFragment;//产品
+private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 
@@ -62,7 +65,8 @@ public class MainTabManager {
             case R.id.nav_left_first:
                 if (isInvestor()) {
                     if (mineFragment == null) {
-                        mineFragment = new MineFragment();
+//                        mineFragment = new MineFragment();
+                        mineFragment = new  MainHomeFragment();
                     }
                     fragment = mineFragment;
                 } else {
@@ -93,7 +97,7 @@ public class MainTabManager {
                 break;
             case R.id.nav_right_first:
                 if (discoveryFragment == null) {
-                    discoveryFragment = new DiscoverFragmentc();
+                    discoveryFragment = new VideoSchoolFragment();
                 }
                 fragment = discoveryFragment;
                 break;

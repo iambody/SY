@@ -123,6 +123,8 @@ public interface Constant {
 
     //加载产品列表时候的 条数  默认加载20条数据
     public static final int LOAD_PRODUCT_lIMIT = 20;
+    //加载视频列表时候的 条数  默认加载20条数据
+    public static final int LOAD_VIDEOLS_lIMIT = 20;
 
     public static final String IMAGE_SAVE_PATH_LOCAL = "relative_asset_local";
     public static final String IMAGE_RIGHT_DELETE = "show_right_delete";

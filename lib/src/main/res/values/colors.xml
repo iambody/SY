@@ -3,7 +3,7 @@
     <color name="colorPrimaryAdv">#ffffffff</color>
     <color name="colorPrimaryDarkAdv">#ffffffff</color>
     <color name="colorAccentAdv">#f23f36</color>
-    
+
     <color name="colorPrimaryInv">#f49f00</color>
     <color name="colorPrimaryDarkInv">#f46a00</color>
     <color name="colorAccentInv">#ffbf00</color>
@@ -73,6 +73,7 @@
 
 
     <color name="c_low_black">#999999</color>
+
     <color name="c_prompt">#bbbbbb</color>
     <color name="c_divide">#d0d0d0</color>
     <color name="c_background">#e9e9e9</color>
@@ -81,15 +82,25 @@
     <color name="c_main_tabbar_select">#2a2a2a</color>
 
     <color name="black">#000</color>
+
     <color name="toc_login_orange_press">#aaf47900</color>
     <color name="toc_cornor_no_alpha">#f47900</color>
 
     <color name="c_high_black">#333333</color>
     <color name="c_mid_black">#666666</color>
 
-
-
-
-
+    <!-- 6.0私享云的规范色值 -->
+    <!-- 背景色 -->
+    <color name="app_bg">#f2f3f5</color>
+    <!-- 主金色-->
+    <color name="app_golden">#bf9b69</color>
+    <!-- 主金色点击色-->
+    <color name="app_golden_click">#9b6f32</color>
+    <!-- 分割线 用于list分割线或者卡片区域划分的分割线-->
+    <color name="app_split_line">#e2e1e6</color>
+    <!-- 用于内容区icon的色值 -->
+    <color name="app_content_icon">#e2e1e6</color>
+    <!-- 醒目提示 红色 -->
+    <color name="app_red">#e63945</color>
 
 </resources>

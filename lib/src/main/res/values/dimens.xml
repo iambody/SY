@@ -38,6 +38,7 @@
     <dimen name="ui_180_dip">180dp</dimen>
     <dimen name="dimens_sp_28">28sp</dimen>
     <dimen name="ui_8_dip">8dp</dimen>
+    <dimen name="ui_80_dip">80dp</dimen>
 
 
 </resources>

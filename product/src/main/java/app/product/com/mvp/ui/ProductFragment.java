@@ -308,6 +308,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentFilter = filterItems.getFilterItemList();
                 CurrentOffset = 0;
                 isLoadmore = false;
+
+                productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.orange : R.color.black));
                 reSetConditionAction();
             }
 
@@ -549,6 +551,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         }
         BStrUtils.SetTxt(productProductfragmentPaixu, getResources().getString(R.string.zhinengpaixu));
         productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.black));
+        productProductfragmentShaixuan.setTextColor(getResources().getColor(R.color.black));
         orderbyPop = null;
         filterPop = null;
         if (null != productFilterBean) {
@@ -563,5 +566,21 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @OnClick(R2.id.product_product_wenjuan)
     public void onViewClicked() {
         Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+    }
+
+    /**
+     * 判断是否存在筛选条件
+     */
+    public boolean isHaveFilter(List<FilterItem> data) {
+        boolean ishaveFilter = false;
+        for (FilterItem h : CurrentFilter) {
+            for (int i = 0; i < h.getItems().size(); i++) {
+                if (h.getType().equals("text") && !BStrUtils.isEmpty(h.getMinNumber()) && !BStrUtils.isEmpty(h.getMaxNumber()))
+                    ishaveFilter = true;
+                else if (h.getItems().get(i).isChecked()) ishaveFilter = true;
+                else ;
+            }
+        }
+        return ishaveFilter;
     }
 }

@@ -17,12 +17,8 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -31,9 +27,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -97,7 +91,6 @@ interface RequestManager {
 
     /**
      * 获取用户信息
-     *
      * @param
      * @return
      */
@@ -590,6 +583,9 @@ interface RequestManager {
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
     Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, String> parmsMap);
+
+    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_ALL_IND)
+    Observable<ResponseBody> videoSchoolAllInf(@QueryMap Map<String, String> parmsMap);
 
     //编辑商城收货地址
     @POST(NetConfig.MALL.MALL_SAVE_ADDRESS)
