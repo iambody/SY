@@ -30,7 +30,7 @@ public class CProductFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<TabBean> tabBeens = new ArrayList<>();
         TabBean tabBeen1 = new TabBean("产品",new ProductFragment());
-//        TabBean tabBeen2 = new TabBean("资讯",new ());
+//        TabBean tabBeen2 = new TabBean("资讯",new DiscoverFragmentc());
         TabBean tabBeen3 = new TabBean("视频",new ProductFragment());
         tabBeens.add(tabBeen1);
         tabBeens.add(tabBeen3);

@@ -33,12 +33,10 @@ public class MainTabManager {
 //    private CollegeFragment collegeFragment;//学院
 
 //    private DiscoverFragmentc discoveryFragment;//发现
-    private VideoSchoolFragment discoveryFragment;//
-    private DiscoverFragmentc discoveryFragment;//发现
+    private VideoSchoolFragment discoveryFragment;//发现
     //    private ProductFragment productFragment;//产品
     private CProductFragment productFragment;//产品
 //    private ProductFragment productFragment;//产品
-private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 
