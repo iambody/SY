@@ -37,12 +37,9 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -59,7 +56,6 @@ import com.tencent.TIMUserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -88,7 +84,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 @Route(RouteConfig.GOTOCMAINHONE)
-public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView, ProfileView {
+public class MainPageActivity extends BaseActivity<MainPagePresenter> implements MainPageContract.View, LoginView, ProfileView {
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -151,11 +147,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
-
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -250,7 +244,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void data() {
         bottomNavigationBar.setOnClickListener(this);
-        bottomNavigationBar.setActivity(this);
+//        bottomNavigationBar.setActivity(this);
 
         if (!SPreference.isThisRunOpenDownload(this))
             new DownloadDialog(this, true, false);
@@ -297,45 +291,45 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     //    @Override
-    public void onCloudMenuClick(int position) {
-        switch (position) {
-            case 0://呼叫投资顾问
-                NavigationUtils.startDialgTelephone(this, AppManager.getUserInfo(this).getAdviserPhone());
-                bottomNavigationBar.closeCloudeMenu();
-                DataStatistApiParam.onStatisToCMenuCallCustom();
-                break;
-            case 1://对话
-                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(this).getToC().getBandingAdviserId(), AppManager.getUserInfo(this).getAdviserRealName());
-                bottomNavigationBar.closeCloudeMenu();
-                DataStatistApiParam.onStatisToCMenuCallDuihua();
-                break;
-            case 2://直播
-                if (!hasLive) {
-                    Intent i = new Intent(this, BaseWebViewActivity.class);
-                    i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
-                    i.putExtra(WebViewConstant.push_message_title, "我的投顾");
-                    startActivityForResult(i, 300);
-
-                } else {
-                    Intent intent = new Intent(this, LiveActivity.class);
-                    intent.putExtra("liveJson", liveJsonData.toString());
-                    startActivity(intent);
-                }
-                DataStatistApiParam.onStatisToCMenuZhibo();
-                bottomNavigationBar.closeCloudeMenu();
-                break;
-            case 3://短信
-                NavigationUtils.startDialogSendMessage(this, AppManager.getUserInfo(this).getAdviserPhone());
-                bottomNavigationBar.closeCloudeMenu();
-                DataStatistApiParam.onStatisToCMenuMessage();
-                break;
-            case 4://客服
-                RongIM.getInstance().startPrivateChat(this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
-                bottomNavigationBar.closeCloudeMenu();
-                DataStatistApiParam.onStatisToCMenuKefu();
-                break;
-        }
-    }
+//    public void onCloudMenuClick(int position) {
+//        switch (position) {
+//            case 0://呼叫投资顾问
+//                NavigationUtils.startDialgTelephone(this, AppManager.getUserInfo(this).getAdviserPhone());
+//                bottomNavigationBar.closeCloudeMenu();
+//                DataStatistApiParam.onStatisToCMenuCallCustom();
+//                break;
+//            case 1://对话
+//                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(this).getToC().getBandingAdviserId(), AppManager.getUserInfo(this).getAdviserRealName());
+//                bottomNavigationBar.closeCloudeMenu();
+//                DataStatistApiParam.onStatisToCMenuCallDuihua();
+//                break;
+//            case 2://直播
+//                if (!hasLive) {
+//                    Intent i = new Intent(this, BaseWebViewActivity.class);
+//                    i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
+//                    i.putExtra(WebViewConstant.push_message_title, "我的投顾");
+//                    startActivityForResult(i, 300);
+//
+//                } else {
+//                    Intent intent = new Intent(this, LiveActivity.class);
+//                    intent.putExtra("liveJson", liveJsonData.toString());
+//                    startActivity(intent);
+//                }
+//                DataStatistApiParam.onStatisToCMenuZhibo();
+//                bottomNavigationBar.closeCloudeMenu();
+//                break;
+//            case 3://短信
+//                NavigationUtils.startDialogSendMessage(this, AppManager.getUserInfo(this).getAdviserPhone());
+//                bottomNavigationBar.closeCloudeMenu();
+//                DataStatistApiParam.onStatisToCMenuMessage();
+//                break;
+//            case 4://客服
+//                RongIM.getInstance().startPrivateChat(this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
+//                bottomNavigationBar.closeCloudeMenu();
+//                DataStatistApiParam.onStatisToCMenuKefu();
+//                break;
+//        }
+//    }
 
     @Override
     protected void onRestart() {
