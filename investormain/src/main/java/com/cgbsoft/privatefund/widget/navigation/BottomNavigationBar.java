@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -71,6 +70,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
+    private static final int doubleClickTime = 300;
     private List<TextView> bottomls;
     //消息文本
     @BindView(R.id.tv_bottom_nav_msgnum)
@@ -205,32 +205,40 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                     if (nowPosition != 0) {
                                         nowPosition = 0;
                                         changeResWithIdtentify();
-                                        if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(0);
+//                                        if (bottomClickListener != null)
+//                                            bottomClickListener.onTabSelected(0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     if (nowPosition != 1) {
                                         nowPosition = 1;
                                         changeResWithIdtentify();
-                                        if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(1);
+//                                        if (bottomClickListener != null)
+//                                            bottomClickListener.onTabSelected(1);
                                     }
                                     break;
-                                case R.id.fl_bottom_nav_right_first:
+                                case R.id.fl_bottom_nav_center:
                                     if (nowPosition != 2) {
                                         nowPosition = 2;
                                         changeResWithIdtentify();
-                                        if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(2);
+//                                        if (bottomClickListener != null)
+//                                            bottomClickListener.onTabSelected(2);
                                     }
                                     break;
-                                case R.id.fl_bottom_nav_right_second:
+                                case R.id.fl_bottom_nav_right_first:
                                     if (nowPosition != 3) {
                                         nowPosition = 3;
                                         changeResWithIdtentify();
-                                        if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(3);
+//                                        if (bottomClickListener != null)
+//                                            bottomClickListener.onTabSelected(2);
+                                    }
+                                    break;
+                                case R.id.fl_bottom_nav_right_second:
+                                    if (nowPosition != 4) {
+                                        nowPosition = 4;
+                                        changeResWithIdtentify();
+//                                        if (bottomClickListener != null)
+//                                            bottomClickListener.onTabSelected(3);
                                     }
                                     break;
                             }

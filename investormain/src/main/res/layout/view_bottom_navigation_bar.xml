@@ -89,11 +89,6 @@
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <FrameLayout
             android:id="@+id/fl_bottom_nav_center"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -122,11 +117,6 @@
                     android:textSize="@dimen/dimens_sp_11" />
             </LinearLayout>
         </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
 
         <FrameLayout
             android:id="@+id/fl_bottom_nav_right_first"

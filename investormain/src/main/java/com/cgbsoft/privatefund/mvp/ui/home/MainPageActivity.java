@@ -243,8 +243,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void data() {
-        bottomNavigationBar.setOnClickListener(this);
-//        bottomNavigationBar.setActivity(this);
+//        bottomNavigationBar.setOnClickListener();
+        bottomNavigationBar.setActivity();
 
         if (!SPreference.isThisRunOpenDownload(this))
             new DownloadDialog(this, true, false);
@@ -718,7 +718,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         this.hasLive = hasLive;
         RxBus.get().post(RxConstant.ZHIBO_STATUES, hasLive);
         if (bottomNavigationBar != null) {
-            bottomNavigationBar.setLive(hasLive);
+//            bottomNavigationBar.setLive(hasLive);
         }
         if (hasLive) {
             liveJsonData = jsonObject;
