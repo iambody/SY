@@ -30,10 +30,10 @@ public class MainTabManager {
 //    private SettingFragment settingFragment;//设置
 //    private CollegeFragment collegeFragment;//学院
 
-//    private DiscoverFragmentc discoveryFragment;//发现
+    //    private DiscoverFragmentc discoveryFragment;//发现
     private VideoSchoolFragment discoveryFragment;//
-//    private ProductFragment productFragment;//产品
-private ProductFragment productFragment;//产品
+    //    private ProductFragment productFragment;//产品
+    private ProductFragment productFragment;//产品
 
     private Bundle mBundle;
 
@@ -61,7 +61,7 @@ private ProductFragment productFragment;//产品
                 if (isInvestor()) {
                     if (mineFragment == null) {
 //                        mineFragment = new MineFragment();
-                        mineFragment = new  MainHomeFragment();
+                        mineFragment = new MainHomeFragment();
                     }
                     fragment = mineFragment;
                 } else {

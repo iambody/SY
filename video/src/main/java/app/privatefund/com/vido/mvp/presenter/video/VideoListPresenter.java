@@ -21,8 +21,8 @@ public class VideoListPresenter extends BasePresenterImpl<VideoListContract.View
     }
 
     @Override
-    public void getVideoList() {
-        addSubscription(ApiClient.videoSchoolAllInf().subscribe(new RxSubscriber<String>() {
+    public void getVideoList(String CatoryValue, int CurrentPostion) {
+        addSubscription(ApiClient.videoSchoolLs(CatoryValue,CurrentPostion).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 if (!BStrUtils.isEmpty(s)) {

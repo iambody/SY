@@ -33,7 +33,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     private ArrayList<View> indicationList;
     private Context context;
     private int selectedBanner;
-    private final static int BANNER_CHANGE = 0;
+    public final static int BANNER_CHANGE = 0;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {

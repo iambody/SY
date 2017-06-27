@@ -10,7 +10,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  */
 public interface VideoListContract {
     interface Presenter extends BasePresenter {
-        void getVideoList();
+        void getVideoList(String CatoryValue, int CurrentPostion);
     }
 
     interface View extends BaseView {

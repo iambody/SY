@@ -22,12 +22,12 @@ public class VideoSchoolAllInfPresenter extends BasePresenterImpl<VideoSchoolAll
     }
 
     @Override
-    public void getVideoSchoolAllInf(String category, int offset) {
-        addSubscription(ApiClient.videoSchoolLs(category, offset).subscribe(new RxSubscriber<String>() {
+    public void getVideoSchoolAllInf() {
+        addSubscription(ApiClient.videoSchoolAllInf().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 if (!BStrUtils.isEmpty(s)) {
-                    getView().getSchoolAllDataSucc(s);
+                    getView().getSchoolAllDataSucc(getV2String(s));
                 } else {
                     getView().getSchoolAllDataSucc(getContext().getResources().getString(com.cgbsoft.lib.R.string.netdata_empty));
                 }

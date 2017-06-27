@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.google.gson.Gson;
 
@@ -32,9 +35,11 @@ import java.util.List;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.bean.VideoAllModel;
-import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
-import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
+import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
+import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -42,10 +47,11 @@ import butterknife.BindView;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期  2017/6/23-14:50
  */
-public class VideoSchoolFragment extends BaseFragment<VideoListPresenter> implements VideoListContract.View {
+public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter> implements VideoSchoolAllInfContract.View {
     @BindView(R2.id.video_videolist_indicator)
     MagicIndicator videoVideolistIndicator;
-
+    @BindView(R2.id.video_videolist_bannerview)
+    BannerView videoVideolistBannerview;
 
     //导航器
     CommonNavigator commonNavigator;
@@ -59,6 +65,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoListPresenter> implem
     //所有需要的fragment的集合
 
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
+
+
 
     @Override
     protected int layoutID() {
@@ -80,10 +88,21 @@ public class VideoSchoolFragment extends BaseFragment<VideoListPresenter> implem
         //fragment的适配器填充
         videoVideolistPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
-        getPresenter().getVideoList();
+        getPresenter().getVideoSchoolAllInf();
+    }
+
+    @Override
+    protected VideoSchoolAllInfPresenter createPresenter() {
+        return new VideoSchoolAllInfPresenter(baseActivity, this);
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
+//        List<BannerBean> bannerBeen=new ArrayList<>();
+//        BannerBean bannerBean1=new BannerBean();
+//        bannerBean1.setImageUrl("https://upload.simuyun.com/videos/a5d16a47-17c9-4673-a658-bf2d9525d3d4.jpg");
+//        bannerBean1.setPositon(0);
+//        bannerBeen.add(bannerBean1);
+//        videoVideolistBannerview.initShowImageForNet(baseActivity,bannerBeen);
         //Navagation的数据填充
         List<BaseLazyFragment> lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
@@ -95,22 +114,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoListPresenter> implem
         fragmentAdapter.freshAp(lazyFragments);
     }
 
-    @Override
-    protected VideoListPresenter createPresenter() {
-        return new VideoListPresenter(baseActivity, this);
-    }
-
 
     @Override
-    public void getVideoDataSucc(String data) {
+    public void getSchoolAllDataSucc(String data) {
         VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
         freashAp(videoAllModel);
     }
 
     @Override
-    public void getVideoDataError(String message) {
+    public void getSchoolAllDataError(String message) {
 
     }
+
 
 
     /**

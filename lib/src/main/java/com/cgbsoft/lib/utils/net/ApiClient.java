@@ -1311,7 +1311,7 @@ public class ApiClient {
         JSONObject js = new JSONObject();
         try {
             js.put("category", category);
-            js.put("offset", offset);
+            js.put("offset", offset*Constant.LOAD_VIDEOLS_lIMIT);
             js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
         } catch (JSONException e) {
             e.printStackTrace();
