@@ -20,6 +20,7 @@ import rx.functions.Func1;
  * Rx处理服务器返回
  */
 class RxResultHelper {
+
     static Observable.Transformer<ResponseBody, String> filterResultToString() {
         return tObservabe -> tObservabe.flatMap(new Func1<ResponseBody, Observable<String>>() {
             @Override
