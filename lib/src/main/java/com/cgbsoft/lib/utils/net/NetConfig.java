@@ -8,7 +8,7 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-    //    private static final String START_APP = "https://app";
+//    private static final String START_APP = "https://app";
     private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
@@ -89,7 +89,7 @@ public class NetConfig {
         //获取平台客服聊天
         static final String PLATFORM_CUSTOMER = AUTH_URL_V2 + "/rc/greetingmessage";
         //获取机构经理的聊天
-        static final String ORIGNATION_MANAGER = AUTH_URL_V2 + "/rc/managerinfo";
+        static final String ORIGNATION_MANAGER = AUTH_URL_V2 +  "/rc/managerinfo";
     }
 
     static class MALL {
@@ -122,7 +122,7 @@ public class NetConfig {
         //私享云新增的获取视频列表的V2接口
         static final String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
-        static final String GET_VIDEO_ALLINF = API_URL + information + "/videos/all";
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
 
     }
 
@@ -172,24 +172,24 @@ public class NetConfig {
         static final String USER_FEED_BACK_URL = AUTH_URL + user + "/problemFeedback";
     }
 
-    //搜索相关
-    static class SOUSOU {
-        private static final String sousou = "/search";
-        //产品全局搜索
-        static final String Get_PRODUCTLS_SOU = API_URL + sousou + "/query";
-        //热门搜索
-        static final String Get_HOT_SOU = API_URL + sousou + "/hot";
-    }
+  //搜索相关
+    static class SOUSOU{
+      private static final String sousou = "/search";
+      //产品全局搜索
+      static  final String Get_PRODUCTLS_SOU=API_URL +sousou+"/query";
+      //热门搜索
+      static  final String Get_HOT_SOU=API_URL +sousou+"/hot";
+  }
 
     //产品先关的url
     static class PRODUCT {
         private static final String product = "/products";
         //获取产品的标签
-        static final String Get_PRODUCT_TAG = API_URL + product + "/filter";
+        static  final String Get_PRODUCT_TAG=API_URL+product+"/filter";
         //获取产品列表
-        static final String Get_PRODUCTLS_TAG = API_URL + product + "/filter/get";
+        static  final String Get_PRODUCTLS_TAG=API_URL+product+"/filter/get";
         //获取产品详情
-        static final String Get_PRODUCTDETAIL_URL = API_URL + product + "/single";
+        static  final String Get_PRODUCTDETAIL_URL=API_URL+product+"/single";
     }
 
     //直播相关
@@ -244,26 +244,23 @@ public class NetConfig {
         static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
         //视频的更多评论
         static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
-
-        //********************私享云的fragment里面的视频初始化信息***********
-        static final String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
-        //获取视频列表
-        static final String VIDEO_SCHOOL_LS = API_URL + video + "s";
-
-
     }
-
 
     //用户授权相关 V2********
     static class AUTHOR {
         private static final String auth = "/auth";
         //登录前获取publickey公钥
-        static final String GET_PUBLIC_KEY = auth + "/v2/publicKey";
+        static final String GET_PUBLIC_KEY = auth  + "/v2/publicKey";
         //V2登录
-        static final String LOGIN_V2_URL = auth + "/v2/appAuthenticate";
+        static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
     }
 
+    /******************6.0私享云增量api*****************/
 
-    /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
+    static class SXY{
+        private static final String sxy="/sxy";
 
+        //首页
+        static final String GETHOME=API_URL+sxy+"/apphome";
+    }
 }

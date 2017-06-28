@@ -3,24 +3,42 @@ package com.cgbsoft.privatefund.utils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.ui.home.EverHealthFragment;
-import com.cgbsoft.privatefund.mvp.ui.home.HappyLifeFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.EnjoyLifeFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
-import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.PrivateBanksFragment;
 
+import app.mall.com.mvp.ui.MallFragment;
+import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
+
 /**
- * @author chenlong
+ * Created by win8 -1 on 2015/8/14.
  */
 public class MainTabManager {
     private static MainTabManager mInstance;
+    //投资人
+//    private MineFragment mineFragment;//个人页
 
-    private MainHomeFragment firstPageFragment;//首页
-    private PrivateBanksFragment priveteBankFragment; // 尊享私行
-    private HappyLifeFragment happyLifeFragment; // 快乐生活
-    private EverHealthFragment eveyHealthFragment; // 永享健康
-    private MineFragment mineFragment; // 我的
+    private MainHomeFragment mineFragment;//首页
+    private EnjoyLifeFragment cloudFragment;//云键
+    private MallFragment clubFragment;//俱乐部
+
+    //理财师
+//    private MessageFragment messageFragment;//消息
+//    private SettingFragment settingFragment;//设置
+//    private CollegeFragment collegeFragment;//学院
+
+    //    private DiscoverFragmentc discoveryFragment;//发现
+//    private VideoSchoolFragment discoveryFragment;//发现
+    //    private ProductFragment productFragment;//产品
+//    private CProductFragment productFragment;//产品
+//    private ProductFragment productFragment;//产品
+    //    private DiscoverFragmentc discoveryFragment;//发现
+    private VideoSchoolFragment discoveryFragment;//
+    //    private ProductFragment productFragment;//产品
+    private PrivateBanksFragment productFragment;//产品
 
     private Bundle mBundle;
 
@@ -45,34 +63,51 @@ public class MainTabManager {
         Fragment fragment = null;
         switch (index) {
             case R.id.nav_left_first:
-                if (firstPageFragment == null) {
-                    firstPageFragment = new MainHomeFragment();
+                if (isInvestor()) {
+                    if (mineFragment == null) {
+//                        mineFragment = new MineFragment();
+                        mineFragment = new MainHomeFragment();
+                    }
+                    fragment = mineFragment;
+                } else {
+//                    if (messageFragment == null) {
+//                        messageFragment = new MessageFragment();
+//                    }
+//                    fragment = messageFragment;
                 }
-                fragment = firstPageFragment;
                 break;
             case R.id.nav_left_second:
-                if (priveteBankFragment == null) {
-                    priveteBankFragment = new PrivateBanksFragment();
+                if (productFragment == null) {
+                    productFragment = new PrivateBanksFragment();
                 }
-                fragment = priveteBankFragment;
+                fragment = productFragment;
                 break;
             case R.id.nav_center:
-                if (happyLifeFragment == null) {
-                    happyLifeFragment = new HappyLifeFragment();
+
+                if (cloudFragment == null) {
+                    cloudFragment = new EnjoyLifeFragment();
                 }
-                fragment = happyLifeFragment;
+                fragment = cloudFragment;
+
                 break;
             case R.id.nav_right_first:
-                if (eveyHealthFragment == null) {
-                    eveyHealthFragment = new EverHealthFragment();
+                if (discoveryFragment == null) {
+                    discoveryFragment = new VideoSchoolFragment();
                 }
-                fragment = eveyHealthFragment;
+                fragment = discoveryFragment;
                 break;
             case R.id.nav_right_second:
-                if (mineFragment == null) {
-                    mineFragment = new MineFragment();
+                if (isInvestor()) {
+                    if (clubFragment == null) {
+                        clubFragment = new MallFragment();
+                    }
+                    fragment = clubFragment;
+                } else {
+//                    if (collegeFragment == null) {
+//                        collegeFragment = new CollegeFragment();
+//                    }
+//                    fragment = collegeFragment;
                 }
-                fragment = mineFragment;
                 break;
         }
         if (fragment != null) {
@@ -83,12 +118,29 @@ public class MainTabManager {
         return fragment;
     }
 
-    public void destory() {
-        firstPageFragment = null;
-        priveteBankFragment = null;
-        happyLifeFragment = null;
-        eveyHealthFragment = null;
-        mineFragment = null;
+    /**
+     * 是否为投资者
+     */
+    private boolean isInvestor() {
+        return AppManager.isInvestor(BaseApplication.getContext());
     }
+
+    public void destory() {
+        mineFragment = null;
+        cloudFragment = null;
+        clubFragment = null;
+
+//        messageFragment = null;
+//        settingFragment = null;
+//        collegeFragment = null;
+
+        discoveryFragment = null;
+        productFragment = null;
+    }
+
+    public PrivateBanksFragment getProductFragment() {
+        return productFragment;
+    }
+
 
 }

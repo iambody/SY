@@ -26,13 +26,10 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-/**
- * 底部导航栏
- * Created by xiaoyu.zhang on 2016/11/15 17:41
- * Email:zhangxyfs@126.com
- *  
- */
 public class BottomNavigationBar extends FrameLayout implements RxConstant {
+    @BindView(R.id.iv_bottom_nav_center)
+    ImageView ivBottomNavCenter;
+
     private BottomClickListener bottomClickListener;
 
     //左面第一个按钮
@@ -54,8 +51,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     ImageView iv_bottom_nav_left_first;
     @BindView(R.id.iv_bottom_nav_left_second)
     ImageView iv_bottom_nav_left_second;
-    @BindView(R.id.iv_bottom_nav_center)
-    ImageView iv_bottom_nav_center;
     @BindView(R.id.iv_bottom_nav_right_first)
     ImageView iv_bottom_nav_right_first;
     @BindView(R.id.iv_bottom_nav_right_second)
@@ -117,6 +112,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         bottomls = new ArrayList<>();
         bottomls.add(tv_bottom_nav_left_first);
         bottomls.add(tv_bottom_nav_left_second);
+        bottomls.add(tv_bottom_nav_center);
         bottomls.add(tv_bottom_nav_right_first);
         bottomls.add(tv_bottom_nav_right_second);
     }
@@ -157,7 +153,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 //            tv_bottom_nav_msgnum.setVisibility(GONE);
         requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
         requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
-        requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(iv_bottom_nav_center);
+        requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(ivBottomNavCenter);
         requestManager.load(rightFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightFirstRes).into(iv_bottom_nav_right_first);
         requestManager.load(rightSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(rightSecRes).into(iv_bottom_nav_right_second);
 
@@ -169,7 +165,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     }
 
     public void selectNavaigationPostion(int index) {
-        nowPosition=index;
+        nowPosition = index;
         changeResWithIdtentify();
     }
 
@@ -196,8 +192,9 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                 case R.id.fl_bottom_nav_right_second:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_SEC, true);
                                     break;
-//                                case R.id.iv_bottom_navigation_cloud:
-//                                    break;
+                                case R.id.fl_bottom_nav_center:
+
+                                    break;
                             }
                         } else {
                             switch (view.getId()) {
@@ -230,7 +227,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 3;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(2);
+                                            bottomClickListener.onTabSelected(3);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
@@ -238,7 +235,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 4;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(3);
+                                            bottomClickListener.onTabSelected(4);
                                     }
                                     break;
                             }

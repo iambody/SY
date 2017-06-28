@@ -24,7 +24,6 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -37,12 +36,9 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -365,18 +361,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
-            case 2://左3
-                switchID = R.id.nav_center;
-                currentPostion = 2;
-                break;
-            case 3://左4
+            case 3://左3
                 switchID = R.id.nav_right_first;
                 currentPostion = 3;
                 break;
-            case 4://中间
-                // getPresenter().toSignIn();
+            case 4://左4
                 switchID = R.id.nav_right_second;
                 currentPostion = 4;
+                break;
+            case 2://中间
+                // getPresenter().toSignIn();
+                switchID = R.id.nav_center;
+                currentPostion = 2;
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
