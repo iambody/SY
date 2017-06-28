@@ -32,13 +32,15 @@ import butterknife.BindView;
 public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @BindView(R2.id.title_layout)
-    protected  FrameLayout title_layout;
+    protected FrameLayout title_layout;
 
     @BindView(R2.id.tab_layout)
     TabLayout tabLayout;
 
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
+
+    protected View titleView;
 
     protected abstract int titleLayoutId();
 
@@ -57,7 +59,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             tab.setText(tabBean.getTabName());
             tabLayout.addTab(tab);
         }
-        LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout,false);
+        LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout, true);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
