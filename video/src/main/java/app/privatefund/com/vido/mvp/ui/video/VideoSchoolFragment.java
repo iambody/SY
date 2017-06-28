@@ -42,7 +42,6 @@ import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
 
-
 /**
  * desc   私享云财富里面的视频模块
  * author wangyongkui  wangyongkui@simuyun.com

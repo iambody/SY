@@ -29,7 +29,7 @@ public class EverHealthFragment extends BasePageFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-        ((TextView)view.findViewById(R.id.title_mid)).setText(R.string.vbnb_ever_ok_str);
+        ((TextView)title_layout.findViewById(R.id.title_mid)).setText(R.string.vbnb_ever_ok_str);
     }
 
     @Override

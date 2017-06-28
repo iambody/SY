@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
@@ -13,9 +14,9 @@ import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
- * @author chenlong
- *         <p>
- *         乐享生活
+ *@author chenlong
+ *
+ * 乐享生活
  */
 public class HappyLifeFragment extends BasePageFragment {
 
@@ -23,6 +24,7 @@ public class HappyLifeFragment extends BasePageFragment {
     protected int titleLayoutId() {
         return R.layout.title_normal_new;
     }
+
 
 
     @Override

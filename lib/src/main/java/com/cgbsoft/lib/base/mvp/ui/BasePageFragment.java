@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -33,7 +32,7 @@ import butterknife.BindView;
 public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @BindView(R2.id.title_layout)
-    FrameLayout title_layout;
+    protected  FrameLayout title_layout;
 
     @BindView(R2.id.tab_layout)
     TabLayout tabLayout;

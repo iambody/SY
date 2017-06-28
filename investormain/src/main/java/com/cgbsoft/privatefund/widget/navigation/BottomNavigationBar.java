@@ -32,18 +32,14 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
     private BottomClickListener bottomClickListener;
 
-    //左面第一个按钮
     @BindView(R.id.fl_bottom_nav_left_first)
     FrameLayout fl_bottom_nav_left_first;
-    //左面第二个按钮
     @BindView(R.id.fl_bottom_nav_left_second)
     FrameLayout fl_bottom_nav_left_second;
     @BindView(R.id.fl_bottom_nav_center)
     FrameLayout fl_bottom_nav_center;
-    //右面第一个按钮
     @BindView(R.id.fl_bottom_nav_right_first)
     FrameLayout fl_bottom_nav_right_first;
-    //右面第二个按钮
     @BindView(R.id.fl_bottom_nav_right_second)
     FrameLayout fl_bottom_nav_right_second;
 
@@ -128,7 +124,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     public void setOnClickListener(BottomClickListener bottomClickListener) {
         this.bottomClickListener = bottomClickListener;
     }
-
 
     public interface BottomClickListener {
         void onTabSelected(int position);
