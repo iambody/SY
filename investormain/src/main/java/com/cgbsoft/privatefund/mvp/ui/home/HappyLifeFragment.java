@@ -35,9 +35,9 @@ public class HappyLifeFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<TabBean> tabBeens = new ArrayList<>();
         TabBean tabBeen1 = new TabBean("生活家", new ProductFragment());
-        TabBean tabBeen2 = new TabBean("尚品", new VideoSchoolFragment());
+//        TabBean tabBeen2 = new TabBean("尚品", new VideoSchoolFragment());
         tabBeens.add(tabBeen1);
-        tabBeens.add(tabBeen2);
+//        tabBeens.add(tabBeen2);
         return tabBeens;
     }
 

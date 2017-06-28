@@ -26,10 +26,10 @@ public class PrivateBanksFragment extends BasePageFragment {
         ArrayList<TabBean> tabBeens = new ArrayList<>();
         TabBean tabBeen1 = new TabBean("产品", new ProductFragment());
         TabBean tabBeen2 = new TabBean("资讯",new DiscoveryFragment());
-        TabBean tabBeen3 = new TabBean("视频", new VideoSchoolFragment());
+//        TabBean tabBeen3 = new TabBean("视频", new VideoSchoolFragment());
         tabBeens.add(tabBeen1);
         tabBeens.add(tabBeen2);
-        tabBeens.add(tabBeen3);
+//        tabBeens.add(tabBeen3);
         return tabBeens;
     }
 }

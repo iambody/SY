@@ -78,6 +78,7 @@ dependencies {
     //第三方okhttp封装库 https://github.com/jeasonlzy/okhttp-OkGo
     compile "com.lzy.net:okgo:${okGo_need_version}"
     compile "com.lzy.net:okserver:${okGoServer_need_version}"
+    compile 'com.androidkun:XTabLayout:1.1.1'
     //上传下载
     //和okhttp一起使用，可以减少代码量
     compile "com.squareup.retrofit2:retrofit:${retrofit_need_version}"

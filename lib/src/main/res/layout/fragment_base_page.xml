@@ -12,16 +12,18 @@
         android:background="@color/transparent"
         android:layout_height="60dp" />
 
-    <android.support.design.widget.TabLayout
+    <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/tab_layout"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@android:color/holo_orange_light"
-        app:tabTextColor="#ff000000"
-        app:tabIndicatorHeight="4dp"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/holo_orange_light"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        app:xTabMode="fixed"
+        app:xTabIndicatorColor="@color/app_golden_click"
+        app:xTabIndicatorHeight="4dp"
+        app:xTabIndicatorWidth="25dp"
+        app:xTabSelectedTextColor="@color/app_golden_click"
+        app:xTabTextColor="#ff000000"
+        app:xTabTextSize="15sp"
+        app:xTabSelectedTextSize="15sp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
