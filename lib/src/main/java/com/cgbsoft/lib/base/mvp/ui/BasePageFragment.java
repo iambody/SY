@@ -1,14 +1,10 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,18 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -60,20 +52,12 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(tabLayout,70,70);
-            }
-        });
-
+        tabLayout.post(() -> setIndicator(tabLayout,70,70));
         for (TabBean tabBean : list()) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setText(tabBean.getTabName());
             tabLayout.addTab(tab);
         }
-
         LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout,false);
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
@@ -94,10 +78,9 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        for (int i=0;i<tabLayout.getTabCount();i++) {
-            tabLayout.getTabAt(i).setText(list().get(i).getTabName());
-        }
-
+//        for (int i=0;i<tabLayout.getTabCount();i++) {
+//            tabLayout.getTabAt(i).setText(list().get(i).getTabName());
+//        }
 
     }
     @Override
