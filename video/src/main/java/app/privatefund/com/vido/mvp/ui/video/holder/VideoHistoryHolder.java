@@ -7,18 +7,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import app.privatefund.com.vido.R2;
+
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.BaseHolder;
 
+import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.mvp.ui.video.listener.VideoHistoryListener;
 import butterknife.BindView;
 
-/**
- * Created by xiaoyu.zhang on 2016/12/12 18:14
- * Email:zhangxyfs@126.com
- *  
- */
+
 public class VideoHistoryHolder extends BaseHolder {
     @BindView(R2.id.avh_head_line)
     View avh_head_line;

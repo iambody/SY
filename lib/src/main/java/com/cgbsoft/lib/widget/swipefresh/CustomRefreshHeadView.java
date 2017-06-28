@@ -4,14 +4,11 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.SwipeRefreshTrigger;
 import com.aspsine.swipetoloadlayout.SwipeTrigger;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.tools.Typefaces;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -26,13 +23,13 @@ public class CustomRefreshHeadView extends LinearLayout implements SwipeRefreshT
     private Context context;
 
     public CustomRefreshHeadView(Context context) {
-        super(context,null,0);
-        this.context=context;
+        super(context, null, 0);
+        this.context = context;
         init();
     }
 
     public CustomRefreshHeadView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs,0);
+        super(context, attrs, 0);
         init();
     }
 
@@ -46,7 +43,7 @@ public class CustomRefreshHeadView extends LinearLayout implements SwipeRefreshT
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View view = View.inflate(getContext(), R.layout.view_comment_list_head, null);
         addView(view, lp);
-        titanicTextView= (ShimmerTextView) view.findViewById(R.id.view_comment_head_txt);
+        titanicTextView = (ShimmerTextView) view.findViewById(R.id.view_comment_head_txt);
 //        titanicTextView.setTypeface(Typefaces.get(context, "Satisfy-Regular.ttf"));
         titanic.setDuration(500l);
 

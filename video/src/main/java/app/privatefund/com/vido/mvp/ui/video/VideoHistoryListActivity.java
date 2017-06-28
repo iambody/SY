@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
@@ -117,6 +118,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         refItemObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
+                LogUtils.Log("jav","number="+integer);
                 getHandler().postDelayed(() -> onControlGetDataList(true), 100);
             }
 

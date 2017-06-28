@@ -17,12 +17,8 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -31,9 +27,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -102,7 +96,7 @@ interface RequestManager {
      * @return
      */
     @GET(NetConfig.USER.GET_USERINFO_URL)
-    Observable<BaseResult<UserInfoDataEntity.UserInfo>> getUserInfo(@QueryMap Map<String,String> map);
+    Observable<BaseResult<UserInfoDataEntity.UserInfo>> getUserInfo(@QueryMap Map<String, String> map);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.GET_USERINFO_URL)
@@ -175,6 +169,7 @@ interface RequestManager {
 
     @POST(NetConfig.USER.REGISTER_URL)
     Observable<ResponseBody> toV2Register(@Body RequestBody paramsMap);
+
     /**
      * 发送验证码
      *
@@ -207,10 +202,9 @@ interface RequestManager {
     Observable<ResponseBody> checkTestCode(@FieldMap Map<String, String> paramsMap);
 
 
-
-
     @POST(NetConfig.USER.CHECKCODE_URL)
     Observable<ResponseBody> checkV2Code(@Body RequestBody paramsMap);
+
     /**
      * 重置密码
      *
@@ -269,8 +263,7 @@ interface RequestManager {
     Observable<BaseResult<String>> wxMergeConfirm();
 
 
-
-//    @FormUrlEncoded
+    //    @FormUrlEncoded
     @POST(NetConfig.USER.WXMARGECONFIRM_URL)
     Observable<ResponseBody> wxTestMergeConfirm();
 
@@ -415,7 +408,7 @@ interface RequestManager {
     /**
      * 获取融云用户信息
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.Auth.RONGYUN_USERINFO)
@@ -427,7 +420,7 @@ interface RequestManager {
     /**
      * 获取群组信息
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.API.GROUP_INFO)
@@ -439,7 +432,7 @@ interface RequestManager {
     /**
      * 获取群成员信息
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.API.GROUP_MEMBERS)
@@ -451,7 +444,7 @@ interface RequestManager {
     /**
      * 获取用户手机号码
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.API.GROUP_MEMBER_PHONE)
@@ -462,7 +455,8 @@ interface RequestManager {
 
     /**
      * 获取群组成员新的接口，返回数据结构不一样
-     *  @param map
+     *
+     * @param map
      * @return
      */
     @GET(NetConfig.API.GROUP_MEMBER_BY_DATE)
@@ -474,7 +468,7 @@ interface RequestManager {
     /**
      * 获取用户所属群组列表
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.API.CHATE_GROUP_LIST)
@@ -486,7 +480,7 @@ interface RequestManager {
     /**
      * 获取热门产品
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.API.HOT_SEARCH_PRODUCT)
@@ -498,7 +492,7 @@ interface RequestManager {
     /**
      * 获取平台客户
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.Auth.PLATFORM_CUSTOMER)
@@ -510,7 +504,7 @@ interface RequestManager {
     /**
      * 获取机构经理
      *
-     *  @param map
+     * @param map
      * @return
      */
     @GET(NetConfig.Auth.ORIGNATION_MANAGER)
@@ -520,6 +514,7 @@ interface RequestManager {
     Observable<ResponseBody> getTestGetOrgMnager(@QueryMap Map<String, String> map);
 
     //获取产品筛选条件
+
     /**
      * 获取产品筛选条件
      *
@@ -560,7 +555,8 @@ interface RequestManager {
      * 产品详情
      */
     @GET(NetConfig.PRODUCT.Get_PRODUCTDETAIL_URL)
-    Observable<ResponseBody>getProductDetail(@QueryMap Map<String,String>paramMap);
+    Observable<ResponseBody> getProductDetail(@QueryMap Map<String, String> paramMap);
+
     /**
      * C端视频播放页获取视频播放
      *
@@ -585,11 +581,25 @@ interface RequestManager {
 
     @POST(NetConfig.VIDEO.VIDEO_COMMENT_ADD)
     Observable<ResponseBody> videoV2CommentAdd(@Body RequestBody parms);
+
     /**
      * 视频评论列表
      */
     @GET(NetConfig.VIDEO.VIDEO_COMMENT_LS)
     Observable<ResponseBody> videoCommentLs(@QueryMap Map<String, String> parmsMap);
+
+    /**
+     * 新增私享云视频学院的全部数据
+     */
+    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_ALL_IND)
+    Observable<ResponseBody> videoSchoolAllInf(@QueryMap Map<String, String> parmsMap);
+
+    /**
+     * 新增私享云视频学院的列表
+     */
+    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_LS)
+    Observable<ResponseBody> videoSchoolLs(@QueryMap Map<String, String> parmsMap);
+
 
     //编辑商城收货地址
     @POST(NetConfig.MALL.MALL_SAVE_ADDRESS)
