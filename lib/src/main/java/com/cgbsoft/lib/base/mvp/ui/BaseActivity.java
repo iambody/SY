@@ -50,7 +50,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用
     private boolean mIsNeedAdapterPhone = true;
-    private boolean mIsNeedGoneNavigationBar ;
+    private boolean mIsNeedGoneNavigationBar;
     private long mExitPressedTime = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +110,11 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         if (mIsNeedGoneNavigationBar) {
             toHideNav();
         }
+    }
+
+    protected void hindWindowTitle() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     protected void data() {
@@ -319,7 +324,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(getApplicationContext(), data,false);
+        DataStatisticsUtils.push(getApplicationContext(), data, false);
     }
 
     protected void toDataStatistics(int grp, int act, String[] args) {
@@ -329,7 +334,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(getApplicationContext().getApplicationContext(), data,false);
+        DataStatisticsUtils.push(getApplicationContext().getApplicationContext(), data, false);
     }
 
     /**
@@ -365,6 +370,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
         if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
     }
+
     protected String getV2String(String resultStr) {
 
         try {

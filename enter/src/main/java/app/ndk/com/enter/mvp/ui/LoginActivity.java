@@ -1,6 +1,7 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -113,8 +115,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
+    protected void before() {
+
+        super.before();
+        setIsNeedGoneNavigationBar(true);//不显示导航条
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    @Override
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
+
         if (AppManager.isAdViser(this)) {
             //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
             btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);

@@ -63,7 +63,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
-    private static final int doubleClickTime = 300;
+    private static final int doubleClickTime = 3;//300
     private List<TextView> bottomls;
     //消息文本
 //    @BindView(R.id.tv_bottom_nav_msgnum)

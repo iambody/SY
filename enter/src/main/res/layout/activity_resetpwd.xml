@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".mvp.ui.ResetPasswordActivity">
 
     <com.cgbsoft.lib.widget.ScrollingImageView
@@ -12,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         scrolling_image_view:speed="1dp"
-        scrolling_image_view:src="@drawable/bg_choice_ids" />
+        scrolling_image_view:src="@drawable/wave" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,16 +35,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="找回密码"
-                android:textSize="@dimen/dimens_sp_20"
-                android:textColor="@color/orange" />
+                android:textColor="@color/orange"
+                android:textSize="@dimen/dimens_sp_20" />
 
-              />
+            />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="@dimen/ui_150_dip">
 
@@ -54,7 +53,6 @@
                 style="@style/normal_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_et_username"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -78,12 +76,12 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <View style="@style/normal_line" />
+        <ImageView style="@style/enter_ed_line" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp">
 
             <EditText
@@ -93,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_et_check"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -118,7 +115,18 @@
                 android:textStyle="normal" />
         </RelativeLayout>
 
-        <View style="@style/normal_line" />
+        <ImageView style="@style/enter_ed_line" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_40_dip"
+            android:paddingBottom="@dimen/ui_5_dip"
+            android:paddingTop="@dimen/ui_5_dip"
+            android:textColor="@color/app_golden"
+            android:textSize="@dimen/dimens_sp_10"
+            android:text="@string/code_shixiao"/>
 
         <Button
             android:id="@+id/btn_af_next"
