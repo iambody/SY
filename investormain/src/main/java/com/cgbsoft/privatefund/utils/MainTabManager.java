@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.mvp.ui.home.CloudFragment;
+import com.cgbsoft.privatefund.mvp.ui.home.EnjoyLifeFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.PrivateBanksFragment;
 
@@ -22,7 +22,7 @@ public class MainTabManager {
 //    private MineFragment mineFragment;//个人页
 
     private MainHomeFragment mineFragment;//首页
-    private CloudFragment cloudFragment;//云键
+    private EnjoyLifeFragment cloudFragment;//云键
     private MallFragment clubFragment;//俱乐部
 
     //理财师
@@ -83,17 +83,12 @@ public class MainTabManager {
                 fragment = productFragment;
                 break;
             case R.id.nav_center:
-                if (isInvestor()) {
-                    if (cloudFragment == null) {
-                        cloudFragment = new CloudFragment();
-                    }
-                    fragment = cloudFragment;
-                } else {
-//                    if (settingFragment == null) {
-//                        settingFragment = new SettingFragment();
-//                    }
-//                    fragment = settingFragment;
+
+                if (cloudFragment == null) {
+                    cloudFragment = new EnjoyLifeFragment();
                 }
+                fragment = cloudFragment;
+
                 break;
             case R.id.nav_right_first:
                 if (discoveryFragment == null) {

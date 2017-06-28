@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
@@ -1320,6 +1321,14 @@ public class ApiClient {
         if (!TextUtils.isEmpty(js.toString()))
             params.put("param", js.toString());
         return OKHTTP.getInstance().getRequestManager().videoSchoolLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+    /**
+     * 获取首页api数据
+     */
+    public static Observable<HomeEntity.Result>getSxyHomeData(){
+
+        return OKHTTP.getInstance().getRequestManager().getSxyHome(new HashMap<>() ).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     }
 

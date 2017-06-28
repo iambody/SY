@@ -7,6 +7,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
@@ -591,13 +592,13 @@ interface RequestManager {
     /**
      * 新增私享云视频学院的全部数据
      */
-    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_ALL_IND)
+    @GET(NetConfig.INFORMATION.GET_VIDEO_ALLINF)
     Observable<ResponseBody> videoSchoolAllInf(@QueryMap Map<String, String> parmsMap);
 
     /**
      * 新增私享云视频学院的列表
      */
-    @GET(NetConfig.VIDEO.VIDEO_SCHOOL_LS)
+    @GET(NetConfig.INFORMATION.GET_VIDEO_LIST)
     Observable<ResponseBody> videoSchoolLs(@QueryMap Map<String, String> parmsMap);
 
 
@@ -698,4 +699,8 @@ interface RequestManager {
     @GET(NetConfig.ACTION_POINT)
     Observable<ResponseBody> ActionPoint(@QueryMap Map<String, String> paramsMap);
 
+    /************************6.0私享云新增***********************/
+
+    @GET(NetConfig.SXY.GETHOME)
+    Observable<BaseResult<HomeEntity.Result>> getSxyHome(@QueryMap Map<String, String> paramsMap);
 }

@@ -117,6 +117,13 @@ public class NetConfig {
 //        static final String GET_VIDEO_INFO = API_URL_V2 + information + "/video/2c";
         //点赞
         static final String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+
+
+        //私享云新增的获取视频列表的V2接口
+        static final String GET_VIDEO_LIST = API_URL + information + "/videos";
+        //私享云新增的财富=》学院模块
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
+
     }
 
     //每日任务
@@ -246,5 +253,14 @@ public class NetConfig {
         static final String GET_PUBLIC_KEY = auth  + "/v2/publicKey";
         //V2登录
         static final String LOGIN_V2_URL = auth  + "/v2/appAuthenticate";
+    }
+
+    /******************6.0私享云增量api*****************/
+
+    static class SXY{
+        private static final String sxy="/sxy";
+
+        //首页
+        static final String GETHOME=API_URL+sxy+"/apphome";
     }
 }
