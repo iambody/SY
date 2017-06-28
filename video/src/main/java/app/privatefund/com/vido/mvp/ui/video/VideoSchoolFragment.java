@@ -96,14 +96,9 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
-//        List<BannerBean> bannerBeen=new ArrayList<>();
-//        BannerBean bannerBean1=new BannerBean(false,"https://upload.simuyun.com/videos/a5d16a47-17c9-4673-a658-bf2d9525d3d4.jpg",BannerBean.ViewType.OVAL);
-//
-//        bannerBeen.add(bannerBean1);
-//        videoVideolistBannerview.initShowImageForNet(baseActivity, bannerBeen);
         initBanner(videoAllModel.banner);
         //Navagation的数据填充
-        List<BaseLazyFragment> lazyFragments = new ArrayList<>();
+        lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
             VidoListFragment baseLazyFragment = new VidoListFragment(videoAllModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
@@ -134,8 +129,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         Context adapterContext;
         //数据的列表
         List<VideoAllModel.VideoCategory> categoryList;
-        //视图的列表
-//        List<View> viewList;
         //视图填充器
         LayoutInflater layoutInflater;
 
@@ -231,7 +224,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private class BannerAdapter extends StaticPagerAdapter {
-
 
         List<VideoAllModel.Banner> banners;
 

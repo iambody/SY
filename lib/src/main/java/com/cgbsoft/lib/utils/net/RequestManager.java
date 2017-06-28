@@ -703,4 +703,9 @@ interface RequestManager {
 
     @GET(NetConfig.SXY.GETHOME)
     Observable<BaseResult<HomeEntity.Result>> getSxyHome(@QueryMap Map<String, String> paramsMap);
+
+    //根据手机硬件地址获取用户ID
+    @POST(NetConfig.SXY.VISITOR_GET_USERID)
+    Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
+
 }
