@@ -32,5 +32,4 @@ public class PrivateBanksFragment extends BasePageFragment {
         tabBeens.add(tabBeen3);
         return tabBeens;
     }
-
 }
