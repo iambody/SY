@@ -116,6 +116,7 @@ dependencies {
 //Indicator
     compile "com.github.hackware1993:MagicIndicator:${magicindicator_version}"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"
+    compile 'com.jude:rollviewpager:1.2.9'
     compile files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
     compile 'com.github.barteksc:android-pdf-viewer:1.4.0'
     compile project(':picselect')
