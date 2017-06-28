@@ -26,10 +26,11 @@ public class HappyLifeFragment extends BasePageFragment {
     }
 
 
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-        ((TextView)title_layout.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
+//        ((TextView)view.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
     }
 
     @Override

@@ -111,6 +111,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
+        if(getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
         pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
