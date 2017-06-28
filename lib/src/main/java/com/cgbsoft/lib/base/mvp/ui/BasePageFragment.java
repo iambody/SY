@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 /**
- *  desc 可以翻页的Fragment
- *  Created by yangzonghui on 2017/5/25 14:42
- *  Email:yangzonghui@simuyun.com
+ * desc 可以翻页的Fragment
+ * Created by yangzonghui on 2017/5/25 14:42
+ * Email:yangzonghui@simuyun.com
  */
 public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
@@ -53,13 +53,13 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        tabLayout.post(() -> setIndicator(tabLayout,70,70));
+        tabLayout.post(() -> setIndicator(tabLayout, 70, 70));
         for (TabBean tabBean : list()) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setText(tabBean.getTabName());
             tabLayout.addTab(tab);
         }
-        LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout, true);
+        LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
@@ -77,17 +77,18 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                 if (object instanceof View) {
                     container.removeView((View) object);
                 } else if (object instanceof Fragment) {
-                    getFragmentManager().beginTransaction().detach((Fragment)object);
+                    getFragmentManager().beginTransaction().detach((Fragment) object);
                 }
             }
         });
 
         tabLayout.setupWithViewPager(viewPager);
-        for (int i=0;i<tabLayout.getTabCount();i++) {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setText(list().get(i).getTabName());
         }
 
     }
+
     @Override
     protected BasePagePresenter createPresenter() {
         return null;
@@ -97,19 +98,19 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             //选择的tab
-            Log.e("TT","onTabSelected:" + tab.getText().toString());
+            Log.e("TT", "onTabSelected:" + tab.getText().toString());
         }
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
             //离开的那个tab
-            Log.e("TT","onTabUnselected" + tab.getText().toString());
+            Log.e("TT", "onTabUnselected" + tab.getText().toString());
         }
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
             //再次选择tab
-            Log.e("TT","onTabReselected" + tab.getText().toString());
+            Log.e("TT", "onTabReselected" + tab.getText().toString());
         }
     };
 
