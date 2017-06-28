@@ -30,7 +30,7 @@ import com.cgbsoft.lib.R;
 public class BannerView extends RelativeLayout implements View.OnTouchListener, ViewPager.OnPageChangeListener {
 
     public interface OnclickBannerItemView {
-        void clickBannerItem(int position);
+        void clickBannerItem(BannerBean bannerBean);
     }
 
     private ViewPager targetVp;
@@ -109,7 +109,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             final int postioan = i;
             iv2.setOnClickListener(v -> {
                 if (onclickBannerItemView != null) {
-                    onclickBannerItemView.clickBannerItem(postioan);
+                    onclickBannerItemView.clickBannerItem(bannerBean);
                 }
             });
             indicationList.add(iv2);

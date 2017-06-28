@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -38,8 +36,6 @@ import app.privatefund.com.vido.bean.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
