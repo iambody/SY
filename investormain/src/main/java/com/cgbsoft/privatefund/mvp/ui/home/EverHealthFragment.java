@@ -26,7 +26,6 @@ public class EverHealthFragment extends BasePageFragment {
     }
 
 
-
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);

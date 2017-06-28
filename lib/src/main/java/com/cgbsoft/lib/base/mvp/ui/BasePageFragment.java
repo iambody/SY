@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -30,7 +31,6 @@ import butterknife.BindView;
  *  Email:yangzonghui@simuyun.com
  */
 public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
-
 
     @BindView(R2.id.title_layout)
     FrameLayout title_layout;
@@ -59,6 +59,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             tabLayout.addTab(tab);
         }
         LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout,false);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public int getCount() {
@@ -72,15 +73,18 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
+                if (object instanceof View) {
+                    container.removeView((View) object);
+                } else if (object instanceof Fragment) {
+                    getFragmentManager().beginTransaction().detach((Fragment)object);
+                }
             }
         });
 
         tabLayout.setupWithViewPager(viewPager);
-
-//        for (int i=0;i<tabLayout.getTabCount();i++) {
-//            tabLayout.getTabAt(i).setText(list().get(i).getTabName());
-//        }
+        for (int i=0;i<tabLayout.getTabCount();i++) {
+            tabLayout.getTabAt(i).setText(list().get(i).getTabName());
+        }
 
     }
     @Override
