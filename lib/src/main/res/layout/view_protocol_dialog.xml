@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center_horizontal"
-            android:textColor="@color/color_red_up"
+            android:textColor="@color/app_golden"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
 
             <Button
                 android:id="@+id/protocol_confirm"
-                style="@style/btn_red_bg_style"
+                style="@style/btn_orange_bg_style"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginLeft="15dp"

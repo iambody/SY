@@ -3,8 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="首页"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="首页" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_100_dip"
+                android:background="@color/app_golden"/>
+
+            <com.cgbsoft.lib.base.webview.BaseWebview
+                android:id="@+id/a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.cgbsoft.lib.base.webview.BaseWebview>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

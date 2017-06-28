@@ -13,7 +13,7 @@ public class BannerBean {
 
     private ViewType vierType = ViewType.OVAL; // 默认圆点
 
-    private boolean isVideo; // 默认是资讯， true表示是视频
+    private boolean isVideo; // 默认是图片， true表示是视频
 
     private int positon;
 

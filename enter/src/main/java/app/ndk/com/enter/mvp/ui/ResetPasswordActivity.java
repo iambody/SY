@@ -1,11 +1,13 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -79,6 +81,20 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     private String UMENG_KEY = "logReg_click";
 
     private String lastInputPhoneNum;//刚才输入的手机号
+
+    @Override
+    protected void before() {
+
+        super.before();
+        setIsNeedGoneNavigationBar(true);//不显示导航条
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -167,11 +183,11 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     void nextClick() {
         String userName = et_af_username.getText().toString();
         String code = et_af_check.getText().toString();
-        if(!isUsernameInput){
+        if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!isCheckInput){
+        if (!isCheckInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }
@@ -228,7 +244,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         Intent intent = new Intent(this, SetPasswordActivity.class);
         intent.putExtra("userName", et_af_username.getText().toString());
         intent.putExtra("code", et_af_check.getText().toString());
-        intent.putExtra(FROMVERIFYTAG, isFromVerifyFogetPwd?"1":"0");
+        intent.putExtra(FROMVERIFYTAG, isFromVerifyFogetPwd ? "1" : "0");
         startActivity(intent);
         finish();
     }
