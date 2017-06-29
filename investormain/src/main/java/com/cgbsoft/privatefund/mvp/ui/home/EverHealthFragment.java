@@ -25,7 +25,6 @@ public class EverHealthFragment extends BasePageFragment {
         return R.layout.title_normal_new;
     }
 
-
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
@@ -36,9 +35,11 @@ public class EverHealthFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<TabBean> tabBeens = new ArrayList<>();
         TabBean tabBeen1 = new TabBean("推荐", new ProductFragment());
-        TabBean tabBeen2 = new TabBean("健康服务", new VideoSchoolFragment());
+        TabBean tabBeen2 = new TabBean("检查", new ProductFragment());
+        TabBean tabBeen3 = new TabBean("健康服务", new VideoSchoolFragment());
         tabBeens.add(tabBeen1);
         tabBeens.add(tabBeen2);
+        tabBeens.add(tabBeen3);
         return tabBeens;
     }
 

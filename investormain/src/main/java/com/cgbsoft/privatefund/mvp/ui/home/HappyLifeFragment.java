@@ -14,7 +14,7 @@ import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
- *@author chenlong
+ * @author chenlong
  *
  * 乐享生活
  */
@@ -25,12 +25,10 @@ public class HappyLifeFragment extends BasePageFragment {
         return R.layout.title_normal_new;
     }
 
-
-
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-//        ((TextView)view.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
+        ((TextView)title_layout.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
     }
 
     @Override

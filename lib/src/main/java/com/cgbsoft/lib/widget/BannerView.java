@@ -105,7 +105,6 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             } else {
                 iv2.setBackgroundResource(BannerBean.ViewType.OVAL == bannerBean.getVierType() ? R.drawable.shape_banner_point_off : R.drawable.shape_banner_rectangle_off);
             }
-            final int postioan = i;
             iv2.setOnClickListener(v -> {
                 if (onclickBannerItemView != null) {
                     onclickBannerItemView.clickBannerItem(bannerBean);
