@@ -202,8 +202,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
             finish();
         } else {
             LogOutAccount logOutAccount = new LogOutAccount();
