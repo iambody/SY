@@ -38,7 +38,6 @@ public class EverHealthFragment extends BasePageFragment {
         TabBean tabBeen2 = new TabBean("健康服务", new VideoSchoolFragment());
         tabBeens.add(tabBeen1);
         tabBeens.add(tabBeen2);
-        tabBeens.add(tabBeen3);
         return tabBeens;
     }
 
