@@ -113,6 +113,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     @Override
     protected void init(Bundle savedInstanceState) {
         isLoad = getIntent().getBooleanExtra("isloade", false);
+        getPresenter().getNavigation();
     }
 
     @Override

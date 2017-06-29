@@ -708,4 +708,8 @@ interface RequestManager {
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
+    //获取全局导航
+    @GET(NetConfig.NAVIGATION)
+    Observable<ResponseBody> getNavigation();
+
 }

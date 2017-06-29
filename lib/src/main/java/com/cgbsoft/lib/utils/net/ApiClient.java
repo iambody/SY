@@ -1340,4 +1340,11 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
+    /**
+     * 获取全局导航
+     */
+    public static Observable<String> getNavigation(){
+        return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }
