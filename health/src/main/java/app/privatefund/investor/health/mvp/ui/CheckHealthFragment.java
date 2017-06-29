@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 
+import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.mvp.contract.HealthContract;
 import app.privatefund.investor.health.mvp.model.HealthEntity;
 import app.privatefund.investor.health.mvp.presenter.HealthPresenter;
@@ -15,10 +16,9 @@ import app.privatefund.investor.health.mvp.presenter.HealthPresenter;
  */
 public class CheckHealthFragment extends BaseFragment<HealthPresenter> implements HealthContract.View {
 
-
     @Override
     protected int layoutID() {
-        return R.layout.fragment_videolist;
+        return R.layout.fragment_healthlist;
     }
 
     @Override
