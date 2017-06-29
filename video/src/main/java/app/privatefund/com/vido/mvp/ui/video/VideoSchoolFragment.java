@@ -110,8 +110,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     @Override
     public void getSchoolAllDataSucc(String data) {
-        VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
-        freashAp(videoAllModel);
+//        VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
+//        freashAp(videoAllModel);
     }
 
     @Override
@@ -211,8 +211,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             indicator.setXOffset(UIUtil.dip2px(context, 10));
             return indicator;
         }
-
-
     }
 
     private void initBanner(List<VideoAllModel.Banner> banners) {
