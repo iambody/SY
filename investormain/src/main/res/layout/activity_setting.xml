@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/title_normal_new"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include
+                layout="@layout/acitivity_divide_online"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                />
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_change_pwd"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sit_gesture_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_show_switchbutton="true"
+                app:setting_item_title="@string/setting_item_gesture_pwd"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_change_gesture_pwd"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_common_question"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_feedback"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_recommend"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/setting_item_about_app"
+                >
+            </com.cgbsoft.lib.widget.SettingItemNormal>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
