@@ -1,29 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.cgbsoft.lib.base.mvp.ui.BasePageFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.cgbsoft.lib.base.mvp.ui.BasePageFragment">
 
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:background="@color/transparent"
-        android:layout_height="60dp" />
+        android:layout_height="50dp"
+        android:background="@color/transparent" />
+
+    <ImageView style="@style/normal_diveline" />
 
     <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:xTabMode="fixed"
         app:xTabIndicatorColor="@color/app_golden_click"
         app:xTabIndicatorHeight="4dp"
         app:xTabIndicatorWidth="25dp"
+        app:xTabMode="fixed"
         app:xTabSelectedTextColor="@color/app_golden_click"
+        app:xTabSelectedTextSize="15sp"
         app:xTabTextColor="#ff000000"
-        app:xTabTextSize="15sp"
-        app:xTabSelectedTextSize="15sp"/>
+        app:xTabTextSize="15sp" />
+
+    <ImageView style="@style/normal_diveline" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

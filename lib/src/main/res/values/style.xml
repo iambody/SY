@@ -56,6 +56,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
+    <style name="normal_diveline">
+        <item name="android:src">@color/app_split_line</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
 
     <style name="confirm_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

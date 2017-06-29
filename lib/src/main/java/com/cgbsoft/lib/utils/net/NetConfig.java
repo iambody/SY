@@ -122,7 +122,7 @@ public class NetConfig {
         //私享云新增的获取视频列表的V2接口
         static final String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
-        static final String GET_VIDEO_ALLINF = API_URL + information + "/videos/all";
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
 
     }
 
