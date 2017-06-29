@@ -1,4 +1,4 @@
-package app.privatefund.investor.health.mvp.model;
+package com.cgbsoft.lib.base.model;
 
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 

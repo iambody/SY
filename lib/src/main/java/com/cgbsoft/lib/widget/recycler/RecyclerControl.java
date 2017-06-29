@@ -177,9 +177,7 @@ public class RecyclerControl {
                     lastViewPos = linearLayoutManager.findLastVisibleItemPosition();
                 if (gridLayoutManager != null)
                     lastViewPos = gridLayoutManager.findLastVisibleItemPosition();
-
                 if (lastViewPos >= (recyclerView.getAdapter().getItemCount() - 1)) {
-
                     if (isLoadMoreComplete) {
                         isLoadMoreComplete = false;
                         delayGetData(false);

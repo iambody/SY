@@ -89,4 +89,15 @@ public class ApiBusParam {
         }
         return jsonObject;
     }
+
+    /** *****************以下为6.0私享云 新增接口参数******************* **/
+
+    public static HashMap getHealthDataParams(String category, int offset, int limit) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("category", category);
+        hashMap.put("offset", offset);
+        hashMap.put("limit", limit);
+        return hashMap;
+    }
+
 }

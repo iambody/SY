@@ -3,7 +3,7 @@ package app.privatefund.investor.health.mvp.contract;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
-import app.privatefund.investor.health.mvp.model.HealthEntity;
+import app.privatefund.investor.health.adapter.CheckHealthAdapter;
 
 
 /**
@@ -13,15 +13,14 @@ import app.privatefund.investor.health.mvp.model.HealthEntity;
 public interface HealthContract {
 
     interface Presenter extends BasePresenter {
-        void getHealthList();
 
-        void loadNextPage();
+        void getHealthList(CheckHealthAdapter adapter, boolean isRef);
     }
 
     interface View extends BaseView {
 
-        void requestDataSuccess(HealthEntity.Result healthData);
+        void requestDataSuccess( boolean isRef);
 
-        void requestDataFailure(String errorMsg);
+        void requestDataFailure(boolean isRef);
     }
 }
