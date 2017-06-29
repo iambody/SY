@@ -14,7 +14,7 @@ import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
- * @author chenlong
+ *@author chenlong
  *
  * 乐享生活
  */

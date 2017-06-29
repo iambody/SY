@@ -26,9 +26,7 @@ import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.adapter.VideoListAdapter;
 import app.privatefund.com.vido.bean.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
-import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
-import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
 
 /**
@@ -70,6 +68,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
 
     public VidoListFragment(String postionString) {
+        super();
         this.CatoryValue = postionString;
     }
 

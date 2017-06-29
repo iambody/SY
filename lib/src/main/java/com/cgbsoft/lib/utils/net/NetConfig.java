@@ -122,7 +122,7 @@ public class NetConfig {
         //私享云新增的获取视频列表的V2接口
         static final String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
-        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/videos/all";
 
     }
 
@@ -244,6 +244,13 @@ public class NetConfig {
         static final String VIDEO_COMMENT_ADD = API_URL + video + "/2c/comment/add";
         //视频的更多评论
         static final String VIDEO_COMMENT_LS = API_URL + video + "/2c/comment";
+
+        //********************私享云的fragment里面的视频初始化信息***********
+        static final String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
+        //获取视频列表
+        static final String VIDEO_SCHOOL_LS = API_URL + video + "s";
+
+
     }
 
     //用户授权相关 V2********
@@ -255,8 +262,8 @@ public class NetConfig {
         static final String LOGIN_V2_URL = auth + "/v2/appAuthenticate";
     }
 
-    /******************6.0私享云增量api*****************/
 
+    /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
     static class SXY {
         private static final String sxy = "/sxy";
 
