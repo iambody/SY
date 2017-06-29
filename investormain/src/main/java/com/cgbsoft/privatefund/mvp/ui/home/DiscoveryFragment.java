@@ -48,13 +48,17 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        discoveryBannerView.startBanner();
+        if (discoveryBannerView != null) {
+            discoveryBannerView.startBanner();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        discoveryBannerView.endBanner();
+        if (discoveryBannerView != null) {
+            discoveryBannerView.endBanner();
+        }
     }
 
     @Override

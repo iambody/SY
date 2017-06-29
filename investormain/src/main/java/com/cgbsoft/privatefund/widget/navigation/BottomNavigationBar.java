@@ -63,7 +63,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     @BindView(R.id.tv_bottom_nav_right_second)
     TextView tv_bottom_nav_right_second;
 
-    private static final int doubleClickTime = 3;//300
+    private static final int doubleClickTime = 3;
     private List<TextView> bottomls;
     //消息文本
 //    @BindView(R.id.tv_bottom_nav_msgnum)
@@ -144,8 +144,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         rightFirstStr = R.string.vbnb_ever_ok_str;
         rightSecStr = R.string.vbnb_mine_str;
 
-//        if (tv_bottom_nav_msgnum.getVisibility() == VISIBLE)
-//            tv_bottom_nav_msgnum.setVisibility(GONE);
         requestManager.load(leftFirstRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftFirstRes).into(iv_bottom_nav_left_first);
         requestManager.load(leftSecRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(leftSecRes).into(iv_bottom_nav_left_second);
         requestManager.load(centerRes).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(centerRes).into(ivBottomNavCenter);
@@ -188,7 +186,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_SEC, true);
                                     break;
                                 case R.id.fl_bottom_nav_center:
-
                                     break;
                             }
                         } else {

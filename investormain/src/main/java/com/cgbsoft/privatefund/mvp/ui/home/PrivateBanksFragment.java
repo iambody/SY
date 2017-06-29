@@ -6,7 +6,6 @@ import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 
-import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
