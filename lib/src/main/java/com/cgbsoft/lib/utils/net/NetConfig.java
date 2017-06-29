@@ -253,7 +253,6 @@ public class NetConfig {
 
     }
 
-
     //用户授权相关 V2********
     static class AUTHOR {
         private static final String auth = "/auth";
@@ -265,5 +264,14 @@ public class NetConfig {
 
 
     /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
+    static class SXY {
+        private static final String sxy = "/sxy";
 
+        //首页
+        static final String GETHOME = API_URL + sxy + "/apphome";
+
+
+        //通过手机硬件地址兑换相应的userid和tOKEN
+        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
+    }
 }

@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
@@ -1311,7 +1312,7 @@ public class ApiClient {
         JSONObject js = new JSONObject();
         try {
             js.put("category", category);
-            js.put("offset", offset*Constant.LOAD_VIDEOLS_lIMIT);
+            js.put("offset", offset * Constant.LOAD_VIDEOLS_lIMIT);
             js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1323,4 +1324,20 @@ public class ApiClient {
 
     }
 
+    /**
+     * 获取首页api数据
+     */
+    public static Observable<HomeEntity.Result> getSxyHomeData() {
+        return OKHTTP.getInstance().getRequestManager().getSxyHome(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
+     */
+    public static Observable<String> visitorGetUserId(String phoneId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mid", phoneId);
+        return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
 }

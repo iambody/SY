@@ -1,14 +1,10 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,37 +13,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
-import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 
 /**
- *  desc 可以翻页的Fragment
- *  Created by yangzonghui on 2017/5/25 14:42
- *  Email:yangzonghui@simuyun.com
+ * desc 可以翻页的Fragment
+ * Created by yangzonghui on 2017/5/25 14:42
+ * Email:yangzonghui@simuyun.com
  */
 public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
-
     @BindView(R2.id.title_layout)
-    FrameLayout title_layout;
+    protected FrameLayout title_layout;
 
     @BindView(R2.id.tab_layout)
-    TabLayout tabLayout;
+    XTabLayout tabLayout;
 
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
+
+    protected View titleView;
 
     protected abstract int titleLayoutId();
 
@@ -60,22 +54,14 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(tabLayout,70,70);
-            }
-        });
-
         for (TabBean tabBean : list()) {
-            TabLayout.Tab tab = tabLayout.newTab();
+            XTabLayout.Tab tab = tabLayout.newTab();
             tab.setText(tabBean.getTabName());
             tabLayout.addTab(tab);
         }
-
-        LayoutInflater.from(getContext()).inflate(titleLayoutId(),title_layout,false);
-        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
                 return list().size();
@@ -88,18 +74,21 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
+                if (object instanceof View) {
+                    container.removeView((View) object);
+                } else if (object instanceof Fragment) {
+                    getChildFragmentManager().beginTransaction().detach((Fragment) object);
+                }
             }
         });
 
         tabLayout.setupWithViewPager(viewPager);
-
-        for (int i=0;i<tabLayout.getTabCount();i++) {
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setText(list().get(i).getTabName());
         }
 
-
     }
+
     @Override
     protected BasePagePresenter createPresenter() {
         return null;
@@ -109,52 +98,19 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             //选择的tab
-            Log.e("TT","onTabSelected:" + tab.getText().toString());
+            Log.e("TT", "onTabSelected:" + tab.getText().toString());
         }
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
             //离开的那个tab
-            Log.e("TT","onTabUnselected" + tab.getText().toString());
+            Log.e("TT", "onTabUnselected" + tab.getText().toString());
         }
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
             //再次选择tab
-            Log.e("TT","onTabReselected" + tab.getText().toString());
+            Log.e("TT", "onTabReselected" + tab.getText().toString());
         }
     };
-
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-
-
-    }
 }

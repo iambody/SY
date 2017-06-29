@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -36,7 +37,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     private Unbinder mUnbinder;//用于butterKnife解绑
     private P mPresenter;//功能调用
     protected Activity baseActivity;
-
+    protected int screenWidth;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -54,7 +55,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (mFragmentView == null && layoutID() > 0) {
             mFragmentView = inflater.inflate(layoutID(), container, false);
         }
-
+        screenWidth= Utils.getScreenWidth(baseActivity);
         after(mFragmentView);
         init(mFragmentView, savedInstanceState);
         data();

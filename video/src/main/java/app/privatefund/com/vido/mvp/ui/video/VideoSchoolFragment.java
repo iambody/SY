@@ -2,6 +2,7 @@ package app.privatefund.com.vido.mvp.ui.video;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -10,14 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.google.gson.Gson;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -38,9 +41,6 @@ import app.privatefund.com.vido.bean.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * desc   私享云财富里面的视频模块
@@ -51,7 +51,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @BindView(R2.id.video_videolist_indicator)
     MagicIndicator videoVideolistIndicator;
     @BindView(R2.id.video_videolist_bannerview)
-    BannerView videoVideolistBannerview;
+    RollPagerView videoVideolistBannerview;
 
     //导航器
     CommonNavigator commonNavigator;
@@ -65,8 +65,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     //所有需要的fragment的集合
 
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
-
-
+    BannerAdapter bannerAdapter;
 
     @Override
     protected int layoutID() {
@@ -82,7 +81,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
         videoVideolistIndicator.setNavigator(commonNavigator);
 
-
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
         videoVideolistPager.setOffscreenPageLimit(20);
         //fragment的适配器填充
@@ -97,13 +95,9 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
-//        List<BannerBean> bannerBeen=new ArrayList<>();
-//        BannerBean bannerBean1=new BannerBean(false,"https://upload.simuyun.com/videos/a5d16a47-17c9-4673-a658-bf2d9525d3d4.jpg",BannerBean.ViewType.OVAL);
-//
-//        bannerBeen.add(bannerBean1);
-//        videoVideolistBannerview.initShowImageForNet(baseActivity,bannerBeen);
+        initBanner(videoAllModel.banner);
         //Navagation的数据填充
-        List<BaseLazyFragment> lazyFragments = new ArrayList<>();
+        lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
             VidoListFragment baseLazyFragment = new VidoListFragment(videoAllModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
@@ -116,15 +110,14 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     @Override
     public void getSchoolAllDataSucc(String data) {
-        VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
-        freashAp(videoAllModel);
+//        VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
+//        freashAp(videoAllModel);
     }
 
     @Override
     public void getSchoolAllDataError(String message) {
 
     }
-
 
 
     /**
@@ -135,8 +128,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         Context adapterContext;
         //数据的列表
         List<VideoAllModel.VideoCategory> categoryList;
-        //视图的列表
-//        List<View> viewList;
         //视图填充器
         LayoutInflater layoutInflater;
 
@@ -220,7 +211,50 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             indicator.setXOffset(UIUtil.dip2px(context, 10));
             return indicator;
         }
+    }
 
+    private void initBanner(List<VideoAllModel.Banner> banners) {
+        videoVideolistBannerview.setPlayDelay(10 * 1000);
+        bannerAdapter = new BannerAdapter(banners);
+        videoVideolistBannerview.setAdapter(bannerAdapter);
+
+    }
+
+    private class BannerAdapter extends StaticPagerAdapter {
+
+        List<VideoAllModel.Banner> banners;
+
+        public BannerAdapter(List<VideoAllModel.Banner> banners) {
+            this.banners = banners;
+        }
+
+        @Override
+        public View getView(ViewGroup container, int position) {
+            VideoAllModel.Banner banner = banners.get(position);
+            View view = LayoutInflater.from(baseActivity).inflate(com.cgbsoft.lib.R.layout.item_imagecycleview, null);
+            ImageView imageView = (ImageView) view.findViewById(com.cgbsoft.lib.R.id.item_imagecycleview_iv);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            Imageload.display(baseActivity, banner.imageURLString, imageView);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(baseActivity, BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, banner.extension_url);
+                    intent.putExtra(WebViewConstant.push_message_title, banner.title);
+                    intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                    baseActivity.startActivity(intent);
+                }
+            });
+
+
+            return view;
+        }
+
+
+        @Override
+        public int getCount() {
+            return null == banners ? 0 : banners.size();
+        }
 
     }
 

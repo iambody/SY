@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.contract.home;
 
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
@@ -9,8 +10,13 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  * 日期 2017/6/26-21:06
  */
 public class MainHomeContract {
-  public   interface  View extends BaseView{
+    public interface View extends BaseView {
+        public void getResultSucc(HomeEntity.Result data);
 
+        public void getResultError(String error);
     }
-   public  interface  Presenter extends BasePresenter{}
+
+    public interface Presenter extends BasePresenter {
+        public void getHomeData();
+    }
 }
