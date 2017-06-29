@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.chenenyu.router'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -28,4 +31,9 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:${android_need_version}"
     testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:${android_need_version}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
+    compile  "com.jakewharton:butterknife:${butterknife_need_version}"
+    testCompile "junit:junit:${testC}"
+    compile project(':lib')
 }

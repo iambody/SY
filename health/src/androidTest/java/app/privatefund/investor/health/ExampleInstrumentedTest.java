@@ -1,4 +1,4 @@
-package privatefund.cgbsoft.com.comcgbsoftprivatefundhealth;
+package app.privatefund.investor.health;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("privatefund.cgbsoft.com.comcgbsoftprivatefundhealth.test", appContext.getPackageName());
+        assertEquals("app.privatefund.investor.health.test", appContext.getPackageName());
     }
 }
