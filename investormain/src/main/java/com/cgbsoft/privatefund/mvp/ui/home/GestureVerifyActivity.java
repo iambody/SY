@@ -48,7 +48,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
-    public static final String PARAM_FROM_SWITCH = "PARAM_FROM_SWITCH";
 
     private int count = 5;
     private boolean isFromResumeIntercepter;
@@ -92,6 +91,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     }
 
     private void setUpViews() {
+        backView.setVisibility(modifyGesturePassword || isFromCloseGesturePassword ? View.VISIBLE : View.GONE);
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
@@ -158,7 +158,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-//        GestureVerifyActivity.this.finish();
+        if (modifyGesturePassword || isFromCloseGesturePassword) {
+            GestureVerifyActivity.this.finish();
+        }
         return;
     }
 
@@ -186,7 +188,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @OnClick(R.id.text_cancel)
     public void backText() {
-        System.exit(0);
+        finish();
     }
 
     private void validateResetPassword(final Dialog dialog, String password) {
