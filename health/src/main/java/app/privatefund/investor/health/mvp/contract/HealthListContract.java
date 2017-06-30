@@ -10,7 +10,7 @@ import app.privatefund.investor.health.adapter.CheckHealthAdapter;
  * @author chenlong
  *
  */
-public interface HealthContract {
+public interface HealthListContract {
 
     interface Presenter extends BasePresenter {
 

@@ -2,11 +2,16 @@ package app.privatefund.investor.health.mvp.presenter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import app.privatefund.investor.health.mvp.contract.HealthBespeakContract;
 
@@ -26,12 +31,25 @@ public class HealthBespeakPresenter extends BasePresenterImpl<HealthBespeakContr
 
             @Override
             protected void onEvent(String s) {
-
+                if (!TextUtils.isEmpty(s)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        JSONObject result = jsonObject.getJSONObject("result");
+                        if (result != null && !TextUtils.isEmpty(result.getString("orderNo"))) {
+                            getView().bespeakSuccess();
+                        } else {
+                            getView().bespeakFailure();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        getView().bespeakError(e.getMessage());
+                    }
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                getView().bespeakFailure();
             }
         }));
     }
@@ -39,14 +57,14 @@ public class HealthBespeakPresenter extends BasePresenterImpl<HealthBespeakContr
     @Override
     public void getValidateCode(String phoneNumber) {
         addSubscription(ApiClient.bespeakHealthValidatePhone(ApiBusParam.getBespeakHealthValidateParams(phoneNumber)).subscribe(new RxSubscriber<String>(){
-
             @Override
             protected void onEvent(String s) {
+                Log.d("HealthBespeakPresenter", s);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                Log.d("HealthBespeakPresenter", error.getMessage());
             }
         }));
     }

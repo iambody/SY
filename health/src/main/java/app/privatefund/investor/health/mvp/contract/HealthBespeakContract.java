@@ -20,5 +20,7 @@ public interface HealthBespeakContract {
         void bespeakSuccess();
 
         void bespeakFailure();
+
+        void bespeakError(String error);
     }
 }

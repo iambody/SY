@@ -1,6 +1,5 @@
 package app.privatefund.investor.health.mvp.ui;
 
-
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,7 +9,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 /**
  *  @author chenlong
  */
-
 public class IntroduceHealthFragment extends BaseFragment {
 
     @Override

@@ -18,9 +18,9 @@ import java.util.HashMap;
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.adapter.CheckHealthAdapter;
-import app.privatefund.investor.health.mvp.contract.HealthContract;
+import app.privatefund.investor.health.mvp.contract.HealthListContract;
 import app.privatefund.investor.health.mvp.model.HealthListModel;
-import app.privatefund.investor.health.mvp.presenter.HealthPresenter;
+import app.privatefund.investor.health.mvp.presenter.HealthListPresenter;
 import app.privatefund.investor.health.mvp.ui.listener.HealthListListener;
 import butterknife.BindView;
 
@@ -28,7 +28,7 @@ import butterknife.BindView;
  * @author chenlong
  *
  */
-public class CheckHealthFragment extends BaseFragment<HealthPresenter> implements HealthContract.View, HealthListListener, RecyclerControl.OnControlGetDataListListener, RecyclerRefreshLayout.OnRefreshListener{
+public class CheckHealthFragment extends BaseFragment<HealthListPresenter> implements HealthListContract.View, HealthListListener, RecyclerControl.OnControlGetDataListListener, RecyclerRefreshLayout.OnRefreshListener{
 
     public static final String FROM_CHECK_HEALTH = "check_health";
 
@@ -70,8 +70,8 @@ public class CheckHealthFragment extends BaseFragment<HealthPresenter> implement
     }
 
     @Override
-    protected HealthPresenter createPresenter() {
-        return new HealthPresenter(getActivity(), this);
+    protected HealthListPresenter createPresenter() {
+        return new HealthListPresenter(getActivity(), this);
     }
 
     @Override

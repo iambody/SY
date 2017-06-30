@@ -17,7 +17,6 @@ public class HealthListHolder extends BaseHolder {
     @BindView(R2.id.image_view)
     public ImageView imageView;
 
-
     public HealthListHolder(View itemView, HealthListListener listener) {
         super(itemView);
         imageView.setOnClickListener(v -> listener.onVideoListItemClick(getAdapterPosition(), imageView));

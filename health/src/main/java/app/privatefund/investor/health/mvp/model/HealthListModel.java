@@ -2,10 +2,12 @@ package app.privatefund.investor.health.mvp.model;
 
 import com.cgbsoft.lib.widget.recycler.BaseModel;
 
+import java.io.Serializable;
+
 /**
  * @author chenlong
  */
-public class HealthListModel extends BaseModel {
+public class HealthListModel extends BaseModel implements Serializable{
 
     public static final int BOTTOM = 1;
 

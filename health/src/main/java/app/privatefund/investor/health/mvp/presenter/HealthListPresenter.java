@@ -14,21 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.investor.health.adapter.CheckHealthAdapter;
-import app.privatefund.investor.health.mvp.contract.HealthContract;
+import app.privatefund.investor.health.mvp.contract.HealthListContract;
 import app.privatefund.investor.health.mvp.model.HealthListModel;
 
 /**
  * @author chenlong
  * 健康业务实现
  */
-public class HealthPresenter extends BasePresenterImpl<HealthContract.View> implements HealthContract.Presenter {
+public class HealthListPresenter extends BasePresenterImpl<HealthListContract.View> implements HealthListContract.Presenter {
 
     private int index = 0;
     private final static int PAGE_LIMIT = 20;
     private final static String CHECK_HEALTH_PARAMS = "4002";
     private final static String CHECK_MEDICAL_PARAMS = "4003";
 
-    public HealthPresenter(@NonNull Context context, @NonNull HealthContract.View view) {
+    public HealthListPresenter(@NonNull Context context, @NonNull HealthListContract.View view) {
         super(context, view);
     }
 
