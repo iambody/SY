@@ -11,6 +11,8 @@ import com.cgbsoft.privatefund.R;
 import java.util.ArrayList;
 
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
+import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
+import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
@@ -34,9 +36,16 @@ public class EverHealthFragment extends BasePageFragment {
     @Override
     protected ArrayList<TabBean> list() {
         ArrayList<TabBean> tabBeens = new ArrayList<>();
-        TabBean tabBeen1 = new TabBean("介绍", new ProductFragment());
-        TabBean tabBeen2 = new TabBean("检查", new VideoSchoolFragment());
-        TabBean tabBeen3 = new TabBean("医疗", new VideoSchoolFragment());
+        Bundle checkBund = new Bundle();
+        CheckHealthFragment checkHealthFragment = new CheckHealthFragment();
+        Bundle medical = new Bundle();
+        CheckHealthFragment medicalHealthFragment = new CheckHealthFragment();
+        checkBund.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, true);
+        checkHealthFragment.setArguments(checkBund);
+
+        TabBean tabBeen1 = new TabBean("介绍", new IntroduceHealthFragment());
+        TabBean tabBeen2 = new TabBean("检查", checkHealthFragment);
+        TabBean tabBeen3 = new TabBean("医疗", new CheckHealthFragment());
         tabBeens.add(tabBeen1);
         tabBeens.add(tabBeen2);
         tabBeens.add(tabBeen3);

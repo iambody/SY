@@ -7,6 +7,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -708,4 +709,7 @@ interface RequestManager {
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
+    // 获取健康检测/医疗
+    @GET(NetConfig.SXY.HEALTH_GET_URL)
+    Observable<BaseResult<HealthEntity.Result>> getHealthList(@Body RequestBody responseBody);
 }

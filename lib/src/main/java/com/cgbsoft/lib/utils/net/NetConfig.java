@@ -276,5 +276,9 @@ public class NetConfig {
 
         //获取全站导航栏信息
         static final String GET_NAVIFAITION=API_URL +"navigation";
+//        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
+
+        // 健康检测/医疗数据
+        static final String   HEALTH_GET_URL = API_URL + "/health/commend";
     }
 }
