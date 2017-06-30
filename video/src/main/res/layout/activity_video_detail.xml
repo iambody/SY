@@ -214,19 +214,30 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ui_10_dip"
                         android:background="@color/white"
-                        android:drawableLeft="@drawable/video_product_icon"
-                        android:drawablePadding="@dimen/ui_5_dip"
-                        android:padding="@dimen/ui_10_dip"
+                        android:paddingLeft="@dimen/ui_10_dip"
+                        android:paddingTop="@dimen/ui_10_dip"
+
                         android:text="@string/xiangxijieshao"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimens_sp_16"
                         android:textStyle="bold" />
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ui_z_dip"
-                        android:layout_marginLeft="@dimen/ui_10_dip"
-                        android:src="@color/gray_font" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:layout_width="@dimen/ui_40_dip"
+                            android:layout_height="3dp"
+                            android:layout_marginLeft="@dimen/ui_10_dip"
+                            android:src="@color/app_golden" />
+                    </LinearLayout>
+                    <!-- <ImageView
+                         android:layout_width="match_parent"
+                         android:layout_height="@dimen/ui_z_dip"
+                         android:layout_marginLeft="@dimen/ui_10_dip"
+                         android:src="@color/gray_font" />-->
 
                     <TextView
                         android:id="@+id/tv_avd_content"

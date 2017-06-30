@@ -19,4 +19,12 @@
         <item name="android:textColor">@color/c_mid_black</item>
         <item name="android:gravity">left</item>
     </style>
+
+    <style name="video_bottom_line">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_marginTop">@dimen/ui_2_dip</item>
+        <item name="android:layout_marginBottom">@dimen/ui_5_dip</item>
+        <item name="android:src">@color/app_golden</item>
+    </style>
 </resources>
