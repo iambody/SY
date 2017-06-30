@@ -22,11 +22,12 @@ import app.privatefund.investor.health.mvp.contract.HealthBespeakContract;
 import app.privatefund.investor.health.mvp.model.HealthListModel;
 import app.privatefund.investor.health.mvp.presenter.HealthBespeakPresenter;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
  */
-public class HealthBespeakActivity extends BaseActivity<HealthBespeakPresenter> implements HealthBespeakContract.View, ClickRunnable.OnClickListener {
+public class HealthBespeakActivity extends BaseActivity<HealthBespeakPresenter> implements HealthBespeakContract.View {
 
     @BindView(R2.id.health_bespeak_content_container)
     LinearLayout contentContainer;
@@ -122,21 +123,19 @@ public class HealthBespeakActivity extends BaseActivity<HealthBespeakPresenter> 
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.health_bespeak_send:
-                if (TextUtils.isEmpty(healthBespeakPhone.getText().toString())) {
-                    Toast.makeText(this, R.string.please_input_phone, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                timer.start();
-                getPresenter().getValidateCode(healthBespeakPhone.getText().toString());
-                break;
-            case R.id.commit_bespeak_health:
-                commitBespeakHealth();
-                break;
+    @OnClick(R2.id.health_bespeak_send)
+    void sendValidatecode() {
+        if (TextUtils.isEmpty(healthBespeakPhone.getText().toString())) {
+            Toast.makeText(this, R.string.please_input_phone, Toast.LENGTH_SHORT).show();
+            return;
         }
+        timer.start();
+        getPresenter().getValidateCode(healthBespeakPhone.getText().toString());
+    }
+
+    @OnClick(R2.id.commit_bespeak_health)
+    void commitBespeakHealthClick() {
+        commitBespeakHealth();
     }
 
     private void commitBespeakHealth() {
