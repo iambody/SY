@@ -13,6 +13,7 @@
         android:src="@drawable/privatebank_title_left" />
 
     <LinearLayout
+        android:id="@+id/search_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -21,18 +22,21 @@
         android:orientation="horizontal"
         android:padding="@dimen/ui_10_dip">
 
-        <ImageView
-            android:layout_width="@dimen/ui_15_dip"
-            android:layout_height="@dimen/ui_15_dip"
-            android:src="@drawable/title_search" />
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ui_5_dip"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="@string/privatebank_title_str" />
+            android:id="@+id/search_text"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/message_search_flag_bg"
+            android:clickable="true"
+            android:drawableLeft="@drawable/search_black"
+            android:drawablePadding="5dp"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/ui_5_dip"
+            android:paddingLeft="10dp"
+            android:text="@string/privatebank_title_str"
+            android:textColor="@color/gray_font"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView

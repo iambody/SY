@@ -26,6 +26,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
+import com.fivehundredpx.android.blur.BlurringView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -64,8 +65,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @BindView(R2.id.swipe_target)
     RecyclerView fragmentProductrecyclerView;
-    @BindView(R2.id.product_productfragment_sousou)
-    TextView productProductfragmentSousou;
     @BindView(R2.id.product_productfragment_paixu)
     TextView productProductfragmentPaixu;
     @BindView(R2.id.product_productfragment_shaixuan)
@@ -83,6 +82,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
+
+    @BindView(R2.id.blurring_view)
+    BlurringView blurringView;
 
     //加载数据的dialog
     private LoadingDialog loadingDialog;
@@ -276,6 +278,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             //如果哦有缓存 就初始化筛选条件
             initFilterDate(productFilterBean.getSeries().getItems());
         }
+        blurringView.setBlurredView(swipeToLoadLayout);
+        blurringView.invalidate();
         initEvent();
     }
 
@@ -345,18 +349,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     protected ProductPresenter createPresenter() {
         return new ProductPresenter(getContext(), this);
-    }
-
-
-    @OnClick(R2.id.product_productfragment_sousou)
-    public void onProductProductfragmentSousouClicked() {
-//        UiSkipUtils.toNextActivity(baseActivity, SearchBaseActivity.class);
-        Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-        i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-        baseActivity.startActivity(i);
-
-        DataStatistApiParam.onStatisToCProductSearchClick();
-
     }
 
     @OnClick(R2.id.product_productfragment_paixu)
