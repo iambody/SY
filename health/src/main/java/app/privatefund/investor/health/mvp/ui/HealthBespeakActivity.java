@@ -2,7 +2,6 @@ package app.privatefund.investor.health.mvp.ui;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.damp.ClickRunnable;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
@@ -88,6 +87,7 @@ public class HealthBespeakActivity extends BaseActivity<HealthBespeakPresenter> 
                 healthBespeakSendCode.setEnabled(true);
             }
         };
+        ViewUtils.showInputMethod(healthBespeakName);
     }
 
     private void initTitle() {
