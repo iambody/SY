@@ -31,6 +31,7 @@ public class HealthBespeakPresenter extends BasePresenterImpl<HealthBespeakContr
 
             @Override
             protected void onEvent(String s) {
+                Log.d("HealthBespeakPresenter", "----"+ s);
                 if (!TextUtils.isEmpty(s)) {
                     try {
                         JSONObject jsonObject = new JSONObject(s);

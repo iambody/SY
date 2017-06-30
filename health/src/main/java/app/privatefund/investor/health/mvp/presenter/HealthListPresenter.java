@@ -27,9 +27,11 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
     private final static int PAGE_LIMIT = 20;
     private final static String CHECK_HEALTH_PARAMS = "4002";
     private final static String CHECK_MEDICAL_PARAMS = "4003";
+    private boolean isCheckHealth;
 
-    public HealthListPresenter(@NonNull Context context, @NonNull HealthListContract.View view) {
+    public HealthListPresenter(@NonNull Context context, @NonNull HealthListContract.View view, boolean isCheckHealth) {
         super(context, view);
+        this.isCheckHealth = isCheckHealth;
     }
 
     @Override
@@ -39,11 +41,11 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
         } else {
             index++;
         }
-        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(CHECK_HEALTH_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
+        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
             @Override
             protected void onEvent(HealthEntity.Result s) {
 //                List<HealthEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<HealthEntity.Row>>() {}.getType());
-                Log.d("HealthPresenter", "--"+ s.toString());
+                Log.d("HealthListPresenter", "----"+ s.toString());
                 List<HealthEntity.Row> rows = s.getRows();
                 List<HealthListModel> list = new ArrayList<>();
                 for (int i = 0; i < rows.size(); i++) {

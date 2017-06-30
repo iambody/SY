@@ -71,7 +71,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
 
     @Override
     protected HealthListPresenter createPresenter() {
-        return new HealthListPresenter(getActivity(), this);
+        return new HealthListPresenter(getActivity(), this, isCheckHealth);
     }
 
     @Override

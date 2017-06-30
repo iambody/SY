@@ -41,7 +41,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         list.add(new BannerBean(false, "http://youimg1.c-ctrip.com/target/fd/tg/g1/M04/7E/C3/CghzflVTERSAaOlcAAGrbgRCst0677.jpg", BannerBean.ViewType.OVAL));
         discoveryBannerView.initShowImageForNet(getActivity(), list);
         discoveryBannerView.setOnclickBannerItemView(bannerBean -> {
-            Toast.makeText(getActivity(), bannerBean.getPositon(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "你添加的是第".concat(String.valueOf(bannerBean.getPositon())).concat("个图片"), Toast.LENGTH_SHORT).show();
         });
     }
 
