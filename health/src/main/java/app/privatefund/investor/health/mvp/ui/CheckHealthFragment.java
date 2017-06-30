@@ -1,7 +1,6 @@
 package app.privatefund.investor.health.mvp.ui;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,7 +23,6 @@ import app.privatefund.investor.health.mvp.model.HealthListModel;
 import app.privatefund.investor.health.mvp.presenter.HealthPresenter;
 import app.privatefund.investor.health.mvp.ui.listener.HealthListListener;
 import butterknife.BindView;
-
 
 /**
  * @author chenlong
@@ -68,7 +66,6 @@ public class CheckHealthFragment extends BaseFragment<HealthPresenter> implement
         recyclerView.setAdapter(checkHealthAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnScrollListener(recyclerControl.getOnScrollListener());
-
         onRefresh();
     }
 

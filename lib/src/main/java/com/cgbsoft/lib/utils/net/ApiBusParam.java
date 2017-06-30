@@ -100,4 +100,19 @@ public class ApiBusParam {
         return hashMap;
     }
 
+    public static HashMap getBespeakHealthParams(String id, String name, String phone, String captcha) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("id", id);
+        hashMap.put("name", name);
+        hashMap.put("phone", phone);
+        hashMap.put("captcha", captcha);
+        return hashMap;
+    }
+
+    public static HashMap getBespeakHealthValidateParams(String phone) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("checkPhoneDuplicate", "6");
+        return hashMap;
+    }
 }

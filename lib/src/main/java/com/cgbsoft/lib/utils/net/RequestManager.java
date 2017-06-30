@@ -711,5 +711,13 @@ interface RequestManager {
 
     // 获取健康检测/医疗
     @GET(NetConfig.SXY.HEALTH_GET_URL)
-    Observable<BaseResult<HealthEntity.Result>> getHealthList(@Body RequestBody responseBody);
+    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
+
+    // 预约健康检测/医疗
+    @POST(NetConfig.SXY.HEALTH_FREE_BESPEAK_URL)
+    Observable<ResponseBody> bespeakHealth(@Body RequestBody responseBody);
+
+    // 预约健康检 短信验证
+    @POST(NetConfig.SXY.HEALTH_INFO_VALIDATE_URL)
+    Observable<ResponseBody> bespeakHealthInfoValidate(@Body RequestBody responseBody);
 }

@@ -274,6 +274,12 @@ public class NetConfig {
         static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
 
         // 健康检测/医疗数据
-        static final String   HEALTH_GET_URL = API_URL + "/health/commend";
+        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+
+        // 健康免费资讯预约
+        static final String HEALTH_FREE_BESPEAK_URL = API_URL + "/health/consult";
+
+        // 健康短信验证
+        static final String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
     }
 }

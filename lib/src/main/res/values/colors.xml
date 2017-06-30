@@ -102,5 +102,6 @@
     <color name="app_content_icon">#e2e1e6</color>
     <!-- 醒目提示 红色 -->
     <color name="app_red">#e63945</color>
-
+    <!-- list条目点击色 -->
+    <color name="list_item_selector_color">#dfe0e1</color>
 </resources>
