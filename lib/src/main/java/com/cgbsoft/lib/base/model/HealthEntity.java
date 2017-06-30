@@ -15,7 +15,7 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
 
         private String category;
 
-        private String residual;
+        private int residual;
 
         public List<Row> rows;
 
@@ -27,11 +27,11 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
             this.category = category;
         }
 
-        public String getResidual() {
+        public int getResidual() {
             return residual;
         }
 
-        public void setResidual(String residual) {
+        public void setResidual(int residual) {
             this.residual = residual;
         }
 
@@ -52,9 +52,9 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
 
         private String title;
 
-        private String imageUrl;
-
         private String url;
+
+        private List<ImageBean> imageUrl;
 
         public String getId() {
             return id;
@@ -80,12 +80,35 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
             this.title = title;
         }
 
-        public String getImageUrl() {
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public List<ImageBean> getImageUrl() {
             return imageUrl;
         }
 
-        public void setImageUrl(String imageUrl) {
+        public void setImageUrl(List<ImageBean> imageUrl) {
             this.imageUrl = imageUrl;
+        }
+    }
+
+    public static class ImageBean {
+
+        private String name;
+
+        private String url;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getUrl() {

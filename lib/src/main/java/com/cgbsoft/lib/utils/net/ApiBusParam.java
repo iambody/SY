@@ -95,8 +95,8 @@ public class ApiBusParam {
     public static HashMap getHealthDataParams(String category, int offset, int limit) {
         HashMap hashMap = new HashMap<>();
         hashMap.put("category", category);
-        hashMap.put("offset", offset);
-        hashMap.put("limit", limit);
+        hashMap.put("offset", String.valueOf(offset));
+        hashMap.put("limit", String.valueOf(limit));
         return hashMap;
     }
 

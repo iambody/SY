@@ -9,6 +9,11 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,30 +46,68 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
         } else {
             index++;
         }
-        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
+        System.out.println("-------start getHealthList");
+//        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
+//            @Override
+//            protected void onEvent(HealthEntity.Result s) {
+////                List<HealthEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<HealthEntity.Row>>() {}.getType());
+//                Log.d("HealthListPresenter", "----"+ s.toString());
+//                List<HealthEntity.Row> rows = s.getRows();
+//                List<HealthListModel> list = new ArrayList<>();
+//                for (int i = 0; i < rows.size(); i++) {
+//                    HealthListModel model = new HealthListModel();
+//                    model.type = HealthListModel.BOTTOM;
+//                    model.setCode(rows.get(i).getCode());
+//                    model.setId(rows.get(i).getId());
+//                    model.setImageUrl(rows.get(i).getImageUrl().get(0).getUrl());
+//                    model.setTitle(rows.get(i).getTitle());
+//                    model.setUrl(rows.get(i).getUrl());
+//                    list.add(model);
+//                }
+//                if (isRef) {
+//                    adapter.deleteAllData();
+//                    adapter.refAllData(list);
+//                } else {
+//                    adapter.appendToList(list);
+//                }
+//                getView().requestDataSuccess(isRef);
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                getView().requestDataFailure(isRef);
+//            }
+//        }));
+        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
-            protected void onEvent(HealthEntity.Result s) {
-//                List<HealthEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<HealthEntity.Row>>() {}.getType());
+            protected void onEvent(String s) {
                 Log.d("HealthListPresenter", "----"+ s.toString());
-                List<HealthEntity.Row> rows = s.getRows();
-                List<HealthListModel> list = new ArrayList<>();
-                for (int i = 0; i < rows.size(); i++) {
-                    HealthListModel model = new HealthListModel();
-                    model.type = HealthListModel.BOTTOM;
-                    model.setCode(rows.get(i).getCode());
-                    model.setId(rows.get(i).getId());
-                    model.setImageUrl(rows.get(i).getImageUrl());
-                    model.setTitle(rows.get(i).getTitle());
-                    model.setUrl(rows.get(i).getUrl());
-                    list.add(model);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String vas = jsonObject.getString("result");
+                    HealthEntity.Result Result = new Gson().fromJson(vas, new TypeToken<HealthEntity.Result>() {}.getType());
+                    List<HealthEntity.Row> rows = Result.getRows();
+                    List<HealthListModel> list = new ArrayList<>();
+                    for (int i = 0; i < rows.size(); i++) {
+                        HealthListModel model = new HealthListModel();
+                        model.type = HealthListModel.BOTTOM;
+                        model.setCode(rows.get(i).getCode());
+                        model.setId(rows.get(i).getId());
+                        model.setImageUrl(rows.get(i).getImageUrl().get(0).getUrl());
+                        model.setTitle(rows.get(i).getTitle());
+                        model.setUrl(rows.get(i).getUrl());
+                        list.add(model);
+                    }
+                    if (isRef) {
+                        adapter.deleteAllData();
+                        adapter.refAllData(list);
+                    } else {
+                        adapter.appendToList(list);
+                    }
+                    getView().requestDataSuccess(isRef);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                if (isRef) {
-                    adapter.deleteAllData();
-                    adapter.refAllData(list);
-                } else {
-                    adapter.appendToList(list);
-                }
-                getView().requestDataSuccess(isRef);
             }
 
             @Override

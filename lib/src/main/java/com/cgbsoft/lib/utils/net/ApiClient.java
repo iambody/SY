@@ -1334,8 +1334,11 @@ public class ApiClient {
     /**
      * 获取健康中检测/医疗数据
      */
-    public static Observable<HealthEntity.Result> getHealthDataList(HashMap hashMap) {
-        return OKHTTP.getInstance().getRequestManager().getHealthList(hashMap).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    public static Observable<HealthEntity.Result> getHealthDataList(HashMap hashMap) {
+//        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    }
+    public static Observable<String> getHealthDataList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

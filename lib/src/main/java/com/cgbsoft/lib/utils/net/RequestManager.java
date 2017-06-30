@@ -709,9 +709,11 @@ interface RequestManager {
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
-    // 获取健康检测/医疗
+     // 获取健康检测/医疗
+//    @GET(NetConfig.SXY.HEALTH_GET_URL)
+//    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
     @GET(NetConfig.SXY.HEALTH_GET_URL)
-    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
+    Observable<ResponseBody> getHealthList(@QueryMap Map<String, String> paramsMap);
 
     // 预约健康检测/医疗
     @POST(NetConfig.SXY.HEALTH_FREE_BESPEAK_URL)
