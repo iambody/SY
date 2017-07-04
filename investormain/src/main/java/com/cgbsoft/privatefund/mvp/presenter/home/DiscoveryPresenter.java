@@ -12,6 +12,9 @@ import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -29,8 +32,15 @@ public class DiscoveryPresenter extends BasePresenterImpl<DiscoverContract.View>
             @Override
             protected void onEvent(String s) {
                 Log.d("DiscoveryPresenter", "----"+ s.toString());
-                DiscoverModel result = new Gson().fromJson(s, new TypeToken<DiscoverModel>() {}.getType());
-                getView().requestFirstDataSuccess(result);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(s);
+                    String vas = jsonObject.getString("result");
+                    DiscoverModel result = new Gson().fromJson(vas, new TypeToken<DiscoverModel>() {}.getType());
+                    getView().requestFirstDataSuccess(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
