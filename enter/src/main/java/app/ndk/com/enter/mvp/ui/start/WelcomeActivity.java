@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,7 +52,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
-    private final int defaultTime = 7000;
+    private final int defaultTime = 4000;
     private final int visableBtnTime = 2000;
     private final int waitTime = 5000;
     private final int noNetTime = 3000;
@@ -83,7 +82,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
-        SPreference.saveThisRunOpenDownload(this,  false);
+        SPreference.saveThisRunOpenDownload(this, false);
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
@@ -99,9 +98,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 
@@ -276,7 +275,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
             switch (which) {
                 case BUTTON_WAIT:
-                    btn_wel_cancle.setVisibility(View.VISIBLE);
+//                    btn_wel_cancle.setVisibility(View.VISIBLE);
                     break;
                 case DEFAULT_WAIT:
                 case WAIT:

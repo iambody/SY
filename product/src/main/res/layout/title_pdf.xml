@@ -27,14 +27,12 @@
         android:maxLines="10"
         android:layout_gravity="center_horizontal|center_vertical"  />
 
-    <TextView
+    <ImageView
         android:id="@+id/pdf_title_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
          android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:text="@string/share"
         android:padding="@dimen/ui_5_dip"
-        android:textSize="@dimen/dimens_sp_16"
-        android:drawableLeft="@drawable/fenxiang_share_nor"  />
+        android:src="@drawable/product_plus"/>
 </LinearLayout>
