@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -68,7 +69,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        mainhomeWebview.loadUrls("http://www.sohu.com/");
+        mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         //测试数据**********************
         List<HomeEntity.Operate> datas = new ArrayList<>();
         HomeEntity.Operate d1 = new HomeEntity.Operate();
@@ -94,6 +95,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         homeBannerAdapter=new BannerAdapter(datasa);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         initViewPage(datasa);
+        //请求数据
+        getPresenter().getHomeData();
     }
 
     //初始化banner
@@ -103,12 +106,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     protected MainHomePresenter createPresenter() {
-        return null;
+        return new MainHomePresenter(baseActivity,this);
     }
 
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {
+
 
     }
 

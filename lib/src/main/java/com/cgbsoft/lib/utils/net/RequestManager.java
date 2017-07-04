@@ -3,11 +3,12 @@ package com.cgbsoft.lib.utils.net;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
+import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -705,11 +706,14 @@ interface RequestManager {
     @GET(NetConfig.SXY.GETHOME)
     Observable<BaseResult<HomeEntity.Result>> getSxyHome(@QueryMap Map<String, String> paramsMap);
 
+    @GET(NetConfig.SXY.GETHOME)
+    Observable<ResponseBody> getSxyHomeTest(@QueryMap Map<String, String> paramsMap);
+
     //根据手机硬件地址获取用户ID
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
-     // 获取健康检测/医疗
+    // 获取健康检测/医疗
 //    @GET(NetConfig.SXY.HEALTH_GET_URL)
 //    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
     @GET(NetConfig.Health.HEALTH_GET_URL)
@@ -730,4 +734,16 @@ interface RequestManager {
     // 资讯列表数据
     @GET(NetConfig.Discovery.DISCOVERY_LIST_PAGE)
     Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);
+    /**
+     * 生活家banner列表
+     */
+    @GET(NetConfig.ELEGANT.GETBANNER)
+    Observable<BaseResult<ElegantLivingEntity.Result>> elegantLivingBanners(@QueryMap Map<String, String> paramsMap);
+    /**
+     * 尚品首页第一次加载数据
+     */
+    @GET(NetConfig.ELEGANT.GETGOODSFIRST)
+    Observable<BaseResult<ElegantGoodsEntity.Result>> elegantGoodsFirst(@QueryMap Map<String, String> paramsMap);
+    @GET(NetConfig.ELEGANT.GETGOODSMORE)
+    Observable<BaseResult<ElegantGoodsEntity.ResultMore>> elegantGoodsMore(@QueryMap Map<String, String> params);
 }

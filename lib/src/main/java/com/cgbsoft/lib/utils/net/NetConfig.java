@@ -249,6 +249,8 @@ public class NetConfig {
         static final String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
         //获取视频列表
         static final String VIDEO_SCHOOL_LS = API_URL + video + "s";
+
+
     }
 
     //用户授权相关 V2********
@@ -268,7 +270,7 @@ public class NetConfig {
         private static final String sxy = "/sxy";
 
         //首页
-        static final String GETHOME = API_URL + sxy + "/apphome";
+        static final String GETHOME = API_URL  + "/enjoycloud/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
         static final String VISITOR_GET_USERID = API_URL + "/visitorAuth";
@@ -300,5 +302,15 @@ public class NetConfig {
 
         // 资讯列表页面
         static final String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
+    }
+
+    /**
+     * 生活家banner&尚品
+     */
+    static class ELEGANT{
+        private static final String elegantLiving="/ydtoc";
+        static final String GETBANNER=API_URL+elegantLiving+"/listbanners";
+        static final String GETGOODSFIRST=API_URL+elegantLiving+"/listhotgoods";
+        static final String GETGOODSMORE=API_URL+elegantLiving+"/category";
     }
 }
