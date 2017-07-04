@@ -283,7 +283,6 @@ public class NetConfig {
 //        static final String HEALTH_GET_URL = API_URL + "/health/commend";
 
 
-
         static final String HEALTH_GET_URL = API_URL + "/health/commend";
 
         // 健康免费资讯预约

@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,7 +68,17 @@
 
             </RelativeLayout>
             <!-- Banner*** -->
-
+            <!-- 直播预报的布局 -->
+            <include
+                android:id="@+id/main_home_live_lay"
+                layout="@layout/view_home_live_lay"
+                android:visibility="gone" />
+            <!-- 直播预报的布局************ -->
+            <!-- 会员等级的布局 -->
+            <include
+                android:id="@+id/main_home_level_lay"
+                layout="@layout/view_home_level_lay" />
+            <!-- 会员等级的布局************* -->
             <!-- 横向滑动的布局 -->
             <HorizontalScrollView
                 android:id="@+id/main_home_horizontalscrollview"
