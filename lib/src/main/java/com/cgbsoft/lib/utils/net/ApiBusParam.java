@@ -95,9 +95,24 @@ public class ApiBusParam {
     public static HashMap getHealthDataParams(String category, int offset, int limit) {
         HashMap hashMap = new HashMap<>();
         hashMap.put("category", category);
-        hashMap.put("offset", offset);
-        hashMap.put("limit", limit);
+        hashMap.put("offset", String.valueOf(offset));
+        hashMap.put("limit", String.valueOf(limit));
         return hashMap;
     }
 
+    public static HashMap getBespeakHealthParams(String id, String name, String phone, String captcha) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("id", id);
+        hashMap.put("name", name);
+        hashMap.put("phone", phone);
+        hashMap.put("captcha", captcha);
+        return hashMap;
+    }
+
+    public static HashMap getBespeakHealthValidateParams(String phone) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("phone", phone);
+        hashMap.put("checkPhoneDuplicate", "6");
+        return hashMap;
+    }
 }
