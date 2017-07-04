@@ -11,9 +11,44 @@
         android:layout_height="@dimen/ui_z_dip"
         android:src="@color/font_grey_up" />
 
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/pdf_share_iv"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:paddingLeft="@dimen/ui_20_dip"
+            android:background="@drawable/fx01_nor"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fenxiangzc"
+                android:layout_toLeftOf="@+id/tsas"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/tsas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/dimens_sp_14"
+                android:text="分享"
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

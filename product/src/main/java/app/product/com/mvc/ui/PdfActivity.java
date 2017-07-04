@@ -2,15 +2,15 @@ package app.product.com.mvc.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
-import com.chenenyu.router.annotation.Route;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
@@ -40,11 +40,12 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     @BindView(R2.id.pdf_title_left)
     ImageView pdfTitleLeft;
     @BindView(R2.id.pdf_title_right)
-    TextView pdfTitleRight;
+    ImageView pdfTitleRight;
     @BindView(R2.id.pdf_title)
     TextView pdfTitle;
-
-
+    @BindView(R2.id.pdf_share_iv)
+    RelativeLayout pdfShareIv;
+    private boolean isShowShare;
     //展示view
     private PDFView pdfView;
     //下载url
@@ -136,7 +137,12 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     //分享按钮
     @OnClick(R2.id.pdf_title_right)
     public void onPdfTitleRightClicked() {
+        isShowShare = !isShowShare;//
+        // pdfShareIv.setVisibility(View.GONE);
+        pdfShareIv.setVisibility(isShowShare ? View.VISIBLE : View.GONE);
+    }
 
+    private void shareShow() {
         String shareTitle = "产品简版" + pdfTitleStr;
         String shareContent = String.format("私募云平台浮收项目%s开始募集，%s万起投", null != productlsBean ? productlsBean.productName : pdfTitleStr, null != productlsBean ? productlsBean.buyStart : "");//"私募云平台浮收项目" + productlsBean.productName+ "开始募集，" + "" + productlsBean.buyStart + "万起投";
         String shareUrl = pdfurl;
@@ -146,5 +152,22 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, null);
         if (null != commonShareDialog && !commonShareDialog.isShowing()) commonShareDialog.show();
 
+    }
+
+    @OnClick(R2.id.pdf_share_iv)
+    public void onViewClicked() {
+        isShowShare = false;
+        pdfShareIv.setVisibility(View.GONE);
+        shareShow();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isShowShare) {
+            isShowShare = false;
+            pdfShareIv.setVisibility(View.GONE);
+
+        }
+        return super.onTouchEvent(event);
     }
 }

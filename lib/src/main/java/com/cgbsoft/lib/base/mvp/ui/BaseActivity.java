@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -373,6 +375,14 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         } catch (JSONException e) {
             e.printStackTrace();
             return "";
+        }
+    }
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && this.getCurrentFocus() != null) {
+            if (this.getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         }
     }
 
