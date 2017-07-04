@@ -13,6 +13,7 @@ import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
@@ -44,7 +45,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     private void initView(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
         titleTV.setText("设置");
-        gestureSwitch.setSwitchCheck(true);
         gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
             @Override
             public void change(CompoundButton buttonView, boolean isChecked) {
@@ -59,5 +59,33 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @Override
     protected SettingPresenterImpl createPresenter() {
         return new SettingPresenterImpl(getBaseContext(),this);
+    }
+
+    /**
+     * 跳转到修改登录密码页面
+     */
+    @OnClick(R.id.sin_change_login_psd)
+    public void changeLoginPsd(){
+        Router.build(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY).go(SettingActivity.this);
+    }
+    @OnClick(R.id.sin_change_gesture_psd)
+    public void changeGesturePsd(){
+
+    }
+    @OnClick(R.id.sin_common_question)
+    public void commonQuestion(){
+
+    }
+    @OnClick(R.id.sin_feedback)
+    public void feedBack(){
+
+    }
+    @OnClick(R.id.sin_recommend_friend)
+    public void recommendFriend(){
+
+    }
+    @OnClick(R.id.sin_about_app)
+    public void aboutApp(){
+
     }
 }

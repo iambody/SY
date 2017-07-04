@@ -1,18 +1,15 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.R;
@@ -20,7 +17,6 @@ import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;

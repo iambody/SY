@@ -20,9 +20,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:padding="5dp"
+        android:padding="10dp"
         android:src="@drawable/select_happy_life_toolbar_left"
         android:clickable="true"
+        android:visibility="gone"
         android:scaleType="fitCenter" />
     <ImageView
         android:id="@+id/iv_title_right"
@@ -31,7 +32,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:clickable="true"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:visibility="gone"
         android:src="@drawable/select_happy_life_toolbar_right"
         android:scaleType="fitCenter" />
 

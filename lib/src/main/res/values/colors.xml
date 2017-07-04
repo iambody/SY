@@ -102,5 +102,9 @@
     <color name="app_content_icon">#e2e1e6</color>
     <!-- 醒目提示 红色 -->
     <color name="app_red">#e63945</color>
+    <!-- 下拉刷新颜色 -->
+    <color name="colorGreen">#3cda38</color>
+    <color name="colorRed">#ec0909</color>
+    <color name="colorYellow">#ff8800</color>
 
 </resources>

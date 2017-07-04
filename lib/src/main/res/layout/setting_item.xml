@@ -15,6 +15,7 @@
         android:layout_toLeftOf="@+id/ll_setting_item_right"
         android:layout_weight="1"
         android:textSize="15sp"
+        android:textColor="@color/black"
         />
 
     <FrameLayout

@@ -24,6 +24,7 @@
                 />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_change_login_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_change_pwd"
@@ -40,6 +41,7 @@
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_change_gesture_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_change_gesture_pwd"
@@ -47,6 +49,7 @@
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_common_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_common_question"
@@ -54,6 +57,7 @@
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_feedback"
@@ -61,6 +65,7 @@
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_recommend"
@@ -68,6 +73,7 @@
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_about_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:setting_item_title="@string/setting_item_about_app"

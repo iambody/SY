@@ -274,4 +274,14 @@ public class NetConfig {
         //通过手机硬件地址兑换相应的userid和tOKEN
         static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
     }
+
+    /**
+     * 生活家banner&尚品
+     */
+    static class ELEGANT{
+        private static final String elegantLiving="/ydtoc";
+        static final String GETBANNER=API_URL+elegantLiving+"/listbanners";
+        static final String GETGOODSFIRST=API_URL+elegantLiving+"/listhotgoods";
+        static final String GETGOODSMORE=API_URL+elegantLiving+"/category";
+    }
 }

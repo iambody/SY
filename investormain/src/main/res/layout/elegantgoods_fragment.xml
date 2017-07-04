@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/elegant_goods_category_bg"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/elegant_goods_rv"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            >
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <com.dinuscxj.refresh.RecyclerRefreshLayout
+        android:id="@+id/elegant_goods_layout_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/elegant_goods_rv_prodects"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+</LinearLayout>

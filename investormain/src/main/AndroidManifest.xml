@@ -272,6 +272,11 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.SettingActivity"
             android:screenOrientation="portrait" />
+        <!-- 修改登录密码页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
 
 
         <!-- app module 通用的webview -->
