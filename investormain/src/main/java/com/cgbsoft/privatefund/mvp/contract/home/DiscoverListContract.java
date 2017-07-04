@@ -4,20 +4,22 @@ import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.privatefund.model.DiscoverModel;
 
+import java.util.List;
+
 /**
  * @author chenlong
  */
-public interface DiscoverContract {
+public interface DiscoverListContract {
 
     interface Presenter extends BasePresenter{
 
-        void getDiscoveryFirstData();
+        void getDiscoveryListData(String offset, String category);
     }
 
     interface View extends BaseView{
 
-        void requestFirstDataSuccess(DiscoverModel discoverModel);
+        void requestListDataSuccess(List<DiscoverModel.DiscoveryListModel> discoveryListModel);
 
-        void requestFirstDataFailure(String errMsg);
+        void requestListDataFailure(String errMsg);
     }
 }

@@ -249,8 +249,6 @@ public class NetConfig {
         static final String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
         //获取视频列表
         static final String VIDEO_SCHOOL_LS = API_URL + video + "s";
-
-
     }
 
     //用户授权相关 V2********
@@ -281,9 +279,12 @@ public class NetConfig {
 
         // 健康检测/医疗数据
 //        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+    }
 
-
-
+    /**
+     * 健康接口
+     */
+    static class Health {
         static final String HEALTH_GET_URL = API_URL + "/health/commend";
 
         // 健康免费资讯预约
@@ -291,5 +292,13 @@ public class NetConfig {
 
         // 健康短信验证
         static final String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
+    }
+
+    static class Discovery {
+        // 资讯首页数据
+        static final String DISCOVERY_FIRST_PAGE = API_URL + "/information/home";
+
+        // 资讯列表页面
+        static final String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
     }
 }

@@ -115,4 +115,11 @@ public class ApiBusParam {
         hashMap.put("checkPhoneDuplicate", "6");
         return hashMap;
     }
+
+    public static HashMap getDiscoverListDataParams(String offset, String category) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("offset", offset);
+        hashMap.put("category", category);
+        return hashMap;
+    }
 }
