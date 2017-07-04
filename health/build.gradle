@@ -7,14 +7,14 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner rootProject.ext.testRunner
     }
     buildTypes {
         release {
@@ -29,10 +29,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile "com.android.support:appcompat-v7:${android_need_version}"
+    testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${android_need_version}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile  "com.jakewharton:butterknife:${butterknife_need_version}"

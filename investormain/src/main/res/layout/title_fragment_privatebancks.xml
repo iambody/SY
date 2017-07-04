@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/ui_5_dip">
+    android:paddingBottom="@dimen/ui_5_dip"
+    android:paddingLeft="@dimen/ui_5_dip"
+    android:paddingRight="@dimen/ui_5_dip"
+    android:paddingTop="@dimen/ui_20_dip"
+    android:layout_marginTop="@dimen/ui_5_dip">
 
     <ImageView
         android:layout_width="@dimen/ui_40_dip"
@@ -16,10 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+
         android:layout_weight="1"
         android:background="@drawable/shape_privatebank_title"
         android:orientation="horizontal"
-        android:padding="@dimen/ui_10_dip">
+        android:padding="@dimen/ui_5_dip">
 
         <ImageView
             android:layout_width="@dimen/ui_15_dip"

@@ -122,7 +122,7 @@ public class NetConfig {
         //私享云新增的获取视频列表的V2接口
         static final String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
-        static final String GET_VIDEO_ALLINF = API_URL + information + "/videos/all";
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
 
     }
 
@@ -263,7 +263,9 @@ public class NetConfig {
     }
 
 
-    /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
+    /**
+     * ****************以下为6.0私享云 新增接口的配置路径*******************
+     **/
     static class SXY {
         private static final String sxy = "/sxy";
 
@@ -271,9 +273,17 @@ public class NetConfig {
         static final String GETHOME = API_URL + sxy + "/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
-        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
+        static final String VISITOR_GET_USERID = API_URL + "/visitorAuth";
+
+        //获取全站导航栏信息
+        static final String GET_NAVIFAITION = API_URL + "navigation";
+//        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
 
         // 健康检测/医疗数据
+//        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+
+
+
         static final String HEALTH_GET_URL = API_URL + "/health/commend";
 
         // 健康免费资讯预约
