@@ -205,18 +205,50 @@
                     <include
                         android:id="@+id/videplay_produxt_view"
                         layout="@layout/view_vidoplay_product"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_10_dip"
+                        android:background="@color/transparent"/>
                     <!-- C相关产品.......... -->
                     <!-- 内容-->
+                    <!-- 主讲人 -->
+                    <LinearLayout
+                        android:id="@+id/jiangjieren_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/ui_10_dip"
+                        android:visibility="gone">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ui_5_dip"
+                            android:drawablePadding="@dimen/ui_5_dip"
+                            android:text="@string/zhujiangren"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimens_sp_16"
+                            android:textStyle="bold" />
+
+                        <ImageView style="@style/video_bottom_line" />
+
+                        <TextView
+                            android:id="@+id/jiangjieren"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="杨勇总裁" />
+
+                    </LinearLayout>
+                    <!-- 主讲人。。。。。。。。。。。 -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ui_10_dip"
                         android:background="@color/white"
                         android:paddingLeft="@dimen/ui_10_dip"
-                        android:paddingTop="@dimen/ui_10_dip"
-
+                        android:paddingTop="@dimen/ui_20_dip"
                         android:text="@string/xiangxijieshao"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimens_sp_16"

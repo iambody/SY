@@ -28,9 +28,16 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
+        int childAdapterPosition = parent.getChildAdapterPosition(view);
+
+        int lastCount = parent.getAdapter().getItemCount() - 1;
+
+        //如果当前条目与是最后一个条目，就不设置divider padding
+        if (childAdapterPosition == lastCount) {
+            outRect.set(0, 0, 0, 0);
+            return;
+        }
         outRect.bottom = margin;
-
-
     }
 
     @Override
@@ -43,11 +50,12 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
         final int right = parent.getWidth() - parent.getPaddingRight();
 
         final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        for (int i = 0; i < parent.getChildCount(); i++) {
+        for (int i = 0; i < parent.getChildCount()-1; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             drawTop(left, right, child, c, layoutManager, params);
             drawBottom(child, left, right, c, layoutManager, params);
+
         }
     }
 

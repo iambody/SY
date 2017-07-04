@@ -76,7 +76,7 @@
             android:gravity="center"
             android:padding="@dimen/ui_10_dip"
             android:text=" 查看更多"
-            android:textColor="#f47900"
+            android:textColor="@color/app_golden"
             android:visibility="gone" />
 
     </RelativeLayout>

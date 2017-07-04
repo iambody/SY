@@ -75,6 +75,7 @@ import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import app.privatefund.com.vido.mvp.ui.video.adapter.CommentAdapter;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -195,6 +196,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     ImageView viewTitleBackIv;
     @BindView(R2.id.view_title_right_txt)
     TextView viewTitleRightTxt;
+    @BindView(R2.id.jiangjieren)
+    TextView jiangjieren;
+    @BindView(R2.id.jiangjieren_lay)
+    LinearLayout jiangjierenLay;
 
 
     private View title_videodetail_lay;
@@ -890,7 +895,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             rl_avd_download.startAnimation(closeAnimationSet);
 
         }
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             return true;
         }
@@ -939,6 +944,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     private void setData() {
+        jiangjierenLay.setVisibility(BStrUtils.isEmpty(videoInfoModel.lecturerRemark)?View.GONE:View.VISIBLE);
+        BStrUtils.SetTxt(jiangjieren,videoInfoModel.lecturerRemark);
         tv_avd_like_num.setText(String.valueOf(videoInfoModel.likeNum));
         tv_avd_title.setText(videoInfoModel.videoName);
         tv_avd_content.setText(videoInfoModel.content);
@@ -1072,6 +1079,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName);
     }
+
 
 
     class AnimListener implements Animation.AnimationListener {

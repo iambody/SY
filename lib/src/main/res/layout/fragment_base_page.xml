@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         android:background="@color/transparent" />
 
     <ImageView style="@style/normal_diveline" />

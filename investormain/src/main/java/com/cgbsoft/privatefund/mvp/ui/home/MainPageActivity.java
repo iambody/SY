@@ -139,7 +139,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void after() {
         super.after();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
@@ -193,8 +196,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initActionPoint() {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("client","c");
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("client", "c");
         getPresenter().actionPoint(map);
     }
 
@@ -670,7 +673,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
 //            MainTabManager.getInstance().getProductFragment().backClick();
 //        } else
-            exitBy2Click();
+        exitBy2Click();
     }
 
 

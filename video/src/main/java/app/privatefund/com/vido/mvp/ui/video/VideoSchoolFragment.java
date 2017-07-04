@@ -217,6 +217,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         videoVideolistBannerview.setPlayDelay(10 * 1000);
         bannerAdapter = new BannerAdapter(banners);
         videoVideolistBannerview.setAdapter(bannerAdapter);
+        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
+
 
     }
 
