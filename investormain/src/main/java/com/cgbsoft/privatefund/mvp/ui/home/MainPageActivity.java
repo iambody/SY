@@ -146,6 +146,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        baseWebview.loadUrls(CwebNetConfig.pageInit);
+    }
+
+    @Override
     protected void init(Bundle savedInstanceState) {
         Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
