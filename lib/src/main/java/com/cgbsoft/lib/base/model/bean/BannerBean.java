@@ -21,6 +21,8 @@ public class BannerBean {
 
     private int positon;
 
+    public BannerBean() {}
+
     public BannerBean(boolean isVideo, String imageUrl, ViewType vierType) {
         this.isVideo = isVideo;
         ImageUrl = imageUrl;

@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,7 +47,6 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
         } else {
             index++;
         }
-        System.out.println("-------start getHealthList");
 //        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
 //            @Override
 //            protected void onEvent(HealthEntity.Result s) {
@@ -93,7 +93,7 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
                         model.type = HealthListModel.BOTTOM;
                         model.setCode(rows.get(i).getCode());
                         model.setId(rows.get(i).getId());
-                        model.setImageUrl(rows.get(i).getImageUrl().get(0).getUrl());
+                        model.setImageUrl(rows.get(i).getImageUrl());
                         model.setTitle(rows.get(i).getTitle());
                         model.setUrl(rows.get(i).getUrl());
                         list.add(model);
@@ -101,8 +101,12 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
                     if (isRef) {
                         adapter.deleteAllData();
                         adapter.refAllData(list);
+                        System.out.println("-----isRef-length=" + adapter.getList().size());
                     } else {
-                        adapter.appendToList(list);
+                        if (!CollectionUtils.isEmpty(list)) {
+                            adapter.appendToList(list);
+                            System.out.println("-----append-length=" + adapter.getList().size());
+                        }
                     }
                     getView().requestDataSuccess(isRef);
                 } catch (JSONException e) {

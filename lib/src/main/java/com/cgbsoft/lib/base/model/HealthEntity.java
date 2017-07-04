@@ -54,7 +54,7 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
 
         private String url;
 
-        private List<ImageBean> imageUrl;
+        private String imageUrl;
 
         public String getId() {
             return id;
@@ -88,35 +88,35 @@ public class HealthEntity extends BaseResult<HealthEntity.Result> {
             this.url = url;
         }
 
-        public List<ImageBean> getImageUrl() {
+        public String getImageUrl() {
             return imageUrl;
         }
 
-        public void setImageUrl(List<ImageBean> imageUrl) {
+        public void setImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
         }
     }
 
-    public static class ImageBean {
-
-        private String name;
-
-        private String url;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
+//    public static class ImageBean {
+//
+//        private String name;
+//
+//        private String url;
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getUrl() {
+//            return url;
+//        }
+//
+//        public void setUrl(String url) {
+//            this.url = url;
+//        }
+//    }
 }

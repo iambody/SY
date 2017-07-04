@@ -31,6 +31,7 @@ import butterknife.Unbinder;
 public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends Fragment implements Constant {
 
     protected View FBaseView;
+
     protected Activity fBaseActivity;
     private boolean isFirstVisible = true;
     private boolean isFirstInvisible = true;
