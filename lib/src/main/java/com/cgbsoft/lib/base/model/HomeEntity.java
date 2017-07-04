@@ -12,14 +12,14 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
     }
 
     public static class Banner {
-        public int jumpId;//": "200100",
+        public String jumpId;//": "200100",
         public String url;//": "https://",
         public String imageUrl;//": "https://",
         public String title;//": "简单生活物语"
     }
 
     public static class Operate {
-        public int jumpId;//": "300200",
+        public String jumpId;//": "300200",
         public String imageUrl;//": "https://",
         public String title;//": "会员专区",
         public String jumpType;//": "h5",

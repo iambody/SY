@@ -37,8 +37,13 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 投资人认证
     public static String invistorCertify;
 
+
+    // 投资人认证
+    public static String HOME_URL;
+
     static {
         initApi();
+        initSxyUrl();
     }
 
     public static void initApi() {
@@ -55,5 +60,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
+    }
+    public static void initSxyUrl(){
+        HOME_URL= baseSxyParentUrl + "biz/profile/";
     }
 }

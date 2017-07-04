@@ -706,10 +706,34 @@ interface RequestManager {
     @GET(NetConfig.SXY.GETHOME)
     Observable<BaseResult<HomeEntity.Result>> getSxyHome(@QueryMap Map<String, String> paramsMap);
 
+    @GET(NetConfig.SXY.GETHOME)
+    Observable<ResponseBody> getSxyHomeTest(@QueryMap Map<String, String> paramsMap);
+
     //根据手机硬件地址获取用户ID
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
+    // 获取健康检测/医疗
+//    @GET(NetConfig.SXY.HEALTH_GET_URL)
+//    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
+    @GET(NetConfig.Health.HEALTH_GET_URL)
+    Observable<ResponseBody> getHealthList(@QueryMap Map<String, String> paramsMap);
+
+    // 预约健康检测/医疗
+    @POST(NetConfig.Health.HEALTH_FREE_BESPEAK_URL)
+    Observable<ResponseBody> bespeakHealth(@Body RequestBody responseBody);
+
+    // 预约健康检 短信验证
+    @POST(NetConfig.Health.HEALTH_INFO_VALIDATE_URL)
+    Observable<ResponseBody> bespeakHealthInfoValidate(@Body RequestBody responseBody);
+
+    // 资讯首页数据
+    @GET(NetConfig.Discovery.DISCOVERY_FIRST_PAGE)
+    Observable<ResponseBody> getDiscoverFirstPage(@QueryMap Map<String, String> paramsMap);
+
+    // 资讯列表数据
+    @GET(NetConfig.Discovery.DISCOVERY_LIST_PAGE)
+    Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);
     /**
      * 生活家banner列表
      */

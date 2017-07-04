@@ -37,8 +37,6 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
 
-    protected View titleView;
-
     protected abstract int titleLayoutId();
 
     protected abstract ArrayList<TabBean> list();
@@ -56,7 +54,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             tabLayout.addTab(tab);
         }
         LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {

@@ -5,5 +5,10 @@
     <dimen name="setting_in_margintitle">10dp</dimen>
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_2">2dp</dimen>
+    <dimen name="ui_75_dip">75dp</dimen>
+    <dimen name="ui_110_dip">110dp</dimen>
+    <dimen name="ui_200_dip">200dp</dimen>
+    <dimen name="ui_400_dip">400dp</dimen>
+    <dimen name="ui_300_dip">300dp</dimen>
 
 </resources>

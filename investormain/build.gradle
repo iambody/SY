@@ -154,4 +154,5 @@ dependencies {
     compile project(':mall')
     compile 'com.takwolf.android:lock9view:0.0.11'
     compile 'com.android.support:support-v4:24.2.1'
+    compile project(':health')
 }

@@ -30,6 +30,8 @@
 //
 //import butterknife.BindView;
 //
+//import static java.security.AccessController.getContext;
+//
 ///**
 // * 学院
 // * Created by xiaoyu.zhang on 2016/11/15 14:41
