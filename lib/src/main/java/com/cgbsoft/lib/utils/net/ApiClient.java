@@ -14,7 +14,6 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -1329,6 +1328,11 @@ public class ApiClient {
      */
     public static Observable<HomeEntity.Result> getSxyHomeData() {
         return OKHTTP.getInstance().getRequestManager().getSxyHome(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    //获取首页数据测试
+    public static Observable<String> getSxyHomeDataTest() {
+        return OKHTTP.getInstance().getRequestManager().getSxyHomeTest(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

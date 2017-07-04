@@ -7,7 +7,6 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -705,11 +704,14 @@ interface RequestManager {
     @GET(NetConfig.SXY.GETHOME)
     Observable<BaseResult<HomeEntity.Result>> getSxyHome(@QueryMap Map<String, String> paramsMap);
 
+    @GET(NetConfig.SXY.GETHOME)
+    Observable<ResponseBody> getSxyHomeTest(@QueryMap Map<String, String> paramsMap);
+
     //根据手机硬件地址获取用户ID
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
-     // 获取健康检测/医疗
+    // 获取健康检测/医疗
 //    @GET(NetConfig.SXY.HEALTH_GET_URL)
 //    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
     @GET(NetConfig.SXY.HEALTH_GET_URL)
