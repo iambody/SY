@@ -2,30 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="100dp"
+    android:layout_marginTop="125dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#eee"
     android:focusable="true"
     android:clickable="true">
-        <com.fivehundredpx.android.blur.BlurringView
-            android:id="@+id/blurring_view"
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:blurRadius="11"
-            app:downsampleFactor="6"
-            app:overlayColor="#99FFFFFF"/>
+            android:background="@drawable/product_blur"/>
+
         <TextView
             android:id="@+id/product_product_wenjuan"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@color/app_golden"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/edit_risk_question"

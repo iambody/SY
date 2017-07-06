@@ -13,14 +13,13 @@
         android:src="@drawable/privatebank_title_left" />
 
     <LinearLayout
-        android:id="@+id/search_layout"
+        android:id="@+id/search_layout_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:background="@drawable/shape_privatebank_title"
         android:orientation="horizontal"
-        android:padding="@dimen/ui_10_dip">
+        >
 
         <TextView
             android:id="@+id/search_text"
@@ -28,7 +27,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/message_search_flag_bg"
-            android:clickable="true"
             android:drawableLeft="@drawable/search_black"
             android:drawablePadding="5dp"
             android:gravity="left|center_vertical"

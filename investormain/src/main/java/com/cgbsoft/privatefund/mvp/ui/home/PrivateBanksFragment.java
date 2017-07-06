@@ -1,8 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
@@ -15,12 +15,8 @@ import com.cgbsoft.privatefund.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
-import app.product.com.R2;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.ProductFragment;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * desc  ${DESC}
@@ -34,8 +30,6 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
 
-    @BindView(R.id.search_layout)
-    LinearLayout searchText;
 
     @Override
     protected int titleLayoutId() {
@@ -52,6 +46,22 @@ public class PrivateBanksFragment extends BasePageFragment {
             }
         }
         return null;
+    }
+
+
+    @Override
+    protected void bindTitle(View titleView) {
+        LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(baseActivity, SearchBaseActivity.class);
+                i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
+                baseActivity.startActivity(i);
+                DataStatistApiParam.onStatisToCProductSearchClick();
+            }
+        });
+
     }
 
     /**
@@ -79,14 +89,5 @@ public class PrivateBanksFragment extends BasePageFragment {
             }
         }
         return tabBeens;
-    }
-
-
-    @OnClick(R.id.search_layout)
-    public void searchClick() {
-        Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-        i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-        baseActivity.startActivity(i);
-        DataStatistApiParam.onStatisToCProductSearchClick();
     }
 }

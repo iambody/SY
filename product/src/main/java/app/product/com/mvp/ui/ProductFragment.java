@@ -83,8 +83,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
 
-    @BindView(R2.id.blurring_view)
-    BlurringView blurringView;
+//    @BindView(R2.id.blurring_view)
+//    BlurringView blurringView;
 
     //加载数据的dialog
     private LoadingDialog loadingDialog;
@@ -278,8 +278,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             //如果哦有缓存 就初始化筛选条件
             initFilterDate(productFilterBean.getSeries().getItems());
         }
-        blurringView.setBlurredView(swipeToLoadLayout);
-        blurringView.invalidate();
+//        blurringView.setBlurredView(swipeToLoadLayout);
+//        blurringView.invalidate();
         initEvent();
     }
 

@@ -36,4 +36,9 @@ public class CProductFragment extends BasePageFragment {
         tabBeens.add(tabBeen3);
         return tabBeens;
     }
+
+    @Override
+    protected void bindTitle(View titleView) {
+
+    }
 }

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.cgbsoft.lib.base.mvp.ui.BasePageFragment"
     android:orientation="vertical">
 
     <FrameLayout
@@ -22,13 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         app:xTabMode="fixed"
-        app:xTabIndicatorColor="@color/app_golden_click"
+        app:xTabIndicatorColor="@color/app_golden"
         app:xTabIndicatorHeight="4dp"
-        app:xTabIndicatorWidth="25dp"
-        app:xTabSelectedTextColor="@color/app_golden_click"
+        app:xTabIndicatorWidth="30dp"
+        app:xTabSelectedTextColor="@color/app_golden"
         app:xTabTextColor="#ff000000"
         app:xTabTextSize="15sp"
         app:xTabSelectedTextSize="15sp"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_z_dip"
+        android:src="@color/gray_font" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

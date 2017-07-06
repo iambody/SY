@@ -42,4 +42,9 @@ public class HappyLifeFragment extends BasePageFragment {
         return tabBeens;
     }
 
+    @Override
+    protected void bindTitle(View titleView) {
+
+    }
+
 }
