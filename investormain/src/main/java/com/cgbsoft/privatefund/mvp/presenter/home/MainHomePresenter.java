@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -21,28 +22,29 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 
     @Override
     public void getHomeData() {
-//        addSubscription(ApiClient.getSxyHomeData().subscribe(new RxSubscriber<HomeEntity.Result>() {
-//            @Override
-//            protected void onEvent(HomeEntity.Result result) {
-//                getView().getResultSucc(result);
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                getView().getResultError(error.getMessage());
-//            }
-//        }));
-        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.getSxyHomeData().subscribe(new RxSubscriber<HomeEntity.Result>() {
             @Override
-            protected void onEvent(String s) {
-                LogUtils.Log("s", s);
+            protected void onEvent(HomeEntity.Result result) {
+                getView().getResultSucc(result);
+                LogUtils.Log("s","s");
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                LogUtils.Log("s", error.getMessage());
+                getView().getResultError(error.getMessage());
             }
         }));
+//        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String s) {
+//                LogUtils.Log("s", s);
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                LogUtils.Log("s", error.getMessage());
+//            }
+//        }));
 
     }
 }
