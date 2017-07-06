@@ -85,12 +85,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
 
             }
         });
-        commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(i);
-            }
-        });
+        commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(i));
 
         return commonPagerTitleView;
     }
@@ -99,7 +94,6 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     public IPagerIndicator getIndicator(Context context) {
         LinePagerIndicator indicator = new LinePagerIndicator(context);
         indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-
         indicator.setYOffset(UIUtil.dip2px(context, 3));
         indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
         indicator.setXOffset(UIUtil.dip2px(context, 10));

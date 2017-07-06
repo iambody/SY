@@ -107,7 +107,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             getSupportActionBar().setTitle(null);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(v -> finish());
-
         tv_title.setText(R.string.play_history_str);
     }
 
@@ -133,7 +132,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @OnClick(R2.id.tv_avh_choiceAll)
     void choiceAllClick() {
         isChoiceAll = !isChoiceAll;
-
         List<VideoHistoryModel> list = videoHistoryAdapter.getList();
         for (int i = 0; i < list.size(); i++) {
             list.get(i).isCheck = isChoiceAll;

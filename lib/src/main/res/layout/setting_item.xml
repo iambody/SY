@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_setting_item_left_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toLeftOf="@+id/ll_setting_item_right"
+        android:layout_weight="1"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        />
+
+    <FrameLayout
+        android:id="@+id/ll_setting_item_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_setting_item_right_part"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_setting_item_right_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/iv_setting_item_right_arrow"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/arrow_right"
+                />
+        </LinearLayout>
+
+        <com.cgbsoft.lib.widget.SwitchButton
+            android:id="@+id/setting_item_switchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:frameDrawable="@drawable/switch_frame"
+            app:sliderDrawable="@drawable/selector_switch_slider"
+            app:stateDrawable="@drawable/selector_switch_state"
+            app:stateMaskDrawable="@drawable/switch_state_mask"
+            app:withTextInterval="16dp"
+            android:visibility="gone"
+            ></com.cgbsoft.lib.widget.SwitchButton>
+    </FrameLayout>
+
+    <include
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        />
+</RelativeLayout>

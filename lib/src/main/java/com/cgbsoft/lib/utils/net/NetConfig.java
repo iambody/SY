@@ -303,4 +303,14 @@ public class NetConfig {
         // 资讯列表页面
         static final String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
     }
+
+    /**
+     * 生活家banner&尚品
+     */
+    static class ELEGANT{
+        private static final String elegantLiving="/ydtoc";
+        static final String GETBANNER=API_URL+elegantLiving+"/listbanners";
+        static final String GETGOODSFIRST=API_URL+elegantLiving+"/listhotgoods";
+        static final String GETGOODSMORE=API_URL+elegantLiving+"/category";
+    }
 }
