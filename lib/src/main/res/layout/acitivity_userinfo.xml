@@ -39,6 +39,22 @@
 
         <include layout="@layout/acitivity_divide_online" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/url"
+                android:hint="url"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/enter"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="确定"/>
+        </LinearLayout>
+
         <com.cgbsoft.lib.base.webview.BaseWebview
             android:id="@+id/webview"
             android:layout_width="match_parent"
