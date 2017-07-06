@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -14,14 +17,12 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
-import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.ElegantGoodsMultAdapter;
 import com.cgbsoft.privatefund.adapter.ElegantGoodsRecyclerAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.ElegantGoodsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.ElegantGoodsPresenterImpl;
-import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,12 @@ import butterknife.BindView;
  * Created by sunfei on 2017/6/29 0029.
  */
 
-public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl> implements ElegantGoodsContract.ElegantGoodsView,RecyclerRefreshLayout.OnRefreshListener,RecyclerControl.OnControlGetDataListListener{
+public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl> implements ElegantGoodsContract.ElegantGoodsView,OnLoadMoreListener, OnRefreshListener {
     @BindView(R.id.elegant_goods_rv)
     RecyclerView recyclerView;
-    @BindView(R.id.elegant_goods_layout_swipe_refresh)
-    RecyclerRefreshLayout mRefreshLayout;
-    @BindView(R.id.elegant_goods_rv_prodects)
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout mRefreshLayout;
+    @BindView(R.id.swipe_target)
     RecyclerView recyclerViewPros;
     private LinearLayoutManager linearLayoutManager;
     private List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categoryDatas=new ArrayList<>();
@@ -50,7 +51,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     private String category = CATEGORY_ALL;//记录被点击的分类标记，默认是全部分类
     private ElegantGoodsRecyclerAdapter categoryAdapter;
     private ElegantGoodsMultAdapter proAdapter;
-    private RecyclerControl recyclerControl;
     private boolean isOver;
     private boolean isCategorySelect;//是否是选择分类后去请求的数据
 
@@ -77,6 +77,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             }
         });
 
+        mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setOnRefreshListener(this);
         DividerGridItemDecoration dividerGridItemDecoration = new DividerGridItemDecoration(baseActivity, R.drawable.elegant_divider);
         recyclerViewPros.addItemDecoration(dividerGridItemDecoration);
@@ -95,8 +96,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                 }
             }
         });
-        recyclerControl = new RecyclerControl(mRefreshLayout, gridLayoutManager, this);
-        recyclerViewPros.addOnScrollListener(recyclerControl.getOnScrollListener());
         recyclerViewPros.setLayoutManager(gridLayoutManager );
         proAdapter.setOnGoodsClickListener(new ElegantGoodsMultAdapter.OnGoodsClickListener() {
             @Override
@@ -148,33 +147,29 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void showLoadDialog() {
-        mLoadingDialog.show();
+//        mLoadingDialog.show();
     }
 
     @Override
     public void hideLoadDialog() {
-        mLoadingDialog.dismiss();
+//        mLoadingDialog.dismiss();
     }
 
     @Override
     public void updateUi(List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categorys,List<ElegantGoodsBeanInterface> result) {
+        clodLsAnim(mRefreshLayout);
         categoryAdapter.setDatas(categorys);
         proAdapter.addDatas(result,true);
-        recyclerControl.getDataComplete(true);
     }
 
     @Override
     public void updateUiMore(List<ElegantGoodsBeanInterface> allRows) {
+        clodLsAnim(mRefreshLayout);
         if (null == allRows||allRows.size() == 0) {
             offsetMore-=LOAD_ELEGANT_GOODS_MORE_lIMIT;
             offsetMore=offsetMore<=0?0:offsetMore;
             if (allRows.size() == 0) {
                 isOver=true;
-            }
-            if (offsetMore == 0) {
-                recyclerControl.getDataComplete(true);
-            } else {
-                recyclerControl.getDataComplete(false);
             }
             return;
         }
@@ -190,62 +185,47 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             isRef=false;
             proAdapter.addDatas(allRows, false);
         }
-        recyclerControl.getDataComplete(isRef);
     }
 
     @Override
     public void updateFirstError(Throwable error) {
-        recyclerControl.getDataComplete(true);
+        clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void updateMoreError(Throwable error) {
 //        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
+        clodLsAnim(mRefreshLayout);
         if (isCategorySelect) {
             isCategorySelect=false;
         }
-        recyclerControl.getDataComplete(false);
     }
 
     /**
-     * 下拉刷新和上拉加载更多
-     * @param isRef true 下拉刷新  false上拉加载更多
+     * 下拉刷新
      */
     @Override
-    public void onControlGetDataList(boolean isRef) {
-//        String s=isRef?"下拉刷新":"上拉加载 ";
-//        LogUtils.Log("aaa",s+"---category is==="+category);
-        if (isRef) {
-            isOver=false;
-            if (category.equals(CATEGORY_ALL)) {
-                getPresenter().getElegantGoodsFirst(offset);
-            } else {
-                offsetMore=0;
-                getPresenter().getElegantGoodsMore(offsetMore,category);
-            }
+    public void onRefresh() {
+        isOver=false;
+        if (category.equals(CATEGORY_ALL)) {
+            getPresenter().getElegantGoodsFirst(offset);
         } else {
-            if (isOver) {
-                Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
-                recyclerControl.getDataComplete(isRef);
-                return;
-            }
-            offsetMore+=LOAD_ELEGANT_GOODS_MORE_lIMIT;
+            offsetMore=0;
             getPresenter().getElegantGoodsMore(offsetMore,category);
         }
     }
 
+    /**
+     * 上拉加载更多
+     */
     @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-    }
-
-    @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-    }
-
-    @Override
-    public void onRefresh() {
-        recyclerControl.onRefresh();
+    public void onLoadMore() {
+        if (isOver) {
+            Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
+            clodLsAnim(mRefreshLayout);
+            return;
+        }
+        offsetMore+=LOAD_ELEGANT_GOODS_MORE_lIMIT;
+        getPresenter().getElegantGoodsMore(offsetMore,category);
     }
 }
