@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_5_dip"
-        android:drawableLeft="@drawable/video_product_icon"
         android:drawablePadding="@dimen/ui_5_dip"
         android:text="@string/xiangguanchanpin"
         android:textSize="@dimen/dimens_sp_16"
         android:textStyle="bold"
         android:textColor="@color/black"/>
-
+<ImageView
+    style="@style/video_bottom_line" />
     <TextView
         android:id="@+id/view_videoplay_product_name"
         android:layout_width="wrap_content"

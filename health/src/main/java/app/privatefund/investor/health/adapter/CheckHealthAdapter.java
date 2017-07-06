@@ -27,7 +27,7 @@ public class CheckHealthAdapter extends BaseAdapter<HealthListModel, HealthListL
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HealthListModel.BOTTOM) {
-            return new HealthListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_health_list, null), listener);
+            return new HealthListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_health_list, parent, false), listener);
         }
         return onCreateErrorViewHolder(parent);
     }
@@ -37,7 +37,7 @@ public class CheckHealthAdapter extends BaseAdapter<HealthListModel, HealthListL
         HealthListModel model = list.get(position);
         if (model.type == HealthListModel.BOTTOM) {
             HealthListHolder vlh = (HealthListHolder) holder;
-            Imageload.display(vlh.context, model.getImageUrl(), 0, 0, 8, vlh.imageView, R.drawable.bg_default, R.drawable.bg_default);
+            Imageload.display(vlh.context, model.getImageUrl(), 0, 0, 1, vlh.imageView, R.drawable.bg_default, R.drawable.bg_default);
         } else {
             bindErrorHolder(model, holder);
         }

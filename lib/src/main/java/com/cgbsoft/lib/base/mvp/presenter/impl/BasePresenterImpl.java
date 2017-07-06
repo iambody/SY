@@ -32,7 +32,12 @@ public abstract class BasePresenterImpl<V extends BaseView> implements RxConstan
         this.mContext = context;
         mCompositeSubscription = new CompositeSubscription();
     }
-
+    public CompositeSubscription getCompositeSubscription(){
+        if (null == mCompositeSubscription) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        return mCompositeSubscription;
+    }
     protected V getView() {
         return view;
     }

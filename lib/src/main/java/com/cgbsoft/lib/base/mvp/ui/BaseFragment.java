@@ -25,7 +25,6 @@ import butterknife.Unbinder;
 
 /**
  * 基本Fragment
- *
  */
 
 public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragment implements Constant {
@@ -38,6 +37,11 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     private P mPresenter;//功能调用
     protected Activity baseActivity;
     protected int screenWidth;
+    //控件是否已经初始化
+    private boolean isCreateView = false;
+    //是否已经加载过数据
+    private boolean isLoadData = false;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -55,16 +59,49 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (mFragmentView == null && layoutID() > 0) {
             mFragmentView = inflater.inflate(layoutID(), container, false);
         }
-        screenWidth= Utils.getScreenWidth(baseActivity);
+
+        screenWidth = Utils.getScreenWidth(baseActivity);
         after(mFragmentView);
         init(mFragmentView, savedInstanceState);
         data();
+        isCreateView = true;
         return mFragmentView;
+    }
+
+    /**
+     * 此方法在控件初始化前调用，所以不能在此方法中直接操作控件会出现空指针
+     *
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isCreateView) {
+            lazyLoad();
+        }
+    }
+
+    private void lazyLoad() {
+        //如果没有加载过就加载，否则就不再加载了
+        if (!isLoadData) {
+            loadData();
+            isLoadData = true;
+        }
+    }
+    protected void setIsLoad(boolean isLoad){
+        isLoadData=isLoad;
+    }
+    protected void loadData() {
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //第一个fragment会调用
+        if (getUserVisibleHint()) {
+            lazyLoad();
+        }
     }
 
     @Override
@@ -156,7 +193,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         data.put("grp", String.valueOf(grp));
         data.put("act", String.valueOf(act));
         data.put("arg1", arg1);
-        DataStatisticsUtils.push(getContext().getApplicationContext(), data,false);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data, false);
     }
 
     protected void toDataStatistics(int grp, int act, String[] args) {
@@ -166,7 +203,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         for (int i = 1; i <= args.length; i++) {
             data.put("arg" + i, args[i - 1]);
         }
-        DataStatisticsUtils.push(getContext().getApplicationContext(), data,false);
+        DataStatisticsUtils.push(getContext().getApplicationContext(), data, false);
     }
 
 

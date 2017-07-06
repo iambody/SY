@@ -67,4 +67,8 @@ public class RouteConfig {
     //跳转到Secretpdfactivity
 
     public static final String GOTO_SECRET_PDF_ACTIVITY = "commontview_secretpdf";
+    //跳转到C端设置页面的url
+    public static final String GOTOCSETTINGACTIVITY="investorn_settingactivity";
+    //跳转到C端修改登录密码页面的url
+    public static final String GOTO_CHANGE_PSD_ACTIVITY="investorn_change_psd_activity";
 }

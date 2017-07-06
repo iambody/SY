@@ -17,7 +17,7 @@ public class VideoInfoModel {
     public String shortName;
     public String content;
     public int likeNum;
-
+public String lecturerRemark;
     public String localVideoPath;
 
     public int currentTime;  //增加当前播放时间

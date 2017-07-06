@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.contract.home;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.model.DiscoverModel;
 
 /**
  * @author chenlong
@@ -9,12 +10,14 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 public interface DiscoverContract {
 
     interface Presenter extends BasePresenter{
-        void getDiscoveryList();
+
+        void getDiscoveryFirstData();
     }
 
     interface View extends BaseView{
-        void getSuccess();
 
-        void getFailure();
+        void requestFirstDataSuccess(DiscoverModel discoverModel);
+
+        void requestFirstDataFailure(String errMsg);
     }
 }
