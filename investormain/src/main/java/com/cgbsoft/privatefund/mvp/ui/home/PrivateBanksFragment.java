@@ -15,6 +15,7 @@ import com.cgbsoft.privatefund.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.ProductFragment;
 
@@ -79,12 +80,12 @@ public class PrivateBanksFragment extends BasePageFragment {
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
-                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment());
-                    tabBeens.add(tabBeen2);
+//                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment());
+//                    tabBeens.add(tabBeen2);
                     break;
                 case VIDEO_CODE:
-//                            TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment());
-//                            tabBeens.add(tabBeen3);
+                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment());
+                    tabBeens.add(tabBeen3);
                     break;
             }
         }

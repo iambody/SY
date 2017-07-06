@@ -714,10 +714,6 @@ interface RequestManager {
     @POST(NetConfig.SXY.VISITOR_GET_USERID)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
-    //获取全局导航
-    @GET(NetConfig.NAVIGATION)
-    Observable<ResponseBody> getNavigation();
-
     // 获取健康检测/医疗
 //    @GET(NetConfig.SXY.HEALTH_GET_URL)
 //    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
@@ -751,6 +747,7 @@ interface RequestManager {
     Observable<BaseResult<ElegantGoodsEntity.Result>> elegantGoodsFirst(@QueryMap Map<String, String> paramsMap);
     @GET(NetConfig.ELEGANT.GETGOODSMORE)
     Observable<BaseResult<ElegantGoodsEntity.ResultMore>> elegantGoodsMore(@QueryMap Map<String, String> params);
+
     //获取全局导航
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
