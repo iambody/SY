@@ -46,7 +46,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     private LoadingDialog mLoadingDialog;
     private int offset=0;
     private int offsetMore=0;
-    private String category = "300200";
+    private final String CATEGORY_ALL = "300200";
+    private String category = CATEGORY_ALL;//记录被点击的分类标记，默认是全部分类
     private ElegantGoodsRecyclerAdapter categoryAdapter;
     private ElegantGoodsMultAdapter proAdapter;
     private RecyclerControl recyclerControl;
@@ -121,9 +122,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         offsetMore=0;
         category=posBean.getCode();
         isOver=false;
-        LogUtils.Log("aaa","click item is==="+category);
+//        LogUtils.Log("aaa","click item is==="+category);
         proAdapter.clean();
-        if (category.equals("300200")) {
+        if (category.equals(CATEGORY_ALL)) {
             getPresenter().getElegantGoodsFirst(offset);
         } else {
             isCategorySelect=true;
@@ -199,7 +200,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void updateMoreError(Throwable error) {
-        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
+//        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
         if (isCategorySelect) {
             isCategorySelect=false;
         }
@@ -212,11 +213,11 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onControlGetDataList(boolean isRef) {
-        String s=isRef?"下拉刷新":"上拉加载 ";
-        LogUtils.Log("aaa",s+"---category is==="+category);
+//        String s=isRef?"下拉刷新":"上拉加载 ";
+//        LogUtils.Log("aaa",s+"---category is==="+category);
         if (isRef) {
             isOver=false;
-            if (category.equals(300200)) {
+            if (category.equals(CATEGORY_ALL)) {
                 getPresenter().getElegantGoodsFirst(offset);
             } else {
                 offsetMore=0;
