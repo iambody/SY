@@ -41,14 +41,15 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     private Context context;
     private int selectedBanner;
     private final static int BANNER_CHANGE = 0;
+    private final static int DELAY_SCROLL_TIME = 5000;
     private OnclickBannerItemView onclickBannerItemView;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BANNER_CHANGE:
-                    targetVp.setCurrentItem(selectedBanner + 1);
-                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                    targetVp.setCurrentItem(selectedBanner + 1 == bannerList.size() ? 0 : selectedBanner + 1);
+                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                     break;
             }
         }
@@ -124,8 +125,6 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         }
         HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList, activity);
         targetVp.setAdapter(bannerAdapter);
-        targetVp.setCurrentItem(bannerList.size() - 1);
-        selectedBanner = bannerList.size() - 1;
     }
 
     private void bannerPointLight(int currentPoint) {
@@ -139,7 +138,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     }
 
     public void startBanner() {
-        mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+        mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
     }
 
     public void endBanner() {
@@ -154,7 +153,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     @Override
     public void onPageSelected(int position) {
-        selectedBanner = position;
+        selectedBanner = position % bannerList.size();
         bannerPointLight(position % indicationList.size());
     }
 
@@ -170,10 +169,10 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
                 mHandler.removeCallbacksAndMessages(null);
                 break;
             case MotionEvent.ACTION_UP:
-                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                 break;
             case MotionEvent.ACTION_CANCEL:
-                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                 break;
         }
         return false;
@@ -190,6 +189,9 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
         @Override
         public Object instantiateItem(View arg0, int arg1) {
+            if (views.size() <= arg1) {
+                return null;
+            }
             ViewGroup v = (ViewGroup)views.get(arg1).getParent();
             if (v != null) {
                 v.removeView(views.get(arg1));
@@ -203,7 +205,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         }
 
         public int getCount() {
-            return Integer.MAX_VALUE;
+            return views == null ? 0 : views.size();
         }
 
         public boolean isViewFromObject(View arg0, Object arg1) {

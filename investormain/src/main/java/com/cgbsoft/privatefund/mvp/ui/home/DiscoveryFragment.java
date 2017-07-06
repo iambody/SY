@@ -8,8 +8,10 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
 import com.cgbsoft.privatefund.model.DiscoverModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
@@ -22,7 +24,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import java.util.ArrayList;
 import java.util.List;
 
-import app.privatefund.com.vido.R;
+import app.privatefund.com.vido.mvp.ui.video.VidoListFragment;
 import butterknife.BindView;
 
 /**
@@ -71,13 +73,13 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
+        discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
         initBanner(DiscoverModel.formatBanner(discoverModel.banner));
         initIndicatorList(discoverModel);
     }
 
     @Override
     public void requestFirstDataFailure(String errMsg) {
-
     }
 
     private void initBanner(List<BannerBean> list) {
@@ -99,7 +101,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         for (int i = 0; i < discoverModel.category.size(); i++) {
             DiscoveryListFragment baseLazyFragment = new DiscoveryListFragment(discoverModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
-            if (0 == i) baseLazyFragment.FreshAp(discoverModel.informations, false);
+            if (0 == i) baseLazyFragment.setData(discoverModel.informations);
         }
         disCoveryNavigationAdapter.setData(discoverModel.category);
         fragmentAdapter.freshAp(lazyFragments);
