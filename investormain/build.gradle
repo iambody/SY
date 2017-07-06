@@ -153,4 +153,5 @@ dependencies {
     compile project(':commonui')
     compile project(':video')
     compile project(':mall')
+    compile project(':health')
 }

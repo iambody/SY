@@ -11,6 +11,10 @@ public class BannerBean {
 
     private String ImageUrl;
 
+    private String jumpUrl; // 跳转的Url
+
+    private String title; // 标题
+
     private ViewType vierType = ViewType.OVAL; // 默认圆点
 
     private boolean isVideo; // 默认是图片， true表示是视频
@@ -21,6 +25,22 @@ public class BannerBean {
         this.isVideo = isVideo;
         ImageUrl = imageUrl;
         this.vierType = vierType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getJumpUrl() {
+        return jumpUrl;
+    }
+
+    public void setJumpUrl(String jumpUrl) {
+        this.jumpUrl = jumpUrl;
     }
 
     public String getImageUrl() {

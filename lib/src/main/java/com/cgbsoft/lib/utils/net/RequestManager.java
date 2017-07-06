@@ -7,6 +7,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -712,4 +713,17 @@ interface RequestManager {
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
 
+     // 获取健康检测/医疗
+//    @GET(NetConfig.SXY.HEALTH_GET_URL)
+//    Observable<BaseResult<HealthEntity.Result>> getHealthList(@QueryMap Map<String, String> paramsMap);
+    @GET(NetConfig.SXY.HEALTH_GET_URL)
+    Observable<ResponseBody> getHealthList(@QueryMap Map<String, String> paramsMap);
+
+    // 预约健康检测/医疗
+    @POST(NetConfig.SXY.HEALTH_FREE_BESPEAK_URL)
+    Observable<ResponseBody> bespeakHealth(@Body RequestBody responseBody);
+
+    // 预约健康检 短信验证
+    @POST(NetConfig.SXY.HEALTH_INFO_VALIDATE_URL)
+    Observable<ResponseBody> bespeakHealthInfoValidate(@Body RequestBody responseBody);
 }

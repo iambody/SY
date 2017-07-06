@@ -96,11 +96,13 @@
     <color name="app_golden">#bf9b69</color>
     <!-- 主金色点击色-->
     <color name="app_golden_click">#9b6f32</color>
+    <color name="app_golden_disable">#dddddd</color>
     <!-- 分割线 用于list分割线或者卡片区域划分的分割线-->
     <color name="app_split_line">#e2e1e6</color>
     <!-- 用于内容区icon的色值 -->
     <color name="app_content_icon">#e2e1e6</color>
     <!-- 醒目提示 红色 -->
     <color name="app_red">#e63945</color>
-
+    <!-- list条目点击色 -->
+    <color name="list_item_selector_color">#dfe0e1</color>
 </resources>

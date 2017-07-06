@@ -2,6 +2,7 @@ package com.cgbsoft.lib.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.cgbsoft.lib.base.model.bean.BannerBean;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 
 import java.util.ArrayList;
@@ -105,10 +108,15 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             } else {
                 iv2.setBackgroundResource(BannerBean.ViewType.OVAL == bannerBean.getVierType() ? R.drawable.shape_banner_point_off : R.drawable.shape_banner_rectangle_off);
             }
-            final int postioan = i;
-            iv2.setOnClickListener(v -> {
+            iv.setOnClickListener(v -> {
                 if (onclickBannerItemView != null) {
                     onclickBannerItemView.clickBannerItem(bannerBean);
+                } else {
+                    Intent intent = new Intent(activity, BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, bannerBean.getJumpUrl());
+                    intent.putExtra(WebViewConstant.push_message_title, bannerBean.getTitle());
+                    intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                    activity.startActivity(intent);
                 }
             });
             indicationList.add(iv2);

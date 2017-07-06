@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">com.cgbsoft.privatefund.health</string>
+
+    <string name="health_bespeak_title">免费咨询</string>
+    <string name="health_bespeak_name">姓名</string>
+    <string name="health_bespeak_phone">联系电话</string>
+    <string name="health_bespeak_validate_code">验证码</string>
+    <string name="health_bespeak_validate_send">发送验证码</string>
+    <string name="health_bespeak_validate_had_send">已发送</string>
+    <string name="health_bespeak_desc">收到您的申请后我们将会有专人与您取得联系</string>
+    <string name="health_bespeak_order_success">咨询订单提交成功</string>
+    <string name="health_bespeak_order_suc_desc">稍后将会有专职咨询师与您取得联系！</string>
+    <string name="commit">提交</string>
+
+    <string name="please_input_name">请输入名称</string>
+    <string name="please_input_phone">请输入手机号</string>
+    <string name="please_input_validate">请填写验证码</string>
+</resources>

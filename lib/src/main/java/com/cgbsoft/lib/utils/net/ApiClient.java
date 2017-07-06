@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
+import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -1321,7 +1322,6 @@ public class ApiClient {
         if (!TextUtils.isEmpty(js.toString()))
             params.put("param", js.toString());
         return OKHTTP.getInstance().getRequestManager().videoSchoolLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**
@@ -1332,13 +1332,36 @@ public class ApiClient {
     }
 
     /**
+     * 获取健康中检测/医疗数据
+     */
+//    public static Observable<HealthEntity.Result> getHealthDataList(HashMap hashMap) {
+//        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    }
+    public static Observable<String> getHealthDataList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 预约健康检测
+     */
+    public static Observable<String> bespeakHealth(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().bespeakHealth(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 预约健康手机验证
+     */
+    public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().bespeakHealthInfoValidate(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
      */
     public static Observable<String> visitorGetUserId(String phoneId) {
         Map<String, String> map = new HashMap<>();
         map.put("mid", phoneId);
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**
