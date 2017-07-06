@@ -69,12 +69,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
 
-    @BindView(R2.id.url)
-    protected EditText urlEdit;
-
-    @BindView(R2.id.enter)
-    protected Button enter;
-
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
 
@@ -144,13 +138,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             }
         });
         mWebview.loadUrl(url);
-        urlEdit.setText(url);
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mWebview.loadUrl(urlEdit.getText().toString());
-            }
-        });
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
             executeObservable = RxBus.get().register(getRegeistRxBusId(), Object.class);
             executeObservable.subscribe(new RxSubscriber<Object>() {
