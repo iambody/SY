@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -13,13 +16,11 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.RecyclerAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.ElegantLivingContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.ElegantLivingPresenterImpl;
-import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,16 +33,15 @@ import butterknife.BindView;
  * Created by sunfei on 2017/6/29 0029.
  */
 
-public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterImpl> implements ElegantLivingContract.ElegantLivingView,RecyclerRefreshLayout.OnRefreshListener,RecyclerControl.OnControlGetDataListListener {
-    @BindView(R.id.elegant_lining_rv)
+public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterImpl> implements ElegantLivingContract.ElegantLivingView,OnLoadMoreListener, OnRefreshListener {
+    @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
-    @BindView(R.id.elegant_layout_swipe_refresh)
-    RecyclerRefreshLayout mRefreshLayout;
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout mRefreshLayout;
     private LoadingDialog mLoadingDialog;
     private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas;
     private RecyclerAdapter recyclerAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerControl recyclerControl;
     private int pageNo=0;
     private boolean isOver;
 
@@ -54,6 +54,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     protected void init(View view, Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         datas = new ArrayList<>();
+        mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setOnRefreshListener(this);
         //这个是下拉刷新出现的那个圈圈要显示的颜色
 //        mRefreshLayout.setColorSchemeResources(
@@ -68,8 +69,6 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity,android.R.color.transparent,R.dimen.ui_10_dip));
-        recyclerControl = new RecyclerControl(mRefreshLayout, linearLayoutManager, this);
-        recyclerView.addOnScrollListener(recyclerControl.getOnScrollListener());
         recyclerAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position,ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
@@ -119,11 +118,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             if (data.size() == 0) {
                 isOver=true;
             }
-            if (pageNo == 0) {
-                recyclerControl.getDataComplete(true);
-            } else {
-                recyclerControl.getDataComplete(false);
-            }
+            clodLsAnim(mRefreshLayout);
             return;
         }
         if (data.size() < Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT) {
@@ -139,52 +134,35 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             isRef=false;
         }
         recyclerAdapter.notifyDataSetChanged();
-        recyclerControl.getDataComplete(isRef);
+        clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void updateError() {
-        boolean isRef;
-        if (pageNo == 0) {
-            isRef=true;
-        } else {
-            isRef=false;
-        }
-        recyclerControl.getDataComplete(isRef);
-    }
-
-    @Override
-    public void onRefresh() {
-        recyclerControl.onRefresh();
+        clodLsAnim(mRefreshLayout);
     }
 
     /**
-     * 下拉刷新和上拉加载更多
-     * @param isRef true 下拉刷新  false上拉加载更多
+     * 下拉刷新
      */
     @Override
-    public void onControlGetDataList(boolean isRef) {
-        if (isRef) {
-            pageNo=0;
-            isOver=false;
-        } else {
-            if (isOver) {
-                Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
-                recyclerControl.getDataComplete(isRef);
-                return;
-            }
-            pageNo+=LOAD_ELEGANT_LIVING_BANNER_lIMIT;
-        }
+    public void onRefresh() {
+        pageNo=0;
+        isOver=false;
         getPresenter().getElegantLivingBanners(pageNo);
     }
 
+    /**
+     * 上拉加载更多
+     */
     @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-    }
-
-    @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
+    public void onLoadMore() {
+        if (isOver) {
+            Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
+            clodLsAnim(mRefreshLayout);
+            return;
+        }
+        pageNo+=LOAD_ELEGANT_LIVING_BANNER_lIMIT;
+        getPresenter().getElegantLivingBanners(pageNo);
     }
 }
