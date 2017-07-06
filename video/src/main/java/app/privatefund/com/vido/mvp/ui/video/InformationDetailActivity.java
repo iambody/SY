@@ -44,6 +44,12 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideKeyboard();
+    }
+
     private void shareToc(String actionUrl) {
         LogUtils.Log("mm", actionUrl);
         // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
@@ -64,11 +70,11 @@ public class InformationDetailActivity extends BaseWebViewActivity {
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
-            public void completShare( int shareType) {
+            public void completShare(int shareType) {
                 TaskInfo.complentTask("分享资讯");
                 //分享微信朋友圈成功
-                if(CommonShareDialog.SHARE_WXCIRCLE==shareType)
-                DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle,title );
+                if (CommonShareDialog.SHARE_WXCIRCLE == shareType)
+                    DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, title);
             }
         });
         commonShareDialog.show();
