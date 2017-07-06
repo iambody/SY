@@ -64,6 +64,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     SwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
+    //邀请码
+    @BindView(R.id.main_home_cardnumber_txt)
+    TextView mainHomeCardnumberTxt;
+    //邀请码的布局
+    @BindView(R.id.main_home_card_lay)
+    LinearLayout mainHomeCardLay;
 
 
     //名片动画展示时候需要的动画
@@ -254,16 +260,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onRefresh() {
         mainHomeSwiperefreshlayout.setRefreshing(false);
+        //请求数据
+        getPresenter().getHomeData();
+
     }
 
     ///scrollview滑动时候的监听
     @Override
     public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
         LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
-        if ((scrollY >scrolloldY ) && scrollY>= 200) {
+        if ((scrollY > scrolloldY) && scrollY >= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE)
                 mainHomeAdviserLayyy.setVisibility(View.GONE);
-        } else if ((scrolloldY >scrollY ) && scrollY <= 200) {
+        } else if ((scrolloldY > scrollY) && scrollY <= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.GONE)
                 initShowCardAnimator(mainHomeAdviserLayyy);
         }

@@ -10,5 +10,7 @@
     <dimen name="ui_200_dip">200dp</dimen>
     <dimen name="ui_400_dip">400dp</dimen>
     <dimen name="ui_300_dip">300dp</dimen>
+    <dimen name="ui_24_dip">24dp</dimen>
+    <dimen name="ui_22_dip">22dp</dimen>
 
 </resources>
