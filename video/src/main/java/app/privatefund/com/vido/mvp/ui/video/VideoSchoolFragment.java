@@ -211,14 +211,14 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             indicator.setXOffset(UIUtil.dip2px(context, 10));
             return indicator;
         }
-
-
     }
 
     private void initBanner(List<VideoAllModel.Banner> banners) {
         videoVideolistBannerview.setPlayDelay(10 * 1000);
         bannerAdapter = new BannerAdapter(banners);
         videoVideolistBannerview.setAdapter(bannerAdapter);
+        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
+
 
     }
 

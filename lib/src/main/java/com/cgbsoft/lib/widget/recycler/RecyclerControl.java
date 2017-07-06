@@ -167,18 +167,17 @@ public class RecyclerControl {
     }
 
     private class OnScrollListener extends RecyclerView.OnScrollListener {
+        int lastViewPos = -1;
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-
             if (isLoadMoreComplete) {
-                int lastViewPos = -1;
                 if (linearLayoutManager != null)
                     lastViewPos = linearLayoutManager.findLastVisibleItemPosition();
                 if (gridLayoutManager != null)
                     lastViewPos = gridLayoutManager.findLastVisibleItemPosition();
 
-                if (lastViewPos >= (recyclerView.getAdapter().getItemCount() - 1)) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE&&lastViewPos >= (recyclerView.getAdapter().getItemCount() - 1)) {
 
                     if (isLoadMoreComplete) {
                         isLoadMoreComplete = false;
@@ -192,6 +191,12 @@ public class RecyclerControl {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            if (isLoadMoreComplete) {
+                if (linearLayoutManager != null)
+                    lastViewPos = linearLayoutManager.findLastVisibleItemPosition();
+                if (gridLayoutManager != null)
+                    lastViewPos = gridLayoutManager.findLastVisibleItemPosition();
+            }
             onControlGetDataListListener.onScrolled(recyclerView, dx, dy);
         }
     }

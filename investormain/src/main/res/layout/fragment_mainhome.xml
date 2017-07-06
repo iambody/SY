@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="首页" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,18 +12,95 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ui_100_dip"
-                android:background="@color/app_golden"/>
-
-            <com.cgbsoft.lib.base.webview.BaseWebview
-                android:id="@+id/a"
+            <!-- Banner -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </com.cgbsoft.lib.base.webview.BaseWebview>
+                <com.jude.rollviewpager.RollPagerView
+                    android:id="@+id/main_home_bannerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp" />
+                <!-- 我的投顾信息布局 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.cgbsoft.lib.widget.ShapeRoundImageView
+                        android:id="@+id/mainhome_advisercard_iv"
+                        android:layout_width="@dimen/ui_75_dip"
+                        android:layout_height="70dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/ui_60_dip"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/rc_ic_def_coversation_portrait" />
+
+                    <LinearLayout
+                        android:id="@+id/main_home_adviser_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/ui_300_dip"
+                            android:layout_height="@dimen/ui_100_dip"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="@dimen/ui_200_dip"
+                                android:layout_height="match_parent"
+                                android:background="@color/black"
+                                android:orientation="vertical" />
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/ui_50_dip"
+                                android:background="@drawable/shape_home_circle" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 我的投顾信息布局 -->
+
+            </RelativeLayout>
+            <!-- Banner*** -->
+            <!-- 直播预报的布局 -->
+            <include
+                android:id="@+id/main_home_live_lay"
+                layout="@layout/view_home_live_lay"
+                android:visibility="gone" />
+            <!-- 直播预报的布局************ -->
+            <!-- 会员等级的布局 -->
+            <include
+                android:id="@+id/main_home_level_lay"
+                layout="@layout/view_home_level_lay" />
+            <!-- 会员等级的布局************* -->
+            <!-- 横向滑动的布局 -->
+            <HorizontalScrollView
+                android:id="@+id/main_home_horizontalscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ui_10_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/main_home_horizontalscrollview_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+            <!-- 横向滑动的布局。。。。。 -->
+            <com.cgbsoft.lib.base.webview.BaseWebview
+                android:id="@+id/mainhome_webview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -56,7 +56,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
     public List<VideoAllModel.VideoListModel> videoListModelList;
 
     /**
-     * Ap
+     *
      */
     public VideoListAdapter videoListAdapter;
 

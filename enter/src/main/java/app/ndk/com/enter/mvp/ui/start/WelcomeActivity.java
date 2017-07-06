@@ -226,7 +226,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         btn_wel_cancle = (Button) findViewById(R.id.btn_wel_cancle);
 
         btn_wel_cancle.setOnClickListener(v -> nextPage());
-
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);

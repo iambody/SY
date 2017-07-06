@@ -125,7 +125,7 @@ public class NetConfig {
         //私享云新增的获取视频列表的V2接口
         static final String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
-        static final String GET_VIDEO_ALLINF = API_URL + information + "/videos/all";
+        static final String GET_VIDEO_ALLINF = API_URL + information + "/video/all";
 
     }
 
@@ -266,15 +266,54 @@ public class NetConfig {
     }
 
 
-    /** *****************以下为6.0私享云 新增接口的配置路径******************* **/
+    /**
+     * ****************以下为6.0私享云 新增接口的配置路径*******************
+     **/
     static class SXY {
         private static final String sxy = "/sxy";
 
         //首页
-        static final String GETHOME = API_URL + sxy + "/apphome";
-
+        static final String GETHOME = API_URL  + "/enjoycloud/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
-        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
+        static final String VISITOR_GET_USERID = API_URL + "/visitorAuth";
+
+        //获取全站导航栏信息
+        static final String GET_NAVIFAITION = API_URL + "navigation";
+//        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
+
+        // 健康检测/医疗数据
+//        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+    }
+
+    /**
+     * 健康接口
+     */
+    static class Health {
+        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+
+        // 健康免费资讯预约
+        static final String HEALTH_FREE_BESPEAK_URL = API_URL + "/health/consult";
+
+        // 健康短信验证
+        static final String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
+    }
+
+    static class Discovery {
+        // 资讯首页数据
+        static final String DISCOVERY_FIRST_PAGE = API_URL + "/information/home";
+
+        // 资讯列表页面
+        static final String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
+    }
+
+    /**
+     * 生活家banner&尚品
+     */
+    static class ELEGANT{
+        private static final String elegantLiving="/ydtoc";
+        static final String GETBANNER=API_URL+elegantLiving+"/listbanners";
+        static final String GETGOODSFIRST=API_URL+elegantLiving+"/listhotgoods";
+        static final String GETGOODSMORE=API_URL+elegantLiving+"/category";
     }
 }

@@ -1,18 +1,15 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.R;
@@ -20,7 +17,6 @@ import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -41,8 +37,6 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
 
-    protected View titleView;
-
     protected abstract int titleLayoutId();
 
     protected abstract ArrayList<TabBean> list();
@@ -60,7 +54,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             tabLayout.addTab(tab);
         }
         LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {

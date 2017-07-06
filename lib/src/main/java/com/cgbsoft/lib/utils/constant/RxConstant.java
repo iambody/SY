@@ -71,5 +71,6 @@ public interface RxConstant {
 
     //直播获取pdf成功
     String LIVE_PDF_SUC = "lice_pdf_suc";
-
+    //跳转到个人中心页面
+    String GOTO_MYCENTER_OBSERVABLE = "goto_mycenter_observable";
 }

@@ -10,6 +10,8 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
+import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
+import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
@@ -791,9 +793,7 @@ public class ApiClient {
      * @param userId
      */
     public static Observable<CommonEntity.Result> getPlatformCustomer(String userId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("uid", userId);
-        return OKHTTP.getInstance().getRequestManager().getPlatformCustomer(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return null;
     }
 
     public static Observable<String> getTestGetPlatformCustomer(String userId) {
@@ -1321,7 +1321,6 @@ public class ApiClient {
         if (!TextUtils.isEmpty(js.toString()))
             params.put("param", js.toString());
         return OKHTTP.getInstance().getRequestManager().videoSchoolLs(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**
@@ -1331,6 +1330,49 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getSxyHome(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
+    //获取首页数据测试
+    public static Observable<String> getSxyHomeDataTest() {
+        return OKHTTP.getInstance().getRequestManager().getSxyHomeTest(new HashMap<>()).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取健康中检测/医疗数据
+     */
+//    public static Observable<HealthEntity.Result> getHealthDataList(HashMap hashMap) {
+//        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+//    }
+    public static Observable<String> getHealthDataList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 预约健康检测
+     */
+    public static Observable<String> bespeakHealth(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().bespeakHealth(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 预约健康手机验证
+     */
+    public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().bespeakHealthInfoValidate(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 资讯首页数据
+     */
+    public static Observable<String> getDiscoverFirstData(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getDiscoverFirstPage(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 资讯列表数据
+     */
+    public static Observable<String> getDiscoverListData(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getDiscoverListPage(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
      */
@@ -1338,7 +1380,68 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("mid", phoneId);
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
+    /**
+     * 获取生活家banner
+     * @param offset
+     * @return
+     */
+    public static Observable<ElegantLivingEntity.Result> getElegantLivingObservable(int offset) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", offset);
+            js.put("limit", Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())){
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().elegantLivingBanners(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取尚品首页数据
+     * @param offset
+     * @return
+     */
+    public static Observable<ElegantGoodsEntity.Result> getElegantGoodsFirstObservable(int offset) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", offset);
+            js.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())){
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().elegantGoodsFirst(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取尚品加载更多数据
+     * @param offset
+     * @param category
+     * @return
+     */
+    public static Observable<ElegantGoodsEntity.ResultMore> getElegantGoodsMoreObservable(int offset, String category) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", offset);
+            js.put("category", category);
+            js.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())){
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
