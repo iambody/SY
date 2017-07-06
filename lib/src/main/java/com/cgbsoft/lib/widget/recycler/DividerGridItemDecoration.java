@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.cgbsoft.lib.utils.tools.LogUtils;
+
 /**
  * Created by sunfei on 2017/7/1 0001.
  */
@@ -73,11 +75,20 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             mDivider.draw(c);
         }
     }
-
+    int temp=1;
     private boolean isLastColum(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+            int spanSize = ((GridLayoutManager) layoutManager).getSpanSizeLookup().getSpanSize(pos);
+            LogUtils.Log("aaa","spansize==="+spanSize+"-----pos==="+pos);
+            if (spanSize==spanCount){
+                if (pos>0&&pos%2!=0){
+                    temp--;
+                }
+                return true;
+            }
+
+            if ((pos+temp) % spanCount == 1)// 如果是最后一列，则不需要绘制右边
             {
                 return true;
             }
@@ -122,14 +133,29 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         return false;
     }
 
+//    @Override
+//    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+//        int spanCount = getSpanCount(parent);
+//        int childCount = parent.getAdapter().getItemCount();
+//        if (isLastRaw(parent, itemPosition, spanCount, childCount))// 如果是最后一行，则不需要绘制底部
+//        {
+//            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+//        } else if (isLastColum(parent, itemPosition, spanCount, childCount))// 如果是最后一列，则不需要绘制右边
+//        {
+//            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+//        } else {
+//            outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
+//        }
+//    }
+
     @Override
-    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int spanCount = getSpanCount(parent);
         int childCount = parent.getAdapter().getItemCount();
-        if (isLastRaw(parent, itemPosition, spanCount, childCount))// 如果是最后一行，则不需要绘制底部
+        if (isLastRaw(parent, ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition(), spanCount, childCount))// 如果是最后一行，则不需要绘制底部
         {
             outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-        } else if (isLastColum(parent, itemPosition, spanCount, childCount))// 如果是最后一列，则不需要绘制右边
+        } else if (isLastColum(parent, ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition(), spanCount, childCount))// 如果是最后一列，则不需要绘制右边
         {
             outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         } else {

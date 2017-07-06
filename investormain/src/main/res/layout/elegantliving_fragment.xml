@@ -4,18 +4,31 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.dinuscxj.refresh.RecyclerRefreshLayout
-        android:id="@+id/elegant_layout_swipe_refresh"
-        android:layout_margin="15dp"
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
+            android:id="@+id/swipe_refresh_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/elegant_lining_rv"
+            android:id="@+id/swipe_target"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
             >
 
         </android.support.v7.widget.RecyclerView>
-    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+
+        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
+            android:id="@+id/swipe_load_more_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </LinearLayout>

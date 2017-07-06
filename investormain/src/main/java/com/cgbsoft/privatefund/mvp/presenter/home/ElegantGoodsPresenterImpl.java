@@ -108,8 +108,7 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
 
     @Override
     public void onModelMoreSuccess(ElegantGoodsEntity.ResultMore result) {
-        LogUtils.Log("aaa","hideLoadDialog---success");
-        elegantGoodsView.hideLoadDialog();
+//        elegantGoodsView.hideLoadDialog();
         ArrayList<ElegantGoodsBeanInterface> datas = new ArrayList<>();
         List<ElegantGoodsEntity.AllNewsItemBean> allRows = result.getRows();
         if (null != allRows && allRows.size() > 0) {
@@ -123,7 +122,6 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
 
     @Override
     public void onModelMoreError(Throwable error) {
-        LogUtils.Log("aaa","hideLoadDialog---error");
         elegantGoodsView.hideLoadDialog();
         elegantGoodsView.updateMoreError(error);
     }
