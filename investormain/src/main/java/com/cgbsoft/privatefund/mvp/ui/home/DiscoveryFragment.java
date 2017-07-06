@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
 import com.cgbsoft.privatefund.model.DiscoverModel;
+import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryPresenter;
 
@@ -24,7 +26,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import java.util.ArrayList;
 import java.util.List;
 
-import app.privatefund.com.vido.mvp.ui.video.VidoListFragment;
 import butterknife.BindView;
 
 /**
@@ -101,7 +102,11 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         for (int i = 0; i < discoverModel.category.size(); i++) {
             DiscoveryListFragment baseLazyFragment = new DiscoveryListFragment(discoverModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
-            if (0 == i) baseLazyFragment.setData(discoverModel.informations);
+            if (0 == i) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(DiscoveryListFragment.INIT_LIST_DATA_PARAMS, (ArrayList<DiscoveryListModel>) discoverModel.informations);
+                baseLazyFragment.setArguments(bundle);
+            }
         }
         disCoveryNavigationAdapter.setData(discoverModel.category);
         fragmentAdapter.freshAp(lazyFragments);

@@ -36,61 +36,6 @@ public class DiscoverModel {
         public String norlog;
     }
 
-    /**
-     * 发现列表
-     */
-    public static class DiscoveryListModel {
-        private String id;
-
-        private String image;
-
-        private String category;
-
-        private String title;
-
-        private String views;
-
-        public String getViews() {
-            return views;
-        }
-
-        public void setViews(String views) {
-            this.views = views;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-    }
-
     public static BannerBean formatBanner(Banner banner) {
         BannerBean bannerBean = new BannerBean();
         bannerBean.setTitle(banner.title);
