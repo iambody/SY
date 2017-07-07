@@ -583,7 +583,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "确消", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
