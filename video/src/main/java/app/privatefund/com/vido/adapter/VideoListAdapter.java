@@ -57,7 +57,8 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);
+//        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);
+        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool_new, null);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
         return lsViewHolder;
@@ -68,10 +69,10 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
         LsViewHolder lsViewHolder = (LsViewHolder) holder;
         lsViewHolder.itemView.setTag(position);
         VideoAllModel.VideoListModel videoListModel = listModelList.get(position);
-        Imageload.display(ApContext, videoListModel.coverImageUrl, lsViewHolder.Item_fragment_videoschool_image_bg);
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%d阅读", videoListModel.likes));
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, videoListModel.shortName);
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, videoListModel.updateTime);
+        Imageload.display(ApContext, videoListModel.coverImageUrl, lsViewHolder.item_fragment_videoschool_new_image);
+        BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_looknumber, String.format("%d阅读", videoListModel.likes));
+        BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_title, videoListModel.shortName);
+        BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_time, videoListModel.updateTime);
 
     }
 
@@ -85,21 +86,37 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
         listModelListItemClickListener.onItemClick((int) v.getTag(), listModelList.get((int) v.getTag()));
     }
 
-    static class LsViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R2.id.item_fragment_videoschool_image_bg)
-        ImageView Item_fragment_videoschool_image_bg;
-        @BindView(R2.id.item_fragment_videoschool_title)
-        TextView Item_fragment_videoschool_title;
-        @BindView(R2.id.item_fragment_videoschool_time)
-        TextView Item_fragment_videoschool_time;
-        @BindView(R2.id.item_fragment_videoschool_readnum)
-        TextView Item_fragment_videoschool_readnum;
-
-        LsViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
+//    static class LsViewHolder extends RecyclerView.ViewHolder {
+//        @BindView(R2.id.item_fragment_videoschool_image_bg)
+//        ImageView Item_fragment_videoschool_image_bg;
+//        @BindView(R2.id.item_fragment_videoschool_title)
+//        TextView Item_fragment_videoschool_title;
+//        @BindView(R2.id.item_fragment_videoschool_time)
+//        TextView Item_fragment_videoschool_time;
+//        @BindView(R2.id.item_fragment_videoschool_readnum)
+//        TextView Item_fragment_videoschool_readnum;
+//
+//        LsViewHolder(View view) {
+//            super(view);
+//            ButterKnife.bind(this, view);
+//        }
+//    }
+static class LsViewHolder extends RecyclerView.ViewHolder {
+    @BindView(R2.id.item_fragment_videoschool_new_image)
+    ImageView item_fragment_videoschool_new_image;
+    @BindView(R2.id.item_fragment_videoschool_new_title)
+    TextView item_fragment_videoschool_new_title;
+    @BindView(R2.id.item_fragment_videoschool_new_time)
+    TextView item_fragment_videoschool_new_time;
+    @BindView(R2.id.item_fragment_videoschool_new_looknumber)
+    TextView item_fragment_videoschool_new_looknumber;
+    @BindView(R2.id.item_fragment_videoschool_new_plaly)
+    ImageView item_fragment_videoschool_new_plaly;
+    LsViewHolder(View view) {
+        super(view);
+        ButterKnife.bind(this, view);
     }
+}
 
 
 }

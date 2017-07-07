@@ -109,7 +109,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
-
         //测试数据**********************
         List<HomeEntity.Operate> datas = new ArrayList<>();
         HomeEntity.Operate d1 = new HomeEntity.Operate();
@@ -408,7 +407,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-//    @Override
+    //    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
 
         if (getUserVisibleHint()) {
