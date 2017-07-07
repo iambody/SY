@@ -20,25 +20,25 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:paddingTop="@dimen/ui_20_dip">
 
             <ImageView
                 android:id="@+id/iv_af_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_toolbar_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
                 android:text="找回密码"
-                android:textColor="@color/orange"
+                android:textColor="@color/black"
                 android:textSize="@dimen/dimens_sp_20" />
-
-            />
         </RelativeLayout>
 
         <RelativeLayout
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="@dimen/ui_150_dip">
+            android:layout_marginTop="@dimen/ui_50_dip">
 
             <EditText
                 android:id="@+id/et_af_username"
@@ -124,9 +124,9 @@
             android:layout_marginLeft="@dimen/ui_40_dip"
             android:paddingBottom="@dimen/ui_5_dip"
             android:paddingTop="@dimen/ui_5_dip"
+            android:text="@string/code_shixiao"
             android:textColor="@color/app_golden"
-            android:textSize="@dimen/dimens_sp_10"
-            android:text="@string/code_shixiao"/>
+            android:textSize="@dimen/dimens_sp_10" />
 
         <Button
             android:id="@+id/btn_af_next"

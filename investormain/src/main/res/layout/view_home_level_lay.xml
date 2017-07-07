@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/ui_10_dip"
+    android:padding="@dimen/ui_10_dip">
 
+    <ImageView
+        android:layout_width="@dimen/ui_40_dip"
+        android:layout_height="@dimen/ui_40_dip"
+        android:layout_margin="@dimen/ui_5_dip"
+        android:src="@drawable/userlogo" />
+
+    <TextView
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/ui_10_dip"
+        android:layout_weight="1"
+        android:text="私 享 云 尊 享 会 员"
+        android:textColor="@color/app_golden"
+        android:textSize="@dimen/ui_15_dip" />
+
+    <TextView
+
+        android:id="@+id/view_home_level_str"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/ui_10_dip"
+        android:text="L5云卡"
+        android:textColor="@color/app_golden" />
 </LinearLayout>

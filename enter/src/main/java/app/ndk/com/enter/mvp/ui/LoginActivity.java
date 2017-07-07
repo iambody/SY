@@ -132,15 +132,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void init(Bundle savedInstanceState) {
         identity = getIntent().getIntExtra(IDS_KEY, -1);
 
-        if (AppManager.isAdViser(this)) {
-            //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-            btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
-            btn_al_login.setTextColor(0xff666666);
-        } else {
-//           iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-            btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
-            btn_al_login.setTextColor(0xffffffff);
-        }
+//        if (AppManager.isAdViser(this)) {
+//            //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+//            btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
+//            btn_al_login.setTextColor(0xff666666);
+//        } else {
+////           iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+//            btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
+//            btn_al_login.setTextColor(0xffffffff);
+//        }
 
         if (savedInstanceState == null) {
             if (identity == IDS_ADVISER) {

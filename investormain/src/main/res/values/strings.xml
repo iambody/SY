@@ -129,6 +129,7 @@
     <string name="enjoylife_str">乐享生活</string>
     <string name="jiankang_str">永享健康</string>
     <string name="privatebank_title_str">搜索产品名称,投资标的,基金管理人</string>
+    <string name="zunixanghuiyuan">私享云尊享会员</string>
     <!-- 设置页面用到 -->
     <string name="setting_item_change_pwd">修改登录密码</string>
     <string name="setting_item_gesture_pwd">手势密码</string>

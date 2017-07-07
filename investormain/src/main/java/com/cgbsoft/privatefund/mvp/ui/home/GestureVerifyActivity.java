@@ -190,6 +190,10 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     }
 
     private void validateResetPassword(final Dialog dialog, String password) {
+        if (this.dialog != null) {
+            this.dialog.dismiss();
+            this.dialog = null;
+        }
         this.dialog = dialog;
         getPresenter().validateUserPassword(ApiBusParam.gesturePasswordValidateParams(AppManager.getUserId(this), password));
     }

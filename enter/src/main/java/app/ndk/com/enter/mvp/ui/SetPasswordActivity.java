@@ -102,11 +102,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         code = getIntent().getStringExtra("code");
         identity = getIntent().getIntExtra(IDS_KEY, -1);
         if (AppManager.isAdViser(this)) {
-            iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
+            iv_as_back.setImageResource(R.drawable.ic_toolbar_back);
             btn_as_ok.setBackgroundResource(R.drawable.select_btn_advister);
             btn_as_ok.setTextColor(0xff666666);
         } else {
-            iv_as_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+            iv_as_back.setImageResource(R.drawable.ic_toolbar_back);
             btn_as_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
             btn_as_ok.setTextColor(0xffffffff);
         }
