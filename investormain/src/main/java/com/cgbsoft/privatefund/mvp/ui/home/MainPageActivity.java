@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,8 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,12 +37,9 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -59,7 +56,6 @@ import com.tencent.TIMUserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -205,8 +201,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initActionPoint() {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("client","c");
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("client", "c");
         getPresenter().actionPoint(map);
     }
 
@@ -645,9 +641,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
+
         if (liveJsonData != null) {
             liveDialog.setVisibility(View.GONE);
-            liveDialog.clearAnimation();
+//            liveDialog.clearAnimation();
+            startOrOverAnimator(false);
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             intent.putExtra("type", "");
@@ -675,6 +673,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_close)
     public void closeLiveDialog() {
         liveDialog.setVisibility(View.GONE);
+        startOrOverAnimator(false);
     }
 
     @Override
@@ -692,6 +691,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
+//        liveDialog.setVisibility(View.VISIBLE);
+//        startOrOverAnimator(true);
         liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
                 //延时3000 ，每间隔3000，时间单位
                 .compose(this.<Long>bindToLifecycle())
@@ -714,11 +715,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         profileInfoHelper.setMyNickName(AppManager.getUserInfo(this).getNickName());
         profileInfoHelper.setMyAvator(AppManager.getUserInfo(this).getHeadImageUrl());
         loginHelper.imLogin(AppManager.getUserId(this) + "_C", sign);
+
     }
 
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
+
         try {
             if ((SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM) + "").equals(jsonObject.getString("id"))) {
                 hasLive = false;
@@ -734,9 +737,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (hasLive) {
             liveJsonData = jsonObject;
             liveDialog.setVisibility(View.VISIBLE);
-            Animation animation = AnimationUtils.loadAnimation(
-                    this, R.anim.live_dialog_anim);
-            liveDialog.startAnimation(animation);
+//            Animation animation = AnimationUtils.loadAnimation(
+//                    this, R.anim.live_dialog_anim);
+//            liveDialog.startAnimation(animation);
+            startOrOverAnimator(true);
             try {
                 liveTitle.setText(jsonObject.getString("title"));
                 Imageload.display(this, jsonObject.getString("image"), liveIcon);
@@ -746,9 +750,27 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             liveJsonData = null;
             liveDialog.setVisibility(View.GONE);
-            liveDialog.clearAnimation();
+//            liveDialog.clearAnimation();
+            startOrOverAnimator(false);
         }
+//        liveDialog.setVisibility(View.VISIBLE);
+//        startOrOverAnimator(true);
+    }
 
+    ObjectAnimator liveAnimator;
+
+    public void startOrOverAnimator(boolean isOnlyClose) {
+        if (isOnlyClose) {
+            if(null==liveAnimator)
+            liveAnimator = ObjectAnimator.ofFloat(liveDialog, "translationY", 0f, 50.0f, 0f);
+
+            liveAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            liveAnimator.setDuration(1*1000);
+            liveAnimator.start();
+        } else {
+            if (null == liveAnimator) return;
+            liveAnimator.end();
+        }
     }
 
     @Override

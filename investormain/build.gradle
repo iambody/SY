@@ -141,7 +141,6 @@ dependencies {
     compile "jp.wasabeef:recyclerview-animators:${recycleanim_need_version}"
     compile "io.reactivex:rxandroid:${rxandroid_need_version}"
     compile "io.reactivex:rxjava:${rxjava_need_version}"
-    compile 'com.takwolf.android:lock9view:0.0.11'
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':order')
@@ -153,4 +152,7 @@ dependencies {
     compile project(':commonui')
     compile project(':video')
     compile project(':mall')
+    compile 'com.takwolf.android:lock9view:0.0.11'
+    compile 'com.android.support:support-v4:24.2.1'
+//    compile project(':health')
 }

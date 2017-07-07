@@ -18,7 +18,9 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 
 import org.json.JSONException;
@@ -33,6 +35,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
+import rx.Observable;
 
 import static android.view.View.GONE;
 
@@ -44,7 +47,7 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     @BindView(R2.id.mall_rule)
     TextView mallRule;
     @BindView(R2.id.mall_web_view)
-    BaseWebview videoDiscoverWeb;
+    BaseWebview mallWeb;
 
     @BindView(R2.id.title_layout)
     RelativeLayout title_layout;
@@ -56,13 +59,15 @@ public class MallFragment extends BaseFragment<MallPresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        videoDiscoverWeb.loadUrls(CwebNetConfig.clubPage);
+        mallWeb.loadUrls(CwebNetConfig.clubPage);
+
     }
 
+
     @Override
-    protected void before() {
-        super.before();
-        if (SPreference.getBoolean(getActivity(),"ydMallState")){
+    protected void after(View view) {
+        super.after(view);
+        if (SPreference.getBoolean(getActivity(), "ydMallState")) {
             title_layout.setVisibility(GONE);
         }
     }
@@ -76,6 +81,7 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     @Override
     public void onResume() {
         super.onResume();
+        mallWeb.loadUrl("javascript:refresh()");
     }
 
     @OnClick(R2.id.mall_rule)

@@ -86,7 +86,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         super.onDestroy();
         if (mediaPlayer != null) {
             if (videoInfoModel != null) {
-                videoInfoModel.currentTime = mediaPlayer.getCurrentPosition();
+                videoInfoModel.currentTime = videoInfoModel.currentTime+mediaPlayer.getCurrentPosition();
                 daoUtils.saveOrUpdateVideoInfo(videoInfoModel);
             }
 
