@@ -17,6 +17,8 @@
 
         <include layout="@layout/fragment_mine_account_info"/>
 
+        <include layout="@layout/fragment_mine_account_info"/>
+
 
     </LinearLayout>
 </LinearLayout>

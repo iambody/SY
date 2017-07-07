@@ -86,9 +86,19 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
+    <style name="mine_account_info_text_image_ll">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:background">@color/app_bg</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="mine_account_info_text_image">
         <item name="android:textSize">@dimen/dimens_sp_12</item>
-        <item name="android:textColor">@color/account_info_image_text</item>
+        <item name="android:color">@color/account_info_image_text</item>
+        <item name="android:drawablePadding">5dp</item>
     </style>
 
 </resources>

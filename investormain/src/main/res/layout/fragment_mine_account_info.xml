@@ -93,7 +93,57 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
 
+            <LinearLayout
+                style="@style/mine_account_info_text_image_ll">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mine_account_info_text_image"
+                    android:drawableTop="@drawable/icon_check"
+                    android:text="@string/account_info_every_qiandao"/>
+            </LinearLayout>
+            
+            <android.support.v4.widget.Space
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                style="@style/mine_account_info_text_image_ll">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mine_account_info_text_image"
+                    android:drawableTop="@drawable/icon_events"
+                    android:text="@string/account_info_mine_activity"/>
+            </LinearLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                style="@style/mine_account_info_text_image_ll">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mine_account_info_text_image"
+                    android:drawableTop="@drawable/icon_ticket"
+                    android:text="@string/account_info_mine_card_quan"/>
+            </LinearLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                style="@style/mine_account_info_text_image_ll">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mine_account_info_text_image"
+                    android:drawableTop="@drawable/icon_cards"
+                    android:text="@string/account_info_mine_wish_card"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -104,5 +154,35 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:src="@drawable/logoshare"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/account_info_image_id"
+        android:id="@+id/account_info_name"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/account_info_image_id"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/component_grade_bg"
+            android:textSize="@dimen/dimens_sp_12"
+            android:textColor="@color/white"
+            android:text="@string/account_info_user_level"
+            android:id="@+id/user_level_text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/component_member_bg"
+            android:textSize="@dimen/dimens_sp_12"
+            android:textColor="@color/white"
+            android:id="@+id/user_level_value"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
