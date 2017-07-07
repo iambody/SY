@@ -40,6 +40,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -336,7 +337,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isPlayFiveMinteObservable.subscribe(new RxSubscriber<Long>() {
             @Override
             protected void onEvent(Long aLong) {
-                TaskInfo.complentTask("查看视频");
+                LogUtils.Log("playvideoo", "我已经视频签到了前！！");
+                TaskInfo.complentTask("学习视频");
+                LogUtils.Log("playvideoo", "我已经视频签到了");
             }
 
             @Override
@@ -748,6 +751,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 				 * 的原因有很多，但常见的是播放器需要缓冲更多数据才能开始播放 4 STATE_PAUSE 播放器准备好并可以立即播放当前位置
 				 * 5 STATE_PLAY 播放器正在播放中 6 STATE_ENDED 播放已完毕
 				 */
+        LogUtils.Log("playvideoo", "我的状态" + arg0);
         switch (arg0) {
             case 5://播放中
                 startPlayTime = System.currentTimeMillis();
@@ -756,7 +760,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 seekToPlay(playerCurrentTime);
                 isPlaying = true;
 
-
+                LogUtils.Log("playvideoo", "播放中时间" + playerCurrentTime + "；；；播放开始时间" + startPlayTime);
 //                allPlayTime += System.currentTimeMillis() - startPlayTime;
 //                if (allPlayTime > fiveMinutes) {
 //                    RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
@@ -767,7 +771,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     onPausePlayStauts = 1;
                 }
 
+
                 allPlayTime += System.currentTimeMillis() - startPlayTime;
+                LogUtils.Log("playvideoo", "播放描述差时间" + allPlayTime + "；；；播放结束时间" + startPlayTime);
                 if (allPlayTime > fiveMinutes) {
                     RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
                 }
@@ -890,7 +896,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             rl_avd_download.startAnimation(closeAnimationSet);
 
         }
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             return true;
         }
