@@ -48,8 +48,8 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BANNER_CHANGE:
-                    targetVp.setCurrentItem(selectedBanner + 1 == bannerList.size() ? 0 : selectedBanner + 1);
-                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
+                    targetVp.setCurrentItem(selectedBanner + 1);
+                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
                     break;
             }
         }
@@ -153,7 +153,9 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     @Override
     public void onPageSelected(int position) {
-        selectedBanner = position % bannerList.size();
+//        selectedBanner = position % bannerList.size();
+//        bannerPointLight(position % indicationList.size());
+        selectedBanner = position;
         bannerPointLight(position % indicationList.size());
     }
 
@@ -189,15 +191,16 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
         @Override
         public Object instantiateItem(View arg0, int arg1) {
-            if (views.size() <= arg1) {
-                return null;
-            }
-            ViewGroup v = (ViewGroup)views.get(arg1).getParent();
+//            if (views.size() <= arg1) {
+//                return null;
+//            }
+            final int currentItem = arg1 % views.size();
+            ViewGroup v = (ViewGroup)views.get(currentItem).getParent();
             if (v != null) {
-                v.removeView(views.get(arg1));
+                v.removeView(views.get(currentItem));
             }
-            ((ViewPager) arg0).addView(views.get(arg1), 0);
-            return views.get(arg1);
+            ((ViewPager) arg0).addView(views.get(currentItem), 0);
+            return views.get(currentItem);
         }
 
         public void destroyItem(View container, int position, Object object) {
@@ -205,7 +208,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         }
 
         public int getCount() {
-            return views == null ? 0 : views.size();
+            return Integer.MAX_VALUE;
         }
 
         public boolean isViewFromObject(View arg0, Object arg1) {

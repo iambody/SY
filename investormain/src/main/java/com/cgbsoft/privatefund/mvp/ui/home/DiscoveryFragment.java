@@ -95,6 +95,9 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         discoveryBannerView.setOnclickBannerItemView(bannerBean -> {
             Toast.makeText(getActivity(), "你添加的是第".concat(String.valueOf(bannerBean.getPositon())).concat("个图片"), Toast.LENGTH_SHORT).show();
         });
+        if (discoveryBannerView != null) {
+            discoveryBannerView.startBanner();
+        }
     }
 
     private void initIndicatorList(DiscoverModel discoverModel) {
@@ -112,14 +115,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         fragmentAdapter.freshAp(lazyFragments);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (discoveryBannerView != null) {
-            discoveryBannerView.startBanner();
-        }
-    }
 
     @Override
     public void onDestroy() {
