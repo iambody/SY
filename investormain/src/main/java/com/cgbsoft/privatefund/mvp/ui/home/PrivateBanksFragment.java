@@ -80,8 +80,8 @@ public class PrivateBanksFragment extends BasePageFragment {
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
-//                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment());
-//                    tabBeens.add(tabBeen2);
+                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment());
+                    tabBeens.add(tabBeen2);
                     break;
                 case VIDEO_CODE:
                     TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment());

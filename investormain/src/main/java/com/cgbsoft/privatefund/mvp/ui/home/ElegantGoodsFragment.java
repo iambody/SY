@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ElegantGoodsPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.mall.com.mvp.ui.MallEditAddressActivity;
 import butterknife.BindView;
 
 /**
@@ -74,6 +76,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onCategoryItemClick(View view,int oldPosition, int position, ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
                 LogUtils.Log("aaa","click item");
                 loadCategory(posBean);
+                Intent intent = new Intent(getActivity(), MallEditAddressActivity.class);
+                startActivity(intent);
             }
         });
 

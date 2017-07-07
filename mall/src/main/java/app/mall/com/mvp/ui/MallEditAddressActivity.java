@@ -80,9 +80,9 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         et_recever_address.addTextChangedListener(this);
         et_recever_phone.addTextChangedListener(this);
         if (addressBean != null) {
-            titleMid.setText("编辑收货地址");
+            titleMid.setText("编辑地址");
         }else{
-            titleMid.setText("新增收货地址");
+            titleMid.setText("添加新地址");
         }
     }
 

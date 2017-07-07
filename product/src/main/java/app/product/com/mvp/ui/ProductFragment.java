@@ -26,7 +26,6 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
-import com.fivehundredpx.android.blur.BlurringView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

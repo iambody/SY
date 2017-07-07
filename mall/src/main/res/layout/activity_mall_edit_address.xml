@@ -4,102 +4,112 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    >
+    android:background="@color/page_bg_color"
+    android:orientation="vertical">
 
     <include layout="@layout/title_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#f6f6f6">
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:orientation="vertical"
-            android:paddingBottom="17dp"
-            android:background="#fff">
-            <EditText
-                android:id="@+id/mall_receiving_name"
+            android:paddingBottom="17dp">
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:hint="@string/edit_recever_name"
-                android:textColorHint="#999"
-                android:textColor="#333"
-                android:singleLine="true"
-                android:gravity="center_vertical|left"
-                style="@style/edit_text_style"
-                android:textCursorDrawable ="@drawable/edit_tob_cursor"
-                android:textSize="13sp"
-                android:background="#ffffff"/>
+                android:layout_marginLeft="10dp"
+                android:layout_height="55dp">
+
+                <EditText
+                    android:id="@+id/mall_receiving_name"
+                    style="@style/edit_text_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="#ffffff"
+                    android:gravity="center_vertical|left"
+                    android:hint="@string/edit_recever_name"
+                    android:singleLine="true"
+                    android:textColor="#333"
+                    android:textColorHint="#333"
+                    android:textCursorDrawable="@drawable/edit_tob_cursor"
+                    android:textSize="13sp" />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#d0d0d0" />
 
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="55dp">
             <EditText
                 android:id="@+id/mall_receiving_phone"
+                style="@style/edit_text_style"
                 android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical|left"
                 android:hint="@string/edit_phone"
-                android:textColorHint="#999"
-                android:textColor="#333"
-                android:textSize="13sp"
-                android:singleLine="true"
                 android:inputType="number"
                 android:maxLength="11"
-                android:gravity="center_vertical|left"
-                style="@style/edit_text_style"
-                android:textCursorDrawable ="@drawable/edit_tob_cursor"
-                android:background="#ffffff"
-                android:layout_height="45dp" />
+                android:singleLine="true"
+                android:textColor="#333"
+                android:textColorHint="#999"
+                android:textCursorDrawable="@drawable/edit_tob_cursor"
+                android:textSize="13sp" />
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#d0d0d0" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <View
+
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    />
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="55dp">
+
                 <EditText
                     android:id="@+id/mall_receiving_address"
+                    style="@style/edit_text_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="5dp"
-                    android:hint="@string/edit_recever_address"
-                    android:textColorHint="#999"
-                    android:textColor="#333"
-                    android:textSize="13sp"
+                    android:background="#ffffff"
                     android:gravity="center_vertical|left"
-                    style="@style/edit_text_style"
-                    android:textCursorDrawable ="@drawable/edit_tob_cursor"
-                    android:background="#ffffff"/>
+                    android:hint="@string/edit_recever_address"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="17dp"
+                    android:textColor="#333"
+                    android:textColorHint="#999"
+                    android:textCursorDrawable="@drawable/edit_tob_cursor"
+                    android:textSize="13sp" />
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
             </FrameLayout>
-
         </LinearLayout>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/mall_address_save_msg"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            style="@style/red1_btn"
-            android:text="@string/mall_save_address"
-            />
-
     </LinearLayout>
 
-
-
+    <Button
+        android:id="@+id/mall_address_save_msg"
+        style="@style/golden_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="@string/mall_save_address" />
 </LinearLayout>

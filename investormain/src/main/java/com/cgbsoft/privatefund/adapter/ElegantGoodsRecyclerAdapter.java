@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import app.mall.com.mvp.ui.MallEditAddressActivity;
 
 /**
  * 尚品顶部分类适配器

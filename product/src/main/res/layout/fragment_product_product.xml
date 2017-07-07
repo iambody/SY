@@ -18,10 +18,10 @@
         <LinearLayout
             android:id="@+id/product_product_filter_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="@dimen/ui_10_dip" >
+            >
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -40,6 +40,7 @@
             </LinearLayout>
 
             <View
+                android:layout_gravity="center_vertical"
                 android:layout_width="@dimen/ui_z_dip"
                 android:layout_height="16dp"
                 android:background="@color/gray_font" />
@@ -58,6 +59,10 @@
                     android:text="筛选" />
             </LinearLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_z_dip"
+            android:background="@color/gray_font" />
         <!--产品筛选里面的筛选 -->
         <LinearLayout
             android:id="@+id/series_layout"
