@@ -4,21 +4,26 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.widget.ShapeRoundImageView;
+import com.cgbsoft.lib.widget.RoundImageView;
+import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
@@ -36,21 +41,29 @@ import butterknife.OnClick;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-21:06
  */
-public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View {
+public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
 
 
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
-    @BindView(R.id.main_home_adviser_lay)
-    LinearLayout mainHomeAdviserLay;
-    @BindView(R.id.mainhome_advisercard_iv)
-    ShapeRoundImageView mainhomeAdvisercardIv;
     @BindView(R.id.main_home_bannerview)
     RollPagerView mainHomeBannerview;
     @BindView(R.id.main_home_horizontalscrollview_lay)
     LinearLayout mainHomeHorizontalscrollviewLay;
     @BindView(R.id.main_home_horizontalscrollview)
     HorizontalScrollView mainHomeHorizontalscrollview;
+    @BindView(R.id.main_home_adviser_inf_lay)
+    LinearLayout mainHomeAdviserInfLay;
+    @BindView(R.id.main_home_adviser_inf_iv)
+    RoundImageView mainHomeAdviserInfIv;
+    @BindView(R.id.main_home_adviser_layyy)
+    LinearLayout mainHomeAdviserLayyy;
+    @BindView(R.id.view_home_level_str)
+    TextView viewHomeLevelStr;
+    @BindView(R.id.main_home_swiperefreshlayout)
+    SwipeRefreshLayout mainHomeSwiperefreshlayout;
+    @BindView(R.id.main_home_smartscrollview)
+    SmartScrollView mainHomeSmartscrollview;
 
 
     //名片动画展示时候需要的动画
@@ -69,6 +82,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         //测试数据**********************
         List<HomeEntity.Operate> datas = new ArrayList<>();
@@ -92,11 +106,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         datasa.add(d4);
         datasa.add(d3);
         //测试数据**********************
-        homeBannerAdapter=new BannerAdapter(datasa);
+        homeBannerAdapter = new BannerAdapter(datasa);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         initViewPage(datasa);
         //请求数据
         getPresenter().getHomeData();
+    }
+
+    /**
+     * 配置view各种资源
+     */
+    private void initConfig() {
+        mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
+        // 设置下拉进度的主题颜色
+        mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click);
+        mainHomeSwiperefreshlayout.setOnRefreshListener(this);
+        mainHomeSmartscrollview.setScrollChangedListener(this);
     }
 
     //初始化banner
@@ -106,14 +131,38 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     protected MainHomePresenter createPresenter() {
-        return new MainHomePresenter(baseActivity,this);
+        return new MainHomePresenter(baseActivity, this);
     }
 
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {
+        if (null != data) {
+            initResultData(data);
 
 
+        }
+
+    }
+
+    /**
+     * 获取数据进行数据填充
+     *
+     * @param data
+     */
+    private void initResultData(HomeEntity.Result data) {
+        //横向轮播
+        initHorizontalScroll(data.module);
+        //用户等级信息
+        initLevel(data.member);
+
+    }
+
+    /**
+     * 用户等级的数据填充
+     */
+    private void initLevel(HomeEntity.Level level) {
+        BStrUtils.SetTxt(viewHomeLevelStr, level.levelName);
     }
 
     @Override
@@ -121,7 +170,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+    /**
+     * 横向滑动时候的数据填充
+     */
     public void initHorizontalScroll(List<HomeEntity.Operate> data) {
+//        mainHomeHorizontalscrollviewLay.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity, 120), DimensionPixelUtil.dip2px(baseActivity, 100));
@@ -138,11 +191,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 开始展示的animator
      */
     public void initShowCardAnimator(View V) {
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 1f);
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0f, 1f);
 
         ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", -600f, 0f);
 
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0.5f, 1f);
 
         AnimatorSet animationSet = new AnimatorSet();
 
@@ -190,11 +243,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
 
-    @OnClick(R.id.mainhome_advisercard_iv)
-    public void onViewClicked() {
-        mainHomeAdviserLay.setVisibility(View.VISIBLE);
-        initShowCardAnimator(mainHomeAdviserLay);
+    //理财师头像的点击事件
+    @OnClick(R.id.main_home_adviser_inf_iv)
+    public void onViewivClicked() {
+        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
+        initShowCardAnimator(mainHomeAdviserLayyy);
     }
+
+    //下拉刷新展示
+    @Override
+    public void onRefresh() {
+        mainHomeSwiperefreshlayout.setRefreshing(false);
+    }
+
+    ///scrollview滑动时候的监听
+    @Override
+    public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
+        LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
+        if ((scrollY >scrolloldY ) && scrollY>= 200) {
+            if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE)
+                mainHomeAdviserLayyy.setVisibility(View.GONE);
+        } else if ((scrolloldY >scrollY ) && scrollY <= 200) {
+            if (mainHomeAdviserLayyy.getVisibility() == View.GONE)
+                initShowCardAnimator(mainHomeAdviserLayyy);
+        }
+    }
+
 
     private class HorizontalItemClickListener implements View.OnClickListener {
         private HomeEntity.Operate data;

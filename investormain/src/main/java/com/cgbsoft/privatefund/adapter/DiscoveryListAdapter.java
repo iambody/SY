@@ -35,18 +35,23 @@ public class DiscoveryListAdapter extends RecyclerView.Adapter implements View.O
         this.listModelListItemClickListener = listener;
     }
 
-    public DiscoveryListAdapter(Context apContext) {
+    public DiscoveryListAdapter(Context apContext, List<DiscoverModel.DiscoveryListModel> listModelListData) {
         this.ApContext = apContext;
         this.layoutInflater = LayoutInflater.from(apContext);
+        this.listModelListdata = listModelListData;
     }
 
-    public void setData(List<DiscoverModel.DiscoveryListModel> listModelListdata, boolean refrush) {
+    public void refrushData(List<DiscoverModel.DiscoveryListModel> listModelListdata, boolean refrush) {
         if (refrush) {
             this.listModelListdata = listModelListdata;
         } else {
             this.listModelListdata.addAll(listModelListdata);
         }
         this.notifyDataSetChanged();
+    }
+
+    public void setData(List<DiscoverModel.DiscoveryListModel> listModelListdata) {
+        this.listModelListdata = listModelListdata;
     }
 
     @Override

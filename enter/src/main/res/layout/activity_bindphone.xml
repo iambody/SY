@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         scrolling_image_view:speed="1dp"
-        scrolling_image_view:src="@drawable/bg_choice_ids" />
+        scrolling_image_view:src="@drawable/login_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"

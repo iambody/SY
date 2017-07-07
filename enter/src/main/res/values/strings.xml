@@ -9,7 +9,7 @@
     <string name="al_login_str">登录</string>
     <string name="al_register_str">注册新用户</string>
     <string name="al_forget_str">忘记密码?</string>
-    <string name="al_wx_login_str">选择用其他方式登录</string>
+    <string name="al_wx_login_strs">微信登录</string>
     <string name="un_null_str">请输入您的账号</string>
     <string name="pw_null_str">请输入您的密码</string>
     <string name="company_name">北京盈泰财富云电子商务有限公司</string>
@@ -99,4 +99,7 @@
     <string name="phone_noright_str">请输入正确的手机号</string>
     <string name="code_shixiao">验证码一分钟内有效,请尽快输入</string>
 
+    <!-- 私享云新增****************** -->
+    <!-- 私享云新增****************** -->
+    <string name="phone_regist">手机号注册</string>
 </resources>

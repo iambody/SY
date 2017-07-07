@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -98,15 +97,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     protected void init(Bundle savedInstanceState) {
 
-        if (AppManager.isAdViser(this)) {
-            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-            btn_ar_register.setBackgroundResource(R.drawable.select_btn_advister);
-            btn_ar_register.setTextColor(0xff666666);
-        } else {
-            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-            btn_ar_register.setBackgroundResource(R.drawable.select_btn_inverstor);
-            btn_ar_register.setTextColor(0xffffffff);
-        }
+//        if (AppManager.isAdViser(this)) {
+//            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+//            btn_ar_register.setBackgroundResource(R.drawable.select_btn_advister);
+//            btn_ar_register.setTextColor(0xff666666);
+//        } else {
+//            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
+//            btn_ar_register.setBackgroundResource(R.drawable.select_btn_inverstor);
+//            btn_ar_register.setTextColor(0xffffffff);
+//        }
 
         et_ar_username.addTextChangedListener(new RegisterTextWatcher(USERNAME_KEY));
         et_ar_password.addTextChangedListener(new RegisterTextWatcher(PASSWORD_KEY));
@@ -170,9 +169,9 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(!Utils.isMobileNO(et_ar_username.getText().toString().trim())){
-            PromptManager.ShowCustomToast(baseContext,getResources().getString(R.string.phone_noright_str));
-            return ;
+        if (!Utils.isMobileNO(et_ar_username.getText().toString().trim())) {
+            PromptManager.ShowCustomToast(baseContext, getResources().getString(R.string.phone_noright_str));
+            return;
         }
         defaultDialog.show();
     }
