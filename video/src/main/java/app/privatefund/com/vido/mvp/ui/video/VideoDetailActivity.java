@@ -196,7 +196,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     ImageView viewTitleBackIv;
     @BindView(R2.id.view_title_right_txt)
     TextView viewTitleRightTxt;
-
+TextView video_videplay_time_playnumber_toc;
 
     private View title_videodetail_lay;
     //加载时候的dialog
@@ -290,6 +290,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     private void findview() {
+        video_videplay_time_playnumber_toc= (TextView) findViewById(R.id.video_videplay_time_playnumber_toc);
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.getvidoingloading), false, false);
         title_videodetail_lay = findViewById(R.id.title_videodetail_lay);
         videplay_produxt_view = findViewById(R.id.videplay_produxt_view);
@@ -944,7 +945,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onDestroy();
     }
 
-    private void setData() {
+    private void setData() {//2017-02-18  | 播放次数 302
+
         tv_avd_like_num.setText(String.valueOf(videoInfoModel.likeNum));
         tv_avd_title.setText(videoInfoModel.videoName);
         tv_avd_content.setText(videoInfoModel.content);
@@ -972,7 +974,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             videplay_produxt_view.setVisibility(View.GONE);
 
         }
-
+try{
+    video_videplay_time_playnumber_toc.setText(videoAllInf.rows.createDate+"  |  播放次数"+videoAllInf.rows.playCount);
+}catch (Exception e){}
 
         //剩余额度
 

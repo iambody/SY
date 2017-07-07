@@ -67,4 +67,5 @@ public class RouteConfig {
     //跳转到Secretpdfactivity
 
     public static final String GOTO_SECRET_PDF_ACTIVITY = "commontview_secretpdf";
+    public static final String GOTO_PDF_ACTIVITY = "gotosharepdf";
 }
