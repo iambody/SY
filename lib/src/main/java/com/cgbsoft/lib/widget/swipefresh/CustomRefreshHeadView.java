@@ -21,7 +21,6 @@ import com.romainpiel.shimmer.ShimmerTextView;
  * 日期 2017/5/12-14:54
  */
 public class CustomRefreshHeadView extends LinearLayout implements SwipeRefreshTrigger, SwipeTrigger {
-    private ShimmerTextView titanicTextView;
     private Shimmer titanic = new Shimmer();
     private Context context;
 
@@ -46,15 +45,11 @@ public class CustomRefreshHeadView extends LinearLayout implements SwipeRefreshT
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         View view = View.inflate(getContext(), R.layout.view_comment_list_head, null);
         addView(view, lp);
-        titanicTextView= (ShimmerTextView) view.findViewById(R.id.view_comment_head_txt);
-//        titanicTextView.setTypeface(Typefaces.get(context, "Satisfy-Regular.ttf"));
-        titanic.setDuration(500l);
 
     }
 
     @Override
     public void onRefresh() {
-        titanic.start(titanicTextView);
     }
 
     @Override

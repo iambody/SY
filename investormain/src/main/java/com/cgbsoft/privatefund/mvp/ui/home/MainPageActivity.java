@@ -691,8 +691,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
-        liveDialog.setVisibility(View.VISIBLE);
-        startOrOverAnimator(true);
+//        liveDialog.setVisibility(View.VISIBLE);
+//        startOrOverAnimator(true);
         liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
                 //延时3000 ，每间隔3000，时间单位
                 .compose(this.<Long>bindToLifecycle())
