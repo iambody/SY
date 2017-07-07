@@ -80,6 +80,18 @@ public abstract class BaseAdapter<MODEL extends BaseModel, LISTENER extends OnBa
      *
      * @param dataList
      */
+    public void refData(List<MODEL> dataList) {
+        if (dataList.size() == 0) {
+            return;
+        }
+        this.list=dataList;
+        notifyDataSetChanged();
+    }
+    /**
+     * 完全刷新
+     *
+     * @param dataList
+     */
     public void refAllData(List<MODEL> dataList) {
         if (dataList.size() == 0) {
             return;
