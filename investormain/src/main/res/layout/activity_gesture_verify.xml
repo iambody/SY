@@ -8,7 +8,9 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="46dip"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dip">
 
         <TextView
             android:id="@+id/text_cancel"

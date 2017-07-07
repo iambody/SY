@@ -26,6 +26,7 @@ public class ModifyUserInfoPresenter extends BasePresenterImpl<ModifyUserInfoCon
         ApiClient.updateUserInfo(hashMap).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
             protected void onEvent(CommonEntity.Result result) {
+                System.out.println("------modify=" + result.toString());
                 String results = result.result;
                 if ("suc".equals(results)) {
                     getView().modifyUserSuccess(isFiveTimes);

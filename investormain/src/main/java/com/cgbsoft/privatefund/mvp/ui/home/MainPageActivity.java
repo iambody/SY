@@ -146,6 +146,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        baseWebview.loadUrls(CwebNetConfig.pageInit);
+    }
+
+    @Override
     protected void init(Bundle savedInstanceState) {
         Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
@@ -684,6 +691,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
+//        liveDialog.setVisibility(View.VISIBLE);
+//        startOrOverAnimator(true);
         liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
                 //延时3000 ，每间隔3000，时间单位
                 .compose(this.<Long>bindToLifecycle())
@@ -752,11 +761,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     public void startOrOverAnimator(boolean isOnlyClose) {
         if (isOnlyClose) {
-            if (null == liveAnimator)
-                liveAnimator = ObjectAnimator.ofFloat(liveDialog, "translationY", 0f, 50.0f, 0f);
+            if(null==liveAnimator)
+            liveAnimator = ObjectAnimator.ofFloat(liveDialog, "translationY", 0f, 50.0f, 0f);
 
             liveAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            liveAnimator.setDuration(1 * 1000);
+            liveAnimator.setDuration(1*1000);
             liveAnimator.start();
         } else {
             if (null == liveAnimator) return;

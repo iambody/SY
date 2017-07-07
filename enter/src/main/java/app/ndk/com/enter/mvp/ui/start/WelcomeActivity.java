@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -33,6 +34,7 @@ import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.utils.RongConnect;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -243,6 +245,14 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
+        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
+
+        if (AppManager.getIsLogin(getApplicationContext())) {
+            if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), false)) { // 手势密码验证
+                finish();
+                return;
+            }
+        }
         if (isLoad) {
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
             WelcomeActivity.this.finish();
