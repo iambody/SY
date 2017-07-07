@@ -116,15 +116,15 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             isFromVerifyFogetPwd = getIntent().getStringExtra(FROMVERIFYTAG).equals("1");
         }
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-        if (AppManager.isAdViser(this)) {
-            iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-            btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
-            btn_af_next.setTextColor(0xff666666);
-        } else {
-            iv_af_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-            btn_af_next.setTextColor(0xffffffff);
-        }
+//        if (AppManager.isAdViser(this)) {
+//            iv_af_back.setImageResource(R.drawable.ic_toolbar_back);
+//            btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
+//            btn_af_next.setTextColor(0xff666666);
+//        } else {
+//            iv_af_back.setImageResource(R.drawable.ic_toolbar_back);
+//            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
+//            btn_af_next.setTextColor(0xffffffff);
+//        }
         et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
