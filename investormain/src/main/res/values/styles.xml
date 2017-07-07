@@ -74,4 +74,21 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text_input_layout_err</item>
     </style>
+
+
+    <style name="mine_account_info_text">
+        <item name="android:textSize">@dimen/dimens_sp_12</item>
+        <item name="android:textColor">@color/c_high_black</item>
+    </style>
+
+    <style name="mine_account_info_value">
+        <item name="android:textSize">@dimen/dimens_sp_24</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="mine_account_info_text_image">
+        <item name="android:textSize">@dimen/dimens_sp_12</item>
+        <item name="android:textColor">@color/account_info_image_text</item>
+    </style>
+
 </resources>

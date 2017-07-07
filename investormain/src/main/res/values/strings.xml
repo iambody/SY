@@ -140,4 +140,8 @@
     <string name="setting_item_about_app">关于本应用</string>
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>
+
+    <string name="account_info_caifu_value">我的财富值</string>
+    <string name="account_info_mine_yundou">我的财富值</string>
+    <string name="account_info_mine_private_banker">我的私人银行家</string>
 </resources>
