@@ -76,6 +76,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
         if (isVisibleToUser && isCreateView) {
             lazyLoad();
         }

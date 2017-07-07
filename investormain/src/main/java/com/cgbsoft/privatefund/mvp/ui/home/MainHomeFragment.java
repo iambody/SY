@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.HomeEntity;
@@ -22,6 +24,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
@@ -29,10 +32,12 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -70,6 +75,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //邀请码的布局
     @BindView(R.id.main_home_card_lay)
     LinearLayout mainHomeCardLay;
+    @BindView(R.id.main_home_new_iv)
+    ImageView mainHomeNewIv;
+    @BindView(R.id.view_live_iv)
+    ImageView viewLiveIv;
+    @BindView(R.id.view_live_title)
+    TextView viewLiveTitle;
+    //直播预告
+    View main_home_live_lay;
+    @BindView(R.id.view_live_iv_lay)
+    RelativeLayout viewLiveIvLay;
 
 
     //名片动画展示时候需要的动画
@@ -79,6 +94,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     // Banner适配器
     private BannerAdapter homeBannerAdapter;
+    /**
+     * Fragment当前状态是否可见
+     */
+    protected boolean isVisible;
 
     @Override
 
@@ -90,6 +109,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
+
         //测试数据**********************
         List<HomeEntity.Operate> datas = new ArrayList<>();
         HomeEntity.Operate d1 = new HomeEntity.Operate();
@@ -114,6 +134,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //测试数据**********************
         homeBannerAdapter = new BannerAdapter(datasa);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
+//        mainHomeBannerview.getViewPager()；
+        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
+        mainHomeBannerview.setPlayDelay(4 * 1000);
+
         initViewPage(datasa);
         //请求数据
         getPresenter().getHomeData();
@@ -128,6 +152,23 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click);
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
+        main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
+//        showLiveView();
+    }
+
+    /**
+     * 显示直播的布局
+     */
+    private void showLiveView() {
+        main_home_live_lay.setVisibility(View.VISIBLE);
+        int ivWidth = (int) (screenWidth * 2.6 / 5);
+        int ivHeight = (int) (ivWidth * 2.6 / 5);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ivWidth, ivHeight);
+        viewLiveIvLay.setLayoutParams(layoutParams);
+        //下边需要填充
+        //viewLiveIv 直播的图片
+        //viewLiveTitle直播的title
+
     }
 
     //初始化banner
@@ -194,7 +235,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 开始展示的animator
+     * 开始展示下边大布局的animator
      */
     public void initShowCardAnimator(View V) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0f, 1f);
@@ -207,11 +248,34 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
         animationSet.setDuration(1 * 1000);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //动画结束开始
+                mainHomeCardLay.setVisibility(View.VISIBLE);
+                showCardLayAnimation(mainHomeCardLay);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
         animationSet.start();
     }
 
     /**
-     * 消失的animator
+     * 消失下边大布局的的animator
      */
     public void initDismissCardAnimator(View V) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
@@ -248,11 +312,47 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+    /**
+     * 开始展示登录模式下的服务码的布局
+     */
+    public void showCardLayAnimation(View V) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0.2f, 0.5f, 1f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 0f, 1f);
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0f, 1f);
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(alphaAnimator).with(scalexAnimator).with(scaleyAnimator);
+        animationSet.setDuration(1 * 500);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animationSet.start();
+    }
+
 
     //理财师头像的点击事件
     @OnClick(R.id.main_home_adviser_inf_iv)
     public void onViewivClicked() {
+        if (isShowAdviserCard) return;
         mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
+        isShowAdviserCard = true;
         initShowCardAnimator(mainHomeAdviserLayyy);
     }
 
@@ -270,12 +370,26 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
         LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
         if ((scrollY > scrolloldY) && scrollY >= 200) {
-            if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE)
+            if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE) {
+                //隐藏下边的布局文件
                 mainHomeAdviserLayyy.setVisibility(View.GONE);
+                isShowAdviserCard = false;
+                //隐藏悬浮的服务码布局
+                mainHomeCardLay.setVisibility(View.GONE);
+                //todo 隐藏悬浮的理财师信息
+            }
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
-            if (mainHomeAdviserLayyy.getVisibility() == View.GONE)
-                initShowCardAnimator(mainHomeAdviserLayyy);
+            if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
+//                mainHomeCardLay.setVisibility(View.GONE);
+//                initShowCardAnimator(mainHomeAdviserLayyy);
+            }
         }
+    }
+
+
+    @OnClick(R.id.main_home_new_iv)
+    public void onNewClicked() {
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
     }
 
 
@@ -293,6 +407,35 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             PromptManager.ShowCustomToast(baseActivity, "位置" + postion);
         }
     }
+
+//    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            LogUtils.Log("sssaa", "首页可见");
+            mainHomeBannerview.resume();
+        } else {
+            isVisible = false;
+            LogUtils.Log("sssaa", "首页不可见");
+            mainHomeBannerview.pause();
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (getUserVisibleHint()) {
+//            isVisible = true;
+//            LogUtils.Log("sssaa", "首页可见");
+//            mainHomeBannerview.resume();
+//        } else {
+//            isVisible = false;
+//            LogUtils.Log("sssaa", "首页不可见");
+//            mainHomeBannerview.pause();
+//        }
+//
+//    }
 
     /**
      * banner
@@ -330,4 +473,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 
     }
+
+
 }
