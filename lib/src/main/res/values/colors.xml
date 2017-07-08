@@ -109,6 +109,7 @@
     <color name="colorYellow">#ff8800</color>
 
     <color name="account_info_image_text">#595959</color>
+    <color name="color_5a5a5a">#5a5a5a</color>
 
     <!-- list条目点击色 -->
     <color name="list_item_selector_color">#dfe0e1</color>

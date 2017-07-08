@@ -17,8 +17,13 @@
 
         <include layout="@layout/fragment_mine_account_info"/>
 
-        <include layout="@layout/fragment_mine_account_info"/>
+        <include layout="@layout/fragment_mine_private_bank"/>
 
+        <include layout="@layout/fragment_mine_order"/>
+
+        <include layout="@layout/fragment_mine_health"/>
+
+        <include layout="@layout/fragment_mine_video"/>
 
     </LinearLayout>
 </LinearLayout>
