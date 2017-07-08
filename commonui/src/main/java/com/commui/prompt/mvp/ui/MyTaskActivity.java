@@ -1,11 +1,9 @@
 package com.commui.prompt.mvp.ui;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +11,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.TaskInfo;
-import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
-import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.commui.prompt.mvp.adapter.MyTaskAdapter;
 import com.commui.prompt.mvp.contract.MyTaskContract;
@@ -35,12 +28,9 @@ import com.commui.prompt.mvp.presenter.MyTaskPresenter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import app.privatefund.com.cmmonui.R;
-import app.privatefund.com.cmmonui.R2;
-import butterknife.BindView;
 
 @Route(RouteConfig.INVTERSTOR_MAIN_TASK)
 public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyTaskContract.View, MyTaskListener {
@@ -143,7 +133,8 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
             }
         }
         Collections.sort(list);
-        adapter.refAllData(list);
+        adapter.refData(list);
+//        adapter.refAllData(list);
         adapter.notifyDataSetChanged();
     }
 

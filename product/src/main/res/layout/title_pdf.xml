@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
          android:layout_gravity="center_vertical"
-        android:layout_marginRight="@dimen/ui_10_dip"
+        android:layout_marginRight="@dimen/ui_5_dip"
         android:padding="@dimen/ui_5_dip"
         android:src="@drawable/product_plus"/>
 </LinearLayout>

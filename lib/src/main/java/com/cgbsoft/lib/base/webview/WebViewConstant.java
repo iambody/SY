@@ -34,7 +34,7 @@ public class WebViewConstant {
         public static final String INVITE_SHARE="app:tocShare";
 //        public static final String OPEN_SHAREPAGE ="app:openSharePage";
         public static final String TOC_SHARE ="app:tocShare";
-        public static final String TOC_PDF ="app:viewpdf";
+        public static final String TOC_PDF ="app:viewpdfs";
         public static final String TOC_GO_PRODUCTLS ="app:jumpProductList";
         public static final String TOC_PRODUCT_TOUTIAO ="app:openInformation";
         public static final String TOC_MALL_STATE = "app:mallHasTitle";
