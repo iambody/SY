@@ -45,6 +45,7 @@ public class CustomRefreshHeadView extends LinearLayout implements SwipeRefreshT
         addView(view, lp);
         titanicTextView = (ShimmerTextView) view.findViewById(R.id.view_comment_head_txt);
 //        titanicTextView.setTypeface(Typefaces.get(context, "Satisfy-Regular.ttf"));
+        //s
         titanic.setDuration(500l);
 
     }

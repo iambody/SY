@@ -5,4 +5,5 @@
     <dimen name="tip_size">12sp</dimen>
     <dimen name="ui_35_dip">35dp</dimen>
     <dimen name="ui_3_dip">3dp</dimen>
+    <dimen name="ui_150_dip">150dp</dimen>
 </resources>

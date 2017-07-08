@@ -93,7 +93,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.gray_font, R.dimen.ui_1_dip));
+        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.app_bg, R.dimen.ui_5_dip));
 
         videoListAdapter.setOnItemClickListener(new ListItemClickListener<VideoAllModel.VideoListModel>() {
             @Override
