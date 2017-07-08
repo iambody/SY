@@ -9,6 +9,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.cgbsoft.lib.R;
+
 /**
  * @author chenlong
  */
@@ -85,11 +87,7 @@ public class RoundProgressbar extends View {
         super(context, attrs, defStyle);
 
         paint = new Paint();
-
-
-        TypedArray mTypedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.RoundProgressBar);
-
+        TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundProgressBar);
         //获取自定义属性和默认值，第一个参数是从用户属性中得到的设置，如果用户没有设置，那么就用默认的属性，即：第二个参数
         //圆环的颜色
         ringColor = mTypedArray.getColor(R.styleable.RoundProgressBar_ringColor,0xff50c0e9);

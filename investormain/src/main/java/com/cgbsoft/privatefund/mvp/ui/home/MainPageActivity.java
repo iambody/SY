@@ -128,8 +128,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     /**
      * 定位管理器
      */
-
-
     @Override
     protected int layoutID() {
         return R.layout.activity_main_page;

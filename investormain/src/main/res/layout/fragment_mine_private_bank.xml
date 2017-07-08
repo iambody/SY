@@ -78,7 +78,7 @@
             android:id="@+id/account_bank_had_bug_ll"
             android:gravity="center">
 
-            <com.eva.views.RoundProgressBar
+            <com.cgbsoft.lib.widget.RoundProgressbar
                 android:id="@+id/roundProgressBar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
