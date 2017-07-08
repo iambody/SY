@@ -90,7 +90,7 @@
     <style name="mine_account_info_text_image_ll">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_height">73dp</item>
         <item name="android:background">@color/app_bg</item>
         <item name="android:gravity">center</item>
     </style>

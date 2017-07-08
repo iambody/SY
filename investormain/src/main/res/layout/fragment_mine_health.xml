@@ -56,8 +56,8 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="23dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_health_go_server"
@@ -69,7 +69,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/account_health_had_bug_ll"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
         </LinearLayout>
     </FrameLayout>

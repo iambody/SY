@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/ui_10_dip"
         android:paddingRight="@dimen/ui_10_dip"
@@ -126,8 +126,10 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="73dp"
-            android:id="@+id/account_order_all_ll">
+            android:layout_height="146dp"
+            android:id="@+id/account_order_all_ll"
+            android:background="@color/app_bg"
+            android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
