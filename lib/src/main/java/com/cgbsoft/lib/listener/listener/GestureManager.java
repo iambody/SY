@@ -31,7 +31,7 @@ public class GestureManager {
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_LOGIN", true);
             return true;
         } else {
-            if (!HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch()) && AppManager.getUserFirstLogin(context)) {
+            if (!HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch()) && (AppManager.getUserFirstLogin(context) || resetLogin)) {
                 NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_REGEIST_OR_LOGIN", true);
                 AppInfStore.saveUserFirstLogin(context, false);
                 return true;
