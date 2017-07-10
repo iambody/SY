@@ -106,6 +106,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:id="@+id/account_bank_assert_total_text"
                         android:text="存续资产"
                         android:textSize="@dimen/dimens_sp_14"/>
 

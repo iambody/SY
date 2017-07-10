@@ -281,6 +281,8 @@ public class NetConfig {
 
         // 健康检测/医疗数据
 //        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+        // 我的接口
+        static final String GET_MINE = API_URL + "/enjoycloud/usercentre";
     }
 
     /**

@@ -734,6 +734,11 @@ interface RequestManager {
     // 资讯列表数据
     @GET(NetConfig.Discovery.DISCOVERY_LIST_PAGE)
     Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);
+
+    // 我的
+    @GET(NetConfig.SXY.GET_MINE)
+    Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
+
     /**
      * 生活家banner列表
      */
