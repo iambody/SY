@@ -76,8 +76,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onCategoryItemClick(View view,int oldPosition, int position, ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
                 LogUtils.Log("aaa","click item");
                 loadCategory(posBean);
-                Intent intent = new Intent(getActivity(), MallAddressListActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), MallAddressListActivity.class);
+//                startActivity(intent);
             }
         });
 
