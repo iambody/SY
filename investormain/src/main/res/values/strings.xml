@@ -163,6 +163,10 @@
     <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
     <string name="account_health_go_server">去看服务</string>
 
+    <string name="account_bank_cunxun_assert">续存资产(%s)</string>
+    <string name="account_bank_zhaiquan_assert">债权(%1%s)-%2$s</string>
+    <string name="account_bank_guquan_assert">股权(%1%s)-%2$s</string>
+
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>
         <item>观看下载记录</item>

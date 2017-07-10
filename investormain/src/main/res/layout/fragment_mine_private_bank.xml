@@ -130,7 +130,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:id="@+id/account_bank_assert_zhaiquan_text"
+                        android:id="@+id/account_bank_assert_guquan_text"
                         android:text="股权占比"
                         android:textSize="@dimen/dimens_sp_14"/>
 
@@ -138,7 +138,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:id="@+id/account_bank_assert_zhaiquan_value"
+                        android:id="@+id/account_bank_assert_guquan_value"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimens_sp_24"/>
                 </LinearLayout>
@@ -154,8 +154,8 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:id="@+id/account_bank_assert_guanquan_text"
-                        android:text="股权占比"
+                        android:id="@+id/account_bank_assert_zhaiquan_text"
+                        android:text="债权占比"
                         android:textSize="@dimen/dimens_sp_14"/>
 
                     <TextView
@@ -163,7 +163,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:id="@+id/account_bank_assert_guanquan_value"
+                        android:id="@+id/account_bank_assert_zhaiquan_value"
                         android:textSize="@dimen/dimens_sp_24"/>
                 </LinearLayout>
             </LinearLayout>
