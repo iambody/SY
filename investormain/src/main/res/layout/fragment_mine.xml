@@ -3,33 +3,33 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_my"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-   <include layout="@layout/title_normal_new"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:background="@drawable/bg_my">
 
-        <include layout="@layout/fragment_mine_account_info"/>
+    <include layout="@layout/title_normal_new"/>
 
-        <include layout="@layout/fragment_mine_private_bank"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-        <include layout="@layout/fragment_mine_order"/>
+            <include layout="@layout/fragment_mine_account_info"/>
 
-        <include layout="@layout/fragment_mine_health"/>
+            <include layout="@layout/fragment_mine_private_bank"/>
 
-        <include layout="@layout/fragment_mine_video"/>
+            <include layout="@layout/fragment_mine_order"/>
 
-    </LinearLayout>
+            <include layout="@layout/fragment_mine_health"/>
+
+            <include layout="@layout/fragment_mine_video"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
