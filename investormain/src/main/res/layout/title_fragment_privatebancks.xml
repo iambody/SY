@@ -6,6 +6,7 @@
     android:padding="@dimen/ui_5_dip">
 
     <ImageView
+        android:id="@+id/privatebank_title_left"
         android:layout_width="@dimen/ui_40_dip"
         android:layout_height="@dimen/ui_40_dip"
         android:layout_gravity="center_vertical"

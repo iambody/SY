@@ -293,7 +293,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentOderBy = series.getKey();
                 CurrentOffset = 0;
                 isLoadmore = false;
-                productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.orange));
+                productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.app_golden));
                 reSetConditionAction();
             }
 
@@ -312,7 +312,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentOffset = 0;
                 isLoadmore = false;
 
-                productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.orange : R.color.black));
+                productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.app_golden : R.color.black));
                 reSetConditionAction();
             }
 

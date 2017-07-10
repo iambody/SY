@@ -164,7 +164,7 @@
                         android:id="@+id/product_item_productls_shengyuedu_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/orange"
+                        android:textColor="@color/app_golden"
                         android:textSize="17sp"
                         android:layout_marginRight="5dp"/>
 
