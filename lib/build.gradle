@@ -130,4 +130,5 @@ dependencies {
     compile 'com.github.deano2390:android-viewbadger:1.0.0@aar'
     compile 'com.romainpiel.shimmer:library:1.4.0@aar'
     compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.wrapp.floatlabelededittext:library:0.0.6'
 }

@@ -195,6 +195,7 @@
     </style>
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.DayNight">
         <item name="actionMenuTextColor">@color/color_333333</item>
+        <item name="colorAccent">@color/app_golden</item>
     </style>
     <!-- 无阴影 -->
     <style name="address_style">

@@ -147,7 +147,6 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     public void onItemClick(int position, LinearLayout linear) {
-        linear.setBackgroundColor(0xffd0d0d0);
         MallAddressBean model = mallAddressBeans.get(position);
         RxBus.get().post(RxConstant.MALL_CHOICE_ADDRESS, new MallAddress(model.getPhone(), model.getId(), model.getShopping_name(), model.getAddress()));
         mallAddressBeans.get(position);
@@ -194,6 +193,13 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
             }
         }.show();
 
+    }
+
+    @Override
+    public void onItemEditClick(int position, LinearLayout linear) {
+        Intent intent = new Intent(MallAddressListActivity.this, MallEditAddressActivity.class);
+        intent.putExtra("addressBean", mallAddressBeans.get(position));
+        startActivity(intent);
     }
 
 

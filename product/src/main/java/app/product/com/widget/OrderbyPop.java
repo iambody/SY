@@ -143,7 +143,7 @@ public class OrderbyPop extends PopupWindow {
             Series da = mBeans.get(position);
             BStrUtils.SetTxt(mItem.product_item_orderby_orderbytxt, da.getName());
 
-                mItem.product_item_orderby_orderbytxt.setTextColor(dcContext.getResources().getColor(!BStrUtils.isEmpty(OderBy)&&OderBy.equals(da.getKey())?R.color.orange:R.color.black));
+                mItem.product_item_orderby_orderbytxt.setTextColor(dcContext.getResources().getColor(!BStrUtils.isEmpty(OderBy)&&OderBy.equals(da.getKey())?R.color.app_golden:R.color.black));
 
             return convertView;
         }

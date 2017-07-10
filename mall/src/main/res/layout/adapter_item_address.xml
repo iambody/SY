@@ -1,47 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:background="#fff"
+    android:layout_height="82dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_marginTop="8dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/mall_item_linear"
+        android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="79dp"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:orientation="vertical"
         >
+
         <LinearLayout
+            android:id="@+id/item_linear"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/mall_address_name"
-                android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="#333"
-                />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mall_address_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/mall_address_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/mall_address_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="gone"
+                    android:background="@drawable/mall_check_address"/>
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/mall_address_phone"
-                android:layout_width="wrap_content"
+                android:id="@+id/mall_address_address"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#333"
-                android:textSize="13sp"
-                android:layout_marginLeft="15dp"
-                />
+                android:layout_marginTop="9dp"
+                android:maxLines="2"
+                android:textColor="#666"
+                android:textSize="14sp" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/mall_address_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#666"
-            android:textSize="13sp"
-            android:maxLines="2"
-            android:layout_marginTop="9dp"
+        <ImageView
+            android:layout_width="@dimen/ui_z_dip"
+            android:layout_height="30dp"
+            android:background="#BFBFBF"
+            android:layout_gravity="center_vertical"
             />
+
+        <ImageView
+            android:id="@+id/mall_edit_address"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/mall_edit_address_sel"/>
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/app_golden" />
 </LinearLayout>

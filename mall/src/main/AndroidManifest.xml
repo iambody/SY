@@ -5,6 +5,7 @@
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
+        android:theme="@style/AppTheme.ActionBar"
         android:supportsRtl="true">
         <activity android:name="app.mall.com.mvp.ui.MallAddressListActivity" />
         <activity android:name="app.mall.com.mvp.ui.MallEditAddressActivity" />

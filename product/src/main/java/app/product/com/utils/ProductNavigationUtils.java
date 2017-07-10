@@ -24,7 +24,7 @@ public class ProductNavigationUtils {
      * @param requestCode
      */
     public static void startProductDetailActivity(Context context, String schemeId, String productName, int requestCode) {
-        String url = CwebNetConfig.productDetail.concat(schemeId);
+        String url = "https://d10-app.simuyun.com/app6.0/biz/product/index.html";//CwebNetConfig.productDetail.concat(schemeId);
         Intent intent = new Intent(context, ProductDetailActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, productName);

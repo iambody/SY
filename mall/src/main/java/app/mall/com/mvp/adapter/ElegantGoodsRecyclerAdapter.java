@@ -1,6 +1,7 @@
-package app.mall.com.mvp.adapter;
+package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
+import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import qcloud.mall.R;
 
 
 /**

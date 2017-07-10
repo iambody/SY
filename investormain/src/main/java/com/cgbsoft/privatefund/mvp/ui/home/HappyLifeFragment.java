@@ -65,4 +65,9 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 break;
         }
     }
+    @Override
+    protected void bindTitle(View titleView) {
+
+    }
+
 }
