@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.model;
+package app.mall.com.model;
 
 
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;

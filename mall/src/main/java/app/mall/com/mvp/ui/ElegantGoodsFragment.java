@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.ui.home;
+package app.mall.com.mvp.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,16 +18,18 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
-import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.adapter.ElegantGoodsMultAdapter;
-import com.cgbsoft.privatefund.adapter.ElegantGoodsRecyclerAdapter;
-import com.cgbsoft.privatefund.mvp.contract.home.ElegantGoodsContract;
-import com.cgbsoft.privatefund.mvp.presenter.home.ElegantGoodsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.mall.com.mvp.adapter.ElegantGoodsMultAdapter;
+import app.mall.com.mvp.adapter.ElegantGoodsRecyclerAdapter;
+import app.mall.com.mvp.contract.ElegantGoodsContract;
+import app.mall.com.mvp.presenter.ElegantGoodsPresenterImpl;
 import butterknife.BindView;
+import qcloud.mall.R;
+import qcloud.mall.R2;
+
 
 /**
  * 尚品页面
@@ -35,11 +37,11 @@ import butterknife.BindView;
  */
 
 public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl> implements ElegantGoodsContract.ElegantGoodsView,OnLoadMoreListener, OnRefreshListener {
-    @BindView(R.id.elegant_goods_rv)
+    @BindView(R2.id.elegant_goods_rv)
     RecyclerView recyclerView;
-    @BindView(R.id.swipeToLoadLayout)
+    @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
-    @BindView(R.id.swipe_target)
+    @BindView(R2.id.swipe_target)
     RecyclerView recyclerViewPros;
     private LinearLayoutManager linearLayoutManager;
     private List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categoryDatas=new ArrayList<>();
@@ -51,8 +53,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     private String category = CATEGORY_ALL;//记录被点击的分类标记，默认是全部分类
     private ElegantGoodsRecyclerAdapter categoryAdapter;
     private ElegantGoodsMultAdapter proAdapter;
-    private boolean isOver;
+    private boolean isOver;//是否已经加载全部数据
     private boolean isCategorySelect;//是否是选择分类后去请求的数据
+    private boolean hasBeRefreshed=false;
 
     @Override
     protected int layoutID() {
@@ -160,6 +163,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         clodLsAnim(mRefreshLayout);
         categoryAdapter.setDatas(categorys);
         proAdapter.addDatas(result,true);
+        hasBeRefreshed=true;
     }
 
     @Override
@@ -189,12 +193,14 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void updateFirstError(Throwable error) {
+        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void updateMoreError(Throwable error) {
 //        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
+        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
         if (isCategorySelect) {
             isCategorySelect=false;
@@ -220,6 +226,10 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onLoadMore() {
+        if (!hasBeRefreshed) {
+            clodLsAnim(mRefreshLayout);
+            return;
+        }
         if (isOver) {
             Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
             clodLsAnim(mRefreshLayout);

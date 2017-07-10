@@ -1,10 +1,10 @@
-package com.cgbsoft.privatefund.model.impl;
+package app.mall.com.model.impl;
 
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.model.ElegantLivingModel;
-import com.cgbsoft.privatefund.model.ElegantLivingModelListener;
+import app.mall.com.model.ElegantLivingModel;
+import app.mall.com.model.ElegantLivingModelListener;
 
 import rx.subscriptions.CompositeSubscription;
 

@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.adapter;
+package app.mall.com.mvp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,12 @@ import android.widget.ImageView;
 
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import qcloud.mall.R;
+
 
 /**
  * Created by feigecal on 2017/6/29 0029.

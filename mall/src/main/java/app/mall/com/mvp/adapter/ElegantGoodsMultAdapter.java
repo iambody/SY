@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.adapter;
+package app.mall.com.mvp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +14,12 @@ import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.string.MySpannableString;
-import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import qcloud.mall.R;
+
 
 /**
  * Created by sunfei on 2017/7/1 0001.
@@ -76,7 +78,7 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
 //            hotHolder.productNameTv.setText(bean.getGoodsName());
             String goodsName = bean.getGoodsName();
             if (!TextUtils.isEmpty(goodsName) && goodsName.contains("【") && goodsName.contains("】")) {
-                MySpannableString.setNewStringStyle1(hotHolder.productNameTv, goodsName, goodsName.indexOf("【"), goodsName.indexOf("】")+1, 1,context.getResources().getColor(R.color.c_high_gold));
+                MySpannableString.setNewStringStyle1(hotHolder.productNameTv, goodsName, goodsName.indexOf("【"), goodsName.indexOf("】")+1, 1,context.getResources().getColor(R.color.app_golden));
             } else {
                 hotHolder.productNameTv.setText(goodsName);
             }
@@ -96,7 +98,7 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
             Imageload.display(context,imgUrl,normalHolder.imgIv);
             String goodsName = bean.getGoodsName();
             if (!TextUtils.isEmpty(goodsName) && goodsName.contains("【") && goodsName.contains("】")) {
-                MySpannableString.setNewStringStyle1(normalHolder.productNameTv, goodsName, goodsName.indexOf("【"), goodsName.indexOf("】")+1, 1, context.getResources().getColor(R.color.c_high_gold));
+                MySpannableString.setNewStringStyle1(normalHolder.productNameTv, goodsName, goodsName.indexOf("【"), goodsName.indexOf("】")+1, 1, context.getResources().getColor(R.color.app_golden));
             } else {
                 normalHolder.productNameTv.setText(goodsName);
             }
