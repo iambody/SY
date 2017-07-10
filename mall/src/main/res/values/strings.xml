@@ -3,16 +3,19 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="edit_phone">请输入电话</string>
-    <string name="edit_recever_name">请输入收货人姓名</string>
-    <string name="edit_recever_address">请输入收货地址</string>
+    <string name="edit_phone">手机号码</string>
+    <string name="edit_recever_name">收货人</string>
+    <string name="edit_recever_address">详细地址</string>
     <string name="mall_save_address">保存并使用</string>
     <string name="recharge_hint">最低充值额为500云豆！</string>
     <string name="recharge">充值</string>
     <string name="paymethod">支付方式</string>
     <string name="weixinpay">微信支付</string>
     <string name="weixinedu">( 最高额度 : ¥3000 )</string>
-    <string name="newaddress">新建收货地址</string>
+    <string name="newaddress">添加新地址</string>
+    <string name="mall_area">所在地区</string>
+    <string name="set_normal_address">设置默认地址</string>
+    <string name="set_normal_address_edit">默认地址</string>
     <string name="ydRecharge">云豆充值</string>
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>

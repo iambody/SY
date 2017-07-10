@@ -11,23 +11,29 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -224,6 +230,32 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 ////                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
 //            }
         }
+    }
+
+
+    /**
+     * 获取全局导航
+     */
+    @Override
+    public void getNavigation() {
+        addSubscription(ApiClient.getNavigation().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String json) {
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    SPreference.putString(getContext(), "Navigation", result.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        }));
+
     }
 //
 //    private String getAddressFromLocation(Location location) {

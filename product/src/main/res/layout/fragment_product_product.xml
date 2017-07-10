@@ -12,59 +12,57 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- 上边的筛选布局-->
+
+        <!-- 上边的筛选布局。。。。。-->
+
         <LinearLayout
             android:id="@+id/product_product_filter_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="@dimen/ui_10_dip" >
+            >
 
-            <TextView
-                android:id="@+id/product_productfragment_sousou"
-                android:layout_width="0dip"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/message_search_flag_bg"
-                android:clickable="true"
-                android:drawableLeft="@drawable/search_black"
-                android:drawablePadding="5dp"
-                android:gravity="left|center_vertical"
-                android:padding="@dimen/ui_5_dip"
-                android:paddingLeft="10dp"
-                android:text="搜索"
-                android:textColor="@color/gray_font"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="@dimen/ui_5_dip"
-                android:layout_height="match_parent"
-                android:src="@null" />
-
-            <TextView
-                android:id="@+id/product_productfragment_paixu"
-                style="@style/style_product_sort_txt"
-                android:drawableRight="@drawable/paixu_product"
-                android:gravity="right|center_vertical"
-                android:maxEms="9"
-                android:maxLines="1"
-                android:text="智能排序" />
-
-            <TextView
-                android:id="@+id/product_productfragment_shaixuan"
-                style="@style/style_product_sort_txt"
-                android:drawableRight="@drawable/shaixuan_product"
-
                 android:gravity="center"
+                android:layout_weight="1">
 
-                android:text="筛选" />
+                <TextView
+                    android:id="@+id/product_productfragment_paixu"
+                    style="@style/style_product_sort_txt"
+                    android:drawableRight="@drawable/paixu_product"
+                    android:gravity="right|center_vertical"
+                    android:maxEms="9"
+                    android:maxLines="1"
+                    android:text="智能排序" />
+            </LinearLayout>
+
+            <View
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/ui_z_dip"
+                android:layout_height="16dp"
+                android:background="@color/gray_font" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/product_productfragment_shaixuan"
+                    style="@style/style_product_sort_txt"
+                    android:drawableRight="@drawable/shaixuan_product"
+                    android:gravity="center"
+                    android:text="筛选" />
+            </LinearLayout>
         </LinearLayout>
-        <!-- 上边的筛选布局。。。。。-->
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
-            android:src="@color/gray_font" />
+            android:background="@color/gray_font" />
         <!--产品筛选里面的筛选 -->
         <LinearLayout
             android:id="@+id/series_layout"
@@ -85,6 +83,8 @@
                 android:background="@color/white"
                 openXu:rowSpace="10dp" />
         </LinearLayout>
+        <!-- 上边的筛选布局-->
+
         <!--产品筛选里面的筛选... -->
         <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
             android:id="@+id/swipeToLoadLayout"

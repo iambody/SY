@@ -297,7 +297,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                         normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.daifaxing);
                     } else if (productlsBean.raiseEndTime != null) {
 //                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(0xffea1202);
-                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(acontext.getResources().getColor(R.color.orange));
+                        normalProductHolder.productItemProductlsShengyueduCount.setTextColor(acontext.getResources().getColor(R.color.app_golden));
 
 //                        h1.shengyuedu_count.setTextColor(0xff222222);
                         java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
@@ -309,7 +309,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
 
                         if (hour >= 72) {
                             dateString = day + "天";
-                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.ic_lanse);
+                            normalProductHolder.productItemProductlsJiezhibg.setBackgroundResource(R.drawable.c_jiaobiao);
                             normalProductHolder.productItemProductlsJiezhidate.setTextColor(0xffffffff);
                         } else if (hour > 0 && hour < 72) {
                             dateString = hour + "小时";

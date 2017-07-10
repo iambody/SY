@@ -52,7 +52,6 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-
             android:background="@drawable/product_filter_ok"
             android:gravity="center"
             android:text="@string/wancheng"

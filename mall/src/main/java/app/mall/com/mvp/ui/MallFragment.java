@@ -60,13 +60,12 @@ public class MallFragment extends BaseFragment<MallPresenter> {
     }
 
     @Override
-    protected void before() {
-        super.before();
+    protected void after(View view) {
+        super.after(view);
         if (SPreference.getBoolean(getActivity(),"ydMallState")){
             title_layout.setVisibility(GONE);
         }
     }
-
 
     @Override
     protected MallPresenter createPresenter() {

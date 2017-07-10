@@ -116,7 +116,7 @@ public class ProductSeriesLayout extends ViewGroup {
                 boolean lastValue = isExtendLine(target);
 
                 if (!isExtend && lastValue && (TextUtils.equals("更多", lable.getName()) || TextUtils.equals("收起", lable.getName()))) {
-                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.color5));
+                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.color5));
                     moreView = tv;
                 }
 
@@ -128,12 +128,12 @@ public class ProductSeriesLayout extends ViewGroup {
                 }
 
                 if (currentView != null && TextUtils.equals(((TextView) currentView).getText().toString(), lable.getName())) {
-                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.color5));
+                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.color5));
                     currentView = tv;
                 }
 
                 if (isInit && TextUtils.equals(getResources().getString(R.string.product_series_all), lable.getName())) {
-                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.color5));
+                    tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.color5));
                     currentView = tv;
                 }
 
@@ -156,7 +156,7 @@ public class ProductSeriesLayout extends ViewGroup {
 
                         tv.setSelected(true);
                         if (tv.isSelected()) {
-                            tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.color5));
+                            tv.setTextColor(AppManager.isInvestor(getContext()) ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.color5));
                         } else {
                             tv.setTextColor(getResources().getColor(R.color.tv_gray));
                         }

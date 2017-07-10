@@ -1,6 +1,8 @@
 package app.mall.com.mvp.holder;
 
+import android.media.Image;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,19 +32,27 @@ public class MallAddressListHolder extends BaseHolder {
     @BindView(R2.id.mall_item_linear)
     public LinearLayout mall_item_linear;
 
+    @BindView(R2.id.item_linear)
+    public LinearLayout item_linear;
+
+    @BindView(R2.id.mall_address_normal)
+    public ImageView mall_address_normal;
+
+    @BindView(R2.id.mall_edit_address)
+    public ImageView mall_edit_address;
+
     public MallAddressListHolder(View itemView, final MallAddressListeber listeber) {
         super(itemView);
-        mall_item_linear.setOnClickListener(new View.OnClickListener() {
+        item_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listeber.onItemClick(getAdapterPosition(), mall_item_linear);
             }
         });
-        mall_item_linear.setOnLongClickListener(new View.OnLongClickListener() {
+        mall_edit_address.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                listeber.onItemLongClick(getAdapterPosition(), mall_item_linear);
-                return false;
+            public void onClick(View v) {
+                listeber.onItemEditClick(getAdapterPosition(), mall_item_linear);
             }
         });
     }

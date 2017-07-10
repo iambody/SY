@@ -15,4 +15,6 @@ public interface MallAddressListeber extends OnBaseListener{
     void onItemClick(int position, LinearLayout linear);
 
     void onItemLongClick(int position,LinearLayout linear);
+
+    void onItemEditClick(int position,LinearLayout linear);
 }

@@ -1450,4 +1450,11 @@ public class ApiClient {
         }
         return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
+
+    /**
+     * 获取全局导航
+     */
+    public static Observable<String> getNavigation(){
+        return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 }

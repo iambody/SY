@@ -2,6 +2,7 @@ package app.mall.com.mvp.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
@@ -40,9 +41,9 @@ public class MallListAdapter extends BaseAdapter<MallAddressBean, MallAddressLis
             vhh.mall_item_name.setText(model.getShopping_name());
             vhh.mall_item_phone.setText(model.getPhone());
             if (model.getDefault_flag().equals("1")) {
-                vhh.mall_item_linear.setBackgroundColor(0xffd0d0d0);
+                vhh.mall_address_normal.setVisibility(View.VISIBLE);
             } else {
-                vhh.mall_item_linear.setBackgroundColor(0xffffffff);
+                vhh.mall_address_normal.setVisibility(View.GONE);
             }
         } else {
             bindErrorHolder(model, holder);

@@ -3,13 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/ui_5_dip"
-    android:paddingLeft="@dimen/ui_5_dip"
-    android:paddingRight="@dimen/ui_5_dip"
-    android:paddingTop="@dimen/ui_20_dip"
-    android:layout_marginTop="@dimen/ui_5_dip">
+    android:padding="@dimen/ui_5_dip">
 
     <ImageView
+        android:id="@+id/privatebank_title_left"
         android:layout_width="@dimen/ui_40_dip"
         android:layout_height="@dimen/ui_40_dip"
         android:layout_gravity="center_vertical"
@@ -17,27 +14,28 @@
         android:src="@drawable/privatebank_title_left" />
 
     <LinearLayout
+        android:id="@+id/search_layout_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-
         android:layout_weight="1"
-        android:background="@drawable/shape_privatebank_title"
         android:orientation="horizontal"
-        android:padding="@dimen/ui_5_dip">
-
-        <ImageView
-            android:layout_width="@dimen/ui_15_dip"
-            android:layout_height="@dimen/ui_15_dip"
-            android:src="@drawable/title_search" />
+        >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ui_5_dip"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="@string/privatebank_title_str" />
+            android:id="@+id/search_text"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/message_search_flag_bg"
+            android:drawableLeft="@drawable/search_black"
+            android:drawablePadding="5dp"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/ui_5_dip"
+            android:paddingLeft="10dp"
+            android:text="@string/privatebank_title_str"
+            android:textColor="@color/gray_font"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView

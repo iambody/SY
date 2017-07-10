@@ -22,6 +22,7 @@ import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.mall.com.mvp.ui.MallAddressListActivity;
 import app.mall.com.mvp.adapter.ElegantGoodsMultAdapter;
 import app.mall.com.mvp.adapter.ElegantGoodsRecyclerAdapter;
 import app.mall.com.mvp.contract.ElegantGoodsContract;
@@ -29,7 +30,6 @@ import app.mall.com.mvp.presenter.ElegantGoodsPresenterImpl;
 import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
-
 
 /**
  * 尚品页面
@@ -77,6 +77,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onCategoryItemClick(View view,int oldPosition, int position, ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
                 LogUtils.Log("aaa","click item");
                 loadCategory(posBean);
+//                Intent intent = new Intent(getActivity(), MallAddressListActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -163,7 +165,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         clodLsAnim(mRefreshLayout);
         categoryAdapter.setDatas(categorys);
         proAdapter.addDatas(result,true);
-        hasBeRefreshed=true;
     }
 
     @Override
@@ -193,14 +194,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void updateFirstError(Throwable error) {
-        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void updateMoreError(Throwable error) {
 //        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
-        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
         if (isCategorySelect) {
             isCategorySelect=false;
@@ -226,10 +225,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onLoadMore() {
-        if (!hasBeRefreshed) {
-            clodLsAnim(mRefreshLayout);
-            return;
-        }
         if (isOver) {
             Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
             clodLsAnim(mRefreshLayout);
