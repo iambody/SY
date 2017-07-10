@@ -13,8 +13,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
         >
@@ -41,8 +41,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
         >
@@ -69,8 +69,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
         >
@@ -96,10 +96,13 @@
         />
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/ui_44_dip"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:background="@drawable/shape_button_elegant"
+        android:textSize="@dimen/dimens_sp_16"
+        android:textColor="@color/white"
         android:text="确定"
         />
 </LinearLayout>

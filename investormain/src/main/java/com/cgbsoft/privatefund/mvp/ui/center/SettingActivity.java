@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
@@ -44,11 +45,11 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     private void initView(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
-        titleTV.setText("设置");
+        titleTV.setText(getResources().getString(R.string.setting_title));
         gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
             @Override
             public void change(CompoundButton buttonView, boolean isChecked) {
-                LogUtils.Log("aaa","ischecked===="+isChecked);
+                Toast.makeText(getApplicationContext(),"isChecked==="+isChecked,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -68,22 +69,38 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     public void changeLoginPsd(){
         Router.build(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY).go(SettingActivity.this);
     }
+
+    /**
+     * 跳转到修改手势密码
+     */
     @OnClick(R.id.sin_change_gesture_psd)
     public void changeGesturePsd(){
 
     }
+    /**
+     * 跳转到常见问题
+     */
     @OnClick(R.id.sin_common_question)
     public void commonQuestion(){
 
     }
+    /**
+     * 跳转到意见反馈
+     */
     @OnClick(R.id.sin_feedback)
     public void feedBack(){
-
+        NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
     }
+    /**
+     * 跳转到推荐好友
+     */
     @OnClick(R.id.sin_recommend_friend)
     public void recommendFriend(){
-
+        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
     }
+    /**
+     * 跳转到关于页面
+     */
     @OnClick(R.id.sin_about_app)
     public void aboutApp(){
 

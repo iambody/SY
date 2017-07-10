@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.presenter.home;
+package app.mall.com.mvp.presenter;
 
 
 import android.content.Context;
@@ -8,12 +8,13 @@ import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.privatefund.model.ElegantGoodsModelListener;
-import com.cgbsoft.privatefund.model.impl.ElegantGoodsModelImpl;
-import com.cgbsoft.privatefund.mvp.contract.home.ElegantGoodsContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import app.mall.com.model.ElegantGoodsModelListener;
+import app.mall.com.model.impl.ElegantGoodsModelImpl;
+import app.mall.com.mvp.contract.ElegantGoodsContract;
 
 /**
  * Created by sunfei on 2017/6/28 0028.

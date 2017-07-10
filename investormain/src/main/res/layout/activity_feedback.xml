@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="left|top"
-            android:hint="请写下您的问题和建议（不少于10个字）"
+            android:hint="@string/feedback_hint"
             android:inputType="textMultiLine"
             android:minLines="6"
             android:paddingTop="15dp"

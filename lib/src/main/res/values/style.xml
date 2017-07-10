@@ -196,4 +196,14 @@
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.DayNight">
         <item name="actionMenuTextColor">@color/color_333333</item>
     </style>
+    <!-- 无阴影 -->
+    <style name="address_style">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

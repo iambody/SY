@@ -131,6 +131,7 @@
     <string name="privatebank_title_str">搜索产品名称,投资标的,基金管理人</string>
     <string name="zunixanghuiyuan">私享云尊享会员</string>
     <!-- 设置页面用到 -->
+    <string name="setting_title">设置</string>
     <string name="setting_item_change_pwd">修改登录密码</string>
     <string name="setting_item_gesture_pwd">手势密码</string>
     <string name="setting_item_change_gesture_pwd">修改手势密码</string>
@@ -140,6 +141,10 @@
     <string name="setting_item_about_app">关于本应用</string>
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>
+    <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
+    <!-- 个人信息页面用到 -->
+    <string name="personal_information_title">我的信息</string>
+    <string name="camera_cancel">取消</string>
 
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云dou</string>

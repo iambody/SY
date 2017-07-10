@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.ui.home;
+package app.mall.com.mvp.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,16 +17,18 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
-import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.adapter.RecyclerAdapter;
-import com.cgbsoft.privatefund.mvp.contract.home.ElegantLivingContract;
-import com.cgbsoft.privatefund.mvp.presenter.home.ElegantLivingPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.mall.com.mvp.adapter.RecyclerAdapter;
+import app.mall.com.mvp.contract.ElegantLivingContract;
+import app.mall.com.mvp.presenter.ElegantLivingPresenterImpl;
 import butterknife.BindView;
+import qcloud.mall.R;
+import qcloud.mall.R2;
+
 
 /**
  * 生活家页面
@@ -34,9 +36,9 @@ import butterknife.BindView;
  */
 
 public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterImpl> implements ElegantLivingContract.ElegantLivingView,OnLoadMoreListener, OnRefreshListener {
-    @BindView(R.id.swipe_target)
+    @BindView(R2.id.swipe_target)
     RecyclerView recyclerView;
-    @BindView(R.id.swipeToLoadLayout)
+    @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
     private LoadingDialog mLoadingDialog;
     private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas;
@@ -139,6 +141,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
 
     @Override
     public void updateError() {
+        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
     }
 
