@@ -14,7 +14,6 @@ import com.cgbsoft.privatefund.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.mall.com.mvp.ui.MallEditAddressActivity;
 
 /**
  * 尚品顶部分类适配器

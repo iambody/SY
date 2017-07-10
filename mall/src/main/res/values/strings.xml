@@ -12,6 +12,9 @@
     <string name="paymethod">支付方式</string>
     <string name="weixinpay">微信支付</string>
     <string name="weixinedu">( 最高额度 : ¥3000 )</string>
-    <string name="newaddress">新建收货地址</string>
+    <string name="newaddress">添加新地址</string>
+    <string name="mall_area">所在地区</string>
+    <string name="set_normal_address">设置默认地址</string>
+    <string name="set_normal_address_edit">默认地址</string>
     <string name="ydRecharge">云豆充值</string>
 </resources>

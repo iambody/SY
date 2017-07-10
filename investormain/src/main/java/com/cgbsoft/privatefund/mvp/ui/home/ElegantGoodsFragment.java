@@ -28,7 +28,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.ElegantGoodsPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.mall.com.mvp.ui.MallEditAddressActivity;
+import app.mall.com.mvp.ui.MallAddressListActivity;
 import butterknife.BindView;
 
 /**
@@ -76,7 +76,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onCategoryItemClick(View view,int oldPosition, int position, ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
                 LogUtils.Log("aaa","click item");
                 loadCategory(posBean);
-                Intent intent = new Intent(getActivity(), MallEditAddressActivity.class);
+                Intent intent = new Intent(getActivity(), MallAddressListActivity.class);
                 startActivity(intent);
             }
         });
