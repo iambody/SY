@@ -181,7 +181,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             }
         });
     }
-
+i
     @Override
     protected void onDestroy() {
         super.onDestroy();

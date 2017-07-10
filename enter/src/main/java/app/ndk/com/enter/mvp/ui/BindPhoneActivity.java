@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -115,6 +116,10 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
      */
     @OnClick(R2.id.iv_ab_back)
     void backClick() {
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
+            finish();
+            return;
+        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }
@@ -194,6 +199,10 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @Override
     public void margeSucc() {
 //        openActivity(MainPageActivity.class);
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
+            finish();
+            return;
+        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
 
@@ -217,9 +226,12 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     }
 
 
-
     @OnClick(R2.id.tv_ab_next)
-    public void onViewClicked() {//跳转首页
+    public void onViewClicked() {// 跳转首页
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
+            finish();
+            return;
+        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }
