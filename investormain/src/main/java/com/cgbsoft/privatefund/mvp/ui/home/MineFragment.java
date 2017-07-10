@@ -1,7 +1,9 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +25,12 @@ import butterknife.BindView;
  * 我的fragment
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
+
+    @BindView(R.id.title_left)
+    ImageView titleLeft;
+
+    @BindView(R.id.title_right)
+    ImageView titleRight;
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -87,6 +95,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init(View view, Bundle savedInstanceState) {
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
+        titleLeft.setBackgroundResource(R.drawable.icon_settings_press);
+        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
     }
 
     private void initMineInfo(MineModel mineModel) {
