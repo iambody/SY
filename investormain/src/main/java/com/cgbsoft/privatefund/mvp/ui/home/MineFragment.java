@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.privatefund.R;
 
 import butterknife.BindView;
 
@@ -35,7 +36,7 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.mine_account_info_ticket_ll)
     LinearLayout linearLayoutTicket;
 
-    @BindView(R.id.mine_account_info_card_ll)
+    @BindView(R.id.mine_account_info_cards_ll)
     LinearLayout linearLayoutCard;
 
     @BindView(R.id.account_bank_assert_total_value)
