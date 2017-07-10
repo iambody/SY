@@ -272,6 +272,13 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.SettingActivity"
             android:screenOrientation="portrait" />
+        <!-- 设置页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.PersonalInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.PermissionsActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
         <!-- 修改登录密码页面-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
@@ -443,7 +450,6 @@
             android:exported="false"
             android:process=":QALSERVICE" >
         </service>
-
 
     </application>
 

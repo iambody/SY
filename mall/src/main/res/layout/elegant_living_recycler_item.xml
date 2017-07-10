@@ -5,7 +5,7 @@
                                     android:layout_height="400dp"
                                     android:clickable="true"
                                     android:foreground="?android:attr/selectableItemBackground"
-                                    app:cardCornerRadius="@dimen/dp_4"
+                                    app:cardCornerRadius="@dimen/ui_4_dip"
                                     app:cardPreventCornerOverlap="false"
                                     app:cardUseCompatPadding="true"
     >

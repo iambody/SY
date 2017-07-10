@@ -6,7 +6,11 @@
               android:orientation="vertical">
 
     <include layout="@layout/title_normal_new"/>
-
+    <include
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,12 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-
-            <include
-                layout="@layout/acitivity_divide_online"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_login_psd"

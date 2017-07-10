@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.contract.home;
+package app.mall.com.mvp.contract;
 
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;

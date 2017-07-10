@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by feigecal on 2017/6/29 0029.
+ * Created by sunfei on 2017/6/29 0029.
  */
 @Route(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY)
 public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl> implements ChangePsdContract.ChangePsdView {

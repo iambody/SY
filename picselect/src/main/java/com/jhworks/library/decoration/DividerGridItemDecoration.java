@@ -89,7 +89,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
                                 int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+            if ((pos + 1) % spanCount == 0||pos==childCount-1)// 如果是最后一列，则不需要绘制右边
             {
                 return true;
             }

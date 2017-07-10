@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.presenter.home;
+package app.mall.com.mvp.presenter;
 
 
 import android.content.Context;
@@ -6,11 +6,12 @@ import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.privatefund.model.ElegantLivingModelListener;
-import com.cgbsoft.privatefund.model.impl.ElegantLivingModelImpl;
-import com.cgbsoft.privatefund.mvp.contract.home.ElegantLivingContract;
 
 import java.util.List;
+
+import app.mall.com.model.ElegantLivingModelListener;
+import app.mall.com.model.impl.ElegantLivingModelImpl;
+import app.mall.com.mvp.contract.ElegantLivingContract;
 
 /**
  * 生活家presenter的实现

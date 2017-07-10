@@ -15,6 +15,9 @@ import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
 
+import app.mall.com.mvp.ui.ElegantGoodsFragment;
+import app.mall.com.mvp.ui.ElegantLivingFragment;
+
 /**
  *@author chenlong
  *
