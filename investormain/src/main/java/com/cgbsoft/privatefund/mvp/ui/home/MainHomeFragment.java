@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.im.MessageListActivity;
+import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -360,8 +361,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onRefresh() {
         mainHomeSwiperefreshlayout.setRefreshing(false);
         //请求数据
-        getPresenter().getHomeData();
-
+//        getPresenter().getHomeData();
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoDownloadListActivity.class));
     }
 
     ///scrollview滑动时候的监听

@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/app_bg"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -38,17 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
             android:layout_alignParentTop="true"
-            android:src="@color/gray_font"
-            />
+            android:src="@color/gray_font" />
+
         <LinearLayout
             android:id="@+id/ll_avd_head"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/app_bg">
 
             <ImageView
                 android:id="@+id/iv_avd_start"
@@ -69,27 +71,51 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <View
+     <!--   <View
             android:id="@+id/v_avd_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/ll_avd_head"
-            android:background="@color/color_d0d0d0" />
+            android:background="@color/color_d0d0d0" />-->
 
-        <com.dinuscxj.refresh.RecyclerRefreshLayout
-            android:id="@+id/recyclerRefreshLayout"
+        <com.cgbsoft.lib.widget.recycler.MyScrollview
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv_avd_allspace"
-            android:layout_below="@+id/v_avd_line">
+            android:layout_below="@+id/ll_avd_head"
+            android:background="@color/white"
+            android:scrollbars="none">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </com.dinuscxj.refresh.RecyclerRefreshLayout>
+                <!-- <com.dinuscxj.refresh.RecyclerRefreshLayout
+                     android:id="@+id/recyclerRefreshLayout"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_above="@+id/tv_avd_allspace"
+                     android:layout_below="@+id/v_avd_line">-->
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--  </com.dinuscxj.refresh.RecyclerRefreshLayout>-->
+                <include
+                    android:id="@+id/donedownload_title_lay"
+                    layout="@layout/view_donedownload_title_lay"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/donerecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </com.cgbsoft.lib.widget.recycler.MyScrollview>
 
         <TextView
             android:id="@+id/tv_avd_allspace"
