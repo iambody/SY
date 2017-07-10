@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.ui.home;
+package app.mall.com.mvp.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,11 +18,6 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
-import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.adapter.ElegantGoodsMultAdapter;
-import com.cgbsoft.privatefund.adapter.ElegantGoodsRecyclerAdapter;
-import com.cgbsoft.privatefund.mvp.contract.home.ElegantGoodsContract;
-import com.cgbsoft.privatefund.mvp.presenter.home.ElegantGoodsPresenterImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +28,8 @@ import app.mall.com.mvp.adapter.ElegantGoodsRecyclerAdapter;
 import app.mall.com.mvp.contract.ElegantGoodsContract;
 import app.mall.com.mvp.presenter.ElegantGoodsPresenterImpl;
 import butterknife.BindView;
+import qcloud.mall.R;
+import qcloud.mall.R2;
 
 /**
  * 尚品页面

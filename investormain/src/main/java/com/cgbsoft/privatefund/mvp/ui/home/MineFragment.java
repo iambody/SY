@@ -10,6 +10,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
@@ -85,7 +86,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
-        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView, R.drawable.sharelogo);
+        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
     }
 
     private void initMineInfo(MineModel mineModel) {
