@@ -8,8 +8,8 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-//    private static final String START_APP = "https://app";
-    private static final String START_APP = "https://t3-app";
+    private static final String START_APP = "https://app";
+//    private static final String START_APP = "https://t、3-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
     private static final String BASE = ".simuyun.com";
