@@ -108,6 +108,18 @@
     <color name="colorRed">#ec0909</color>
     <color name="colorYellow">#ff8800</color>
 
+    <color name="account_info_image_text">#595959</color>
+    <color name="color_5a5a5a">#5a5a5a</color>
+
     <!-- list条目点击色 -->
     <color name="list_item_selector_color">#dfe0e1</color>
+    <!-- 黑色20%透明度 -->
+    <color name="line_20">#33000000</color>
+    <!-- 黑色10%透明度 -->
+    <color name="line_10">#19000000</color>
+    <color name = "bottomdialog_text_blue">#007aff</color>
+    <!-- 黑色30%透明度 -->
+    <color name="line_30">#4c000000</color>
+    <color name="apply_zx_serv_bankgroud">#efeff4</color>
+    <color name = "wheel_text_blue">#007aff</color>
 </resources>

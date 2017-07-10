@@ -15,12 +15,11 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoveryListAdapter;
-import com.cgbsoft.privatefund.model.DiscoverModel;
-import com.cgbsoft.privatefund.model.DiscoverModel.DiscoveryListModel;
+import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryListPresenter;
-import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     @Override
     protected void onFirstUserVisible() {
         LogUtils.Log("fffa", "第一次可见:" + CatoryValue);
-        List<DiscoveryListModel> list = getArguments() != null ? (List<DiscoveryListModel>) getArguments().get(INIT_LIST_DATA_PARAMS) : null;
+        List<DiscoveryListModel> list = getArguments() != null ? getArguments().getParcelableArrayList(INIT_LIST_DATA_PARAMS) : null;
         discoveryListAdapter = new DiscoveryListAdapter(fBaseActivity, list == null ? new ArrayList<>() : list);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
@@ -127,9 +126,6 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         discoveryListAdapter.refrushData(disCoveryListModels, !isAdd);
     }
 
-    public void setData(List<DiscoveryListModel> disCoveryListModels) {
-        discoveryListAdapter.setData(disCoveryListModels);
-    }
 
     @Override
     public void onLoadMore() {

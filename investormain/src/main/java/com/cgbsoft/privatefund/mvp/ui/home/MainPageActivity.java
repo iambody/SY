@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -128,8 +127,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     /**
      * 定位管理器
      */
-
-
     @Override
     protected int layoutID() {
         return R.layout.activity_main_page;
@@ -140,9 +137,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.after();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
@@ -358,10 +355,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-//                if (1 == position && isHaveClickProduct) {
-//                    MainTabManager.getInstance().getProductFragment().resetAllData();
-//                }
-//                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
             case 3://左3
@@ -373,7 +366,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 4;
                 break;
             case 2://中间
-                // getPresenter().toSignIn();
                 switchID = R.id.nav_center;
                 currentPostion = 2;
                 break;

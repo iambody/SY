@@ -401,6 +401,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
     /**
      * 判断是否全部下载完毕
+     *
      * @param downloadListModels
      * @return
      */
@@ -418,4 +419,20 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 //
     }
 
+    /**
+     * 筛选出来未下载和已下载的数据
+     * false标识未下载  true标识已经下载数据
+     */
+    public List<VideoDownloadListModel> getVideoList(List<VideoDownloadListModel> allData, boolean isDoneLoad) {
+
+        if (null == allData || 0 == allData.size()) return new ArrayList<>();
+        List<VideoDownloadListModel> videoList = new ArrayList<>();
+        for (int i = 0; i < allData.size(); i++) {
+            if (!isDoneLoad && VideoStatus.FINISH != allData.get(i).status)//获取下载未完成的数据
+                videoList.add(allData.get(i));
+            if (isDoneLoad && VideoStatus.FINISH == allData.get(i).status)
+                videoList.add(allData.get(i));
+        }
+        return videoList;
+    }
 }

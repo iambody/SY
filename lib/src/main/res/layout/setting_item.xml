@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:orientation="vertical">
 
 
@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         android:layout_toLeftOf="@+id/ll_setting_item_right"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:textColor="@color/black"
+        android:layout_marginRight="@dimen/ui_13_dip"
         />
 
     <FrameLayout
@@ -24,7 +25,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="15dp"
         >
 
         <LinearLayout
@@ -39,14 +40,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="12dp"
+                android:textSize="@dimen/dimens_sp_14"
+                android:textColor="@color/app_golden"
                 android:visibility="gone"
                 />
 
             <ImageView
                 android:id="@+id/iv_setting_item_right_arrow"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerInside"
                 android:src="@drawable/arrow_right"
@@ -55,16 +58,20 @@
 
         <com.cgbsoft.lib.widget.SwitchButton
             android:id="@+id/setting_item_switchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:frameDrawable="@drawable/switch_frame"
-            app:sliderDrawable="@drawable/selector_switch_slider"
-            app:stateDrawable="@drawable/selector_switch_state"
-            app:stateMaskDrawable="@drawable/switch_state_mask"
-            app:withTextInterval="16dp"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
             android:visibility="gone"
-            ></com.cgbsoft.lib.widget.SwitchButton>
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/ui_10_dip"
+            android:paddingRight="@dimen/ui_10_dip"
+            android:paddingTop="@dimen/ui_4_dip"
+            android:paddingBottom="@dimen/ui_4_dip"
+            app:kswThumbDrawable="@drawable/thumb_drawable"
+            app:kswBackDrawable="@drawable/back_drawable"
+            app:kswThumbWidth="29dp"
+            app:kswThumbHeight="29dp"
+            >
+        </com.cgbsoft.lib.widget.SwitchButton>
     </FrameLayout>
 
     <include
@@ -72,6 +79,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
         />
 </RelativeLayout>

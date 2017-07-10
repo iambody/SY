@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.BaseApplication;
@@ -76,6 +77,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
         if (isVisibleToUser && isCreateView) {
             lazyLoad();
         }
@@ -228,5 +230,8 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (null == swipeToLoadLayout) return;
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
         if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
+    }
+    protected void showToast(int strId){
+        Toast.makeText(baseActivity.getApplicationContext(),getResources().getString(strId),Toast.LENGTH_SHORT).show();
     }
 }

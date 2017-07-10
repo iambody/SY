@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.listener.listener.FeedbackListener;
@@ -28,7 +27,6 @@ import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
-import com.jhworks.library.decoration.DividerGridItemDecoration;
 
 import org.json.JSONArray;
 
@@ -87,7 +85,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(feedbackAdapter);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerGridItemDecoration(getApplicationContext()));
+//        recyclerView.addItemDecoration(new DividerGridItemDecoration(getApplicationContext()));
     }
 
     @Override

@@ -267,13 +267,13 @@ public class NetConfig {
 
 
     /**
-     * ****************以下为6.0私享云 新增接口的配置路径*******************
+     * ****************以下为6.0私享云 新增新增接口的配置路径接口的配置路径*******************
      **/
     static class SXY {
         private static final String sxy = "/sxy";
 
         //首页
-        static final String GETHOME = API_URL  + "/enjoycloud/apphome";
+        static final String GETHOME = API_URL + "/enjoycloud/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
         static final String VISITOR_GET_USERID = API_URL + "/visitorAuth";
@@ -284,6 +284,8 @@ public class NetConfig {
 
         // 健康检测/医疗数据
 //        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+        // 我的接口
+        static final String GET_MINE = API_URL + "/enjoycloud/usercentre";
     }
 
     /**
@@ -310,10 +312,10 @@ public class NetConfig {
     /**
      * 生活家banner&尚品
      */
-    static class ELEGANT{
-        private static final String elegantLiving="/ydtoc";
-        static final String GETBANNER=API_URL+elegantLiving+"/listbanners";
-        static final String GETGOODSFIRST=API_URL+elegantLiving+"/listhotgoods";
-        static final String GETGOODSMORE=API_URL+elegantLiving+"/category";
+    static class ELEGANT {
+        private static final String elegantLiving = "/ydtoc";
+        static final String GETBANNER = API_URL + elegantLiving + "/listbanners";
+        static final String GETGOODSFIRST = API_URL + elegantLiving + "/listhotgoods";
+        static final String GETGOODSMORE = API_URL + elegantLiving + "/category";
     }
 }

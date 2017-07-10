@@ -14,11 +14,6 @@ import app.privatefund.com.vido.mvp.ui.video.holder.VideoDownloadListHolder;
 import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 
-/**
- * Created by xiaoyu.zhang on 2016/12/13 16:59
- * Email:zhangxyfs@126.com
- *  
- */
 public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel, VideoDownloadListListener, RecyclerView.ViewHolder> {
     private boolean openCheck;
 

@@ -13,11 +13,12 @@
         android:layout_marginTop="@dimen/ui_5_dip"
         android:drawablePadding="@dimen/ui_5_dip"
         android:text="@string/xiangguanchanpin"
+        android:textColor="@color/black"
         android:textSize="@dimen/dimens_sp_16"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-<ImageView
-    style="@style/video_bottom_line" />
+        android:textStyle="bold" />
+
+    <ImageView style="@style/video_bottom_line" />
+
     <TextView
         android:id="@+id/view_videoplay_product_name"
         android:layout_width="wrap_content"
@@ -30,8 +31,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:src="@color/gray_font"
-        android:layout_marginTop="@dimen/ui_5_dip"/>
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:src="@color/gray_font" />
 
     <LinearLayout
         android:layout_width="match_parent"

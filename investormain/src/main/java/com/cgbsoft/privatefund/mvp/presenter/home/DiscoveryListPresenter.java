@@ -8,7 +8,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.model.DiscoverModel;
+import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,7 +37,7 @@ public class DiscoveryListPresenter extends BasePresenterImpl<DiscoverListContra
                     JSONObject jsonObject = new JSONObject(s);
                     JSONObject result = jsonObject.getJSONObject("result");
                     String values = result.getString("informations");
-                    List<DiscoverModel.DiscoveryListModel> discoverList = new Gson().fromJson(values, new TypeToken<List<DiscoverModel.DiscoveryListModel>>() {}.getType());
+                    List<DiscoveryListModel> discoverList = new Gson().fromJson(values, new TypeToken<List<DiscoveryListModel>>() {}.getType());
                     if (result != null) {
                         getView().requestListDataSuccess(discoverList);
                     } else {
