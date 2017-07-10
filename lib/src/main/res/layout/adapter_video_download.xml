@@ -129,7 +129,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_d0d0d0" />
+        android:background="@color/color_d0d0d0"
+        android:paddingLeft="@dimen/ui_5_dip"/>
 
     <TextView
         android:id="@+id/tv_avd_id"
