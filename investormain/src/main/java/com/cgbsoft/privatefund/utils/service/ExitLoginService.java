@@ -20,6 +20,8 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -101,6 +103,7 @@ public class ExitLoginService extends Service {
         AppInfStore.saveUserAccount(getApplicationContext(), null);
         AppInfStore.saveRongTokenExpired(this, 0);
         ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
+        SPreference.putBoolean(InvestorAppli.getContext(), Constant.weixin_login, false);
         if(RongIM.getInstance().getRongIMClient()!=null){
             RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.PRIVATE);
             RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.GROUP);

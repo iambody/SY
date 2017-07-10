@@ -16,6 +16,7 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -87,6 +88,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
                 AppInfStore.saveUserId(getContext(), loginBean.userId);
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+                SPreference.putBoolean(getContext(), Constant.weixin_login, false);
                 AppInfStore.saveUserAccount(getContext().getApplicationContext(), un);
                 Log.i("LoginPresenter", "-------userid=" + loginBean.userId + "------rongYunToken=" + loginBean.token);
                 if (loginBean.userInfo != null) {
@@ -156,6 +158,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 } else {
                     AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+                    SPreference.putBoolean(getContext(), Constant.weixin_login, true);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
