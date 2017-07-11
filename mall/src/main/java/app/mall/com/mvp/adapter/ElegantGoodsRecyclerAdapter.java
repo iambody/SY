@@ -34,6 +34,7 @@ public class ElegantGoodsRecyclerAdapter extends RecyclerView.Adapter<ElegantGoo
         if (null == data) {
             data = new ArrayList<>();
         }
+        data.clear();
         data.addAll(datas);
         notifyDataSetChanged();
     }

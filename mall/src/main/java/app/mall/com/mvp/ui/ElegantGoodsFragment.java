@@ -150,12 +150,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void showLoadDialog() {
-//        mLoadingDialog.show();
+        mLoadingDialog.show();
     }
 
     @Override
     public void hideLoadDialog() {
-//        mLoadingDialog.dismiss();
+        mLoadingDialog.dismiss();
     }
 
     @Override
