@@ -127,8 +127,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     /**
      * 定位管理器
      */
-
-
     @Override
     protected int layoutID() {
         return R.layout.activity_main_page;
@@ -357,10 +355,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
-//                if (1 == position && isHaveClickProduct) {
-//                    MainTabManager.getInstance().getProductFragment().resetAllData();
-//                }
-//                isHaveClickProduct = true;
                 currentPostion = 1;
                 break;
             case 3://左3
@@ -372,7 +366,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 4;
                 break;
             case 2://中间
-                // getPresenter().toSignIn();
                 switchID = R.id.nav_center;
                 currentPostion = 2;
                 break;

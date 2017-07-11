@@ -26,12 +26,12 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.lib.widget.recycler.RecyclerControl;
-import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.cgbsoft.lib.widget.swipefresh.FullyLinearLayoutManager;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.lzy.okserver.download.DownloadManager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.vido.R;
@@ -43,6 +43,7 @@ import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 
@@ -55,8 +56,8 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_O
  * 视频下载列表 单线程下载
  *  
  */
-public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, RecyclerControl.OnControlGetDataListListener, VideoDownloadListListener,
-        Toolbar.OnMenuItemClickListener, RecyclerRefreshLayout.OnRefreshListener {
+public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener,
+        Toolbar.OnMenuItemClickListener {
     @BindView(R2.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
@@ -74,9 +75,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @BindView(R2.id.tv_avd_start_title)
     TextView tv_avd_start_title;
-
-    @BindView(R2.id.recyclerRefreshLayout)
-    RecyclerRefreshLayout recyclerRefreshLayout;
+//
+//    @BindView(R2.id.recyclerRefreshLayout)
+//    RecyclerRefreshLayout recyclerRefreshLayout;
 
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
@@ -92,11 +93,25 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @BindView(R2.id.tv_avd_allspace)
     TextView tv_avd_allspace;
+    //已经下载的列表
+    @BindView(R2.id.donerecyclerView)
+    RecyclerView donerecyclerView;
 
-    private RecyclerControl recyclerControl;
-    private LinearLayoutManager linearLayoutManager;
+    //已下载的title展示view
+    View donedownload_title_lay;
+    //全部删除时候正在下载的选择数目
+    int loadingCheckNum = 0;
+    //已经下载的选择数目
+    int DownCheckNum = 0;
+
+    //    private RecyclerControl recyclerControl;
+    private FullyLinearLayoutManager linearLayoutManager;
+    private FullyLinearLayoutManager donelinearLayoutManager;
+    //标识未下载完成的
     private VideoDownloadListAdapter videoDownloadListAdapter;
 
+    //标识已经下载的
+    private VideoDownloadListAdapter videoHaveDownloadListAdapter;
     private Observable<Integer> refItemObservable;
     private Observable<String> nowPlayVideoIdObservable;
     private Observable<Boolean> downloadToListObservable;
@@ -120,17 +135,28 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        initFindview();
         tv_title.setText(R.string.local_video_str);
         videoDownloadListAdapter = new VideoDownloadListAdapter(this);
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
-        recyclerRefreshLayout.setOnRefreshListener(this);
-        recyclerRefreshLayout.setEnabled(false);
+        videoHaveDownloadListAdapter = new VideoDownloadListAdapter(new HaveDownloadListListener());
 
+        linearLayoutManager = new FullyLinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        donelinearLayoutManager = new FullyLinearLayoutManager(this);
+        donelinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
+//        recyclerRefreshLayout.setOnRefreshListener(this);
+//        recyclerRefreshLayout.setEnabled(false);
+        //正在下载的
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoDownloadListAdapter);
+        //已经下载的
+        donerecyclerView.setLayoutManager(donelinearLayoutManager);
+        donerecyclerView.setAdapter(videoHaveDownloadListAdapter);
+
         recyclerView.setHasFixedSize(true);
+        donerecyclerView.setHasFixedSize(true);
+
         toolbar.setTitle(null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
@@ -153,6 +179,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                 this.dismiss();
             }
         };
+    }
+
+    private void initFindview() {
+        donedownload_title_lay = findViewById(R.id.donedownload_title_lay);
     }
 
     @Override
@@ -198,8 +228,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
             }
         });
-
-        onRefresh();
+        onControlGetDataList(true);
+//        onRefresh();
     }
 
     @OnClick(R2.id.ll_avd_head)
@@ -224,10 +254,13 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         isChoiceAll = !isChoiceAll;
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
+        List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
+        list.addAll(null==donelist?new ArrayList<VideoDownloadListModel>():donelist);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).isCheck = isChoiceAll;
         }
         videoDownloadListAdapter.notifyDataSetChanged();
+        videoHaveDownloadListAdapter.notifyDataSetChanged();
         if (isChoiceAll) {
             choiceChangeText(list.size());
         } else {
@@ -237,7 +270,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @OnClick(R2.id.tv_avd_delete)
     void deleteClick() {//删除
+
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
+        List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
+        list.addAll(null==donelist?new ArrayList<VideoDownloadListModel>():donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
@@ -268,22 +304,33 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (dataList.size() == 0) {//没做分页所以直接判断就行
             unVisableBottomLayout();
             ll_avd_head.setVisibility(View.GONE);
-
         }
-        if(getPresenter().isAllDownLoadOver(dataList)){
+        //如果已经全部下载过了就全部开始不显示
+        if (getPresenter().isAllDownLoadOver(dataList)) {
             unVisableBottomLayout();
             ll_avd_head.setVisibility(View.GONE);
+            //只在已下载的列表显示
+            videoHaveDownloadListAdapter.deleteAllData();
+            videoHaveDownloadListAdapter.refAllData(dataList);
+            return;
         }
+        //获取未下载的数据
+        List<VideoDownloadListModel> downloadingData = getPresenter().getVideoList(dataList, false);
+        //获取已下载的数据
+        List<VideoDownloadListModel> DownloadData = getPresenter().getVideoList(dataList, true);
+        //展示已下载的view 的title
+        donedownload_title_lay.setVisibility((null == DownloadData || 0 == DownloadData.size() ? View.GONE : View.VISIBLE));
         if (isRef) {
+            //开始刷新未完成的数据列表
             videoDownloadListAdapter.deleteAllData();
-            videoDownloadListAdapter.refAllData(dataList);
+            videoDownloadListAdapter.refAllData(downloadingData);//(dataList);
+            //开始刷新已完成的数据列表
+            videoHaveDownloadListAdapter.deleteAllData();
+            videoHaveDownloadListAdapter.refAllData(DownloadData);
         } else {
             videoDownloadListAdapter.appendToList(dataList);
         }
 
-        recyclerControl.getDataComplete(isRef);
-        recyclerControl.setError(this, false, videoDownloadListAdapter, new VideoDownloadListModel(), "", R.drawable.local_video_no);
-        recyclerRefreshLayout.setEnabled(false);
 
         if (getPresenter().isStartAllDownloading(dataList)) {
             isAllDownloadStart = true;
@@ -295,9 +342,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public void getLocalListFail(boolean isRef) {
-        recyclerControl.getDataComplete(isRef);
-        recyclerRefreshLayout.setEnabled(false);
-        recyclerControl.setError(this, true, videoDownloadListAdapter, new VideoDownloadListModel());
+//        recyclerControl.getDataComplete(isRef);
+//        recyclerRefreshLayout.setEnabled(false);
+//        recyclerControl.setError(this, true, videoDownloadListAdapter, new VideoDownloadListModel());
     }
 
     @Override
@@ -334,14 +381,16 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.firstBtn) {
-            if (videoDownloadListAdapter.getList().size() == 1) {
-                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+        if (item.getItemId() == R.id.firstBtn) {//点击右上角的删除按钮
+            if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
+                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
                     return false;
             }
+
+            videoHaveDownloadListAdapter.changeCheck();
             videoDownloadListAdapter.changeCheck();
 
-            if (videoDownloadListAdapter.getCheckStatus()) {
+            if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
                 visableBottomLayout();
             } else {
                 unVisableBottomLayout();
@@ -368,7 +417,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                     getPresenter().updateStatus(model.videoId, VideoStatus.WAIT);
                     getPresenter().startDownload(model);
                     changeStatus = true;
-                    PromptManager.ShowCustomToast(baseContext,"等待下载...");
+                    PromptManager.ShowCustomToast(baseContext, "等待下载...");
                 }
             }
             changeStart(changeStatus, iv_avd_pause, tv_avd_pause);
@@ -400,19 +449,22 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         int choiceNum = 0;
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
+        List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 choiceNum++;
             }
         }
+        //记录正在下载的选择删除数目
+        loadingCheckNum = choiceNum;
 
-        if (choiceNum == 0) {
+        if ((DownCheckNum+loadingCheckNum) == 0) {
             unChoiceChangeText();
         } else {
-            choiceChangeText(choiceNum);
+            choiceChangeText((DownCheckNum+loadingCheckNum) );
         }
 
-        if (choiceNum != list.size()) {
+        if ((DownCheckNum+loadingCheckNum) != (list.size()+donelist.size())) {
             isChoiceAll = false;
             tv_avd_choiceAll.setText(R.string.choice_all_str);
         } else {
@@ -423,30 +475,30 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public void onErrorClickListener() {
-        onRefresh();
+//        onRefresh();
     }
 
-    @Override
+    //    @Override
     public void onControlGetDataList(boolean isRef) {
         getPresenter().getLocalDataList(isRef);
         tv_avd_allspace.setText(getPresenter().getSDCardSize());
     }
+//
+//    @Override
+//    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//
+//    }
+//
+//    @Override
+//    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//
+//    }
 
-    @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-    }
-
-    @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-    }
-
-    @Override
-    public void onRefresh() {
-        recyclerControl.onRefresh();
-        recyclerRefreshLayout.setEnabled(false);
-    }
+//    @Override
+//    public void onRefresh() {
+////        recyclerControl.onRefresh();
+//        recyclerRefreshLayout.setEnabled(false);
+//    }
 
     @Override
     protected void onDestroy() {
@@ -533,9 +585,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         VideoDownloadListModel model = getPresenter().getLocalVideoInfo(videoId);
         if (position == -1)
             return;
-        videoDownloadListAdapter.getList().remove(position);
-        videoDownloadListAdapter.getList().add(model);
-        videoDownloadListAdapter.notifyDataSetChanged();
+        onControlGetDataList(true);
+//        videoDownloadListAdapter.getList().remove(position);
+//        videoDownloadListAdapter.getList().add(model);
+//        videoDownloadListAdapter.notifyDataSetChanged();
     }
 
     private void refItemUI(String videoId, boolean isFinish, long currentSize, long totalSize, float progress, long networkSpeed, int downloadState) {
@@ -564,6 +617,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             pb_avd.setVisibility(View.GONE);
             tv_avd_speed.setVisibility(View.GONE);
             changeStart(false, iv_avd_pause, tv_avd_pause);
+//            onControlGetDataList(true);
             return;
         }
         ll_avd_pause.setVisibility(View.VISIBLE);
@@ -588,6 +642,76 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         if (downloadState == DownloadManager.NONE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);
+        }
+
+//        if (isFinish) {
+//            onControlGetDataList(true);
+//        }
+    }
+
+    /**
+     * 已下载的选择监听器
+     */
+
+    class HaveDownloadListListener implements VideoDownloadListListener {
+        @Override
+        public void onErrorClickListener() {
+
+        }
+
+        @Override
+        public void onItemClick(int position, ImageView iv_avd_cover, ImageView iv_avd_pause, TextView tv_avd_pause) {
+            VideoDownloadListModel model = videoHaveDownloadListAdapter.getList().get(position);
+
+
+            //没有正在下载的视频
+//            if (model.status == VideoStatus.FINISH) {//如果点击的视频已经下载完成
+            Intent intent = new Intent(baseContext, VideoDetailActivity.class);
+            intent.putExtra("videoId", model.videoId);
+            intent.putExtra("videoCoverUrl", model.videoCoverUrl);
+            ActivityTransitionLauncher.with(baseContext).from(iv_avd_cover).launch(intent);
+//            } else {
+//                getPresenter().startDownload(model);
+//                changeStart(true, iv_avd_pause, tv_avd_pause);
+//            }
+//
+//            //关闭选择框
+//            if (videoDownloadListAdapter.getCheckStatus()) {
+//                setRefLayoutMarginBottom(0);
+//                unVisableBottomLayout();
+//                unChoiceChangeText();
+//                videoDownloadListAdapter.changeCheck();
+//            }
+        }
+
+        @Override
+        public void onCheck(int position, boolean isCheck) {
+            videoHaveDownloadListAdapter.getList().get(position).isCheck = isCheck;
+
+            int choiceNum = 0;
+            List<VideoDownloadListModel> list = videoHaveDownloadListAdapter.getList();
+            List<VideoDownloadListModel> loadinglist = videoDownloadListAdapter.getList();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).isCheck) {
+                    choiceNum++;
+                }
+            }
+            //记录已经下载的选择删除的数目
+            DownCheckNum = choiceNum;
+
+            if ((loadingCheckNum+DownCheckNum) == 0) {
+                unChoiceChangeText();
+            } else {
+                choiceChangeText((loadingCheckNum+DownCheckNum));
+            }
+
+            if ((loadingCheckNum+DownCheckNum) != (list.size()+loadinglist.size())) {
+                isChoiceAll = false;
+                tv_avd_choiceAll.setText(R.string.choice_all_str);
+            } else {
+                isChoiceAll = true;
+                tv_avd_choiceAll.setText(R.string.cancel_choice_all_str);
+            }
         }
     }
 

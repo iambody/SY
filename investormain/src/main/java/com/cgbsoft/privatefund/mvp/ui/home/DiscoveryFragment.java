@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
@@ -8,10 +9,13 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
 import com.cgbsoft.privatefund.model.DiscoverModel;
+import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryPresenter;
 
@@ -22,7 +26,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import java.util.ArrayList;
 import java.util.List;
 
-import app.privatefund.com.vido.R;
 import butterknife.BindView;
 
 /**
@@ -71,13 +74,13 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
+        discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
         initBanner(DiscoverModel.formatBanner(discoverModel.banner));
         initIndicatorList(discoverModel);
     }
 
     @Override
     public void requestFirstDataFailure(String errMsg) {
-
     }
 
     private void initBanner(List<BannerBean> list) {
@@ -92,6 +95,9 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         discoveryBannerView.setOnclickBannerItemView(bannerBean -> {
             Toast.makeText(getActivity(), "你添加的是第".concat(String.valueOf(bannerBean.getPositon())).concat("个图片"), Toast.LENGTH_SHORT).show();
         });
+        if (discoveryBannerView != null) {
+            discoveryBannerView.startBanner();
+        }
     }
 
     private void initIndicatorList(DiscoverModel discoverModel) {
@@ -99,20 +105,16 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         for (int i = 0; i < discoverModel.category.size(); i++) {
             DiscoveryListFragment baseLazyFragment = new DiscoveryListFragment(discoverModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
-            if (0 == i) baseLazyFragment.FreshAp(discoverModel.informations, false);
+            if (0 == i) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(DiscoveryListFragment.INIT_LIST_DATA_PARAMS, (ArrayList<DiscoveryListModel>) discoverModel.informations);
+                baseLazyFragment.setArguments(bundle);
+            }
         }
         disCoveryNavigationAdapter.setData(discoverModel.category);
         fragmentAdapter.freshAp(lazyFragments);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (discoveryBannerView != null) {
-            discoveryBannerView.startBanner();
-        }
-    }
 
     @Override
     public void onDestroy() {

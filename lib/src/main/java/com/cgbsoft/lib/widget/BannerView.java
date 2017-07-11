@@ -41,6 +41,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     private Context context;
     private int selectedBanner;
     private final static int BANNER_CHANGE = 0;
+    private final static int DELAY_SCROLL_TIME = 5000;
     private OnclickBannerItemView onclickBannerItemView;
 
     private Handler mHandler = new Handler() {
@@ -124,8 +125,6 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         }
         HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList, activity);
         targetVp.setAdapter(bannerAdapter);
-        targetVp.setCurrentItem(bannerList.size() - 1);
-        selectedBanner = bannerList.size() - 1;
     }
 
     private void bannerPointLight(int currentPoint) {
@@ -139,7 +138,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     }
 
     public void startBanner() {
-        mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+        mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
     }
 
     public void endBanner() {
@@ -154,6 +153,8 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     @Override
     public void onPageSelected(int position) {
+//        selectedBanner = position % bannerList.size();
+//        bannerPointLight(position % indicationList.size());
         selectedBanner = position;
         bannerPointLight(position % indicationList.size());
     }
@@ -170,10 +171,10 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
                 mHandler.removeCallbacksAndMessages(null);
                 break;
             case MotionEvent.ACTION_UP:
-                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                 break;
             case MotionEvent.ACTION_CANCEL:
-                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                 break;
         }
         return false;
@@ -190,12 +191,16 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
         @Override
         public Object instantiateItem(View arg0, int arg1) {
-            ViewGroup v = (ViewGroup)views.get(arg1).getParent();
+//            if (views.size() <= arg1) {
+//                return null;
+//            }
+            final int currentItem = arg1 % views.size();
+            ViewGroup v = (ViewGroup)views.get(currentItem).getParent();
             if (v != null) {
-                v.removeView(views.get(arg1));
+                v.removeView(views.get(currentItem));
             }
-            ((ViewPager) arg0).addView(views.get(arg1), 0);
-            return views.get(arg1);
+            ((ViewPager) arg0).addView(views.get(currentItem), 0);
+            return views.get(currentItem);
         }
 
         public void destroyItem(View container, int position, Object object) {
@@ -210,6 +215,35 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             return (arg0 == arg1);
         }
     }
+
+//    public class HomeBannerAdapter extends PagerAdapter {
+//
+//        private List<View> views;
+//        private Context context;
+//
+//        public HomeBannerAdapter(List<View> views, Context context) {
+//            this.context = context;
+//            this.views = views;
+//        }
+//
+//        public Object instantiateItem(View container, int position) {
+//            final int currentItem = position % views.size();
+//            ((ViewPager) container).addView(views.get(currentItem));
+//            return views.get(currentItem);
+//        }
+//
+//        public void destroyItem(View container, int position, Object object) {
+//            ((ViewPager) container).removeView((View) object);
+//        }
+//
+//        public int getCount() {
+//            return Integer.MAX_VALUE;
+//        }
+//
+//        public boolean isViewFromObject(View arg0, Object arg1) {
+//            return (arg0 == arg1);
+//        }
+//    }
 
 //    /**
 //     * 在本地Drawable中使用轮播和指示器

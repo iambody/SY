@@ -110,6 +110,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     @Override
     public void getSchoolAllDataSucc(String data) {
+        if (BStrUtils.isEmpty(data)) return;
         VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
         freashAp(videoAllModel);
     }
