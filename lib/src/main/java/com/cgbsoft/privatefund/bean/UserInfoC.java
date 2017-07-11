@@ -8,7 +8,6 @@ import java.io.Serializable;
  * Created by lee on 2016/9/10.
  */
 public class UserInfoC implements Serializable {
-
     private String customerName;
     private String customerType;
     private String stockAssetsTime;

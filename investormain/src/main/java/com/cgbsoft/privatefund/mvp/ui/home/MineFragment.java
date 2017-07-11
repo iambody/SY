@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -29,6 +31,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -37,11 +40,11 @@ import butterknife.BindView;
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
 
-//    @BindView(R.id.title_left)
-//    ImageView titleLeft;
-//
-//    @BindView(R.id.title_right)
-//    TextView titleRight;
+    @BindView(R.id.mine_title_set_id)
+    ImageView titleImageLeft;
+
+    @BindView(R.id.mine_title_message_id)
+    ImageView titleImageRight;
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -121,6 +124,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_order_all_ll)
     LinearLayout order_waith_all_ll;
 
+    @BindView(R.id.account_order_receive_text)
+    TextView account_order_receive_text;
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_mine;
@@ -150,9 +156,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init(View view, Bundle savedInstanceState) {
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
-//        titleLeft.setBackgroundResource(R.drawable.icon_settings_press);
-//        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
+        if (AppManager.getUserInfo(getActivity()).getToC() != null) {
+            textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());
+            textViewYundou.setText(String.valueOf(AppManager.getUserInfo(getActivity()).getToC().getMyPoint()));
+            textViewPrivateBanker.setText(AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName());
+        }
         getPresenter().getMineData();
+    }
+
+    @OnClick(R.id.mine_title_set_id)
+    void gotoSetActivity() {
+        // TODO 设置
+    }
+
+    @OnClick(R.id.mine_title_message_id)
+    void gotoMessagectivity() {
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
     }
 
     private void initMineInfo(MineModel mineModel) {
@@ -192,34 +211,38 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         current = order_waith_all_ll;
                         break;
                 }
-                if (orders.getCount() > 0) {
-                    ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
-                }
+//                ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
             }
+            ViewUtils.createTopRightBadgerView(getActivity(), account_order_receive_text, 9);
         }
     }
 
     private void initHealthView(MineModel mineModel) {
         if (mineModel != null && mineModel.getHealthy() != null) {
-            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem()) ? View.GONE : View.VISIBLE);
-            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem()) ? View.VISIBLE : View.GONE);
-            if (!CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem())) {
+            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
+            if (!CollectionUtils.isEmpty(mineModel.getHealthy().getContent())) {
                 health_title_all_ll.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, mineModel.getHealthy().getAllHealthy()));
-                createHealthItem(mineModel.getHealthy().getHealthItem());
+                createHealthItem(mineModel.getHealthy().getContent());
             }
         }
     }
 
     private void createHealthItem(List<MineModel.HealthItem> list) {
         if (!CollectionUtils.isEmpty(list)) {
-            for (MineModel.HealthItem healthItem : list) {
+            for (int i= 0; i < list.size(); i++) {
+                MineModel.HealthItem healthItem  = list.get(i);
                 TextView textView = new TextView(getActivity());
                 textView.setGravity(Gravity.CENTER);
+                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
                 textView.setText(healthItem.getTitle());
                 textView.setTextColor(Color.parseColor("#5a5a5a"));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 textView.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, healthItem.getUrl()));
                 health_had_data_ll.addView(textView);
+                if (i != list.size() -1) {
+                    health_had_data_ll.addView(LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null));
+                }
             }
         }
     }

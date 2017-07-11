@@ -310,6 +310,33 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String checkFailureReason;
         public String gesturePassword;
         private String gestureSwitch;
+        private int myPoint;
+        private String adviserRealName;
+        private String wealth;
+
+        public int getMyPoint() {
+            return myPoint;
+        }
+
+        public void setMyPoint(int myPoint) {
+            this.myPoint = myPoint;
+        }
+
+        public String getAdviserRealName() {
+            return adviserRealName;
+        }
+
+        public void setAdviserRealName(String adviserRealName) {
+            this.adviserRealName = adviserRealName;
+        }
+
+        public String getWealth() {
+            return wealth;
+        }
+
+        public void setWealth(String wealth) {
+            this.wealth = wealth;
+        }
 
         public String getCustomerName() {
             return customerName;

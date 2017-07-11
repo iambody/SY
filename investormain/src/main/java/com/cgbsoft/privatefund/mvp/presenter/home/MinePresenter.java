@@ -5,10 +5,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.google.gson.Gson;
@@ -18,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author chenlong

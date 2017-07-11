@@ -149,7 +149,7 @@ public class MineModel {
 
         private String allHealthy;
 
-        private List<HealthItem> HealthItem;
+        private List<HealthItem> content;
 
         public String getAllHealthy() {
             return allHealthy;
@@ -159,12 +159,12 @@ public class MineModel {
             this.allHealthy = allHealthy;
         }
 
-        public List<MineModel.HealthItem> getHealthItem() {
-            return HealthItem;
+        public List<HealthItem> getContent() {
+            return content;
         }
 
-        public void setHealthItem(List<MineModel.HealthItem> healthItem) {
-            HealthItem = healthItem;
+        public void setContent(List<HealthItem> content) {
+            this.content = content;
         }
     }
 
@@ -173,6 +173,10 @@ public class MineModel {
         private String title;
 
         private String url;
+
+        private String healthId;
+
+        private String code;
 
         public String getTitle() {
             return title;
@@ -188,6 +192,22 @@ public class MineModel {
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public String getHealthId() {
+            return healthId;
+        }
+
+        public void setHealthId(String healthId) {
+            this.healthId = healthId;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
     }
 }

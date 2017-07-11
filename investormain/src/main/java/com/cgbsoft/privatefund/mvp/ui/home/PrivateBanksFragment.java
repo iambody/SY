@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +34,6 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
 
-
     @Override
     protected int titleLayoutId() {
         return R.layout.title_fragment_privatebancks;
@@ -45,39 +43,33 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
-        for (NavigationBean navigationBean : navigationBeans) {
-            if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
-                return loadTab(tabBeens, navigationBean);
+        if (navigationBeans != null) {
+            for (NavigationBean navigationBean : navigationBeans) {
+                if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
+                    return loadTab(tabBeens, navigationBean);
+                }
             }
         }
         return null;
     }
 
-
     @Override
     protected void bindTitle(View titleView) {
         LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
         ImageView privatebank_title_left = (ImageView) titleView.findViewById(R.id.privatebank_title_left);
-        privatebank_title_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                intent.putExtra(WebViewConstant.push_message_url, "https://d10-app.simuyun.com/app6.0/biz/adviser/assets_basis.html");
-                intent.putExtra(WebViewConstant.push_message_title, "选择投顾");
-                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-                getActivity().startActivity(intent);
-            }
+        privatebank_title_left.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, "https://d10-app.simuyun.com/app6.0/biz/adviser/assets_basis.html");
+            intent.putExtra(WebViewConstant.push_message_title, "选择投顾");
+            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+            getActivity().startActivity(intent);
         });
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-                i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-                baseActivity.startActivity(i);
-                DataStatistApiParam.onStatisToCProductSearchClick();
-            }
+        search.setOnClickListener(v -> {
+            Intent i = new Intent(baseActivity, SearchBaseActivity.class);
+            i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
+            baseActivity.startActivity(i);
+            DataStatistApiParam.onStatisToCProductSearchClick();
         });
-
     }
 
     /**

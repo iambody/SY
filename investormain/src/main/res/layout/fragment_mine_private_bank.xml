@@ -128,22 +128,32 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="15dp">
+                    
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_golden"/>
+                    
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/account_bank_assert_guquan_text"
                         android:text="股权占比"
-                        android:textSize="@dimen/dimens_sp_14"/>
+                        android:textSize="@dimen/dimens_sp_12"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/account_bank_assert_guquan_value"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_24"/>
+                        android:textSize="@dimen/dimens_sp_18"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -152,22 +162,32 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="8dp">
+
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:id="@+id/account_bank_assert_zhaiquan_text"
-                        android:text="债权占比"
-                        android:textSize="@dimen/dimens_sp_14"/>
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/black"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_zhaiquan_text"
+                        android:text="债权占比"
+                        android:textSize="@dimen/dimens_sp_12"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/account_bank_assert_zhaiquan_value"
-                        android:textSize="@dimen/dimens_sp_24"/>
+                        android:textSize="@dimen/dimens_sp_18"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

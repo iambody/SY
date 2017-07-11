@@ -58,7 +58,6 @@ public class ViewUtils {
     public static void formatColorUserAchievment(TextView textView, String value, String... target) {
         SpannableString textSize = new SpannableString(value);
         for (String str : target) {
-            System.out.println("----------str=" + str + "-----value==" + value);
             if (!TextUtils.isEmpty(value)) {
                 int start = value.indexOf(str);
                 textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#ea1202")), start, start + str.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
