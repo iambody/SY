@@ -18,4 +18,6 @@ public class BaseWebNetConfig extends NetConfig {
     public static String pdfUrlToC = basePdfUrl + "file=";
     //测跳的产品详细跳转到资讯页面
     public static String detailToZiXun=baseParentUrl+"apptie/new_detail_toc.html?id=";
+
+    public static String bindAdviser = baseSxyParentUrl + "biz/adviser/assets_basis.html";
 }
