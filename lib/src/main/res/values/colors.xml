@@ -44,8 +44,8 @@
     <color name="half_truns">#80000000</color>
     <color name="truns">#00000000</color>
     <color name="dialog_transparent">#55666666</color>
-
-
+    <color name="dialog_transparent1">#aacccccc</color>
+    <color name="transparent1">#eecccccc</color>
     <color name="gray_font">#bebebe</color> <!-- 字体灰 -->
 
     <color name="tv_gray">#666666</color>

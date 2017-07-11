@@ -21,28 +21,35 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginTop="@dimen/ui_20_dip"
+            android:paddingTop="@dimen/ui_10_dip">
 
             <ImageView
                 android:id="@+id/iv_as_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_toolbar_back" />
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:background="@drawable/bg_choice_ids_logo" />
+                android:layout_centerInParent="true"
+                android:text="设置密码"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_20" />
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp">
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="60dp">
 
             <EditText
                 android:id="@+id/et_as_password1"
@@ -50,8 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_et_password"
-                android:drawablePadding="10dp"
+
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="请输入6-16位密码"
@@ -81,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp">
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/ui_10_dip">
 
             <EditText
                 android:id="@+id/et_as_password2"
@@ -89,8 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_et_password"
-                android:drawablePadding="10dp"
+
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="请输入6-16位密码"
@@ -118,7 +124,7 @@
 
         <Button
             android:id="@+id/btn_as_ok"
-            style="@style/normal_btn"
+            style="@style/normal_alphbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

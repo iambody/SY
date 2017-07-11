@@ -103,6 +103,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     int loadingCheckNum = 0;
     //已经下载的选择数目
     int DownCheckNum = 0;
+    @BindView(R2.id.tv_nodata_lay)
+    RelativeLayout tvNodataLay;
 
     //    private RecyclerControl recyclerControl;
     private FullyLinearLayoutManager linearLayoutManager;
@@ -228,7 +230,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
             }
         });
-        onControlGetDataList(true);
+//        onControlGetDataList(true);
+        getHandler().postDelayed(() -> onControlGetDataList(true), 100);
 //        onRefresh();
     }
 
@@ -255,7 +258,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
         List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
-        list.addAll(null==donelist?new ArrayList<VideoDownloadListModel>():donelist);
+        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).isCheck = isChoiceAll;
         }
@@ -273,7 +276,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
         List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
-        list.addAll(null==donelist?new ArrayList<VideoDownloadListModel>():donelist);
+        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
@@ -304,6 +307,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (dataList.size() == 0) {//没做分页所以直接判断就行
             unVisableBottomLayout();
             ll_avd_head.setVisibility(View.GONE);
+            donedownload_title_lay.setVisibility(View.GONE);
+            tvNodataLay.setVisibility(View.VISIBLE);
+        }else{
+            tvNodataLay.setVisibility(View.GONE);
         }
         //如果已经全部下载过了就全部开始不显示
         if (getPresenter().isAllDownLoadOver(dataList)) {
@@ -458,13 +465,13 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         //记录正在下载的选择删除数目
         loadingCheckNum = choiceNum;
 
-        if ((DownCheckNum+loadingCheckNum) == 0) {
+        if ((DownCheckNum + loadingCheckNum) == 0) {
             unChoiceChangeText();
         } else {
-            choiceChangeText((DownCheckNum+loadingCheckNum) );
+            choiceChangeText((DownCheckNum + loadingCheckNum));
         }
 
-        if ((DownCheckNum+loadingCheckNum) != (list.size()+donelist.size())) {
+        if ((DownCheckNum + loadingCheckNum) != (list.size() + donelist.size())) {
             isChoiceAll = false;
             tv_avd_choiceAll.setText(R.string.choice_all_str);
         } else {
@@ -476,6 +483,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     @Override
     public void onErrorClickListener() {
 //        onRefresh();
+
     }
 
     //    @Override
@@ -649,6 +657,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        }
     }
 
+
+
     /**
      * 已下载的选择监听器
      */
@@ -699,13 +709,13 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             //记录已经下载的选择删除的数目
             DownCheckNum = choiceNum;
 
-            if ((loadingCheckNum+DownCheckNum) == 0) {
+            if ((loadingCheckNum + DownCheckNum) == 0) {
                 unChoiceChangeText();
             } else {
-                choiceChangeText((loadingCheckNum+DownCheckNum));
+                choiceChangeText((loadingCheckNum + DownCheckNum));
             }
 
-            if ((loadingCheckNum+DownCheckNum) != (list.size()+loadinglist.size())) {
+            if ((loadingCheckNum + DownCheckNum) != (list.size() + loadinglist.size())) {
                 isChoiceAll = false;
                 tv_avd_choiceAll.setText(R.string.choice_all_str);
             } else {

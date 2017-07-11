@@ -22,7 +22,7 @@ public interface RegisterContract {
          * @param pwd
          * @param code
          */
-        void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code);
+        void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code,String uniqueCode);
 
         /**
          * 发送验证码

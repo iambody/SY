@@ -37,6 +37,22 @@
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
+    <style name="normal_alphbtn">
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/select_btn_apphnormal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+    <style name="normal_alphbtn1">
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/select_btn_apphnormal</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
     <style name="normal_edit">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -55,6 +71,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
+
     <style name="normal_line1">
         <item name="android:layout_marginLeft">60dp</item>
         <item name="android:layout_marginRight">40dp</item>
@@ -62,6 +79,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
+
     <style name="normal_diveline">
         <item name="android:src">@color/app_split_line</item>
         <item name="android:layout_width">match_parent</item>
@@ -94,11 +112,11 @@
 
 
     <style name="btn_red_line_bg_style">
-        <item name="android:padding">5dp</item>
-        <item name="android:textColor">@color/color_red_dark</item>
-        <item name="android:background">@drawable/shape_red_line</item>
+
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/shape_regist_line</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:layout_marginLeft">20dp</item>
+
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
@@ -193,6 +211,7 @@
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.DayNight">
         <item name="actionMenuTextColor">@color/color_333333</item>
     </style>

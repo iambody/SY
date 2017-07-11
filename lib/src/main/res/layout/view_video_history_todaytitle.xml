@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/ui_5_dip"
+    android:paddingLeft="@dimen/ui_10_dip"
+    android:paddingTop="@dimen/ui_5_dip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:drawablePadding="@dimen/ui_5_dip"
+        android:text="今天"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_sp_16" />
+
+    <ImageView
+        android:layout_width="@dimen/ui_35_dip"
+        android:layout_height="3dp"
+
+        android:layout_marginTop="3dp"
+        android:src="@color/app_golden" />
+
+</LinearLayout>

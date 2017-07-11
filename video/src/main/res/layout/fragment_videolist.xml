@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/video_videolist_bannerview"
+            android:layout_width="match_parent"
+            android:layout_height="140dp" />-->
 
-    <com.jude.rollviewpager.RollPagerView
-        android:id="@+id/video_videolist_bannerview"
-        android:layout_width="match_parent"
-        android:layout_height="140dp" />
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/video_videolist_indicator"
         android:layout_width="match_parent"

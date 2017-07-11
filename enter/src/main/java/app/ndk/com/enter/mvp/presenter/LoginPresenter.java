@@ -37,11 +37,11 @@ import app.privatefund.com.im.utils.RongConnect;
 import rx.Observable;
 
 /**
- * Created by xiaoyu.zhang on 2016/11/17 11:45
- * Email:zhangxyfs@126.com
  *  
  */
 public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implements LoginContract.Presenter {
+    public boolean isVistorLogin;
+
     public LoginPresenter(Context context, LoginContract.View view) {
         super(context, view);
     }
@@ -101,7 +101,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
                 LogUtils.Log("LoginPresenter", "----error=" + error.toString());
 //                loadingDialog.dismiss();
-              loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
+                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
             }
         }));
 
@@ -214,6 +214,38 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
     }
 
     /**
+     * 游客登录
+     */
+    @Override
+    public void invisterLogin(Context context) {
+        addSubscription(ApiClient.visiterGetUserId(context.getApplicationContext()).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                UserInfoDataEntity.Result loginBean = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
+                AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
+                AppInfStore.saveUserId(getContext(), loginBean.userId);
+                AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+                AppInfStore.saveUserAccount(getContext().getApplicationContext(), loginBean.userId);
+                Log.i("LoginPresenter", "-------userid=" + loginBean.userId + "------rongYunToken=" + loginBean.token);
+                if (loginBean.userInfo != null) {
+                    SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
+                }
+//                RongConnect.initRongTokenConnect(loginBean.userId);
+                isVistorLogin = true;
+                getView().invisterloginSuccess();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                isVistorLogin = false;
+                getView().invisterloginFail();
+                LogUtils.Log("LoginPresenter", "----error=" + error.toString());
+//
+            }
+        }));
+    }
+
+    /**
      * 获取登录前的公钥
      */
     @Override
@@ -248,4 +280,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         result.result.token = "-1";
         return new Gson().toJson(result);
     }
+
+    public boolean isvistorLogin() {
+        return isVistorLogin;
+    }
+
+
 }

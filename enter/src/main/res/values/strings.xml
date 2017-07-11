@@ -102,4 +102,5 @@
     <!-- 私享云新增****************** -->
     <!-- 私享云新增****************** -->
     <string name="phone_regist">手机号注册</string>
+    <string name="code_shixiao1">请在两分钟内完成验证</string>
 </resources>

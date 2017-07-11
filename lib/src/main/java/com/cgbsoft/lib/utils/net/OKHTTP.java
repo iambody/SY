@@ -9,6 +9,7 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.exception.ApiException;
+import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
@@ -81,11 +82,13 @@ public class OKHTTP {
             builder.addHeader(NetConfig.DefaultParams.uid, uid);
             builder.addHeader(NetConfig.DefaultParams.token, token);
             //*******V2测试**
-            builder.addHeader(NetConfig.DefaultParams.dev, "DEBUG");
+//            builder.addHeader(NetConfig.DefaultParams.dev, "DEBUG");
             builder.addHeader(NetConfig.DefaultParams.client, AppManager.isInvestor(context) ? "C" : "B");
             //*******V2测试**
-            builder.addHeader(NetConfig.DefaultParams.deviceId, Utils.getIMEI(context));
+            builder.addHeader(NetConfig.DefaultParams.deviceId, DeviceUtils.getPhoneId(context));
+            builder.addHeader(NetConfig.DefaultParams.mid, DeviceUtils.getPhoneId(context));
             builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
+
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
             builder.addHeader("Accept", "*/*");
             builder.addHeader("Content-Type", "application/json; charset=UTF-8");

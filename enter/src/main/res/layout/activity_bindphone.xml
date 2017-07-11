@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="24dp"
                 android:text="@string/bind_phone"
                 android:textColor="@color/orange"
@@ -52,10 +52,12 @@
                 android:paddingTop="@dimen/ui_5_dip"
                 android:text="@string/ab_jump_next_str"
                 android:textColor="@color/orange_dark"
-                android:textSize="@dimen/dimens_sp_16" />
+                android:textSize="@dimen/dimens_sp_16"
+                android:visibility="gone" />
 
             />
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,52 +71,13 @@
                 style="@style/normal_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_et_username"
-                android:drawablePadding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_phone_hint_str"
                 android:inputType="number"
                 android:maxLength="11"
-                android:maxLines="1"
-                android:saveEnabled="false"
-                android:scrollHorizontally="true"
-                android:singleLine="true" />
-
-            <ImageView
-                android:id="@+id/iv_ab_del_un"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@id/et_ab_username"
-                android:layout_alignTop="@id/et_ab_username"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/ic_et_del"
-                android:visibility="invisible" />
-        </RelativeLayout>
-
-        <View style="@style/normal_line" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp">
-
-            <EditText
-                android:id="@+id/et_ab_check"
-                style="@style/normal_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_et_check"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:hint="@string/enter_code_hint_str"
-                android:inputType="number"
-                android:maxLength="4"
                 android:maxLines="1"
                 android:saveEnabled="false"
                 android:scrollHorizontally="true"
@@ -133,20 +96,60 @@
                 android:textStyle="normal" />
         </RelativeLayout>
 
+
         <View style="@style/normal_line" />
-        <TextView
-            android:layout_marginTop="30dp"
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="15sp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:layout_marginTop="@dimen/ui_10_dip">
+
+            <EditText
+                android:id="@+id/et_ab_check"
+                style="@style/normal_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_code_hint_str"
+                android:inputType="number"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:saveEnabled="false"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/iv_ab_del_un"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/et_ab_check"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/ic_et_del"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <View style="@style/normal_line" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="30dp"
             android:maxLines="5"
-            android:text="@string/bind_account_prompt"/>
+            android:text="@string/bind_account_prompt"
+            android:textColor="@color/tv_gray"
+            android:textSize="15sp" />
+
         <Button
             android:id="@+id/btn_ab_ok"
-            style="@style/normal_btn"
+            style="@style/normal_alphbtn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

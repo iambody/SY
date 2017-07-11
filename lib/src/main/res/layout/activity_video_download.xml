@@ -49,8 +49,8 @@
             android:id="@+id/ll_avd_head"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:background="@color/app_bg">
+            android:background="@color/app_bg"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/iv_avd_start"
@@ -71,12 +71,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-     <!--   <View
-            android:id="@+id/v_avd_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/ll_avd_head"
-            android:background="@color/color_d0d0d0" />-->
+        <!--   <View
+               android:id="@+id/v_avd_line"
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_below="@+id/ll_avd_head"
+               android:background="@color/color_d0d0d0" />-->
 
         <com.cgbsoft.lib.widget.recycler.MyScrollview
             android:layout_width="match_parent"
@@ -106,8 +106,7 @@
                 <!--  </com.dinuscxj.refresh.RecyclerRefreshLayout>-->
                 <include
                     android:id="@+id/donedownload_title_lay"
-                    layout="@layout/view_donedownload_title_lay"
-                    />
+                    layout="@layout/view_donedownload_title_lay" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/donerecyclerView"
@@ -164,5 +163,18 @@
                 android:textColor="@color/orange"
                 android:textSize="12sp" />
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tv_nodata_lay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/local_video_no" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -9,21 +9,21 @@ import java.util.List;
  */
 public class VideoAllModel {
 
-    public List<Banner> banner;
+//    public List<Banner> banner;
 
     public List<VideoListModel> video;
 
     public List<VideoCategory> category;
 
-
-    /**
-     * Banner
-     */
-    public static class Banner {
-        public String imageURLString;//": "http://pic1.win4000.com/wallpaper/f/54a8f54c6f210.jpg",
-        public String title;//": "1234567",
-        public String extension_url;//"
-    }
+//
+//    /**
+//     * Banner
+//     */
+//    public static class Banner {
+//        public String imageURLString;//": "http://pic1.win4000.com/wallpaper/f/54a8f54c6f210.jpg",
+//        public String title;//": "1234567",
+//        public String extension_url;//"
+//    }
 
     /**
      * 视频的分类
