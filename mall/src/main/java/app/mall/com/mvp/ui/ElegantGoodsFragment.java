@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -13,16 +14,20 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import app.mall.com.mvp.ui.MallAddressListActivity;
 import app.mall.com.mvp.adapter.ElegantGoodsMultAdapter;
 import app.mall.com.mvp.adapter.ElegantGoodsRecyclerAdapter;
 import app.mall.com.mvp.contract.ElegantGoodsContract;
@@ -30,6 +35,7 @@ import app.mall.com.mvp.presenter.ElegantGoodsPresenterImpl;
 import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
+
 
 /**
  * 尚品页面
@@ -43,6 +49,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     SwipeToLoadLayout mRefreshLayout;
     @BindView(R2.id.swipe_target)
     RecyclerView recyclerViewPros;
+    @BindView(R2.id.ll_category_all)
+    LinearLayout categoryAll;
     private LinearLayoutManager linearLayoutManager;
     private List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categoryDatas=new ArrayList<>();
     private List<ElegantGoodsBeanInterface> prosDatas=new ArrayList<>();
@@ -77,8 +85,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onCategoryItemClick(View view,int oldPosition, int position, ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
                 LogUtils.Log("aaa","click item");
                 loadCategory(posBean);
-//                Intent intent = new Intent(getActivity(), MallAddressListActivity.class);
-//                startActivity(intent);
             }
         });
 
@@ -106,14 +112,54 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             @Override
             public void onClick(ElegantGoodsBeanInterface bean, boolean isHot) {
                 String id;
+                String name;
                 if (isHot) {//热门清单产品
                     ElegantGoodsEntity.HotListItemBean clickBean = (ElegantGoodsEntity.HotListItemBean) bean;
+                    name=clickBean.getGoodsName();
                     id=clickBean.getId();
                 } else {//全部产品
                     ElegantGoodsEntity.AllNewsItemBean clickBean = (ElegantGoodsEntity.AllNewsItemBean) bean;
                     id=clickBean.getId();
+                    name=clickBean.getGoodsName();
                 }
-                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
+                HashMap hashMap = new HashMap();
+                hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+                hashMap.put(WebViewConstant.push_message_title, name);
+                hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+id);
+                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+            }
+        });
+        recyclerViewPros.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mScrollThreshold;
+            boolean isScorlling;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        isScorlling = true;
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        isScorlling = false;
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                boolean isSignificantDelta = Math.abs(dy) > mScrollThreshold;
+                if (isSignificantDelta && isScorlling ) {
+                    if (dy > 30) {//上滑动
+                        if (categoryAll.getVisibility() == View.VISIBLE)
+                            categoryAll.setVisibility(View.GONE);
+                    }
+                    if (dy < -5) {//下互动
+                        if (categoryAll.getVisibility() == View.GONE)
+                            categoryAll.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
     }
@@ -152,12 +198,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void showLoadDialog() {
-//        mLoadingDialog.show();
+        mLoadingDialog.show();
     }
 
     @Override
     public void hideLoadDialog() {
-//        mLoadingDialog.dismiss();
+        mLoadingDialog.dismiss();
     }
 
     @Override
@@ -165,6 +211,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         clodLsAnim(mRefreshLayout);
         categoryAdapter.setDatas(categorys);
         proAdapter.addDatas(result,true);
+        hasBeRefreshed=true;
     }
 
     @Override
@@ -194,12 +241,14 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void updateFirstError(Throwable error) {
+        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void updateMoreError(Throwable error) {
 //        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
+        showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
         if (isCategorySelect) {
             isCategorySelect=false;
@@ -225,6 +274,10 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onLoadMore() {
+        if (!hasBeRefreshed) {
+            clodLsAnim(mRefreshLayout);
+            return;
+        }
         if (isOver) {
             Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
             clodLsAnim(mRefreshLayout);

@@ -5,7 +5,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="270dp">
-    <android.support.v7.widget.CardView
+    <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -16,13 +16,16 @@
         android:layout_marginTop="@dimen/ui_10_dip"
         android:layout_marginLeft="@dimen/ui_15_dip"
         android:layout_marginRight="@dimen/ui_15_dip"
-        >
+        >-->
         <ImageView
             android:id="@+id/iv_recycler_goods_item"
             android:layout_width="match_parent"
             android:layout_height="170dp"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_marginRight="@dimen/ui_15_dip"
             />
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
     <TextView
         android:id="@+id/tv_elegant_goods_product_name"
         android:layout_width="match_parent"
@@ -42,20 +45,20 @@
         <TextView
             android:id="@+id/tv_elegant_goods_yd_num"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/c_high_black"
             android:textSize="@dimen/dimens_sp_16"
-            android:gravity="center_vertical"
             />
         <TextView
             android:id="@+id/tv_elegant_goods_yd_str"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/c_high_black"
             android:layout_marginLeft="@dimen/ui_2_dip"
             android:text="云豆"
             android:textSize="@dimen/dimens_sp_14"
-            android:layout_gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:lineSpacingMultiplier="0.9"
             />
     </LinearLayout>
 </LinearLayout>

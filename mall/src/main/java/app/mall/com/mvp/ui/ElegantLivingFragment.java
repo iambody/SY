@@ -101,7 +101,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
      */
     @Override
     public void showLoadDialog() {
-//        mLoadingDialog.show();
+        mLoadingDialog.show();
     }
 
     /**
@@ -109,7 +109,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
      */
     @Override
     public void hideLoadDialog() {
-//        mLoadingDialog.dismiss();
+        mLoadingDialog.dismiss();
     }
 
     @Override
