@@ -113,6 +113,7 @@ public class MineModel {
     }
 
     public static class Orders {
+
         private String goodsStatusName;
 
         private String count;

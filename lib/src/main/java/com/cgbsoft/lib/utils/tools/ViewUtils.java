@@ -38,7 +38,7 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    public static BadgeView createTopRightBadgerView(Context context, View view) {
+    public static BadgeView createTopRightBadgerView(Context context, View view, String value) {
         BadgeView badge = new BadgeView(context, view);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);

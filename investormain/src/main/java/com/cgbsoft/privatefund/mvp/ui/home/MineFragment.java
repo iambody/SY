@@ -1,7 +1,11 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,13 +13,19 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -26,11 +36,11 @@ import butterknife.BindView;
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
 
-    @BindView(R.id.title_left)
-    ImageView titleLeft;
-
-    @BindView(R.id.title_right)
-    TextView titleRight;
+//    @BindView(R.id.title_left)
+//    ImageView titleLeft;
+//
+//    @BindView(R.id.title_right)
+//    TextView titleRight;
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -86,31 +96,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.roundProgressBar)
     RoundProgressbar roundProgressbar;
 
+    @BindView(R.id.health_all_title_ll)
+    LinearLayout health_title_all_ll;
+
+    @BindView(R.id.account_health_had_bug_ll)
+    LinearLayout health_had_data_ll;
+
+    @BindView(R.id.account_health_on_bug_ll)
+    LinearLayout health_had_no_data_ll;
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_mine;
-    }
-
-    @Override
-    protected void init(View view, Bundle savedInstanceState) {
-        textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
-        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
-        titleLeft.setBackgroundResource(R.drawable.icon_settings_press);
-//        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
-    }
-
-    private void initMineInfo(MineModel mineModel) {
-        if (mineModel != null) {
-            linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
-            linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
-            roundProgressbar.setProgress(40);
-//            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), mineModel.getBank().getDurationUnit()));
-            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-//            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), mineModel.getBank().getEquityUnit(), mineModel.getBank().getEquityRatio()));
-            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-//            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), mineModel.getBank().getDebtUnit(), mineModel.getBank().getDebtRatio()));
-            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-        }
     }
 
     @Override
@@ -125,12 +122,82 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void requestDataSuccess(MineModel mineModel) {
-
+        initMineInfo(mineModel);
     }
 
     @Override
     public void requestDataFailure(String errMsg) {
 
+    }
+
+    @Override
+    protected void init(View view, Bundle savedInstanceState) {
+        textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
+        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
+//        titleLeft.setBackgroundResource(R.drawable.icon_settings_press);
+//        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
+        getPresenter().getMineData();
+    }
+
+    private void initMineInfo(MineModel mineModel) {
+        if (mineModel != null) {
+            linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
+            linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
+            roundProgressbar.setProgress(40);
+//            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), mineModel.getBank().getDurationUnit()));
+            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+//            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), mineModel.getBank().getEquityUnit(), mineModel.getBank().getEquityRatio()));
+            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+//            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), mineModel.getBank().getDebtUnit(), mineModel.getBank().getDebtRatio()));
+            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+            initOrderView(mineModel.getMallOrder());
+            initHealthView(mineModel);
+        }
+    }
+
+    private void initOrderView(List<MineModel.Orders> mallOrder) {
+        if (!CollectionUtils.isEmpty(mallOrder)) {
+            for (MineModel.Orders orders : mallOrder) {
+                switch (orders.getGoodsStatusCode()) {
+                    case "1":
+
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "0":
+                        break;
+                }
+            }
+        }
+    }
+
+    private void initHealthView(MineModel mineModel) {
+        if (mineModel != null && mineModel.getHealthy() != null) {
+            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem()) ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem()) ? View.VISIBLE : View.GONE);
+            if (!CollectionUtils.isEmpty(mineModel.getHealthy().getHealthItem())) {
+                health_title_all_ll.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, mineModel.getHealthy().getAllHealthy()));
+                createHealthItem(mineModel.getHealthy().getHealthItem());
+            }
+        }
+    }
+
+    private void createHealthItem(List<MineModel.HealthItem> list) {
+        if (!CollectionUtils.isEmpty(list)) {
+            for (MineModel.HealthItem healthItem : list) {
+                TextView textView = new TextView(getActivity());
+                textView.setGravity(Gravity.CENTER);
+                textView.setText(healthItem.getTitle());
+                textView.setTextColor(Color.parseColor("#5a5a5a"));
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                textView.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, healthItem.getUrl()));
+                health_had_data_ll.addView(textView);
+            }
+        }
     }
 }
 
