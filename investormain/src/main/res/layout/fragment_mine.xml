@@ -20,7 +20,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
-            <include layout="@layout/fragment_mine_account_info"/>
+            <include layout="@layout/fragment_mine_account_info" />
 
             <include layout="@layout/fragment_mine_private_bank"/>
 

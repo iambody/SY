@@ -30,7 +30,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     ImageView titleLeft;
 
     @BindView(R.id.title_right)
-    ImageView titleRight;
+    TextView titleRight;
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -96,7 +96,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         titleLeft.setBackgroundResource(R.drawable.icon_settings_press);
-        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
+//        titleRight.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon_news_white_press));
     }
 
     private void initMineInfo(MineModel mineModel) {

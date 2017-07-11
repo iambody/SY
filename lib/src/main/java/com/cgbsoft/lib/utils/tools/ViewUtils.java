@@ -198,7 +198,6 @@ public class ViewUtils {
         }
     }
 
-
     private static void showCompoundDrawable(TextView textView, Drawable drawable) {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         textView.setCompoundDrawables(null, drawable, null, null);
