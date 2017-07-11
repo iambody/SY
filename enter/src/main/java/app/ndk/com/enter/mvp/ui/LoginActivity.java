@@ -262,12 +262,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     private void testSelectPic() {
         ImageSelector imageSelector = ImageSelector.create();
-
         imageSelector.single();
         imageSelector.origin(picLs);
         imageSelector.openCameraOnly(false);
         imageSelector.start(LoginActivity.this, REQUEST_CODE);
-
     }
 
     @Override

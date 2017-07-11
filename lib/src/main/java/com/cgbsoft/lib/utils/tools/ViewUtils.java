@@ -38,10 +38,11 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    public static BadgeView createTopRightBadgerView(Context context, View view) {
+    public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        badge.setText(String.valueOf(value));
         badge.setTextColor(Color.parseColor("#ffffff"));
         badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
         badge.show();
@@ -57,7 +58,6 @@ public class ViewUtils {
     public static void formatColorUserAchievment(TextView textView, String value, String... target) {
         SpannableString textSize = new SpannableString(value);
         for (String str : target) {
-            System.out.println("----------str=" + str + "-----value==" + value);
             if (!TextUtils.isEmpty(value)) {
                 int start = value.indexOf(str);
                 textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#ea1202")), start, start + str.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

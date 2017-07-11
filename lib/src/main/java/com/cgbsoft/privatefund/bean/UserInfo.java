@@ -99,6 +99,8 @@ public class UserInfo implements Serializable {
 
     private String adviserPhone;
 
+    private String wealth;
+
     public void setIsEvaluated(String isEvaluated) {
         this.isEvaluated = isEvaluated;
     }
@@ -478,7 +480,6 @@ public class UserInfo implements Serializable {
 
     public String getPhoneNumber() {
         return phoneNum;
-
     }
 
     public String getWechatUnionid() {
@@ -487,5 +488,13 @@ public class UserInfo implements Serializable {
 
     public void setWechatUnionid(String wechatUnionid) {
         this.unionid = wechatUnionid;
+    }
+
+    public String getWealth() {
+        return wealth;
+    }
+
+    public void setWealth(String wealth) {
+        this.wealth = wealth;
     }
 }

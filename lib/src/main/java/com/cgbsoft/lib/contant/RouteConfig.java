@@ -31,6 +31,8 @@ public class RouteConfig {
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
+    public static final String IM_MESSAGE_LIST_ACTIVITY = "immodule_messagelistactivity";
+
     // 云健菜单
     public static final String GOTO_CLOUD_MENU_ACTIVITY = "investormain_cloudmenuactivity";
 

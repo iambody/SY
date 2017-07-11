@@ -37,7 +37,6 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
 
-
     @Override
     protected int titleLayoutId() {
         return R.layout.title_fragment_privatebancks;
@@ -47,9 +46,11 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
-        for (NavigationBean navigationBean : navigationBeans) {
-            if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
-                return loadTab(tabBeens, navigationBean);
+        if (navigationBeans != null) {
+            for (NavigationBean navigationBean : navigationBeans) {
+                if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
+                    return loadTab(tabBeens, navigationBean);
+                }
             }
         }
         return null;
