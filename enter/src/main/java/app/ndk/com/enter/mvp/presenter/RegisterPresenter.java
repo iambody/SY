@@ -30,10 +30,10 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
     }
 
     @Override
-    public void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code) {
+    public void toRegister(@NonNull LoadingDialog loadingDialog, String un, String pwd, String code, String uniqueCode) {
         loadingDialog.setLoading(getContext().getString(R.string.ra_register_loading_str));
         loadingDialog.show();
-        addSubscription(ApiClient.toTestRegister(un, MD5Utils.getShortMD5(pwd), code).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.toTestRegister(un, MD5Utils.getShortMD5(pwd), code, uniqueCode).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 UserInfoDataEntity.Result result = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
@@ -50,7 +50,7 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> 
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.setResult(false,error.getMessage(), 1000, () -> getView().regFail());
+                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().regFail());
             }
         }));
     }

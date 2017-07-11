@@ -15,6 +15,6 @@ public class VideoHistoryModel extends BaseModel {
     public String videoCoverUrl;
     public String videoTitle;
     public String time;
-
+    public long finalPlayTime;
     public boolean isCheck;
 }

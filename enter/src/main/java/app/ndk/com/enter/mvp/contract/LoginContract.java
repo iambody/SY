@@ -1,5 +1,6 @@
 package app.ndk.com.enter.mvp.contract;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
@@ -23,12 +24,12 @@ public interface LoginContract {
          * @param pwd  密码
          * @param isWx 是否微信登录
          */
-        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey,boolean isWx);
+        void toNormalLogin(@NonNull LoadingDialog loadingDialog, String un, String pwd, String publicKey, boolean isWx);
 
         /**
          * 微信登录
          */
-        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl,String openid,String toWxLogin);
+        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl, String openid, String toWxLogin);
 
         /**
          * 微信登录
@@ -39,7 +40,14 @@ public interface LoginContract {
          * @param nickName
          * @param headimgurl
          */
-        void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl,String openid,String toWxLogin);
+        void toDialogWxLogin(@NonNull LoadingDialog loadingDialog, String unionid, String sex, String nickName, String headimgurl, String openid, String toWxLogin);
+
+
+        /**
+         * 游客登录接口
+         */
+        void invisterLogin(Context context);
+
         /**
          * 获取登录公钥
          */
@@ -64,6 +72,13 @@ public interface LoginContract {
         void loginFail();
 
         void toBindActivity();
+
+        void invisterloginSuccess();
+
+        void invisterloginFail();
+
         void publicKeySuccess(String str);
+
+
     }
 }

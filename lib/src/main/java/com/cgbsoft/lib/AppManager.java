@@ -221,4 +221,11 @@ public class AppManager implements AppinfConstant {
     public static LocationBean getLocation(Context context) {
         return AppInfStore.getLocationInf(context.getApplicationContext());
     }
+
+    /**
+     * 获取是否是游客模式
+     */
+    public static boolean isVisitor(Context context) {
+        return getBasePreference(context.getApplicationContext()).getBoolean(VISITOR_KEY, false);
+    }
 }

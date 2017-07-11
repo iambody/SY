@@ -31,6 +31,7 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
+import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import org.json.JSONArray;
@@ -335,12 +336,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().toRegister(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> toTestRegister(String userName, String pwdMd5, String code) {
+    public static Observable<String> toTestRegister(String userName, String pwdMd5, String code, String uniqueCode) {
         JSONObject object = new JSONObject();
         try {
             object.put("userName", userName);
             object.put("password", pwdMd5);
             object.put("captcha", code);
+            object.put("userType", "1");//1是投资人 2是理财师
+            object.put("uniqueCode", uniqueCode);
         } catch (Exception e) {
 
         }
@@ -1383,14 +1386,18 @@ public class ApiClient {
     /**
      * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
      */
-    public static Observable<String> visitorGetUserId(String phoneId) {
+    public static Observable<String> visiterGetUserId(Context context) {
         Map<String, String> map = new HashMap<>();
-        map.put("mid", phoneId);
+        map.put("mid", "A-" + DeviceUtils.getPhoneId(context));
+        map.put("client", "C");
+        map.put("version", String.valueOf(Utils.getVersionCode(context)));
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
     /**
      * 获取生活家banner
+     *
      * @param offset
      * @return
      */
@@ -1403,7 +1410,7 @@ public class ApiClient {
             e.printStackTrace();
         }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())){
+        if (!TextUtils.isEmpty(js.toString())) {
             params.put("param", js.toString());
         }
         return OKHTTP.getInstance().getRequestManager().elegantLivingBanners(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
@@ -1411,6 +1418,7 @@ public class ApiClient {
 
     /**
      * 获取尚品首页数据
+     *
      * @param offset
      * @return
      */
@@ -1423,7 +1431,7 @@ public class ApiClient {
             e.printStackTrace();
         }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())){
+        if (!TextUtils.isEmpty(js.toString())) {
             params.put("param", js.toString());
         }
         return OKHTTP.getInstance().getRequestManager().elegantGoodsFirst(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
@@ -1431,6 +1439,7 @@ public class ApiClient {
 
     /**
      * 获取尚品加载更多数据
+     *
      * @param offset
      * @param category
      * @return
@@ -1445,7 +1454,7 @@ public class ApiClient {
             e.printStackTrace();
         }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())){
+        if (!TextUtils.isEmpty(js.toString())) {
             params.put("param", js.toString());
         }
         return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());

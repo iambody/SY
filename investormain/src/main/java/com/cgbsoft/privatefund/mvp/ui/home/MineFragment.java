@@ -2,8 +2,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -155,6 +153,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
+        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         if (AppManager.getUserInfo(getActivity()).getToC() != null) {
             textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());

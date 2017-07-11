@@ -40,41 +40,87 @@
                 android:textSize="@dimen/dimens_sp_20" />
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/ui_50_dip"
+            android:orientation="horizontal">
+            <!-- 手机号输入框-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/et_ar_username"
+                    style="@style/normal_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="请输入手机号"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:saveEnabled="false"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/iv_ar_del_un"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_6_dip"
+
+                    android:background="@drawable/ic_et_del"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+            <!-- 手机号输入框***********-->
+            <Button
+                android:id="@+id/btn_ar_check"
+                style="@style/btn_red_line_bg_style"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contextClickable="true"
+                android:focusable="true"
+                android:text="发送验证码"
+                android:textColor="@color/black"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <ImageView style="@style/enter_ed_line" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="@dimen/ui_50_dip">
+            android:layout_marginRight="20dp">
 
             <EditText
-                android:id="@+id/et_ar_username"
+                android:id="@+id/et_ar_check"
                 style="@style/normal_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:hint="请输入手机号"
+                android:hint="请输入验证码"
                 android:inputType="number"
-                android:maxLength="11"
+                android:maxLength="4"
                 android:maxLines="1"
                 android:saveEnabled="false"
                 android:scrollHorizontally="true"
                 android:singleLine="true" />
 
-            <ImageView
-                android:id="@+id/iv_ar_del_un"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@id/et_ar_username"
-                android:layout_alignTop="@id/et_ar_username"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/ic_et_del"
-                android:visibility="invisible" />
-        </RelativeLayout>
 
+        </RelativeLayout>
 
         <ImageView style="@style/enter_ed_line" />
 
@@ -111,10 +157,8 @@
                 android:background="@drawable/ic_et_del"
                 android:visibility="invisible" />
         </RelativeLayout>
-
-
         <ImageView style="@style/enter_ed_line" />
-
+        <!--服务码 -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,53 +166,39 @@
             android:layout_marginRight="20dp">
 
             <EditText
-                android:id="@+id/et_ar_check"
+                android:id="@+id/private_bank_code"
                 style="@style/normal_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:hint="请输入验证码"
+                android:hint="私人银行家服务码(选填)"
                 android:inputType="number"
-                android:maxLength="4"
                 android:maxLines="1"
                 android:saveEnabled="false"
                 android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="" />
 
-            <Button
-                android:id="@+id/btn_ar_check"
-                style="@style/btn_red_line_bg_style"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
+            <ImageView
+                android:id="@+id/iv_bank_del_pw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="0dp"
-                android:contextClickable="true"
-                android:focusable="true"
-                android:text="发送验证码"
-                android:textColor="@color/white"
-                android:textStyle="normal" />
+                android:layout_marginRight="5dp"
+
+                android:background="@drawable/ic_et_del"
+                android:visibility="invisible" />
         </RelativeLayout>
 
-
+        <!-- 服务码*********-->
         <ImageView style="@style/enter_ed_line" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ui_40_dip"
-            android:paddingBottom="@dimen/ui_5_dip"
-            android:paddingTop="@dimen/ui_5_dip"
-            android:text="@string/code_shixiao"
-            android:textColor="@color/app_split_line"
-            android:textSize="@dimen/dimens_sp_10" />
 
         <Button
             android:id="@+id/btn_ar_register"
-            style="@style/normal_btn"
+            style="@style/normal_alphbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

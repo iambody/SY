@@ -137,34 +137,20 @@
 
         <ImageView style="@style/enter_ed_line" />
 
-        <Button
-            android:id="@+id/btn_al_login"
-            style="@style/normal_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/al_login_str"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/tv_al_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/al_register_str"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/tv_gray"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_al_forget"
@@ -172,9 +158,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="@string/al_forget_str"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/tv_gray"
+                android:textSize="14sp" />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_al_login"
+            style="@style/normal_alphbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/al_login_str"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/btn_stroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingBottom="@dimen/ui_10_dip"
+            android:paddingLeft="@dimen/ui_30_dip"
+            android:paddingRight="@dimen/ui_30_dip"
+            android:paddingTop="@dimen/ui_10_dip"
+            android:text="先逛逛"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -215,8 +229,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="2px"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="40dp"
                     android:layout_marginLeft="@dimen/ui_30_dip"
+                    android:layout_marginRight="40dp"
                     android:layout_toRightOf="@+id/weixin_text"
                     android:background="#d0d0d0" />
 

@@ -711,7 +711,7 @@ interface RequestManager {
     Observable<ResponseBody> getSxyHomeTest(@QueryMap Map<String, String> paramsMap);
 
     //根据手机硬件地址获取用户ID
-    @POST(NetConfig.SXY.VISITOR_GET_USERID)
+    @POST(NetConfig.SXY.VISITORLOGIN)
     Observable<ResponseBody> visitor_get_UserId(@Body RequestBody responseBody);
 
     // 获取健康检测/医疗

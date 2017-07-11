@@ -5,10 +5,11 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/app_bg"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/video_history_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -32,26 +33,60 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <ImageView
+        <!--<ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
             android:layout_alignParentTop="true"
             android:layout_gravity="bottom"
-            android:src="@color/gray_font" />
+            android:src="@color/gray_font" />-->
     </android.support.design.widget.AppBarLayout>
+    <!--
 
-    <com.dinuscxj.refresh.RecyclerRefreshLayout
-        android:id="@+id/recyclerRefreshLayout"
+        <com.dinuscxj.refresh.RecyclerRefreshLayout
+            android:id="@+id/recyclerRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    -->
+
+
+    <com.cgbsoft.lib.widget.recycler.MyScrollview
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_above="@+id/ll_avh"
+        android:layout_below="@id/video_history_appbarlayout"
+        android:layout_marginTop="@dimen/ui_60_dip"
+        android:background="@color/app_bg"
+        android:scrollbars="none">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+            <include
+                android:id="@+id/video_history_todaytitle_lay"
+                layout="@layout/view_video_history_todaytitle"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/video_history_moretitle_lay"
+                layout="@layout/view_video_history_moretitle"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/more_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </com.cgbsoft.lib.widget.recycler.MyScrollview>
+    <!--  </com.dinuscxj.refresh.RecyclerRefreshLayout>-->
 
     <LinearLayout
         android:id="@+id/ll_avh"
@@ -90,4 +125,16 @@
             android:textSize="12sp" />
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/video_history_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bfjl_kong" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
