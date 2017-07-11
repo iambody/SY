@@ -49,7 +49,6 @@ import butterknife.OnClick;
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
 
-
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_bannerview)

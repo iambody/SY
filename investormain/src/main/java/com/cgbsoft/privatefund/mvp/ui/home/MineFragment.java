@@ -2,20 +2,28 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
@@ -28,6 +36,7 @@ import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -124,8 +133,30 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_order_all_ll)
     LinearLayout order_waith_all_ll;
 
+    @BindView(R.id.account_order_send_text)
+    TextView account_order_send_text;
+
     @BindView(R.id.account_order_receive_text)
     TextView account_order_receive_text;
+
+    @BindView(R.id.account_order_finished_text)
+    TextView account_order_finished_text;
+
+    @BindView(R.id.account_order_sale_text)
+    TextView account_order_sale_text;
+
+    @BindView(R.id.account_order_all_text)
+    TextView account_order_all_text;
+
+    @BindView(R.id.tab_layout)
+    XTabLayout xTabLayout;
+
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    private DaoUtils daoUtils;
+
+    private String[] videos = getContext().getResources().getStringArray(R.array.mine_video_tag_text);
 
     @Override
     protected int layoutID() {
@@ -149,11 +180,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void requestDataFailure(String errMsg) {
-
     }
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         if (AppManager.getUserInfo(getActivity()).getToC() != null) {
@@ -161,6 +192,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             textViewYundou.setText(String.valueOf(AppManager.getUserInfo(getActivity()).getToC().getMyPoint()));
             textViewPrivateBanker.setText(AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName());
         }
+//        initVideoView();
         getPresenter().getMineData();
     }
 
@@ -193,27 +225,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initOrderView(List<MineModel.Orders> mallOrder) {
         if (!CollectionUtils.isEmpty(mallOrder)) {
             for (MineModel.Orders orders : mallOrder) {
-                LinearLayout current = null;
+                TextView current = null;
                 switch (orders.getGoodsStatusCode()) {
                     case "1":
-                        current = order_waith_send_ll;
+                        current = account_order_send_text;
                         break;
                     case "2":
-                        current = order_waith_receive_ll;
+                        current = account_order_receive_text;
                         break;
                     case "3":
-                        current = order_waith_finished_ll;
+                        current = account_order_finished_text;
                         break;
                     case "4":
-                        current = order_waith_after_sale_ll;
+                        current = account_order_sale_text;
                         break;
                     case "0":
-                        current = order_waith_all_ll;
+                        current = account_order_all_text;
                         break;
                 }
-//                ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
+                ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
             }
-            ViewUtils.createTopRightBadgerView(getActivity(), account_order_receive_text, 9);
         }
     }
 
@@ -241,10 +272,59 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 textView.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, healthItem.getUrl()));
                 health_had_data_ll.addView(textView);
                 if (i != list.size() -1) {
-                    health_had_data_ll.addView(LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null));
+                    health_had_data_ll.addView(LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, health_had_data_ll));
                 }
             }
         }
+    }
+
+    private void initVideoView() {
+        for (String name : videos) {
+            XTabLayout.Tab tab = xTabLayout.newTab();
+            tab.setText(name);
+            xTabLayout.addTab(tab);
+        }
+        viewPager.setOffscreenPageLimit(2);
+        List<Fragment> list = new ArrayList<>();
+        List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
+        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        setFragmentParams(playlList, list);
+        setFragmentParams(downlList, list);
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public int getCount() {
+                return list.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return list.get(position);
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                if (object instanceof View) {
+                    container.removeView((View) object);
+                } else if (object instanceof Fragment) {
+                    getChildFragmentManager().beginTransaction().detach((Fragment) object);
+                }
+            }
+        });
+        xTabLayout.setupWithViewPager(viewPager);
+        for (int i = 0; i < xTabLayout.getTabCount(); i++) {
+            xTabLayout.getTabAt(i).setText(videos[i]);
+        }
+    }
+
+    private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList) {
+        if (!CollectionUtils.isEmpty(valuesList)) {
+            HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, (ArrayList)valuesList);
+            scrollFragment.setArguments(bundle);
+            fragmentList.add(scrollFragment);
+        }
+
     }
 }
 
