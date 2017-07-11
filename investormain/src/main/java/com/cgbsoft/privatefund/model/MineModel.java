@@ -116,7 +116,7 @@ public class MineModel {
 
         private String goodsStatusName;
 
-        private String count;
+        private int count;
 
         private String goodsStatusCode;
 
@@ -128,11 +128,11 @@ public class MineModel {
             this.goodsStatusName = goodsStatusName;
         }
 
-        public String getCount() {
+        public int getCount() {
             return count;
         }
 
-        public void setCount(String count) {
+        public void setCount(int count) {
             this.count = count;
         }
 

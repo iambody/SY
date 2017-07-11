@@ -38,10 +38,11 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    public static BadgeView createTopRightBadgerView(Context context, View view, String value) {
+    public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        badge.setText(String.valueOf(value));
         badge.setTextColor(Color.parseColor("#ffffff"));
         badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
         badge.show();

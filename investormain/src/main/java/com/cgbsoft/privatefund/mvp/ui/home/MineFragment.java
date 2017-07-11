@@ -18,6 +18,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.privatefund.R;
@@ -105,6 +106,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
 
+    @BindView(R.id.account_order_send_ll)
+    LinearLayout order_waith_send_ll;
+
+    @BindView(R.id.account_order_receive_ll)
+    LinearLayout order_waith_receive_ll;
+
+    @BindView(R.id.account_order_finished_ll)
+    LinearLayout order_waith_finished_ll;
+
+    @BindView(R.id.account_order_sale_ll)
+    LinearLayout order_waith_after_sale_ll;
+
+    @BindView(R.id.account_order_all_ll)
+    LinearLayout order_waith_all_ll;
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_mine;
@@ -158,18 +174,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initOrderView(List<MineModel.Orders> mallOrder) {
         if (!CollectionUtils.isEmpty(mallOrder)) {
             for (MineModel.Orders orders : mallOrder) {
+                LinearLayout current = null;
                 switch (orders.getGoodsStatusCode()) {
                     case "1":
-
+                        current = order_waith_send_ll;
                         break;
                     case "2":
+                        current = order_waith_receive_ll;
                         break;
                     case "3":
+                        current = order_waith_finished_ll;
                         break;
                     case "4":
+                        current = order_waith_after_sale_ll;
                         break;
                     case "0":
+                        current = order_waith_all_ll;
                         break;
+                }
+                if (orders.getCount() > 0) {
+                    ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
                 }
             }
         }
