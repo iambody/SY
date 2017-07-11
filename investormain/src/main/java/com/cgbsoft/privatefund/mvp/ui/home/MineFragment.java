@@ -1,37 +1,20 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.tools.CollectionUtils;
-import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
-import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -155,6 +138,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
+        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         if (AppManager.getUserInfo(getActivity()).getToC() != null) {
             textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());
