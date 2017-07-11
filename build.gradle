@@ -18,6 +18,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
         maven { url "https://jitpack.io" }
         flatDir {
             // 由于Library module中引用了 ipay 库的 aar，在多 module 的情况下，

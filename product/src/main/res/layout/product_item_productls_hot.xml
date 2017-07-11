@@ -75,7 +75,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:text="北京城区"
-        android:textColor="@color/orange"
+        android:textColor="@color/app_golden"
         android:textSize="@dimen/text_size_medium" />
 
     <View
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:text="300"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/app_golden"
                     android:textSize="17sp" />
 
                 <TextView

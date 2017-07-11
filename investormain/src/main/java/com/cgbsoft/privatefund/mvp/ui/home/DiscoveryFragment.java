@@ -115,7 +115,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         fragmentAdapter.freshAp(lazyFragments);
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

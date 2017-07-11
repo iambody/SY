@@ -52,4 +52,9 @@ public class EverHealthFragment extends BasePageFragment {
         return tabBeens;
     }
 
+    @Override
+    protected void bindTitle(View titleView) {
+
+    }
+
 }

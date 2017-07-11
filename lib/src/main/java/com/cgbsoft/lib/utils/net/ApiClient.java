@@ -1377,6 +1377,13 @@ public class ApiClient {
     }
 
     /**
+     * 资讯列表数据
+     */
+    public static Observable<String> getMineData(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineData(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
      */
     public static Observable<String> visiterGetUserId(Context context) {
@@ -1451,5 +1458,12 @@ public class ApiClient {
             params.put("param", js.toString());
         }
         return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取全局导航
+     */
+    public static Observable<String> getNavigation(){
+        return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 }

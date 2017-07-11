@@ -4,159 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="260dp"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp"
-        android:paddingTop="48dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="4dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
-            
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text"
-                    android:text="@string/account_info_caifu_value"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_value"
-                    android:id="@+id/mine_caifu_value"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text"
-                    android:text="@string/account_info_mine_yundou"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_value"
-                    android:id="@+id/mine_yundou_id"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text"
-                    android:text="@string/account_info_mine_private_banker"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_value"
-                    android:id="@+id/mine_private_banker_id"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <LinearLayout
-                style="@style/mine_account_info_text_image_ll"
-                android:id="@+id/mine_account_info_qiandao_ll">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text_image"
-                    android:drawableTop="@drawable/icon_check"
-                    android:text="@string/account_info_every_qiandao"/>
-            </LinearLayout>
-            
-            <android.support.v4.widget.Space
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                style="@style/mine_account_info_text_image_ll"
-                android:id="@+id/mine_account_info_activity_ll">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text_image"
-                    android:drawableTop="@drawable/icon_events"
-                    android:text="@string/account_info_mine_activity"/>
-            </LinearLayout>
-
-            <android.support.v4.widget.Space
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                style="@style/mine_account_info_text_image_ll"
-                android:id="@+id/mine_account_info_ticket_ll">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text_image"
-                    android:drawableTop="@drawable/icon_ticket"
-                    android:text="@string/account_info_mine_card_quan"/>
-            </LinearLayout>
-
-            <android.support.v4.widget.Space
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                style="@style/mine_account_info_text_image_ll"
-                android:id="@+id/mine_account_info_cards_ll">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/mine_account_info_text_image"
-                    android:drawableTop="@drawable/icon_cards"
-                    android:text="@string/account_info_mine_wish_card"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_marginTop="@dimen/ui_40_dip"/>
 
     <com.cgbsoft.lib.widget.RoundImageView
         android:layout_width="@dimen/ui_80_dip"
         android:layout_height="@dimen/ui_80_dip"
         android:id="@+id/account_info_image_id"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/logoshare"/>
     
@@ -164,7 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/account_info_image_id"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_sp_22"
         android:text="王老师"
         android:id="@+id/account_info_name"/>
 
@@ -173,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/account_info_image_id"
         android:layout_below="@id/account_info_name"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/account_info_level_ll"
         android:orientation="horizontal">
         <TextView
@@ -199,11 +62,157 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/account_info_huiyuan_chaju"
         android:textSize="@dimen/dimens_sp_12"
         android:gravity="center"
         android:text="距会员升级还差7倍财富值"
-        android:textColor="@color/color_333333"
+        android:textColor="@color/account_info_image_text"
         android:layout_below="@id/account_info_level_ll"
         android:layout_alignLeft="@id/account_info_level_ll"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="6dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="8dp"
+        android:layout_below="@+id/account_info_huiyuan_chaju"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:id="@+id/account_info_base_value_ll">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text"
+                android:text="@string/account_info_caifu_value"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_value"
+                android:text="256"
+                android:id="@+id/mine_caifu_value"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text"
+                android:text="@string/account_info_mine_yundou"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_value"
+                android:text="2350"
+                android:id="@+id/mine_yundou_id"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text"
+                android:text="@string/account_info_mine_private_banker"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_value"
+                android:text="陈龙"
+                android:id="@+id/mine_private_banker_id"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/account_info_base_value_ll">
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_account_info_qiandao_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_check"
+                android:text="@string/account_info_every_qiandao"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_account_info_activity_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_events"
+                android:text="@string/account_info_mine_activity"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_account_info_ticket_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_ticket"
+                android:text="@string/account_info_mine_card_quan"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_account_info_cards_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_cards"
+                android:text="@string/account_info_mine_wish_card"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

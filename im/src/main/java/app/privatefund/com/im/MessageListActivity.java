@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.chenenyu.router.annotation.Route;
 
 import app.privatefund.com.im.fragment.MainMessageFragment;
@@ -12,7 +13,7 @@ import app.privatefund.com.im.fragment.MainMessageFragment;
 /**
  * @author chenlong
  */
-@Route("immodule_messagelistactivity")
+@Route(RouteConfig.IM_MESSAGE_LIST_ACTIVITY)
 public class MessageListActivity extends BaseActivity {
 
     public static final String IS_MESSAGE_LIST = "is_message_list";

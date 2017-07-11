@@ -41,6 +41,9 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     protected abstract ArrayList<TabBean> list();
 
+    //绑定标题中的ID
+    protected abstract void bindTitle(View titleView);
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_base_page;
@@ -75,7 +78,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                 }
             }
         });
-
+        bindTitle(title_layout);
         tabLayout.setupWithViewPager(viewPager);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setText(list().get(i).getTabName());

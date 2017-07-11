@@ -15,6 +15,9 @@ import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
 
+import app.mall.com.mvp.ui.ElegantGoodsFragment;
+import app.mall.com.mvp.ui.ElegantLivingFragment;
+
 /**
  *@author chenlong
  *
@@ -62,4 +65,9 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 break;
         }
     }
+    @Override
+    protected void bindTitle(View titleView) {
+
+    }
+
 }

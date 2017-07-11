@@ -64,8 +64,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @BindView(R2.id.swipe_target)
     RecyclerView fragmentProductrecyclerView;
-    @BindView(R2.id.product_productfragment_sousou)
-    TextView productProductfragmentSousou;
     @BindView(R2.id.product_productfragment_paixu)
     TextView productProductfragmentPaixu;
     @BindView(R2.id.product_productfragment_shaixuan)
@@ -83,6 +81,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
+
+//    @BindView(R2.id.blurring_view)
+//    BlurringView blurringView;
 
     //加载数据的dialog
     private LoadingDialog loadingDialog;
@@ -276,6 +277,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             //如果哦有缓存 就初始化筛选条件
             initFilterDate(productFilterBean.getSeries().getItems());
         }
+//        blurringView.setBlurredView(swipeToLoadLayout);
+//        blurringView.invalidate();
         initEvent();
     }
 
@@ -290,7 +293,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentOderBy = series.getKey();
                 CurrentOffset = 0;
                 isLoadmore = false;
-                productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.orange));
+                productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.app_golden));
                 reSetConditionAction();
             }
 
@@ -309,7 +312,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 CurrentOffset = 0;
                 isLoadmore = false;
 
-                productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.orange : R.color.black));
+                productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.app_golden : R.color.black));
                 reSetConditionAction();
             }
 
@@ -345,18 +348,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     protected ProductPresenter createPresenter() {
         return new ProductPresenter(getContext(), this);
-    }
-
-
-    @OnClick(R2.id.product_productfragment_sousou)
-    public void onProductProductfragmentSousouClicked() {
-//        UiSkipUtils.toNextActivity(baseActivity, SearchBaseActivity.class);
-        Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-        i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-        baseActivity.startActivity(i);
-
-        DataStatistApiParam.onStatisToCProductSearchClick();
-
     }
 
     @OnClick(R2.id.product_productfragment_paixu)

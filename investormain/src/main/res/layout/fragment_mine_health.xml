@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/ui_10_dip"
         android:paddingRight="@dimen/ui_10_dip"
+        android:id="@+id/health_all_title_ll"
         android:gravity="center_vertical">
 
         <TextView
@@ -26,7 +28,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="查看全部"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/ic_right_arrow"
@@ -49,15 +50,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/dimens_sp_14"
-                android:textColor="@color/color_5a5a5a"
+                style="@style/mine_item_desc_text"
                 android:text="@string/account_health_no_bugy"
                 android:gravity="center"/>
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="44dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/ui_15_dip"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
                 android:gravity="center"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_health_go_server"
@@ -67,7 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:id="@+id/account_health_had_bug_ll"
             android:gravity="center"
             android:visibility="gone">

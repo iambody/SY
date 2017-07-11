@@ -31,6 +31,8 @@ public class RouteConfig {
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 
+    public static final String IM_MESSAGE_LIST_ACTIVITY = "immodule_messagelistactivity";
+
     // 云健菜单
     public static final String GOTO_CLOUD_MENU_ACTIVITY = "investormain_cloudmenuactivity";
 
@@ -69,6 +71,8 @@ public class RouteConfig {
     public static final String GOTO_SECRET_PDF_ACTIVITY = "commontview_secretpdf";
     //跳转到C端设置页面的url
     public static final String GOTOCSETTINGACTIVITY="investorn_settingactivity";
+    //跳转到C端个人信息页面的url
+    public static final String GOTOC_PERSONAL_INFORMATION_ACTIVITY="investorn_personal_information_activity";
     //跳转到C端修改登录密码页面的url
     public static final String GOTO_CHANGE_PSD_ACTIVITY="investorn_change_psd_activity";
 }

@@ -140,6 +140,10 @@
     <string name="setting_item_about_app">关于本应用</string>
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>
+    <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
+    <!-- 个人信息页面用到 -->
+    <string name="personal_information_title">我的信息</string>
+    <string name="camera_cancel">取消</string>
 
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云dou</string>
@@ -153,7 +157,7 @@
     <string name="account_bank_invistor_carlendar">投资日历</string>
     <string name="account_bank_info_manager">资料管理</string>
     <string name="account_bank_no_bugy">您还没有资产，您可以：</string>
-    <string name="account_bank_browse_buy">浏览认购资产</string>
+    <string name="account_bank_browse_buy">去看产品</string>
     <string name="account_bank_upload_certify">上传证件关联已有资产</string>
     <string name="account_order_wait_send">待发货</string>
     <string name="account_order_wait_receive">待收货</string>

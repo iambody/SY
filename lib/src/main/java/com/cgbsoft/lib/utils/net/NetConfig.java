@@ -57,6 +57,9 @@ public class NetConfig {
     //
     static final String ACTION_POINT = PROMOTION_URL + "/common/availableOp";
 
+    //全局导航栏
+    static final String NAVIGATION = API_URL_V2 +"/navigation";
+
     static class API {
 
         //客户风险评测提交接口
@@ -278,9 +281,12 @@ public class NetConfig {
 
         //获取全站导航栏信息
         static final String GET_NAVIFAITION = API_URL + "navigation";
+//        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
 
         //游客登录
         static final String VISITORLOGIN = AUTH_URL + "/visitorLogin";
+        // 我的接口
+        static final String GET_MINE = API_URL + "/enjoycloud/usercentre";
     }
 
     /**
