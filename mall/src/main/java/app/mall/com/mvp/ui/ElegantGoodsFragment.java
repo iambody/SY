@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -13,13 +14,18 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.adapter.ElegantGoodsMultAdapter;
