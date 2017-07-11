@@ -109,7 +109,7 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
 
     @Override
     public void onModelMoreSuccess(ElegantGoodsEntity.ResultMore result) {
-//        elegantGoodsView.hideLoadDialog();
+        elegantGoodsView.hideLoadDialog();
         ArrayList<ElegantGoodsBeanInterface> datas = new ArrayList<>();
         List<ElegantGoodsEntity.AllNewsItemBean> allRows = result.getRows();
         if (null != allRows && allRows.size() > 0) {

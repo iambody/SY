@@ -13,25 +13,27 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ui_10_dip"
-        android:layout_marginBottom="@dimen/ui_10_dip"
-        app:hintTextAppearance="@style/hintAppearance"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:layout_marginBottom="@dimen/ui_15_dip"
         app:errorTextAppearance="@style/errorAppearance"
+        app:hintTextAppearance="@style/hintAppearance"
         >
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="@dimen/setting_in_margintitle"
+            android:background="@android:color/transparent"
+            android:hint="原密码"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/text_input_layout"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
-            android:hint="原密码"
-            android:paddingLeft="20dp"
-            android:background="@android:color/transparent"
             />
     </android.support.design.widget.TextInputLayout>
+
     <include
         layout="@layout/acitivity_divide_online"
         android:layout_width="match_parent"
@@ -41,8 +43,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ui_10_dip"
-        android:layout_marginBottom="@dimen/ui_10_dip"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:layout_marginBottom="@dimen/ui_15_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
         >
@@ -69,8 +71,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ui_10_dip"
-        android:layout_marginBottom="@dimen/ui_10_dip"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:layout_marginBottom="@dimen/ui_15_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
         >
