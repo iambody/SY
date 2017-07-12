@@ -31,10 +31,13 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
+import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
+import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
+import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +51,6 @@ import butterknife.OnClick;
  * 我的fragment
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
-
-    @BindView(R.id.mine_title_set_id)
-    ImageView titleImageLeft;
-
-    @BindView(R.id.mine_title_message_id)
-    ImageView titleImageRight;
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -156,7 +153,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private DaoUtils daoUtils;
 
-    private String[] videos = getContext().getResources().getStringArray(R.array.mine_video_tag_text);
+    private String[] videos;
 
     @Override
     protected int layoutID() {
@@ -184,26 +181,100 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        System.out.println("--MineFragment----init");
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
         Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
         if (AppManager.getUserInfo(getActivity()).getToC() != null) {
             textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());
             textViewYundou.setText(String.valueOf(AppManager.getUserInfo(getActivity()).getToC().getMyPoint()));
-            textViewPrivateBanker.setText(AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName());
+            String realName = AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName();
+            textViewPrivateBanker.setText(TextUtils.isEmpty(realName) ? "无" : realName);
         }
-//        initVideoView();
-        getPresenter().getMineData();
+        initVideoView();
+        System.out.println("---MineFragment---end inist");
+//        getPresenter().getMineData();
     }
 
     @OnClick(R.id.mine_title_set_id)
     void gotoSetActivity() {
-        // TODO 设置
+        NavigationUtils.startActivity(getActivity(), SettingActivity.class);
     }
 
     @OnClick(R.id.mine_title_message_id)
     void gotoMessagectivity() {
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
+    }
+
+    @OnClick(R.id.account_info_caifu_value_ll)
+    void gotoWealthctivity() {
+        // 财富值
+    }
+
+    @OnClick(R.id.account_info_yundou_value_ll)
+    void gotoYundouctivity() {
+        // 云豆
+    }
+
+    @OnClick(R.id.account_info_private_bank_value_ll)
+    void gotoPrivateBanktivity() {
+        // 私行
+        String realName = AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName();
+        if (TextUtils.isEmpty(realName)) {
+            // 去选择
+        } else {
+            // 去私行
+        }
+    }
+
+    @OnClick(R.id.mine_account_info_qiandao_ll)
+    void gotoQiandaoActivity() {
+        //签到
+    }
+
+    @OnClick(R.id.mine_account_info_activity_ll)
+    void gotoMineActiviteActivity() {
+        // 活动
+    }
+
+    @OnClick(R.id.mine_account_info_ticket_ll)
+    void gotoCouponsActivity() {
+        // 卡券
+    }
+
+    @OnClick(R.id.mine_account_info_cards_ll)
+    void gotoBestCardActivity() {
+        // 贺卡
+    }
+
+    @OnClick(R.id.account_bank_go_look_product)
+    void gotoLookProductActivity() {
+        // 去看产品
+    }
+
+    @OnClick(R.id.account_bank_go_relative_assert)
+    void gotoRelativeAssetActivity() {
+        // 去关联资产
+    }
+
+    @OnClick(R.id.mine_bank_asset_match_ll)
+    void gotoAssetMatchActivity() {
+        //资产组合
+    }
+
+    @OnClick(R.id.mine_bank_invistor_carlendar_ll)
+    void gotoInvestorCarlendarActivity() {
+        //投资日历
+    }
+
+    @OnClick(R.id.mine_bank_datum_manager_ll)
+    void gotoDatumCarlendarActivity() {
+        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+    }
+
+    @OnClick(R.id.account_order_goto_receive_address)
+    void gotoManagerAddressActivity() {
+        // 管理收货地址
     }
 
     private void initMineInfo(MineModel mineModel) {
@@ -279,6 +350,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initVideoView() {
+        videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         for (String name : videos) {
             XTabLayout.Tab tab = xTabLayout.newTab();
             tab.setText(name);

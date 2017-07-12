@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;

@@ -87,7 +87,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/account_info_caifu_value_ll">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +110,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/account_info_yundou_value_ll">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +133,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/account_info_private_bank_value_ll">
 
             <TextView
                 android:layout_width="wrap_content"

@@ -146,6 +146,18 @@
     <string name="personal_information_title">我的信息</string>
     <string name="camera_cancel">取消</string>
 
+    <!-- 资料管理 -->
+    <string name="datum_manage_title">资料管理</string>
+    <string name="datum_manage_account">投资账号</string>
+    <string name="datum_manage_risk">风险偏好</string>
+    <string name="datum_manage_asset_report">资产报告</string>
+    <string name="datum_manage_asset_certify">资产证明</string>
+    <string name="datum_manage_relative_asset">关联我的资产</string>
+    <string name="datum_manage_risk_type_pingheng">平衡性</string>
+    <string name="datum_manage_relative_statues">未关联</string>
+
+
+    <!-- 我的 -->
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云dou</string>
     <string name="account_info_mine_private_banker">我的私人银行家</string>
