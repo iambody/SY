@@ -184,7 +184,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         System.out.println("--MineFragment----init");
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
-        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView);
+        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView, R.drawable.logo, R.drawable.logo);
         if (AppManager.getUserInfo(getActivity()).getToC() != null) {
             textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());
             textViewYundou.setText(String.valueOf(AppManager.getUserInfo(getActivity()).getToC().getMyPoint()));
@@ -193,7 +193,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
         initVideoView();
         System.out.println("---MineFragment---end inist");
-//        getPresenter().getMineData();
+        getPresenter().getMineData();
     }
 
     @OnClick(R.id.mine_title_set_id)
@@ -204,6 +204,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_title_message_id)
     void gotoMessagectivity() {
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
+    }
+
+    @OnClick(R.id.account_info_level_ll)
+    void gotoPersonInfoctivity() {
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
@@ -282,11 +288,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
             linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
             roundProgressbar.setProgress(40);
-//            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), mineModel.getBank().getDurationUnit()));
+            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), mineModel.getBank().getDurationUnit()));
             textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-//            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), mineModel.getBank().getEquityUnit(), mineModel.getBank().getEquityRatio()));
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), mineModel.getBank().getEquityUnit(), mineModel.getBank().getEquityRatio()));
             textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-//            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), mineModel.getBank().getDebtUnit(), mineModel.getBank().getDebtRatio()));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), mineModel.getBank().getDebtUnit(), mineModel.getBank().getDebtRatio()));
             textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
             initOrderView(mineModel.getMallOrder());
             initHealthView(mineModel);
@@ -360,6 +366,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         List<Fragment> list = new ArrayList<>();
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
         List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        System.out.println("------playlList=" + playlList.size() + "-----downlList=" + downlList.size());
         setFragmentParams(playlList, list);
         setFragmentParams(downlList, list);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
@@ -396,7 +403,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             scrollFragment.setArguments(bundle);
             fragmentList.add(scrollFragment);
         }
-
     }
 }
 

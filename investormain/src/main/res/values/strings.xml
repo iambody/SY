@@ -154,11 +154,11 @@
     <string name="datum_manage_relative_asset">关联我的资产</string>
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
-
+    <string name="setting_title">设置</string>
 
     <!-- 我的 -->
     <string name="account_info_caifu_value">我的财富值</string>
-    <string name="account_info_mine_yundou">我的云dou</string>
+    <string name="account_info_mine_yundou">我的云豆</string>
     <string name="account_info_mine_private_banker">我的私人银行家</string>
     <string name="account_info_every_qiandao">每日签到</string>
     <string name="account_info_mine_activity">我的活动</string>
@@ -180,10 +180,10 @@
     <string name="account_health_go_server">去看服务</string>
     <string name="account_video_go_server">去看视频</string>
 
-   <!-- <string name="account_bank_cunxun_assert">续存资产(%s)</string>
-    <string name="account_bank_zhaiquan_assert">债权(%1%s)-%2$s</string>
-    <string name="account_bank_guquan_assert">股权(%1%s)-%2$s</string>
--->
+    <string name="account_bank_cunxun_assert">续存资产(%s)</string>
+    <string name="account_bank_zhaiquan_assert">债权(%1$s)-%2$s</string>
+    <string name="account_bank_guquan_assert">股权(%1$s)-%2$s</string>
+
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>
         <item>观看下载记录</item>

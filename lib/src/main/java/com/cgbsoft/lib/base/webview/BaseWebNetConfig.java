@@ -9,9 +9,9 @@ import com.cgbsoft.lib.utils.net.NetConfig;
  */
 public class BaseWebNetConfig extends NetConfig {
     //基础host
-    public static String baseParentUrl = SERVER_ADD + "/app5.0/";
+    public static String baseParentUrl = SERVER_ADD + "/";
 
-    public static String baseSxyParentUrl = SERVER_ADD + "/app6.0/";
+    public static String baseSxyParentUrl = SERVER_ADD + "/";
     //基础pdf路径
     public static String basePdfUrl = baseParentUrl + "pdfjs/web/viewer.html?";
     //

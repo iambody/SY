@@ -29,7 +29,7 @@
                 android:id="@+id/datum_manage_risk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_show_switchbutton="true"
+                app:setting_item_tip = "稳健性"
                 app:setting_item_title="@string/datum_manage_risk"/>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
@@ -48,6 +48,7 @@
                 android:id="@+id/datum_manage_relative_asset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:setting_item_tip = "未关联"
                 app:setting_item_title="@string/datum_manage_relative_asset"/>
         </LinearLayout>
     </ScrollView>
