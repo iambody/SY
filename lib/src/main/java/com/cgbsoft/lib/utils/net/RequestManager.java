@@ -9,7 +9,6 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -756,5 +755,9 @@ interface RequestManager {
     //获取全局导航
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
+
+    //签到
+    @POST(NetConfig.SXY.SIGNIN)
+    Observable<ResponseBody> sign(@Body RequestBody responseBody);
 
 }

@@ -16,7 +16,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 俱乐部
     public static String clubPage;
 
-    public static String  pageInit;
+    public static String pageInit;
 
     public static String productDetail;
 
@@ -42,6 +42,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     // 投资人认证
     public static String HOME_URL;
+    //私享云 选择投顾页面
+    public static String choiceAdviser;
 
     static {
         initApi();
@@ -58,13 +60,22 @@ public class CwebNetConfig extends BaseWebNetConfig {
         productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
-        product = baseParentUrl +  "/apptie/detail.html?schemeId=";
+        product = baseParentUrl + "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
-    public static void initSxyUrl(){
-        HOME_URL= baseSxyParentUrl + "biz/profile/";
-        elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
+
+    /**
+     * 私享云使用新得weburl
+     */
+    public static void initSxyUrl() {
+        HOME_URL = baseSxyParentUrl + "biz/profile/";
+        elegantGoodsDetail = baseSxyParentUrl + "biz/life/detail.html?goodsId=";
+        //选择理财师
+        choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+//        https://d10-app.simuyun.com/app6.0/biz/adviser/assets_basis.html
+
     }
+
 }

@@ -23,10 +23,12 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
+import com.cgbsoft.lib.widget.dialog.HomeSignDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
@@ -84,14 +86,46 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView viewLiveTitle;
     //直播预告
     View main_home_live_lay;
+
     @BindView(R.id.view_live_iv_lay)
     RelativeLayout viewLiveIvLay;
+    //
+    @BindView(R.id.main_home_adviser_title)
+    TextView mainHomeAdviserTitle;
+    @BindView(R.id.main_home_adviser_phone)
+    TextView mainHomeAdviserPhone;
+    @BindView(R.id.main_home_adviser_note)
+    TextView mainHomeAdviserNote;
+    @BindView(R.id.main_home_adviser_im)
+    TextView mainHomeAdviserIm;
+    @BindView(R.id.main_home_adviser_relation_lay)
+    LinearLayout mainHomeAdviserRelationLay;
+    @BindView(R.id.main_home_login_lay)
+    RelativeLayout mainHomeLoginLay;
+    @BindView(R.id.main_home_vister_adviser_layyy)
+    LinearLayout mainHomeVisterAdviserLayyy;
+    @BindView(R.id.main_home_vister_adviser_inf_lay)
+    LinearLayout mainHomeVisterAdviserInfLay;
+    @BindView(R.id.main_home_vister_adviser_inf_iv)
+    RoundImageView mainHomeVisterAdviserInfIv;
+    @BindView(R.id.main_home_vister_adviser_layy)
+    LinearLayout mainHomeVisterAdviserLayy;
+    @BindView(R.id.main_home_vister_lay)
+    RelativeLayout mainHomeVisterLay;
+    @BindView(R.id.main_home_invisiter_txt_lay)
+    LinearLayout mainHomeInvisiterTxtLay;
 
 
     //名片动画展示时候需要的动画
     private ObjectAnimator adviserCardObjectAnimator;
     //是否已经展示出来名片
     private boolean isShowAdviserCard;
+    //游客模式下是否已经展示出来
+    private boolean isVisiterShow;
+
+
+    //每天一次的签到的dialog
+    private HomeSignDialog signDialog;
 
     // Banner适配器
     private BannerAdapter homeBannerAdapter;
@@ -109,7 +143,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
+
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
+        initDialog();
+
         //测试数据**********************
         List<HomeEntity.Operate> datas = new ArrayList<>();
         HomeEntity.Operate d1 = new HomeEntity.Operate();
@@ -141,6 +178,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initViewPage(datasa);
         //请求数据
         getPresenter().getHomeData();
+    }
+
+    /**
+     * 弹出框
+     */
+    private void initDialog() {
+        //初始化签到页面
+        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
     }
 
     /**
@@ -186,8 +231,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getResultSucc(HomeEntity.Result data) {
         if (null != data) {
             initResultData(data);
-
-
         }
 
     }
@@ -218,6 +261,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
+     * 签到动作的结果通知
+     */
+    @Override
+    public void getSignResult(String message) {
+        if (null != signDialog && signDialog.isShowing()) signDialog.dismiss();
+        PromptManager.ShowCustomToast(baseActivity, message);
+
+    }
+
+    /**
      * 横向滑动时候的数据填充
      */
     public void initHorizontalScroll(List<HomeEntity.Operate> data) {
@@ -237,7 +290,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /**
      * 开始展示下边大布局的animator
      */
-    public void initShowCardAnimator(View V) {
+    public void initShowCardAnimator(View V, boolean isVisiter) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0f, 1f);
 
         ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", -600f, 0f);
@@ -256,9 +309,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                //动画结束开始
-                mainHomeCardLay.setVisibility(View.VISIBLE);
-                showCardLayAnimation(mainHomeCardLay);
+                if (isVisiter) {//游客模式下
+                    mainHomeInvisiterTxtLay.setVisibility(View.VISIBLE);
+                    showCardLayAnimation(mainHomeInvisiterTxtLay);
+                } else {//非游客模式下
+                    //动画结束开始
+                    mainHomeCardLay.setVisibility(View.VISIBLE);
+                    showCardLayAnimation(mainHomeCardLay);
+                    //开始展示私人管家的信息
+                    mainHomeAdviserRelationLay.setVisibility(View.VISIBLE);
+                    showCardLayAnimation(mainHomeAdviserRelationLay);
+                }
             }
 
             @Override
@@ -347,15 +408,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
 
-    //理财师头像的点击事件
-    @OnClick(R.id.main_home_adviser_inf_iv)
-    public void onViewivClicked() {
-        if (isShowAdviserCard) return;
-        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
-        isShowAdviserCard = true;
-        initShowCardAnimator(mainHomeAdviserLayyy);
-    }
-
     //下拉刷新展示
     @Override
     public void onRefresh() {
@@ -377,6 +429,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 //隐藏悬浮的服务码布局
                 mainHomeCardLay.setVisibility(View.GONE);
                 //todo 隐藏悬浮的理财师信息
+                mainHomeAdviserRelationLay.setVisibility(View.GONE);
+                //隐藏游客模式的右侧文字布局
+
+            }
+            if (mainHomeVisterAdviserLayyy.getVisibility() == View.VISIBLE) {
+                mainHomeVisterAdviserLayyy.setVisibility(View.GONE);
             }
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
@@ -386,13 +444,55 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-
+    //点击消息
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
         UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
     }
 
+    //登录模式点击电话
+    @OnClick(R.id.main_home_adviser_phone)
+    public void onMainHomeAdviserPhoneClicked() {
+    }
 
+    //登录模式点击短信
+    @OnClick(R.id.main_home_adviser_note)
+    public void onMainHomeAdviserNoteClicked() {
+    }
+
+    //登录模式点击聊天
+    @OnClick(R.id.main_home_adviser_im)
+    public void onMainHomeAdviserImClicked() {
+    }
+
+    //非游客模式头像的点击事件
+    @OnClick(R.id.main_home_adviser_inf_iv)
+    public void onViewivClicked() {
+        if (isShowAdviserCard) return;
+        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
+        isShowAdviserCard = true;
+        initShowCardAnimator(mainHomeAdviserLayyy, false);
+    }
+
+    //游客模式点击头像
+    @OnClick(R.id.main_home_vister_adviser_inf_iv)
+    public void onViewvisterivClicked() {
+        if (isVisiterShow) return;
+        mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
+        isVisiterShow = true;
+        initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
+
+    }
+
+
+    @OnClick(R.id.main_home_invisiter_txt_lay)
+    public void onViewinvisitertxtlayClicked() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+    }
+
+    /**
+     * 横向滑动的点击事件处理
+     */
     private class HorizontalItemClickListener implements View.OnClickListener {
         private HomeEntity.Operate data;
         private int postion;
@@ -405,6 +505,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         @Override
         public void onClick(View v) {
             PromptManager.ShowCustomToast(baseActivity, "位置" + postion);
+            if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
+            signDialog.show();
         }
     }
 

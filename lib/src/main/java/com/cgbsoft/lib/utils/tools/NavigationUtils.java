@@ -99,6 +99,17 @@ public class NavigationUtils {
     }
 
     /**
+     * 跳转到统一的webactivity页面
+     */
+    public static void gotoWebActivity(Activity activity, String url, String title, boolean isShowRightShare) {
+        Intent intent = new Intent(activity, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, title);
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowRightShare);
+        activity.startActivity(intent);
+    }
+
+    /**
      * 跳转到产品详情的操作
      *
      * @param context

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialog_transparent1">
+
+
+    <LinearLayout
+        android:id="@+id/dialog_sign_uplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/ui_40_dip"
+        android:layout_marginRight="@dimen/ui_40_dip"
+        android:background="@drawable/shape_sign_bg"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signdialog_up_bg">
+
+            <ImageView
+                android:id="@+id/dialog_sign_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ui_30_dip"
+                android:src="@drawable/signdialog_up_txt_iv" />
+
+            <TextView
+                android:id="@+id/homesign_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dialog_sign_iv"
+                android:layout_centerHorizontal="true"
+                android:text="尊敬的杨先生,欢迎来到私享云"
+                android:textColor="@color/white_light"
+                android:textSize="@dimen/dimens_sp_16" />
+        </RelativeLayout>
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/signdialog_up_wave" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_10_dip"
+            android:background="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/homesign_data_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+
+                android:text="今日奖励3云豆"
+                android:textSize="@dimen/dimens_sp_24" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/homesign_next_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingTop="@dimen/ui_8_dip"
+            android:text="下次奖励5云豆" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_20_dip"
+            android:background="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/select_sign_bt"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="云豆兑换礼品"
+            android:textSize="@dimen/dimens_sp_17"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/dialog_sign_line"
+        android:layout_width="@dimen/ui_2_dip"
+        android:layout_height="@dimen/ui_40_dip"
+        android:layout_below="@id/dialog_sign_uplay"
+        android:layout_centerHorizontal="true"
+        android:src="@color/white_light" />
+
+    <ImageView
+        android:id="@+id/homesign_cancle_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_sign_line"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/signdialog_up_cha_iv" />
+
+</RelativeLayout>

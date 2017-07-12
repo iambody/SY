@@ -50,7 +50,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -232,6 +231,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
 //        getPresenter().invisterLogin(baseContext);
+//
+//        dialg.show();
 //        if (true) return;
         LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))

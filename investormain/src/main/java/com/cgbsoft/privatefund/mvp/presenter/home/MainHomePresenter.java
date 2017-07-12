@@ -7,8 +7,11 @@ import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.privatefund.bean.commui.SignBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
+import com.google.gson.Gson;
 
 /**
  * desc  ${DESC}
@@ -26,7 +29,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             @Override
             protected void onEvent(HomeEntity.Result result) {
                 getView().getResultSucc(result);
-                LogUtils.Log("s","s");
+                LogUtils.Log("s", "s");
             }
 
             @Override
@@ -46,5 +49,28 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 //            }
 //        }));
 
+    }
+
+    //进行签到动作
+    @Override
+    public void todoSign() {
+        addSubscription(ApiClient.userSign().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                if (!BStrUtils.isEmpty(s)) {
+                    SignBean signBean = new Gson().fromJson(getV2String(s), SignBean.class);//
+
+                    getView().getSignResult(signBean.resultMessage);
+                } else {
+                    getView().getSignResult("签到失败");
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        }));
     }
 }
