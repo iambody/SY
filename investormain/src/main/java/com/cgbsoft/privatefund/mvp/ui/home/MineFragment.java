@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -366,9 +366,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         List<Fragment> list = new ArrayList<>();
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
         List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
-        System.out.println("------playlList=" + playlList.size() + "-----downlList=" + downlList.size());
         setFragmentParams(playlList, list);
         setFragmentParams(downlList, list);
+        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
