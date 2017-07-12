@@ -1,6 +1,7 @@
 package app.privatefund.com.im.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.ui.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +46,7 @@ import io.rong.imlib.model.Conversation;
 /**
  * 首页消息页面
  */
-public class MainMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class MainMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -79,6 +84,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             divideLineView.setVisibility(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? View.VISIBLE : View.GONE);
             pager.setBackgroundResource(R.color.c_background);
             toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+            toolbar.setOnMenuItemClickListener(this);
             toolbar.setNavigationOnClickListener(v -> {
                 getActivity().finish();
             });
@@ -291,6 +297,26 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(com.cgbsoft.lib.R.menu.page_menu, menu);
+        MenuItem firstItem = menu.findItem(com.cgbsoft.lib.R.id.firstBtn);
+        MenuItem secItem = menu.findItem(com.cgbsoft.lib.R.id.secondBtn);
+        firstItem.setTitle("常见问题");
+        secItem.setVisible(false);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
+            //TODO 常见问题
+        }
+        return false;
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
@@ -311,11 +337,4 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
     public void onPageScrollStateChanged(int i) {
 
     }
-
-//    public void onEventMainThread(RefreshKefu refreshKefu) {
-//        Log.e("ConnectRongYun", "8.刷新Kefu");
-//        if (conversationListFragment != null && conversationListFragment.getAdapter() != null) {
-//            conversationListFragment.getAdapter().notifyDataSetChanged();
-//        }
-//    }
 }
