@@ -366,9 +366,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         List<Fragment> list = new ArrayList<>();
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
         List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
         setFragmentParams(playlList, list);
         setFragmentParams(downlList, list);
-        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {

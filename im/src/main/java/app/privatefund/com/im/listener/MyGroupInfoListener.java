@@ -28,6 +28,9 @@ public class MyGroupInfoListener implements RongIM.GroupInfoProvider {
 
     public Group getGroupInfo(String groupID) {
         final Group[] groups = new Group[1];
+        if ("公告".equals(groupID)) {
+            return groups[0];
+        }
         ApiClient.getGroupInfo(groupID).subscribe(new RxSubscriber<GroupInfoEntity.Result>() {
             @Override
             protected void onEvent(GroupInfoEntity.Result result) {

@@ -49,6 +49,9 @@ public class MyUserInfoListener implements RongIM.UserInfoProvider {
     public UserInfo getUserInfo(final String userId) {
         Log.i(this.getClass().getName(), "getUserInfo");
         final UserInfo[] userInfos = new UserInfo[1];
+        if ("公告".equals(userId)) {
+            return userInfos[0];
+        }
         ApiClient.goTestGetRongUserInfo(userId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

@@ -1,28 +1,47 @@
 package app.privatefund.com.im.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import app.privatefund.com.im.Contants;
 import app.privatefund.com.im.R;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.widget.AsyncImageView;
+import io.rong.imkit.widget.ProviderContainerView;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 
 /**
  * @author chenlong
  */
-public class RongConversationListAdapter extends ConversationListAdapter {
+public class RongConversationListAdapter extends RongConversationBaseListAdapter {
 
     private Context context;
+    private LayoutInflater mInflater;
 
     public RongConversationListAdapter(Context context) {
         super(context);
         this.context = context;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public void notifyDataSetChanged() {
         customServerTop();
         super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return super.getViewTypeCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     private void customServerTop() {
