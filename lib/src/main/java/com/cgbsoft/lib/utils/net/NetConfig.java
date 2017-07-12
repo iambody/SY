@@ -38,6 +38,7 @@ public class NetConfig {
         public static final String appVersion = "version";
         public static final String appPlatform = "appPlatform";
         public static final String dev = "dev";
+        public static final String mid = "mid";
     }
 
     //登录
@@ -282,8 +283,8 @@ public class NetConfig {
         static final String GET_NAVIFAITION = API_URL + "navigation";
 //        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
 
-        // 健康检测/医疗数据
-//        static final String HEALTH_GET_URL = API_URL + "/health/commend";
+        //游客登录
+        static final String VISITORLOGIN = AUTH_URL + "/visitorLogin";
         // 我的接口
         static final String GET_MINE = API_URL + "/enjoycloud/usercentre";
     }

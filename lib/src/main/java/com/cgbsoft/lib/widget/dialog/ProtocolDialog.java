@@ -9,20 +9,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.ProtocolEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -41,14 +38,15 @@ import static com.cgbsoft.lib.utils.cache.CacheManager.FILE;
  * Email:zhangxyfs@126.com
  *  
  */
-public class ProtocolDialog implements DBConstant{
+public class ProtocolDialog implements DBConstant {
     private TextView mConfirmTv, titleTv, mContentTv;
     private int type;
     private BaseDialog dialog;
     private String filePath = CacheManager.getCachePath(BaseApplication.getContext(), FILE) + "pro.tp";
 
     private DaoUtils daoUtils;
-private Context context;
+    private Context context;
+
     public ProtocolDialog(Context context, int type, Handler handler) {
         this.type = type;
         init(context);
@@ -56,7 +54,7 @@ private Context context;
 
     private void init(Context context) {
         daoUtils = new DaoUtils(context, DaoUtils.W_OTHER);
-        this.context=context;
+        this.context = context;
         dialog = new BaseDialog(context, R.style.CenterCompatDialogTheme);
         dialog.setContentView(R.layout.view_protocol_dialog);
         dialog.setCanceledOnTouchOutside(true);
@@ -73,13 +71,13 @@ private Context context;
 
         mContentTv.setMovementMethod(new ScrollingMovementMethod());
 
-        if (AppManager.isInvestor(context)) {
-            titleTv.setTextColor(0xfff47900);
-            mConfirmTv.setBackgroundResource(R.drawable.shape_f47900);
-        } else {
-            titleTv.setTextColor(0xffd73a2e);
-            mConfirmTv.setBackgroundResource(R.drawable.all_red_btn);
-        }
+//        if (AppManager.isInvestor(context)) {
+//            titleTv.setTextColor(0xfff47900);
+//            mConfirmTv.setBackgroundResource(R.drawable.shape_f47900);
+//        } else {
+//            titleTv.setTextColor(0xffd73a2e);
+//            mConfirmTv.setBackgroundResource(R.drawable.all_red_btn);
+//        }
 
         mConfirmTv.setOnClickListener(v -> {
             if (type == 0) {

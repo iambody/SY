@@ -50,6 +50,7 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -88,9 +89,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     RelativeLayout enterLoginWxBtLay;
     @BindView(R2.id.enter_login_wxlogin_lay)
     RelativeLayout enterLoginWxloginLay;
+    @BindView(R2.id.btn_stroll)
+    TextView btnStroll;
 
     //是否已经显示了微信登录的按钮  默认进来是不显示的
     private boolean isShowWxBt;
+    //是否点击了游客模式的按钮
+    boolean isVisitorLoginClick;
 
     private LoadingDialog mLoadingDialog;
     private int identity;
@@ -130,17 +135,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        identity = getIntent().getIntExtra(IDS_KEY, -1);
 
-//        if (AppManager.isAdViser(this)) {
-//            //                iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_adviser);
-//            btn_al_login.setBackgroundResource(R.drawable.select_btn_advister);
-//            btn_al_login.setTextColor(0xff666666);
-//        } else {
-////           iv_al_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-//            btn_al_login.setBackgroundResource(R.drawable.select_btn_inverstor);
-//            btn_al_login.setTextColor(0xffffffff);
-//        }
 
         if (savedInstanceState == null) {
             if (identity == IDS_ADVISER) {
@@ -179,7 +174,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
-
+        getPresenter().invisterLogin(baseContext);
     }
 
     private void initLocation() {
@@ -236,6 +231,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
+//        getPresenter().invisterLogin(baseContext);
+//        if (true) return;
         LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))
             getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
@@ -329,6 +326,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
+    //游客登录成功
+    @Override
+    public void invisterloginSuccess() {
+        if (isVisitorLoginClick) {//是点击游客模式登录按钮进入的
+            visitorLogin();
+        }
+    }
+
+    @Override
+    public void invisterloginFail() {
+        //游客登录失败
+        LogUtils.Log("sss", "ss");
+    }
+
     @Override
     public void publicKeySuccess(String str) {
         publicKey = str;
@@ -386,6 +397,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         });
         wxAuthorManger.startAuth();
         DataStatistApiParam.onStatisToWXLoginClick();
+    }
+
+
+    @OnClick(R2.id.btn_stroll)
+    public void onStrollClicked() {//游客模式点击登录
+        isVisitorLoginClick = true;
+        if (getPresenter().isvistorLogin()) {//如果已经登录成功就直接进行进入
+            visitorLogin();
+        } else {//如果没有就直接进行登录后才能进入主界面
+            getPresenter().invisterLogin(baseContext);
+        }
     }
 
 
@@ -467,5 +489,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             LogUtils.Log("daa", result);
         }
 
+    }
+
+    /**
+     * 游客模式进行登录
+     */
+    public void visitorLogin() {
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
+            finish();
+            return;
+        }
+        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
+        finish();
     }
 }

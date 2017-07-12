@@ -55,7 +55,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoverPage = baseParentUrl + "/discover/index.html";
         clubPage = baseParentUrl + "/bank/default.html";
         pageInit = baseParentUrl + "/setData.html";
-        productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
+        productDetail = baseSxyParentUrl + "/biz/product/index.html?id=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
         product = baseParentUrl +  "/apptie/detail.html?schemeId=";

@@ -94,4 +94,7 @@ public interface AppinfConstant {
 
     //登录前的token
     String PUBLIC_KEY="publickey";
+
+    //游客模式存储的key
+    String VISITOR_KEY="isvisitor";
 }

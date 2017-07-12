@@ -73,6 +73,16 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
+    /**
+     * 保存游客模式
+     */
+    public static void saveIsVisitor(Context spContext, boolean isVisitor) {
+        SharedPreferences.Editor ed = getBasePreference(spContext).edit();
+        ed.putBoolean(VISITOR_KEY, isVisitor);
+        ed.commit();
+    }
+
+
 //    /**
 //     * 保存V2的混淆的Token
 //     */

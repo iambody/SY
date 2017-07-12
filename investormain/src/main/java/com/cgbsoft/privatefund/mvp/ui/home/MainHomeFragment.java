@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.im.MessageListActivity;
-import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
+import app.privatefund.com.vido.mvp.ui.video.VideoHistoryListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -361,7 +361,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSwiperefreshlayout.setRefreshing(false);
         //请求数据
 //        getPresenter().getHomeData();
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoDownloadListActivity.class));
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoHistoryListActivity.class));
     }
 
     ///scrollview滑动时候的监听

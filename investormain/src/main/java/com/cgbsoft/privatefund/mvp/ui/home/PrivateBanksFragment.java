@@ -10,8 +10,10 @@ import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
@@ -54,23 +56,31 @@ public class PrivateBanksFragment extends BasePageFragment {
         return null;
     }
 
+
     @Override
     protected void bindTitle(View titleView) {
         LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
         ImageView privatebank_title_left = (ImageView) titleView.findViewById(R.id.privatebank_title_left);
-        privatebank_title_left.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-            intent.putExtra(WebViewConstant.push_message_url, "https://d10-app.simuyun.com/app6.0/biz/adviser/assets_basis.html");
-            intent.putExtra(WebViewConstant.push_message_title, "选择投顾");
-            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-            getActivity().startActivity(intent);
+        privatebank_title_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, BaseWebNetConfig.bindAdviser);
+                intent.putExtra(WebViewConstant.push_message_title, "选择投顾");
+                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                getActivity().startActivity(intent);
+            }
         });
-        search.setOnClickListener(v -> {
-            Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-            i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-            baseActivity.startActivity(i);
-            DataStatistApiParam.onStatisToCProductSearchClick();
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(baseActivity, SearchBaseActivity.class);
+                i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
+                baseActivity.startActivity(i);
+                DataStatistApiParam.onStatisToCProductSearchClick();
+            }
         });
+
     }
 
     /**

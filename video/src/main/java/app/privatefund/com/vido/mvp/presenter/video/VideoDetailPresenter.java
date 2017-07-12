@@ -49,8 +49,8 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
 
-    public void getLocalVideoDetailInfo(LoadingDialog loadingDialog,String videoId) {
-        getVideoDetailInfo(loadingDialog,videoId);
+    public void getLocalVideoDetailInfo(LoadingDialog loadingDialog, String videoId) {
+        getVideoDetailInfo(loadingDialog, videoId);
         getView().getLocalVideoInfoSucc(viModel);
     }
 
@@ -152,6 +152,8 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         if (viModel == null)
             return;
         viModel.finalPlayTime = System.currentTimeMillis();
+//        //todo 测试使用
+//        viModel.finalPlayTime = 1499669773L;
         updataLocalVideoInfo();
     }
 

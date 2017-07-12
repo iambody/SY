@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -30,6 +31,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.RegisterContract;
 import app.ndk.com.enter.mvp.presenter.RegisterPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -73,6 +75,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @BindView(R2.id.tv_ar_proto)
     TextView tv_ar_proto;
+    @BindView(R2.id.private_bank_code)
+    EditText privateBankCode;
 
     private LoadingDialog mLoadingDialog;
     private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true;
@@ -96,16 +100,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
-//        if (AppManager.isAdViser(this)) {
-//            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-//            btn_ar_register.setBackgroundResource(R.drawable.select_btn_advister);
-//            btn_ar_register.setTextColor(0xff666666);
-//        } else {
-//            iv_ar_back.setImageResource(R.drawable.ic_toolbar_back_al_investor);
-//            btn_ar_register.setBackgroundResource(R.drawable.select_btn_inverstor);
-//            btn_ar_register.setTextColor(0xffffffff);
-//        }
 
         et_ar_username.addTextChangedListener(new RegisterTextWatcher(USERNAME_KEY));
         et_ar_password.addTextChangedListener(new RegisterTextWatcher(PASSWORD_KEY));
@@ -181,6 +175,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         String userName = et_ar_username.getText().toString();
         String password = et_ar_password.getText().toString();
         String code = et_ar_check.getText().toString();
+        String privateBanckCode = privateBankCode.getText().toString();
         toUmengStatistics(UMENG_KEY, "按钮", "注册");
         if (!isUsernameInput) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
@@ -202,7 +197,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             return;
         }
         toDataStatistics(1002, 10012, "提交注册");
-        getPresenter().toRegister(mLoadingDialog, userName, password, code);
+        getPresenter().toRegister(mLoadingDialog, userName, password, code, privateBanckCode.trim());
 
 
         DataStatistApiParam.onStaticToCRegeistClick();
@@ -260,6 +255,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         btn_ar_check.setTextColor(getResources().getColor(R.color.white));
         btn_ar_check.setText(R.string.ra_code_resend_str);
     }
+
 
     private class RegisterTextWatcher implements TextWatcher {
         private int which;
