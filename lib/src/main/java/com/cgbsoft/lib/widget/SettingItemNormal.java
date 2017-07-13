@@ -18,7 +18,6 @@ import com.cgbsoft.lib.R;
  * 自定义设置页面的条目
  * Created by sunfei on 2017/6/28 0028.
  */
-
 public class SettingItemNormal extends LinearLayout {
     private final Context context;
     private TextView titleTV;

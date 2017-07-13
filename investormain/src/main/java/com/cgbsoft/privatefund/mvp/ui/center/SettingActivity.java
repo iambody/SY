@@ -46,11 +46,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     private void initView(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_title));
-        gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
-            @Override
-            public void change(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(),"isChecked==="+isChecked,Toast.LENGTH_SHORT).show();
-            }
+        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
+            NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+            Toast.makeText(getApplicationContext(),"isChecked==="+isChecked,Toast.LENGTH_SHORT).show();
         });
     }
     @OnClick(R.id.title_left)
@@ -75,7 +73,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_change_gesture_psd)
     public void changeGesturePsd(){
-
+        NavigationUtils.startActivityByRouter(this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
     }
     /**
      * 跳转到常见问题

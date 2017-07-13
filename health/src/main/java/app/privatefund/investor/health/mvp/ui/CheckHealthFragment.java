@@ -63,7 +63,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
         recyclerRefreshLayout.setOnRefreshListener(this);
         recyclerRefreshLayout.setEnabled(false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_30_dip));
+        recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_15_dip));
         recyclerView.setAdapter(checkHealthAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnScrollListener(recyclerControl.getOnScrollListener());

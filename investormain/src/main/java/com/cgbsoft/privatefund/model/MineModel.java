@@ -6,11 +6,22 @@ import java.util.List;
  * @author chenlong
  */
 public class MineModel {
+
+    public MineUserInfo myInfo;
+
     public PrivateBank bank;
 
     public List<Orders> mallOrder;
 
     public Health healthy;
+
+    public MineUserInfo getMyInfo() {
+        return myInfo;
+    }
+
+    public void setMyInfo(MineUserInfo myInfo) {
+        this.myInfo = myInfo;
+    }
 
     public PrivateBank getBank() {
         return bank;
@@ -34,6 +45,79 @@ public class MineModel {
 
     public void setHealthy(Health healthy) {
         this.healthy = healthy;
+    }
+
+    public static class MineUserInfo {
+
+        private String headImageUrl;
+
+        private String nickName;
+
+        private String adviserName;
+
+        private String ydTotal;
+
+        private String memberValue;
+
+        private String memberLevel;
+
+        private String memberBalance;
+
+        public String getHeadImageUrl() {
+            return headImageUrl;
+        }
+
+        public void setHeadImageUrl(String headImageUrl) {
+            this.headImageUrl = headImageUrl;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getAdviserName() {
+            return adviserName;
+        }
+
+        public void setAdviserName(String adviserName) {
+            this.adviserName = adviserName;
+        }
+
+        public String getYdTotal() {
+            return ydTotal;
+        }
+
+        public void setYdTotal(String ydTotal) {
+            this.ydTotal = ydTotal;
+        }
+
+        public String getMemberValue() {
+            return memberValue;
+        }
+
+        public void setMemberValue(String memberValue) {
+            this.memberValue = memberValue;
+        }
+
+        public String getMemberLevel() {
+            return memberLevel;
+        }
+
+        public void setMemberLevel(String memberLevel) {
+            this.memberLevel = memberLevel;
+        }
+
+        public String getMemberBalance() {
+            return memberBalance;
+        }
+
+        public void setMemberBalance(String memberBalance) {
+            this.memberBalance = memberBalance;
+        }
     }
 
     public static class PrivateBank {

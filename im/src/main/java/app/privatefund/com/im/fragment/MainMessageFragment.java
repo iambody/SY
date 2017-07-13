@@ -8,22 +8,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,7 @@ import io.rong.imlib.model.Conversation;
 /**
  * 首页消息页面
  */
-public class MainMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class MainMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -79,6 +77,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             divideLineView.setVisibility(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? View.VISIBLE : View.GONE);
             pager.setBackgroundResource(R.color.c_background);
             toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+            toolbar.setOnMenuItemClickListener(this);
             toolbar.setNavigationOnClickListener(v -> {
                 getActivity().finish();
             });
@@ -118,7 +117,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             }
         });
         initPlatformCustomer();
-        initOrgManager();
+//        initOrgManager();
     }
 
     @Override
@@ -150,13 +149,11 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 //                    }
 //                    ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
 //                }
-//
 //                @Override
 //                protected void onRxError(Throwable error) {
 //                    Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
 //                }
 //            });
-
             ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {
@@ -178,47 +175,82 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         }
     }
 
-    private void initOrgManager() {
-        Log.e("MainMessageFragment", "-----initOrgManager");
-        if (RongIM.getInstance().getRongIMClient() != null) {
-            String managerUid = AppManager.getOrgManagerUid(getContext());
-            String teamManagerUid = AppManager.getTeamManagerUid(getContext());
-            List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-            if (conversationList != null) {
-                for (int i = 0; i < conversationList.size(); i++) {
-                    if (conversationList.get(i).getTargetId().equals(managerUid)) {
-                        return;
-                    }
-                    if (conversationList.get(i).getTargetId().equals(teamManagerUid)) {
-                        return;
-                    }
-                }
-            }
-            if (AppManager.getUserInfo(getContext()) != null &&
-                    !AppManager.isInvestor(getContext()) &&
-                    "0".equals(AppManager.getUserInfo(getContext()).getToB().adviserState)) {
-//                ApiClient.getOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<OrgManagerEntity.Result>() {
+//    private void initOrgManager() {
+//        Log.e("MainMessageFragment", "-----initOrgManager");
+//        if (RongIM.getInstance().getRongIMClient() != null) {
+//            String managerUid = AppManager.getOrgManagerUid(getContext());
+//            String teamManagerUid = AppManager.getTeamManagerUid(getContext());
+//            List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+//            if (conversationList != null) {
+//                for (int i = 0; i < conversationList.size(); i++) {
+//                    if (conversationList.get(i).getTargetId().equals(managerUid)) {
+//                        return;
+//                    }
+//                    if (conversationList.get(i).getTargetId().equals(teamManagerUid)) {
+//                        return;
+//                    }
+//                }
+//            }
+//            if (AppManager.getUserInfo(getContext()) != null &&
+//                    !AppManager.isInvestor(getContext()) &&
+//                    "0".equals(AppManager.getUserInfo(getContext()).getToB().adviserState)) {
+////                ApiClient.getOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<OrgManagerEntity.Result>() {
+////                    @Override
+////                    protected void onEvent(OrgManagerEntity.Result result) {
+////                        String managerMobile = result.getManagerMobile();
+////                        String managerUid = result.getManagerUid();
+////                        String teamManagerUid = result.getTeamManagerUid();
+////                        AppInfStore.saveOrgManagerUid(getContext(), managerUid);
+////                        AppInfStore.saveTeamManagerUid(getContext(), teamManagerUid);
+////                        AppInfStore.saveOrgManagerMobile(getContext(), managerMobile);
+////                        if (managerUid != null && managerUid.length() > 0) {
+////                            if (AppManager.hasTeamManager(getContext())) {
+////                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
+////                                AppInfStore.saveHasTeamManager(getContext(), false);
+////                            }
+////                            AppInfStore.saveHasOrgManager(getContext(), true);
+////                        }
+////                        if (teamManagerUid != null && teamManagerUid.length() > 0) {
+////                            if (AppManager.hasTeamManager(getContext())) {
+////                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
+////                                AppInfStore.saveHasOrgManager(getContext(), false);
+////                            }
+////                            AppInfStore.saveHasTeamManager(getContext(), true);
+////                        }
+////                    }
+////
+////                    @Override
+////                    protected void onRxError(Throwable error) {
+////                        Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
+////                    }
+////                });
+//                ApiClient.getTestOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
 //                    @Override
-//                    protected void onEvent(OrgManagerEntity.Result result) {
-//                        String managerMobile = result.getManagerMobile();
-//                        String managerUid = result.getManagerUid();
-//                        String teamManagerUid = result.getTeamManagerUid();
-//                        AppInfStore.saveOrgManagerUid(getContext(), managerUid);
-//                        AppInfStore.saveTeamManagerUid(getContext(), teamManagerUid);
-//                        AppInfStore.saveOrgManagerMobile(getContext(), managerMobile);
-//                        if (managerUid != null && managerUid.length() > 0) {
-//                            if (AppManager.hasTeamManager(getContext())) {
-//                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
-//                                AppInfStore.saveHasTeamManager(getContext(), false);
+//                    protected void onEvent(String s) {
+//                        try {
+//                            JSONObject response = new JSONObject(s);
+//                            String managerMobile = response.optString(AppinfConstant.ORG_MANAGER_MOBILE);
+//                            String managerUid = response.optString(AppinfConstant.ORG_MANAGER_UID);
+//                            String teamManagerUid = response.optString(AppinfConstant.TEAM_MANAGER_UID);
+//                            AppInfStore.saveOrgManagerUid(getContext(), managerUid);
+//                            AppInfStore.saveTeamManagerUid(getContext(), teamManagerUid);
+//                            AppInfStore.saveOrgManagerMobile(getContext(), managerMobile);
+//                            if (managerUid != null && managerUid.length() > 0) {
+//                                if (AppManager.hasTeamManager(getContext())) {
+//                                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
+//                                    AppInfStore.saveHasTeamManager(getContext(), false);
+//                                }
+//                                AppInfStore.saveHasOrgManager(getContext(), true);
 //                            }
-//                            AppInfStore.saveHasOrgManager(getContext(), true);
-//                        }
-//                        if (teamManagerUid != null && teamManagerUid.length() > 0) {
-//                            if (AppManager.hasTeamManager(getContext())) {
-//                                RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
-//                                AppInfStore.saveHasOrgManager(getContext(), false);
+//                            if (teamManagerUid != null && teamManagerUid.length() > 0) {
+//                                if (AppManager.hasTeamManager(getContext())) {
+//                                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
+//                                    AppInfStore.saveHasOrgManager(getContext(), false);
+//                                }
+//                                AppInfStore.saveHasTeamManager(getContext(), true);
 //                            }
-//                            AppInfStore.saveHasTeamManager(getContext(), true);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
 //                        }
 //                    }
 //
@@ -227,54 +259,19 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 //                        Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
 //                    }
 //                });
-                ApiClient.getTestOrgManager(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
-                    @Override
-                    protected void onEvent(String s) {
-                        try {
-                            JSONObject response = new JSONObject(s);
-                            String managerMobile = response.optString(AppinfConstant.ORG_MANAGER_MOBILE);
-                            String managerUid = response.optString(AppinfConstant.ORG_MANAGER_UID);
-                            String teamManagerUid = response.optString(AppinfConstant.TEAM_MANAGER_UID);
-                            AppInfStore.saveOrgManagerUid(getContext(), managerUid);
-                            AppInfStore.saveTeamManagerUid(getContext(), teamManagerUid);
-                            AppInfStore.saveOrgManagerMobile(getContext(), managerMobile);
-                            if (managerUid != null && managerUid.length() > 0) {
-                                if (AppManager.hasTeamManager(getContext())) {
-                                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
-                                    AppInfStore.saveHasTeamManager(getContext(), false);
-                                }
-                                AppInfStore.saveHasOrgManager(getContext(), true);
-                            }
-                            if (teamManagerUid != null && teamManagerUid.length() > 0) {
-                                if (AppManager.hasTeamManager(getContext())) {
-                                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
-                                    AppInfStore.saveHasOrgManager(getContext(), false);
-                                }
-                                AppInfStore.saveHasTeamManager(getContext(), true);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    protected void onRxError(Throwable error) {
-                        Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
-                    }
-                });
-            } else {
-                //1 表示有机构经理聊天  0 表示没有机构经理聊天
-                if (AppManager.hasOrgManager(getContext())) {
-                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
-                    AppInfStore.saveHasOrgManager(getContext(), false);
-                }
-                if (AppManager.hasTeamManager(getContext())) {
-                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
-                    AppInfStore.saveHasTeamManager(getContext(), false);
-                }
-            }
-        }
-    }
+//            } else {
+//                //1 表示有机构经理聊天  0 表示没有机构经理聊天
+//                if (AppManager.hasOrgManager(getContext())) {
+//                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getOrgManagerUid(getContext()));
+//                    AppInfStore.saveHasOrgManager(getContext(), false);
+//                }
+//                if (AppManager.hasTeamManager(getContext())) {
+//                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, AppManager.getTeamManagerUid(getContext()));
+//                    AppInfStore.saveHasTeamManager(getContext(), false);
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 被首页标签选中的处理
@@ -289,6 +286,26 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
                 .build();
         //conversationListFragment.initFragment(uri);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(com.cgbsoft.lib.R.menu.page_menu, menu);
+        MenuItem firstItem = menu.findItem(com.cgbsoft.lib.R.id.firstBtn);
+        MenuItem secItem = menu.findItem(com.cgbsoft.lib.R.id.secondBtn);
+        firstItem.setTitle("常见问题");
+        secItem.setVisible(false);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
+            //TODO 常见问题
+        }
+        return false;
+    }
+
 
     @Override
     public void onDestroy() {
@@ -311,11 +328,4 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
     public void onPageScrollStateChanged(int i) {
 
     }
-
-//    public void onEventMainThread(RefreshKefu refreshKefu) {
-//        Log.e("ConnectRongYun", "8.刷新Kefu");
-//        if (conversationListFragment != null && conversationListFragment.getAdapter() != null) {
-//            conversationListFragment.getAdapter().notifyDataSetChanged();
-//        }
-//    }
 }

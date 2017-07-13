@@ -703,7 +703,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
         try {
-            if ((SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM) + "").equals(jsonObject.getString("id"))) {
+            if (jsonObject.getString("id").equals(SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM) + "")) {
                 hasLive = false;
             }
         } catch (JSONException e) {
@@ -760,7 +760,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-
 //                PromptManager.ShowCustomToast(baseContext,"定位成功");
                 locationManger.unregistLocation();
 //                LogUtils.Log("S", "s");

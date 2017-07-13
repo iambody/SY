@@ -230,7 +230,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         final TextView concel = (TextView) layout.findViewById(R.id.quxiao);
         TextView comfirm = (TextView) layout.findViewById(R.id.queren);
         dialog.setCancelable(false);
-        dialog.show();
+        if (context != null) {
+            dialog.show();
+        }
         concel.setOnClickListener(v -> dialog.dismiss());
         comfirm.setOnClickListener(v -> {
             String vaus = et_password.getText().toString();

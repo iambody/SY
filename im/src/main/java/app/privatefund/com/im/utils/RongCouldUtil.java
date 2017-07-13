@@ -49,7 +49,7 @@ public class RongCouldUtil {
                 || conversationSenderId.equals(Constant.msgProductStatus)
                 || conversationSenderId.equals(Constant.msgMarketingStatus)
                 || conversationSenderId.equals(Constant.msgOperationStatus)
-                || conversationSenderId.equals(Constant.msgSystemStatus)
+//                || conversationSenderId.equals(Constant.msgSystemStatus)
                 || conversationSenderId.equals(Constant.msgTradeInformation)) {
             return true;
         }

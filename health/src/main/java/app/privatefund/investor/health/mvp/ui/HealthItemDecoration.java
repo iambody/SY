@@ -17,9 +17,9 @@ import android.view.View;
 public class HealthItemDecoration extends RecyclerView.ItemDecoration{
 
     protected Drawable divider;
-    protected int margin;
+    protected int margin ;
     private Context context;
-    private static int MARGIN_LEFT_RIGHT = 30;
+//    private static int MARGIN_LEFT_RIGHT = 30;
 
     public HealthItemDecoration(Context context, int ColorId, int HeightId) {
         this.context = context;
@@ -31,8 +31,8 @@ public class HealthItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
         outRect.bottom = margin;
-        outRect.left = MARGIN_LEFT_RIGHT;
-        outRect.right = MARGIN_LEFT_RIGHT;
+//        outRect.left = MARGIN_LEFT_RIGHT;
+//        outRect.right = MARGIN_LEFT_RIGHT;
     }
 
     @Override

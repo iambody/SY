@@ -28,6 +28,9 @@ public class MyGroupUserInfoProvider implements RongIM.GroupUserInfoProvider {
     @Override
     public GroupUserInfo getGroupUserInfo(final String groupID, final String userId) {
         GroupUserInfo groupUserInfo = new GroupUserInfo(groupID, userId, "");
+        if ("公告".equals(groupID) || "公告".equals(userId)) {
+            return groupUserInfo;
+        }
         ApiClient.getRongUserInfo(userId).subscribe(new RxSubscriber<RongUserEntity.Result>() {
             @Override
             protected void onEvent(RongUserEntity.Result result) {
