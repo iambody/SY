@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -39,7 +41,10 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +62,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.account_info_image_id)
     RoundImageView roundImageView;
+
+    @BindView(R.id.user_leaguar_level)
+    TextView userLeaguarLevel;
+
+    @BindView(R.id.user_leaguar_update_desc)
+    TextView userLeaguarUpdateDesc;
 
     @BindView(R.id.mine_caifu_value)
     TextView textViewCaifu;
@@ -115,21 +126,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
 
-    @BindView(R.id.account_order_send_ll)
-    LinearLayout order_waith_send_ll;
-
-    @BindView(R.id.account_order_receive_ll)
-    LinearLayout order_waith_receive_ll;
-
-    @BindView(R.id.account_order_finished_ll)
-    LinearLayout order_waith_finished_ll;
-
-    @BindView(R.id.account_order_sale_ll)
-    LinearLayout order_waith_after_sale_ll;
-
-    @BindView(R.id.account_order_all_ll)
-    LinearLayout order_waith_all_ll;
-
     @BindView(R.id.account_order_send_text)
     TextView account_order_send_text;
 
@@ -154,6 +150,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private DaoUtils daoUtils;
 
     private String[] videos;
+
+    private MineModel mineModel;
 
     @Override
     protected int layoutID() {
@@ -183,14 +181,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init(View view, Bundle savedInstanceState) {
         System.out.println("--MineFragment----init");
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
-        textViewName.setText(AppManager.getUserInfo(getActivity()).getUserName());
-        Imageload.display(getActivity(), AppManager.getUserInfo(getActivity()).getHeadImageUrl(), roundImageView, R.drawable.logo, R.drawable.logo);
-        if (AppManager.getUserInfo(getActivity()).getToC() != null) {
-            textViewCaifu.setText(AppManager.getUserInfo(getActivity()).getToC().getWealth());
-            textViewYundou.setText(String.valueOf(AppManager.getUserInfo(getActivity()).getToC().getMyPoint()));
-            String realName = AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName();
-            textViewPrivateBanker.setText(TextUtils.isEmpty(realName) ? "无" : realName);
-        }
         initVideoView();
         System.out.println("---MineFragment---end inist");
         getPresenter().getMineData();
@@ -283,25 +273,96 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         // 管理收货地址
     }
 
+    @OnClick(R.id.account_order_send_ll)
+    void gotoWaitSendHuoActivity() {
+        String url = CwebNetConfig.privateOrder.concat("?labelType=1");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.account_order_receive_ll)
+    void gotoWaitReceiveHuoActivity() {
+        String url = CwebNetConfig.privateOrder.concat("?labelType=2");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.account_order_finished_ll)
+    void gotoFinishedActivity() {
+        String url = CwebNetConfig.privateOrder.concat("?labelType=3");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.account_order_sale_ll)
+    void gotoAfterSaleActivity() {
+        String url = CwebNetConfig.privateOrder.concat("?labelType=4");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.account_order_all_ll)
+    void gotoOrderAllctivity() {
+        String url = CwebNetConfig.privateOrder.concat("?labelType=0");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
-            linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
-            linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
-            roundProgressbar.setProgress(40);
-            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), mineModel.getBank().getDurationUnit()));
-            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), mineModel.getBank().getEquityUnit(), mineModel.getBank().getEquityRatio()));
-            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), mineModel.getBank().getDebtUnit(), mineModel.getBank().getDebtRatio()));
-            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-            initOrderView(mineModel.getMallOrder());
+            this.mineModel = mineModel;
+            initUserInfo(mineModel);
+            initPrivateBank(mineModel);
+            initOrderView(mineModel);
             initHealthView(mineModel);
         }
     }
 
-    private void initOrderView(List<MineModel.Orders> mallOrder) {
-        if (!CollectionUtils.isEmpty(mallOrder)) {
-            for (MineModel.Orders orders : mallOrder) {
+    private void initUserInfo(MineModel mineModel) {
+        if (mineModel.getMyInfo() != null) {
+            MineModel.MineUserInfo mineUserInfo = mineModel.getMyInfo();
+            textViewName.setText(mineUserInfo.getNickName());
+            Imageload.display(getActivity(), mineUserInfo.getHeadImageUrl(), roundImageView, R.drawable.logo, R.drawable.logo);
+            userLeaguarLevel.setText(mineUserInfo.getMemberLevel());
+            userLeaguarUpdateDesc.setText(mineUserInfo.getMemberBalance());
+            textViewCaifu.setText(mineUserInfo.getMemberValue());
+            textViewYundou.setText(mineUserInfo.getYdTotal());
+            textViewPrivateBanker.setText(TextUtils.isEmpty(mineUserInfo.getAdviserName()) ? "无" : mineUserInfo.getAdviserName());
+        }
+    }
+
+    private void initPrivateBank(MineModel mineModel) {
+        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
+        linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
+        if (mineModel.getBank() != null) {
+            MineModel.PrivateBank privateBank = mineModel.getBank();
+            roundProgressbar.setProgress(40);
+            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
+            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+            try {
+                textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), URLDecoder.decode(privateBank.getEquityRatio(), "utf-8")));
+                textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), URLDecoder.decode(privateBank.getDebtRatio(), "utf-8")));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initOrderView(MineModel mineModel) {
+        if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
+            for (MineModel.Orders orders : mineModel.mallOrder) {
                 TextView current = null;
                 switch (orders.getGoodsStatusCode()) {
                     case "1":

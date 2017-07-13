@@ -39,6 +39,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 生活模块尚品列表商品详情
     public static String elegantGoodsDetail;
 
+    // 我的订单
+    public static String privateOrder;
 
     // 投资人认证
     public static String HOME_URL;
@@ -66,5 +68,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static void initSxyUrl(){
         HOME_URL= baseSxyParentUrl + "biz/profile/";
         elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
+        privateOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
     }
 }

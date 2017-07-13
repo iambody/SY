@@ -157,6 +157,7 @@
     <string name="setting_title">设置</string>
 
     <!-- 我的 -->
+    <string name="mine_order">我的订单</string>
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云豆</string>
     <string name="account_info_mine_private_banker">我的私人银行家</string>

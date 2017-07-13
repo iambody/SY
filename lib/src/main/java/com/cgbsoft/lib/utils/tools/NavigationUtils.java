@@ -43,6 +43,21 @@ public class NavigationUtils {
         ((Activity) context).startActivity(intent);
     }
 
+    public static void startActivity(Context context, Class target, String propertyName, String propertyValue) {
+        Intent intent = new Intent(context, target);
+        intent.putExtra(propertyName, propertyValue);
+        ((Activity) context).startActivity(intent);
+    }
+
+    public static void startActivity(Context context, Class target, HashMap<String, String> hashMap) {
+        Intent intent = new Intent(context, target);
+        Set<Map.Entry<String, String>> set = hashMap.entrySet();
+        for (Map.Entry<String, String> entry : set) {
+            intent.putExtra(entry.getKey(), entry.getValue());
+        }
+        ((Activity) context).startActivity(intent);
+    }
+
     public static void startActivityForResult(Context context, Class target, int requestCode) {
         Intent intent = new Intent(context, target);
         ((Activity) context).startActivityForResult(intent, requestCode);
