@@ -2,10 +2,8 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,8 +23,10 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -226,7 +226,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         // 私行
         String realName = AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName();
         if (TextUtils.isEmpty(realName)) {
-            // 去选择
+            String url = CwebNetConfig.selectAdviser;
+            HashMap<String ,String> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, getString(R.string.select_bind_advise));
+            NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
         } else {
             // 去私行
         }
@@ -234,7 +238,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_account_info_qiandao_ll)
     void gotoQiandaoActivity() {
-        //签到
+        String url = CwebNetConfig.signInPage;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_signin));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.mine_account_info_activity_ll)
@@ -244,27 +252,48 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_account_info_ticket_ll)
     void gotoCouponsActivity() {
-        // 卡券
+        String url = CwebNetConfig.mineCardCoupons;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_card_coupons));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.mine_account_info_cards_ll)
     void gotoBestCardActivity() {
-        // 贺卡
+        String url = CwebNetConfig.mineBestCard;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_best_card));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.account_bank_go_look_product)
     void gotoLookProductActivity() {
         // 去看产品
+        RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
     }
 
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
-        // 去关联资产
+        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
+
+    @OnClick(R.id.roundProgressBar)
+    void gotoAssetOrderActivity() {
+        String url = CwebNetConfig.mineAssertOrder;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);    }
 
     @OnClick(R.id.mine_bank_asset_match_ll)
     void gotoAssetMatchActivity() {
-        //资产组合
+        String url = CwebNetConfig.assetGroup;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_group));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
@@ -284,7 +313,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_send_ll)
     void gotoWaitSendHuoActivity() {
-        String url = CwebNetConfig.privateOrder.concat("?labelType=1");
+        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=1");
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
@@ -293,7 +322,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_receive_ll)
     void gotoWaitReceiveHuoActivity() {
-        String url = CwebNetConfig.privateOrder.concat("?labelType=2");
+        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=2");
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
@@ -302,7 +331,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_finished_ll)
     void gotoFinishedActivity() {
-        String url = CwebNetConfig.privateOrder.concat("?labelType=3");
+        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=3");
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
@@ -311,7 +340,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_sale_ll)
     void gotoAfterSaleActivity() {
-        String url = CwebNetConfig.privateOrder.concat("?labelType=4");
+        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=4");
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
@@ -320,7 +349,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_all_ll)
     void gotoOrderAllctivity() {
-        String url = CwebNetConfig.privateOrder.concat("?labelType=0");
+        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=0");
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));

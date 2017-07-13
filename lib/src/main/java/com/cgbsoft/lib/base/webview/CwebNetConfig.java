@@ -40,7 +40,23 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String elegantGoodsDetail;
 
     // 我的订单
-    public static String privateOrder;
+    public static String mineGoodsOrder;
+    // 我的资产订单
+    public static String mineAssertOrder;
+    // 我的健康订单
+    public static String mineHealthOrder;
+
+    // 资产组合
+    public static String assetGroup;
+
+    // 签到页面
+    public static String signInPage;
+    // 我的卡券
+    public static String mineCardCoupons;
+    // 我的贺卡
+    public static String mineBestCard;
+    // 选择理财师
+    public static String selectAdviser;
 
     // 投资人认证
     public static String HOME_URL;
@@ -59,15 +75,23 @@ public class CwebNetConfig extends BaseWebNetConfig {
         pageInit = baseParentUrl + "/setData.html";
         productDetail = baseSxyParentUrl + "/biz/product/index.html?id=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
+        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
         product = baseParentUrl +  "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
+        assetGroup = baseParentUrl + "/biz/mine/balance_order.html";
     }
     public static void initSxyUrl(){
         HOME_URL= baseSxyParentUrl + "biz/profile/";
         elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
-        privateOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
+        mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
+        mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
+        mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
+        signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
+        mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
+        mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
+        selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
     }
 }

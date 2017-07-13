@@ -158,6 +158,12 @@
 
     <!-- 我的 -->
     <string name="mine_order">我的订单</string>
+    <string name="mine_signin">我的签到</string>
+    <string name="mine_card_coupons">我的卡券</string>
+    <string name="mine_best_card">我的贺卡</string>
+    <string name="mine_assert_group">资产组合</string>
+    <string name="mine_assert_order">我的资产</string>
+    <string name="select_bind_advise">选择投顾</string>
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云豆</string>
     <string name="account_info_mine_private_banker">我的私人银行家</string>
