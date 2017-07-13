@@ -61,6 +61,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     // 投资人认证
     public static String HOME_URL;
+    //私享云 选择投顾页面
+    public static String choiceAdviser;
 
     static {
         initApi();
@@ -76,9 +78,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         pageInit = baseParentUrl + "/setData.html";
         productDetail = baseSxyParentUrl + "/biz/product/index.html?id=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
-        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
-        product = baseParentUrl +  "/apptie/detail.html?schemeId=";
+        product = baseParentUrl + "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";

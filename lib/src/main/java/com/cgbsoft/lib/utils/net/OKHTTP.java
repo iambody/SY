@@ -123,6 +123,13 @@ public class OKHTTP {
                     intent.putExtra(Constant.RECEIVER_ERRORCODE, response.code());
 
                     BaseApplication.getContext().sendBroadcast(intent);
+                } else if (406 == response.code()) {//无访问权限 eg:包括游客模式无权的访问
+                    message = "无权限访问";
+                    Intent intent = new Intent();
+                    intent.setAction(Constant.VISITER_ERRORCODE);
+                    intent.putExtra(Constant.RECEIVER_ERRORCODE, response.code());
+
+
                 }
                 httpCodeInterceptor(responseBody, UTF8, response, message);
             }

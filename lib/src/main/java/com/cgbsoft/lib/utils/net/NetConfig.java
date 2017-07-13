@@ -1,8 +1,6 @@
 package com.cgbsoft.lib.utils.net;
 
-/**
- * Created by xiaoyu.zhang on 2016/11/8 17:19
- */
+
 public class NetConfig {
     public static final boolean isLocal = true;
 
@@ -58,7 +56,7 @@ public class NetConfig {
     static final String ACTION_POINT = PROMOTION_URL + "/common/availableOp";
 
     //全局导航栏
-    static final String NAVIGATION = API_URL_V2 +"/navigation";
+    static final String NAVIGATION = API_URL_V2 + "/navigation";
 
     static class API {
 
@@ -270,27 +268,33 @@ public class NetConfig {
     /**
      * ****************以下为6.0私享云 新增新增接口的配置路径接口的配置路径*******************
      **/
+    /**
+     * enjoycloud模块外层接口
+     */
     static class SXY {
-        private static final String sxy = "/sxy";
+        private static final String sxy = "/enjoycloud";
 
         //首页
-        static final String GETHOME = API_URL + "/enjoycloud/apphome";
+        static final String GETHOME = API_URL + sxy + "/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
         static final String VISITOR_GET_USERID = API_URL + "/visitorAuth";
 
         //获取全站导航栏信息
         static final String GET_NAVIFAITION = API_URL + "navigation";
-//        static final String   VISITOR_GET_USERID = API_URL + "visitorAuth";
 
         //游客登录
         static final String VISITORLOGIN = AUTH_URL + "/visitorLogin";
         // 我的接口
-        static final String GET_MINE = API_URL + "/enjoycloud/usercentre";
+        static final String GET_MINE = API_URL + sxy + "/usercentre";
+
+
+        //签到
+        static final String SIGNIN = API_URL + sxy + "/signin";
     }
 
     /**
-     * 健康接口
+     * 健康模块接口
      */
     static class Health {
         static final String HEALTH_GET_URL = API_URL + "/health/commend";
@@ -311,7 +315,7 @@ public class NetConfig {
     }
 
     /**
-     * 生活家banner&尚品
+     * 生活家模块banner&尚品
      */
     static class ELEGANT {
         private static final String elegantLiving = "/ydtoc";

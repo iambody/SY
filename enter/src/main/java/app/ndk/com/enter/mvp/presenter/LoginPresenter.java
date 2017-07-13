@@ -224,7 +224,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 UserInfoDataEntity.Result loginBean = new Gson().fromJson(getV2String(s), UserInfoDataEntity.Result.class);
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(loginBean.token));
                 AppInfStore.saveUserId(getContext(), loginBean.userId);
-                AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
+
                 AppInfStore.saveUserAccount(getContext().getApplicationContext(), loginBean.userId);
                 Log.i("LoginPresenter", "-------userid=" + loginBean.userId + "------rongYunToken=" + loginBean.token);
                 if (loginBean.userInfo != null) {

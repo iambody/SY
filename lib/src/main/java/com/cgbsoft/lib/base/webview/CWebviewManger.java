@@ -95,8 +95,13 @@ public class CWebviewManger {
      * @param action
      */
     public void setAction(String action) {
+
         LogUtils.Log("webview", action);
-        if (action.contains("filingdata")) { // TOB
+
+        if (action.contains(" app:toastError")) {
+            showToast(action);
+
+        } else if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
         } else if (action.contains("filing")) { // TOB
 //            toBaobei();
@@ -190,6 +195,7 @@ public class CWebviewManger {
                 public void left() {
                     dismiss();
                 }
+
                 @Override
                 public void right() {
                     dismiss();
@@ -317,29 +323,28 @@ public class CWebviewManger {
     }
 
     private void opensharepage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
-        Utils.OpenSharePage(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, data, rightSave ,initPage, rightShare);
+        Utils.OpenSharePage(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, data, rightSave, initPage, rightShare);
     }
 
     /**
      * 跳转到secretpdf
+     *
      * @param action
      */
     private void gotoScretPdf(String action) {
 
         try {
-            String urcodeAction=URLDecoder.decode(action,"utf-8");
+            String urcodeAction = URLDecoder.decode(action, "utf-8");
             String[] split = urcodeAction.split(":");
             String string = split[2];
 
-            HashMap<String,Object>map=new HashMap<>();
-            map.put("pdfurl_tag",split[2]+":"+split[3]);
-            map.put("pdftitle_tag", split[4] );
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SECRET_PDF_ACTIVITY,map);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("pdfurl_tag", split[2] + ":" + split[3]);
+            map.put("pdftitle_tag", split[4]);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SECRET_PDF_ACTIVITY, map);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
 
 
     }
@@ -949,7 +954,7 @@ public class CWebviewManger {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         String content = split[2];
-        Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
+        PromptManager.ShowCustomToast(context, content);
     }
 
     private void showNewToast(String action) {
@@ -1242,12 +1247,12 @@ public class CWebviewManger {
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
-            if (!url.contains("http")) {
-                url = BaseWebNetConfig.baseParentUrl + url;
-            } else {
-                title = split[4];
-                url = split[2] + ":" + split[3];
-            }
+//            if (!url.contains("http")) {
+                url = BaseWebNetConfig.SERVER_ADD + url;
+//            } else {
+//                title = split[4];
+//                url = split[2] + ":" + split[3];
+//            }
             Intent i = new Intent(context, BaseWebViewActivity.class);
 
             i.putExtra(WebViewConstant.push_message_url, url);

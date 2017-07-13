@@ -123,8 +123,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
      */
     @OnClick(R2.id.iv_ab_del_un)
     void delUsernameClick() {
-        if (et_ab_username.getText().toString().length() > 0) {
-            et_ab_username.setText("");
+        if (et_ab_check.getText().toString().length() > 0) {
+            et_ab_check.setText("");
         }
         iv_ab_del_un.setVisibility(View.GONE);
     }

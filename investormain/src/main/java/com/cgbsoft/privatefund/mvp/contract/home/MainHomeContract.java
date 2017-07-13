@@ -14,9 +14,14 @@ public class MainHomeContract {
         public void getResultSucc(HomeEntity.Result data);
 
         public void getResultError(String error);
+
+        public void getSignResult(String notemessage);
     }
 
     public interface Presenter extends BasePresenter {
         public void getHomeData();
+
+
+
     }
 }

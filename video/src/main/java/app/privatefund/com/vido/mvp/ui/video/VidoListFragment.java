@@ -161,25 +161,36 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
 
     public void FreshAp(List<VideoAllModel.VideoListModel> videoListModels, boolean isAdd) {
-        if (null == videoListModelList) videoListModelList = new ArrayList<>();
-        if (isAdd)
-            videoListModelList.addAll(videoListModels);
-        else videoListModelList = videoListModels;
+//        if (null == videoListModelList) videoListModelList = new ArrayList<>();
+//
+//        if (isAdd) {
+////            videoListModelList.addAll(videoListModels);
+//
+//            videoListAdapter.freshAp(videoListModels);
+//        } else {
+//            videoListModelList = videoListModels;
+//        }
+        if (null == videoListModels) videoListModels = new ArrayList<>();
+        if (isAdd) {
+            if (0 != videoListModels.size())
+                videoListAdapter.addFreshAp(videoListModels);
+        } else {
+            videoListAdapter.freshAp(videoListModels);
+        }
 
-        videoListAdapter.freshAp(videoListModels);
     }
 
     @Override
     public void onLoadMore() {
+        isLoadMore = true;
         CurrentPostion = CurrentPostion + 1;
         getPresenter().getVideoList(CatoryValue, CurrentPostion);
     }
 
     @Override
     public void onRefresh() {
-
+        isLoadMore = false;
         CurrentPostion = 0;
-        isLoadMore = true;
         getPresenter().getVideoList(CatoryValue, CurrentPostion);
     }
 

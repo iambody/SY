@@ -54,7 +54,10 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
         this.listModelList = listModelListdata;
         this.notifyDataSetChanged();
     }
-
+    public void addFreshAp(List<VideoAllModel.VideoListModel> listModelListdata) {
+        this.listModelList.addAll(listModelListdata);
+        this.notifyDataSetChanged();
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);

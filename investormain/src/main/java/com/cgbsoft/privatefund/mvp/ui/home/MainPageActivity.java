@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +29,6 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -40,6 +37,7 @@ import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
@@ -173,22 +171,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initRxObservable();
 
-        initUserInfo();
+//        initUserInfo();
 
-        loginLive();
-
-        initDialog();
 
         initRongInterface();
 
-        initDayTask();
 
 //        initPlatformCustomer();
 
         showInfoDialog();
 
-        autoSign();
+
         initLocation();
+        //游客模式下禁止的Api 添加限制条件
+        if (!AppManager.isVisitor(baseContext)) {
+            loginLive();
+            autoSign();
+            initDayTask();
+        }
+
 
     }
 
@@ -206,6 +207,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
+//        getPresenter().toSignIn();
     }
 
     /**
@@ -219,17 +221,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initDayTask();
     }
 
-    /**
-     * 各种需要初始化判断是否显示dialog的 eg:风险测评
-     */
-    private void initDialog() {
-
-        //是否需要风险评测d 弹出框
-//        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
-//            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
-//            riskEvaluatDialog.show();
-//        }
-    }
 
     private void loginLive() {
         loginHelper = new LoginHelper(this, this);
@@ -714,22 +705,24 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (bottomNavigationBar != null) {
 //            bottomNavigationBar.setLive(hasLive);
         }
-        if (hasLive) {
+        if (hasLive) {//有直播
             liveJsonData = jsonObject;
-            liveDialog.setVisibility(View.VISIBLE);
-            Animation animation = AnimationUtils.loadAnimation(
-                    this, R.anim.live_dialog_anim);
-            liveDialog.startAnimation(animation);
-            try {
-                liveTitle.setText(jsonObject.getString("title"));
-                Imageload.display(this, jsonObject.getString("image"), liveIcon);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            LiveInfBean liveInfBean = new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
+//            liveDialog.setVisibility(View.VISIBLE);
+//            Animation animation = AnimationUtils.loadAnimation(
+//                    this, R.anim.live_dialog_anim);
+//            liveDialog.startAnimation(animation);
+//            try {
+//                liveTitle.setText(jsonObject.getString("title"));
+//                Imageload.display(this, jsonObject.getString("image"), liveIcon);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+
         } else {
-            liveJsonData = null;
-            liveDialog.setVisibility(View.GONE);
-            liveDialog.clearAnimation();
+//            liveJsonData = null;
+//            liveDialog.setVisibility(View.GONE);
+//            liveDialog.clearAnimation();
         }
 
     }

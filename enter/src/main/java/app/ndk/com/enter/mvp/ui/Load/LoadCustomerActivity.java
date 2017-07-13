@@ -24,7 +24,7 @@ public class LoadCustomerActivity extends BaseActivity {
     @Override
     protected void configApp() {
         //需要在mainfeer 添加metdat数据 进行确保！！！！！（清除数据）！！！！！！
-        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM,"");
+        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, "");
         AppInfStore.saveAdvise(baseActivity, false);
         if (AppManager.getIsLogin(getApplicationContext())) {
             RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
@@ -35,9 +35,9 @@ public class LoadCustomerActivity extends BaseActivity {
 
 //            Router.build(RouteConfig.GOTOCMAINHONE).go(LoadCustomerActivity.this);
 //            UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);
-            Intent intent=new Intent(this,WelcomeActivity.class);
-            intent.putExtra("isloade",true);
-            UiSkipUtils.toNextActivityWithIntent(this,intent);
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            intent.putExtra("isloade", true);
+            UiSkipUtils.toNextActivityWithIntent(this, intent);
             baseActivity.finish();
             return;
         }

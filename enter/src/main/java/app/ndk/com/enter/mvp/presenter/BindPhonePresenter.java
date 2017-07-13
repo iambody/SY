@@ -8,12 +8,12 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
+import app.ndk.com.enter.view.MergeDialg;
 
 /**
  * Created by xiaoyu.zhang on 2016/11/29 14:23
@@ -56,23 +56,42 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                 } else if (TextUtils.equals(getV2String(ss).trim().trim(), "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);
                     loadingDialog.dismiss();
-                    DefaultDialog defaultDialog=  new DefaultDialog(getContext(), vas,
-                            getContext().getString(R.string.bpna_marge_no_str), getContext().getString(R.string.bpna_marge_yes_str)) {
+
+                    //***********新逻辑***************
+                    MergeDialg dialg = new MergeDialg(getContext(), vas, new MergeDialg.MergeDialogListener() {
                         @Override
                         public void left() {
-                            this.dismiss();
+
                             getView().margeSucc();
                         }
 
                         @Override
                         public void right() {
-                            this.dismiss();
                             loadingDialog.setLoading(getContext().getString(R.string.bpna_start_marge_str));
                             loadingDialog.show();
                             wxMergeConfirm(loadingDialog);
                         }
-                    };
-                    defaultDialog.show();
+                    });
+                    dialg.show();
+
+                    //***********老逻辑****************
+//                    DefaultDialog defaultDialog=  new DefaultDialog(getContext(), vas,
+//                            getContext().getString(R.string.bpna_marge_no_str), getContext().getString(R.string.bpna_marge_yes_str)) {
+//                        @Override
+//                        public void left() {
+//                            this.dismiss();
+//                            getView().margeSucc();
+//                        }
+//
+//                        @Override
+//                        public void right() {
+//                            this.dismiss();
+//                            loadingDialog.setLoading(getContext().getString(R.string.bpna_start_marge_str));
+//                            loadingDialog.show();
+//                            wxMergeConfirm(loadingDialog);
+//                        }
+//                    };
+//                    defaultDialog.show();
                 } else if (TextUtils.equals(getV2String(ss).trim().trim(), "3")) {//绑定中
                     loadingDialog.dismiss();
                     showToast(R.string.bind_phone_not_repeat_str);

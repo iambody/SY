@@ -45,6 +45,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="normal_alphbtn1">
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/black</item>
@@ -53,6 +54,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="normal_edit">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -197,11 +199,20 @@
     </style>
 
     <style name="dialog_comment">
+
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="dialog_comment_style">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/dialog_transparent1</item>
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
 
     <style name="dialog_alpha">
@@ -225,5 +236,10 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <!-- 公用分享的dialog的动画style-->
+    <style name="dialog_commont_anims_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_commont_anim_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_commont_anim_exit</item>
     </style>
 </resources>
