@@ -81,6 +81,7 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            System.out.println("------onCreateViewHolder=");
             View view = mInflater.inflate(R.layout.fragment_horizontal_item, viewGroup, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.mImg = (ImageView)view.findViewById(R.id.mine_video_image_id);

@@ -41,8 +41,6 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -391,12 +389,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
             textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
             textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-            try {
-                textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), URLDecoder.decode(privateBank.getEquityRatio(), "utf-8")));
-                textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), URLDecoder.decode(privateBank.getDebtRatio(), "utf-8")));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
         }
     }
 
