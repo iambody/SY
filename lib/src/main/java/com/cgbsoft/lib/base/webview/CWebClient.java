@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;

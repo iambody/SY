@@ -79,7 +79,7 @@ public class BaseWebview extends WebView {
     private void parseAttr(Context context, AttributeSet attributeSet) {
         TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.initWebView);
         isInitData = ta.getBoolean(R.styleable.initWebView_init, false);
-        System.out.println("-------initData=" + isInitData);
+//        System.out.println("-------initData=" + isInitData);
         ta.recycle();
     }
 
@@ -92,7 +92,7 @@ public class BaseWebview extends WebView {
         getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         getSettings().setLoadWithOverviewMode(true);
 //        getSettings().setSupportZoom(true);
-//        getSettings().setBuiltInZoomControls(true);
+        getSettings().setBuiltInZoomControls(true);
 //        getSettings().setDisplayZoomControls(false);
         getSettings().setSavePassword(true);
         getSettings().setSaveFormData(true);
@@ -141,11 +141,6 @@ public class BaseWebview extends WebView {
                 myCallback = null;
                 return;
             }
-           /* ViewGroup parent = (ViewGroup) .getParent();
-            String s = parent.getClass().getName();
-            parent.removeView(mWebview);
-            parent.addView(view);
-            myView = view;*/
         }
 
         @Override
@@ -163,11 +158,8 @@ public class BaseWebview extends WebView {
      * @param url
      */
     public void loadUrls(String url) {
-
         int[] widthHeight = Utils.getWidthHeight(wcontext);
-
         if (url.contains("?")) {
-
             url += "&w=" + widthHeight[0] + "&h=" + widthHeight[1];
         } else {
             url += "?w=" + widthHeight[0] + "&h=" + widthHeight[1];
@@ -176,19 +168,13 @@ public class BaseWebview extends WebView {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMDDhhmmss");
         String time = sdf.format(new Date(System.currentTimeMillis()));
         url = url + "&t=" + time;
-
         url = url.replace("%2F", "/");
-
         //loadingNoNetPic();
-
-        loadUrl = url;
         Log.e("webview_url", url);
-//        synCookies(context, "https://app-intime.simuyun.com");
         this.loadUrl(url);
         loadUrl = url;
     }
     public void shouldOverrideUrlLoading(WebView view, String url) {
-
         new Handler().postDelayed(new Runnable() {
 
             @Override

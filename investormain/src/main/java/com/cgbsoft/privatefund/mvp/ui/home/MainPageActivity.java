@@ -141,6 +141,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
         baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
 
@@ -150,7 +151,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
-
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
