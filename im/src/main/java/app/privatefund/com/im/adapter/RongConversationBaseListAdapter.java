@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.privatefund.com.im.R;
@@ -48,7 +49,6 @@ import io.rong.imlib.model.Conversation;
                     break;
                 }
             }
-
             return position;
         }
 
@@ -62,28 +62,28 @@ import io.rong.imlib.model.Conversation;
                     break;
                 }
             }
-
             return position;
         }
 
         protected View newView(Context context, int position, ViewGroup group) {
             View result = null;
-            if (position == 0) {
+//            if (position == 0) {
                 result = this.mInflater.inflate(R.layout.rc_item_conversation_new, (ViewGroup)null);
-            } else {
-                result = this.mInflater.inflate(R.layout.rc_item_conversation, (ViewGroup)null);
-            }
+//            } else {
+//                result = this.mInflater.inflate(R.layout.rc_item_conversation, (ViewGroup)null);
+//            }
             RongConversationBaseListAdapter.ViewHolder holder = new ViewHolder();
-            holder.layout = this.findViewById(result, io.rong.imkit.R.id.rc_item_conversation);
-            holder.leftImageLayout = this.findViewById(result, io.rong.imkit.R.id.rc_item1);
-            holder.rightImageLayout = this.findViewById(result, io.rong.imkit.R.id.rc_item2);
-            holder.leftImageView = (AsyncImageView)this.findViewById(result, io.rong.imkit.R.id.rc_left);
-            holder.rightImageView = (AsyncImageView)this.findViewById(result, io.rong.imkit.R.id.rc_right);
-            holder.contentView = (ProviderContainerView)this.findViewById(result, io.rong.imkit.R.id.rc_content);
-            holder.unReadMsgCount = (TextView)this.findViewById(result, io.rong.imkit.R.id.rc_unread_message);
-            holder.unReadMsgCountRight = (TextView)this.findViewById(result, io.rong.imkit.R.id.rc_unread_message_right);
-            holder.unReadMsgCountIcon = (ImageView)this.findViewById(result, io.rong.imkit.R.id.rc_unread_message_icon);
-            holder.unReadMsgCountRightIcon = (ImageView)this.findViewById(result, io.rong.imkit.R.id.rc_unread_message_icon_right);
+            holder.layout = this.findViewById(result, R.id.rc_item_conversation);
+            holder.leftImageLayout = this.findViewById(result, R.id.rc_item1);
+            holder.rightImageLayout = this.findViewById(result, R.id.rc_item2);
+            holder.leftImageView = (AsyncImageView)this.findViewById(result, R.id.rc_left);
+            holder.rightImageView = (AsyncImageView)this.findViewById(result, R.id.rc_right);
+            holder.contentView = (ProviderContainerView)this.findViewById(result, R.id.rc_content);
+            holder.unReadMsgCount = (TextView)this.findViewById(result, R.id.rc_unread_message);
+            holder.unReadMsgCountRight = (TextView)this.findViewById(result, R.id.rc_unread_message_right);
+            holder.unReadMsgCountIcon = (ImageView)this.findViewById(result, R.id.rc_unread_message_icon);
+            holder.unReadMsgCountRightIcon = (ImageView)this.findViewById(result, R.id.rc_unread_message_icon_right);
+            holder.dividerItem = (LinearLayout) this.findViewById(result, R.id.rc_item_height_divider);
             result.setTag(holder);
             return result;
         }
@@ -95,12 +95,14 @@ import io.rong.imlib.model.Conversation;
                 if(provider == null) {
                     RLog.e("ConversationListAdapter", "provider is null");
                 } else {
+                    boolean isKehu = "dd0cc61140504258ab474b8f0a38bb56".equals(data.getConversationSenderId()) || "dd0cc61140504258ab474b8f0a38bb56".equals(data.getConversationTargetId());
                     View view = holder.contentView.inflate(provider);
                     provider.bindView(view, position, data);
+                    holder.dividerItem.setVisibility(isKehu ? View.VISIBLE : View.GONE);
                     if(data.isTop()) {
-                        holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(io.rong.imkit.R.drawable.rc_item_top_list_selector));
+                        holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
                     } else {
-                        holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(io.rong.imkit.R.drawable.rc_item_list_selector));
+                        holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_list_selector));
                     }
 
                     ConversationProviderTag tag = RongContext.getInstance().getConversationProviderTag(data.getConversationType().getName());
@@ -116,22 +118,18 @@ import io.rong.imlib.model.Conversation;
                             defaultId1 = io.rong.imkit.R.drawable.rc_default_portrait;
                         }
 
-                        holder.leftImageLayout.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
-                                if(mOnPortraitItemClick != null) {
-                                    mOnPortraitItemClick.onPortraitItemClick(v, data);
-                                }
-
+                        holder.leftImageLayout.setOnClickListener(v1 -> {
+                            if(mOnPortraitItemClick != null) {
+                                mOnPortraitItemClick.onPortraitItemClick(v1, data);
                             }
+
                         });
-                        holder.leftImageLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                            public boolean onLongClick(View v) {
-                                if(mOnPortraitItemClick != null) {
-                                    mOnPortraitItemClick.onPortraitItemLongClick(v, data);
-                                }
-
-                                return true;
+                        holder.leftImageLayout.setOnLongClickListener(v12 -> {
+                            if(mOnPortraitItemClick != null) {
+                                mOnPortraitItemClick.onPortraitItemLongClick(v12, data);
                             }
+
+                            return true;
                         });
                         if(data.getConversationGatherState()) {
                             holder.leftImageView.setAvatar((String)null, defaultId1);
@@ -253,6 +251,7 @@ import io.rong.imlib.model.Conversation;
             TextView unReadMsgCountRight;
             ImageView unReadMsgCountRightIcon;
             ProviderContainerView contentView;
+            LinearLayout dividerItem;
 
             ViewHolder() {
             }

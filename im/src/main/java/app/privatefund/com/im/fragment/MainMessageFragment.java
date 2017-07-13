@@ -1,5 +1,6 @@
 package app.privatefund.com.im.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,14 +17,17 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.im.MessageListActivity;
+import app.privatefund.com.im.MessageSearchActivity;
 import app.privatefund.com.im.R;
 import app.privatefund.com.im.R2;
 import app.privatefund.com.im.adapter.TeamPageAdapter;

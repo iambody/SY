@@ -104,7 +104,10 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/rc_item_height_divider"
         android:layout_height="30dp"
         android:background="@color/app_bg"
+        android:orientation="horizontal"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
