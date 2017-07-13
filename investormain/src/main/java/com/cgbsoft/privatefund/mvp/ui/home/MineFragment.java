@@ -246,7 +246,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_account_info_activity_ll)
     void gotoMineActiviteActivity() {
-        // 活动
+        NavigationUtils.startActivity(getActivity(), MineActiviesActivity.class);
     }
 
     @OnClick(R.id.mine_account_info_ticket_ll)

@@ -1384,6 +1384,13 @@ public class ApiClient {
     }
 
     /**
+     * 我的活动列表
+     */
+    public static Observable<String> getMineActivitesList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineActivitesList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 通过用户的mac地址获取userid  在用户第一次进登录页面时候先偷偷记录在内存里面  如果点击游客进入就保存在本地并且所有api交互使用该userid 如果直接登录就不是有内存里的userid
      */
     public static Observable<String> visiterGetUserId(Context context) {

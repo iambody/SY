@@ -736,8 +736,12 @@ interface RequestManager {
     Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);
 
     // 我的
-    @GET(NetConfig.SXY.GET_MINE)
+    @GET(NetConfig.Mine.GET_MINE)
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
+
+    // 我的活动
+    @GET(NetConfig.Mine.ACTIVITES)
+    Observable<ResponseBody> getMineActivitesList(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 生活家banner列表
