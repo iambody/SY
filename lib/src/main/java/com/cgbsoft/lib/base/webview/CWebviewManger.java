@@ -97,8 +97,9 @@ public class CWebviewManger {
     public void setAction(String action) {
 
         LogUtils.Log("webview", action);
-
-        if (action.contains(" app:toastError")) {
+        if (action.contains("visiterGotoLogin")) {
+            gotoVisiterLogin();
+        } else if (action.contains("toastError")) {
             showToast(action);
 
         } else if (action.contains("filingdata")) { // TOB
@@ -320,6 +321,16 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    /**
+     * h5提示需要跳转到登录界面
+     */
+    private void gotoVisiterLogin() {
+//        RouteConfig.GOTO_LOGIN
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("insidegotologin", true);
+        NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
     }
 
     private void opensharepage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
@@ -1248,7 +1259,7 @@ public class CWebviewManger {
             String url = split[2];
             String title = split[3];
 //            if (!url.contains("http")) {
-                url = BaseWebNetConfig.SERVER_ADD + url;
+            url = BaseWebNetConfig.SERVER_ADD + url;
 //            } else {
 //                title = split[4];
 //                url = split[2] + ":" + split[3];

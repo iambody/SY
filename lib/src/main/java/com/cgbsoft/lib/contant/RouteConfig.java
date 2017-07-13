@@ -75,4 +75,7 @@ public class RouteConfig {
     public static final String GOTOC_PERSONAL_INFORMATION_ACTIVITY="investorn_personal_information_activity";
     //跳转到C端修改登录密码页面的url
     public static final String GOTO_CHANGE_PSD_ACTIVITY="investorn_change_psd_activity";
+
+    //跳转到登录接口
+    public static final String GOTO_LOGIN ="enter_loginactivity";
 }
