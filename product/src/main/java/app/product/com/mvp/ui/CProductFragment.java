@@ -41,4 +41,9 @@ public class CProductFragment extends BasePageFragment {
     protected void bindTitle(View titleView) {
 
     }
+
+    @Override
+    protected int indexSel() {
+        return 0;
+    }
 }

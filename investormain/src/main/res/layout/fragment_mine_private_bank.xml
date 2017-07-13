@@ -57,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginTop="5dp"
+                android:id="@+id/account_bank_go_look_product"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_bank_browse_buy"
                 android:gravity="center"
@@ -67,6 +68,7 @@
                 android:layout_height="44dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:id="@+id/account_bank_go_relative_assert"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_bank_upload_certify"
                 android:textColor="@color/app_golden"/>
@@ -115,12 +117,12 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
                         android:id="@+id/account_bank_assert_total_value"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimens_sp_24"/>
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -128,40 +130,6 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="15dp">
-                    
-                    <TextView
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/app_golden"/>
-                    
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center_vertical"
-                        android:id="@+id/account_bank_assert_guquan_text"
-                        android:text="股权占比"
-                        android:textSize="@dimen/dimens_sp_12"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:id="@+id/account_bank_assert_guquan_value"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_18"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:layout_width="8dp"
@@ -189,6 +157,40 @@
                         android:id="@+id/account_bank_assert_zhaiquan_value"
                         android:textSize="@dimen/dimens_sp_18"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_golden"/>
+                    
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_guquan_text"
+                        android:text="股权占比"
+                        android:textSize="@dimen/dimens_sp_12"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_guquan_value"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_18"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
@@ -200,7 +202,8 @@
         android:layout_margin="@dimen/ui_10_dip">
 
         <LinearLayout
-            style="@style/mine_account_info_text_image_ll">
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_asset_match_ll">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,7 +217,8 @@
             android:layout_height="wrap_content"/>
 
         <LinearLayout
-            style="@style/mine_account_info_text_image_ll">
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_invistor_carlendar_ll">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,7 +232,8 @@
             android:layout_height="wrap_content"/>
 
         <LinearLayout
-            style="@style/mine_account_info_text_image_ll">
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_datum_manager_ll">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

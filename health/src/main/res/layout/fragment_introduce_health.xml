@@ -3,11 +3,34 @@
     android:id="@+id/ll_ivl_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <com.cgbsoft.lib.base.webview.BaseWebview
-        android:id="@+id/webview"
+    <RelativeLayout
+        android:id="@+id/rl_avd_head"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
 
+        <com.tencent.qcload.playersdk.ui.VideoRootFrame
+            android:id="@+id/vrf_avd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_mvv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_golden"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/introduce_health_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </ScrollView>
 </LinearLayout>

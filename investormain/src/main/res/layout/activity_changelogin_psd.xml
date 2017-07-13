@@ -11,26 +11,21 @@
         android:layout_height="1dp"
         />
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_psd_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_5_dip"
         android:layout_marginBottom="@dimen/ui_15_dip"
         app:errorTextAppearance="@style/errorAppearance"
         app:hintTextAppearance="@style/hintAppearance"
+        android:theme="@style/hintColor"
         >
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/setting_in_margintitle"
-            android:background="@android:color/transparent"
+            android:id="@+id/et_psd_old"
+            style="@style/edit_text_style_changepsd"
+            android:textCursorDrawable="@drawable/text_cursor_drawe"
             android:hint="原密码"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:paddingLeft="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_input_layout"
-            android:textCursorDrawable="@drawable/text_cursor_drawe"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -39,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         />
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -47,19 +43,13 @@
         android:layout_marginBottom="@dimen/ui_15_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
+        android:theme="@style/hintColor"
         >
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/setting_in_margintitle"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_input_layout"
+            android:id="@+id/et_psd_new"
+            style="@style/edit_text_style_changepsd"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
             android:hint="新密码"
-            android:paddingLeft="20dp"
-            android:background="@android:color/transparent"
             />
     </android.support.design.widget.TextInputLayout>
     <include
@@ -67,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         />
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -75,19 +66,13 @@
         android:layout_marginBottom="@dimen/ui_15_dip"
         app:hintTextAppearance="@style/hintAppearance"
         app:errorTextAppearance="@style/errorAppearance"
+        android:theme="@style/hintColor"
         >
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/setting_in_margintitle"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_input_layout"
+            android:id="@+id/et_psd_confirm_new"
+            style="@style/edit_text_style_changepsd"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
             android:hint="确认新密码"
-            android:paddingLeft="20dp"
-            android:background="@android:color/transparent"
             />
     </android.support.design.widget.TextInputLayout>
     <include
@@ -95,13 +80,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_44_dip"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/shape_button_elegant"
         android:textSize="@dimen/dimens_sp_16"
         android:textColor="@color/white"

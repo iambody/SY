@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/title_normal_new"/>
+    <include
+        layout="@layout/acitivity_divide_online"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/datum_manage_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/datum_manage_account"/>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/datum_manage_risk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_tip = "稳健性"
+                app:setting_item_title="@string/datum_manage_risk"/>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/datum_manage_asset_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/datum_manage_asset_report"/>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/datum_manage_asset_certify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_title="@string/datum_manage_asset_certify"/>
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/datum_manage_relative_asset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_tip = "未关联"
+                app:setting_item_title="@string/datum_manage_relative_asset"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

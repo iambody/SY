@@ -319,7 +319,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @Override
     public void onCheck(int position, boolean isCheck) {
         videoHistoryAdapter.getList().get(position).isCheck = isCheck;
-
         int choiceNum = 0;
         List<VideoHistoryModel> list = videoHistoryAdapter.getList();
         List<VideoHistoryModel> morelist = morevideoHistoryAdapter.getList();

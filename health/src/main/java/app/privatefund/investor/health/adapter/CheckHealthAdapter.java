@@ -37,7 +37,7 @@ public class CheckHealthAdapter extends BaseAdapter<HealthListModel, HealthListL
         HealthListModel model = list.get(position);
         if (model.type == HealthListModel.BOTTOM) {
             HealthListHolder vlh = (HealthListHolder) holder;
-            Imageload.display(vlh.context, model.getImageUrl(), 0, 0, 1, vlh.imageView, R.drawable.bg_default, R.drawable.bg_default);
+            Imageload.display(vlh.context, model.getImageUrl(), 0, 0, 2, vlh.imageView, R.drawable.bg_default, R.drawable.bg_default);
         } else {
             bindErrorHolder(model, holder);
         }

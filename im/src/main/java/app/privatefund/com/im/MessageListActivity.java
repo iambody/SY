@@ -15,9 +15,8 @@ import app.privatefund.com.im.fragment.MainMessageFragment;
  */
 @Route(RouteConfig.IM_MESSAGE_LIST_ACTIVITY)
 public class MessageListActivity extends BaseActivity {
-
     public static final String IS_MESSAGE_LIST = "is_message_list";
-    public static final String IS_NOTICE_MESSAGE_LIST = "is_notice_+message_list";
+    public static final String IS_NOTICE_MESSAGE_LIST = "is_notice_message_list";
 
     @Override
     protected int layoutID() {

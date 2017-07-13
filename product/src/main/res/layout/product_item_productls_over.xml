@@ -179,4 +179,9 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/logobackgroundyiqingsuan" />
 
+    <ImageView
+        android:id="@+id/item_blur_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/product_item_blur" />
 </RelativeLayout>

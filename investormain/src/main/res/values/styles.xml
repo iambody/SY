@@ -67,13 +67,27 @@
         <item name="android:windowAnimationStyle">@null</item>
     </style>
     <style name="hintAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/text_input_layout</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_5a5a5a</item>
+    </style>
+    <style name="hintColor" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/black</item>
     </style>
     <style name="errorAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_input_layout_err</item>
     </style>
+    <style name="edit_text_style_changepsd" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <!-- bottom menu dialog -->
     <style name="bottomMenuDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

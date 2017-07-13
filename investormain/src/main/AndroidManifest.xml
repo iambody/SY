@@ -264,6 +264,10 @@
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 风险评测结果-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskResultActivity"

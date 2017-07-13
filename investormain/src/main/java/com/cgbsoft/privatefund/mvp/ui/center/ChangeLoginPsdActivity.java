@@ -1,7 +1,9 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,14 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     protected ImageView back;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.et_psd_old)
+    EditText oldPsd;
+    @BindView(R.id.et_psd_new)
+    EditText newPsd;
+    @BindView(R.id.et_psd_confirm_new)
+    EditText newConfirm;
+    @BindView(R.id.til_psd_old)
+    TextInputLayout tilOldPsd;
     @Override
     protected int layoutID() {
         return R.layout.activity_changelogin_psd;
@@ -33,6 +43,10 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     protected void init(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_item_change_pwd));
+        initView(savedInstanceState);
+    }
+
+    private void initView(Bundle savedInstanceState) {
     }
 
     @Override

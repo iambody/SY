@@ -16,7 +16,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 俱乐部
     public static String clubPage;
 
-    public static String pageInit;
+    public static String  pageInit;
 
     public static String productDetail;
 
@@ -39,6 +39,25 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 生活模块尚品列表商品详情
     public static String elegantGoodsDetail;
 
+    // 我的订单
+    public static String mineGoodsOrder;
+    // 我的资产订单
+    public static String mineAssertOrder;
+    // 我的健康订单
+    public static String mineHealthOrder;
+    // 资讯详情
+    public static String discoveryDetail;
+    // 会员专区
+    public static String memeberArea;
+
+    // 签到页面
+    public static String signInPage;
+    // 我的卡券
+    public static String mineCardCoupons;
+    // 我的贺卡
+    public static String mineBestCard;
+    // 选择理财师
+    public static String selectAdviser;
 
     // 投资人认证
     public static String HOME_URL;
@@ -57,7 +76,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoverPage = baseParentUrl + "/discover/index.html";
         clubPage = baseParentUrl + "/bank/default.html";
         pageInit = baseParentUrl + "/setData.html";
-        productDetail = baseParentUrl + "/apptie/detail.html?schemeId=";
+        productDetail = baseSxyParentUrl + "/biz/product/index.html?id=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
         product = baseParentUrl + "/apptie/detail.html?schemeId=";
@@ -65,17 +84,17 @@ public class CwebNetConfig extends BaseWebNetConfig {
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
-
-    /**
-     * 私享云使用新得weburl
-     */
-    public static void initSxyUrl() {
-        HOME_URL = baseSxyParentUrl + "biz/profile/";
-        elegantGoodsDetail = baseSxyParentUrl + "biz/life/detail.html?goodsId=";
-        //选择理财师
-        choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
-//        https://d10-app.simuyun.com/app6.0/biz/adviser/assets_basis.html
-
+    public static void initSxyUrl(){
+        HOME_URL= baseSxyParentUrl + "biz/profile/";
+        elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
+        mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
+        mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
+        mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
+        signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
+        mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
+        mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
+        selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
+        memeberArea = baseSxyParentUrl + "/biz/members/index.html";
     }
-
 }

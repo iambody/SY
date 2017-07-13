@@ -57,7 +57,7 @@
         android:layout_below="@id/gesture_tip_layout"
         app:lock9_autoLink="false"
         app:lock9_enableVibrate="true"
-        app:lock9_lineColor="@color/orange"
+        app:lock9_lineColor="@color/app_golden"
         app:lock9_lineWidth="3dp"
         app:lock9_nodeOnSrc="@drawable/gesture_node_pressed"
         app:lock9_nodeSrc="@drawable/gesture_node_normal"

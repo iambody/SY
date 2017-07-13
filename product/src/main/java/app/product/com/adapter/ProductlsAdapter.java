@@ -90,9 +90,9 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
 
         switch (getItemViewType(position)) {
             case HOTPRODUCT://热门产品
-
                 HotProductHolder hotProductHolder = (HotProductHolder) holder;
                 hotProductHolder.itemView.setTag(position);
+                hotProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
                 Imageload.display(acontext, productlsBean.marketingImageUrl, hotProductHolder.productItemProductlsHotBg);
                 String pro_name = productlsBean.productName;
                 if (pro_name.length() > 16) {
@@ -200,7 +200,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                 NormalProductHolder normalProductHolder = (NormalProductHolder) holder;
                 normalProductHolder.itemView.setTag(position);
                 BStrUtils.SetTxt(normalProductHolder.productItemProductlsTitle, productlsBean.productName);
-
+                normalProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
                 normalProductHolder.productItemProductlsLogobackground.setImageResource(R.drawable.logobackgroundzanting);
 
 
@@ -339,7 +339,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
             case OVERPRODUCT://已清算
                 OverProductHolder overProductHolder = (OverProductHolder) holder;
                 overProductHolder.itemView.setTag(position);
-
+                overProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
                 BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverTitle, productlsBean.productName);
                 BStrUtils.switchColorToBandC(acontext, overProductHolder.productItemProductlsOverShengyueduCount);
 
@@ -444,6 +444,8 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         TextView productItemProductlsHotMujicount;
         @BindView(R2.id.product_item_productls_hot_wan)
         TextView productItemProductlsHotWan;
+        @BindView(R2.id.item_blur_image)
+        ImageView item_blur_image;
 
         public HotProductHolder(View itemView) {
             super(itemView);
@@ -489,6 +491,8 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         TextView productItemProductlsJiezhidate;
         @BindView(R2.id.product_item_productls_qingsuan_icon)
         ImageView productItemProductlsQingsuanIcon;
+        @BindView(R2.id.item_blur_image)
+        ImageView item_blur_image;
 
         public NormalProductHolder(View itemView) {
             super(itemView);
@@ -525,6 +529,8 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         TextView productItemProductlsOverWan;
         @BindView(R2.id.product_item_productls_over_qingsuan_icon)
         ImageView productItemProductlsOverQingsuanIcon;
+        @BindView(R2.id.item_blur_image)
+        ImageView item_blur_image;
 
         public OverProductHolder(View itemView) {
             super(itemView);

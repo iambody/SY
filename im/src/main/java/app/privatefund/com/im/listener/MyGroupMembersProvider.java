@@ -34,6 +34,9 @@ public class MyGroupMembersProvider implements RongIM.IGroupMembersProvider {
 
     @Override
     public void getGroupMembers(String groupId, final RongIM.IGroupMemberCallback iGroupMemberCallback) {
+        if ("公告".equals(groupId)) {
+            return;
+        }
         ApiClient.getTestGetGroupMember(groupId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
