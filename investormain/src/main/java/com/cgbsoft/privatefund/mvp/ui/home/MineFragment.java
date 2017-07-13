@@ -196,10 +196,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
     }
 
+    @OnClick(R.id.account_info_name)
+    void gotoPersonInfoNamectivity() {
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+    }
+
+    @OnClick(R.id.account_info_image_id)
+    void gotoPersonInfoHeaderctivity() {
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+    }
+
     @OnClick(R.id.account_info_level_ll)
     void gotoPersonInfoctivity() {
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
-
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
