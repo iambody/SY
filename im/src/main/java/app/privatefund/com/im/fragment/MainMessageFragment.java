@@ -127,15 +127,16 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 
     private void initPlatformCustomer() {
         Log.e("MainMessageFragment", "---initPlatformCustomer");
-        if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-            List<Conversation> conversationList = RongIMClient.getInstance().getConversationList();
-            if (conversationList != null) {
-                for (int i = 0; i < conversationList.size(); i++) {
-                    if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
-                        return;
-                    }
-                }
-            }
+        if (RongIMClient.getInstance() != null) {
+//        if (RongIMClient.getInstance() != null && !((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
+//            List<Conversation> conversationList = RongIMClient.getInstance().getConversationList();
+//            if (conversationList != null) {
+//                for (int i = 0; i < conversationList.size(); i++) {
+//                    if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+//                        return;
+//                    }
+//                }
+//            }
 
 //            ApiClient.getPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<CommonEntity.Result>() {
 //                @Override
@@ -154,6 +155,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 //                    Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
 //                }
 //            });
+            Log.e("MainMessageFragment", "---initPlatformCustomer");
             ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                 @Override
                 protected void onEvent(String s) {

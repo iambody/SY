@@ -90,6 +90,7 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            System.out.println("------vass=" + mDatas.get(position).videoName);
             Imageload.display(getContext(), mDatas.get(position).videoCoverUrl, holder.mImg);
             holder.mTxt.setText(mDatas.get(position).videoName);
         }

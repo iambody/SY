@@ -10,6 +10,8 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -22,6 +24,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryListPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -87,11 +90,9 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.gray_font, R.dimen.ui_1_dip));
-        discoveryListAdapter.setOnItemClickListener(new ListItemClickListener<DiscoveryListModel>() {
-            @Override
-            public void onItemClick(int position, DiscoveryListModel discoveryListModel) {
-//                NavigationUtils.startVideoInformationActivityu(fBaseActivity, discoveryListModel.getId(), discoveryListModel.getTitle());
-            }
+        discoveryListAdapter.setOnItemClickListener((position, discoveryListModel) -> {
+            HashMap<String, String> hashMap1 = new HashMap<>();
+            hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&catagory=").concat(discoveryListModel.getCategory()));
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         //第一次显示的时候全部不需要加载数据  非全部需要进行请求网络数据
@@ -105,11 +106,8 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         LogUtils.Log("fffa", "可见:" + CatoryValue);
     }
 
-
     @Override
-    protected void onUserInvisible() {
-
-    }
+    protected void onUserInvisible() {}
 
     @Override
     protected void DetoryViewAndThing() {

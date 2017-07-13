@@ -45,9 +45,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String mineAssertOrder;
     // 我的健康订单
     public static String mineHealthOrder;
-
-    // 资产组合
-    public static String assetGroup;
+    // 资讯详情
+    public static String discoveryDetail;
+    // 会员专区
+    public static String memeberArea;
 
     // 签到页面
     public static String signInPage;
@@ -81,7 +82,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
-        assetGroup = baseParentUrl + "/biz/mine/balance_order.html";
     }
     public static void initSxyUrl(){
         HOME_URL= baseSxyParentUrl + "biz/profile/";
@@ -93,5 +93,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
+        memeberArea = baseSxyParentUrl + "/biz/members/index.html";
     }
 }

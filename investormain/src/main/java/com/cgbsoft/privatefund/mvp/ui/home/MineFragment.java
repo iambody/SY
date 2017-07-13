@@ -117,9 +117,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.roundProgressBar)
     RoundProgressbar roundProgressbar;
 
-    @BindView(R.id.health_all_title_ll)
-    LinearLayout health_title_all_ll;
-
     @BindView(R.id.account_health_had_bug_ll)
     LinearLayout health_had_data_ll;
 
@@ -213,7 +210,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        // 财富值
+        String url = CwebNetConfig.memeberArea;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_members));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.account_info_yundou_value_ll)
@@ -279,20 +280,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
-    @OnClick(R.id.roundProgressBar)
-    void gotoAssetOrderActivity() {
+    @OnClick(R.id.mine_bank_asset_match_ll)
+    void gotoAssetMatchActivity() {
         String url = CwebNetConfig.mineAssertOrder;
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_order));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);    }
-
-    @OnClick(R.id.mine_bank_asset_match_ll)
-    void gotoAssetMatchActivity() {
-        String url = CwebNetConfig.assetGroup;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_group));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
@@ -353,6 +346,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.health_all_title_ll)
+    void gotoHealthAllctivity() {
+        String url = CwebNetConfig.mineHealthOrder;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
@@ -428,10 +430,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void initHealthView(MineModel mineModel) {
         if (mineModel != null && mineModel.getHealthy() != null) {
-            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
-            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
+//            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
+//            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
             if (!CollectionUtils.isEmpty(mineModel.getHealthy().getContent())) {
-                health_title_all_ll.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, mineModel.getHealthy().getAllHealthy()));
                 createHealthItem(mineModel.getHealthy().getContent());
             }
         }
