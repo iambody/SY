@@ -57,4 +57,9 @@ public class EverHealthFragment extends BasePageFragment {
 
     }
 
+    @Override
+    protected int indexSel() {
+        return 1;
+    }
+
 }

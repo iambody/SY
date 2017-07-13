@@ -44,6 +44,8 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     //绑定标题中的ID
     protected abstract void bindTitle(View titleView);
 
+    protected abstract int indexSel();
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_base_page;
@@ -83,7 +85,14 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setText(list().get(i).getTabName());
         }
+        viewPager.setCurrentItem(indexSel());
+        tabLayout.getChildAt(indexSel()).setSelected(true);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewPager.setCurrentItem(indexSel());
     }
 
     @Override

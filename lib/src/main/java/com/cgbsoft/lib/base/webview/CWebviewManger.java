@@ -654,14 +654,14 @@ public class CWebviewManger {
 //    }
 
     private void openCustomerChat(String action) {
-//        String[] split = action.split(":");
-//        try {
-//            String name = URLDecoder.decode(split[3], "utf-8");
-//            String userId = URLDecoder.decode(split[2], "utf-8");
+        String[] split = action.split(":");
+        try {
+            String name = URLDecoder.decode(split[3], "utf-8");
+            String userId = URLDecoder.decode(split[2], "utf-8");
 //            RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, userId, name);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void cutScreenShare(String action) {

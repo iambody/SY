@@ -204,6 +204,10 @@ public class NavigationUtils {
         iRouter.go(context);
     }
 
+    public static void jumpNativePage(int code){
+
+    }
+
     public static ArrayList<NavigationBean> getNavigationBeans(Context context) {
         String navigation = SPreference.getString(context, "Navigation");
         if (navigation != null) {

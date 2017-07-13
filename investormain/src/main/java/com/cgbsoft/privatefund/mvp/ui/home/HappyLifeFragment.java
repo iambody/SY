@@ -70,4 +70,9 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
 
     }
 
+    @Override
+    protected int indexSel() {
+        return 0;
+    }
+
 }

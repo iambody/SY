@@ -65,7 +65,7 @@ public class OrderbyPop extends PopupWindow {
         setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         setBackgroundDrawable(dw);
-        setAnimationStyle(R.style.style_product_oderby_dialog_anim);
+//        setAnimationStyle(R.style.style_product_oderby_dialog_anim);
         setOutsideTouchable(true);
         baseView.setOnTouchListener(new View.OnTouchListener() {
             @Override
