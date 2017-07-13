@@ -289,7 +289,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
-        //投资日历
+        String url = CwebNetConfig.investeCarlendar;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_investor_carlendar));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.mine_bank_datum_manager_ll)
@@ -453,6 +457,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
+        List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
+        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
         for (String name : videos) {
             XTabLayout.Tab tab = xTabLayout.newTab();
             tab.setText(name);
@@ -460,9 +467,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
         viewPager.setOffscreenPageLimit(2);
         List<Fragment> list = new ArrayList<>();
-        List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
-        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
         setFragmentParams(playlList, list);
         setFragmentParams(downlList, list);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
