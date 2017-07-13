@@ -86,7 +86,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             tabLayout.getTabAt(i).setText(list().get(i).getTabName());
         }
         viewPager.setCurrentItem(indexSel());
-        tabLayout.getChildAt(indexSel()).setSelected(true);
+//        tabLayout.getChildAt(indexSel()).setSelected(true);
     }
 
     @Override

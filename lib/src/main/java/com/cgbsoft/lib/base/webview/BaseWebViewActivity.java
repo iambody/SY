@@ -246,7 +246,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
      */
     private String fullUrlPath(String url) {
         if (!url.contains("http")) {
-            url = BaseWebNetConfig.baseSxyParentUrl + url;
+            url = BaseWebNetConfig.baseParentUrl + url;
         }
         if (!TextUtils.isEmpty(getIntent().getStringExtra(WebViewConstant.Jump_Info_KeyWord))) {
             String keyWords = getIntent().getStringExtra(WebViewConstant.Jump_Info_KeyWord);
