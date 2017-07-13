@@ -78,6 +78,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     TextView productProductWenjuan;
     @BindView(R2.id.product_product_filter_lay)
     LinearLayout productProductFilterLay;
+    @BindView(R2.id.filter_line)
+    View filter_line;
 
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
@@ -174,6 +176,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         super.onResume();
         //是否需要风险评测d 弹出框
         product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+        productlsAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -359,7 +362,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         }
 //        if (!BStrUtils.isEmpty(CurrentOderBy))
         orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems(), CurrentOderBy);
-        orderbyPop.showAsDropDown(productProductfragmentPaixu, 0, 20);
+        orderbyPop.showAsDropDown(productProductfragmentPaixu);
 
     }
 

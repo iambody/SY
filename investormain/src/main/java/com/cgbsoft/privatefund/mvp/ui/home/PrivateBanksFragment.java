@@ -83,6 +83,12 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     }
 
+    @Override
+    protected int indexSel() {
+
+        return 0;
+    }
+
     /**
      * 加载Tab数据
      *

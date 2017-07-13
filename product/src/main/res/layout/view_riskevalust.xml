@@ -2,35 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="125dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#eee"
     android:focusable="true"
+    android:layout_below="@id/top_filter_layout"
     android:clickable="true">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/product_blur"/>
-
-        <TextView
-            android:id="@+id/product_product_wenjuan"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/app_golden"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
+            android:layout_height="66dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/edit_risk_question"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
+            android:background="@color/white"
+            android:gravity="center">
+                <TextView
+                    android:id="@+id/product_product_wenjuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/app_golden"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/edit_risk_question"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+        </LinearLayout>
 </RelativeLayout>

@@ -4,12 +4,12 @@
     xmlns:openXu="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_background"
-     >
+    android:background="@color/c_background">
 
     <LinearLayout
+        android:id="@+id/top_filter_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
@@ -20,14 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/product_productfragment_paixu"
@@ -40,16 +39,16 @@
             </LinearLayout>
 
             <View
-                android:layout_gravity="center_vertical"
                 android:layout_width="@dimen/ui_z_dip"
                 android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
                 android:background="@color/gray_font" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/product_productfragment_shaixuan"
@@ -59,7 +58,9 @@
                     android:text="筛选" />
             </LinearLayout>
         </LinearLayout>
+
         <View
+            android:id="@+id/filter_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
             android:background="@color/gray_font" />
@@ -85,7 +86,14 @@
         </LinearLayout>
         <!-- 上边的筛选布局-->
 
-        <!--产品筛选里面的筛选... -->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/top_filter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
             android:id="@+id/swipeToLoadLayout"
             android:layout_width="match_parent"

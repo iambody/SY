@@ -2,6 +2,7 @@ package com.cgbsoft.lib.utils.net;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
@@ -94,6 +95,8 @@ public class OKHTTP {
             builder.addHeader("Content-Type", "application/json; charset=UTF-8");
             builder.addHeader("X-HTTP-Method-Override", "no-cache");
             builder.addHeader("Accept", "application/json");
+            builder.addHeader("latitude", String.valueOf(AppManager.getLocation(BaseApplication.getContext()).getLocationlatitude()));
+            builder.addHeader("longitude", String.valueOf(AppManager.getLocation(BaseApplication.getContext()).getLocationlontitude()));
             okhttp3.Request authorised = builder.build();
             Utils.log("okHttp", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +

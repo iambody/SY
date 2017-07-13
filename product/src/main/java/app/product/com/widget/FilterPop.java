@@ -92,7 +92,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         setBackgroundDrawable(dw);
-        setAnimationStyle(R.style.style_product_oderby_dialog_anim);
+//        setAnimationStyle(R.style.style_product_oderby_dialog_anim);
         setOutsideTouchable(true);
         product_filte_linear_layout = (LinearLayout) baseView.findViewById(R.id.product_filte_linear_layout);
         product_filtepop_reset_filter = (Button) baseView.findViewById(R.id.product_filtepop_reset_filter);
