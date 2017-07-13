@@ -956,14 +956,6 @@ public class ApiClient {
 
     }
 
-    /**
-     * 签到接口
-     */
-    public static Observable<String> userSign() {
-        Map<String, String> params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
-    }
 
     /**
      * 重新生成Get 方式的value值
@@ -1474,4 +1466,14 @@ public class ApiClient {
     public static Observable<String> getNavigation() {
         return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /**
+     * 私享云签到接口
+     */
+    public static Observable<String> SxySign() {
+        Map<String, String> params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
 }

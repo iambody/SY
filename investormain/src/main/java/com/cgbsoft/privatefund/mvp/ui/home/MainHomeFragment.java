@@ -15,11 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -28,8 +32,8 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
-import com.cgbsoft.lib.widget.dialog.HomeSignDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.jude.rollviewpager.RollPagerView;
@@ -39,10 +43,11 @@ import com.jude.rollviewpager.hintview.IconHintView;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
-import app.privatefund.com.vido.mvp.ui.video.VideoHistoryListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * desc  ${DESC}
@@ -50,7 +55,7 @@ import butterknife.OnClick;
  * 日期 2017/6/26-21:06
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
-
+public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
 
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
@@ -62,6 +67,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     HorizontalScrollView mainHomeHorizontalscrollview;
     @BindView(R.id.main_home_adviser_inf_lay)
     LinearLayout mainHomeAdviserInfLay;
+    //登录模式下
     @BindView(R.id.main_home_adviser_inf_iv)
     RoundImageView mainHomeAdviserInfIv;
     @BindView(R.id.main_home_adviser_layyy)
@@ -100,16 +106,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView mainHomeAdviserIm;
     @BindView(R.id.main_home_adviser_relation_lay)
     LinearLayout mainHomeAdviserRelationLay;
+    //登录模式下的视图布局
     @BindView(R.id.main_home_login_lay)
     RelativeLayout mainHomeLoginLay;
     @BindView(R.id.main_home_vister_adviser_layyy)
     LinearLayout mainHomeVisterAdviserLayyy;
     @BindView(R.id.main_home_vister_adviser_inf_lay)
     LinearLayout mainHomeVisterAdviserInfLay;
+    //游客模式的头像
     @BindView(R.id.main_home_vister_adviser_inf_iv)
     RoundImageView mainHomeVisterAdviserInfIv;
     @BindView(R.id.main_home_vister_adviser_layy)
     LinearLayout mainHomeVisterAdviserLayy;
+    //游客模式下的布局
     @BindView(R.id.main_home_vister_lay)
     RelativeLayout mainHomeVisterLay;
     @BindView(R.id.main_home_invisiter_txt_lay)
@@ -124,8 +133,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean isVisiterShow;
 
 
-    //每天一次的签到的dialog
-    private HomeSignDialog signDialog;
+//    //每天一次的签到的dialog
+//    private HomeSignDialog signDialog;
 
     // Banner适配器
     private BannerAdapter homeBannerAdapter;
@@ -143,7 +152,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
-
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         initDialog();
 
@@ -185,7 +193,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     private void initDialog() {
         //初始化签到页面
-        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
+//        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
     }
 
     /**
@@ -199,6 +207,51 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
 //        showLiveView();
+        boolean isVisiter = AppManager.isVisitor(baseActivity);
+        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(baseActivity);
+        boolean isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
+        if (isVisiter || isBindAdviser) {//游客模式下或者没有绑定过理财师需要
+            //登录模式
+            mainHomeLoginLay.setVisibility(View.GONE);
+            //游客模式
+            mainHomeVisterLay.setVisibility(View.VISIBLE);
+
+
+            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
+        } else {//登录模式下并且已经绑定过理财师
+            //登录模式
+            mainHomeLoginLay.setVisibility(View.VISIBLE);
+            //游客模式
+            mainHomeVisterLay.setVisibility(View.GONE);
+
+            //开始填充登录模式下理财师数据
+            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
+
+
+        }
+        initRxEvent();
+
+    }
+
+    private Observable<LiveInfBean> liveObservable;
+
+    /**
+     * 注册监听事件
+     */
+    private void initRxEvent() {
+        //直播状态监听
+        liveObservable= RxBus.get().register(LIVERXOBSERBER_TAG,LiveInfBean.class);
+        liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
+            @Override
+            protected void onEvent(LiveInfBean liveInfBean) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     /**
@@ -265,7 +318,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @Override
     public void getSignResult(String message) {
-        if (null != signDialog && signDialog.isShowing()) signDialog.dismiss();
+//        if (null != signDialog && signDialog.isShowing()) signDialog.dismiss();
         PromptManager.ShowCustomToast(baseActivity, message);
 
     }
@@ -412,9 +465,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onRefresh() {
         mainHomeSwiperefreshlayout.setRefreshing(false);
+        //刷新webview
+        mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
-//        getPresenter().getHomeData();
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoHistoryListActivity.class));
+        getPresenter().getHomeData();
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoHistoryListActivity.class));
     }
 
     ///scrollview滑动时候的监听
@@ -432,9 +487,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 mainHomeAdviserRelationLay.setVisibility(View.GONE);
                 //隐藏游客模式的右侧文字布局
 
+
             }
             if (mainHomeVisterAdviserLayyy.getVisibility() == View.VISIBLE) {
                 mainHomeVisterAdviserLayyy.setVisibility(View.GONE);
+                mainHomeInvisiterTxtLay.setVisibility(View.GONE);
+                isVisiterShow = false;
             }
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
@@ -505,8 +563,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         @Override
         public void onClick(View v) {
             PromptManager.ShowCustomToast(baseActivity, "位置" + postion);
-            if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
-            signDialog.show();
+//            if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
+//            signDialog.show();
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
         }
     }
 

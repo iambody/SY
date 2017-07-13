@@ -22,6 +22,6 @@ public class MainHomeContract {
         public void getHomeData();
 
 
-        public void todoSign();
+
     }
 }

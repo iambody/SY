@@ -1247,12 +1247,12 @@ public class CWebviewManger {
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
-            if (!url.contains("http")) {
-                url = BaseWebNetConfig.baseParentUrl + url;
-            } else {
-                title = split[4];
-                url = split[2] + ":" + split[3];
-            }
+//            if (!url.contains("http")) {
+                url = BaseWebNetConfig.SERVER_ADD + url;
+//            } else {
+//                title = split[4];
+//                url = split[2] + ":" + split[3];
+//            }
             Intent i = new Intent(context, BaseWebViewActivity.class);
 
             i.putExtra(WebViewConstant.push_message_url, url);

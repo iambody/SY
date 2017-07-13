@@ -2,6 +2,7 @@ package com.cgbsoft.lib.widget.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.SpannableUtils;
+import com.cgbsoft.privatefund.bean.commui.SignBean;
 
 /**
  * desc 私享云签到dialog
@@ -24,12 +29,15 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
     private TextView homesign_next_title;
     private ImageView homesign_cancle_iv;
 
+    //签到的数据
+    private SignBean mysSignBean;
     private Context pContext;
     private View baseView;
 
-    public HomeSignDialog(Context pContext) {
+    public HomeSignDialog(Context pContext, SignBean signBeans) {
         super(pContext, R.style.dialog_comment_style);
         this.pContext = pContext;
+        this.mysSignBean = signBeans;
     }
 
     @Override
@@ -41,8 +49,9 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
     }
 
     private void initView() {
-        initfindview();
+
         initConfig();
+        initfindview();
     }
 
     /**
@@ -54,6 +63,15 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
         homesign_next_title = (TextView) findViewById(R.id.homesign_next_title);
         homesign_cancle_iv = (ImageView) findViewById(R.id.homesign_cancle_iv);
         homesign_cancle_iv.setOnClickListener(this);
+        String award = mysSignBean.coinNum + "";
+        String left = "今日奖励 ";
+        String right = " 云豆";
+        String content = left + award + right;
+//填充数据
+        SpannableString spannableString = SpannableUtils.setTextColorSize(pContext, content, left.length(), left.length() + award.length(), R.color.app_golden, 140);
+        homesign_data_title.setText(spannableString);
+        homesign_title.setText(String.format("尊敬的%s,欢迎来到私享云", BStrUtils.isEmpty(AppManager.getUserInfo(pContext).getRealName())?"用户":AppManager.getUserInfo(pContext).getRealName()));
+        homesign_next_title.setText(String.format("明日奖励%s云豆", (mysSignBean.coinNum + 1) + ""));
     }
 
     private void initConfig() {

@@ -61,6 +61,15 @@
                 android:layout_marginLeft="@dimen/ui_40_dip"
                 android:layout_marginTop="68dp"
                 android:background="@drawable/login_logo" />
+            <ImageView
+                android:id="@+id/login_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/ui_20_dip"
+                android:src="@drawable/login_right_cha"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout

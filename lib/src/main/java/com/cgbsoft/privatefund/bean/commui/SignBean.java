@@ -8,7 +8,8 @@ package com.cgbsoft.privatefund.bean.commui;
 public class SignBean {
     public String resultCode;//":  0：系统异常 1：签到成功 2：已经签到
     public String resultMessage;//":"签到成功",
-//            signDays":5,
-//            "coinNum":5
+
+    public int signDays;//":1,
+    public int coinNum;//":1,
 
 }

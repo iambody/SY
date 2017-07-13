@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dialog_sign_iv"
                 android:layout_centerHorizontal="true"
-                android:text="尊敬的杨先生,欢迎来到私享云"
                 android:textColor="@color/white_light"
                 android:textSize="@dimen/dimens_sp_16" />
         </RelativeLayout>
@@ -64,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
 
-                android:text="今日奖励3云豆"
                 android:textSize="@dimen/dimens_sp_24" />
         </RelativeLayout>
 
@@ -75,7 +73,7 @@
             android:background="@color/white"
             android:gravity="center"
             android:paddingTop="@dimen/ui_8_dip"
-            android:text="下次奖励5云豆" />
+              />
 
         <TextView
             android:layout_width="match_parent"

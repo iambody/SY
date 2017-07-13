@@ -369,12 +369,12 @@ public class Utils {
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
-            if (!url.contains("http")) {
+//            if (!url.contains("http")) {
                 url = BaseWebNetConfig.baseParentUrl + url;
-            } else {
-                title = split[4];
-                url = split[2] + ":" + split[3];
-            }
+//            } else {
+//                title = split[4];
+//                url = split[2] + ":" + split[3];
+//            }
             HashMap hashMap = new HashMap();
             hashMap.put(WebViewConstant.push_message_url, url);
             hashMap.put(WebViewConstant.push_message_title, title);

@@ -58,6 +58,7 @@ public interface Constant {
 
     String RECEIVER_EXIT_ACTION = "com.privateFund.exitLogin";
     String RECEIVER_ERRORCODE = "errorCode";
+    String VISITER_ERRORCODE = "errorCode";
 
     //----------------权限管理参数(危险权限)------------------
     int REQUEST_CODE_ASK_PERMISSIONS = 0x0101;

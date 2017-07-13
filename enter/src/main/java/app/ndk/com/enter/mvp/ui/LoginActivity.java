@@ -50,6 +50,7 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -62,7 +63,7 @@ import cn.sharesdk.framework.ShareSDK;
  */
 @Route("enter_loginactivity")
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
-
+    public static final String TAG_GOTOLOGIN = "insidegotologin";
     @BindView(R2.id.et_al_username)
     EditText et_al_username;//用户名
 
@@ -90,6 +91,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     RelativeLayout enterLoginWxloginLay;
     @BindView(R2.id.btn_stroll)
     TextView btnStroll;
+    //内容登录动作的布局
+    @BindView(R2.id.login_cancle)
+    ImageView loginCancle;
 
     //是否已经显示了微信登录的按钮  默认进来是不显示的
     private boolean isShowWxBt;
@@ -107,6 +111,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private String publicKey;
 
     private LocationManger locationManger;
+
+    //是否是app内发起的 登录操作
+    private boolean isFromInside;
 
     @Override
     protected int layoutID() {
@@ -137,14 +144,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (savedInstanceState == null) {
-            if (identity == IDS_ADVISER) {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             recreate();
         }
-
+        isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -157,7 +160,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             iv_al_del_un.setVisibility(View.VISIBLE);
             isUsernameInput = true;
         }
-
+        if (isFromInside)
+            initinSideComeId();
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
@@ -173,11 +177,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
-        getPresenter().invisterLogin(baseContext);
+        //如果是正常进来的就偷偷加载游客信息
+        if (!isFromInside)
+            getPresenter().invisterLogin(baseContext);
+    }
+
+    private void initinSideComeId() {
+        loginCancle.setVisibility(View.VISIBLE);
+        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
+        btn_al_login.setTextColor(getResources().getColor(R.color.white));
+        //开始展示
+        enterLoginWxloginLay.setVisibility(View.GONE);
+        enterLoginWxBtLay.setVisibility(View.VISIBLE);
+        isShowWxBt = true;
+        getPresenter().setAnimation(enterLoginWxBtLay);
     }
 
     private void initLocation() {
-
         locationManger = LocationManger.getInstanceLocationManger(baseContext);
         locationManger.startLocation(new BdLocationListener() {
             @Override
@@ -308,6 +324,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             finish();
             return;
         }
+        AppInfStore.saveIsVisitor(baseContext, false);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }
@@ -412,6 +429,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
+    @OnClick(R2.id.login_cancle)
+    public void onViewlogincancleClicked() {//登录取消
+        LoginActivity.this.finish();
+    }
+
+
     private class LoginTextWatcher implements TextWatcher {
         private int which;
 
@@ -500,6 +523,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             finish();
             return;
         }
+        AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }

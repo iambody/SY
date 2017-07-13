@@ -1,31 +1,25 @@
 package com.cgbsoft.privatefund.mvp.presenter.home;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.TaskInfo;
-import com.cgbsoft.lib.base.model.RongTokenEntity;
-import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.widget.dialog.HomeSignDialog;
+import com.cgbsoft.privatefund.bean.commui.SignBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
-import com.commui.prompt.mvp.ui.SignInDialog;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.HashMap;
 
@@ -88,7 +82,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
         });
     }
 
-    public void actionPoint(HashMap<String,Object> map){
+    public void actionPoint(HashMap<String, Object> map) {
         addSubscription(ApiClient.ActionPoint(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -96,10 +90,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                     JSONObject js = new JSONObject(s);
                     JSONObject result = js.getJSONObject("result");
                     int ydMallState = Integer.parseInt(result.getString("ydMallState"));
-                    if (ydMallState!=1){
-                        SPreference.putBoolean(getContext(),"ydMallState", false);
-                    }else{
-                        SPreference.putBoolean(getContext(),"ydMallState", true);
+                    if (ydMallState != 1) {
+                        SPreference.putBoolean(getContext(), "ydMallState", false);
+                    } else {
+                        SPreference.putBoolean(getContext(), "ydMallState", true);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,28 +108,39 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     }
 
     public void toSignIn() {
-        addSubscription(ApiClient.testSignIn(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.SxySign().subscribe(new RxSubscriber<String>() {
             protected void onEvent(String s) {
-                try {
-                    JSONObject response = new JSONObject(s);
-                    if (response.has("msg")) {
-                        new MToast(getContext()).show(response.getString("msg"), 0);
-                    } else {
+//                try {
+//                    JSONObject response = new JSONObject(s);
+//                    if (response.has("msg")) {
+//                        new MToast(getContext()).show(response.getString("msg"), 0);
+//                    } else {
+//
+////                        SignInDialog signDialog = new SignInDialog(getContext());
+////                        signDialog.setData(response);
+////                        signDialog.show();
+//                        HomeSignDialog homeSignDialog = new HomeSignDialog(getContext());
+//                        homeSignDialog.show();
+//
+//
+//                        getView().signInSuc();
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
-                        SignInDialog signDialog = new SignInDialog(getContext());
-                        signDialog.setData(response);
-                        signDialog.show();
-                        getView().signInSuc();
-                    }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(!BStrUtils.isEmpty(s)){
+                    SignBean signBean=new Gson().fromJson(getV2String(s),SignBean.class);
+                    HomeSignDialog homeSignDialog = new HomeSignDialog(getContext(),signBean);
+                    homeSignDialog.show();
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                LogUtils.Log("s", "s");
             }
         }));
     }
