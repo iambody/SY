@@ -6,6 +6,7 @@ import android.webkit.JavascriptInterface;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
@@ -41,7 +42,7 @@ public class JavaScriptObjectToc {
         String userId = AppManager.getUserId(context);
         String visiter = AppManager.isVisitor(context) ? "1" : "2";//1是游客模式 2是正常模式
         StringBuffer sb = new StringBuffer();
-        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").append("C");//.append(":").append(visiter);
+        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").append("C").append(":").append(DeviceUtils.getPhoneId(context));
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }

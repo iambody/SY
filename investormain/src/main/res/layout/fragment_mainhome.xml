@@ -14,7 +14,8 @@
         <com.cgbsoft.lib.widget.SmartScrollView
             android:id="@+id/main_home_smartscrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
 
             <LinearLayout
                 android:layout_width="match_parent"

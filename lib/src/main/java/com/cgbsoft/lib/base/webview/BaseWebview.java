@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class BaseWebview extends WebView {
      */
     private android.webkit.WebChromeClient.CustomViewCallback myCallback;
     /**
-     *  是否是商学院   @按照陈龙之前业务逻辑
+     * 是否是商学院   @按照陈龙之前业务逻辑
      */
     private boolean isShangxueyuan = false;
 
@@ -54,6 +55,7 @@ public class BaseWebview extends WebView {
 
     /**
      * 加载url
+     *
      * @param context
      */
     private String loadUrl;
@@ -101,7 +103,11 @@ public class BaseWebview extends WebView {
         getSettings().setCacheMode(android.webkit.WebSettings.LOAD_NO_CACHE);
         getSettings().setAppCacheEnabled(false);
         getSettings().setDefaultFontSize(16);
-
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+//        } else {
+//            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+//        }
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
         setWebChromeClient(new WVChromeClient());
@@ -134,7 +140,7 @@ public class BaseWebview extends WebView {
         }
 
         @Override
-        public void onShowCustomView(View view,IX5WebChromeClient.CustomViewCallback callback) {
+        public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback callback) {
             super.onShowCustomView(view, 0, callback);
             if (myCallback != null) {
                 myCallback.onCustomViewHidden();
@@ -152,7 +158,7 @@ public class BaseWebview extends WebView {
         public void onHideCustomView() {
             if (myCallback != null) {
                 myCallback.onCustomViewHidden();
-                myCallback = null ;
+                myCallback = null;
             }
         }
     }
@@ -187,6 +193,7 @@ public class BaseWebview extends WebView {
         this.loadUrl(url);
         loadUrl = url;
     }
+
     public void shouldOverrideUrlLoading(WebView view, String url) {
 
         new Handler().postDelayed(new Runnable() {
@@ -194,7 +201,7 @@ public class BaseWebview extends WebView {
             @Override
             public void run() {
                 //TODO 去通知商学院  其他逻辑处理已经好了 只用确定按照那种方式进行调用即可
- //                EventBus.getDefault().post(new ShangxueyuanBackBean());
+                //                EventBus.getDefault().post(new ShangxueyuanBackBean());
             }
         }, 500);
     }
