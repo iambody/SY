@@ -381,7 +381,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         current = account_order_all_text;
                         break;
                 }
-                ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
+                if (orders.getCount() > 0) {
+                    ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
+                }
             }
         }
     }
