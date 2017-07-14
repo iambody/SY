@@ -158,7 +158,6 @@
     <string name="datum_manage_relative_asset">关联我的资产</string>
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
-    <string name="setting_title">设置</string>
 
     <!-- 我的 -->
     <string name="mine_order">我的订单</string>

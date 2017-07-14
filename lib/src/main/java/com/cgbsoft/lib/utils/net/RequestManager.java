@@ -740,6 +740,9 @@ interface RequestManager {
     // 我的
     @GET(NetConfig.Mine.GET_MINE)
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
+    // 我的活动
+    @GET(NetConfig.Mine.ACTIVITES)
+    Observable<ResponseBody> getMineActivitesList(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 生活家banner列表
