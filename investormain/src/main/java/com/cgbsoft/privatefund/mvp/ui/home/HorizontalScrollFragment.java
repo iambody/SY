@@ -16,11 +16,14 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.vido.VideoNavigationUtils;
+import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -30,6 +33,7 @@ import butterknife.OnClick;
 public class HorizontalScrollFragment extends BaseFragment {
 
     public static final String GET_VIDEO_PARAMS = "get_video_params";
+    public static final String IS_VIDEO_PLAY_PARAMS = "is_play_video_params";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -37,6 +41,7 @@ public class HorizontalScrollFragment extends BaseFragment {
     Button button;
 
     private List<VideoInfoModel> list;
+    private boolean isPlay;
 
     @Override
     protected int layoutID() {
@@ -46,18 +51,23 @@ public class HorizontalScrollFragment extends BaseFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         list = getArguments()!= null ? getArguments().getParcelableArrayList(GET_VIDEO_PARAMS) : new ArrayList<>();
+        isPlay = getArguments() != null && getArguments().getBoolean(IS_VIDEO_PLAY_PARAMS, false);
         System.out.println("------list=" + list.size());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new MyHolderAdapter(getActivity(), list));
+        recyclerView.setAdapter(new MyHolderAdapter(getActivity(), list, isPlay));
         recyclerView.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.goto_look_video)
     void gotoLookVideo() {
-        // togo video
+        if (isPlay) {
+            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+        } else {
+            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+        }
     }
 
     @Override
@@ -68,10 +78,12 @@ public class HorizontalScrollFragment extends BaseFragment {
     public class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
         private LayoutInflater mInflater;
         private List<VideoInfoModel> mDatas;
+        private boolean isPlayVideo;
 
-        public MyHolderAdapter(Context context, List<VideoInfoModel> datats) {
+        public MyHolderAdapter(Context context, List<VideoInfoModel> datats, boolean isPlayVideo) {
             mInflater = LayoutInflater.from(context);
             mDatas = datats;
+            this.isPlayVideo = isPlayVideo;
         }
 
         @Override
@@ -81,7 +93,6 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            System.out.println("------onCreateViewHolder=");
             View view = mInflater.inflate(R.layout.fragment_horizontal_item, viewGroup, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.mImg = (ImageView)view.findViewById(R.id.mine_video_image_id);
@@ -91,16 +102,19 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            System.out.println("------vass=" + mDatas.get(position).videoName);
-            Imageload.display(getContext(), mDatas.get(position).videoCoverUrl, holder.mImg);
-            holder.mTxt.setText(mDatas.get(position).videoName);
+            VideoInfoModel videoInfoModel = mDatas.get(position);
+            Imageload.display(getContext(), videoInfoModel.videoCoverUrl, holder.mImg);
+            holder.mTxt.setText(videoInfoModel.videoName);
+            holder.rootView.setOnClickListener(v -> VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.id), videoInfoModel.videoCoverUrl));
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View arg0){
             super(arg0);
+            this.rootView = arg0;
         }
+        View rootView;
         ImageView mImg;
         TextView mTxt;
     }
