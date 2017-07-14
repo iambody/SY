@@ -80,7 +80,7 @@ public class DatumManageActivity extends BaseActivity {
 
     @OnClick(R.id.datum_manage_account)
     public void gotoAccount(){
-
+        NavigationUtils.startActivity(this, InvisiteAccountActivity.class);
     }
 
     @OnClick(R.id.datum_manage_risk)

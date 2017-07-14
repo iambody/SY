@@ -148,6 +148,12 @@
         <item name="android:color">@color/white</item>
     </style>
 
+    <style name="invisite_account">
+        <item name="android:textSize">@dimen/dimens_sp_16</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
+
     <style name="home_banker_bt_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

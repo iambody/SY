@@ -273,7 +273,6 @@ public class NetConfig {
      */
     static class SXY {
         private static final String sxy = "/enjoycloud";
-
         //首页
         static final String GETHOME = API_URL + sxy + "/apphome";
 
@@ -295,6 +294,8 @@ public class NetConfig {
         static final String GET_MINE = API_URL + "/enjoycloud" + "/usercentre";
         // 我的活动
         static final String ACTIVITES = API_URL  + "/salons/mine";
+        // 提交投资账号
+        static final String CommitInvisitAccount = API_URL  + "/auth/user/certSubmit";
     }
 
     /**

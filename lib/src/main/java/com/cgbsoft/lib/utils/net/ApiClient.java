@@ -1358,6 +1358,13 @@ public class ApiClient {
     }
 
     /**
+     * 提交投资账号
+     */
+    public static Observable<String> commitInvisitAccount(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().commitInvisitAccount(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 预约健康手机验证
      */
     public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {

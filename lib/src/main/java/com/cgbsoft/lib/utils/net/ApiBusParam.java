@@ -129,4 +129,13 @@ public class ApiBusParam {
         hashMap.put("limit", String.valueOf(limit));
         return hashMap;
     }
+
+    public static HashMap commitInvisiteAccount(String userId, String customerName, String customerIdType, String customerIdNumber) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("userId", userId);
+        hashMap.put("customerName", customerName);
+        hashMap.put("customerIdType", customerIdType);
+        hashMap.put("customerIdNumber", customerIdNumber);
+        return hashMap;
+    }
 }

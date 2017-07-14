@@ -158,6 +158,14 @@
     <string name="datum_manage_relative_asset">关联我的资产</string>
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
+    <string name="setting_title">设置</string>
+
+    <!-- 投资账号-->
+    <string name="real_name">真实姓名</string>
+    <string name="centify_type">证件类型</string>
+    <string name="certify_number">证件号码</string>
+    <string name="invisite_account_prompt">温馨提示：请填写您的真实信息，以便私行家为您提供更精准的服务</string>
+    <string name="invisit_account_input_prompt">请输入%s</string>
 
     <!-- 我的 -->
     <string name="mine_order">我的订单</string>
@@ -191,7 +199,6 @@
     <string name="account_order_all">全部</string>
     <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
     <string name="account_health_go_server">去看服务</string>
-    <string name="setting_title">设置</string>
     <string name="phone">电话</string>
     <string name="mms">短信</string>
     <string name="conversation">对话</string>
