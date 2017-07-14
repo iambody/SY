@@ -68,9 +68,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     // 投资人认证
     public static String HOME_URL;
-    //私享云 选择投顾页面
+    //私享云 投顾页面  未绑定过
     public static String choiceAdviser;
-    //绑定过的角色对呀的投顾界面
+    //私享云 投顾页面  已经绑定过
     public static String BindchiceAdiser;
 
     static {

@@ -5,15 +5,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
-import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 
@@ -61,6 +61,7 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     }
 
+
     @Override
     protected void bindTitle(View titleView) {
         LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
@@ -69,8 +70,8 @@ public class PrivateBanksFragment extends BasePageFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                intent.putExtra(WebViewConstant.push_message_url, BaseWebNetConfig.bindAdviser);
-                intent.putExtra(WebViewConstant.push_message_title, "选择投顾");
+                intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
+                intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的投顾" : "选择投顾");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
                 getActivity().startActivity(intent);
             }
@@ -103,15 +104,15 @@ public class PrivateBanksFragment extends BasePageFragment {
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
-                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
                     break;
                 case VIDEO_CODE:
-                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
                     break;
             }
@@ -119,7 +120,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         return tabBeens;
     }
 
-    public void setCode(int index){
+    public void setCode(int index) {
         super.setIndex(index);
     }
 }
