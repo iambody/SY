@@ -58,6 +58,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String mineBestCard;
     // 选择理财师
     public static String selectAdviser;
+    // 投资日历
+    public static String investeCarlendar;
 
     // 投资人认证
     public static String HOME_URL;
@@ -85,8 +87,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
     public static void initSxyUrl(){
-        HOME_URL= baseSxyParentUrl + "biz/profile/";
-        elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
+        HOME_URL= baseSxyParentUrl + "/biz/profile/";
+        elegantGoodsDetail=baseSxyParentUrl+"/biz/life/detail.html?goodsId=";
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
@@ -96,5 +98,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
+        investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
     }
 }

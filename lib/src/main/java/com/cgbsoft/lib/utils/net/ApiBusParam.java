@@ -122,4 +122,11 @@ public class ApiBusParam {
         hashMap.put("category", category);
         return hashMap;
     }
+
+    public static HashMap getActivitesListData(int offset, int limit) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("offset", String.valueOf(offset));
+        hashMap.put("limit", String.valueOf(limit));
+        return hashMap;
+    }
 }

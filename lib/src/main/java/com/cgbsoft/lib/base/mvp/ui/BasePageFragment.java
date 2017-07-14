@@ -53,39 +53,42 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        for (TabBean tabBean : list()) {
-            XTabLayout.Tab tab = tabLayout.newTab();
-            tab.setText(tabBean.getTabName());
-            tabLayout.addTab(tab);
-        }
         LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public int getCount() {
-                return list().size();
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return list().get(position).getFragment();
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                if (object instanceof View) {
-                    container.removeView((View) object);
-                } else if (object instanceof Fragment) {
-                    getChildFragmentManager().beginTransaction().detach((Fragment) object);
-                }
-            }
-        });
         bindTitle(title_layout);
-        tabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            tabLayout.getTabAt(i).setText(list().get(i).getTabName());
+        if (list() != null) {
+            for (TabBean tabBean : list()) {
+                XTabLayout.Tab tab = tabLayout.newTab();
+                tab.setText(tabBean.getTabName());
+                tabLayout.addTab(tab);
+            }
+            viewPager.setOffscreenPageLimit(3);
+            viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+                @Override
+                public int getCount() {
+                    return list().size();
+                }
+
+                @Override
+                public Fragment getItem(int position) {
+                    return list().get(position).getFragment();
+                }
+
+                @Override
+                public void destroyItem(ViewGroup container, int position, Object object) {
+                    if (object instanceof View) {
+                        container.removeView((View) object);
+                    } else if (object instanceof Fragment) {
+                        getChildFragmentManager().beginTransaction().detach((Fragment) object);
+                    }
+                }
+            });
+
+            tabLayout.setupWithViewPager(viewPager);
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                tabLayout.getTabAt(i).setText(list().get(i).getTabName());
+            }
+            viewPager.setCurrentItem(indexSel());
         }
-        viewPager.setCurrentItem(indexSel());
 //        tabLayout.getChildAt(indexSel()).setSelected(true);
     }
 

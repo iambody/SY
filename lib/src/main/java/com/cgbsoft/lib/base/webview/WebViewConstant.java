@@ -31,12 +31,12 @@ public class WebViewConstant {
         public static final String MODIFY_PASSWORD = "app:changepassword";
         public static final String JUMP_PRODUCT_DETAIL = "app:jumpProduct";
         public static final String INVITE_CUSTOM = "app:inviteCust";
-        public static final String INVITE_SHARE="app:tocShare";
-//        public static final String OPEN_SHAREPAGE ="app:openSharePage";
-        public static final String TOC_SHARE ="app:tocShare";
-        public static final String TOC_PDF ="app:viewpdf";
-        public static final String TOC_GO_PRODUCTLS ="app:jumpProductList";
-        public static final String TOC_PRODUCT_TOUTIAO ="app:openInformation";
+        public static final String INVITE_SHARE = "app:tocShare";
+        //        public static final String OPEN_SHAREPAGE ="app:openSharePage";
+        public static final String TOC_SHARE = "app:tocShare";
+        public static final String TOC_PDF = "app:viewpdf";
+        public static final String TOC_GO_PRODUCTLS = "app:jumpProductList";
+        public static final String TOC_PRODUCT_TOUTIAO = "app:openInformation";
         public static final String TOC_MALL_STATE = "app:mallHasTitle";
         //风险评测结果
 //        public static final String TOC_RISKTEST = "app:riskTest";
@@ -48,6 +48,98 @@ public class WebViewConstant {
     public class IntecepterActivity {
         public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
         public static final String DISCOVER_DETAILS = "/discover/details.html";
+    }
+
+    public class Navigation {
+        /**
+         * 首页
+         */
+        public static final int MAIN_PAGE = 10;
+        /**
+         * 会员页
+         */
+        public static final int MEMBER_PAGE = 1001;
+        /**
+         * 充值页
+         */
+        public static final int RECHARGE_PAGE = 1002;
+        /**
+         * 任务页
+         */
+        public static final int TASK_PAGE = 1003;
+        /**
+         * 云豆乐园
+         */
+        public static final int YD_ENJOY_PAGE = 1004;
+        /**
+         * 分享给好友
+         */
+        public static final int SHARE_FRIEND_PAGE = 1005;
+        /**
+         * 尊享私行
+         */
+        public static final int PRIVATE_BANK_PAGE = 20;
+        /**
+         * 产品
+         */
+        public static final int PRODUCT_PAGE = 2001;
+        /**
+         * 资讯
+         */
+        public static final int INFORMATION_PAGE = 2002;
+        /**
+         * 学院
+         */
+        public static final int VIDEO_PAGE = 2003;
+        /**
+         * 乐享生活
+         */
+        public static final int LIFE_ENJOY_PAGE = 30;
+        /**
+         * 生活家
+         */
+        public static final int LIFT_HOME_PAGE = 3001;
+        /**
+         * 尚品
+         */
+        public static final int LIFT_MALL_PAGE = 3002;
+        /**
+         * 健康
+         */
+        public static final int HEALTH_PAGE = 40;
+        /**
+         * 介绍
+         */
+        public static final int HEALTH_INTRODUCTION_PAGE = 4001;
+        /**
+         * 检测
+         */
+        public static final int HEALTH_CHECK_PAGE = 4002;
+        /**
+         * 医疗
+         */
+        public static final int HEALTH_MEDICAL_PAGE = 4003;
+        /**
+         * 我的
+         */
+        public static final int MINE_PAGE = 50;
+        /**
+         * 签到
+         */
+        public static final int MINE_SIGN_PAGE = 5001;
+        /**
+         * 我的活动
+         */
+        public static final int MINE_ACTION_PAGE = 5002;
+        /**
+         * 我的卡卷
+         */
+        public static final int MINE_CARD_PAGE = 5003;
+        /**
+         * 我的贺卡
+         */
+        public static final int MINE_GREETING_CARD_PAGE = 5004;
+
     }
 
 }

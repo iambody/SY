@@ -285,12 +285,16 @@ public class NetConfig {
 
         //游客登录
         static final String VISITORLOGIN = AUTH_URL + "/visitorLogin";
-        // 我的接口
-        static final String GET_MINE = API_URL + sxy + "/usercentre";
-
 
         //签到
         static final String SIGNIN = API_URL + sxy + "/signin";
+    }
+
+    static class Mine {
+        // 我的接口
+        static final String GET_MINE = API_URL + "/enjoycloud" + "/usercentre";
+        // 我的活动
+        static final String ACTIVITES = API_URL  + "/salons/mine";
     }
 
     /**
