@@ -28,9 +28,11 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
@@ -101,6 +103,10 @@ public class CWebviewManger {
             gotoVisiterLogin();
         } else if (action.contains("toastError")) {
             showToast(action);
+
+        } else if(action.contains("jumpNativeCode")){
+
+            gotoNative(action);
 
         } else if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
@@ -321,6 +327,22 @@ public class CWebviewManger {
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
+    }
+
+    /**
+     * 跳转到本地
+     * @param action
+     */
+    private void gotoNative(String action) {
+        String urcodeAction = null;
+        try {
+            urcodeAction = URLDecoder.decode(action, "utf-8");
+            String[] split = urcodeAction.split(":");
+            JumpNativeUtil.SkipNative(context,split[2]);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

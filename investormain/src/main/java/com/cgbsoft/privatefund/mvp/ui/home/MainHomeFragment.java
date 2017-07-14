@@ -55,7 +55,7 @@ import rx.Observable;
  * 日期 2017/6/26-21:06
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
-public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
+    public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
 
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
@@ -240,11 +240,14 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
      */
     private void initRxEvent() {
         //直播状态监听
-        liveObservable= RxBus.get().register(LIVERXOBSERBER_TAG,LiveInfBean.class);
+        liveObservable = RxBus.get().register(LIVERXOBSERBER_TAG, LiveInfBean.class);
         liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
             @Override
             protected void onEvent(LiveInfBean liveInfBean) {
+                if (liveInfBean.isLiveing) {//直播中
 
+                } else {//没直播
+                }
             }
 
             @Override
@@ -571,9 +574,10 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         }
     }
 
-    //    @Override
+        @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-
+            super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.Log("sssaa", "首页可见");
         if (getUserVisibleHint()) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页可见");
@@ -583,7 +587,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             LogUtils.Log("sssaa", "首页不可见");
             mainHomeBannerview.pause();
         }
-        super.setUserVisibleHint(isVisibleToUser);
+
     }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
