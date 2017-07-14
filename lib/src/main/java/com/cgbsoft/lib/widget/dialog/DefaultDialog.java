@@ -8,12 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
-
-import static android.view.View.GONE;
 
 
 /**
@@ -24,7 +19,7 @@ import static android.view.View.GONE;
 public abstract class DefaultDialog extends BaseDialog {
     private String content, left, right;
     private boolean showTitle = false;
-    private LinearLayout doubleBottomLayout,singleBottomLayout;
+    private LinearLayout doubleBottomLayout, singleBottomLayout;
 
     public DefaultDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
@@ -74,24 +69,9 @@ public abstract class DefaultDialog extends BaseDialog {
         mQueren.setText(right);
         mQueren1.setText(right);
 
-        mQueren1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                right();
-            }
-        });
-        mQuxiao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                left();
-            }
-        });
-        mQueren.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                right();
-            }
-        });
+        mQueren1.setOnClickListener(v -> right());
+        mQuxiao.setOnClickListener(v -> left());
+        mQueren.setOnClickListener(v -> right());
     }
 
     private TextView mContent;

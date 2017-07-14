@@ -66,7 +66,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(this);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.gray_font, R.dimen.ui_1_dip));
+        swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
         mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
             Intent intent = new Intent(this, BaseWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));

@@ -185,10 +185,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        System.out.println("--MineFragment----init");
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initVideoView();
-        System.out.println("---MineFragment---end inist");
         getPresenter().getMineData();
     }
 
@@ -383,11 +381,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
             this.mineModel = mineModel;
+            handler.postDelayed(runnable, DEALAY);
             initUserInfo(mineModel);
             initPrivateBank(mineModel);
             initOrderView(mineModel);
             initHealthView(mineModel);
-            handler.postDelayed(runnable, DEALAY);
         }
     }
 
@@ -409,7 +407,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
         if (mineModel.getBank() != null) {
             MineModel.PrivateBank privateBank = mineModel.getBank();
-            roundProgressbar.setProgress(40);
             textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
             textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
             textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
