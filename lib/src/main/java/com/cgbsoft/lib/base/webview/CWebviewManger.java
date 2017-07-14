@@ -337,7 +337,7 @@ public class CWebviewManger {
         try {
             String urlcodeAction = URLDecoder.decode(action, "utf-8");
             String[] split = urlcodeAction.split(":");
-            String codeStr = split[1];
+            String codeStr = split[2];
             NavigationUtils.jumpNativePage(context, Integer.decode(codeStr));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

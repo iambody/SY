@@ -92,7 +92,7 @@ public class ClearEditText extends EditText {
     }
 
     private void setClearIconVisible(boolean visible) {
-        Drawable right = visible ? drawableRight : null;
+        Drawable right = visible && isEnabled() ? drawableRight : null;
         setCompoundDrawablesWithIntrinsicBounds(getCompoundDrawables()[0], getCompoundDrawables()[1], right,
                 getCompoundDrawables()[3]);
     }

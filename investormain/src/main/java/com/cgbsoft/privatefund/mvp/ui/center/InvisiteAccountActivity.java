@@ -20,8 +20,6 @@ import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -112,34 +110,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @OnClick(R.id.title_left)
     public void clickBack(){
         this.finish();
-    }
-
-    @OnClick(R.id.datum_manage_account)
-    public void gotoAccount(){
-
-    }
-
-    @OnClick(R.id.datum_manage_risk)
-    public void gotoRiskComment(){
-        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
-    }
-
-    @OnClick(R.id.datum_manage_asset_report)
-    public void gotoAssetReport(){
-        String url = CwebNetConfig.assetReport;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_report));
-        NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
-    }
-
-    @OnClick(R.id.datum_manage_asset_certify)
-    public void gotoAssetCertify(){
-        NavigationUtils.startActivity(this, AssetProveActivity.class);
-    }
-    @OnClick(R.id.datum_manage_relative_asset)
-    public void gotoRelativeAsset(){
-        NavigationUtils.startActivity(this, RelativeAssetActivity.class);
     }
 
     private boolean validateEditView() {

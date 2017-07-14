@@ -72,7 +72,7 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         } else {
             SalonsButtonViewHolder buttonHolder = (SalonsButtonViewHolder) holder;
-            Imageload.display(context,R.drawable.salon_button_bg,buttonHolder.salonBg);
+            Imageload.display(context,R.drawable.salons_button_bg,buttonHolder.salonBg);
             buttonHolder.salonTitle.setText(context.getResources().getString(R.string.oldsalons_activities));
             if (null != listener) {
                 buttonHolder.layoutAll.setOnClickListener(new View.OnClickListener() {

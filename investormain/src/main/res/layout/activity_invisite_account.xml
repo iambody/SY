@@ -28,7 +28,9 @@
 
             <com.cgbsoft.lib.widget.ClearEditText
                 android:id="@+id/invisite_realname"
+                style="@style/invisite_account"
                 android:layout_width="0dp"
+                android:background="@null"
                 android:layout_height="match_parent"
                 android:layout_weight="3" />
         </LinearLayout>
@@ -48,8 +50,10 @@
                 android:text="@string/centify_type" />
 
             <com.cgbsoft.lib.widget.ClearEditText
+                style="@style/invisite_account"
                 android:id="@+id/invisite_certifiy_type"
                 android:layout_width="0dp"
+                android:background="@null"
                 android:layout_height="match_parent"
                 android:layout_weight="3" />
         </LinearLayout>
@@ -70,7 +74,9 @@
 
             <com.cgbsoft.lib.widget.ClearEditText
                 android:id="@+id/invisite_certifiy_number"
+                style="@style/invisite_account"
                 android:layout_width="0dp"
+                android:background="@null"
                 android:layout_height="match_parent"
                 android:layout_weight="3" />
         </LinearLayout>

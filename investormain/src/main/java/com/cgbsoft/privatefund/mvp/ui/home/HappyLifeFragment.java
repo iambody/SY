@@ -5,15 +5,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.mvp.model.NavigationBean;
+import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.mall.com.mvp.ui.ElegantGoodsFragment;
 import app.mall.com.mvp.ui.ElegantLivingFragment;
@@ -24,6 +28,10 @@ import app.mall.com.mvp.ui.ElegantLivingFragment;
  * 乐享生活
  */
 public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener{
+
+    private final String NAVIGATION_CODE = "30";
+    private final String LIFE_HOME_CODE = "3001";
+    private final String LIFE_MALL_CODE = "3002";
 
     ImageView toolbarLeft;
     ImageView toolbarRight;
@@ -46,11 +54,39 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
 
     @Override
     protected ArrayList<TabBean> list() {
+        ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
-        TabBean elegantLivingBeen = new TabBean(getResources().getString(R.string.elegantliving_str), new ElegantLivingFragment());
-        TabBean elegantGoodsBeen = new TabBean(getResources().getString(R.string.elegantgoods_str), new ElegantGoodsFragment());
-        tabBeens.add(elegantLivingBeen);
-        tabBeens.add(elegantGoodsBeen);
+        if (navigationBeans != null) {
+            for (NavigationBean navigationBean : navigationBeans) {
+                if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
+                    return loadTab(tabBeens, navigationBean);
+                }
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 加载Tab数据
+     *
+     * @param tabBeens
+     * @param navigationBean
+     */
+    private ArrayList<TabBean> loadTab(ArrayList<TabBean> tabBeens, NavigationBean navigationBean) {
+        List<SecondNavigation> secondNavigations = navigationBean.getSecondNavigation();
+        for (SecondNavigation secondNavigation : secondNavigations) {
+            switch (secondNavigation.getCode()) {
+                case LIFE_HOME_CODE:
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ElegantLivingFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen1);
+                    break;
+                case LIFE_MALL_CODE:
+                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new ElegantGoodsFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen2);
+                    break;
+            }
+        }
         return tabBeens;
     }
 
@@ -73,6 +109,10 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     protected int indexSel() {
         return 0;
+    }
+
+    public void setCode(int index){
+        super.setIndex(index);
     }
 
 }

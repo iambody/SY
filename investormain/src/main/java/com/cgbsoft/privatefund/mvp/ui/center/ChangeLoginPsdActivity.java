@@ -13,6 +13,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.ChangePsdContract;
@@ -21,6 +22,8 @@ import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.R.attr.password;
 
 /**
  * Created by sunfei on 2017/6/29 0029.
@@ -89,6 +92,14 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
         }
         if (!newPsdStr.equals(newConfirm)) {
             showToast("二次新密码不一致,请确认新密码");
+            return;
+        }
+        if (oldPsdStr.length() > 16 || oldPsdStr.length() < 6) {
+            MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
+            return;
+        }
+        if (newConfirm.length() > 16 || newConfirm.length() < 6) {
+            MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
             return;
         }
         getPresenter().submitChangeRequest(AppManager.getUserId(baseContext), MD5Utils.getShortMD5(oldPsdStr),MD5Utils.getShortMD5(newConfirm));
