@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/salon_button_bg"
+        android:src="@drawable/salons_button_bg"
         />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
             android:textSize="@dimen/dimens_sp_14"
             android:layout_marginTop="@dimen/ui_30_dip"
             android:layout_marginLeft="@dimen/ui_20_dip"
-            android:text="上海"
             />
         <TextView
             android:id="@+id/tv_salon_separate"
@@ -44,7 +43,6 @@
             android:textSize="@dimen/dimens_sp_14"
             android:layout_marginTop="@dimen/ui_30_dip"
             android:layout_toRightOf="@+id/tv_salon_separate"
-            android:text="2017.05.06"
             />
         <TextView
             android:id="@+id/tv_salon_time"
@@ -54,7 +52,6 @@
             android:textSize="@dimen/dimens_sp_14"
             android:layout_marginTop="@dimen/ui_30_dip"
             android:layout_toRightOf="@+id/tv_salon_date"
-            android:text="14:09"
             />
         <TextView
             android:id="@+id/tv_salon_title"
@@ -66,7 +63,6 @@
             android:layout_marginTop="@dimen/ui_15_dip"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:layout_below="@+id/tv_salon_address"
-            android:text="投资与未来对话"
             />
         <TextView
             android:id="@+id/tv_salon_depict"
@@ -80,7 +76,6 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:visibility="gone"
-            android:text="活动描述"
             />
         <RelativeLayout
             android:id="@+id/rl_salon_live_flag"
@@ -97,7 +92,6 @@
                 android:textSize="@dimen/dimens_sp_16"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/ui_15_dip"
-                android:text="正在直播"
                 />
             <TextView
                 android:id="@+id/tv_look_live_flag"
@@ -108,7 +102,6 @@
                 android:gravity="center_vertical"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/ui_15_dip"
-                android:text="观看直播"
                 />
             <ImageView
                 android:layout_width="14dp"

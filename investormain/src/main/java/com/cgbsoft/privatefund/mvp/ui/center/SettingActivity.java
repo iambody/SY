@@ -17,7 +17,6 @@ import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
-import com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
@@ -51,7 +50,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
-        String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
+        String phoneNum = AppManager.getUserInfo(baseContext).getUserName();
         if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
             changeLoginPsd.setVisibility(View.GONE);
         } else {
@@ -119,8 +118,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_common_question)
     public void commonQuestion(){
-        Intent intent = new Intent(this, SalonsActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SalonsActivity.class);
+//        startActivity(intent);
     }
     /**
      * 跳转到意见反馈
@@ -134,7 +133,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_recommend_friend)
     public void recommendFriend(){
-        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+//        Intent intent = new Intent(this, PersonalInformationActivity.class);
+//        startActivity(intent);
+//        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
     }
     /**
      * 跳转到关于页面

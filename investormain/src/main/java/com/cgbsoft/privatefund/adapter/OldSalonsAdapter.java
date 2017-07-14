@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.OldSalonsEntity;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.privatefund.R;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class OldSalonsAdapter extends RecyclerView.Adapter<OldSalonsAdapter.OldS
     @Override
     public void onBindViewHolder(OldSalonsAdapter.OldSalonsViewHodler holder, int position) {
             OldSalonsEntity.SalonItemBean salonItemBean = datas.get(position);
+        Imageload.display(context,salonItemBean.getMainImage(),holder.salonBg);
         holder.salonAddress.setText(salonItemBean.getCity());
         holder.salonDate.setText(salonItemBean.getStartTime());
         holder.salonTitle.setText(salonItemBean.getTitle());

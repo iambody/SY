@@ -9,6 +9,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
 import com.cgbsoft.privatefund.model.impl.PersonalInformationModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
@@ -81,6 +82,7 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
             imageId = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_USERICONNEWC_TYPE);
             com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.deleteFile(newTargetFile);
             if (!TextUtils.isEmpty(imageId)) {
+                LogUtils.Log("aaa","imageId==="+imageId);
                 RxBus.get().post(RxConstant.GOTO_PERSONAL_INFORMATION,1);
             } else {
                 imageId = "";

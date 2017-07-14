@@ -1404,18 +1404,10 @@ public class ApiClient {
      * @return
      */
     public static Observable<ElegantLivingEntity.Result> getElegantLivingObservable(int offset) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("offset", offset);
-            js.put("limit", Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
-        return OKHTTP.getInstance().getRequestManager().elegantLivingBanners(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("limit", Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT);
+        return OKHTTP.getInstance().getRequestManager().elegantLivingBanners(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -1425,18 +1417,10 @@ public class ApiClient {
      * @return
      */
     public static Observable<ElegantGoodsEntity.Result> getElegantGoodsFirstObservable(int offset) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("offset", offset);
-            js.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
-        return OKHTTP.getInstance().getRequestManager().elegantGoodsFirst(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
+        return OKHTTP.getInstance().getRequestManager().elegantGoodsFirst(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -1447,19 +1431,11 @@ public class ApiClient {
      * @return
      */
     public static Observable<ElegantGoodsEntity.ResultMore> getElegantGoodsMoreObservable(int offset, String category) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("offset", offset);
-            js.put("category", category);
-            js.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
-        return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("category", category);
+        params.put("limit", Constant.LOAD_ELEGANT_GOODS_FIRST_lIMIT);
+        return OKHTTP.getInstance().getRequestManager().elegantGoodsMore(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -1488,18 +1464,10 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> changeLoginPsdRequest(String userName,String oldPsd,String newPsd) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("userName", userName);
-            js.put("oldPassword", oldPsd);
-            js.put("newPassword", newPsd);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
+        params.put("userName", userName);
+        params.put("oldPassword", oldPsd);
+        params.put("newPassword", newPsd);
         return OKHTTP.getInstance().getRequestManager().changeLoginPsd(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -1511,68 +1479,36 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> updateUserInfoNewC(String userName, String gender, String birthday) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("realName", userName);
-            js.put("sex", gender);
-            js.put("birthday", birthday);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
+        params.put("realName", userName);
+        params.put("sex", gender);
+        params.put("birthday", birthday);
         return OKHTTP.getInstance().getRequestManager().updateUserInfoNewC(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
     /**
      * 上传头像的远程路径给服务端
      */
     public static Observable<String> uploadIconRemotePath(String adviserId,String imageRemotePath) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("adviserId", adviserId);
-            js.put("path", NetConfig.UPLOAD_FILE + imageRemotePath);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
+        params.put("adviserId", adviserId);
+        params.put("path", NetConfig.UPLOAD_FILE + imageRemotePath);
         return OKHTTP.getInstance().getRequestManager().uploadIconRemotePath(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
     /**
      * 获取沙龙和城市
      */
     public static Observable<SalonsEntity.Result> getSalonsAndCity(String cityCode, int offset, int limit) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("cityText", cityCode);
-            js.put("offset", offset);
-            js.put("limit", limit);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
-        return OKHTTP.getInstance().getRequestManager().getSalonsAndCitys(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        Map<String, Object> params = new HashMap<>();
+        params.put("cityText", cityCode);
+        params.put("offset", offset);
+        params.put("limit", limit);
+        return OKHTTP.getInstance().getRequestManager().getSalonsAndCitys(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<OldSalonsEntity.SalonBean> getOldSalons(int offset, int limit) {
-        JSONObject js = new JSONObject();
-        try {
-            js.put("offset", offset);
-            js.put("limit", limit);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> params = new HashMap<>();
-        if (!TextUtils.isEmpty(js.toString())) {
-            params.put("param", js.toString());
-        }
-        return OKHTTP.getInstance().getRequestManager().getOldSalons(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        Map<String, Object> params = new HashMap<>();
+        params.put("offset", offset);
+        params.put("limit", limit);
+        return OKHTTP.getInstance().getRequestManager().getOldSalons(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 }
