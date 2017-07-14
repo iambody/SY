@@ -103,6 +103,9 @@ public class BaseWebview extends WebView {
         getSettings().setCacheMode(android.webkit.WebSettings.LOAD_NO_CACHE);
         getSettings().setAppCacheEnabled(false);
         getSettings().setDefaultFontSize(16);
+//        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT) {
+//            this.setWebContentsDebuggingEnabled(true);
+//        }
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
 //        } else {

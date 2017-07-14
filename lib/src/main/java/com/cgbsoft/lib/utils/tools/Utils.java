@@ -33,6 +33,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.google.android.exoplayer.C;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;

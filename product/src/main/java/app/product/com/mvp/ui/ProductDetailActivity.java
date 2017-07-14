@@ -86,10 +86,10 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 //                        isLookZhiBao = true;
 //                        //joinLive();
 //                    } else {
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("product_detail", true);
-                        hashMap.put("hasLive", hasLive);
-                        NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, hashMap, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("product_detail", true);
+                    hashMap.put("hasLive", hasLive);
+                    NavigationUtils.startActivityByRouter(ProductDetailActivity.this, RouteConfig.GOTO_CLOUD_MENU_ACTIVITY, hashMap, com.cgbsoft.lib.R.anim.home_fade_in, com.cgbsoft.lib.R.anim.home_fade_out);
 //                    }
                 }
                 DataStatistApiParam.onStatisToCProductDetailMenu();
@@ -180,10 +180,10 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             String title = URLDecoder.decode(split[4], "utf-8");
             String Url = BaseWebNetConfig.detailToZiXun + infoId + "&category=" + category;
             Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
-                    .with(WebViewConstant.push_message_url,Url)
-                    .with(WebViewConstant.push_message_title,title)
-                    .with(WebViewConstant.PAGE_SHOW_TITLE,false)
-                    .with(WebViewConstant.RIGHT_SHARE,true)
+                    .with(WebViewConstant.push_message_url, Url)
+                    .with(WebViewConstant.push_message_title, title)
+                    .with(WebViewConstant.PAGE_SHOW_TITLE, false)
+                    .with(WebViewConstant.RIGHT_SHARE, true)
                     .go(baseContext);
         } catch (Exception e) {
 
@@ -208,13 +208,13 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             String imageTitle = split[4];
             String link = split[5];
 
-            link = link.startsWith("/") ? " https://app.simuyun.com/app5.0" + link : " https://app.simuyun.com/app5.0" + "/" + link;
+            link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link : BaseWebNetConfig.baseParentUrl + "/" + link;
 
             shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
             commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
 
                 @Override
-                public void completShare( int shareType) {
+                public void completShare(int shareType) {
                     TaskInfo.complentTask("分享产品");
 
                 }

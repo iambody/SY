@@ -114,6 +114,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
     private Observable<QrCodeBean> twoCodeObservable;
+    private Observable<Integer> jumpIndexObservable;
     private Observable<ConversationBean> startConverstationObservable;
     private boolean isOnlyClose;
     private int currentResId;
@@ -152,14 +153,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         Log.i("MainPageActivity", "----init");
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
+        mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                onTabSelected(integer);
+                onTabSelected(integer,0);
                 bottomNavigationBar.selectNavaigationPostion(integer);
             }
 
@@ -168,6 +169,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
 
         initActionPoint();
 
@@ -205,7 +207,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private void initIndex(int code) {
         if (0 != code) {
             int substring = Integer.parseInt(String.valueOf(code).substring(0, 1));
-            onTabSelected(substring - 1);
+            onTabSelected(substring - 1, code);
+            bottomNavigationBar.selectNavaigationPostion(substring - 1);
         }
     }
 
@@ -241,11 +244,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      */
     private void initDialog() {
 
-        //是否需要风险评测d 弹出框
-//        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
-//            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
-//            riskEvaluatDialog.show();
-//        }
     }
 
     private void loginLive() {
@@ -363,7 +361,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     boolean isHaveClickProduct;
 
     @Override
-    public void onTabSelected(int position) {
+    public void onTabSelected(int position, int code) {
         int switchID = -1;
         switch (position) {
             case 0://左1
@@ -387,7 +385,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 2;
                 break;
         }
-        switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID));
+        switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         buryPoint(position);
     }
 
@@ -415,6 +413,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initRxObservable() {
+        jumpIndexObservable = RxBus.get().register(RxConstant.JUMP_INDEX, Integer.class);
+        jumpIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                initIndex(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         closeMainObservable = RxBus.get().register(RxConstant.CLOSE_MAIN_OBSERVABLE, Boolean.class);
         closeMainObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override

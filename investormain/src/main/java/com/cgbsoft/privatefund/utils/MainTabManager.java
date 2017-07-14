@@ -41,7 +41,7 @@ public class MainTabManager {
         return mInstance;
     }
 
-    public Fragment getFragmentByIndex(int index) {
+    public Fragment getFragmentByIndex(int index,int code) {
         Fragment fragment = null;
         switch (index) {
             case R.id.nav_left_first:
@@ -54,17 +54,26 @@ public class MainTabManager {
                 if (priveteBankFragment == null) {
                     priveteBankFragment = new PrivateBanksFragment();
                 }
+                if (code!=0) {
+                    priveteBankFragment.setCode(code);
+                }
                 fragment = priveteBankFragment;
                 break;
             case R.id.nav_center:
                 if (happyLifeFragment == null) {
                     happyLifeFragment = new HappyLifeFragment();
                 }
+                if (code!=0) {
+                    happyLifeFragment.setCode(code);
+                }
                 fragment = happyLifeFragment;
                 break;
             case R.id.nav_right_first:
                 if (eveyHealthFragment == null) {
                     eveyHealthFragment = new EverHealthFragment();
+                }
+                if (code!=0){
+                    eveyHealthFragment.setCode(code);
                 }
                 fragment = eveyHealthFragment;
                 break;
