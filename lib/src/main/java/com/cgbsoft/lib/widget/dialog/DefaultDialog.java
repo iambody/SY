@@ -107,11 +107,7 @@ public abstract class DefaultDialog extends BaseDialog {
         doubleBottomLayout = (LinearLayout) findViewById(R.id.dialog_bottom_layout);
         singleBottomLayout = (LinearLayout) findViewById(R.id.dialog_single_layout);
 
-        if (AppManager.isAdViser(getContext())) {
-            mQueren.setBackgroundResource(R.drawable.default_dialog_right_btn_select_adviser);
-        } else {
-            mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);
-        }
+        mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);
         mContent.setTypeface(mContent.getTypeface(), Typeface.NORMAL);
     }
 

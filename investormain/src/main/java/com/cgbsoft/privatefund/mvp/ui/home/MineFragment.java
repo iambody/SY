@@ -2,7 +2,8 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -149,6 +150,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private MineModel mineModel;
 
+    private static final long DEALAY = 100;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            handler.postDelayed(runnable, DEALAY);
+        }
+    };
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_mine;
@@ -215,6 +225,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_members));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
+
+     private Runnable runnable = () -> {
+         int currentProgress = roundProgressbar.getProgress();
+         if (currentProgress > 40) {
+             return;
+         }
+         roundProgressbar.setProgress(currentProgress + 5);
+         handler.sendMessage(Message.obtain());
+    };
 
     @OnClick(R.id.account_info_yundou_value_ll)
     void gotoYundouctivity() {
@@ -368,6 +387,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             initPrivateBank(mineModel);
             initOrderView(mineModel);
             initHealthView(mineModel);
+            handler.postDelayed(runnable, DEALAY);
         }
     }
 
