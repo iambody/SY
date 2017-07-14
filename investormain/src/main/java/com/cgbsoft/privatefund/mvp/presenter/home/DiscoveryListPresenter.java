@@ -23,6 +23,7 @@ import java.util.List;
  *
  */
 public class DiscoveryListPresenter extends BasePresenterImpl<DiscoverListContract.View> implements DiscoverListContract.Presenter {
+
     public DiscoveryListPresenter(@NonNull Context context, @NonNull DiscoverListContract.View view) {
         super(context, view);
     }
