@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -15,7 +17,7 @@ import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
-import com.chenenyu.router.Router;
+import com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
@@ -35,6 +37,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     SettingItemNormal gestureSwitch;
     @BindView(R.id.sin_change_gesture_psd)
     SettingItemNormal changeGesturePsdLayout;
+    @BindView(R.id.sin_change_login_psd)
+    SettingItemNormal changeLoginPsd;
 
     @Override
     protected int layoutID() {
@@ -47,6 +51,12 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+        String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
+        if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
+            changeLoginPsd.setVisibility(View.GONE);
+        } else {
+            changeLoginPsd.setVisibility(View.VISIBLE);
+        }
         boolean gestureFlag = AppManager.getGestureFlag(baseContext);
         gestureSwitch.setSwitchCheck(gestureFlag);
         if (gestureFlag) {//开
@@ -92,7 +102,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_change_login_psd)
     public void changeLoginPsd(){
-        Router.build(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY).go(SettingActivity.this);
+        Intent intent = new Intent(this, ChangeLoginPsdActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -108,7 +119,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_common_question)
     public void commonQuestion(){
-
+        Intent intent = new Intent(this, SalonsActivity.class);
+        startActivity(intent);
     }
     /**
      * 跳转到意见反馈

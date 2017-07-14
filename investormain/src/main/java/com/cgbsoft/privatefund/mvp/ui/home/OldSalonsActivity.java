@@ -44,6 +44,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
     private OldSalonsAdapter salonsAdapter;
     private int offset=0;
     private int limit=20;
+    private boolean isOver;
 
     @OnClick(R.id.title_left)
     public void clickBack() {
@@ -64,6 +65,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
     private void initView(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setLoadMoreEnabled(false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(baseContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -71,6 +73,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new SimpleItemDecoration(baseContext,android.R.color.transparent,R.dimen.ui_10_dip));
         salonsAdapter = new OldSalonsAdapter(baseContext, salons);
+        recyclerView.setAdapter(salonsAdapter);
         salonsAdapter.setOnItemClickListener(new OldSalonsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, OldSalonsEntity.SalonItemBean bean) {
@@ -97,21 +100,44 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
 
     @Override
     public void getDataSuccess(List<OldSalonsEntity.SalonItemBean> oldSalons) {
+        clodLsAnim(mRefreshLayout);
+        mRefreshLayout.setLoadMoreEnabled(true);
+        if (null == oldSalons || oldSalons.size() == 0) {
+            offset--;
+            offset=offset<=0?0:offset;
+            if (oldSalons.size() == 0) {
+                isOver=true;
+            }
+            return;
+        }
 
+        if (offset == 0) {//下拉刷新成功
+            salons.clear();
+        }
+        salons.addAll(oldSalons);
+        salonsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void getDataError(Throwable error) {
+        clodLsAnim(mRefreshLayout);
+        if (offset == 0) {//下拉刷新错误
 
+        } else {//上拉加载错误
+            offset--;
+        }
     }
 
     @Override
     public void onLoadMore() {
-
+        offset++;
+        getPresenter().getOldSalons(offset,limit);
     }
 
     @Override
     public void onRefresh() {
-
+        offset=0;
+        mRefreshLayout.setLoadMoreEnabled(false);
+        getPresenter().getOldSalons(offset,limit);
     }
 }

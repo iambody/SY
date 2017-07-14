@@ -12,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.SalonsEntity;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.privatefund.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
 public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private final List<SalonsEntity.SalonItemBean> datas;
+    private List<SalonsEntity.SalonItemBean> datas;
     private OnItemClickListener listener;
 
     public SalonsAdapter(Context context, List<SalonsEntity.SalonItemBean> data) {
@@ -33,6 +35,9 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void setDatas(List<SalonsEntity.SalonItemBean> data){
         if (null == data || data.size() == 0) {
             return;
+        }
+        if (null == datas) {
+            datas = new ArrayList<>();
         }
         datas.clear();
         datas.addAll(data);
@@ -52,6 +57,7 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             SalonsEntity.SalonItemBean salonItemBean = datas.get(position);
         if (holder instanceof SalonsViewHodler) {
             SalonsViewHodler salonHolder= (SalonsViewHodler) holder;
+            Imageload.display(context,salonItemBean.getMainImage(),salonHolder.salonBg);
             salonHolder.salonAddress.setText(salonItemBean.getCity());
             salonHolder.salonDate.setText(salonItemBean.getStartTime());
             salonHolder.salonTitle.setText(salonItemBean.getTitle());
@@ -66,6 +72,8 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         } else {
             SalonsButtonViewHolder buttonHolder = (SalonsButtonViewHolder) holder;
+            Imageload.display(context,R.drawable.salon_button_bg,buttonHolder.salonBg);
+            buttonHolder.salonTitle.setText(context.getResources().getString(R.string.oldsalons_activities));
             if (null != listener) {
                 buttonHolder.layoutAll.setOnClickListener(new View.OnClickListener() {
                     @Override

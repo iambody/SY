@@ -47,7 +47,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_15_dip"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="头像"
                     />
                 <com.cgbsoft.lib.widget.CircleImageView
@@ -93,7 +93,7 @@
                     android:gravity="center_vertical"
                     android:text="姓名"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     />
 
                 <TextView
@@ -102,7 +102,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     android:gravity="center_vertical"
                     />
 
@@ -135,7 +135,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="性别"
                     />
                 <TextView
@@ -144,7 +144,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/ui_10_dip"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     android:layout_alignParentTop="true"
                     android:layout_toStartOf="@+id/iv_personalinfo_item_right_arrow_gender"
                     android:layout_marginEnd="14dp"/>
@@ -176,7 +176,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="生日"
                     />
                 <TextView
@@ -186,7 +186,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow_birthday"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     />
                 <ImageView
                     android:id="@+id/iv_personalinfo_item_right_arrow_birthday"
@@ -218,7 +218,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="地区"
                     />
 
@@ -228,7 +228,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow_district"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     android:gravity="center_vertical"
                     />
                 <ImageView
@@ -260,7 +260,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="我的会员"
                     />
                 <TextView
@@ -269,7 +269,7 @@
                     android:gravity="center_vertical"
                     android:layout_toLeftOf="@+id/iv_personal_information_arrow_hy"
                     android:layout_marginRight="@dimen/ui_10_dip"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     />
                 <ImageView
                     android:id="@+id/iv_personal_information_arrow_hy"
@@ -298,7 +298,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_sp_22"
+                    android:textSize="@dimen/dimens_sp_16"
                     android:text="我的二维码"
                     />
                 <TextView
@@ -307,7 +307,7 @@
                     android:gravity="center_vertical"
                     android:layout_toLeftOf="@+id/iv_personal_information_arrow"
                     android:layout_marginRight="@dimen/ui_10_dip"
-                    android:textSize="@dimen/dimens_sp_20"
+                    android:textSize="@dimen/dimens_sp_14"
                     />
                 <ImageView
                     android:id="@+id/iv_personal_information_arrow"

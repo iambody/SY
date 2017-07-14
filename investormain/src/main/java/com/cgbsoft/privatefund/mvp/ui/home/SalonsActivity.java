@@ -53,7 +53,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private LoadingDialog mLoadingDialog;
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
-    private String cityCode;
+    private String cityCode="北京";
     private int offset=0;
     private int limit=100;
     private List<SalonsEntity.CityBean> citys;
@@ -83,6 +83,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new SimpleItemDecoration(baseContext,android.R.color.transparent,R.dimen.ui_10_dip));
+
         salonsAdapter = new SalonsAdapter(baseContext, salons);
         salonsAdapter.setOnItemClickListener(new SalonsAdapter.OnItemClickListener() {
             @Override
@@ -96,6 +97,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                 }
             }
         });
+        recyclerView.setAdapter(salonsAdapter);
         getPresenter().getSalonsAndCitys(cityCode,offset,limit);
     }
 
@@ -142,6 +144,12 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 
     @Override
     public void getDataError(Throwable error) {
+        List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
+        SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
+        salonItemBean.setIsButton("1");
+        salons.clear();
+        salons.add(salonItemBean);
+        salonsAdapter.setDatas(salons);
         clodLsAnim(mRefreshLayout);
     }
 

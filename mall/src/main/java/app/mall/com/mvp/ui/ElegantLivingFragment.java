@@ -35,16 +35,16 @@ import qcloud.mall.R2;
  * Created by sunfei on 2017/6/29 0029.
  */
 
-public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterImpl> implements ElegantLivingContract.ElegantLivingView,OnLoadMoreListener, OnRefreshListener {
+public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterImpl> implements ElegantLivingContract.ElegantLivingView,
+        OnLoadMoreListener, OnRefreshListener {
     @BindView(R2.id.swipe_target)
     RecyclerView recyclerView;
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
     private LoadingDialog mLoadingDialog;
-    private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas;
+    private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas= new ArrayList<>();
     private RecyclerAdapter recyclerAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private int pageNo=0;
     private boolean isOver;
 
     @Override
@@ -55,36 +55,33 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
-        datas = new ArrayList<>();
         mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setLoadMoreEnabled(false);
         //这个是下拉刷新出现的那个圈圈要显示的颜色
 //        mRefreshLayout.setColorSchemeResources(
 //                R.color.colorGreen,
 //                R.color.colorYellow,
 //                R.color.colorRed
 //        );
-        recyclerAdapter = new RecyclerAdapter(baseActivity,datas);
+        recyclerAdapter = new RecyclerAdapter(baseActivity, datas);
         recyclerView.setAdapter(recyclerAdapter);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity,android.R.color.transparent,R.dimen.ui_10_dip));
+        recyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity, android.R.color.transparent, R.dimen.ui_10_dip));
         recyclerAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position,ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
-                //TODO banner点击事件处理
+            public void onItemClick(View view, int position, ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
                 gotoBannerDetail(elegantLivingBean);
             }
         });
-        getPresenter().getElegantLivingBanners(pageNo);
-//        mRefreshLayout.setRefreshing(true);
+        getPresenter().getElegantLivingBanners(datas.size());
     }
 
     private void gotoBannerDetail(ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
         HashMap hashMap = new HashMap();
-//        hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
         hashMap.put(WebViewConstant.RIGHT_SHARE, true);
         hashMap.put(WebViewConstant.push_message_title, elegantLivingBean.getTitle());
         hashMap.put(WebViewConstant.push_message_url, elegantLivingBean.getUrl());
@@ -93,7 +90,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
 
     @Override
     protected ElegantLivingPresenterImpl createPresenter() {
-        return new ElegantLivingPresenterImpl(baseActivity,this);
+        return new ElegantLivingPresenterImpl(baseActivity, this);
     }
 
     /**
@@ -114,29 +111,13 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
 
     @Override
     public void updateUi(List<ElegantLivingEntity.ElegantLivingBean> data) {
-        if (null == data||data.size() == 0) {
-            pageNo-=LOAD_ELEGANT_LIVING_BANNER_lIMIT;
-            pageNo=pageNo<0?0:pageNo;
-            if (data.size() == 0) {
-                isOver=true;
-            }
-            clodLsAnim(mRefreshLayout);
-            return;
-        }
-        if (data.size() < Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT) {
-            isOver=true;
-        }
-        boolean isRef;
-        if (pageNo == 0) {
-            datas.clear();
-            datas.addAll(data);
-            isRef=true;
-        } else {
-            datas.addAll(data);
-            isRef=false;
-        }
-        recyclerAdapter.notifyDataSetChanged();
         clodLsAnim(mRefreshLayout);
+        mRefreshLayout.setLoadMoreEnabled(true);
+        if (data.size() == 0 || data.size() < Constant.LOAD_ELEGANT_LIVING_BANNER_lIMIT) {
+            isOver = true;
+        }
+        datas.addAll(data);
+        recyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -150,9 +131,10 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
      */
     @Override
     public void onRefresh() {
-        pageNo=0;
-        isOver=false;
-        getPresenter().getElegantLivingBanners(pageNo);
+        mRefreshLayout.setLoadMoreEnabled(false);
+        datas.clear();
+        isOver = false;
+        getPresenter().getElegantLivingBanners(datas.size());
     }
 
     /**
@@ -161,11 +143,10 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     @Override
     public void onLoadMore() {
         if (isOver) {
-            Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
+            Toast.makeText(baseActivity.getApplicationContext(), "已经加载全部", Toast.LENGTH_SHORT).show();
             clodLsAnim(mRefreshLayout);
             return;
         }
-        pageNo+=LOAD_ELEGANT_LIVING_BANNER_lIMIT;
-        getPresenter().getElegantLivingBanners(pageNo);
+        getPresenter().getElegantLivingBanners(datas.size());
     }
 }

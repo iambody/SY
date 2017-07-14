@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.ChangePsdContract;
@@ -90,7 +91,7 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
             showToast("二次新密码不一致,请确认新密码");
             return;
         }
-        getPresenter().submitChangeRequest(AppManager.getUserId(baseContext),oldPsdStr,newConfirm);
+        getPresenter().submitChangeRequest(AppManager.getUserId(baseContext), MD5Utils.getShortMD5(oldPsdStr),MD5Utils.getShortMD5(newConfirm));
     }
     private void showToast(String content){
         Toast.makeText(getApplicationContext(),content,Toast.LENGTH_SHORT).show();
@@ -113,6 +114,6 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
 
     @Override
     public void changePsdError(Throwable error) {
-        showToast(error.toString());
+        showToast(error.getMessage());
     }
 }

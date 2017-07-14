@@ -28,14 +28,6 @@ public class OldSalonsAdapter extends RecyclerView.Adapter<OldSalonsAdapter.OldS
         this.context=context;
         this.datas=data;
     }
-    public void setDatas(List<OldSalonsEntity.SalonItemBean> data){
-        if (null == data || data.size() == 0) {
-            return;
-        }
-        datas.clear();
-        datas.addAll(data);
-        notifyDataSetChanged();
-    }
     @Override
     public OldSalonsViewHodler onCreateViewHolder(ViewGroup parent, int viewType) {
             return new OldSalonsViewHodler(LayoutInflater.from(context).inflate(R.layout.oldsalon_item,parent,false));
