@@ -203,6 +203,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     boolean isBindAdviser;
     UserInfoDataEntity.UserInfo userInfo;
+
     /**
      * 配置view各种资源
      */
@@ -215,7 +216,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
 //        showLiveView();
         boolean isVisiter = AppManager.isVisitor(baseActivity);
-         userInfo = AppManager.getUserInfo(baseActivity);
+        userInfo = AppManager.getUserInfo(baseActivity);
         isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
         if (isVisiter || !isBindAdviser) {//游客模式下或者没有绑定过理财师需要
             //登录模式
@@ -233,7 +234,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             //开始填充登录模式下理财师数据
             Imageload.display(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv);
-
+            BStrUtils.SetTxt(mainHomeCardnumberTxt, userInfo.bandingAdviserUniqueCode);
 
         }
         initRxEvent();
@@ -593,7 +594,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //已经绑定过的
         if (isBindAdviser) {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
-        }else{
+        } else {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
         }
     }

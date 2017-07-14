@@ -114,29 +114,31 @@
                             android:layout_width="@dimen/ui_70_dip"
                             android:layout_height="30dp"
                             android:layout_marginLeft="@dimen/ui_8_dip"
-                            android:layout_marginTop="@dimen/ui_57_dip"
+                            android:layout_marginTop="@dimen/ui_62_dip"
                             android:background="@drawable/main_home_card_bg"
                             android:orientation="vertical"
                             android:visibility="gone">
 
                             <TextView
-                                android:id="@+id/main_home_cardnumber_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_weight="1"
-                                android:text="8888"
-                                android:textColor="@color/app_golden"
-                                android:textSize="@dimen/dimens_sp_11" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dip"
+
                                 android:layout_weight="1"
                                 android:text="服 务 码"
                                 android:textColor="@color/app_golden"
-                                android:textSize="@dimen/dimens_sp_10" />
+                                android:textSize="@dimen/dimens_sp_7"
+                                android:gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/main_home_cardnumber_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dip"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="8888"
+                                android:textColor="@color/app_golden"
+                                android:textSize="@dimen/dimens_sp_12" />
                         </LinearLayout>
                         <!--服务码的布局(登录模式)**************-->
                         <!--理财师信息的的布局(登录模式)-->
@@ -154,7 +156,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="@dimen/ui_8_dip"
+                                android:layout_marginBottom="@dimen/ui_2_dip"
+
                                 android:gravity="center"
                                 android:text="您的私人顾问杨经理"
                                 android:textColor="@color/app_golden" />
@@ -163,7 +166,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="@dimen/ui_12_dip">
+                                android:layout_marginTop="@dimen/ui_20_dip">
 
                                 <TextView
                                     android:id="@+id/main_home_adviser_phone"

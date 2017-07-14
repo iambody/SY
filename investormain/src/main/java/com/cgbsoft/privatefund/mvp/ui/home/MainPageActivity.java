@@ -177,7 +177,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initRxObservable();
 
-//        initUserInfo();
+        initUserInfo();
 
 //        initPlatformCustomer();
 

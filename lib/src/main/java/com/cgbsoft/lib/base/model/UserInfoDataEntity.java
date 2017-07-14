@@ -48,7 +48,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String memoToFather;
         public String isAdvisers;
         public String bandingAdviserHeadImageUrl;
-
+        public String  bandingAdviserUniqueCode;
         public String getBirthday() {
             return birthday;
         }
