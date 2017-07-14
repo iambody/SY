@@ -31,6 +31,9 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -128,6 +131,12 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     private void startPermissionsActivity() {
         PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+    @OnClick(R.id.rl_personal_information_qr)
+    public void gotoMyQr(){
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.myqr);
+        startActivity(intent);
     }
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){

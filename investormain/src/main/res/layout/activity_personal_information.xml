@@ -288,6 +288,7 @@
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 />
             <RelativeLayout
+                android:id="@+id/rl_personal_information_qr"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_70_dip"
                 android:layout_marginLeft="@dimen/ui_15_dip"

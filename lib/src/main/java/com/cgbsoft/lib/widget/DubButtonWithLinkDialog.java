@@ -105,11 +105,8 @@ public abstract class DubButtonWithLinkDialog extends BaseDialog {
 //        if (TextUtils.isEmpty(identify)){
 //            identify = SPSave.getInstance(getContext()).getString("proId");
 //        }
-        if (AppManager.isAdViser(getContext())) {
-            mQueren.setBackgroundResource(R.drawable.right_btn_select_tob);
-        } else {
-            mQueren.setBackgroundResource(R.drawable.right_btn_select_toc);
-        }
+//        mQueren.setBackgroundResource(R.drawable.right_btn_select_toc);
+        mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);
 
         mContent.setOnClickListener(new View.OnClickListener() {
             @Override

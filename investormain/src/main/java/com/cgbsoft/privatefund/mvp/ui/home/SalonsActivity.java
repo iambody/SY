@@ -15,6 +15,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogCity;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -96,11 +99,28 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                     gotoOldActivities();
                 } else {
                     //活动详情
+                    gotoSalonDetail(bean);
                 }
             }
         });
         recyclerView.setAdapter(salonsAdapter);
         getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+    }
+
+    /**
+     * 跳转到沙龙详情页面
+     * @param bean
+     */
+    private void gotoSalonDetail(SalonsEntity.SalonItemBean bean) {
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+        startActivity(intent);
+//        HashMap hashMap = new HashMap();
+//        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+//        hashMap.put(WebViewConstant.push_message_title, bean.getTitle());
+//        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+//        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
     /**

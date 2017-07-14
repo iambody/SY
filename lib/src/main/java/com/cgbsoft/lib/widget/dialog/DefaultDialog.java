@@ -8,12 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
-
-import static android.view.View.GONE;
 
 
 /**
@@ -24,7 +19,7 @@ import static android.view.View.GONE;
 public abstract class DefaultDialog extends BaseDialog {
     private String content, left, right;
     private boolean showTitle = false;
-    private LinearLayout doubleBottomLayout,singleBottomLayout;
+    private LinearLayout doubleBottomLayout, singleBottomLayout;
 
     public DefaultDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
@@ -74,24 +69,9 @@ public abstract class DefaultDialog extends BaseDialog {
         mQueren.setText(right);
         mQueren1.setText(right);
 
-        mQueren1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                right();
-            }
-        });
-        mQuxiao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                left();
-            }
-        });
-        mQueren.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                right();
-            }
-        });
+        mQueren1.setOnClickListener(v -> right());
+        mQuxiao.setOnClickListener(v -> left());
+        mQueren.setOnClickListener(v -> right());
     }
 
     private TextView mContent;
@@ -107,11 +87,7 @@ public abstract class DefaultDialog extends BaseDialog {
         doubleBottomLayout = (LinearLayout) findViewById(R.id.dialog_bottom_layout);
         singleBottomLayout = (LinearLayout) findViewById(R.id.dialog_single_layout);
 
-        if (AppManager.isAdViser(getContext())) {
-            mQueren.setBackgroundResource(R.drawable.default_dialog_right_btn_select_adviser);
-        } else {
-            mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);
-        }
+        mQueren.setBackgroundResource(R.drawable.ios_right_btn_select_investor);
         mContent.setTypeface(mContent.getTypeface(), Typeface.NORMAL);
     }
 

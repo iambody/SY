@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,9 @@ import butterknife.OnClick;
  * @author chenlong
  */
 public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresenter> implements InvisiteAccountContract.View {
+
+    @BindView(R.id.title_left)
+    ImageView imageViewLeft;
 
     @BindView(R.id.title_mid)
     TextView titleMid;
@@ -57,6 +61,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @Override
     protected void init(Bundle savedInstanceState) {
         isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
+        imageViewLeft.setVisibility(View.VISIBLE);
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
         titleRight.setText(R.string.rc_confirm);
         initView();
@@ -69,7 +74,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
             certifyNumber.setEnabled(false);
             realName.setText(AppManager.getUserInfo(this).getToC().getCustomerName());
             certifyType.setText(AppManager.getUserInfo(this).getToC().getCustomerIdType());
-            certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerPhone());
+            certifyNumber.setText(AppManager.getUserInfo(this).getToC().getRiskEvaluationPhone());
         }
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);

@@ -42,14 +42,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/mine_account_info_text"
+            style="@style/mine_activites_item_desc_text"
             android:text="@string/mine_main_jiabing"
             android:layout_marginRight="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/mine_account_info_value"
+            style="@style/mine_activites_item_desc_value"
             android:id="@+id/mine_activity_speaker"/>
     </LinearLayout>
 
@@ -62,14 +62,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/mine_account_info_text"
+            style="@style/mine_activites_item_desc_text"
             android:text="@string/mine_activity_time"
             android:layout_marginRight="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/mine_account_info_value"
+            style="@style/mine_activites_item_desc_value"
             android:id="@+id/mine_activity_time"/>
 
     </LinearLayout>
