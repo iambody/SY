@@ -2,7 +2,6 @@ package com.cgbsoft.lib.utils.net;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
@@ -11,6 +10,7 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
@@ -128,8 +128,8 @@ public class OKHTTP {
                     Intent intent = new Intent();
                     intent.setAction(Constant.VISITER_ERRORCODE);
                     intent.putExtra(Constant.RECEIVER_ERRORCODE, response.code());
-
-
+                    LogUtils.Log("skskksksk", "406错误！！！！！！");
+                    BaseApplication.getContext().sendBroadcast(intent);
                 }
                 httpCodeInterceptor(responseBody, UTF8, response, message);
             }

@@ -7,7 +7,7 @@
 
     <string name="search_result_empty">没有更多的搜索结果</string>
     <string name="search_notice_name">公告</string>
-    <string name="search_notice_title">搜一搜 公告</string>
+    <string name="search_notice_title">搜一搜</string>
     <string name="search_notice_content">产品、运营、直播等消息</string>
 
     <string name="message_relative">%s条相关记录消息</string>

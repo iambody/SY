@@ -58,7 +58,7 @@ public interface Constant {
 
     String RECEIVER_EXIT_ACTION = "com.privateFund.exitLogin";
     String RECEIVER_ERRORCODE = "errorCode";
-    String VISITER_ERRORCODE = "errorCode";
+    String VISITER_ERRORCODE = "visiterCode";
 
     //----------------权限管理参数(危险权限)------------------
     int REQUEST_CODE_ASK_PERMISSIONS = 0x0101;
@@ -108,6 +108,8 @@ public interface Constant {
     public static final String UPLOAD_HEAD_TYPE = "avata/";
     //证件/资产证明
     public static final String UPLOAD_CERTIFICATE_TYPE = "certificates/";
+    //证件/资产证明
+    public static final String UPLOAD_USERICONNEWC_TYPE = "usericonnewc/";
     //打款凭条
     public static final String UPLOAD_SUBSRCIPTION_TYPE = "subscription/";
     //赎回

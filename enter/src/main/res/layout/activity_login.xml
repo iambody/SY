@@ -197,6 +197,7 @@
             android:paddingRight="@dimen/ui_30_dip"
             android:paddingTop="@dimen/ui_10_dip"
             android:text="先逛逛"
+            android:layout_marginTop="@dimen/ui_20_dip"
             android:textColor="@color/black" />
 
         <LinearLayout

@@ -10,9 +10,11 @@ import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
+import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -743,6 +745,10 @@ interface RequestManager {
     @GET(NetConfig.Mine.ACTIVITES)
     Observable<ResponseBody> getMineActivitesList(@QueryMap Map<String, String> paramsMap);
 
+    // 提交投资账号
+    @POST(NetConfig.Mine.CommitInvisitAccount)
+    Observable<ResponseBody> commitInvisitAccount(@Body RequestBody responseBody);
+
     /**
      * 生活家banner列表
      */
@@ -763,5 +769,31 @@ interface RequestManager {
     //签到
     @POST(NetConfig.SXY.SIGNIN)
     Observable<ResponseBody> sign(@Body RequestBody responseBody);
+    /**
+     * 修改用户登录密码
+     * @param responseBody
+     * @return
+     */
+    @POST(NetConfig.ChangePsd.CHANGE_PSD)
+    Observable<ResponseBody> changeLoginPsd(@Body RequestBody responseBody);
 
+    /**
+     * 更新用户信息
+     * @param requestBody
+     * @return
+     */
+    @POST(NetConfig.ChangePsd.UPDATE_USERINFO)
+    Observable<ResponseBody> updateUserInfoNewC(@Body RequestBody requestBody);
+    /**
+     * 上传头像的远程路径给服务端
+     */
+    @POST(NetConfig.ChangePsd.UPDATE_USERICON)
+    Observable<ResponseBody> uploadIconRemotePath(@Body RequestBody requestBody);
+    /**
+     * 获取沙龙和城市
+     */
+    @GET(NetConfig.Salon.UPDATE_SALON_AND_CITY)
+    Observable<BaseResult<SalonsEntity.Result>> getSalonsAndCitys(@QueryMap Map<String, String> params);
+    @GET(NetConfig.Salon.UPDATE_SALON)
+    Observable<BaseResult<OldSalonsEntity.SalonBean>> getOldSalons(@QueryMap Map<String, String> params);
 }

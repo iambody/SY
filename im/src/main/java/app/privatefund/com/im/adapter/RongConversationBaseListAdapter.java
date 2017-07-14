@@ -96,9 +96,9 @@ import io.rong.imlib.model.Conversation;
                     RLog.e("ConversationListAdapter", "provider is null");
                 } else {
                     boolean isKehu = "dd0cc61140504258ab474b8f0a38bb56".equals(data.getConversationSenderId()) || "dd0cc61140504258ab474b8f0a38bb56".equals(data.getConversationTargetId());
+                    holder.dividerItem.setVisibility(isKehu ? View.VISIBLE : View.GONE);
                     View view = holder.contentView.inflate(provider);
                     provider.bindView(view, position, data);
-                    holder.dividerItem.setVisibility(isKehu ? View.VISIBLE : View.GONE);
                     if(data.isTop()) {
                         holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
                     } else {

@@ -147,7 +147,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     @Override
     public void initDayTask() {
-        ApiClient.initDayTask().subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.initDayTask().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
@@ -163,12 +163,12 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onRxError(Throwable error) {
 
             }
-        });
+        }));
     }
 
     @Override
     public void getUserInfo() {
-        ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
+        addSubscription(ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
             @Override
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
@@ -180,7 +180,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onRxError(Throwable error) {
                 error.toString();
             }
-        });
+        }));
     }
 
 

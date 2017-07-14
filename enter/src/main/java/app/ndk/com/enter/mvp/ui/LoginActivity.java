@@ -43,6 +43,7 @@ import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
@@ -55,13 +56,8 @@ import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 
-/**
- * 登录
- * Created by xiaoyu.zhang on 2016/11/17 11:42
- * Email:zhangxyfs@126.com
- *  
- */
-@Route("enter_loginactivity")
+
+@Route(RouteConfig.GOTO_LOGIN)
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     public static final String TAG_GOTOLOGIN = "insidegotologin";
     @BindView(R2.id.et_al_username)
@@ -166,7 +162,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
-//        mUMShareAPI = UMShareAPI.get(this);
 
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
@@ -523,6 +518,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             finish();
             return;
         }
+        AppInfStore.saveIsVisitor(baseContext,true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();

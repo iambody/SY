@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,8 +12,8 @@ import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 
@@ -56,6 +55,11 @@ public class PrivateBanksFragment extends BasePageFragment {
         return null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     protected void bindTitle(View titleView) {

@@ -17,9 +17,11 @@ import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
+import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -1356,6 +1358,13 @@ public class ApiClient {
     }
 
     /**
+     * 提交投资账号
+     */
+    public static Observable<String> commitInvisitAccount(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().commitInvisitAccount(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 预约健康手机验证
      */
     public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {
@@ -1381,13 +1390,6 @@ public class ApiClient {
      */
     public static Observable<String> getMineData(HashMap hashMap) {
         return OKHTTP.getInstance().getRequestManager().getMineData(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-    }
-
-    /**
-     * 我的活动列表
-     */
-    public static Observable<String> getMineActivitesList(HashMap hashMap) {
-        return OKHTTP.getInstance().getRequestManager().getMineActivitesList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1482,5 +1484,102 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+    /**
+     * 我的活动列表
+     */
+    public static Observable<String> getMineActivitesList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineActivitesList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    /**
+     * 修改登录密码
+     * @return
+     */
+    public static Observable<String> changeLoginPsdRequest(String userName,String oldPsd,String newPsd) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("userName", userName);
+            js.put("oldPassword", oldPsd);
+            js.put("newPassword", newPsd);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())) {
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().changeLoginPsd(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
+    /**
+     * 更新用户信息
+     * @param userName 用户名字
+     * @param gender 用户性别
+     * @param birthday 用户生日
+     * @return
+     */
+    public static Observable<String> updateUserInfoNewC(String userName, String gender, String birthday) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("realName", userName);
+            js.put("sex", gender);
+            js.put("birthday", birthday);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())) {
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().updateUserInfoNewC(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    /**
+     * 上传头像的远程路径给服务端
+     */
+    public static Observable<String> uploadIconRemotePath(String adviserId,String imageRemotePath) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("adviserId", adviserId);
+            js.put("path", NetConfig.UPLOAD_FILE + imageRemotePath);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())) {
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().uploadIconRemotePath(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    /**
+     * 获取沙龙和城市
+     */
+    public static Observable<SalonsEntity.Result> getSalonsAndCity(String cityCode, int offset, int limit) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("cityText", cityCode);
+            js.put("offset", offset);
+            js.put("limit", limit);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())) {
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().getSalonsAndCitys(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    public static Observable<OldSalonsEntity.SalonBean> getOldSalons(int offset, int limit) {
+        JSONObject js = new JSONObject();
+        try {
+            js.put("offset", offset);
+            js.put("limit", limit);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString())) {
+            params.put("param", js.toString());
+        }
+        return OKHTTP.getInstance().getRequestManager().getOldSalons(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
 }

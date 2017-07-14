@@ -30,8 +30,11 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
@@ -47,6 +50,8 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -55,7 +60,7 @@ import rx.Observable;
  * 日期 2017/6/26-21:06
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
-public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
+    public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
 
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
@@ -75,7 +80,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
     @BindView(R.id.view_home_level_str)
     TextView viewHomeLevelStr;
     @BindView(R.id.main_home_swiperefreshlayout)
-    SwipeRefreshLayout mainHomeSwiperefreshlayout;
+    MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
     //邀请码
@@ -196,6 +201,8 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
 //        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
     }
 
+    boolean isBindAdviser;
+    UserInfoDataEntity.UserInfo userInfo;
     /**
      * 配置view各种资源
      */
@@ -208,16 +215,16 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
 //        showLiveView();
         boolean isVisiter = AppManager.isVisitor(baseActivity);
-        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(baseActivity);
-        boolean isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
-        if (isVisiter || isBindAdviser) {//游客模式下或者没有绑定过理财师需要
+         userInfo = AppManager.getUserInfo(baseActivity);
+        isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
+        if (isVisiter || !isBindAdviser) {//游客模式下或者没有绑定过理财师需要
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
             mainHomeVisterLay.setVisibility(View.VISIBLE);
 
 
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
+//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
         } else {//登录模式下并且已经绑定过理财师
             //登录模式
             mainHomeLoginLay.setVisibility(View.VISIBLE);
@@ -225,12 +232,17 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             mainHomeVisterLay.setVisibility(View.GONE);
 
             //开始填充登录模式下理财师数据
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
+            Imageload.display(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv);
 
 
         }
         initRxEvent();
-
+//        mainHomeSmartscrollview.getViewTreeObserver().addOnScrollChangedListener(new  ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                mainHomeSwiperefreshlayout.setEnabled(mainHomeSmartscrollview.getScrollY()==0);
+//            }
+//        });
     }
 
     private Observable<LiveInfBean> liveObservable;
@@ -240,11 +252,14 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
      */
     private void initRxEvent() {
         //直播状态监听
-        liveObservable= RxBus.get().register(LIVERXOBSERBER_TAG,LiveInfBean.class);
+        liveObservable = RxBus.get().register(LIVERXOBSERBER_TAG, LiveInfBean.class);
         liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
             @Override
             protected void onEvent(LiveInfBean liveInfBean) {
+                if (liveInfBean.isLiveing) {//直播中
 
+                } else {//没直播
+                }
             }
 
             @Override
@@ -460,6 +475,12 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         animationSet.start();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.Log("saassaa", "resume");
+//        mainHomeSmartscrollview.smoothScrollTo(0,20);
+    }
 
     //下拉刷新展示
     @Override
@@ -505,22 +526,44 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
     //点击消息
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        if (AppManager.isVisitor(baseActivity)) {//游客模式
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {//非游客模式
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
     }
 
     //登录模式点击电话
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
+
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确消", "呼叫") {
+            @Override
+            public void left() {
+                dismiss();
+            }
+
+            @Override
+            public void right() {
+                dismiss();
+                NavigationUtils.startDialgTelephone(baseActivity, userInfo.adviserPhone);
+            }
+        };
+        dialog.show();
     }
 
     //登录模式点击短信
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
+        Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
     }
 
     //登录模式点击聊天
     @OnClick(R.id.main_home_adviser_im)
     public void onMainHomeAdviserImClicked() {
+        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
     }
 
     //非游客模式头像的点击事件
@@ -545,7 +588,14 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
 
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        //游客模式或者未绑定需要跳转到未绑定的
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        //已经绑定过的
+        if (isBindAdviser) {
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
+        }else{
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        }
     }
 
     /**
@@ -571,9 +621,10 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         }
     }
 
-    //    @Override
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.Log("sssaa", "首页可见");
         if (getUserVisibleHint()) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页可见");
@@ -583,7 +634,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             LogUtils.Log("sssaa", "首页不可见");
             mainHomeBannerview.pause();
         }
-        super.setUserVisibleHint(isVisibleToUser);
+
     }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {

@@ -143,7 +143,11 @@
     <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
     <!-- 个人信息页面用到 -->
     <string name="personal_information_title">我的信息</string>
+    <string name="personal_information_title_changename">真实姓名</string>
+    <string name="personal_information_title_changegender">性别</string>
     <string name="camera_cancel">取消</string>
+    <string name="salons_activities">活动沙龙</string>
+    <string name="oldsalons_activities">过往活动</string>
 
     <!-- 资料管理 -->
     <string name="datum_manage_title">资料管理</string>
@@ -156,11 +160,19 @@
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
 
+    <!-- 投资账号-->
+    <string name="real_name">真实姓名</string>
+    <string name="centify_type">证件类型</string>
+    <string name="certify_number">证件号码</string>
+    <string name="invisite_account_prompt">温馨提示：请填写您的真实信息，以便私行家为您提供更精准的服务</string>
+    <string name="invisit_account_input_prompt">请输入%s</string>
+
     <!-- 我的 -->
     <string name="mine_order">我的订单</string>
     <string name="mine_signin">我的签到</string>
     <string name="mine_card_coupons">我的卡券</string>
     <string name="mine_best_card">我的贺卡</string>
+    <string name="mine_assert_report">资产报告</string>
     <string name="mine_investor_carlendar">投资日历</string>
     <string name="mine_members">我的会员</string>
     <string name="mine_health_list">我的健康</string>
@@ -190,6 +202,9 @@
     <string name="phone">电话</string>
     <string name="mms">短信</string>
     <string name="conversation">对话</string>
+    <string name="mine_activity_time">活动时间</string>
+    <string name="mine_activity_address">活动地点</string>
+    <string name="mine_main_jiabing">主讲嘉宾</string>
 
     <string name="home_visiter_up_txt">私享云-链接人与财富</string>
     <string name="home_visiter_down_txt">我们是专属您的私人银行家</string>
@@ -202,5 +217,19 @@
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>
         <item>观看下载记录</item>
+    </string-array>
+
+    <string-array name="risk_evalate_text">
+        <item>保守型</item>
+        <item>稳健型</item>
+        <item>平衡型</item>
+        <item>成长型</item>
+        <item>进取型</item>
+    </string-array>
+
+    <string-array name="assert_certify">
+        <item>待审核</item>
+        <item>已通过</item>
+        <item>被驳回</item>
     </string-array>
 </resources>

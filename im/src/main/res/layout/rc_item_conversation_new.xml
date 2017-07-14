@@ -2,112 +2,114 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:gravity="center_vertical">
-<RelativeLayout
-    android:id="@id/rc_item_conversation"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="@android:color/transparent"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="30dp"
-    android:paddingTop="25dp"
-    android:paddingBottom="25dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:id="@id/rc_item1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true">
-
-        <io.rong.imkit.widget.AsyncImageView
-            android:id="@+id/rc_left"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            app:RCCornerRadius="80dp"
-            app:RCDefDrawable="@drawable/rc_default_portrait"
-            app:RCShape="square" />
+    <RelativeLayout
+        android:id="@id/rc_item_conversation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:paddingTop="4dp">
-
-            <ImageView
-                android:id="@+id/rc_unread_message_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/rc_unread_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="10dp" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <io.rong.imkit.widget.ProviderContainerView
-        android:id="@+id/rc_content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/rc_item2"
-        android:layout_toRightOf="@id/rc_item1"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@id/rc_item2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/transparent">
-
-        <io.rong.imkit.widget.AsyncImageView
-            android:id="@id/rc_right"
+            android:id="@id/rc_item1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
-            app:RCCornerRadius="80dp"
-            app:RCDefDrawable="@drawable/rc_default_portrait" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <io.rong.imkit.widget.AsyncImageView
+                android:id="@+id/rc_left"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                app:RCCornerRadius="80dp"
+                app:RCDefDrawable="@drawable/rc_default_portrait"
+                app:RCShape="square" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:paddingTop="4dp">
+
+                <ImageView
+                    android:id="@+id/rc_unread_message_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/rc_unread_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10dp" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <io.rong.imkit.widget.ProviderContainerView
+            android:id="@+id/rc_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/rc_item2"
+            android:layout_toRightOf="@id/rc_item1"
+            android:background="@android:color/transparent" />
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:paddingTop="4dp">
+            android:id="@id/rc_item2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent">
 
-            <ImageView
-                android:id="@+id/rc_unread_message_icon_right"
+            <io.rong.imkit.widget.AsyncImageView
+                android:id="@id/rc_right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                app:RCCornerRadius="80dp"
+                app:RCDefDrawable="@drawable/rc_default_portrait" />
+
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="right|top"
+                android:paddingTop="4dp">
 
-            <TextView
-                android:id="@+id/rc_unread_message_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="10dp" />
+                <ImageView
+                    android:id="@+id/rc_unread_message_icon_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/rc_unread_message_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10dp" />
+            </FrameLayout>
         </FrameLayout>
-      </FrameLayout>
+
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/rc_item_height_divider"
         android:layout_height="30dp"
-        android:background="@color/app_bg"
         android:orientation="horizontal"
+        android:background="@color/app_bg"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"/>
+        android:layout_below="@id/rc_item_conversation"
+        android:id="@+id/rc_item_height_divider"/>
+
 </RelativeLayout>

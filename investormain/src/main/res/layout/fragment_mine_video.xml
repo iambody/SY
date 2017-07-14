@@ -11,19 +11,21 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:xTabIndicatorColor="@color/black"
+        app:xTabMode="fixed"
+        app:xTabIndicatorColor="@color/app_golden"
         app:xTabIndicatorHeight="4dp"
         app:xTabIndicatorWidth="25dp"
-        app:xTabMode="fixed"
         app:xTabSelectedTextColor="@color/app_golden_click"
         app:xTabSelectedTextSize="15sp"
         app:xTabTextColor="#ff000000"
-        app:xTabTextSize="15sp" />
+        app:xTabTextSize="15sp"
+        />
+
 
     <ImageView style="@style/normal_diveline" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="170dp" />
 </LinearLayout>

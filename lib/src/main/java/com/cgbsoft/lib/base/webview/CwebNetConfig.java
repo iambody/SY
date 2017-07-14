@@ -60,11 +60,18 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String selectAdviser;
     // 投资日历
     public static String investeCarlendar;
+    // 资产报告
+    public static String assetReport;
+
+    // 活动详情
+    public static String activitesDeatil;
 
     // 投资人认证
     public static String HOME_URL;
     //私享云 选择投顾页面
     public static String choiceAdviser;
+    //绑定过的角色对呀的投顾界面
+    public static String BindchiceAdiser;
 
     static {
         initApi();
@@ -77,7 +84,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         productPage = baseParentUrl + "/apptie/productlist.html";
         discoverPage = baseParentUrl + "/discover/index.html";
         clubPage = baseParentUrl + "/bank/default.html";
-        pageInit = baseParentUrl + "/setData.html";
+        pageInit = baseSxyParentUrl + "/setData.html";
         productDetail = baseSxyParentUrl + "/biz/product/index.html?id=";
         msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
@@ -99,5 +106,11 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
+        //没绑定过的
+        choiceAdviser= baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        //绑定过的
+        BindchiceAdiser =baseSxyParentUrl + "/biz/adviser/details_bind.html";
+        activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
+        assetReport = baseSxyParentUrl + "/biz/report/index.html";
     }
 }

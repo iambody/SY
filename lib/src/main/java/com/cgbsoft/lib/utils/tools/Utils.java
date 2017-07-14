@@ -29,7 +29,6 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -593,5 +592,15 @@ public class Utils {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(str);
         return m.matches();
+    }
+    /**
+     * 调用系统界面，给指定的号码发送短信
+     *
+     * @param context
+     * @param number
+     */
+    public static void sendSmsWithNumber(Context context, String number) {
+        Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + number));
+        context.startActivity(sendIntent);
     }
 }

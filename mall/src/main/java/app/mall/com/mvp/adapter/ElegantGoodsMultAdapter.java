@@ -41,16 +41,16 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
      * @param data 数据
      * @param isRef 是否是下拉刷新的数据 true 是   false 不是
      */
-    public void addDatas(List<ElegantGoodsBeanInterface> data,boolean isRef){
-        if (null == datas) {
-            datas = new ArrayList<>();
-        }
-        if (isRef) {
-            datas.clear();
-        }
-        datas.addAll(data);
-        notifyDataSetChanged();
-    }
+//    public void addDatas(List<ElegantGoodsBeanInterface> data,boolean isRef){
+//        if (null == datas) {
+//            datas = new ArrayList<>();
+//        }
+//        if (isRef) {
+//            datas.clear();
+//        }
+//        datas.addAll(data);
+//        notifyDataSetChanged();
+//    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {//标题
@@ -126,10 +126,10 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
         return elegantGoodsBeanInterface.getCustomItemType();
     }
 
-    public void clean() {
-        datas.clear();
-        notifyDataSetChanged();
-    }
+//    public void clean() {
+//        datas.clear();
+//        notifyDataSetChanged();
+//    }
 
     class TitleHolder extends RecyclerView.ViewHolder{
 
