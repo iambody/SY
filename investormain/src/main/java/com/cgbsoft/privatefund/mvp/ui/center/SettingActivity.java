@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -96,6 +98,13 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @Override
     protected SettingPresenterImpl createPresenter() {
         return new SettingPresenterImpl(getBaseContext(),this);
+    }
+
+    @OnClick(R.id.exit_login_out)
+    public void LogOut(){
+        Intent intent = new Intent();
+        intent.setAction(Constant.RECEIVER_EXIT_ACTION);
+        BaseApplication.getContext().sendBroadcast(intent);
     }
 
     /**

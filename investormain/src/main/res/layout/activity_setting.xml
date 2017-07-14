@@ -76,6 +76,16 @@
                 app:setting_item_title="@string/setting_item_about_app"
                 >
             </com.cgbsoft.lib.widget.SettingItemNormal>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/exit_login_out"
+                android:layout_marginTop="@dimen/ui_40_dip"
+                android:text="退 出"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_16"
+                android:background="@color/app_golden"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
