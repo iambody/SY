@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -37,7 +38,7 @@ public class RiskEvaluationActivity extends BaseActivity {
     @Override
     protected void before() {
         super.before();
-        url = CwebNetConfig.riskEvaluationQuestion;
+        url = BaseWebNetConfig.evaluation;
     }
 
     @Override

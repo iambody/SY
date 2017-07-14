@@ -23,4 +23,6 @@ public class Contant {
     public static final String LIVE_SHARE_TITLE = String.format("盈泰财富云财富大讲堂正在直播，%s邀请你来一起看！",
             AppManager.getUserInfo(BaseApplication.getContext()).getNickName() != null ? AppManager.getUserInfo(BaseApplication.getContext()).getNickName() : "私募云用户");
 
+    public static final String MEMBER_CENTER_TITLE = "会员中心";
+
 }
