@@ -3,6 +3,8 @@ package app.mall.com.model.impl;
 import com.cgbsoft.lib.base.model.ElegantLivingEntity;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+
 import app.mall.com.model.ElegantLivingModel;
 import app.mall.com.model.ElegantLivingModelListener;
 
@@ -18,6 +20,7 @@ public class ElegantLivingModelImpl implements ElegantLivingModel {
         subscription.add(ApiClient.getElegantLivingObservable(offset).subscribe(new RxSubscriber<ElegantLivingEntity.Result>() {
             @Override
             protected void onEvent(ElegantLivingEntity.Result result) {
+                LogUtils.Log("aaa","living onevent");
                 if (null != result) {
                     listener.onModelSuccess(result);
                 } else {

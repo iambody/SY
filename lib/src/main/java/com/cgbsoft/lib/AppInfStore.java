@@ -338,7 +338,6 @@ public class AppInfStore implements AppinfConstant {
         SPreference.saveUserInfoData(context, userInfo);
     }
 
-
     /**
      * 保存获取的公钥
      */

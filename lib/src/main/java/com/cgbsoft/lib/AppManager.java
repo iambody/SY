@@ -2,6 +2,7 @@ package com.cgbsoft.lib;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
@@ -227,5 +228,16 @@ public class AppManager implements AppinfConstant {
      */
     public static boolean isVisitor(Context context) {
         return getBasePreference(context.getApplicationContext()).getBoolean(VISITOR_KEY, false);
+    }
+
+    /**
+     * 获取手势密码是否打开
+     * @param context
+     * @return
+     */
+    public static boolean getGestureFlag(Context context){
+        UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(context);
+        String gestureSwitch = userInfo.getToC().getGestureSwitch();
+        return !TextUtils.isEmpty(gestureSwitch)&&gestureSwitch.equals("1")?true:false;
     }
 }

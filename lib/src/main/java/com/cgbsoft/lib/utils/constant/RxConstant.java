@@ -73,4 +73,6 @@ public interface RxConstant {
     String LIVE_PDF_SUC = "lice_pdf_suc";
     //跳转到个人中心页面
     String GOTO_MYCENTER_OBSERVABLE = "goto_mycenter_observable";
+    //个人信息页面用到
+    String GOTO_PERSONAL_INFORMATION = "personal_information";
 }

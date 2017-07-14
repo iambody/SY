@@ -1,20 +1,26 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
-import com.chenenyu.router.Router;
+import com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
@@ -32,6 +38,10 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     TextView titleTV;
     @BindView(R.id.sit_gesture_switch)
     SettingItemNormal gestureSwitch;
+    @BindView(R.id.sin_change_gesture_psd)
+    SettingItemNormal changeGesturePsdLayout;
+    @BindView(R.id.sin_change_login_psd)
+    SettingItemNormal changeLoginPsd;
 
     @Override
     protected int layoutID() {
@@ -44,13 +54,44 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+        String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
+        if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
+            changeLoginPsd.setVisibility(View.GONE);
+        } else {
+            changeLoginPsd.setVisibility(View.VISIBLE);
+        }
+        boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+        gestureSwitch.setSwitchCheck(gestureFlag);
+        if (gestureFlag) {//开
+            changeGesturePsdLayout.setVisibility(View.VISIBLE);
+        } else {
+            changeGesturePsdLayout.setVisibility(View.GONE);
+        }
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_title));
-        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
-            NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
-            Toast.makeText(getApplicationContext(),"isChecked==="+isChecked,Toast.LENGTH_SHORT).show();
+        gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
+            @Override
+            public void change(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                } else {
+
+                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                }
+            }
         });
     }
+
+    private void turnOffGesturePsd() {
+        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+    }
+
+    private void turnOnGesturePsd() {
+        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.SET_GESTURE_PASSWORD);
+        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
+        DataStatistApiParam.onSwitchGesturePassword(valuse);
+    }
+
     @OnClick(R.id.title_left)
     public void clickBack(){
         this.finish();
@@ -60,12 +101,19 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         return new SettingPresenterImpl(getBaseContext(),this);
     }
 
+    @OnClick(R.id.exit_login_out)
+    public void LogOut(){
+        LogOutAccount returnLogin = new LogOutAccount();
+        returnLogin.accounttExit(this);
+    }
+
     /**
      * 跳转到修改登录密码页面
      */
     @OnClick(R.id.sin_change_login_psd)
     public void changeLoginPsd(){
-        Router.build(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY).go(SettingActivity.this);
+        Intent intent = new Intent(this, ChangeLoginPsdActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -80,7 +128,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_common_question)
     public void commonQuestion(){
-
+        Intent intent = new Intent(this, SalonsActivity.class);
+        startActivity(intent);
     }
     /**
      * 跳转到意见反馈

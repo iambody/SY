@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_normal_new" />
+
+    <include layout="@layout/acitivity_divide_online" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/invisite_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/real_name" />
+
+            <com.cgbsoft.lib.widget.ClearEditText
+                android:id="@+id/invisite_realname"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <include layout="@layout/acitivity_divide_online" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/invisite_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/centify_type" />
+
+            <com.cgbsoft.lib.widget.ClearEditText
+                android:id="@+id/invisite_certifiy_type"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <include layout="@layout/acitivity_divide_online" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/invisite_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/certify_number" />
+
+            <com.cgbsoft.lib.widget.ClearEditText
+                android:id="@+id/invisite_certifiy_number"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <include layout="@layout/acitivity_divide_online" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/color_5a5a5a"
+            android:id="@+id/invisite_certifiy_prompt"
+            android:text="@string/invisite_account_prompt"
+            android:textSize="@dimen/dimens_sp_14" />
+    </LinearLayout>
+</LinearLayout>
