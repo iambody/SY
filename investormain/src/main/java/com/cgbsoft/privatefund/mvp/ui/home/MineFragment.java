@@ -485,8 +485,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
         viewPager.setOffscreenPageLimit(2);
         List<Fragment> list = new ArrayList<>();
-        setFragmentParams(playlList, list);
-        setFragmentParams(downlList, list);
+        setFragmentParams(playlList, list, true);
+        setFragmentParams(downlList, list, false);
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
@@ -513,10 +513,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
-    private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList) {
+    private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList, boolean isPlay) {
         HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList)valuesList);
+        bundle.putBoolean(HorizontalScrollFragment.IS_VIDEO_PLAY_PARAMS, isPlay);
         scrollFragment.setArguments(bundle);
         fragmentList.add(scrollFragment);
     }

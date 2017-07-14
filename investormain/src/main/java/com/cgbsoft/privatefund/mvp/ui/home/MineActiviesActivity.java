@@ -24,7 +24,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineActivitesContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MineActivitesPresenter;
 
 import java.util.List;
-
 import butterknife.BindView;
 
 /**
@@ -49,7 +48,6 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     //标记第几页的位置
     private int CurrentPostion = 0;
     //标记是否是架子啊更多
-
     private boolean isLoadMore;
 
     @Override

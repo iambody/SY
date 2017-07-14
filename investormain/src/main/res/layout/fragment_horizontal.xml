@@ -14,7 +14,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="@color/app_bg"
         android:scrollbars="none"
         />
 

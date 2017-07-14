@@ -76,12 +76,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/mine_activity_image"
-            android:layout_marginTop="10dp"
             android:scaleType="fitXY"/>
 
         <LinearLayout
