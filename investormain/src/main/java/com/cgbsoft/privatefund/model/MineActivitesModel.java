@@ -38,6 +38,8 @@ public class MineActivitesModel {
 
         private String city;
 
+        private String speaker;
+
         private String liveVideoNo;
 
         private String playbackVideoUrl;
@@ -98,6 +100,14 @@ public class MineActivitesModel {
 
         public void setPlaybackVideoUrl(String playbackVideoUrl) {
             this.playbackVideoUrl = playbackVideoUrl;
+        }
+
+        public String getSpeaker() {
+            return speaker;
+        }
+
+        public void setSpeaker(String speaker) {
+            this.speaker = speaker;
         }
 
         public String getStartTime() {

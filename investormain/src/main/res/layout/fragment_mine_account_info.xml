@@ -66,7 +66,7 @@
         android:textSize="@dimen/dimens_sp_12"
         android:gravity="center"
         android:text="距会员升级还差7倍财富值"
-        android:textColor="@color/account_info_image_text"
+        android:textColor="@color/color_595959"
         android:layout_below="@id/account_info_level_ll"
         android:layout_alignLeft="@id/account_info_level_ll"
         android:layout_marginTop="6dp"/>

@@ -139,7 +139,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-
         baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
 

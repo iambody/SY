@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.model.MineActivitesModel;
 
 import java.util.ArrayList;
@@ -69,17 +67,23 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);
-        LsViewHolder lsViewHolder = new LsViewHolder(view);
+        View view = layoutInflater.inflate(R.layout.item_list_mine_activites, null);
+        MyActivitesHolder myActivitesHolder= new MyActivitesHolder(view);
         view.setOnClickListener(this);
-        return lsViewHolder;
+        return myActivitesHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LsViewHolder lsViewHolder = (LsViewHolder) holder;
+        MyActivitesHolder lsViewHolder = (MyActivitesHolder) holder;
         lsViewHolder.itemView.setTag(position);
         MineActivitesModel.ActivitesItem activitesItem = listModelListdata.get(position);
+        lsViewHolder.textViewCity.setText(activitesItem.getCity());
+        lsViewHolder.textViewTitle.setText(activitesItem.getTitle());
+        lsViewHolder.textViewTime.setText(activitesItem.getStartTime());
+        Imageload.display(ApContext, activitesItem.getMainImage(), lsViewHolder.imageViewLogo);
+        lsViewHolder.textViewSpeaker.setText(activitesItem.getSpeaker());
+//        lsViewHolder.textViewAddress.setText(activitesItem());
     }
 
     @Override
@@ -92,17 +96,24 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         listModelListItemClickListener.onItemClick((int) v.getTag(), listModelListdata.get((int) v.getTag()));
     }
 
-    static class LsViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_fragment_videoschool_image_bg)
-        ImageView Item_fragment_videoschool_image_bg;
-        @BindView(R.id.item_fragment_videoschool_title)
-        TextView Item_fragment_videoschool_title;
-        @BindView(R.id.item_fragment_videoschool_time)
-        TextView Item_fragment_videoschool_time;
-        @BindView(R.id.item_fragment_videoschool_readnum)
-        TextView Item_fragment_videoschool_readnum;
+    static class MyActivitesHolder extends RecyclerView.ViewHolder {
 
-        LsViewHolder(View view) {
+        @BindView(R.id.mine_activites_city)
+        TextView textViewCity;
+        @BindView(R.id.mine_activites_title)
+        TextView textViewTitle;
+        @BindView(R.id.mine_activity_time)
+        TextView textViewTime;
+        @BindView(R.id.mine_activity_speaker)
+        TextView textViewSpeaker;
+        @BindView(R.id.mine_activity_image)
+        ImageView imageViewLogo;
+        @BindView(R.id.mine_activites_status_desc)
+        TextView textViewStatusDesc;
+        @BindView(R.id.mine_play_look)
+        TextView textViewPlayLook;
+
+        MyActivitesHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
