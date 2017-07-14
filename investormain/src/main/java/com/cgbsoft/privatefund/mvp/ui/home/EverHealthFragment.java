@@ -1,17 +1,20 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.Router;
@@ -19,10 +22,8 @@ import com.chenenyu.router.Router;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
-import app.product.com.mvp.ui.ProductFragment;
 
 /**
  *@author chenlong
@@ -124,7 +125,12 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_left://toolbar左边按钮点击事件
-                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,4);
+//                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,4);
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
+                intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的投顾" : "选择投顾");
+                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
                 Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
