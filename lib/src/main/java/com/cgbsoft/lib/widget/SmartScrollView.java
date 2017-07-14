@@ -23,6 +23,7 @@ public class SmartScrollView extends ScrollView {
     public SmartScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mGestureDetector = new GestureDetector(context, new YScrollDetector());
+        setFadingEdgeLength(0);
     }
 
     private ISmartScrollChangedListener mSmartScrollChangedListener;
@@ -102,12 +103,33 @@ public class SmartScrollView extends ScrollView {
      * onInterceptTouchEvent方法是关键，重写这个方法使如果ScrollView有touch事件时不被拦截，
      * 这样只要ScrollView有touch事件优先处理，这样就保证了滑动的流畅。
      */
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return super.onInterceptTouchEvent(ev)
+//                && mGestureDetector.onTouchEvent(ev);
+//    }
+    private float xDistance, yDistance, lastX, lastY;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev)
-                && mGestureDetector.onTouchEvent(ev);
-    }
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                xDistance = yDistance = 0f;
+                lastX = ev.getX();
+                lastY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final float curX = ev.getX();
+                final float curY = ev.getY();
+                xDistance += Math.abs(curX - lastX);
+                yDistance += Math.abs(curY - lastY);
+                lastX = curX;
+                lastY = curY;
+                if (xDistance > yDistance)
+                    return false;
+        }
 
+        return super.onInterceptTouchEvent(ev);
+    }
     class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,

@@ -517,6 +517,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             finish();
             return;
         }
+        AppInfStore.saveIsVisitor(baseContext,true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();

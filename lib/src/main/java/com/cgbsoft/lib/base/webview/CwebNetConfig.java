@@ -99,5 +99,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
+        choiceAdviser= baseSxyParentUrl + "/biz/adviser/assets_basis.html";
     }
 }

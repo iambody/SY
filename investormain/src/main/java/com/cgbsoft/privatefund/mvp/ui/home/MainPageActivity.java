@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +29,6 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -169,7 +166,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
-        initActionPoint();
+//        initActionPoint();
 
         transaction.add(R.id.fl_main_content, mContentFragment);
 
@@ -177,11 +174,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initRxObservable();
 
-//        initUserInfo();
-
-
-        initRongInterface();
-
+        initUserInfo();
 
 //        initPlatformCustomer();
 
@@ -197,6 +190,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             loginLive();
             autoSign();
             initDayTask();
+            initRongInterface();
         }
 
 
@@ -525,24 +519,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
                 }
             });
-//            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
-//                @Override
-//                protected void onEvent(String s) {
-//                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-//                    if (null != conversationList) {
-//                        Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
-//                    }
-//                    if (!((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
-////                            EventBus.getDefault().post(new RefreshKefu());
-//                    }
-//                    ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(true);
-//                }
-//
-//                @Override
-//                protected void onRxError(Throwable error) {
-//                    Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
-//                }
-//            });
+
         }
     }
 

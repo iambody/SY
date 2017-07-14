@@ -30,6 +30,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
@@ -75,7 +76,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @BindView(R.id.view_home_level_str)
     TextView viewHomeLevelStr;
     @BindView(R.id.main_home_swiperefreshlayout)
-    SwipeRefreshLayout mainHomeSwiperefreshlayout;
+    MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
     //邀请码
@@ -217,7 +218,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeVisterLay.setVisibility(View.VISIBLE);
 
 
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
+//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
         } else {//登录模式下并且已经绑定过理财师
             //登录模式
             mainHomeLoginLay.setVisibility(View.VISIBLE);
@@ -225,12 +226,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeVisterLay.setVisibility(View.GONE);
 
             //开始填充登录模式下理财师数据
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
+//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
 
 
         }
         initRxEvent();
-
+//        mainHomeSmartscrollview.getViewTreeObserver().addOnScrollChangedListener(new  ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                mainHomeSwiperefreshlayout.setEnabled(mainHomeSmartscrollview.getScrollY()==0);
+//            }
+//        });
     }
 
     private Observable<LiveInfBean> liveObservable;
@@ -463,6 +469,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.start();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.Log("saassaa", "resume");
+//        mainHomeSmartscrollview.smoothScrollTo(0,20);
+    }
 
     //下拉刷新展示
     @Override
@@ -574,9 +586,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-        @Override
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-            super.setUserVisibleHint(isVisibleToUser);
+        super.setUserVisibleHint(isVisibleToUser);
         LogUtils.Log("sssaa", "首页可见");
         if (getUserVisibleHint()) {
             isVisible = true;

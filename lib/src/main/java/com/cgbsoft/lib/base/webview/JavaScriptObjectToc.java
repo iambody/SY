@@ -42,7 +42,7 @@ public class JavaScriptObjectToc {
         String userId = AppManager.getUserId(context);
         String visiter = AppManager.isVisitor(context) ? "1" : "2";//1是游客模式 2是正常模式
         StringBuffer sb = new StringBuffer();
-        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").append("C").append(":").append(DeviceUtils.getPhoneId(context));
+        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").append("C").append(":").append(DeviceUtils.getPhoneId(context)).append(":").append(AppManager.isInvestor(context) ? "1" : "2");
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }

@@ -104,10 +104,6 @@ public class CWebviewManger {
         } else if (action.contains("toastError")) {
             showToast(action);
 
-        } else if(action.contains("jumpNativeCode")){
-
-            gotoNative(action);
-
         } else if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
         } else if (action.contains("filing")) { // TOB
@@ -328,7 +324,7 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         } else if (action.contains("jumpNativeCode")) {
             jumpNativeCode(action);
-        }else if (action.contains("callPhone")){
+        } else if (action.contains("callPhone")) {
             callPhone(action);
         }
     }
@@ -346,6 +342,7 @@ public class CWebviewManger {
 
     /**
      * 跳转到本地
+     *
      * @param action
      */
     private void gotoNative(String action) {
@@ -353,7 +350,7 @@ public class CWebviewManger {
         try {
             urcodeAction = URLDecoder.decode(action, "utf-8");
             String[] split = urcodeAction.split(":");
-            JumpNativeUtil.SkipNative(context,split[2]);
+            JumpNativeUtil.SkipNative(context, split[2]);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -653,7 +650,7 @@ public class CWebviewManger {
         }
     }
 
-    private void callPhone(String action){
+    private void callPhone(String action) {
         String[] split = action.split(":");
         try {
             final String telephone = URLDecoder.decode(split[2], "utf-8");
