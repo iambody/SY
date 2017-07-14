@@ -61,6 +61,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 投资日历
     public static String investeCarlendar;
 
+    // 活动详情
+    public static String activitesDeatil;
+
     // 投资人认证
     public static String HOME_URL;
     //私享云 选择投顾页面
@@ -99,5 +102,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
+        activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
     }
 }

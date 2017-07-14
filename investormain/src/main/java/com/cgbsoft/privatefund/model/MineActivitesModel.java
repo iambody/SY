@@ -34,7 +34,7 @@ public class MineActivitesModel {
 
         private String title;
 
-        private String mainImage;
+        private String imageUrl;
 
         private String city;
 
@@ -70,12 +70,12 @@ public class MineActivitesModel {
             this.title = title;
         }
 
-        public String getMainImage() {
-            return mainImage;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public void setMainImage(String mainImage) {
-            this.mainImage = mainImage;
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
 
         public String getCity() {

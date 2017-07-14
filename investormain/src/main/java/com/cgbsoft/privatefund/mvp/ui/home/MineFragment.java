@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -496,13 +497,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList) {
-        if (!CollectionUtils.isEmpty(valuesList)) {
-            HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, (ArrayList)valuesList);
-            scrollFragment.setArguments(bundle);
-            fragmentList.add(scrollFragment);
-        }
+        HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList)valuesList);
+        scrollFragment.setArguments(bundle);
+        fragmentList.add(scrollFragment);
     }
 }
 

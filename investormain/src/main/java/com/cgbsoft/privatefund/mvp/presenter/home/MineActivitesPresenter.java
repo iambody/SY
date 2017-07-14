@@ -44,8 +44,7 @@ public class MineActivitesPresenter extends BasePresenterImpl<MineActivitesContr
                     Log.d("MineActivitesPresenter", "----" + s.toString());
                     JSONObject jsonObject = new JSONObject(s);
                     String result = jsonObject.getString("result");
-                    MineActivitesModel mineActivitesModel = new Gson().fromJson(result, new TypeToken<MineActivitesModel>() {
-                    }.getType());
+                    MineActivitesModel mineActivitesModel = new Gson().fromJson(result, new TypeToken<MineActivitesModel>() {}.getType());
 //                    if (mineActivitesModel != null && !CollectionUtils.isEmpty()) {
 //                        getView().requestDataSuccess();
 //                    }

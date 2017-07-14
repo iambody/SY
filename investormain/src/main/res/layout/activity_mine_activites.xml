@@ -7,6 +7,8 @@
     <include
         layout="@layout/title_normal_new"/>
 
+    <include layout="@layout/acitivity_divide_online"/>
+
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
