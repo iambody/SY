@@ -9,11 +9,12 @@ import com.cgbsoft.lib.base.model.GroupInfoEntity;
 import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
+import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -737,7 +738,7 @@ interface RequestManager {
     Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);
 
     // 我的
-    @GET(NetConfig.SXY.GET_MINE)
+    @GET(NetConfig.Mine.GET_MINE)
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
 
     /**
