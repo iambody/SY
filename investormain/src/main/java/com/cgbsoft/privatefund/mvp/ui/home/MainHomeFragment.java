@@ -30,9 +30,11 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
@@ -48,6 +50,8 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -197,6 +201,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
     }
 
+    boolean isBindAdviser;
+    UserInfoDataEntity.UserInfo userInfo;
     /**
      * 配置view各种资源
      */
@@ -209,9 +215,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
 //        showLiveView();
         boolean isVisiter = AppManager.isVisitor(baseActivity);
-        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(baseActivity);
-        boolean isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
-        if (isVisiter || isBindAdviser) {//游客模式下或者没有绑定过理财师需要
+         userInfo = AppManager.getUserInfo(baseActivity);
+        isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
+        if (isVisiter || !isBindAdviser) {//游客模式下或者没有绑定过理财师需要
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
@@ -226,7 +232,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeVisterLay.setVisibility(View.GONE);
 
             //开始填充登录模式下理财师数据
-//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
+            Imageload.display(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv);
 
 
         }
@@ -520,22 +526,44 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //点击消息
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        if (AppManager.isVisitor(baseActivity)) {//游客模式
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {//非游客模式
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
     }
 
     //登录模式点击电话
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
+
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确消", "呼叫") {
+            @Override
+            public void left() {
+                dismiss();
+            }
+
+            @Override
+            public void right() {
+                dismiss();
+                NavigationUtils.startDialgTelephone(baseActivity, userInfo.adviserPhone);
+            }
+        };
+        dialog.show();
     }
 
     //登录模式点击短信
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
+        Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
     }
 
     //登录模式点击聊天
     @OnClick(R.id.main_home_adviser_im)
     public void onMainHomeAdviserImClicked() {
+        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
     }
 
     //非游客模式头像的点击事件
@@ -560,7 +588,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        //游客模式或者未绑定需要跳转到未绑定的
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        //已经绑定过的
+        if (isBindAdviser) {
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
+        }else{
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        }
     }
 
     /**
