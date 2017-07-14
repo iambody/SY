@@ -81,4 +81,7 @@ public class RouteConfig {
     public static final String GOTO_CHANGE_USERGENDER_ACTIVITY="investorn_change_usergendernewc_activity";
     //跳转到C端活动沙龙页面的url
     public static final String GOTO_SALONS_ACTIVITY="investorn_salons_activity";
+
+    //跳转到登录接口
+    public static final String GOTO_LOGIN ="enter_loginactivity";
 }

@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.cgbsoft.lib.widget.MySwipeRefreshLayout
         android:id="@+id/main_home_swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
 
         <com.cgbsoft.lib.widget.SmartScrollView
             android:id="@+id/main_home_smartscrollview"
@@ -20,6 +21,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -338,5 +341,5 @@
 
             </LinearLayout>
         </com.cgbsoft.lib.widget.SmartScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.cgbsoft.lib.widget.MySwipeRefreshLayout>
 </LinearLayout>

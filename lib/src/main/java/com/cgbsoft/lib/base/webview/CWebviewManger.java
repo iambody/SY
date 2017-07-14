@@ -28,9 +28,11 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
@@ -97,8 +99,9 @@ public class CWebviewManger {
     public void setAction(String action) {
 
         LogUtils.Log("webview", action);
-
-        if (action.contains(" app:toastError")) {
+        if (action.contains("visiterGotoLogin")) {
+            gotoVisiterLogin();
+        } else if (action.contains("toastError")) {
             showToast(action);
 
         } else if (action.contains("filingdata")) { // TOB
@@ -323,7 +326,7 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         } else if (action.contains("jumpNativeCode")) {
             jumpNativeCode(action);
-        }else if (action.contains("callPhone")){
+        } else if (action.contains("callPhone")) {
             callPhone(action);
         }
     }
@@ -337,6 +340,33 @@ public class CWebviewManger {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 跳转到本地
+     *
+     * @param action
+     */
+    private void gotoNative(String action) {
+        String urcodeAction = null;
+        try {
+            urcodeAction = URLDecoder.decode(action, "utf-8");
+            String[] split = urcodeAction.split(":");
+            JumpNativeUtil.SkipNative(context, split[2]);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * h5提示需要跳转到登录界面
+     */
+    private void gotoVisiterLogin() {
+//        RouteConfig.GOTO_LOGIN
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("insidegotologin", true);
+        NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
     }
 
     private void opensharepage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
@@ -620,7 +650,7 @@ public class CWebviewManger {
         }
     }
 
-    private void callPhone(String action){
+    private void callPhone(String action) {
         String[] split = action.split(":");
         try {
             final String telephone = URLDecoder.decode(split[2], "utf-8");
@@ -1291,7 +1321,7 @@ public class CWebviewManger {
             String url = split[2];
             String title = split[3];
 //            if (!url.contains("http")) {
-                url = BaseWebNetConfig.SERVER_ADD + url;
+            url = BaseWebNetConfig.SERVER_ADD + url;
 //            } else {
 //                title = split[4];
 //                url = split[2] + ":" + split[3];

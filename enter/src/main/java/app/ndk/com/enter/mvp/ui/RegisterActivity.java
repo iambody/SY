@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -52,8 +51,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @BindView(R2.id.et_ar_username)
     EditText et_ar_username;//用户名
 
-    @BindView(R2.id.iv_ar_del_un)
-    ImageView iv_ar_del_un;//删除用户名
+    @BindView(R2.id.iv_code_del_un)
+    ImageView iv_code_del_un;//删除码
 
     @BindView(R2.id.et_ar_password)
     EditText et_ar_password;//密码
@@ -75,12 +74,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @BindView(R2.id.tv_ar_proto)
     TextView tv_ar_proto;
+
     @BindView(R2.id.private_bank_code)
     EditText privateBankCode;
+    @BindView(R2.id.iv_bank_del_pw)
+    ImageView ivBankDelPw;
 
     private LoadingDialog mLoadingDialog;
-    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true;
-    private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3;
+    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel, isBankCode = true;
+    private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3, BANK_KEY = 4;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
     private DefaultDialog defaultDialog;
@@ -104,7 +106,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         et_ar_username.addTextChangedListener(new RegisterTextWatcher(USERNAME_KEY));
         et_ar_password.addTextChangedListener(new RegisterTextWatcher(PASSWORD_KEY));
         et_ar_check.addTextChangedListener(new RegisterTextWatcher(CHECK_KEY));
-
+        privateBankCode.addTextChangedListener(new RegisterTextWatcher(BANK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.ra_register_loading_str), false, false);
         defaultDialog = new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
@@ -140,12 +142,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 //        toDataStatistics(1002, 10011, "注册手机");
     }
 
-    @OnClick(R2.id.iv_ar_del_un)
+    @OnClick(R2.id.iv_code_del_un)
     void delUsernameClick() {
-        if (et_ar_username.getText().toString().length() > 0) {
-            et_ar_username.setText("");
+        if (et_ar_check.getText().toString().length() > 0) {
+            et_ar_check.setText("");
         }
-        iv_ar_del_un.setVisibility(View.GONE);
+        iv_code_del_un.setVisibility(View.GONE);
     }
 
     @OnClick(R2.id.iv_ar_del_pw)
@@ -257,6 +259,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     }
 
 
+    @OnClick(R2.id.iv_bank_del_pw)
+    public void onViewbanckdelClicked() {
+        if (privateBankCode.getText().toString().length() > 0) {
+            privateBankCode.setText("");
+        }
+        ivBankDelPw.setVisibility(View.GONE);
+    }
+
+
     private class RegisterTextWatcher implements TextWatcher {
         private int which;
 
@@ -274,8 +285,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             boolean isTextHasLength = s.length() > 0;
             switch (which) {
                 case USERNAME_KEY:
-                    isUsernameInput = isTextHasLength;
-                    iv_ar_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
+//                    isUsernameInput = isTextHasLength;
+//                    iv_code_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
                 case PASSWORD_KEY:
                     isPasswordInput = isTextHasLength;
@@ -283,6 +294,11 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                     break;
                 case CHECK_KEY:
                     isCheckInput = isTextHasLength;
+                    iv_code_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
+                    break;
+                case BANK_KEY:
+                    isBankCode = isTextHasLength;
+                    ivBankDelPw.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
             }
         }

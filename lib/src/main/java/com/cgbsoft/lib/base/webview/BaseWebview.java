@@ -106,7 +106,7 @@ public class BaseWebview extends WebView {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
 //        } else {
-//            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 //        }
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");

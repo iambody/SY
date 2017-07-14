@@ -9,12 +9,17 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -75,6 +80,7 @@ public class DatumManageActivity extends BaseActivity {
 
     @OnClick(R.id.datum_manage_account)
     public void gotoAccount(){
+
     }
 
     @OnClick(R.id.datum_manage_risk)
@@ -84,6 +90,11 @@ public class DatumManageActivity extends BaseActivity {
 
     @OnClick(R.id.datum_manage_asset_report)
     public void gotoAssetReport(){
+        String url = CwebNetConfig.assetReport;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_report));
+        NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.datum_manage_asset_certify)
