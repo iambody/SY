@@ -1,20 +1,23 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
-import com.chenenyu.router.Router;
+import com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
@@ -66,7 +69,12 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
             @Override
             public void change(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                } else {
+
                 NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                }
             }
         });
     }
