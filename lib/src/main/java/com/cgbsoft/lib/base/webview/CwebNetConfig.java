@@ -38,6 +38,12 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String invistorCertify;
     // 生活模块尚品列表商品详情
     public static String elegantGoodsDetail;
+    // 沙龙详情
+    public static String salonDetail;
+    // 推荐好友
+    public static String recommendFriends;
+    // 我的二维码
+    public static String myqr;
 
     // 我的订单
     public static String mineGoodsOrder;
@@ -112,5 +118,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         BindchiceAdiser =baseSxyParentUrl + "/biz/adviser/details_bind.html";
         activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
         assetReport = baseSxyParentUrl + "/biz/report/index.html";
+        salonDetail=baseSxyParentUrl +"/biz/indexSecond/active_detail.html?id=";
+        recommendFriends=baseSxyParentUrl +"/biz/mine/mine-recommend.html";
+        myqr=baseSxyParentUrl +"/biz/mine/mine-myCode.html";
     }
 }

@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.R;
@@ -77,12 +81,27 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
         salonsAdapter.setOnItemClickListener(new OldSalonsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, OldSalonsEntity.SalonItemBean bean) {
-
+                //活动详情
+                gotoSalonDetail(bean);
             }
         });
         getPresenter().getOldSalons(offset,limit);
     }
-
+    /**
+     * 跳转到沙龙详情页面
+     * @param bean
+     */
+    private void gotoSalonDetail(OldSalonsEntity.SalonItemBean bean) {
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+        startActivity(intent);
+//        HashMap hashMap = new HashMap();
+//        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+//        hashMap.put(WebViewConstant.push_message_title, bean.getTitle());
+//        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+//        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+    }
     @Override
     protected OldSalonsPresenterImpl createPresenter() {
         return new OldSalonsPresenterImpl(baseContext,this);
