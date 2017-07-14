@@ -107,6 +107,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
             offset=offset<=0?0:offset;
             if (oldSalons.size() == 0) {
                 isOver=true;
+                mRefreshLayout.setLoadMoreEnabled(false);
             }
             return;
         }
@@ -136,6 +137,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
 
     @Override
     public void onRefresh() {
+        mRefreshLayout.setLoadMoreEnabled(true);
         offset=0;
         mRefreshLayout.setLoadMoreEnabled(false);
         getPresenter().getOldSalons(offset,limit);
