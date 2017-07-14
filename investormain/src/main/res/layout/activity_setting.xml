@@ -81,10 +81,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/exit_login_out"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="@dimen/ui_40_dip"
+                android:layout_marginBottom="@dimen/ui_40_dip"
                 android:text="退 出"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimens_sp_16"
+                android:textSize="@dimen/dimens_sp_24"
                 android:background="@color/app_golden"/>
         </LinearLayout>
     </ScrollView>
