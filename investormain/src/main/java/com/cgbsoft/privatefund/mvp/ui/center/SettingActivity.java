@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
@@ -32,6 +33,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     TextView titleTV;
     @BindView(R.id.sit_gesture_switch)
     SettingItemNormal gestureSwitch;
+    @BindView(R.id.sin_change_gesture_psd)
+    SettingItemNormal changeGesturePsdLayout;
 
     @Override
     protected int layoutID() {
@@ -44,15 +47,37 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+        boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+        gestureSwitch.setSwitchCheck(gestureFlag);
+        if (gestureFlag) {//开
+            changeGesturePsdLayout.setVisibility(View.VISIBLE);
+        } else {
+            changeGesturePsdLayout.setVisibility(View.GONE);
+        }
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_title));
         gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
             @Override
             public void change(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(),"isChecked==="+isChecked,Toast.LENGTH_SHORT).show();
+                if (isChecked) {//开
+                    turnOnGesturePsd();
+                } else {
+                    turnOffGesturePsd();
+                }
             }
         });
     }
+
+    private void turnOffGesturePsd() {
+        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+    }
+
+    private void turnOnGesturePsd() {
+        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.SET_GESTURE_PASSWORD);
+        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
+        DataStatistApiParam.onSwitchGesturePassword(valuse);
+    }
+
     @OnClick(R.id.title_left)
     public void clickBack(){
         this.finish();
@@ -75,7 +100,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_change_gesture_psd)
     public void changeGesturePsd(){
-
+        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
+        DataStatistApiParam.onModifyGesturePassword();
     }
     /**
      * 跳转到常见问题

@@ -37,7 +37,6 @@
                 app:setting_item_title="@string/setting_item_gesture_pwd"
                 >
             </com.cgbsoft.lib.widget.SettingItemNormal>
-
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_gesture_psd"
                 android:layout_width="match_parent"

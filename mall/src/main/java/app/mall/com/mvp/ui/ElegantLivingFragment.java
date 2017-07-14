@@ -79,7 +79,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             }
         });
         getPresenter().getElegantLivingBanners(pageNo);
-        mRefreshLayout.setRefreshing(true);
+//        mRefreshLayout.setRefreshing(true);
     }
 
     private void gotoBannerDetail(ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {

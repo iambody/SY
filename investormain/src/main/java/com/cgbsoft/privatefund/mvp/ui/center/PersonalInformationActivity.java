@@ -27,11 +27,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.CircleImageView;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.BuildConfig;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
@@ -58,6 +67,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * 个人信息页面
@@ -66,6 +76,8 @@ import butterknife.OnClick;
 @Route(RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY)
 public class PersonalInformationActivity extends BaseActivity<PersonalInformationPresenterImpl> implements PersonalInformationContract
         .PersonalInformationView {
+    private static final int REQUEST_CODE_TO_CHANGE_ANME = 1002;
+    private static final int REQUEST_CODE_TO_CHANGE_GENDER = 1003;
     @BindView(R.id.title_left)
     ImageView back;
     @BindView(R.id.title_mid)
@@ -80,6 +92,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     TextView userAddress;
     private Dialog mHeadIconDialog;
     private String mPhotoPath;
+    @BindView(R.id.tv_personal_num)
+    TextView userNum;
+    @BindView(R.id.tv_personal_name)
+    TextView userName;
+    @BindView(R.id.tv_personal_gender)
+    TextView userGender;
+
     /**
      * 更新头像，拍照REQUEST_CODE
      */
@@ -103,11 +122,21 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private int mMonth;
     private int mDay;
     private Calendar calendar;
+    private UserInfoDataEntity.UserInfo userInfo;
+    private LoadingDialog mLoadingDialog;
+    private Observable<Integer> uploadIcon;
 
     private void startPermissionsActivity() {
         PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
-
+    @OnClick(R.id.rl_username_all)
+    public void changeUserName(){
+        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
+    }
+    @OnClick(R.id.rl_usergender_all)
+    public void changeUserGender(){
+        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
+    }
     @OnClick(R.id.title_left)
     public void clickBack() {
         this.finish();
@@ -136,24 +165,65 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     protected void init(Bundle savedInstanceState) {
         initView(savedInstanceState);
+        userInfo = AppManager.getUserInfo(baseContext);
         initHeadIconDialog();
     }
 
     private void initView(Bundle savedInstanceState) {
-        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
+        uploadIcon = RxBus.get().register(RxConstant.GOTO_PERSONAL_INFORMATION, Integer.class);
+        uploadIcon.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                switch (integer) {
+                    case 1:
+                        //上传头像成功
+                        uploadRemotePath();
+                        break;
+                    case 2:
+                        //上传头像失败
+                        hideLoadDialog();
+                        Toast.makeText(getApplicationContext(), "上传头像失败", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         calendar = Calendar.getInstance();
-        String format = simpleDateFormat.format(calendar.getTime());
-        userDate.setText(format);
+//        String format = simpleDateFormat.format(calendar.getTime());
+//        userDate.setText(format);
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
+        if (null != userInfo) {
+            String phoneNum = userInfo.getPhoneNum();
+            if (!TextUtils.isEmpty(phoneNum)) {
+                    phoneNum = phoneNum.substring(0, 3).concat("****").concat(phoneNum.substring(7));
+            }
+            userNum.setText(phoneNum);
+
+            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
+
+            userName.setText(userInfo.getToC().getAdviserRealName());
+
+            userGender.setText(userInfo.getSex());
+
+            userDate.setText(userInfo.getBirthday());
+        }
+
+
     }
 
     @Override
     protected PersonalInformationPresenterImpl createPresenter() {
-        return null;
+        return new PersonalInformationPresenterImpl(baseContext,this);
     }
 
     /**
@@ -277,10 +347,52 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath);//Bimp.revitionImageSizeHalf(filepath);
                 bitmap = Bimp.rotateBitmap(bitmap, mPhotoPath);// 处理某些手机图片旋转问题
                 iconImg.setImageBitmap(bitmap);
+                updateLoadIcon();
             }
         } else if (requestCode == REQUEST_CODE) {
             mHeadIconDialog.show();
+        } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
+            if (null != userInfo) {
+                userName.setText(userInfo.getToC().getAdviserRealName());
+            }
+        } else if (requestCode==REQUEST_CODE_TO_CHANGE_GENDER) {
+            String gender = data.getStringExtra("gender");
+            userGender.setText(gender);
+            getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getToC().getAdviserRealName():"",gender,null!=userInfo?userInfo.getBirthday():"");
         }
+    }
+
+    /**
+     * 上传头像
+     */
+    private void updateLoadIcon() {
+
+        getPresenter().uploadIcon(mPhotoPath);
+//        showLoadDialog();
+//        new Thread(() -> {
+//            String newTargetFile = com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.compressFileToUpload(mPhotoPath, false);
+//            imageId = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_USERICONNEWC_TYPE);
+//            com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.deleteFile(newTargetFile);
+//            if (!TextUtils.isEmpty(imageId)) {
+//                uploadRemotePath(imageId);
+//            } else {
+//                iconImg.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        hideLoadDialog();
+//                        Toast.makeText(getApplicationContext(), "上传头像失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        }).start();
+    }
+
+    /**
+     * 上传头像的远程路径给服务端
+     */
+    private void uploadRemotePath() {
+        String userId = AppManager.getUserId(baseContext);
+        getPresenter().uploadRemotePath(userId);
     }
 
     private void deletePhoto() {    // 删除相机拍摄的照片
@@ -375,8 +487,17 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 calendar.set(year, month, dayOfMonth);
                 String format = simpleDateFormat.format(calendar.getTime());
                 userDate.setText(format);
+                updateServerDate(format);
             }
         }, mYear, mMonth, mDay).show();
+    }
+
+    /**
+     * 向服务端更新用户生日
+     * @param format
+     */
+    private void updateServerDate(String format) {
+        getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getToC().getAdviserRealName():"",null!=userInfo?userInfo.getSex():"",format);
     }
 
     @OnClick(R.id.rl_show_address)
@@ -448,5 +569,51 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         });
         dialogAddress.show();
+    }
+
+    @Override
+    public void showLoadDialog() {
+        if (mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.show();
+    }
+
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
+    }
+
+    @Override
+    public void updateSuccess() {
+        if (null != userInfo) {
+            String newUserDate = userDate.getText().toString();
+            String newUserGender = userGender.getText().toString();
+            userInfo.setBirthday(newUserDate);
+            userInfo.setSex(newUserGender);
+            AppInfStore.saveUserInfo(baseContext,userInfo);
+        }
+    }
+
+    @Override
+    public void updateError(Throwable error) {
+        userDate.setText(null!=userInfo?userInfo.getBirthday():"");
+        userDate.setText(null!=userInfo?userInfo.getSex():"");
+
+    }
+
+    @Override
+    public void uploadImgSuccess(String imageId) {
+        if (null != userInfo) {
+            userInfo.setHeadImageUrl(imageId);
+            AppInfStore.saveUserInfo(baseContext,userInfo);
+        }
+    }
+
+    @Override
+    public void uploadImgError(Throwable error) {
+        if (null != userInfo) {
+            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
+        }
     }
 }

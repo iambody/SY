@@ -2,13 +2,17 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.ChangePsdContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.ChangePsdPresenterImpl;
@@ -34,6 +38,8 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     EditText newConfirm;
     @BindView(R.id.til_psd_old)
     TextInputLayout tilOldPsd;
+    private LoadingDialog mLoadingDialog;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_changelogin_psd;
@@ -47,14 +53,66 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     }
 
     private void initView(Bundle savedInstanceState) {
+//        AppManager.getu
+        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
     }
 
     @Override
     protected ChangePsdPresenterImpl createPresenter() {
-        return null;
+        return new ChangePsdPresenterImpl(baseContext,this);
     }
     @OnClick(R.id.title_left)
     public void clickBack(){
         this.finish();
+    }
+
+    /**
+     * 修改登录密码
+     */
+    @OnClick(R.id.bt_change_psd)
+    public void submitChangeRequest(){
+        String oldPsdStr = oldPsd.getText().toString();
+        String newPsdStr = newPsd.getText().toString();
+        String newConfirm = this.newConfirm.getText().toString();
+        if (TextUtils.isEmpty(oldPsdStr)) {
+            showToast("请输入原始密码");
+            return;
+        }
+        if (TextUtils.isEmpty(newPsdStr)) {
+            showToast("请输入新密码");
+            return;
+        }
+        if (TextUtils.isEmpty(newConfirm)) {
+            showToast("请确认新密码");
+            return;
+        }
+        if (!newPsdStr.equals(newConfirm)) {
+            showToast("二次新密码不一致,请确认新密码");
+            return;
+        }
+        getPresenter().submitChangeRequest(AppManager.getUserId(baseContext),oldPsdStr,newConfirm);
+    }
+    private void showToast(String content){
+        Toast.makeText(getApplicationContext(),content,Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void showLoadDialog() {
+        mLoadingDialog.show();
+    }
+
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
+    }
+
+    @Override
+    public void changePsdSuccess() {
+        showToast("登录密码修改成功");
+        this.finish();
+    }
+
+    @Override
+    public void changePsdError(Throwable error) {
+        showToast(error.toString());
     }
 }

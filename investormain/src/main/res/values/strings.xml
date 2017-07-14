@@ -143,7 +143,11 @@
     <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
     <!-- 个人信息页面用到 -->
     <string name="personal_information_title">我的信息</string>
+    <string name="personal_information_title_changename">真实姓名</string>
+    <string name="personal_information_title_changegender">性别</string>
     <string name="camera_cancel">取消</string>
+    <string name="salons_activities">活动沙龙</string>
+    <string name="oldsalons_activities">过往活动</string>
 
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云dou</string>
@@ -166,11 +170,12 @@
     <string name="account_order_all">全部</string>
     <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
     <string name="account_health_go_server">去看服务</string>
+    <string name="setting_title">设置</string>
 
-   <!-- <string name="account_bank_cunxun_assert">续存资产(%s)</string>
-    <string name="account_bank_zhaiquan_assert">债权(%1%s)-%2$s</string>
-    <string name="account_bank_guquan_assert">股权(%1%s)-%2$s</string>
--->
+    <!-- <string name="account_bank_cunxun_assert">续存资产(%s)</string>
+     <string name="account_bank_zhaiquan_assert">债权(%1%s)-%2$s</string>
+     <string name="account_bank_guquan_assert">股权(%1%s)-%2$s</string>
+ -->
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>
         <item>观看下载记录</item>

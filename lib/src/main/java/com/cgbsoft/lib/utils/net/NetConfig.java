@@ -319,4 +319,13 @@ public class NetConfig {
         static final String GETGOODSFIRST = API_URL + elegantLiving + "/listhotgoods";
         static final String GETGOODSMORE = API_URL + elegantLiving + "/category";
     }
+    static class ChangePsd{
+        static final String CHANGE_PSD = AUTH_URL + "/user/updatePassword";
+        static final String UPDATE_USERINFO = AUTH_URL + "/user/updateUserInfo";
+        static final String UPDATE_USERICON = AUTH_URL + "/user/uploadUserImage";
+    }
+    static class Salon{
+        static final String UPDATE_SALON_AND_CITY = API_URL + "/salons/main";
+        static final String UPDATE_SALON = API_URL + "/salons";
+    }
 }

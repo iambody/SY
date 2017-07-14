@@ -272,9 +272,25 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.SettingActivity"
             android:screenOrientation="portrait" />
-        <!-- 设置页面-->
+        <!-- 个人信息页面-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.PersonalInformationActivity"
+            android:screenOrientation="portrait" />
+        <!-- 活动沙龙页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 活动沙龙页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.home.OldSalonsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改用户名页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeNameActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改用户性别页面-->
+        <activity
+            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeGenderActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.PermissionsActivity"

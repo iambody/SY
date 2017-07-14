@@ -72,6 +72,18 @@
         android:text=""
         android:textColor="@color/black"
         android:textSize="15sp" />
+    <TextView
+        android:id="@+id/title_right_newc"
+        android:layout_width="@dimen/ui_44_dip"
+        android:layout_height="@dimen/ui_44_dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/ui_5_dip"
+        android:text="确定"
+        android:textColor="@drawable/change_name_selector"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/title_right2"
@@ -84,5 +96,27 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:visibility="gone"/>
-
+    <LinearLayout
+        android:id="@+id/ll_salon_city_all"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/salon_address_flag"
+            />
+        <TextView
+            android:id="@+id/tv_salon_city"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="北京"
+            />
+    </LinearLayout>
 </RelativeLayout>
