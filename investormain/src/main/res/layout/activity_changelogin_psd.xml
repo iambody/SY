@@ -24,6 +24,7 @@
         <EditText
             android:id="@+id/et_psd_old"
             style="@style/edit_text_style_changepsd"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
             android:hint="原密码"
             />
@@ -48,6 +49,7 @@
         <EditText
             android:id="@+id/et_psd_new"
             style="@style/edit_text_style_changepsd"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
             android:hint="新密码"
             />
@@ -71,6 +73,7 @@
         <EditText
             android:id="@+id/et_psd_confirm_new"
             style="@style/edit_text_style_changepsd"
+            android:textColor="@color/black"
             android:textCursorDrawable="@drawable/text_cursor_drawe"
             android:hint="确认新密码"
             />
@@ -83,6 +86,7 @@
         android:layout_marginRight="20dp"
         />
     <Button
+        android:id="@+id/bt_change_psd"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_44_dip"
         android:layout_marginTop="50dp"

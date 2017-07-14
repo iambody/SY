@@ -8,6 +8,22 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
  */
 
 public interface PersonalInformationContract {
-    interface PersonalInformationView extends BaseView{}
-    interface PersonalInformationPresenter extends BasePresenter{}
+    interface PersonalInformationView extends BaseView{
+        /**
+         * 显示loading弹窗
+         */
+        void showLoadDialog();
+        /**
+         * 隐藏loading弹窗
+         */
+        void hideLoadDialog();
+        void updateSuccess();
+        void updateError(Throwable error);
+        void uploadImgSuccess(String imgRemotePath);
+        void uploadImgError(Throwable error);
+    }
+    interface PersonalInformationPresenter extends BasePresenter{
+        void updateUserInfoToServer(String userName, String gender, String birthday);
+        void uploadRemotePath(String adviserId);
+    }
 }

@@ -55,15 +55,14 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     private List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categoryDatas=new ArrayList<>();
     private List<ElegantGoodsBeanInterface> prosDatas=new ArrayList<>();
     private LoadingDialog mLoadingDialog;
-    private int offset=0;
-    private int offsetMore=0;
+//    private int offset=0;
+//    private int offsetMore=0;
     private final String CATEGORY_ALL = "300200";
     private String category = CATEGORY_ALL;//记录被点击的分类标记，默认是全部分类
     private ElegantGoodsRecyclerAdapter categoryAdapter;
     private ElegantGoodsMultAdapter proAdapter;
     private boolean isOver;//是否已经加载全部数据
-    private boolean isCategorySelect;//是否是选择分类后去请求的数据
-    private boolean hasBeRefreshed=false;
+//    private boolean isCategorySelect;//是否是选择分类后去请求的数据
 
     @Override
     protected int layoutID() {
@@ -90,6 +89,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
         mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setLoadMoreEnabled(false);
         DividerGridItemDecoration dividerGridItemDecoration = new DividerGridItemDecoration(baseActivity, R.drawable.elegant_divider);
         recyclerViewPros.addItemDecoration(dividerGridItemDecoration);
         recyclerViewPros.setHasFixedSize(true);
@@ -169,16 +169,15 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      * @param posBean
      */
     private void loadCategory(ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
-        offsetMore=0;
+        mRefreshLayout.setLoadMoreEnabled(false);
         category=posBean.getCode();
         isOver=false;
 //        LogUtils.Log("aaa","click item is==="+category);
-        proAdapter.clean();
+        prosDatas.clear();
         if (category.equals(CATEGORY_ALL)) {
-            getPresenter().getElegantGoodsFirst(offset);
+            getPresenter().getElegantGoodsFirst(prosDatas.size());
         } else {
-            isCategorySelect=true;
-            getPresenter().getElegantGoodsMore(offsetMore,category);
+            getPresenter().getElegantGoodsMore(prosDatas.size(),category);
         }
     }
 
@@ -187,7 +186,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     protected void loadData() {
-        getPresenter().getElegantGoodsFirst(offset);
+        getPresenter().getElegantGoodsFirst(prosDatas.size());
 //        setIsLoad(false);
     }
 
@@ -209,34 +208,22 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     @Override
     public void updateUi(List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categorys,List<ElegantGoodsBeanInterface> result) {
         clodLsAnim(mRefreshLayout);
+        mRefreshLayout.setLoadMoreEnabled(true);
         categoryAdapter.setDatas(categorys);
-        proAdapter.addDatas(result,true);
-        hasBeRefreshed=true;
+        prosDatas.clear();
+        prosDatas.addAll(result);
+        proAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void updateUiMore(List<ElegantGoodsBeanInterface> allRows) {
+        mRefreshLayout.setLoadMoreEnabled(true);
         clodLsAnim(mRefreshLayout);
-        if (null == allRows||allRows.size() == 0) {
-            offsetMore-=LOAD_ELEGANT_GOODS_MORE_lIMIT;
-            offsetMore=offsetMore<=0?0:offsetMore;
-            if (allRows.size() == 0) {
+            if (allRows.size() == 0||allRows.size() < Constant.LOAD_ELEGANT_GOODS_MORE_lIMIT) {
                 isOver=true;
             }
-            return;
-        }
-        if (allRows.size() < Constant.LOAD_ELEGANT_GOODS_MORE_lIMIT) {
-            isOver=true;
-        }
-        boolean isRef;
-        if (isCategorySelect||offsetMore == 0) {
-            proAdapter.addDatas(allRows, true);
-            isCategorySelect = false;
-            isRef=true;
-        } else {
-            isRef=false;
-            proAdapter.addDatas(allRows, false);
-        }
+        prosDatas.addAll(allRows);
+        proAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -250,9 +237,6 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 //        LogUtils.Log("aaa","click item is not 300200---updateMoreError");
         showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
-        if (isCategorySelect) {
-            isCategorySelect=false;
-        }
     }
 
     /**
@@ -260,12 +244,13 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onRefresh() {
+        mRefreshLayout.setLoadMoreEnabled(false);
         isOver=false;
+        prosDatas.clear();
         if (category.equals(CATEGORY_ALL)) {
-            getPresenter().getElegantGoodsFirst(offset);
+            getPresenter().getElegantGoodsFirst(prosDatas.size());
         } else {
-            offsetMore=0;
-            getPresenter().getElegantGoodsMore(offsetMore,category);
+            getPresenter().getElegantGoodsMore(prosDatas.size(),category);
         }
     }
 
@@ -274,16 +259,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
      */
     @Override
     public void onLoadMore() {
-        if (!hasBeRefreshed) {
-            clodLsAnim(mRefreshLayout);
-            return;
-        }
         if (isOver) {
             Toast.makeText(baseActivity.getApplicationContext(),"已经加载全部",Toast.LENGTH_SHORT).show();
             clodLsAnim(mRefreshLayout);
             return;
         }
-        offsetMore+=LOAD_ELEGANT_GOODS_MORE_lIMIT;
-        getPresenter().getElegantGoodsMore(offsetMore,category);
+//        offsetMore+=LOAD_ELEGANT_GOODS_MORE_lIMIT;
+        getPresenter().getElegantGoodsMore(prosDatas.size(),category);
     }
 }
