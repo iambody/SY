@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @OnClick(R.id.sin_recommend_friend)
     public void recommendFriend(){
         Intent intent = new Intent(this, BaseWebViewActivity.class);
-        intent.putExtra((WebViewConstant.push_message_url,CwebNetConfig.recommendFriends);
+        intent.putExtra(WebViewConstant.push_message_url,CwebNetConfig.recommendFriends);
         startActivity(intent);
 //        Intent intent = new Intent(this, PersonalInformationActivity.class);
 //        startActivity(intent);
