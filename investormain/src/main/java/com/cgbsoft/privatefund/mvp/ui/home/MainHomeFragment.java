@@ -30,6 +30,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
@@ -55,7 +56,7 @@ import rx.Observable;
  * 日期 2017/6/26-21:06
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
-public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
+    public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
 
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
@@ -75,7 +76,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
     @BindView(R.id.view_home_level_str)
     TextView viewHomeLevelStr;
     @BindView(R.id.main_home_swiperefreshlayout)
-    SwipeRefreshLayout mainHomeSwiperefreshlayout;
+    MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
     //邀请码
@@ -217,7 +218,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             mainHomeVisterLay.setVisibility(View.VISIBLE);
 
 
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
+//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
         } else {//登录模式下并且已经绑定过理财师
             //登录模式
             mainHomeLoginLay.setVisibility(View.VISIBLE);
@@ -225,12 +226,17 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             mainHomeVisterLay.setVisibility(View.GONE);
 
             //开始填充登录模式下理财师数据
-            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
+//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeAdviserInfIv);
 
 
         }
         initRxEvent();
-
+//        mainHomeSmartscrollview.getViewTreeObserver().addOnScrollChangedListener(new  ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                mainHomeSwiperefreshlayout.setEnabled(mainHomeSmartscrollview.getScrollY()==0);
+//            }
+//        });
     }
 
     private Observable<LiveInfBean> liveObservable;
@@ -240,11 +246,14 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
      */
     private void initRxEvent() {
         //直播状态监听
-        liveObservable= RxBus.get().register(LIVERXOBSERBER_TAG,LiveInfBean.class);
+        liveObservable = RxBus.get().register(LIVERXOBSERBER_TAG, LiveInfBean.class);
         liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
             @Override
             protected void onEvent(LiveInfBean liveInfBean) {
+                if (liveInfBean.isLiveing) {//直播中
 
+                } else {//没直播
+                }
             }
 
             @Override
@@ -460,6 +469,12 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         animationSet.start();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.Log("saassaa", "resume");
+//        mainHomeSmartscrollview.smoothScrollTo(0,20);
+    }
 
     //下拉刷新展示
     @Override
@@ -571,9 +586,10 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
         }
     }
 
-    //    @Override
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.Log("sssaa", "首页可见");
         if (getUserVisibleHint()) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页可见");
@@ -583,7 +599,7 @@ public static final String LIVERXOBSERBER_TAG="rxobserlivetag";
             LogUtils.Log("sssaa", "首页不可见");
             mainHomeBannerview.pause();
         }
-        super.setUserVisibleHint(isVisibleToUser);
+
     }
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {

@@ -72,7 +72,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         videoNavigationAdapter = new VideoNavigationsAdapter(baseActivity, new ArrayList<>());
 
         commonNavigator.setAdapter(videoNavigationAdapter);
-
+        commonNavigator.setSmoothScroll(true);
+        commonNavigator.setAdjustMode(true);
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
@@ -165,8 +166,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 @Override
                 public void onSelected(int i, int i1) {//被选中
                     Imageload.display(adapterContext, videoCategory.prelog, imageView);
-
-
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
                 }
 

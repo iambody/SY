@@ -125,7 +125,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
 //            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
 //            btn_af_next.setTextColor(0xffffffff);
 //        }
-        et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
+//        et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
         defaultDialog = new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
@@ -158,8 +158,8 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
      */
     @OnClick(R2.id.iv_af_del_un)
     void delUsernameClick() {
-        if (et_af_username.getText().toString().length() > 0) {
-            et_af_username.setText("");
+        if (et_af_check.getText().toString().length() > 0) {
+            et_af_check.setText("");
         }
         iv_af_del_un.setVisibility(View.GONE);
     }
@@ -279,11 +279,11 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             boolean isTextHasLength = s.length() > 0;
             switch (which) {
                 case USERNAME_KEY:
-                    isUsernameInput = isTextHasLength;
-                    iv_af_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
+
                     break;
                 case CHECK_KEY:
-                    isCheckInput = isTextHasLength;
+                    isUsernameInput = isTextHasLength;
+                    iv_af_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
             }
         }

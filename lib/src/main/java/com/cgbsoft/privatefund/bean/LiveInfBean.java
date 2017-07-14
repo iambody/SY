@@ -8,4 +8,5 @@ package com.cgbsoft.privatefund.bean;
 public class LiveInfBean {
     public String title;
     public String image;
+    public boolean isLiveing;
 }

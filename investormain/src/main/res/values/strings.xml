@@ -143,7 +143,11 @@
     <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
     <!-- 个人信息页面用到 -->
     <string name="personal_information_title">我的信息</string>
+    <string name="personal_information_title_changename">真实姓名</string>
+    <string name="personal_information_title_changegender">性别</string>
     <string name="camera_cancel">取消</string>
+    <string name="salons_activities">活动沙龙</string>
+    <string name="oldsalons_activities">过往活动</string>
 
     <!-- 资料管理 -->
     <string name="datum_manage_title">资料管理</string>
@@ -188,6 +192,7 @@
     <string name="account_order_all">全部</string>
     <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
     <string name="account_health_go_server">去看服务</string>
+    <string name="setting_title">设置</string>
     <string name="phone">电话</string>
     <string name="mms">短信</string>
     <string name="conversation">对话</string>

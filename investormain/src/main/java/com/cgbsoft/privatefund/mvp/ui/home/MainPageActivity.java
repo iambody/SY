@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +29,6 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -168,7 +165,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
-        initActionPoint();
+//        initActionPoint();
 
         transaction.add(R.id.fl_main_content, mContentFragment);
 
@@ -176,11 +173,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initRxObservable();
 
-//        initUserInfo();
-
-
-        initRongInterface();
-
+        initUserInfo();
 
 //        initPlatformCustomer();
 
@@ -196,6 +189,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             loginLive();
             autoSign();
             initDayTask();
+            initRongInterface();
         }
     }
 
@@ -304,46 +298,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        }
     }
 
-//    //    @Override
-//    public void onCloudMenuClick(int position) {
-//        switch (position) {
-//            case 0://呼叫投资顾问
-//                NavigationUtils.startDialgTelephone(this, AppManager.getUserInfo(this).getAdviserPhone());
-//                bottomNavigationBar.closeCloudeMenu();
-//                DataStatistApiParam.onStatisToCMenuCallCustom();
-//                break;
-//            case 1://对话
-//                RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(this).getToC().getBandingAdviserId(), AppManager.getUserInfo(this).getAdviserRealName());
-//                bottomNavigationBar.closeCloudeMenu();
-//                DataStatistApiParam.onStatisToCMenuCallDuihua();
-//                break;
-//            case 2://直播
-//                if (!hasLive) {
-//                    Intent i = new Intent(this, BaseWebViewActivity.class);
-//                    i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.mineTouGu);
-//                    i.putExtra(WebViewConstant.push_message_title, "我的投顾");
-//                    startActivityForResult(i, 300);
-//
-//                } else {
-//                    Intent intent = new Intent(this, LiveActivity.class);
-//                    intent.putExtra("liveJson", liveJsonData.toString());
-//                    startActivity(intent);
-//                }
-//                DataStatistApiParam.onStatisToCMenuZhibo();
-//                bottomNavigationBar.closeCloudeMenu();
-//                break;
-//            case 3://短信
-//                NavigationUtils.startDialogSendMessage(this, AppManager.getUserInfo(this).getAdviserPhone());
-//                bottomNavigationBar.closeCloudeMenu();
-//                DataStatistApiParam.onStatisToCMenuMessage();
-//                break;
-//            case 4://客服
-//                RongIM.getInstance().startPrivateChat(this, "dd0cc61140504258ab474b8f0a38bb56", "平台客服");
-//                bottomNavigationBar.closeCloudeMenu();
-//                DataStatistApiParam.onStatisToCMenuKefu();
-//                break;
-//        }
-//    }
 
     @Override
     protected void onRestart() {
@@ -561,24 +515,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
                 }
             });
-//            ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(this)).subscribe(new RxSubscriber<String>() {
-//                @Override
-//                protected void onEvent(String s) {
-//                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-//                    if (null != conversationList) {
-//                        Log.i("ConnectRongYun", "7 RongYun conversationList size= " + conversationList.size());
-//                    }
-//                    if (!((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
-////                            EventBus.getDefault().post(new RefreshKefu());
-//                    }
-//                    ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(true);
-//                }
-//
-//                @Override
-//                protected void onRxError(Throwable error) {
-//                    Log.e("MainPageActivity", "----platformcustomer=" + error.getMessage());
-//                }
-//            });
+
         }
     }
 
@@ -730,6 +667,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (hasLive) {//有直播
             liveJsonData = jsonObject;
             LiveInfBean liveInfBean = new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
+            liveInfBean.isLiveing = true;
+            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
 //            liveDialog.setVisibility(View.VISIBLE);
 //            Animation animation = AnimationUtils.loadAnimation(
 //                    this, R.anim.live_dialog_anim);
@@ -742,6 +681,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            }
 
         } else {
+            LiveInfBean liveInfBeanerr = new LiveInfBean();
+            liveInfBeanerr.isLiveing = false;
+            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
 //            liveJsonData = null;
 //            liveDialog.setVisibility(View.GONE);
 //            liveDialog.clearAnimation();
