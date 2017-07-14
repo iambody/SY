@@ -19,5 +19,10 @@ public class BaseWebNetConfig extends NetConfig {
     //测跳的产品详细跳转到资讯页面
     public static String detailToZiXun=baseParentUrl+"apptie/new_detail_toc.html?id=";
 
+    //绑定理财师
     public static String bindAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+
+    //风险测评
+    public static String evaluation = baseSxyParentUrl + "/biz/assesment/index.html";
+
 }

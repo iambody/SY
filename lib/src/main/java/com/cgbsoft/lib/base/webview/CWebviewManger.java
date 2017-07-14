@@ -319,6 +319,21 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
         } else if (action.contains("rootPage")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        } else if (action.contains("jumpNativeCode")) {
+            jumpNativeCode(action);
+        }else if (action.contains("callPhone")){
+            callPhone(action);
+        }
+    }
+
+    private void jumpNativeCode(String action) {
+        try {
+            String urlcodeAction = URLDecoder.decode(action, "utf-8");
+            String[] split = urlcodeAction.split(":");
+            String codeStr = split[1];
+            NavigationUtils.jumpNativePage(context, Integer.decode(codeStr));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -332,7 +347,6 @@ public class CWebviewManger {
      * @param action
      */
     private void gotoScretPdf(String action) {
-
         try {
             String urcodeAction = URLDecoder.decode(action, "utf-8");
             String[] split = urcodeAction.split(":");
@@ -605,6 +619,35 @@ public class CWebviewManger {
             e.printStackTrace();
         }
     }
+
+    private void callPhone(String action){
+        String[] split = action.split(":");
+        try {
+            final String telephone = URLDecoder.decode(split[2], "utf-8");
+            String text = URLDecoder.decode(split[3], "utf-8");
+
+            if (TextUtils.isEmpty(telephone)) {
+                MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
+                return;
+            }
+            DefaultDialog dialog = new DefaultDialog(context, text, "确消", "呼叫") {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    dismiss();
+                    NavigationUtils.startDialgTelephone(context, telephone);
+                }
+            };
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void isTouGuOnline(String action) {
         String[] split = action.split(":");

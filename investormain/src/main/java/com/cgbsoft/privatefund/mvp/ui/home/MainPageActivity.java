@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +31,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -121,6 +124,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
+    private int code;
 
     /**
      * 定位管理器
@@ -149,6 +153,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first);
+
+        code = getIntent().getIntExtra("code", 0);
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -182,7 +188,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         showInfoDialog();
 
 
+        initIndex(code);
+
         initLocation();
+
         //游客模式下禁止的Api 添加限制条件
         if (!AppManager.isVisitor(baseContext)) {
             loginLive();
@@ -191,6 +200,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
 
+    }
+
+    private void initIndex(int code) {
+        if (0 != code) {
+            int substring = Integer.parseInt(String.valueOf(code).substring(0, 1));
+            onTabSelected(substring - 1);
+        }
     }
 
     private void initActionPoint() {
@@ -207,7 +223,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
-//        getPresenter().toSignIn();
     }
 
     /**
@@ -221,6 +236,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initDayTask();
     }
 
+    /**
+     * 各种需要初始化判断是否显示dialog的 eg:风险测评
+     */
+    private void initDialog() {
+
+        //是否需要风险评测d 弹出框
+//        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
+//            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
+//            riskEvaluatDialog.show();
+//        }
+    }
 
     private void loginLive() {
         loginHelper = new LoginHelper(this, this);

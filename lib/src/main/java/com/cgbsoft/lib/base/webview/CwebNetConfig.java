@@ -87,8 +87,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
     public static void initSxyUrl(){
-        HOME_URL= baseSxyParentUrl + "biz/profile/";
-        elegantGoodsDetail=baseSxyParentUrl+"biz/life/detail.html?goodsId=";
+        HOME_URL= baseSxyParentUrl + "/biz/profile/";
+        elegantGoodsDetail=baseSxyParentUrl+"/biz/life/detail.html?goodsId=";
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
