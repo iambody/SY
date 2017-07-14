@@ -43,7 +43,9 @@ public class MyConversationListBehaviorListener implements RongIM.ConversationLi
     public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
 //        if (uiConversation.isTop()) {  //置顶
 
-        if ("dd0cc61140504258ab474b8f0a38bb56".equals(uiConversation.getConversationTargetId())) { // 平台客服消息不让删除
+        if ("dd0cc61140504258ab474b8f0a38bb56".equals(uiConversation.getConversationTargetId()) ||
+                "公告".equals(uiConversation.getConversationTargetId()) ||
+                "系统通知".equals(uiConversation.getConversationTargetId())) { // 平台客服消息不让删除
             return true;
         }
         showPopUpWindow(context, uiConversation);

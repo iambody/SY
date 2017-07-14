@@ -60,6 +60,11 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String selectAdviser;
     // 投资日历
     public static String investeCarlendar;
+    // 资产报告
+    public static String assetReport;
+
+    // 活动详情
+    public static String activitesDeatil;
 
     // 投资人认证
     public static String HOME_URL;
@@ -100,5 +105,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
         choiceAdviser= baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
+        assetReport = baseSxyParentUrl + "/biz/report/index.html";
     }
 }

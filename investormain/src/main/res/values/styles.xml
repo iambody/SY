@@ -125,8 +125,28 @@
 
     <style name="mine_account_info_text_image">
         <item name="android:textSize">@dimen/dimens_sp_12</item>
-        <item name="android:color">@color/account_info_image_text</item>
+        <item name="android:color">@color/color_595959</item>
         <item name="android:drawablePadding">5dp</item>
+    </style>
+
+    <style name="mine_activites_item_title">
+        <item name="android:textSize">@dimen/dimens_sp_20</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
+    <style name="mine_activites_item_desc_text">
+        <item name="android:textSize">@dimen/dimens_sp_14</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
+    <style name="mine_activites_item_desc_value">
+        <item name="android:textSize">@dimen/dimens_sp_14</item>
+        <item name="android:color">@color/color_595959</item>
+    </style>
+
+    <style name="mine_activites_item_desc_prompt">
+        <item name="android:textSize">@dimen/dimens_sp_16</item>
+        <item name="android:color">@color/white</item>
     </style>
 
     <style name="home_banker_bt_style">

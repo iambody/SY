@@ -34,9 +34,11 @@ public class MineActivitesModel {
 
         private String title;
 
-        private String mainImage;
+        private String imageUrl;
 
         private String city;
+
+        private String speaker;
 
         private String liveVideoNo;
 
@@ -68,12 +70,12 @@ public class MineActivitesModel {
             this.title = title;
         }
 
-        public String getMainImage() {
-            return mainImage;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public void setMainImage(String mainImage) {
-            this.mainImage = mainImage;
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
 
         public String getCity() {
@@ -98,6 +100,14 @@ public class MineActivitesModel {
 
         public void setPlaybackVideoUrl(String playbackVideoUrl) {
             this.playbackVideoUrl = playbackVideoUrl;
+        }
+
+        public String getSpeaker() {
+            return speaker;
+        }
+
+        public void setSpeaker(String speaker) {
+            this.speaker = speaker;
         }
 
         public String getStartTime() {

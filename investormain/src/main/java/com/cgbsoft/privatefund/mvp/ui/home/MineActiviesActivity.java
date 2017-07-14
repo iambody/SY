@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,9 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.listener.listener.ListItemClickListener;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -39,7 +42,6 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     SwipeToLoadLayout swipeToLoadLayout;
 
     private static final int PAGE_LIMIT = 20;
-
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
     private LinearLayoutManager linearLayoutManager;
     public MineActivitesListAdapter mineActivitesListAdapter;
@@ -59,28 +61,24 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     protected void init(Bundle savedInstanceState) {
         initTitleView();
         mineActivitesListAdapter = new MineActivitesListAdapter(this);
+        swipeTarget.setAdapter(mineActivitesListAdapter);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(this);
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.gray_font, R.dimen.ui_1_dip));
-        swipeTarget.setAdapter(mineActivitesListAdapter);
-        mineActivitesListAdapter.setOnItemClickListener(new ListItemClickListener<MineActivitesModel.ActivitesItem>() {
-            @Override
-            public void onItemClick(int position, MineActivitesModel.ActivitesItem activitesItem) {
-            }
+        mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
+            Intent intent = new Intent(this, BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
+            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+            startActivity(intent);
         });
         getPresenter().getActivitesList(mineActivitesListAdapter, true);
     }
 
     private void initTitleView() {
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
-        findViewById(R.id.title_left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.title_left).setOnClickListener(v -> finish());
         ((TextView)findViewById(R.id.title_mid)).setText("我的活动");
     }
 
@@ -105,6 +103,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     public void onRefresh() {
         CurrentPostion = 0;
         isLoadMore = true;
+        System.out.println("-------onRefresh");
         if (mineActivitesListAdapter != null) {
             getPresenter().getActivitesList(mineActivitesListAdapter, true);
         }
