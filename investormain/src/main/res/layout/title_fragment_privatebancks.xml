@@ -11,6 +11,7 @@
         android:layout_height="@dimen/ui_40_dip"
         android:layout_gravity="center_vertical"
         android:padding="@dimen/ui_10_dip"
+
         android:src="@drawable/privatebank_title_left" />
 
     <LinearLayout

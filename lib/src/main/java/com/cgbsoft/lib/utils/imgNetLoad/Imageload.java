@@ -13,6 +13,7 @@ import com.bumptech.glide.GifRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.io.File;
@@ -63,7 +64,11 @@ public class Imageload {
             drawableTypeRequest.into(imageView);
         }
     }
-
+    private static void baseListener(DrawableTypeRequest drawableTypeRequest, ImageView imageView,RequestListener requestListener) {
+        if (drawableTypeRequest != null) {
+            drawableTypeRequest.listener(requestListener).into(imageView);
+        }
+    }
     /**
      * 显示图片
      *
@@ -73,6 +78,13 @@ public class Imageload {
      */
     public static void display(@NonNull Context context, @NonNull Object res, @NonNull ImageView imageView) {
         base(getDrawableTypeRequest(imageWith(context), res), imageView);
+    }
+
+    /**
+     * 添加监听的的方法
+     */
+    public static void displayListener(Context context, Object res, ImageView imageView, RequestListener requestListener) {
+        baseListener(getDrawableTypeRequest(imageWith(context), res), imageView,requestListener);
     }
 
     /**

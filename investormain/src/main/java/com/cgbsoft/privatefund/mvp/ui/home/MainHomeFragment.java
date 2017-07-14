@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -217,7 +219,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        showLiveView();
         boolean isVisiter = AppManager.isVisitor(baseActivity);
         userInfo = AppManager.getUserInfo(baseActivity);
-        isBindAdviser = !BStrUtils.isEmpty(userInfo.getToC().getBandingAdviserId());
+        isBindAdviser = AppManager.isBindAdviser(baseActivity);
         if (isVisiter || !isBindAdviser) {//游客模式下或者没有绑定过理财师需要
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
@@ -231,19 +233,26 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeLoginLay.setVisibility(View.VISIBLE);
             //游客模式
             mainHomeVisterLay.setVisibility(View.GONE);
-
+            LogUtils.Log("lalal", "开始加载");
             //开始填充登录模式下理财师数据
-            Imageload.display(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv);
+            Imageload.displayListener(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv, new RequestListener() {
+                @Override
+                public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Object resource, Object model, Target target, boolean isFromMemoryCache, boolean isFirstResource) {
+
+                    mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
+                    LogUtils.Log("lalal", "已经加载");
+                    return false;
+                }
+            });
             BStrUtils.SetTxt(mainHomeCardnumberTxt, userInfo.bandingAdviserUniqueCode);
 
         }
         initRxEvent();
-//        mainHomeSmartscrollview.getViewTreeObserver().addOnScrollChangedListener(new  ViewTreeObserver.OnScrollChangedListener() {
-//            @Override
-//            public void onScrollChanged() {
-//                mainHomeSwiperefreshlayout.setEnabled(mainHomeSmartscrollview.getScrollY()==0);
-//            }
-//        });
     }
 
     private Observable<LiveInfBean> liveObservable;
@@ -586,6 +595,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+    @OnClick(R.id.main_home_adviser_title)
+    public void adviserTextClick() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
+    }
 
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
@@ -593,7 +606,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
         //已经绑定过的
         if (isBindAdviser) {
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "我的投顾", false);
         } else {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
         }

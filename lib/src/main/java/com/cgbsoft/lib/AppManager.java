@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 
 /**
@@ -232,12 +233,20 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取手势密码是否打开
+     *
      * @param context
      * @return
      */
-    public static boolean getGestureFlag(Context context){
+    public static boolean getGestureFlag(Context context) {
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(context);
         String gestureSwitch = userInfo.getToC().getGestureSwitch();
-        return !TextUtils.isEmpty(gestureSwitch)&&gestureSwitch.equals("1")?true:false;
+        return !TextUtils.isEmpty(gestureSwitch) && gestureSwitch.equals("1") ? true : false;
+    }
+
+    /**
+     * 获取是否绑定过理财师
+     */
+    public static boolean  isBindAdviser(Context context) {
+        return !BStrUtils.isEmpty(AppManager.getUserInfo(context).getToC().getBandingAdviserId());
     }
 }

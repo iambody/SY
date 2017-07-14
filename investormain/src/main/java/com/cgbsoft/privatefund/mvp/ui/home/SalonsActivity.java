@@ -15,6 +15,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogCity;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -36,7 +39,7 @@ import butterknife.OnClick;
  * Created by sunfei on 2017/7/13 0013.
  */
 @Route(RouteConfig.GOTO_SALONS_ACTIVITY)
-public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements SalonsContract.SalonsView,OnRefreshListener{
+public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements SalonsContract.SalonsView, OnRefreshListener {
 
     @BindView(R.id.title_left)
     ImageView back;
@@ -53,14 +56,16 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private LoadingDialog mLoadingDialog;
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
-    private String cityCode="北京";
-    private int offset=0;
-    private int limit=100;
+    private String cityCode = "北京";
+    private int offset = 0;
+    private int limit = 100;
     private List<SalonsEntity.CityBean> citys;
+
     @OnClick(R.id.title_left)
     public void clickBack() {
         this.finish();
     }
+
     @Override
     protected int layoutID() {
         return R.layout.activity_salons;
@@ -82,7 +87,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(baseContext,android.R.color.transparent,R.dimen.ui_10_dip));
+        recyclerView.addItemDecoration(new SimpleItemDecoration(baseContext, android.R.color.transparent, R.dimen.ui_10_dip));
 
         salonsAdapter = new SalonsAdapter(baseContext, salons);
         salonsAdapter.setOnItemClickListener(new SalonsAdapter.OnItemClickListener() {
@@ -94,11 +99,28 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                     gotoOldActivities();
                 } else {
                     //活动详情
+                    gotoSalonDetail(bean);
                 }
             }
         });
         recyclerView.setAdapter(salonsAdapter);
-        getPresenter().getSalonsAndCitys(cityCode,offset,limit);
+        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+    }
+
+    /**
+     * 跳转到沙龙详情页面
+     * @param bean
+     */
+    private void gotoSalonDetail(SalonsEntity.SalonItemBean bean) {
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+        startActivity(intent);
+//        HashMap hashMap = new HashMap();
+//        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+//        hashMap.put(WebViewConstant.push_message_title, bean.getTitle());
+//        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+//        NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
     /**
@@ -112,13 +134,14 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        getPresenter().getSalonsAndCitys(cityCode,offset,limit);
+        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
     }
 
     @Override
     protected SalonsPresenterImpl createPresenter() {
-        return new SalonsPresenterImpl(baseContext,this);
+        return new SalonsPresenterImpl(baseContext, this);
     }
+
     @Override
     public void showLoadDialog() {
         if (mLoadingDialog.isShowing()) {
@@ -139,7 +162,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         salonItemBean.setIsButton("1");
         salons.add(salonItemBean);
         salonsAdapter.setDatas(salons);
-        this.citys=citys;
+        this.citys = citys;
     }
 
     @Override
@@ -155,12 +178,13 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 
     @Override
     public void onRefresh() {
-        getPresenter().getSalonsAndCitys(cityCode,offset,limit);
+        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
     }
+
     @OnClick(R.id.ll_salon_city_all)
-    public void showCitySelect(){
+    public void showCitySelect() {
         if (null == citys || citys.size() == 0) {
-            Toast.makeText(getApplicationContext(),"暂无其它城市",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "暂无其它城市", Toast.LENGTH_SHORT).show();
             return;
         }
         WheelDialogCity wheelDialogCity = new WheelDialogCity(this);
@@ -170,7 +194,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
             @Override
             public void confirm(SalonsEntity.CityBean result) {
                 salonCity.setText(result.getText());
-                getPresenter().getSalonsAndCitys(result.getCode(),offset,limit);
+                getPresenter().getSalonsAndCitys(result.getCode(), offset, limit);
             }
         });
         wheelDialogCity.show();
