@@ -87,7 +87,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
             switch (secondNavigation.getCode()) {
                 case HEALTE_INTRODUCTION_CODE:
 
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new IntroduceHealthFragment(),Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case HEALTH_CHECK_CODE:
