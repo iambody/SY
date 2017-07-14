@@ -116,7 +116,7 @@ public class MessageSearchActivity extends BaseActivity {
         listAdapter = new SearchMessageListAdapter(this);
         listView.setAdapter(listAdapter);
         TextView textView = (TextView)noticeSearchLinear.findViewById(R.id.name);
-        ViewUtils.setTextColor(textView, getString(R.string.search_notice_name), Color.parseColor("#f47900"));
+//        ViewUtils.setTextColor(textView, getString(R.string.search_notice_name), Color.parseColor("#f47900"));
         noticeSearchLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

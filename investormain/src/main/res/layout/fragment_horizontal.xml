@@ -7,13 +7,13 @@
     android:paddingTop="30dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:gravity="center_vertical"
     android:paddingBottom="20dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_centerVertical="true"
         android:background="@color/app_bg"
         android:scrollbars="none"
         />
@@ -26,6 +26,7 @@
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
         android:id="@+id/goto_look_video"
+        android:layout_gravity="center_vertical"
         android:gravity="center"
         android:background="@drawable/shape_btn_goden_boader_bg"
         android:text="@string/account_video_go_server"

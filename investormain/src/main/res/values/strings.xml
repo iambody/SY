@@ -206,4 +206,18 @@
         <item>观看视频记录</item>
         <item>观看下载记录</item>
     </string-array>
+
+    <string-array name="risk_evalate_text">
+        <item>保守型</item>
+        <item>稳健型</item>
+        <item>平衡型</item>
+        <item>成长型</item>
+        <item>进取型</item>
+    </string-array>
+
+    <string-array name="assert_certify">
+        <item>待审核</item>
+        <item>已通过</item>
+        <item>被驳回</item>
+    </string-array>
 </resources>

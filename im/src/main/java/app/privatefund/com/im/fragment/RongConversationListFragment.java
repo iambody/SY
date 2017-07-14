@@ -95,7 +95,6 @@ import io.rong.push.RongPushClient;
  * 消息会话列表
  */
 public class RongConversationListFragment extends UriFragment implements OnItemClickListener, OnItemLongClickListener, OnPortraitItemClick {
-
     private static final String noticeId = "公告";
     private static final String SystemNotifyId = "系统通知";
     private String TAG = "RongConversationListFragment";

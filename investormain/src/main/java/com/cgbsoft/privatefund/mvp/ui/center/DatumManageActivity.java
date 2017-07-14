@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class DatumManageActivity extends BaseActivity {
     SettingItemNormal assetCertify;
     @BindView(R.id.datum_manage_relative_asset)
     SettingItemNormal assetRelative;
+    private String[] riskResult;
+    private String[] assetStatus;
 
     @Override
     protected int layoutID() {
@@ -41,6 +44,8 @@ public class DatumManageActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         initView(savedInstanceState);
+        riskResult = getResources().getStringArray(R.array.risk_evalate_text);
+        assetStatus = getResources().getStringArray(R.array.assert_certify);
     }
 
     @Override
@@ -51,9 +56,12 @@ public class DatumManageActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        riskLike.setTip(AppManager.getUserInfo(this).getToC().getCustomerType());
-        assetCertify.setTip(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
-        assetRelative.setTip(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
+        int riskType = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getCustomerType()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getCustomerType());
+        int certify = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
+        int relative = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getStockAssetsStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
+        riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
+        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
+        assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
     }
 
     private void initView(Bundle savedInstanceState) {
