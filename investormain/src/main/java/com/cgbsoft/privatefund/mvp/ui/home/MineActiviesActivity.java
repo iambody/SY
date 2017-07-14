@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -66,10 +67,16 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
         mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
-            Intent intent = new Intent(this, BaseWebViewActivity.class);
-            intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
-            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-            startActivity(intent);
+            if (!TextUtils.isEmpty(mineActivitesItem.getPlaybackVideoUrl())) {
+                Intent intent = new Intent(this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, mineActivitesItem.getPlaybackVideoUrl());
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_video_detail));
+            } else {
+                Intent intent = new Intent(this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
+                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                startActivity(intent);
+            }
         });
         getPresenter().getActivitesList(mineActivitesListAdapter, true);
     }

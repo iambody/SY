@@ -93,7 +93,6 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            System.out.println("------onCreateViewHolder=");
             View view = mInflater.inflate(R.layout.fragment_horizontal_item, viewGroup, false);
             ViewHolder viewHolder = new ViewHolder(view);
             viewHolder.mImg = (ImageView)view.findViewById(R.id.mine_video_image_id);
@@ -103,10 +102,9 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            System.out.println("------vass=" + mDatas.get(position).videoName);
             VideoInfoModel videoInfoModel = mDatas.get(position);
-            Imageload.display(getContext(), mDatas.get(position).videoCoverUrl, holder.mImg);
-            holder.mTxt.setText(mDatas.get(position).videoName);
+            Imageload.display(getContext(), videoInfoModel.videoCoverUrl, holder.mImg);
+            holder.mTxt.setText(videoInfoModel.videoName);
             holder.rootView.setOnClickListener(v -> VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.id), videoInfoModel.videoCoverUrl));
         }
     }

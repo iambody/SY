@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 style="@style/mine_activites_item_desc_prompt"
                 android:text="正在直播"
+                android:visibility="gone"
                 android:id="@+id/mine_activites_status_desc"/>
 
             <TextView

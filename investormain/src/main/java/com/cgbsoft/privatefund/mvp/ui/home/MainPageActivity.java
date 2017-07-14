@@ -666,6 +666,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void hasLive(boolean hasLive, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
+        if (jsonObject != null) {
+            return;
+        }
         try {
             if (jsonObject.getString("id").equals(SPreference.getString(this, Contant.CUR_LIVE_ROOM_NUM) + "")) {
                 hasLive = false;

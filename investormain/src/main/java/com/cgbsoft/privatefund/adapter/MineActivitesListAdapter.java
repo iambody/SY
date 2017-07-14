@@ -2,10 +2,12 @@ package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
@@ -83,6 +85,7 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         lsViewHolder.textViewTime.setText(activitesItem.getStartTime());
         Imageload.display(ApContext, activitesItem.getImageUrl(), lsViewHolder.imageViewLogo);
         lsViewHolder.textViewSpeaker.setText(activitesItem.getSpeaker());
+        lsViewHolder.linearLayoutPrompt.setVisibility(TextUtils.isEmpty(activitesItem.getPlaybackVideoUrl()) ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -97,6 +100,8 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
     }
 
     static class MyActivitesHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.mine_activity_prompt)
+        LinearLayout linearLayoutPrompt;
         @BindView(R.id.mine_activites_city)
         TextView textViewCity;
         @BindView(R.id.mine_activites_title)
