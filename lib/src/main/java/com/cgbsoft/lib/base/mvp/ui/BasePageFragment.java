@@ -46,6 +46,8 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     protected abstract int indexSel();
 
+    private int index;
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_base_page;
@@ -87,15 +89,31 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             for (int i = 0; i < tabLayout.getTabCount(); i++) {
                 tabLayout.getTabAt(i).setText(list().get(i).getTabName());
             }
-            viewPager.setCurrentItem(indexSel());
+            for (int i = 0; i < list().size(); i++) {
+                if (list().get(i).getCode() == index)
+                    viewPager.setCurrentItem(i);
+            }
+
         }
-//        tabLayout.getChildAt(indexSel()).setSelected(true);
+    }
+
+    protected void setIndex(int code) {
+        if (code != 0 && code > 1000) {
+            if (null == viewPager) {
+                index = code;
+            } else {
+                index = code;
+                for (int i = 0; i < list().size(); i++) {
+                    if (list().get(i).getCode() == code)
+                        viewPager.setCurrentItem(i);
+                }
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewPager.setCurrentItem(indexSel());
     }
 
     @Override

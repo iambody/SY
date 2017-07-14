@@ -126,7 +126,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     }
 
     public interface BottomClickListener {
-        void onTabSelected(int position);
+        void onTabSelected(int position,int code);
     }
 
     public void changeResWithIdtentify() {
@@ -195,7 +195,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 0;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(0);
+                                            bottomClickListener.onTabSelected(0,0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
@@ -203,7 +203,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 1;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(1);
+                                            bottomClickListener.onTabSelected(1,0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_center:
@@ -211,7 +211,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 2;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(2);
+                                            bottomClickListener.onTabSelected(2,0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
@@ -219,7 +219,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 3;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(3);
+                                            bottomClickListener.onTabSelected(3,0);
                                     }
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
@@ -227,7 +227,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         nowPosition = 4;
                                         changeResWithIdtentify();
                                         if (bottomClickListener != null)
-                                            bottomClickListener.onTabSelected(4);
+                                            bottomClickListener.onTabSelected(4,0);
                                     }
                                     break;
                             }

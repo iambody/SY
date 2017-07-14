@@ -173,5 +173,6 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                 getPresenter().getSalonsAndCitys(result.getCode(),offset,limit);
             }
         });
+        wheelDialogCity.show();
     }
 }

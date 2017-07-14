@@ -164,8 +164,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        initView(savedInstanceState);
         userInfo = AppManager.getUserInfo(baseContext);
+        initView(savedInstanceState);
         initHeadIconDialog();
     }
 
@@ -203,7 +203,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
         if (null != userInfo) {
-            String phoneNum = userInfo.getPhoneNum();
+            String phoneNum = userInfo.getUserName();
             if (!TextUtils.isEmpty(phoneNum)) {
                     phoneNum = phoneNum.substring(0, 3).concat("****").concat(phoneNum.substring(7));
             }

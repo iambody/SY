@@ -89,7 +89,6 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     @Override
     protected int indexSel() {
-
         return 0;
     }
 
@@ -104,19 +103,23 @@ public class PrivateBanksFragment extends BasePageFragment {
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment());
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment(),Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
-                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment());
+                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment(),Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
                     break;
                 case VIDEO_CODE:
-                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment());
+                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(),Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
                     break;
             }
         }
         return tabBeens;
+    }
+
+    public void setCode(int index){
+        super.setIndex(index);
     }
 }

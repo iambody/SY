@@ -16,7 +16,9 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.RouteCallback;
 import com.chenenyu.router.Router;
@@ -235,8 +237,8 @@ public class NavigationUtils {
     }
 
     public static void jumpNativePage(Context context, int code) {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("code",code);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code", code);
         switch (code) {
             case WebViewConstant.Navigation.MAIN_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE);
@@ -249,64 +251,71 @@ public class NavigationUtils {
                 NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 break;
             case WebViewConstant.Navigation.TASK_PAGE:
-                NavigationUtils.startActivityByRouter(context,RouteConfig.INVTERSTOR_MAIN_TASK);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
                 break;
             case WebViewConstant.Navigation.YD_ENJOY_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.SHARE_FRIEND_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
                 break;
             case WebViewConstant.Navigation.PRIVATE_BANK_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.PRODUCT_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.INFORMATION_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.VIDEO_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.LIFE_ENJOY_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.LIFT_HOME_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.LIFT_MALL_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.HEALTH_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.HEALTH_CHECK_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.HEALTH_MEDICAL_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.MINE_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.MINE_SIGN_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.MINE_ACTION_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.MINE_CARD_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
             case WebViewConstant.Navigation.MINE_GREETING_CARD_PAGE:
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE,map);
+                jumpNativeMain(context,map);
                 break;
         }
+    }
 
+    private static void jumpNativeMain(Context context, HashMap<String, Object> map){
+        if (context.toString().contains("MainPageActivity")) {
+            RxBus.get().post(RxConstant.JUMP_INDEX, (int)map.get("code"));
+        } else {
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, map);
+        }
     }
 
     public static ArrayList<NavigationBean> getNavigationBeans(Context context) {
