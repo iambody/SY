@@ -283,7 +283,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoAssetMatchActivity() {
         String url = CwebNetConfig.mineAssertOrder;
         HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
+        hashMap.put(WebViewConstant.push_message_url, url.concat("?labelType=0"));
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_order));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }

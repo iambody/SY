@@ -284,6 +284,8 @@ public class CWebviewManger {
             isTouGuOnline(action);
         } else if (action.contains("callLiCaiShi")) { // 呼叫理财师
             callLiCaiShi(action);
+        } else if (action.contains("imLicaishi")) { // 回话理财师
+            chatToTouGu(action);
         } else if (action.contains("sendPhoneMsg")) {  // 发送短信
             sendMessageToTouGu(action);
         } else if (action.contains("messageDialog")) { // 和投顾对话
@@ -359,8 +361,6 @@ public class CWebviewManger {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void versonUpdate() {

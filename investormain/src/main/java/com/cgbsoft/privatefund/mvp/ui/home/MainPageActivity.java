@@ -197,8 +197,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             autoSign();
             initDayTask();
         }
-
-
     }
 
     private void initIndex(int code) {
@@ -239,7 +237,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 各种需要初始化判断是否显示dialog的 eg:风险测评
      */
     private void initDialog() {
-
         //是否需要风险评测d 弹出框
 //        if (TextUtils.isEmpty(AppManager.getUserInfo(baseContext).getToC().getCustomerType())) {
 //            RiskEvaluatDialog riskEvaluatDialog = new RiskEvaluatDialog(baseContext);
