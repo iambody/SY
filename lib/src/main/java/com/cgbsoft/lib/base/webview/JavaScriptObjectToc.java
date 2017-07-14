@@ -33,7 +33,6 @@ public class JavaScriptObjectToc {
 
     /**
      * 暴露 给H5 用户信息的 对象接口
-     *
      * @return
      */
     @JavascriptInterface
@@ -44,7 +43,9 @@ public class JavaScriptObjectToc {
         System.out.println("---------userId=" + userId);
         System.out.println("---------token=" + token);
         StringBuffer sb = new StringBuffer();
-        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").append("C").append(":").append(DeviceUtils.getPhoneId(context)).append(visiter);
+        sb.append(token).append(":").append(userId).append(":").append(Utils.getVersionCode(BaseApplication.getContext())).append(":").append("1").append(":").
+                append("C").append(":").append(DeviceUtils.getPhoneId(context)).append(":").append(visiter);
+
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }
