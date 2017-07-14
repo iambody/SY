@@ -68,7 +68,6 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_list_mine_activites, null);
-        System.out.println("-------onCreateViewHolder");
         MyActivitesHolder myActivitesHolder= new MyActivitesHolder(view);
         view.setOnClickListener(this);
         return myActivitesHolder;
@@ -77,7 +76,6 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyActivitesHolder lsViewHolder = (MyActivitesHolder) holder;
-        System.out.println("-------onBindViewHolder");
         lsViewHolder.itemView.setTag(position);
         MineActivitesModel.ActivitesItem activitesItem = listModelListdata.get(position);
         lsViewHolder.textViewCity.setText(activitesItem.getCity());
@@ -85,7 +83,6 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         lsViewHolder.textViewTime.setText(activitesItem.getStartTime());
         Imageload.display(ApContext, activitesItem.getImageUrl(), lsViewHolder.imageViewLogo);
         lsViewHolder.textViewSpeaker.setText(activitesItem.getSpeaker());
-//        lsViewHolder.textViewAddress.setText(activitesItem());
     }
 
     @Override
