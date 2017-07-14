@@ -28,7 +28,6 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -104,6 +103,9 @@ public class CWebviewManger {
         } else if (action.contains("toastError")) {
             showToast(action);
 
+        } else if (action.contains("jumtoActivitiesSalon")) {//沙龙活动
+//            UiSkipUtils.toNextActivity(context,new Intent(context,));
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SALONS_ACTIVITY);
         } else if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
         } else if (action.contains("filing")) { // TOB

@@ -20,5 +20,7 @@
     <dimen name="ui_84_dip">84dp</dimen>
     <dimen name="ui_78_dip">78dp</dimen>
     <dimen name="ui_57_dip">57dp</dimen>
+    <dimen name="ui_62_dip">62dp</dimen>
+    <dimen name="dimens_sp_7">7sp</dimen>
 
 </resources>
