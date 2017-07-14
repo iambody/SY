@@ -1477,7 +1477,12 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
-
+    /**
+     * 我的活动列表
+     */
+    public static Observable<String> getMineActivitesList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineActivitesList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
     /**
      * 修改登录密码
      * @return
