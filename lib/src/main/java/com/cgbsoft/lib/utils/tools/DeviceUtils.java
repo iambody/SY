@@ -37,6 +37,7 @@ public class DeviceUtils {
         TelephonyManager TelephonyMgr = (TelephonyManager) context
                 .getSystemService(context.TELEPHONY_SERVICE);
         String szImei = TelephonyMgr.getDeviceId();
+        szImei="A-"+szImei;
         return szImei;
     }
 

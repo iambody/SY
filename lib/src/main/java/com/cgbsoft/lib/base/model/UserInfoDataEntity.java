@@ -47,6 +47,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String lastLogStringime;
         public String memoToFather;
         public String isAdvisers;
+        public String bandingAdviserHeadImageUrl;
 
         public String getBirthday() {
             return birthday;
@@ -530,8 +531,8 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
             this.gestureSwitch = gestureSwitch;
         }
 
-        public String getBindTeacher(){
-            if (!TextUtils.isEmpty(bandingAdviserId)){
+        public String getBindTeacher() {
+            if (!TextUtils.isEmpty(bandingAdviserId)) {
                 return "1";
             }
             return "0";

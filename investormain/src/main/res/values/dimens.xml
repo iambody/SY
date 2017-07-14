@@ -19,5 +19,6 @@
     <dimen name="ui_53_dip">53dp</dimen>
     <dimen name="ui_84_dip">84dp</dimen>
     <dimen name="ui_78_dip">78dp</dimen>
+    <dimen name="ui_57_dip">57dp</dimen>
 
 </resources>

@@ -114,7 +114,7 @@
                             android:layout_width="@dimen/ui_70_dip"
                             android:layout_height="30dp"
                             android:layout_marginLeft="@dimen/ui_8_dip"
-                            android:layout_marginTop="@dimen/ui_53_dip"
+                            android:layout_marginTop="@dimen/ui_57_dip"
                             android:background="@drawable/main_home_card_bg"
                             android:orientation="vertical"
                             android:visibility="gone">
