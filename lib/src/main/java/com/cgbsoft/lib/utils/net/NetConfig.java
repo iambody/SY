@@ -23,6 +23,7 @@ public class NetConfig {
     public static final String AUTH_URL = "auth/v2";
     public static final String PROMOTION_URL = "promotion/v2";
 
+
     public static final String API_URL_V2 = "api/v2";
     public static final String LIVE_URL_V2 = "zhibo/v2";
     public static final String AUTH_URL_V2 = "auth/v2";
@@ -302,6 +303,8 @@ public class NetConfig {
      * 健康模块接口
      */
     static class Health {
+        static final String HEALTH_INTRODUCE_URL = API_URL + "/health/introduce";
+
         static final String HEALTH_GET_URL = API_URL + "/health/commend";
 
         // 健康免费资讯预约

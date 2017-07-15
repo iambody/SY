@@ -5,6 +5,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -268,6 +270,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             backEvent();
             return;
         }
+
 		if (hasPushMessage) {
 //			NavigationUtils.startMessageList(context);
 		}
@@ -398,7 +401,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             getMenuInflater().inflate(R.menu.page_menu, menu);
             MenuItem firstItem = menu.findItem(R.id.firstBtn);
             MenuItem secItem = menu.findItem(R.id.secondBtn);
-            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+//            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
+            firstItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
             secItem.setVisible(false);
         }
         return super.onCreateOptionsMenu(menu);
@@ -407,7 +411,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            if (item.getTitle().equals(getString(R.string.umeng_socialize_share))) {
+            if (hasRightShare) {
                 pageShare();
             } else if(item.getTitle().equals(getString(R.string.save))) {
                 String jascript = "javascript:Tools.save()";

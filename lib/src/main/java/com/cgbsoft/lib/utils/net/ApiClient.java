@@ -1341,6 +1341,15 @@ public class ApiClient {
     }
 
     /**
+     * 健康-介绍
+     * @param hashMap
+     * @return
+     */
+    public static Observable<String> getHealthIntruduce(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getHealthIntruduce(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取健康中检测/医疗数据
      */
 //    public static Observable<HealthEntity.Result> getHealthDataList(HashMap hashMap) {

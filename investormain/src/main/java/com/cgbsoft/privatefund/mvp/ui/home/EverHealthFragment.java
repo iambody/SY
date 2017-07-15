@@ -22,8 +22,10 @@ import com.chenenyu.router.Router;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
+import io.rong.imkit.RongIM;
 
 /**
  *@author chenlong
@@ -43,7 +45,6 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     protected int titleLayoutId() {
         return R.layout.title_normal_new;
     }
-
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
@@ -87,7 +88,6 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case HEALTE_INTRODUCTION_CODE:
-
                     TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new IntroduceHealthFragment(),Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
@@ -133,7 +133,8 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                 getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
-                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
+                NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+//                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
         }
     }

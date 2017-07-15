@@ -3,16 +3,19 @@ package app.privatefund.investor.health.mvp.ui;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
@@ -24,6 +27,9 @@ import java.util.List;
 
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
+import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
+import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
+import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
 import butterknife.BindFloat;
 import butterknife.BindView;
 
@@ -33,7 +39,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSER
 /**
  * @author chenlong
  */
-public class IntroduceHealthFragment extends BaseFragment implements PlayerListener {
+public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresenter> implements PlayerListener, HealthIntroduceContract.View{
 
     @BindView(R2.id.introduce_health_text)
     TextView introduce_health_text;
@@ -57,20 +63,20 @@ public class IntroduceHealthFragment extends BaseFragment implements PlayerListe
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         videoRootFrame.setListener(this);
-        List<VideoInfo> videos = new ArrayList<>();
-        VideoInfo v1 = new VideoInfo();
-        VideoInfo v2 = new VideoInfo();
-        v1.description = "标清";
-        v1.type = VideoInfo.VideoType.MP4;
-        v2.description = "高清";
-        v2.type = VideoInfo.VideoType.MP4;
-        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
-//        v2.url = //videoInfoModel.hdUrl;
-        videos.add(v1);
+//        List<VideoInfo> videos = new ArrayList<>();
+//        VideoInfo v1 = new VideoInfo();
+//        v1.description = "标清";
+//        v1.type = VideoInfo.VideoType.MP4;
+//        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
+////        VideoInfo v2 = new VideoInfo();
+////        v2.description = "高清";
+////        v2.type = VideoInfo.VideoType.MP4;
+////        v2.url = //videoInfoModel.hdUrl;
+//        videos.add(v1);
 //        videos.add(v2);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-        videoRootFrame.play(videos);
-        videoRootFrame.pause();
+//        videoRootFrame.play(videos);
+//        videoRootFrame.pause();
         if (!isSetFullscreenHandler) {
             isSetFullscreenHandler = true;
             videoRootFrame.setToggleFullScreenHandler(() -> {
@@ -82,10 +88,39 @@ public class IntroduceHealthFragment extends BaseFragment implements PlayerListe
                 }
             });
         }
-
-        introduce_health_text.setText("adjfkldjfk;aldjfa;dfjl;adfj;a\n\n\n\n\n\n\n3\n\n\n\n\n\n3\n\n\n\n\n\n\n\n\n\n\n\n\n\n5\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhjAFDLSFJAKLHDSFJ");
+        getPresenter().introduceHealth();
     }
 
+    @Override
+    public void requestDataSuccess(HealthIntroduceModel healthIntroduceModel) {
+        if (healthIntroduceModel != null) {
+            Imageload.display(getContext(), healthIntroduceModel.getImage(), iv_mvv_cover);
+            introduce_health_text.setText(healthIntroduceModel.getText());
+            List<VideoInfo> videos = new ArrayList<>();
+            VideoInfo v1 = new VideoInfo();
+            v1.description = "标清";
+            v1.type = VideoInfo.VideoType.MP4;
+            v1.url = healthIntroduceModel.getSdVideo();
+            videos.add(v1);
+            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+            videoRootFrame.play(videos);
+//            videoRootFrame.pause();
+        }
+    }
+
+    @Override
+    public void requestDataFailure(String errorMsg) {
+        List<VideoInfo> videos = new ArrayList<>();
+        VideoInfo v1 = new VideoInfo();
+        v1.description = "标清";
+        v1.type = VideoInfo.VideoType.MP4;
+        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
+        videos.add(v1);
+        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+        videoRootFrame.play(videos);
+        videoRootFrame.pause();
+        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
 
     private void changeVideoViewSize(int orientation) {
         ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
@@ -99,13 +134,13 @@ public class IntroduceHealthFragment extends BaseFragment implements PlayerListe
     }
 
     @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
+    protected HealthIntroducePresenter createPresenter() {
+        return new HealthIntroducePresenter(getContext(), this);
     }
 
     @Override
     public void onError(Exception e) {
-
+        Log.e("PlayVideo ERROR ", e.getMessage());
     }
 
 

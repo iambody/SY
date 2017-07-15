@@ -16,6 +16,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
@@ -111,7 +112,7 @@ public class OKHTTP {
             ResponseBody responseBody = response.body();
             Charset UTF8 = Charset.forName("UTF-8");
 
-            Utils.log("okHttp", response.request().url().toString() + " " + response.toString(), "d");
+            Utils.log("okHttp", URLDecoder.decode(response.request().url().toString(), "utf-8") + " " + URLDecoder.decode(response.toString(), "utf-8"), "d");
             String message = "";
             if (response.code() != 200) {
                 if (response.code() == 500) {

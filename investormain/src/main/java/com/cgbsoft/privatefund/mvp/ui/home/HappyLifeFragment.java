@@ -24,6 +24,7 @@ import java.util.List;
 
 import app.mall.com.mvp.ui.ElegantGoodsFragment;
 import app.mall.com.mvp.ui.ElegantLivingFragment;
+import app.privatefund.com.im.MessageListActivity;
 
 /**
  * @author chenlong
@@ -106,7 +107,8 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
-                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
+                NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+//                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
         }
     }

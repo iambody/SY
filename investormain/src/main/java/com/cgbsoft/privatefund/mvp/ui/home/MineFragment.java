@@ -446,8 +446,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void initHealthView(MineModel mineModel) {
         if (mineModel != null && mineModel.getHealthy() != null) {
-//            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
-//            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
+            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
             if (!CollectionUtils.isEmpty(mineModel.getHealthy().getContent())) {
                 createHealthItem(mineModel.getHealthy().getContent());
             }
@@ -464,10 +464,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 textView.setText(healthItem.getTitle());
                 textView.setTextColor(Color.parseColor("#5a5a5a"));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                textView.setOnClickListener(v -> NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, WebViewConstant.push_message_url, healthItem.getUrl()));
+                textView.setOnClickListener(v -> {
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
+                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                });
                 health_had_data_ll.addView(textView);
                 if (i != list.size() -1) {
-                    health_had_data_ll.addView(LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, health_had_data_ll));
+                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                    lineView.setLayoutParams(layoutParams);
+                    health_had_data_ll.addView(lineView);
                 }
             }
         }

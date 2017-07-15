@@ -45,40 +45,10 @@ public class HealthListPresenter extends BasePresenterImpl<HealthListContract.Vi
         if (isRef) {
             index = 0;
         } else {
-            index++;
+            index += 1;
         }
-//        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<HealthEntity.Result>() {
-//            @Override
-//            protected void onEvent(HealthEntity.Result s) {
-////                List<HealthEntity.Row> rows = new Gson().fromJson(s, new TypeToken<List<HealthEntity.Row>>() {}.getType());
-//                Log.d("HealthListPresenter", "----"+ s.toString());
-//                List<HealthEntity.Row> rows = s.getRows();
-//                List<HealthListModel> list = new ArrayList<>();
-//                for (int i = 0; i < rows.size(); i++) {
-//                    HealthListModel model = new HealthListModel();
-//                    model.type = HealthListModel.BOTTOM;
-//                    model.setCode(rows.get(i).getCode());
-//                    model.setId(rows.get(i).getId());
-//                    model.setImageUrl(rows.get(i).getImageUrl().get(0).getUrl());
-//                    model.setTitle(rows.get(i).getTitle());
-//                    model.setUrl(rows.get(i).getUrl());
-//                    list.add(model);
-//                }
-//                if (isRef) {
-//                    adapter.deleteAllData();
-//                    adapter.refAllData(list);
-//                } else {
-//                    adapter.appendToList(list);
-//                }
-//                getView().requestDataSuccess(isRef);
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                getView().requestDataFailure(isRef);
-//            }
-//        }));
-        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index, PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
+        System.out.println("-----HealthListPresenter--index="+ index);
+        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthDataParams(isCheckHealth ? CHECK_HEALTH_PARAMS : CHECK_MEDICAL_PARAMS, index * PAGE_LIMIT, PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.d("HealthListPresenter", "----"+ s.toString());
