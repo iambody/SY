@@ -73,7 +73,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
         commonNavigator.setAdapter(videoNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
-        commonNavigator.setAdjustMode(true);
+//        commonNavigator.setAdjustMode(true);
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);

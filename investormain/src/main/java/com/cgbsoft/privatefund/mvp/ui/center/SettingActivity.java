@@ -73,10 +73,10 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
             @Override
             public void change(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                    NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
                 } else {
 
-                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+                    NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
                 }
             }
         });
@@ -93,16 +93,17 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     @OnClick(R.id.title_left)
-    public void clickBack(){
+    public void clickBack() {
         this.finish();
     }
+
     @Override
     protected SettingPresenterImpl createPresenter() {
-        return new SettingPresenterImpl(getBaseContext(),this);
+        return new SettingPresenterImpl(getBaseContext(), this);
     }
 
     @OnClick(R.id.exit_login_out)
-    public void LogOut(){
+    public void LogOut() {
         LogOutAccount returnLogin = new LogOutAccount();
         returnLogin.accounttExit(this);
     }
@@ -111,7 +112,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      * 跳转到修改登录密码页面
      */
     @OnClick(R.id.sin_change_login_psd)
-    public void changeLoginPsd(){
+    public void changeLoginPsd() {
         Intent intent = new Intent(this, ChangeLoginPsdActivity.class);
         startActivity(intent);
     }
@@ -120,41 +121,45 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      * 跳转到修改手势密码
      */
     @OnClick(R.id.sin_change_gesture_psd)
-    public void changeGesturePsd(){
+    public void changeGesturePsd() {
         NavigationUtils.startActivityByRouter(this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
     }
+
     /**
      * 跳转到常见问题
      */
     @OnClick(R.id.sin_common_question)
-    public void commonQuestion(){
+    public void commonQuestion() {
 //        Intent intent = new Intent(this, SalonsActivity.class);
 //        startActivity(intent);
     }
+
     /**
      * 跳转到意见反馈
      */
     @OnClick(R.id.sin_feedback)
-    public void feedBack(){
+    public void feedBack() {
         NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
     }
+
     /**
      * 跳转到推荐好友
      */
     @OnClick(R.id.sin_recommend_friend)
-    public void recommendFriend(){
+    public void recommendFriend() {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url,CwebNetConfig.recommendFriends);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.recommendFriends);
         startActivity(intent);
 //        Intent intent = new Intent(this, PersonalInformationActivity.class);
 //        startActivity(intent);
 //        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
     }
+
     /**
      * 跳转到关于页面
      */
     @OnClick(R.id.sin_about_app)
-    public void aboutApp(){
+    public void aboutApp() {
 
     }
 }
