@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -95,6 +97,7 @@ public class MainTabManager {
                 fragment.setArguments(mBundle);
             }
         }
+        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
         return fragment;
     }
 
