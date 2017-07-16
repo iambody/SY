@@ -1,14 +1,20 @@
 package com.cgbsoft.privatefund.utils;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.EverHealthFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.HappyLifeFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MainHomeFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.PrivateBanksFragment;
+
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 
 /**
  * @author chenlong

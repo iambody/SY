@@ -28,10 +28,6 @@ public class LoadCustomerActivity extends BaseActivity {
         AppInfStore.saveAdvise(baseActivity, false);
         if (AppManager.getIsLogin(getApplicationContext())) {
             RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
-            if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), false)) { // 手势密码验证
-                finish();
-                return;
-            }
 
 //            Router.build(RouteConfig.GOTOCMAINHONE).go(LoadCustomerActivity.this);
 //            UiSkipUtils.toNextActivity(baseActivity, WelcomeActivity.class);

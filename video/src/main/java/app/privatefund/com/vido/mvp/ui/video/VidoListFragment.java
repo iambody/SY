@@ -66,7 +66,6 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
     private boolean isLoadMore;
 
-
     public VidoListFragment(String postionString) {
         super();
         this.CatoryValue = postionString;

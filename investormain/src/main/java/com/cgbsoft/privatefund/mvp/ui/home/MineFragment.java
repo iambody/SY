@@ -369,6 +369,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
+    @OnClick(R.id.account_health_to_look_server)
+    void gotoHealthSeverctivity() {
+        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.HEALTH_CHECK_PAGE);
+    }
+
     @OnClick(R.id.health_all_title_ll)
     void gotoHealthAllctivity() {
         String url = CwebNetConfig.mineHealthOrder;

@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
+import com.cgbsoft.lib.widget.swipefresh.RefreshHeadView;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import java.util.HashMap;
@@ -62,6 +65,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
         recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
         recyclerRefreshLayout.setOnRefreshListener(this);
         recyclerRefreshLayout.setEnabled(false);
+        recyclerRefreshLayout.setRefreshView(new RefreshHeadView(getActivity()), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_15_dip));
         recyclerView.setAdapter(checkHealthAdapter);

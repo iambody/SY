@@ -35,7 +35,9 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
+import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -56,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.listener.MyGroupInfoListener;
 import app.privatefund.com.im.listener.MyGroupMembersProvider;
@@ -327,6 +330,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 3;
                 break;
             case 4://左4
+                if (AppManager.isVisitor(InitApplication.getContext())) {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+                    UiSkipUtils.toNextActivityWithIntent(this, intent);
+                    return;
+                }
                 switchID = R.id.nav_right_second;
                 currentPostion = 4;
                 break;

@@ -11,7 +11,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import java.util.Calendar;
 
 /**
- * 检测程序运行在后台是否超过五分钟
  *
  * @author chenlong
  */

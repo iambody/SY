@@ -22,7 +22,6 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
-import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -315,10 +314,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
-        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
-            finish();
-            return;
-        }
         AppInfStore.saveIsVisitor(baseContext, false);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
@@ -514,10 +509,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
      * 游客模式进行登录
      */
     public void visitorLogin() {
-        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
-            finish();
-            return;
-        }
         AppInfStore.saveIsVisitor(baseContext,true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);

@@ -160,6 +160,12 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        videoRootFrame.play();
+    }
+
+    @Override
     public void onStateChanged(int i) {
            /*
                  * 1 STATE_IDLE 播放器空闲，既不在准备也不在播放 2 STATE_PREPARING 播放器正在准备 3
