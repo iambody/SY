@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
@@ -101,7 +102,7 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
 
     static class MyActivitesHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.mine_activity_prompt)
-        LinearLayout linearLayoutPrompt;
+        RelativeLayout linearLayoutPrompt;
         @BindView(R.id.mine_activites_city)
         TextView textViewCity;
         @BindView(R.id.mine_activites_title)

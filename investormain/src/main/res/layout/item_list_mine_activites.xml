@@ -84,7 +84,7 @@
             android:id="@+id/mine_activity_image"
             android:scaleType="fitXY"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
@@ -95,9 +95,9 @@
             android:paddingRight="10dp"
             android:id="@+id/mine_activity_prompt">
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 style="@style/mine_activites_item_desc_prompt"
                 android:text="正在直播"
                 android:visibility="gone"
@@ -106,10 +106,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 style="@style/mine_activites_item_desc_prompt"
                 android:drawableLeft="@drawable/play"
                 android:text="播放回看"
                 android:id="@+id/mine_play_look"/>
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

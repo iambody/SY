@@ -62,10 +62,10 @@ public class RefreshHeadView extends ImageView implements IRefreshStatus {
     @Override
     public void refreshing() {
         clearAnimation();
-
-        AnimationDrawable drawable = (AnimationDrawable) getResources().getDrawable(R.drawable.logoshare);
-        this.setImageDrawable(drawable);
-        drawable.start();
+//
+//        AnimationDrawable drawable = (AnimationDrawable) getResources().getDrawable(R.drawable.logoshare);
+//        this.setImageDrawable(drawable);
+//        drawable.start();
     }
 
     @Override
