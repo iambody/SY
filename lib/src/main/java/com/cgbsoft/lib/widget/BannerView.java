@@ -228,7 +228,15 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
         public Object instantiateItem(View container, int position) {
             final int currentItem = position % views.size();
-            ((ViewPager) container).addView(views.get(currentItem));
+//            if (views.get(currentItem).getParent() != null) {
+//                ((ViewPager) container).addView(views.get(currentItem));
+//            }
+//            return views.get(currentItem);
+            ViewGroup parent = (ViewGroup) views.get(currentItem).getParent();
+            if (parent != null) {
+                parent.removeAllViews();
+            }
+            ((ViewPager)container).addView(views.get(currentItem));
             return views.get(currentItem);
         }
 
