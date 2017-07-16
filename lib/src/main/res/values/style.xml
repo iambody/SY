@@ -227,6 +227,12 @@
         <item name="actionMenuTextColor">@color/color_333333</item>
         <item name="colorAccent">@color/app_golden</item>
     </style>
+
+    <style name="AppTheme.AppBarLayout" parent="Theme.AppCompat.DayNight.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
     <!-- 无阴影 -->
     <style name="address_style">
         <item name="android:windowBackground">@android:color/transparent</item>

@@ -1,7 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
@@ -83,15 +82,14 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     public void requestFirstDataFailure(String errMsg) {
     }
 
-    private void initBanner(List<BannerBean> list) {
-//        List<BannerBean> list = new ArrayList<>();
+    private void initBanner(List<BannerBean> valuelist) {
 //        list.add(new BannerBean(false, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1498574380597&di=9d45fb18e608e1102bb6951b884b10c6&imgtype=0&src=http%3A%2F%2Fn1.itc.cn%2Fimg8%2Fwb%2Frecom%2F2016%2F04%2F15%2F146070551257980148.GIF", BannerBean.ViewType.OVAL));
 //        list.add(new BannerBean(false, "http://dimg08.c-ctrip.com/images/tg/132/715/635/f6d1d5683770473bb31d19743e7df6bd.jpg", BannerBean.ViewType.OVAL));
 //        list.add(new BannerBean(false, "http://img4.duitang.com/uploads/item/201509/04/20150904204338_RcSCF.jpeg", BannerBean.ViewType.OVAL));
 //        list.add(new BannerBean(false, "http://h.hiphotos.baidu.com/lvpics/h=800/sign=d3cb72cb38292df588c3a1158c305ce2/b812c8fcc3cec3fdbb261091d488d43f8794273d.jpg", BannerBean.ViewType.OVAL));
 //        list.add(new BannerBean(false, "http://pic.58pic.com/58pic/12/00/76/78b58PICVWs.jpg", BannerBean.ViewType.OVAL));
 //        list.add(new BannerBean(false, "http://youimg1.c-ctrip.com/target/fd/tg/g1/M04/7E/C3/CghzflVTERSAaOlcAAGrbgRCst0677.jpg", BannerBean.ViewType.OVAL));
-        discoveryBannerView.initShowImageForNet(getActivity(), list);
+        discoveryBannerView.initShowImageForNet(getActivity(), valuelist);
         discoveryBannerView.setOnclickBannerItemView(bannerBean -> {
             Toast.makeText(getActivity(), "你添加的是第".concat(String.valueOf(bannerBean.getPositon())).concat("个图片"), Toast.LENGTH_SHORT).show();
         });

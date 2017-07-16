@@ -180,44 +180,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         return false;
     }
 
-    public class HomeBannerAdapter extends PagerAdapter {
-        private List<View> views;
-        private Context context;
-
-        public HomeBannerAdapter(List<View> views, Context context) {
-            this.context = context;
-            this.views = views;
-        }
-
-        @Override
-        public Object instantiateItem(View arg0, int arg1) {
-//            if (views.size() <= arg1) {
-//                return null;
-//            }
-            final int currentItem = arg1 % views.size();
-            ViewGroup v = (ViewGroup)views.get(currentItem).getParent();
-            if (v != null) {
-                v.removeView(views.get(currentItem));
-            }
-            ((ViewPager) arg0).addView(views.get(currentItem), 0);
-            return views.get(currentItem);
-        }
-
-        public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView((View) object);
-        }
-
-        public int getCount() {
-            return Integer.MAX_VALUE;
-        }
-
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return (arg0 == arg1);
-        }
-    }
-
 //    public class HomeBannerAdapter extends PagerAdapter {
-//
 //        private List<View> views;
 //        private Context context;
 //
@@ -226,9 +189,17 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 //            this.views = views;
 //        }
 //
-//        public Object instantiateItem(View container, int position) {
-//            final int currentItem = position % views.size();
-//            ((ViewPager) container).addView(views.get(currentItem));
+//        @Override
+//        public Object instantiateItem(View arg0, int arg1) {
+////            if (views.size() <= arg1) {
+////                return null;
+////            }
+//            final int currentItem = arg1 % views.size();
+////            ViewGroup v = (ViewGroup)views.get(currentItem).getParent();
+////            if (v != null) {
+////                v.removeView(views.get(currentItem));
+////            }
+////            ((ViewPager) arg0).addView(views.get(currentItem), 0);
 //            return views.get(currentItem);
 //        }
 //
@@ -244,6 +215,35 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 //            return (arg0 == arg1);
 //        }
 //    }
+
+    public class HomeBannerAdapter extends PagerAdapter {
+
+        private List<View> views;
+        private Context context;
+
+        public HomeBannerAdapter(List<View> views, Context context) {
+            this.context = context;
+            this.views = views;
+        }
+
+        public Object instantiateItem(View container, int position) {
+            final int currentItem = position % views.size();
+            ((ViewPager) container).addView(views.get(currentItem));
+            return views.get(currentItem);
+        }
+
+        public void destroyItem(View container, int position, Object object) {
+            ((ViewPager) container).removeView((View) object);
+        }
+
+        public int getCount() {
+            return Integer.MAX_VALUE;
+        }
+
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return (arg0 == arg1);
+        }
+    }
 
 //    /**
 //     * 在本地Drawable中使用轮播和指示器

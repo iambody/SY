@@ -8,7 +8,9 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:theme="@style/AppTheme.AppBarLayout">
 
         <com.cgbsoft.lib.widget.BannerView
             android:id="@+id/discover_bannerview"
@@ -19,7 +21,8 @@
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/discover_list_indicator"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_80_dip" />
+            android:layout_height="@dimen/ui_80_dip"
+            android:background="@color/white"/>
 
     </android.support.design.widget.AppBarLayout>
 
