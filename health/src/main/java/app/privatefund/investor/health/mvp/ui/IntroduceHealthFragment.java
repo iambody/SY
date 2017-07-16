@@ -84,7 +84,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
                 }
             });
         }
-        videoStateObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Boolean.class);
+        videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Boolean.class);
         videoStateObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean b) {
