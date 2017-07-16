@@ -49,8 +49,7 @@ public class ProductlsBean implements Serializable {
     //产品的发行方案
     public List<Schemes> schemes;
     //产品的投资单元
-    //TODO 投资单元明天打开
-//    public List<Units> units;
+    public List<Units> units;
     //发行方案ID
     public String schemeId;
 

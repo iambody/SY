@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
+import com.tencent.qcload.playersdk.util.BuildUtil;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
@@ -63,20 +67,8 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         videoRootFrame.setListener(this);
-//        List<VideoInfo> videos = new ArrayList<>();
-//        VideoInfo v1 = new VideoInfo();
-//        v1.description = "标清";
-//        v1.type = VideoInfo.VideoType.MP4;
-//        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
-////        VideoInfo v2 = new VideoInfo();
-////        v2.description = "高清";
-////        v2.type = VideoInfo.VideoType.MP4;
-////        v2.url = //videoInfoModel.hdUrl;
-//        videos.add(v1);
-//        videos.add(v2);
+
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-//        videoRootFrame.play(videos);
-//        videoRootFrame.pause();
         if (!isSetFullscreenHandler) {
             isSetFullscreenHandler = true;
             videoRootFrame.setToggleFullScreenHandler(() -> {
@@ -110,16 +102,29 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
     @Override
     public void requestDataFailure(String errorMsg) {
-        List<VideoInfo> videos = new ArrayList<>();
-        VideoInfo v1 = new VideoInfo();
-        v1.description = "标清";
-        v1.type = VideoInfo.VideoType.MP4;
-        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
-        videos.add(v1);
-        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-        videoRootFrame.play(videos);
-        videoRootFrame.pause();
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+//        List<VideoInfo> videos = new ArrayList<>();
+//        VideoInfo v1 = new VideoInfo();
+//        v1.description = "标清";
+//        v1.type = VideoInfo.VideoType.MP4;
+//        v1.url = "http://flv.bn.netease.com/tvmrepo/2012/7/C/7/E868IGRC7-mobile.mp4";//videoInfoModel.sdUrl;
+//        videos.add(v1);
+//        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+//        videoRootFrame.play(videos);
+//        videoRootFrame.pause();
+//        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+
+        }else {
+            if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+                videoRootFrame.pause();
+            }
+
+        }
     }
 
     private void changeVideoViewSize(int orientation) {
@@ -156,13 +161,13 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onPause() {
         super.onPause();
-        videoRootFrame.pause();
+//        videoRootFrame.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        videoRootFrame.play();
+//        videoRootFrame.play();
     }
 
     @Override
@@ -176,8 +181,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         switch (i) {
             case 5://播放中
                 iv_mvv_cover.setVisibility(View.GONE);
+                videoRootFrame.pause();
                 break;
             case 4:
+//                iv_mvv_cover.setVisibility(View.GONE);
                 break;
             default:
                 break;
