@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.mall.com.mvp.ui.MallAddressListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -321,7 +322,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_goto_receive_address)
     void gotoManagerAddressActivity() {
-        // 管理收货地址
+        NavigationUtils.startActivity(getActivity(), MallAddressListActivity.class);
     }
 
     @OnClick(R.id.account_order_send_ll)

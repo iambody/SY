@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
@@ -64,7 +65,7 @@ public class HorizontalScrollFragment extends BaseFragment {
     @OnClick(R.id.goto_look_video)
     void gotoLookVideo() {
         if (isPlay) {
-            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+            NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.VIDEO_PAGE);
         } else {
             NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
         }
@@ -105,7 +106,8 @@ public class HorizontalScrollFragment extends BaseFragment {
             VideoInfoModel videoInfoModel = mDatas.get(position);
             Imageload.display(getContext(), videoInfoModel.videoCoverUrl, holder.mImg);
             holder.mTxt.setText(videoInfoModel.videoName);
-            holder.rootView.setOnClickListener(v -> VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.id), videoInfoModel.videoCoverUrl));
+            holder.rootView.setOnClickListener(v ->
+                    VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.id), videoInfoModel.videoCoverUrl));
         }
     }
 
