@@ -125,7 +125,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private void gotoSalonDetail(SalonsEntity.SalonItemBean bean) {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
-        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.salonDetail+bean.getId());
         startActivity(intent);
 //        HashMap hashMap = new HashMap();
 //        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
