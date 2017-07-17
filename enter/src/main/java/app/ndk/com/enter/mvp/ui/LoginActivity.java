@@ -42,7 +42,6 @@ import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
@@ -50,7 +49,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -192,13 +190,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-                LogUtils.Log("S", "sss");
+
 
             }
 
             @Override
             public void getLocationerror() {
-                LogUtils.Log("S", "sss");
+
             }
         });
     }
@@ -509,7 +507,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
      * 游客模式进行登录
      */
     public void visitorLogin() {
-        AppInfStore.saveIsVisitor(baseContext,true);
+        AppInfStore.saveIsVisitor(baseContext, true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();

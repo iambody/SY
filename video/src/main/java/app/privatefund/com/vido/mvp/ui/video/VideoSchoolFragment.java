@@ -207,51 +207,5 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
     }
 
-//    private void initBanner(List<VideoAllModel.Banner> banners) {
-//        videoVideolistBannerview.setPlayDelay(10 * 1000);
-//        bannerAdapter = new BannerAdapter(banners);
-//        videoVideolistBannerview.setAdapter(bannerAdapter);
-//        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
-//
-//
-//    }
-//
-//    private class BannerAdapter extends StaticPagerAdapter {
-//
-//        List<VideoAllModel.Banner> banners;
-//
-//        public BannerAdapter(List<VideoAllModel.Banner> banners) {
-//            this.banners = banners;
-//        }
-//
-//        @Override
-//        public View getView(ViewGroup container, int position) {
-//            VideoAllModel.Banner banner = banners.get(position);
-//            View view = LayoutInflater.from(baseActivity).inflate(com.cgbsoft.lib.R.layout.item_imagecycleview, null);
-//            ImageView imageView = (ImageView) view.findViewById(com.cgbsoft.lib.R.id.item_imagecycleview_iv);
-//            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//            Imageload.display(baseActivity, banner.imageURLString, imageView);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(baseActivity, BaseWebViewActivity.class);
-//                    intent.putExtra(WebViewConstant.push_message_url, banner.extension_url);
-//                    intent.putExtra(WebViewConstant.push_message_title, banner.title);
-//                    intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-//                    baseActivity.startActivity(intent);
-//                }
-//            });
-//
-//
-//            return view;
-//        }
-//
-//
-//        @Override
-//        public int getCount() {
-//            return null == banners ? 0 : banners.size();
-//        }
-//
-//    }
 
 }
