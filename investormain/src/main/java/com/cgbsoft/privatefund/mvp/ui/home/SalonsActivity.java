@@ -87,6 +87,9 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         } else {
             cityCode = AppManager.getLocation(baseContext).getLocationcity();
         }
+        if (TextUtils.isEmpty(cityCode)) {
+            cityCode="全国";
+        }
         SalonsEntity.CityBean cityBean = new SalonsEntity.CityBean();
         cityBean.setText("全国");
         citys.add(cityBean);
