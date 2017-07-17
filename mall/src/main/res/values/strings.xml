@@ -20,4 +20,6 @@
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>
     <string name="load_fail">加载失败</string>
+    <string name="product_detail">商品详情</string>
+    <string name="banner_detail">专题详情</string>
 </resources>
