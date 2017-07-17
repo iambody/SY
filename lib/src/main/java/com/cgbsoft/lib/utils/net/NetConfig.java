@@ -97,15 +97,15 @@ public class NetConfig {
 
     static class MALL {
         //新增商城收货地址
-        static final String MALL_ADD_ADDRESS = API_URL_V2 + "/ydInsertAddress";
+        static final String MALL_ADD_ADDRESS = API_URL_V2 + "/yd/insertydaddress";
         //保存商城收获地址
-        static final String MALL_SAVE_ADDRESS = API_URL_V2 + "/ydUpdateAddress";
+        static final String MALL_SAVE_ADDRESS = API_URL_V2 + "/yd/updateydAddress";
         //删除商城收货地址
-        static final String MALL_DETELE_ADDRESS = API_URL_V2 + "/YdDeleteAddress";
+        static final String MALL_DETELE_ADDRESS = API_URL_V2 + "/yd/deleteaddress";
         //获取商城收货地址列表
-        static final String MALL_ADDRESS_LIST = API_URL_V2 + "/getYdAddressList";
+        static final String MALL_ADDRESS_LIST = API_URL_V2 + "/yd/listydaddress";
         //设置商城默认收货地址
-        static final String MALL_SET_DEFAULT = API_URL_V2 + "/ydDefaultAddress";
+        static final String MALL_SET_DEFAULT = API_URL_V2 + "/yd/updatedefaultaddress";
     }
 
     static class INFORMATION {

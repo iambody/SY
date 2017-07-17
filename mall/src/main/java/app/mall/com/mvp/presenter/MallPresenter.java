@@ -43,11 +43,12 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void saveMallAddress(final MallAddressBean model) {
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", AppManager.getUserId(getContext()));
-        params.put("shopping_name", model.getShopping_name());
+        params.put("shoppingName", model.getShopping_name());
         params.put("id", model.getId());
         params.put("address", model.getAddress());
         params.put("phone", model.getPhone());
+        params.put("regionAddress",model.getRegionAddress());
+        params.put("defaultFlag",model.getDefault_flag());
         addSubscription(ApiClient.saveMallAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -64,12 +65,13 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void addMallAddress(final MallAddressBean model) {
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", AppManager.getUserId(getContext()));
-        params.put("shopping_name", model.getShopping_name());
+        params.put("shoppingName", model.getShopping_name());
         params.put("id", model.getId());
         params.put("address", model.getAddress());
         params.put("phone", model.getPhone());
-        params.put("default_flag",model.getDefault_flag());
+        params.put("defaultFlag",model.getDefault_flag());
+        params.put("regionAddress",model.getRegionAddress());
+        params.put("defaultFlag",model.getDefault_flag());
         addSubscription(ApiClient.addAddress(params).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -95,7 +97,6 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
     @Override
     public void deleteMallAddress(final String addressId) {
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", AppManager.getUserId(getContext()));
         params.put("id", addressId);
         addSubscription(ApiClient.deleteMallAddress(params).subscribe(new RxSubscriber<String>() {
             @Override

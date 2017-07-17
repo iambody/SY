@@ -146,6 +146,14 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null==mallAddressBeans||mallAddressBeans.size()==0){
+            RxBus.get().post(RxConstant.MALL_CHOICE_ADDRESS, new MallAddress("", "", "", ""));
+        }
+    }
+
+    @Override
     public void onItemClick(int position, LinearLayout linear) {
         MallAddressBean model = mallAddressBeans.get(position);
         RxBus.get().post(RxConstant.MALL_CHOICE_ADDRESS, new MallAddress(model.getPhone(), model.getId(), model.getShopping_name(), model.getAddress()));
