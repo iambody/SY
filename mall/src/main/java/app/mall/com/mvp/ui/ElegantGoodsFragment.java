@@ -125,7 +125,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-                hashMap.put(WebViewConstant.push_message_title, name);
+                hashMap.put(WebViewConstant.push_message_title, getResources().getString(R.string.product_detail));
                 hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+id);
                 NavigationUtils.startActivityByRouter(getContext(), RouteConfig.INVESTORMAIN_BASEWEBACTIVITY, hashMap);
             }
