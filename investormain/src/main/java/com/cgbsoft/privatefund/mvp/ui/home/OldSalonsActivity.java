@@ -135,6 +135,9 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
             salons.clear();
         }
         salons.addAll(oldSalons);
+        if (salons.size() == 0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         salonsAdapter.notifyDataSetChanged();
     }
 
