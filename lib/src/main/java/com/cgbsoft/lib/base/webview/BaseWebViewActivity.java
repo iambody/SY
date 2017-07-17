@@ -417,14 +417,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            if (hasRightShare) {
                 pageShare();
-            } else if(item.getTitle().equals(getString(R.string.save))) {
-                String jascript = "javascript:Tools.save()";
-                mWebview.loadUrl(jascript);
-            } else if (item.getTitle().equals("设置")) {
-                DialogUtils.createSwitchBcDialog(this).show();
-            }
+//            } else if(item.getTitle().equals(getString(R.string.save))) {
+//                String jascript = "javascript:Tools.save()";
+//                mWebview.loadUrl(jascript);
+//            } else if (item.getTitle().equals("设置")) {
+//                DialogUtils.createSwitchBcDialog(this).show();
+//            }
         }
 
 
