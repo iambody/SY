@@ -57,7 +57,7 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             SalonsEntity.SalonItemBean salonItemBean = datas.get(position);
         if (holder instanceof SalonsViewHodler) {
             SalonsViewHodler salonHolder= (SalonsViewHodler) holder;
-            Imageload.display(context,salonItemBean.getMainImage(),salonHolder.salonBg);
+            Imageload.display(context,salonItemBean.getImageUrl(),salonHolder.salonBg);
             salonHolder.salonAddress.setText(salonItemBean.getCity());
             salonHolder.salonDate.setText(salonItemBean.getStartTime());
             salonHolder.salonTitle.setText(salonItemBean.getTitle());
