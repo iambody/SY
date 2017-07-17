@@ -69,6 +69,15 @@ public class SalonsEntity extends BaseResult<SalonsEntity.Result> {
         private String id;
         private String title;
         private String hot;
+        private String speaker;
+
+        public String getSpeaker() {
+            return speaker;
+        }
+
+        public void setSpeaker(String speaker) {
+            this.speaker = speaker;
+        }
 
         public String getAddress() {
             return address;
