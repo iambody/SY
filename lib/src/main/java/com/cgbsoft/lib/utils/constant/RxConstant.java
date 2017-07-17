@@ -78,4 +78,6 @@ public interface RxConstant {
 
     //全局跳转
     String JUMP_INDEX = "junp_index";
+
+    String PAUSR_HEALTH_VIDEO = "pause_health_video";
 }

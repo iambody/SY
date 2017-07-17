@@ -18,8 +18,10 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.BuildUtil;
@@ -36,6 +38,7 @@ import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
 import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
 import butterknife.BindFloat;
 import butterknife.BindView;
+import rx.Observable;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSERVABLE;
 import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSERVABLE;
@@ -58,6 +61,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     ImageView iv_mvv_cover;
 
     private boolean isSetFullscreenHandler;
+    private Observable<Boolean> videoStateObservable;
 
     @Override
     protected int layoutID() {
@@ -80,6 +84,22 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
                 }
             });
         }
+        videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Boolean.class);
+        videoStateObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean b) {
+                if (b){
+                    if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+                        videoRootFrame.pause();
+                    }
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         getPresenter().introduceHealth();
     }
 

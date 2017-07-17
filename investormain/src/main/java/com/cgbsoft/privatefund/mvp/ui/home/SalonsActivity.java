@@ -161,6 +161,9 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
         salonItemBean.setIsButton("1");
         salons.add(salonItemBean);
+        if (salons.size() == 0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         salonsAdapter.setDatas(salons);
         this.citys = citys;
     }

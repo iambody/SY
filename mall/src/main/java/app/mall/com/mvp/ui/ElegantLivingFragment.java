@@ -117,6 +117,9 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             isOver = true;
         }
         datas.addAll(data);
+        if (datas.size() == 0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         recyclerAdapter.notifyDataSetChanged();
     }
 
