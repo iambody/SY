@@ -243,7 +243,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     };
 
     public void showShareButton() {
-        rightItem.setVisible(true);
+        if (rightItem != null) {
+            rightItem.setVisible(true);
+        }
     }
 
     /**
