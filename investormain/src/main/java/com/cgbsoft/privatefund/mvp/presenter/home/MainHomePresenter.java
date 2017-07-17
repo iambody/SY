@@ -1,7 +1,11 @@
 package com.cgbsoft.privatefund.mvp.presenter.home;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -47,7 +51,76 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 //        }));
 
     }
+    /**
+     * 开始展示登录模式下的服务码的布局
+     */
+    public void showCardLayAnimation(View V) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0.2f, 0.5f, 1f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 0f, 1f);
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0f, 1f);
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(alphaAnimator).with(scalexAnimator).with(scaleyAnimator);
+        animationSet.setDuration(1 * 500);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animationSet.start();
+    }
+    /**
+     * 消失下边大布局的的animator
+     */
+    public void initDismissCardAnimator(View V) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
+
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f, -600f);
+
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
+
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
+        animationSet.setDuration(1 * 1000);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                V.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animationSet.start();
+
+    }
 //    //进行签到动作
 //    @Override
 //    public void todoSign() {

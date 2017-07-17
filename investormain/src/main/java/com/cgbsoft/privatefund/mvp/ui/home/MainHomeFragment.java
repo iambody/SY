@@ -45,7 +45,6 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
@@ -160,48 +159,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
-        initDialog();
-
-        //测试数据**********************
-        List<HomeEntity.Operate> datas = new ArrayList<>();
-        HomeEntity.Operate d1 = new HomeEntity.Operate();
-        d1.imageUrl = "http://dimg08.c-ctrip.com/images/tg/132/715/635/f6d1d5683770473bb31d19743e7df6bd.jpg";
-        HomeEntity.Operate d2 = new HomeEntity.Operate();
-        d2.imageUrl = "http://youimg1.c-ctrip.com/target/fd/tg/g1/M04/7E/C3/CghzflVTERSAaOlcAAGrbgRCst0677.jpg";
-        datas.add(d1);
-        datas.add(d2);
-        datas.add(d1);
-        //测试数据**********************
-        initHorizontalScroll(datas);
-
-        //测试数据**********************
-        List<HomeEntity.Banner> datasa = new ArrayList<>();
-        HomeEntity.Banner d3 = new HomeEntity.Banner();
-        d3.imageUrl = "http://dimg08.c-ctrip.com/images/tg/132/715/635/f6d1d5683770473bb31d19743e7df6bd.jpg";
-        HomeEntity.Banner d4 = new HomeEntity.Banner();
-        d4.imageUrl = "http://youimg1.c-ctrip.com/target/fd/tg/g1/M04/7E/C3/CghzflVTERSAaOlcAAGrbgRCst0677.jpg";
-        datasa.add(d3);
-        datasa.add(d4);
-        datasa.add(d3);
-        //测试数据**********************
-        homeBannerAdapter = new BannerAdapter(datasa);
+        homeBannerAdapter = new BannerAdapter();
         mainHomeBannerview.setAdapter(homeBannerAdapter);
-//        mainHomeBannerview.getViewPager()；
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
-        mainHomeBannerview.setPlayDelay(4 * 1000);
+        mainHomeBannerview.setPlayDelay(6 * 1000);
 
-        initViewPage(datasa);
         //请求数据
         getPresenter().getHomeData();
     }
 
-    /**
-     * 弹出框
-     */
-    private void initDialog() {
-        //初始化签到页面
-//        if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
-    }
 
     boolean isBindAdviser;
     UserInfoDataEntity.UserInfo userInfo;
@@ -296,7 +262,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     //初始化banner
     private void initViewPage(List<HomeEntity.Banner> banner) {
-
+        homeBannerAdapter.frash(banner);
     }
 
     @Override
@@ -321,9 +287,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initResultData(HomeEntity.Result data) {
         //横向轮播
         initHorizontalScroll(data.module);
+        //banner
+        initViewPage(data.banner);
         //用户等级信息
         initLevel(data.member);
-
     }
 
     /**
@@ -343,7 +310,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @Override
     public void getSignResult(String message) {
-//        if (null != signDialog && signDialog.isShowing()) signDialog.dismiss();
         PromptManager.ShowCustomToast(baseActivity, message);
 
     }
@@ -352,13 +318,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 横向滑动时候的数据填充
      */
     public void initHorizontalScroll(List<HomeEntity.Operate> data) {
-//        mainHomeHorizontalscrollviewLay.removeAllViews();
+        mainHomeHorizontalscrollviewLay.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity, 120), DimensionPixelUtil.dip2px(baseActivity, 100));
             params.setMargins(DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
             view.setLayoutParams(params);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Imageload.display(baseActivity, data.get(i).imageUrl, imageView);
             view.setOnClickListener(new HorizontalItemClickListener(data.get(i), i));
             mainHomeHorizontalscrollviewLay.addView(view);
@@ -389,14 +356,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             public void onAnimationEnd(Animator animation) {
                 if (isVisiter) {//游客模式下
                     mainHomeInvisiterTxtLay.setVisibility(View.VISIBLE);
-                    showCardLayAnimation(mainHomeInvisiterTxtLay);
+                    getPresenter().showCardLayAnimation(mainHomeInvisiterTxtLay);
                 } else {//非游客模式下
                     //动画结束开始
                     mainHomeCardLay.setVisibility(View.VISIBLE);
-                    showCardLayAnimation(mainHomeCardLay);
+                    getPresenter().showCardLayAnimation(mainHomeCardLay);
                     //开始展示私人管家的信息
                     mainHomeAdviserRelationLay.setVisibility(View.VISIBLE);
-                    showCardLayAnimation(mainHomeAdviserRelationLay);
+                    getPresenter().showCardLayAnimation(mainHomeAdviserRelationLay);
                 }
             }
 
@@ -413,77 +380,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.start();
     }
 
-    /**
-     * 消失下边大布局的的animator
-     */
-    public void initDismissCardAnimator(View V) {
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
 
-        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f, -600f);
 
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
-
-        AnimatorSet animationSet = new AnimatorSet();
-        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
-        animationSet.setDuration(1 * 1000);
-        animationSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                V.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        animationSet.start();
-
-    }
-
-    /**
-     * 开始展示登录模式下的服务码的布局
-     */
-    public void showCardLayAnimation(View V) {
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0.2f, 0.5f, 1f);
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 0f, 1f);
-        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0f, 1f);
-        AnimatorSet animationSet = new AnimatorSet();
-        animationSet.play(alphaAnimator).with(scalexAnimator).with(scaleyAnimator);
-        animationSet.setDuration(1 * 500);
-        animationSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        animationSet.start();
-    }
 
     @Override
     public void onResume() {
@@ -672,8 +570,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         List<HomeEntity.Banner> banners;
 
+        public BannerAdapter() {
+        }
+
         public BannerAdapter(List<HomeEntity.Banner> banners) {
             this.banners = banners;
+        }
+
+        public void frash(List<HomeEntity.Banner> datas) {
+            this.banners = datas;
+            this.notifyDataSetChanged();
         }
 
         @Override
@@ -686,11 +592,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
                 }
             });
-
-
             return view;
         }
 

@@ -32,14 +32,14 @@
                     <com.jude.rollviewpager.RollPagerView
                         android:id="@+id/main_home_bannerview"
                         android:layout_width="match_parent"
-                        android:layout_height="240dp" />
+                        android:layout_height="260dp" />
                     <!-- 登录模式下的布局文件 -->
                     <!-- 下边布局 -->
                     <RelativeLayout
                         android:id="@+id/main_home_login_lay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ui_50_dip"
+                        android:layout_marginTop="@dimen/ui_30_dip"
                         android:visibility="gone">
                         <!-- 下边的图片 -->
                         <LinearLayout
@@ -197,7 +197,7 @@
                         android:id="@+id/main_home_vister_lay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ui_50_dip">
+                        android:layout_marginTop="@dimen/ui_30_dip">
                         <!-- 游客模式下的下边的布局-->
                         <LinearLayout
                             android:id="@+id/main_home_vister_adviser_layyy"
