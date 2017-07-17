@@ -48,6 +48,8 @@ public class WebViewConstant {
     public class IntecepterActivity {
         public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
         public static final String DISCOVER_DETAILS = "/discover/details.html";
+        public static final String LIFE_DETAIL = "/biz/life/detail.html";
+        public static final String LIFE_SPECIAL = "/pp6.0/biz/life/special.html";
     }
 
     public class Navigation {

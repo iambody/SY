@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,12 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineActivitesModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -87,6 +93,14 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         Imageload.display(ApContext, activitesItem.getImageUrl(), lsViewHolder.imageViewLogo);
         lsViewHolder.textViewSpeaker.setText(activitesItem.getSpeaker());
         lsViewHolder.linearLayoutPrompt.setVisibility(TextUtils.isEmpty(activitesItem.getPlaybackVideoUrl()) ? View.GONE : View.VISIBLE);
+
+        lsViewHolder.textViewPlayLook.setOnClickListener(v -> {
+            MineActivitesModel.ActivitesItem activitesItem1 = listModelListdata.get(position);
+            HashMap<String ,Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.push_message_url, activitesItem1.getPlaybackVideoUrl());
+            hashMap.put(WebViewConstant.push_message_title, ApContext.getString(R.string.mine_video_detail));
+            NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+        });
     }
 
     @Override

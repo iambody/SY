@@ -94,7 +94,8 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
     private void gotoSalonDetail(OldSalonsEntity.SalonItemBean bean) {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
-        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+bean.getId());
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail.concat(bean.getId()));
         startActivity(intent);
 //        HashMap hashMap = new HashMap();
 //        hashMap.put(WebViewConstant.RIGHT_SHARE, true);

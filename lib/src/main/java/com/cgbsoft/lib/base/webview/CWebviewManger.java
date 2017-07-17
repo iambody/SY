@@ -1321,7 +1321,6 @@ public class CWebviewManger {
      *             rightShare 右边是否有分享
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
-//
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
@@ -1367,7 +1366,9 @@ public class CWebviewManger {
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
-        if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND)) {
+        if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL)) {
             String[] split = actionUrl.split(":");
             String url = split[2];
             String title = split[3];
@@ -1388,7 +1389,7 @@ public class CWebviewManger {
             if (split.length >= 5) {
                 hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
-            NavigationUtils.startActivityByRouter(context, "investornmain_invisterbasewebviewctivity", hashMap);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             return true;
         }
         return false;
