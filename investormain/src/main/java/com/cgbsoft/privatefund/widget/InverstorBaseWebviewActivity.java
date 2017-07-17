@@ -19,7 +19,7 @@ public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
 
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
-        if (actionUrl.contains(WebViewConstant.AppCallBack.INVITE_CUSTOM) || actionUrl.contains(WebViewConstant.AppCallBack.INVITE_SHARE)) {
+        if (actionUrl.contains(WebViewConstant.AppCallBack.INVITE_CUSTOM)) {
             String[] split = actionUrl.split(":");
             try {
                 String title = URLDecoder.decode(split[5], "utf-8");
