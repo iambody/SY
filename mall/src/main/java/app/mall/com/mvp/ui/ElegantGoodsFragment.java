@@ -212,6 +212,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         categoryAdapter.setDatas(categorys);
         prosDatas.clear();
         prosDatas.addAll(result);
+        if (prosDatas.size()==0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         proAdapter.notifyDataSetChanged();
     }
 
@@ -223,6 +226,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                 isOver=true;
             }
         prosDatas.addAll(allRows);
+        if (prosDatas.size()==0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         proAdapter.notifyDataSetChanged();
     }
 
