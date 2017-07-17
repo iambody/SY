@@ -4,16 +4,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
-import com.cgbsoft.lib.widget.swipefresh.RefreshHeadView;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
 
 import java.util.HashMap;
@@ -92,7 +89,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
         hashMap.put(WebViewConstant.push_message_title, healthListModel.getTitle());
         hashMap.put(WebViewConstant.push_message_url, healthListModel.getUrl().concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
                 .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()));
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.INVESTORMAIN_BASEWEBACTIVITY, hashMap);
     }
 
     @Override

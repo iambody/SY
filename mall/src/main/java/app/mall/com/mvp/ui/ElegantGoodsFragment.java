@@ -127,7 +127,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
                 hashMap.put(WebViewConstant.push_message_title, name);
                 hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+id);
-                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.INVESTORMAIN_BASEWEBACTIVITY, hashMap);
             }
         });
         recyclerViewPros.addOnScrollListener(new RecyclerView.OnScrollListener() {

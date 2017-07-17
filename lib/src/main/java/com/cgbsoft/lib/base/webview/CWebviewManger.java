@@ -330,6 +330,14 @@ public class CWebviewManger {
             jumpNativeCode(action);
         } else if (action.contains("callPhone")) {
             callPhone(action);
+        } else if (action.contains("showShareItem")) {
+            switchShareButton();
+        }
+    }
+
+    private void switchShareButton() {
+        if (context instanceof BaseWebViewActivity) {
+            ((BaseWebViewActivity)context).showShareButton();
         }
     }
 

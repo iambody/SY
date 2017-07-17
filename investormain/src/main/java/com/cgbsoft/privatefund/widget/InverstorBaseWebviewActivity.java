@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.widget;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
@@ -13,12 +14,12 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 /**
  * @author chenlong
  */
-@Route("investornmain_invisterbasewebviewctivity")
+@Route(RouteConfig.INVESTORMAIN_BASEWEBACTIVITY)
 public class InverstorBaseWebviewActivity extends BaseWebViewActivity {
 
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
-        if (actionUrl.contains(WebViewConstant.AppCallBack.INVITE_CUSTOM)) {
+        if (actionUrl.contains(WebViewConstant.AppCallBack.INVITE_CUSTOM) || actionUrl.contains(WebViewConstant.AppCallBack.INVITE_SHARE)) {
             String[] split = actionUrl.split(":");
             try {
                 String title = URLDecoder.decode(split[5], "utf-8");

@@ -48,6 +48,9 @@ public class RouteConfig {
     //充值
     public static final String MALL_PAY = "mall_pay";
 
+    // 分享
+    public static final String INVESTORMAIN_BASEWEBACTIVITY = "investornmain_invisterbasewebviewctivity";
+
     //跳转到产品详情详情的路由
     public static final String GOTOPRODUCTDETAIL = "product_pproductdetail";
     //app moudle中的风险测评
