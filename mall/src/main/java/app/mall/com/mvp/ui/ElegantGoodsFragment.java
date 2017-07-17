@@ -125,9 +125,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-                hashMap.put(WebViewConstant.push_message_title, name);
+                hashMap.put(WebViewConstant.push_message_title, getResources().getString(R.string.product_detail));
                 hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.elegantGoodsDetail+id);
-                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             }
         });
         recyclerViewPros.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -212,6 +212,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         categoryAdapter.setDatas(categorys);
         prosDatas.clear();
         prosDatas.addAll(result);
+        if (prosDatas.size()==0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         proAdapter.notifyDataSetChanged();
     }
 
@@ -223,6 +226,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                 isOver=true;
             }
         prosDatas.addAll(allRows);
+        if (prosDatas.size()==0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         proAdapter.notifyDataSetChanged();
     }
 

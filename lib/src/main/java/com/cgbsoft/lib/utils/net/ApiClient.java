@@ -1356,7 +1356,7 @@ public class ApiClient {
 //        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 //    }
     public static Observable<String> getHealthDataList(HashMap hashMap) {
-        return OKHTTP.getInstance().getRequestManager().getHealthList(hashMap).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getHealthList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

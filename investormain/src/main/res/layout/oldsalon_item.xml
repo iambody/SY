@@ -77,10 +77,6 @@
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:layout_below="@+id/tv_oldsalon_title"
             android:layout_marginTop="@dimen/ui_5_dip"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:visibility="gone"
-            android:text="活动描述"
             />
     </RelativeLayout>
 </FrameLayout>
