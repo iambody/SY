@@ -47,7 +47,6 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
 
     @Override
     public void onModelFirstSuccess(ElegantGoodsEntity.Result result) {
-        elegantGoodsView.hideLoadDialog();
         ArrayList<ElegantGoodsBeanInterface> datas = new ArrayList<>();
         List<ElegantGoodsEntity.ElegantGoodsCategoryBean> categorys = result.getNavigation();
         for (int i=0;i<categorys.size();i++) {
@@ -84,12 +83,13 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
             datas.addAll(allRows);
         }
         elegantGoodsView.updateUi(categorys,datas);
+        elegantGoodsView.hideLoadDialog();
     }
 
     @Override
     public void onModelFirstError(Throwable error) {
-        elegantGoodsView.hideLoadDialog();
         elegantGoodsView.updateFirstError(error);
+        elegantGoodsView.hideLoadDialog();
 //        try {
 //            StringBuilder sb = new StringBuilder();
 //            InputStream open = getContext().getResources().getAssets().open("result.json");
@@ -109,7 +109,6 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
 
     @Override
     public void onModelMoreSuccess(ElegantGoodsEntity.ResultMore result) {
-        elegantGoodsView.hideLoadDialog();
         ArrayList<ElegantGoodsBeanInterface> datas = new ArrayList<>();
         List<ElegantGoodsEntity.AllNewsItemBean> allRows = result.getRows();
         if (null != allRows && allRows.size() > 0) {
@@ -119,11 +118,12 @@ public class ElegantGoodsPresenterImpl extends BasePresenterImpl<ElegantGoodsCon
             datas.addAll(allRows);
         }
         elegantGoodsView.updateUiMore(datas);
+        elegantGoodsView.hideLoadDialog();
     }
 
     @Override
     public void onModelMoreError(Throwable error) {
-        elegantGoodsView.hideLoadDialog();
         elegantGoodsView.updateMoreError(error);
+        elegantGoodsView.hideLoadDialog();
     }
 }

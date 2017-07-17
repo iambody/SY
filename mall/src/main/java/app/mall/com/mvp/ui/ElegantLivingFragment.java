@@ -83,7 +83,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     private void gotoBannerDetail(ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
         HashMap hashMap = new HashMap();
         hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-        hashMap.put(WebViewConstant.push_message_title, elegantLivingBean.getTitle());
+        hashMap.put(WebViewConstant.push_message_title, getResources().getString(R.string.banner_detail));
         hashMap.put(WebViewConstant.push_message_url, elegantLivingBean.getUrl());
         NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
