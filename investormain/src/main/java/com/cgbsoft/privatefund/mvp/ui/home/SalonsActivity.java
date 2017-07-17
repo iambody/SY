@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.SalonsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -24,6 +24,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.SalonsAdapter;
+import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.SalonsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.SalonsPresenterImpl;
 import com.chenenyu.router.annotation.Route;
@@ -56,10 +57,10 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private LoadingDialog mLoadingDialog;
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
-    private String cityCode = "北京";
+    private String cityCode = "";
     private int offset = 0;
     private int limit = 100;
-    private List<SalonsEntity.CityBean> citys;
+    private List<SalonsEntity.CityBean> citys=new ArrayList<>();
 
     @OnClick(R.id.title_left)
     public void clickBack() {
@@ -80,6 +81,16 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     }
 
     private void initView(Bundle savedInstanceState) {
+        LocationBean location = AppManager.getLocation(baseContext);
+        if (null == location) {
+            cityCode = "全国";
+        } else {
+            cityCode = AppManager.getLocation(baseContext).getLocationcity();
+        }
+        SalonsEntity.CityBean cityBean = new SalonsEntity.CityBean();
+        cityBean.setText("全国");
+        citys.add(cityBean);
+        salonCity.setText(cityCode);
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setLoadMoreEnabled(false);
@@ -161,8 +172,11 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
         salonItemBean.setIsButton("1");
         salons.add(salonItemBean);
+        if (salons.size() == 0) {
+            mRefreshLayout.setLoadMoreEnabled(false);
+        }
         salonsAdapter.setDatas(salons);
-        this.citys = citys;
+        this.citys.addAll(citys);
     }
 
     @Override
@@ -183,10 +197,10 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 
     @OnClick(R.id.ll_salon_city_all)
     public void showCitySelect() {
-        if (null == citys || citys.size() == 0) {
-            Toast.makeText(getApplicationContext(), "暂无其它城市", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (null == citys || citys.size() == 0) {
+//            Toast.makeText(getApplicationContext(), "暂无其它城市", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         WheelDialogCity wheelDialogCity = new WheelDialogCity(this);
         wheelDialogCity.setList(citys);
         wheelDialogCity.setTitle("请选择城市");

@@ -242,6 +242,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     };
 
+    public void showShareButton() {
+        if (rightItem != null) {
+            rightItem.setVisible(true);
+        }
+    }
+
     /**
      * @param url
      * @return
@@ -390,20 +396,21 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     public boolean onCreateOptionsMenu(Menu menu) {
         if ("设置".equals(title)) {
             getMenuInflater().inflate(R.menu.page_menu, menu);
-            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            rightItem = menu.findItem(R.id.firstBtn);
             MenuItem secItem = menu.findItem(R.id.secondBtn);
-            firstItem.setTitle("设置");
+            rightItem.setTitle("设置");
             Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
-            firstItem.setIcon(drawable);
+            rightItem.setIcon(drawable);
             secItem.setVisible(false);
         }
         if (hasRightShare || hasRightSave) {
             getMenuInflater().inflate(R.menu.page_menu, menu);
-            MenuItem firstItem = menu.findItem(R.id.firstBtn);
+            rightItem = menu.findItem(R.id.firstBtn);
             MenuItem secItem = menu.findItem(R.id.secondBtn);
 //            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-            firstItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
+            rightItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
             secItem.setVisible(false);
+            rightItem.setVisible(!hasRightShare);
         }
         return super.onCreateOptionsMenu(menu);
     }
