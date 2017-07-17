@@ -73,9 +73,6 @@
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:layout_below="@+id/tv_salon_title"
             android:layout_marginTop="@dimen/ui_5_dip"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:visibility="gone"
             />
         <RelativeLayout
             android:id="@+id/rl_salon_live_flag"

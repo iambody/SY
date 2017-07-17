@@ -61,6 +61,7 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             salonHolder.salonAddress.setText(salonItemBean.getCity());
             salonHolder.salonDate.setText(salonItemBean.getStartTime());
             salonHolder.salonTitle.setText(salonItemBean.getTitle());
+            salonHolder.salonDepict.setText("主讲嘉宾：".concat(salonItemBean.getSpeaker()));
             if (null != listener) {
                 salonHolder.layoutAll.setOnClickListener(new View.OnClickListener() {
                     @Override
