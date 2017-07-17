@@ -37,7 +37,7 @@ public class OldSalonsAdapter extends RecyclerView.Adapter<OldSalonsAdapter.OldS
     @Override
     public void onBindViewHolder(OldSalonsAdapter.OldSalonsViewHodler holder, int position) {
             OldSalonsEntity.SalonItemBean salonItemBean = datas.get(position);
-        Imageload.display(context,salonItemBean.getMainImage(),holder.salonBg);
+        Imageload.display(context,salonItemBean.getImageUrl(),holder.salonBg);
         holder.salonAddress.setText(salonItemBean.getCity());
         holder.salonDate.setText(salonItemBean.getStartTime());
         holder.salonTitle.setText(salonItemBean.getTitle());

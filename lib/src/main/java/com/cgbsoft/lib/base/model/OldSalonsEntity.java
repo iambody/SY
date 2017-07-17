@@ -25,11 +25,19 @@ public class OldSalonsEntity extends BaseResult<OldSalonsEntity.SalonBean> {
         private String address;
         private String city;
         private String startTime;
-        private String mainImage;
         private String id;
         private String title;
         private String hot;
         private String speaker;
+        private String imageUrl;
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
 
         public String getSpeaker() {
             return speaker;
@@ -63,13 +71,6 @@ public class OldSalonsEntity extends BaseResult<OldSalonsEntity.SalonBean> {
             this.startTime = startTime;
         }
 
-        public String getMainImage() {
-            return mainImage;
-        }
-
-        public void setMainImage(String mainImage) {
-            this.mainImage = mainImage;
-        }
 
         public String getId() {
             return id;
