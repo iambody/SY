@@ -13,26 +13,28 @@ import java.io.Serializable;
 public class MallAddressBean extends BaseModel implements Serializable{
     public static int LIST = 0;
 
-    private String shopping_name;
+    private String shoppingName;
     private String address;
     private String phone;
-    private String default_flag;
+    private String defaultFlag;
     private String id;
+    private String regionAddress;
 
-    public MallAddressBean(String shopping_name, String address, String phone, String default_flag, String id) {
-        this.shopping_name = shopping_name;
+    public MallAddressBean(String shopping_name, String address, String phone, String default_flag, String id,String regionAddress) {
+        this.shoppingName = shopping_name;
         this.address = address;
         this.phone = phone;
-        this.default_flag = default_flag;
+        this.defaultFlag = default_flag;
         this.id = id;
+        this.regionAddress = regionAddress;
     }
 
     public String getShopping_name() {
-        return shopping_name;
+        return shoppingName;
     }
 
     public void setShopping_name(String shopping_name) {
-        this.shopping_name = shopping_name;
+        this.shoppingName = shopping_name;
     }
 
     public String getAddress() {
@@ -52,11 +54,11 @@ public class MallAddressBean extends BaseModel implements Serializable{
     }
 
     public String getDefault_flag() {
-        return default_flag;
+        return defaultFlag;
     }
 
     public void setDefault_flag(String default_flag) {
-        this.default_flag = default_flag;
+        this.defaultFlag = default_flag;
     }
 
     public String getId() {
@@ -65,5 +67,13 @@ public class MallAddressBean extends BaseModel implements Serializable{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRegionAddress() {
+        return regionAddress;
+    }
+
+    public void setRegionAddress(String regionAddress) {
+        this.regionAddress = regionAddress;
     }
 }
