@@ -269,15 +269,14 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 uiConversation.setConversationContent(cacheConversation.getConversationContent());
                 int value = 0;
                 for (UIConversation conversation2 : cacheConversationList) {
-                    value += conversation2.getUnReadMessageCount();
-                    System.out.println("--------showTime=" + showTime + "-------value=" + value + "--------conversation1.getConversationContent()=" + conversation2.getConversationContent());
+                    if (RongCouldUtil.getInstance().customConversation(conversation2.getConversationSenderId())) {
+                        value += conversation2.getUnReadMessageCount();
+                    }
                 }
                 if (value > 0) {
                     uiConversation.setUnReadMessageCount(value);
                 }
             }
-
-
 
             int index = RongConversationListFragment.this.getPosition(uiConversation);
             RongConversationListFragment.this.mAdapter.add(uiConversation, index);

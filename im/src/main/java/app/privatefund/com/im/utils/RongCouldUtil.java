@@ -19,7 +19,7 @@ public class RongCouldUtil {
 //        RongIM.registerMessageType(ProductMessage.class);
 //        RongIM.registerMessageType(NewsMessage.class);
 //        RongIM.registerMessageType(PdfMessage.class);
-////        RongIM.getInstance().registerMessageTemplate(new ProductMessageItemProvider());
+////        RongIM.filtergetInstance().registerMessageTemplate(new ProductMessageItemProvider());
 ////        RongIM.getInstance().registerMessageTemplate(new PdfMessageItemProvider());
 ////        RongIM.getInstance().registerMessageTemplate(new NewMessageItemProvider());
 //        RongIM.setOnReceiveMessageListener(new RongRMListener());
