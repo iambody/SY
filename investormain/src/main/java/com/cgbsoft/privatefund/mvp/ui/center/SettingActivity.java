@@ -88,8 +88,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     private void turnOnGesturePsd() {
         NavigationUtils.startActivityByRouter(baseContext, RouteConfig.SET_GESTURE_PASSWORD);
-        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
-        DataStatistApiParam.onSwitchGesturePassword(valuse);
+//        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
+//        DataStatistApiParam.onSwitchGesturePassword(valuse);
     }
 
     @OnClick(R.id.title_left)

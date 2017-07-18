@@ -22,15 +22,14 @@
             android:src="@drawable/ic_back_black_24dp" />
 
         <TextView
-            android:id="@+id/title_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="right"
-            android:text="跳过"
-            android:textColor="@color/c_mid_black"
-            android:textSize="16sp" />
+            android:text="@string/gesture_new_no_set"
+            android:textSize="@dimen/dimens_sp_16"
+            android:id="@+id/gesture_top_right"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/black"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -83,15 +82,15 @@
         <!--android:layout_marginBottom="20dp"-->
         <!--android:layout_marginTop="20dip"></FrameLayout>-->
 
-    <TextView
-        android:id="@+id/text_reset"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lock_9_view"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:text="@string/forget_gesture_code"
-        android:textColor="#816E6A"
-        android:visibility="gone" />
+    <!--<TextView-->
+        <!--android:id="@+id/text_reset"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/lock_9_view"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="@string/forget_gesture_code"-->
+        <!--android:textColor="#816E6A"-->
+        <!--android:visibility="gone" />-->
 </RelativeLayout>

@@ -201,13 +201,13 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
-     * 得到最后一次退出时间
+     * 得到最后一次验证或者设置手势密码时间
      *
      * @param context
      * @return
      */
-    public static long getLastExitTime(Context context) {
-        return getBasePreference(context).getLong(LAST_EXIT_BACK_TIME, 0);
+    public static long getLastSetOrValidateTime(Context context) {
+        return getBasePreference(context).getLong(LAST_SET_VALIDATE_TIME, 0);
     }
 
     /**

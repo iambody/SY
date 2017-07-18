@@ -27,6 +27,7 @@ import java.util.List;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoHistoryListActivity;
+import app.privatefund.investor.health.mvp.ui.HealthItemDecoration;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -64,6 +65,7 @@ public class HorizontalScrollFragment extends BaseFragment {
         System.out.println("------list=" + list.size());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_10_dip));
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(new MyHolderAdapter(getActivity(), list, isPlay));
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);

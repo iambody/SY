@@ -88,8 +88,8 @@ public interface AppinfConstant {
     // 是否有用户所属群
     String HAS_USER_GROUP = "hasGroup";
 
-    // 最后返回时间
-    String LAST_EXIT_BACK_TIME = "last_exit_back_time";
+    // 设置/验证手势密码最后时间
+    String LAST_SET_VALIDATE_TIME = "last_set_validate_time";
 
 
     //登录前的token

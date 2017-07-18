@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -29,13 +28,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import butterknife.BindView;
 
 /**
  * @author chenlong
- *
- * 资讯页面
+ *         资讯页面
  */
 public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements DiscoverContract.View {
 
@@ -60,17 +57,25 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        initIndicatorView();
+        initViewPage();
+        getPresenter().getDiscoveryFirstData();
+    }
+
+    private void initIndicatorView() {
         commonNavigator = new CommonNavigator(baseActivity);
         disCoveryNavigationAdapter = new DiscoverIndicatorAdapter(getActivity(), viewPager);
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
         commonNavigator.setAdjustMode(true);
         magicIndicator.setNavigator(commonNavigator);
+    }
+
+    private void initViewPage() {
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
         viewPager.setOffscreenPageLimit(20);
         viewPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(magicIndicator, viewPager);
-        getPresenter().getDiscoveryFirstData();
     }
 
     @Override
@@ -93,8 +98,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         discoveryBannerView.initShowImageForNet(getActivity(), valuelist);
         discoveryBannerView.setOnclickBannerItemView(bannerBean -> {
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.push_message_url,  bannerBean.getJumpUrl());
-            hashMap.put(WebViewConstant.push_message_title,  bannerBean.getTitle());
+            hashMap.put(WebViewConstant.push_message_url, bannerBean.getJumpUrl());
+            hashMap.put(WebViewConstant.push_message_title, bannerBean.getTitle());
             NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap);
         });
         if (discoveryBannerView != null) {

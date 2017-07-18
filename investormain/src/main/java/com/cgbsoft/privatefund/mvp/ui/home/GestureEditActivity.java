@@ -45,6 +45,8 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";
     public static final String PARAM_FROM_MODIFY = "PARAM_FROM_MODIFY";
     public static final String PARAM_FROM_FORGET = "PARAM_FROM_FORGET";
+    public static final String PARAM_FROM_SHOW_ASSERT = "PARAM_FROM_SHWO_ASSERT";
+
     /**
      * 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后=》重新设置密码（本界面）的流程进来的
      * 注意 理论上是 手势密码忘记密码进来的需要重新设置手势密码时候直接进入main页面 去掉存在手势密码的标识@TODO需要问龙哥 标识是怎么存储形式！！！！
@@ -71,12 +73,17 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @BindView(R.id.lock_indicator)
     LockIndicator mLockIndicator;
 
+    @BindView(R.id.gesture_top_right)
+    TextView titleNoSet;
+
+    private boolean isFromShowAssert;
+
     @Override
     protected void before() {
         super.before();
         fromRegistOrLoginPage = getIntent().getBooleanExtra(PARAM_FROM_REGIST_OR_LOGIN, false);
         isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
-        //判断是否是 手势密码=》忘记密码=》重置密码=》重置密码成功后=》重新设置密码 流程进来的 标识
+        isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)) {
             isFromVerifyForget = getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
         }
@@ -90,6 +97,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpViews();
+        titleNoSet.setVisibility(isFromShowAssert ? View.VISIBLE : View.GONE);
        // setUpListeners();
     }
 
@@ -146,32 +154,32 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         }
     }
 
-    @OnClick(R.id.title_right)
-    void rightJumpClick() {
-        NavigationUtils.toMainActivity(this);
+    @OnClick(R.id.gesture_top_right)
+    public void nowToJumpPage() {
         finish();
+        RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
     }
 
-    @OnClick(R.id.text_reset)
-    void resetClick() {
-        if (SPreference.getBoolean(this, Constant.weixin_login)) {
-            DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
-                @Override
-                public void left() {
-                    dismiss();
-                }
-
-                @Override
-                public void right() {
-                    dismiss();
-                    NavigationUtils.startDialgTelephone(GestureEditActivity.this, getResources().getString(R.string.hotline));
-                }
-            };
-            dialog.show();
-        } else {
-//        resetGesturePasswordDialog(this);
-        }
-    }
+//    @OnClick(R.id.text_reset)
+//    void resetClick() {
+//        if (SPreference.getBoolean(this, Constant.weixin_login)) {
+//            DubButtonWithLinkDialog dialog = new DubButtonWithLinkDialog(this, getString(R.string.weixin_reset_gesture_password), getString(R.string.hotline), "取消", "确认") {
+//                @Override
+//                public void left() {
+//                    dismiss();
+//                }
+//
+//                @Override
+//                public void right() {
+//                    dismiss();
+//                    NavigationUtils.startDialgTelephone(GestureEditActivity.this, getResources().getString(R.string.hotline));
+//                }
+//            };
+//            dialog.show();
+//        } else {
+////        resetGesturePasswordDialog(this);
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -202,9 +210,9 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
             finish();
             return;
         }
-        if (fromRegistOrLoginPage) {
-            NavigationUtils.toMainActivity(GestureEditActivity.this);
+        if (isFromShowAssert) {
             finish();
+            RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
         } else {
             RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
             finish();
@@ -215,6 +223,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @Override
     public void modifyUserFailure() {
         Toast.makeText(GestureEditActivity.this, isModifyPassword ? "修改手势密码失败" : "设置手势密码失败", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

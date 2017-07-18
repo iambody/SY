@@ -58,6 +58,8 @@ public interface RxConstant {
 
     String MALL_CHOICE_ADDRESS = "choice_address";
 
+    String SWITCH_ASSERT_SHOW = "switch_assert_show_hint";
+
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
     String ZHIBO_STATUES = "zhibo_status";
