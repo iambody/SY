@@ -76,7 +76,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
             certifyNumber.setEnabled(false);
             realName.setText(AppManager.getUserInfo(this).getToC().getCustomerName());
             certifyType.setText(AppManager.getUserInfo(this).getToC().getCustomerIdType());
-            certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerPhone());
+            certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerIdNumber());
         }
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);

@@ -74,13 +74,14 @@ public class HorizontalScrollFragment extends BaseFragment {
         recyclerView.setAdapter(myHolderAdapter);
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-//      lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
+        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
     }
 
     public void refrushData(List<VideoInfoModel> list) {
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        myHolderAdapter.refrushData(list);
+        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
+        myHolderAdapter.refrushData(list.size() > 10 ? list.subList(0, 11) : list);
     }
 
     @OnClick(R.id.goto_look_more)
@@ -97,7 +98,8 @@ public class HorizontalScrollFragment extends BaseFragment {
         if (isPlay) {
             NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.VIDEO_PAGE);
         } else {
-            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+            NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.VIDEO_PAGE);
+//            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
         }
     }
 
