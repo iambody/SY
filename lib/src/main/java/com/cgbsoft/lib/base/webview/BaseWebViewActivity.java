@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -30,7 +28,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -139,7 +137,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 startActivity(intent);
             }
         });
-        mWebview.loadUrl(url);
+//        mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
             executeObservable = RxBus.get().register(getRegeistRxBusId(), Object.class);
             executeObservable.subscribe(new RxSubscriber<Object>() {
@@ -317,14 +315,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onResume() {
         super.onResume();
+        LogUtils.Log("JavaScriptObjectToc","ss");
+        mWebview.loadUrl(url);
         mWebview.loadUrl("javascript:refresh()");
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
 //        } else
-        try {
-            mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void initShakeInSetPage() {
