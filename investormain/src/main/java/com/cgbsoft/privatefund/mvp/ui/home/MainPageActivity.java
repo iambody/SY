@@ -34,6 +34,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -121,12 +122,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable;
+    private Observable<Integer> showIndexObservable,freshWebObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
     private int code;
 
+    private InvestorAppli initApplication;
     /**
      * 定位管理器
      */
@@ -144,12 +146,20 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
         Log.i("MainPageActivity", "----init");
+        initApplication= (InitApplication) getApplication();
+        initApplication.setMainpage(true);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
@@ -497,6 +507,22 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+        //刷新webview的信息配置
+        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
+        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                LogUtils.Log("JavaScriptObjectToc","开始调用");
+
+//                baseWebview.reload();
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void toJumpTouziren(QrCodeBean qrCodeBean) {
@@ -551,7 +577,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        initApplication.setMainpage(false);
         if (null != liveTimerObservable) {
             liveTimerObservable.unsubscribe();
         }

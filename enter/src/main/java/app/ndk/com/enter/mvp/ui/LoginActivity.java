@@ -18,12 +18,15 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -108,6 +111,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //是否是app内发起的 登录操作
     private boolean isFromInside;
 
+
+    private InvestorAppli initApplication;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_login;
@@ -140,13 +146,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             recreate();
         }
+        initApplication = (InvestorAppli) getApplication();
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
-        if (userInfo != null) {
+        if (userInfo != null && !AppManager.isVisitor(baseContext)) {
             et_al_username.setText(userInfo.userName);
-        } else if (loginName != null) {
+        } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
             et_al_username.setText(loginName);
         }
         if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
@@ -312,8 +319,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void loginSuccess() {
+        if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
+            AppInfStore.saveIsVisitor(baseContext, false);
+
+            RxBus.get().post(RxConstant.MAIN_FRESH_WEB_CONFIG, 1);
+//            BaseWebview view=new BaseWebview(baseContext,false);
+//            view.loadUrl(CwebNetConfig.pageInit);
+        } else {
+            Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
+        }
         AppInfStore.saveIsVisitor(baseContext, false);
-        Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }
 
@@ -509,7 +524,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void visitorLogin() {
         AppInfStore.saveIsVisitor(baseContext, true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
+
+        //xxxxxxxxxxx
+
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
+
         finish();
     }
 }

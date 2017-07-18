@@ -163,7 +163,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
         mainHomeBannerview.setPlayDelay(6 * 1000);
-
         //请求数据
         getPresenter().getHomeData();
     }
@@ -298,6 +297,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.SetTxt(viewHomeLevelStr, level.levelName);
+//        isVisibleToUser
     }
 
     @Override
@@ -534,10 +534,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.Log("sssaa", "首页可见");
-        if (getUserVisibleHint()) {
+    public void onHiddenChanged(boolean isVisibleToUser) {
+        super.onHiddenChanged(isVisibleToUser);
+        if (isVisibleToUser) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页可见");
             mainHomeBannerview.resume();

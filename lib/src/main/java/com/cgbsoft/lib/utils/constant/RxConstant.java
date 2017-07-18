@@ -41,6 +41,8 @@ public interface RxConstant {
      String PRODUCT_ORDERBY_TO_FRAGMENT="product_oderby_to_fragment";
     //在产品模块 我的筛选的dialog点击确定时候传递给fragment数据消息
     String PRODUCT_FILTER_TO_FRAGMENT="product_filtr_to_fragment";
+    //在首页接受需要刷新web的信息配置（游客去登录进入登录需要哦刷新）
+    String MAIN_FRESH_WEB_CONFIG="mainfreshwebconfig";
 
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 
