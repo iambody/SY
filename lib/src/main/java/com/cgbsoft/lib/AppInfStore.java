@@ -259,10 +259,10 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
-    //最后退出时间
-    public static void saveLastExitTime(Context pcContext, long time) {
+    // 最后设置和验证时间
+    public static void saveLastSetAndValidateTime(Context pcContext, long time) {
         SharedPreferences.Editor ed = getBasePreference(pcContext).edit();
-        ed.putLong(LAST_EXIT_BACK_TIME, time);
+        ed.putLong(LAST_SET_VALIDATE_TIME, time);
         ed.commit();
     }
 

@@ -1,6 +1,5 @@
 package com.cgbsoft.lib.utils.net;
 
-
 public class NetConfig {
     public static final boolean isLocal = true;
 
@@ -22,7 +21,6 @@ public class NetConfig {
     public static final String LIVE_URL = "zhibo/v2";
     public static final String AUTH_URL = "auth/v2";
     public static final String PROMOTION_URL = "promotion/v2";
-
 
     public static final String API_URL_V2 = "api/v2";
     public static final String LIVE_URL_V2 = "zhibo/v2";
@@ -84,7 +82,6 @@ public class NetConfig {
     }
 
     static class Auth {
-        //获取容云token
         //获取容云token
         static final String GET_RONG_TOKEN = AUTH_URL_V2 + "/rc/gettoken";
         // 获取融云用户信息

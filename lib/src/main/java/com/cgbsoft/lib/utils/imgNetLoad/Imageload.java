@@ -35,7 +35,6 @@ public class Imageload {
         return Glide.with(context.getApplicationContext());
     }
 
-
     /**
      * 创建DrawableTypeRequest
      *

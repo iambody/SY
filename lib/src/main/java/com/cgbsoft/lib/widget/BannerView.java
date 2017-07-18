@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -49,7 +50,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             switch (msg.what) {
                 case BANNER_CHANGE:
                     targetVp.setCurrentItem(selectedBanner + 1);
-                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, 3000);
+                    mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                     break;
             }
         }
@@ -102,7 +103,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             bannerList.add(iv);
             ImageView iv2 = new ImageView(activity);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(10, 0, 0, 0);
+            lp.setMargins(15, 0, 0, 0);
             iv2.setLayoutParams(lp);
             if (i == 0) {
                 iv2.setBackgroundResource(BannerBean.ViewType.OVAL == bannerBean.getVierType() ? R.drawable.shape_banner_point_on : R.drawable.shape_banner_rectangle_on);
@@ -123,7 +124,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             indicationList.add(iv2);
             ly_indication.addView(iv2);
         }
-        HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList, activity);
+        HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList);
         targetVp.setAdapter(bannerAdapter);
     }
 
@@ -138,6 +139,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     }
 
     public void startBanner() {
+        mHandler.removeCallbacksAndMessages(null);
         mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
     }
 
@@ -153,8 +155,6 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     @Override
     public void onPageSelected(int position) {
-//        selectedBanner = position % bannerList.size();
-//        bannerPointLight(position % indicationList.size());
         selectedBanner = position;
         bannerPointLight(position % indicationList.size());
     }
@@ -171,79 +171,43 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
                 mHandler.removeCallbacksAndMessages(null);
                 break;
             case MotionEvent.ACTION_UP:
+                mHandler.removeCallbacksAndMessages(null);
                 mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
                 break;
             case MotionEvent.ACTION_CANCEL:
-                mHandler.sendEmptyMessageDelayed(BANNER_CHANGE, DELAY_SCROLL_TIME);
+                mHandler.removeCallbacksAndMessages(null);
                 break;
         }
         return false;
     }
 
-//    public class HomeBannerAdapter extends PagerAdapter {
-//        private List<View> views;
-//        private Context context;
-//
-//        public HomeBannerAdapter(List<View> views, Context context) {
-//            this.context = context;
-//            this.views = views;
-//        }
-//
-//        @Override
-//        public Object instantiateItem(View arg0, int arg1) {
-////            if (views.size() <= arg1) {
-////                return null;
-////            }
-//            final int currentItem = arg1 % views.size();
-////            ViewGroup v = (ViewGroup)views.get(currentItem).getParent();
-////            if (v != null) {
-////                v.removeView(views.get(currentItem));
-////            }
-////            ((ViewPager) arg0).addView(views.get(currentItem), 0);
-//            return views.get(currentItem);
-//        }
-//
-//        public void destroyItem(View container, int position, Object object) {
-//            ((ViewPager) container).removeView((View) object);
-//        }
-//
-//        public int getCount() {
-//            return Integer.MAX_VALUE;
-//        }
-//
-//        public boolean isViewFromObject(View arg0, Object arg1) {
-//            return (arg0 == arg1);
-//        }
-//    }
-
     public class HomeBannerAdapter extends PagerAdapter {
 
         private List<View> views;
-        private Context context;
 
-        public HomeBannerAdapter(List<View> views, Context context) {
-            this.context = context;
+        public HomeBannerAdapter(List<View> views) {
             this.views = views;
         }
 
-        public Object instantiateItem(View container, int position) {
-            final int currentItem = position % views.size();
-//            if (views.get(currentItem).getParent() != null) {
-//                ((ViewPager) container).addView(views.get(currentItem));
-//            }
-//            return views.get(currentItem);
-            View itemView = views.get(currentItem);
-            ViewGroup parent = (ViewGroup) itemView.getParent();
-            if (parent != null) {
-                return parent.getChildAt(0);
-//                parent.removeAllViews();
+        public Object instantiateItem(View container, int position1) {
+            int currentItem = position1 % views.size();
+            if (currentItem < 0){
+                currentItem = views.size() + position1;
             }
-            ((ViewGroup)container).addView(itemView);
-            return views.get(currentItem);
+            View view = views.get(currentItem);
+            ViewParent vp = view.getParent();
+            if (vp!=null){
+                ViewGroup parent = (ViewGroup)vp;
+                parent.removeView(view);
+            }
+            ((ViewGroup)container).addView(view);
+            return view;
         }
 
-        public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView((View) object);
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+//            super.destroyItem(container, position, object);
+//            container.removeView(views.get(position % views.size()));
         }
 
         public int getCount() {
@@ -254,39 +218,4 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             return (arg0 == arg1);
         }
     }
-
-//    /**
-//     * 在本地Drawable中使用轮播和指示器
-//     */
-//    public void initShowImageForLocal(Activity activity, int[] img_urls) {
-//        LinearLayout ly_indication = new LinearLayout(activity);
-//        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        params.bottomMargin = 15;
-//        params.addRule(ALIGN_PARENT_BOTTOM);
-//        params.addRule(CENTER_HORIZONTAL);
-//        addView(ly_indication, params);
-//        bannerList = new ArrayList<View>();
-//        indicationList = new ArrayList<View>();
-//        for (int i = 0; i < img_urls.length; i++) {
-//            ImageView iv = new ImageView(activity);
-//            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-//            iv.setBackgroundResource(img_urls[i]);
-//            bannerList.add(iv);
-//            ImageView iv2 = new ImageView(activity);
-//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            lp.setMargins(8, 0, 0, 0);
-//            iv2.setLayoutParams(lp);
-//            if (i == 0) {
-//                iv2.setBackgroundResource(R.drawable.home_top_ic_point_on);
-//            } else {
-//                iv2.setBackgroundResource(R.drawable.home_top_ic_point_off);
-//            }
-//            indicationList.add(iv2);
-//            ly_indication.addView(iv2);
-//        }
-//        HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList, activity);
-//        targetVp.setAdapter(bannerAdapter);
-//        targetVp.setCurrentItem(bannerList.size() * 1000);
-//        selectedBanner = bannerList.size() * 1000;
-//    }
 }

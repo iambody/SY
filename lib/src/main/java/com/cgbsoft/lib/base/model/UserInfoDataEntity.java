@@ -310,7 +310,7 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         public String stockAssetsImage;
         public String checkFailureReason;
         public String gesturePassword;
-        private String gestureSwitch;
+        private String gestureSwitch; // 1打开 2关闭
         private int myPoint;
         private String adviserRealName;
         private String wealth;

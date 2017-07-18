@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
@@ -38,6 +37,8 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
+    private static final String PASSWROD_TYPE_START = "*";
+
     public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
@@ -47,6 +48,34 @@ public class ViewUtils {
         badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
         badge.show();
         return badge;
+    }
+
+    public static void TextViewFormatPasswordType(TextView textView) {
+        String values = textView.getText().toString();
+        values = values.replace(values, PASSWROD_TYPE_START);
+        textView.setText(values);
+    }
+
+    public static void TextViewFormatPasswordType(TextView textView, int startIndex, int endIndex) {
+        String values = textView.getText().toString();
+        if (TextUtils.isEmpty(values) || startIndex > endIndex) {
+            return;
+        }
+        if (startIndex < 0 ) {
+            startIndex = 0;
+        }
+        if (endIndex > values.length()) {
+            endIndex = values.length();
+        }
+        String newStr = values.substring(startIndex, endIndex);
+        values = values.replace(newStr, PASSWROD_TYPE_START);
+        textView.setText(values);
+    }
+
+    public static void TextViewFormatNumberType(TextView textView, String showNumber) {
+        String values = textView.getText().toString();
+        values = values.replaceAll(PASSWROD_TYPE_START, showNumber);
+        textView.setText(values);
     }
 
     public static void scaleUserAchievment(TextView textView, String achievment, float relativeValue) {

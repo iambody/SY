@@ -2,17 +2,10 @@ package app.privatefund.com.im.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import app.privatefund.com.im.Contants;
 import app.privatefund.com.im.R;
 import io.rong.imkit.model.UIConversation;
-import io.rong.imkit.widget.AsyncImageView;
-import io.rong.imkit.widget.ProviderContainerView;
-import io.rong.imkit.widget.adapter.ConversationListAdapter;
 
 /**
  * @author chenlong

@@ -96,6 +96,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
+    private Observable<String> mallDeleteObservable;
     private Observable<String> refrushGestureObservable;
 
     @Override
@@ -168,6 +169,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             @Override
             protected void onEvent(MallAddress myAddress) {
                 mWebview.loadUrl("javaScript:products.setAddress('" + myAddress.getId() + "','" + myAddress.getName() + "','" + myAddress.getPhone() + "','" + myAddress.getAddress() + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+        mallDeleteObservable = RxBus.get().register(RxConstant.DELETE_ADDRESS, String.class);
+        mallDeleteObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String addressId) {
+                mWebview.loadUrl("javaScript:products.deleteAddressId('" + addressId + "')");
             }
 
             @Override

@@ -48,10 +48,10 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";
     public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
-    public static final String PARAM_FROM_SWITCH = "PARAM_FROM_SWITCH";
+    public static final String PARAM_FROM_SHOW_ASSERT = "PARAM_FROM_SHWO_ASSERT";
 
     private int count = 5;
-    private boolean isFromResumeIntercepter;
+    private boolean isFromShowAssert;
     private boolean isFromCloseGesturePassword;
     private boolean modifyGesturePassword;
     private Dialog dialog;
@@ -71,9 +71,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     @Override
     protected void before() {
         super.before();
-        isFromResumeIntercepter = getIntent().getBooleanExtra(FROM_EXCCEED_TIIME, false);
-        isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
-        modifyGesturePassword = getIntent().getBooleanExtra(GestureEditActivity.PARAM_FROM_MODIFY, false);
+        isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
+//        isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
+//        modifyGesturePassword = getIntent().getBooleanExtra(GestureEditActivity.PARAM_FROM_MODIFY, false);
     }
 
     @Override
@@ -102,14 +102,10 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                         intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
                         startActivity(intent);
                         finish();
-                    } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-                        NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-                        finish();
-                        return;
-                    }
-
-                    if (isFromResumeIntercepter) {
+                    } else if (isFromShowAssert) {
                         GestureVerifyActivity.this.finish();
+                        AppInfStore.saveLastSetAndValidateTime(getAppli(), System.currentTimeMillis());
+                        RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
                     } else if (isFromCloseGesturePassword) {
                         closeGesturePassword(false);
                     } else {
@@ -121,7 +117,6 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                             @Override
                             public void OnClickPositive() {
                                 super.OnClickPositive();
-//                                ((BaseApplication) InvestorAppli.getContext()).getBackgroundManager().setExitCalendar(null);
                                 closeGesturePassword(true);
                             }
                         });
@@ -207,9 +202,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            LogOutAccount logOutAccount = new LogOutAccount();
-            logOutAccount.accounttExit(this);
+        } else if (isFromShowAssert){
+            finish();
         }
     }
 
@@ -261,9 +255,10 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             return;
         }
 
-        if (isFromResumeIntercepter) {
-            GestureVerifyActivity.this.finish();
-        } else if (isFromCloseGesturePassword) {
+//        if (isFromResumeIntercepter) {
+//            GestureVerifyActivity.this.finish();
+//        } else
+        if (isFromCloseGesturePassword) {
             closeGesturePassword(false);
         } else {
             GestureVerifyActivity.this.finish();
