@@ -33,6 +33,7 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
     }
 
     public static class Level {
+        public String  memberLevel;
         public String level;//":"1",
         public String levelName;//":"LV1盈卡",
         public String url;//":"http://www.baidu.com"

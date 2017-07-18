@@ -24,11 +24,13 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -50,6 +52,9 @@ import java.util.List;
 import app.mall.com.mvp.ui.MallAddressListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import rx.Observable;
 
 /**
  * @author chenlong
@@ -90,6 +95,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.mine_account_info_cards_ll)
     LinearLayout linearLayoutCard;
+
+    @BindView(R.id.account_bank_hide_assert)
+    TextView textViewShowAssert;
 
     @BindView(R.id.account_bank_assert_total_text)
     TextView textViewAssertTotalText;
@@ -146,12 +154,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     ViewPager viewPager;
 
     private DaoUtils daoUtils;
-
     private String[] videos;
-
     private MineModel mineModel;
-
-    private static final long DEALAY = 100;
+    private static final long DEALAY = 500;
+    private Observable<Boolean> swtichAssetObservable;
 
     private Handler handler = new Handler() {
         @Override
@@ -184,11 +190,30 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void requestDataFailure(String errMsg) {
     }
 
+    private void initObserver() {
+        swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
+        swtichAssetObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (aBoolean) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+    }
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initVideoView();
         getPresenter().getMineData();
+        initObserver();
     }
 
     @OnClick(R.id.mine_title_set_id)
@@ -227,11 +252,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
-         if (currentProgress > 40) {
+         if (currentProgress > 60) {
              return;
          }
          roundProgressbar.setProgress(currentProgress + 5);
-         handler.sendMessage(Message.obtain());
+         handler.sendMessageDelayed(Message.obtain(), DEALAY);
     };
 
     @OnClick(R.id.account_info_yundou_value_ll)
@@ -284,6 +309,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_best_card));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    @OnClick(R.id.account_bank_hide_assert)
+    void switchAssetNumber() {
+        if (this.mineModel == null) {
+            return;
+        }
+        GestureManager.showAssertGestureManager(getActivity());
     }
 
     @OnClick(R.id.account_bank_go_look_product)
@@ -534,6 +567,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         bundle.putBoolean(HorizontalScrollFragment.IS_VIDEO_PLAY_PARAMS, isPlay);
         scrollFragment.setArguments(bundle);
         fragmentList.add(scrollFragment);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (swtichAssetObservable != null) {
+            RxBus.get().unregister(RxConstant.SWITCH_ASSERT_SHOW, swtichAssetObservable);
+        }
     }
 }
 

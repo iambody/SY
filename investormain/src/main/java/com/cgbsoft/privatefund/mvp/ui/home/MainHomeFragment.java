@@ -60,7 +60,7 @@ import rx.Observable;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-21:06
  */
-public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener {
+public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener {
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
 
     @BindView(R.id.mainhome_webview)
@@ -129,8 +129,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     RelativeLayout mainHomeVisterLay;
     @BindView(R.id.main_home_invisiter_txt_lay)
     LinearLayout mainHomeInvisiterTxtLay;
-
-
+    //会员布局
+    View main_home_level_lay;
     //名片动画展示时候需要的动画
     private ObjectAnimator adviserCardObjectAnimator;
     //是否已经展示出来名片
@@ -163,7 +163,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
         mainHomeBannerview.setPlayDelay(6 * 1000);
-
         //请求数据
         getPresenter().getHomeData();
     }
@@ -176,6 +175,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 配置view各种资源
      */
     private void initConfig() {
+        main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
+        main_home_level_lay.setOnClickListener(this);
         mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
         // 设置下拉进度的主题颜色
         mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click);
@@ -297,7 +298,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 用户等级的数据填充
      */
     private void initLevel(HomeEntity.Level level) {
-        BStrUtils.SetTxt(viewHomeLevelStr, level.levelName);
+        BStrUtils.SetTxt(viewHomeLevelStr, level.memberLevel);
+//        isVisibleToUser
     }
 
     @Override
@@ -381,8 +383,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -447,7 +447,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
 
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "取消", "呼叫") {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确消", "呼叫") {
             @Override
             public void left() {
                 dismiss();
@@ -500,13 +500,21 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
-        //游客模式或者未绑定需要跳转到未绑定的
-//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
         //已经绑定过的
         if (isBindAdviser) {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "我的投顾", false);
         } else {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_home_level_lay:
+                String url = CwebNetConfig.membercenter;
+                NavigationUtils.gotoWebActivity(baseActivity, url, "会员", false);
+                break;
         }
     }
 
@@ -525,11 +533,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         @Override
         public void onClick(View v) {
             PromptManager.ShowCustomToast(baseActivity, "位置" + postion);
-//            if (null == signDialog) signDialog = new HomeSignDialog(baseActivity);
-//            signDialog.show();
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+            if (data.jumpType.equals("h5")) {//跳转h5
+                NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+            } else if (data.jumpType.equals("app")) {
+                NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
+            }
         }
     }
 
@@ -547,20 +555,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 
     }
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (getUserVisibleHint()) {
-//            isVisible = true;
-//            LogUtils.Log("sssaa", "首页可见");
-//            mainHomeBannerview.resume();
-//        } else {
-//            isVisible = false;
-//            LogUtils.Log("sssaa", "首页不可见");
-//            mainHomeBannerview.pause();
-//        }
-//
-//    }
+
 
     /**
      * banner

@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_back_black_24dp"
             android:visibility="gone" />
+
     </RelativeLayout>
 
     <LinearLayout

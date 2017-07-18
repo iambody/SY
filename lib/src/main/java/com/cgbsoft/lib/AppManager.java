@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -201,13 +202,13 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
-     * 得到最后一次退出时间
+     * 得到最后一次验证或者设置手势密码时间
      *
      * @param context
      * @return
      */
-    public static long getLastExitTime(Context context) {
-        return getBasePreference(context).getLong(LAST_EXIT_BACK_TIME, 0);
+    public static long getLastSetOrValidateTime(Context context) {
+        return getBasePreference(context).getLong(LAST_SET_VALIDATE_TIME, 0);
     }
 
     /**
@@ -246,7 +247,15 @@ public class AppManager implements AppinfConstant {
     /**
      * 获取是否绑定过理财师
      */
-    public static boolean  isBindAdviser(Context context) {
+    public static boolean isBindAdviser(Context context) {
         return !BStrUtils.isEmpty(AppManager.getUserInfo(context).getToC().getBandingAdviserId());
     }
+
+    /**
+     * 获取首页数据 ==》如果缓存不存在就需要进行
+     */
+    public static HomeEntity.Result getHomeCache(Context pContext) {
+        return AppInfStore.getHomeData(pContext);
+    }
+
 }
