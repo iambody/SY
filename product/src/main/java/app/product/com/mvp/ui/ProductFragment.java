@@ -121,6 +121,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     private boolean fromShare;
 
+    private boolean isFirstShow;
+
     //获取列表需要的数据************
 
     private List<ProductlsBean> productlsBeen = new ArrayList<>();
@@ -133,10 +135,19 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        isFirstShow = true;
         initConfig();
         initRiskEvaluat();
         initCache();
         initData();
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (productlsBeen!=null&&productlsBeen.size()>0){
+            if (isVisibleToUser){
+                initRiskEvaluat();
+            }
+        }
     }
 
     /**
@@ -169,6 +180,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     /**
      */
     private void initRiskEvaluat() {
+        isFirstShow = false;
+        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+        productlsAdapter.notifyDataSetChanged();
     }
 
     @Override

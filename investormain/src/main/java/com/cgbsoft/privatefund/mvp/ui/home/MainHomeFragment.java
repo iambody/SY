@@ -447,7 +447,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
 
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确消", "呼叫") {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "取消", "呼叫") {
             @Override
             public void left() {
                 dismiss();

@@ -80,4 +80,7 @@ public interface RxConstant {
     String JUMP_INDEX = "junp_index";
 
     String PAUSR_HEALTH_VIDEO = "pause_health_video";
+
+    //商城删除地址
+    String DELETE_ADDRESS = "delete_address";
 }

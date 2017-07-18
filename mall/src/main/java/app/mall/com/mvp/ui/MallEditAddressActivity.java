@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.chenenyu.router.annotation.Route;
@@ -224,6 +226,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     public void deleteSuc(String id) {
+        RxBus.get().post(RxConstant.DELETE_ADDRESS,id);
         finish();
     }
 

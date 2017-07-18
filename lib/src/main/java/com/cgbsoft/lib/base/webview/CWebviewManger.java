@@ -337,7 +337,7 @@ public class CWebviewManger {
 
     private void switchShareButton() {
         if (context instanceof BaseWebViewActivity) {
-            ((BaseWebViewActivity)context).showShareButton();
+            ((BaseWebViewActivity) context).showShareButton();
         }
     }
 
@@ -1330,6 +1330,9 @@ public class CWebviewManger {
             String url = split[2];
             String title = split[3];
 //            if (!url.contains("http")) {
+            if (url.startsWith("app6.0")) {
+                url = "/" + url;
+            }
             url = BaseWebNetConfig.SERVER_ADD + url;
 //            } else {
 //                title = split[4];
