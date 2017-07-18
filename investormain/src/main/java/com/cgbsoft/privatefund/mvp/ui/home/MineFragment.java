@@ -50,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
+import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -156,8 +157,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private DaoUtils daoUtils;
     private String[] videos;
     private MineModel mineModel;
-    private static final long DEALAY = 500;
+    private boolean showAssert;
+    private boolean isLoading;
+    private static final long DEALAY = 1000;
     private Observable<Boolean> swtichAssetObservable;
+    private List<HorizontalScrollFragment> videoList;
 
     private Handler handler = new Handler() {
         @Override
@@ -177,17 +181,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void requestDataSuccess(MineModel mineModel) {
+        isLoading = false;
         initMineInfo(mineModel);
     }
 
     @Override
     public void requestDataFailure(String errMsg) {
+        isLoading = false;
     }
 
     private void initObserver() {
@@ -196,9 +197,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             @Override
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
-
+                    showAssert();
+                    showAssert = true;
                 } else {
-
+                    hideAssert();
                 }
             }
 
@@ -208,12 +210,51 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         });
     }
 
+    private void showAssert() {
+        if (mineModel == null) {
+            return;
+        }
+        textViewShowAssert.setText(R.string.account_bank_hide_assert);
+        MineModel.PrivateBank privateBank = mineModel.getBank();
+        textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
+        textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+        textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+        textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+    }
+
+    private void hideAssert() {
+        if (mineModel == null) {
+            return;
+        }
+        MineModel.PrivateBank privateBank = mineModel.getBank();
+        textViewShowAssert.setText(R.string.account_bank_show_assert);
+        ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
+        ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
+        ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START));
+//        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
+//        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
+    }
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initVideoView();
-        getPresenter().getMineData();
         initObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("------MineFragment--onResume");
+        if (isLoading) {
+            return;
+        }
+        isLoading = true;
+        getPresenter().getMineData();
     }
 
     @OnClick(R.id.mine_title_set_id)
@@ -255,8 +296,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
          if (currentProgress > 60) {
              return;
          }
-         roundProgressbar.setProgress(currentProgress + 5);
-         handler.sendMessageDelayed(Message.obtain(), DEALAY);
+         roundProgressbar.setProgress(currentProgress + 1);
+         handler.sendMessage(Message.obtain());
     };
 
     @OnClick(R.id.account_info_yundou_value_ll)
@@ -316,7 +357,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (this.mineModel == null) {
             return;
         }
-        GestureManager.showAssertGestureManager(getActivity());
+        if (showAssert) {
+            hideAssert();
+            showAssert = false;
+        } else {
+            GestureManager.showAssertGestureManager(getActivity());
+        }
     }
 
     @OnClick(R.id.account_bank_go_look_product)
@@ -442,16 +488,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initPrivateBank(MineModel mineModel) {
-        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
+        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
-        if (mineModel.getBank() != null) {
-            MineModel.PrivateBank privateBank = mineModel.getBank();
-            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
-            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
-            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+        if (showAssert) {
+            showAssert();
+        } else {
+            hideAssert();
         }
     }
 
@@ -531,18 +573,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             xTabLayout.addTab(tab);
         }
         viewPager.setOffscreenPageLimit(2);
-        List<Fragment> list = new ArrayList<>();
-        setFragmentParams(playlList, list, true);
-        setFragmentParams(downlList, list, false);
+        if (videoList == null) {
+            videoList = new ArrayList<>();
+            setFragmentParams(playlList, videoList, true);
+            setFragmentParams(downlList, videoList, false);
+        } else {
+            videoList.get(0).refrushData(playlList);
+            videoList.get(1).refrushData(downlList);
+        }
+
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
-                return list.size();
+                return videoList.size();
             }
 
             @Override
             public Fragment getItem(int position) {
-                return list.get(position);
+                return videoList.get(position);
             }
 
             @Override
@@ -560,13 +608,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
-    private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList, boolean isPlay) {
+    private HorizontalScrollFragment setFragmentParams(List<VideoInfoModel> valuesList, List<HorizontalScrollFragment> fragmentList, boolean isPlay) {
         HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList)valuesList);
         bundle.putBoolean(HorizontalScrollFragment.IS_VIDEO_PLAY_PARAMS, isPlay);
         scrollFragment.setArguments(bundle);
         fragmentList.add(scrollFragment);
+        return scrollFragment;
     }
 
     @Override

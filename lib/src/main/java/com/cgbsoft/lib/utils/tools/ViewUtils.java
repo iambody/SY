@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    private static final String PASSWROD_TYPE_START = "*";
+    public static final String PASSWROD_TYPE_START = "*";
 
     public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
@@ -50,17 +50,20 @@ public class ViewUtils {
         return badge;
     }
 
-    public static void TextViewFormatPasswordType(TextView textView) {
+    public static void textViewFormatPasswordType(TextView textView) {
         String values = textView.getText().toString();
         values = values.replace(values, PASSWROD_TYPE_START);
         textView.setText(values);
     }
 
-    public static void TextViewFormatPasswordType(TextView textView, int startIndex, int endIndex) {
+    public static void textViewFormatPasswordType(TextView textView, String subString) {
         String values = textView.getText().toString();
-        if (TextUtils.isEmpty(values) || startIndex > endIndex) {
+        if (TextUtils.isEmpty(values)) {
             return;
         }
+        int startIndex = values.indexOf(subString);
+        int endIndex = values.length();
+//        int endIndex = startIndex + subString.length();
         if (startIndex < 0 ) {
             startIndex = 0;
         }

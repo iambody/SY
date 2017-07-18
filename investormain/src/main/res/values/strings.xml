@@ -105,7 +105,6 @@
     <string name="risk_result_info">根据问卷答案分析，您的风险承受能力为</string>
     <string name="risk_evaluating_title">风险承受能力评测</string>
 
-
     <!-- Gesture code starting -->
     <string name="setup_gesture_pattern">请输入手势密码</string>
     <string name="setup_gesture_pattern_again">再次绘制解锁图案</string>
@@ -189,6 +188,8 @@
     <string name="account_info_mine_wish_card">我的贺卡</string>
     <string name="account_info_user_level">会员等级</string>
     <string name="account_bank_asset_zuhe">资产组合</string>
+    <string name="account_bank_hide_assert">隐藏</string>
+    <string name="account_bank_show_assert">显示</string>
     <string name="account_bank_invistor_carlendar">投资日历</string>
     <string name="account_bank_info_manager">资料管理</string>
     <string name="account_bank_no_bugy">您还没有资产，您可以：</string>
@@ -220,6 +221,7 @@
     <string name="account_bank_cunxun_assert">续存资产(%s)</string>
     <string name="account_bank_zhaiquan_assert">债权(%1$s)-%2$s</string>
     <string name="account_bank_guquan_assert">股权(%1$s)-%2$s</string>
+    <string name="account_bank_online">-</string>
     <string name="next">下一步</string>
     <string name="retest">重新测评</string>
     <string name="select_adviser">选择投顾</string>

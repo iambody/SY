@@ -45,6 +45,7 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getView().requestDataFailure("数据加载错误！");
                 }
             }
 
