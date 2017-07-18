@@ -16,7 +16,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 俱乐部
     public static String clubPage;
 
-    public static String  pageInit;
+    public static String pageInit;
 
     public static String productDetail;
 
@@ -79,6 +79,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //私享云 投顾页面  已经绑定过
     public static String BindchiceAdiser;
 
+    //会员
+    public static String membercenter;
+
+
     static {
         initApi();
         initSxyUrl();
@@ -99,9 +103,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
     }
-    public static void initSxyUrl(){
-        HOME_URL= baseSxyParentUrl + "/biz/profile/";
-        elegantGoodsDetail=baseSxyParentUrl+"/biz/life/detail.html?goodsId=";
+
+    public static void initSxyUrl() {
+        HOME_URL = baseSxyParentUrl + "/biz/profile/";
+        elegantGoodsDetail = baseSxyParentUrl + "/biz/life/detail.html?goodsId=";
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
@@ -113,13 +118,16 @@ public class CwebNetConfig extends BaseWebNetConfig {
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
         //没绑定过的
-        choiceAdviser= baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
         //绑定过的
-        BindchiceAdiser =baseSxyParentUrl + "/biz/adviser/details_bind.html";
+        BindchiceAdiser = baseSxyParentUrl + "/biz/adviser/details_bind.html";
         activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
         assetReport = baseSxyParentUrl + "/biz/report/index.html";
-        salonDetail=baseSxyParentUrl +"/biz/indexSecond/active_detail.html?id=";
-        recommendFriends=baseSxyParentUrl +"/biz/mine/mine-recommend.html";
-        myqr=baseSxyParentUrl +"/biz/mine/mine-myCode.html";
+        salonDetail = baseSxyParentUrl + "/biz/indexSecond/active_detail.html?id=";
+        recommendFriends = baseSxyParentUrl + "/biz/mine/mine-recommend.html";
+        myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
+
+        membercenter = baseSxyParentUrl + "/biz/members/index.html";
+
     }
 }
