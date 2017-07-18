@@ -87,6 +87,9 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         } else {
             cityCode = AppManager.getLocation(baseContext).getLocationcity();
         }
+        if (TextUtils.isEmpty(cityCode)) {
+            cityCode="全国";
+        }
         SalonsEntity.CityBean cityBean = new SalonsEntity.CityBean();
         cityBean.setText("全国");
         citys.add(cityBean);
@@ -125,7 +128,8 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private void gotoSalonDetail(SalonsEntity.SalonItemBean bean) {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
-        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.salonDetail+bean.getId());
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.salonDetail.concat(bean.getId()));
         startActivity(intent);
 //        HashMap hashMap = new HashMap();
 //        hashMap.put(WebViewConstant.RIGHT_SHARE, true);

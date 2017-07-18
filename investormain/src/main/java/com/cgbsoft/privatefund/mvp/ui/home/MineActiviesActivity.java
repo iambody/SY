@@ -67,16 +67,10 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
         mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
-            if (!TextUtils.isEmpty(mineActivitesItem.getPlaybackVideoUrl())) {
-                Intent intent = new Intent(this, BaseWebViewActivity.class);
-                intent.putExtra(WebViewConstant.push_message_url, mineActivitesItem.getPlaybackVideoUrl());
-                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_video_detail));
-            } else {
-                Intent intent = new Intent(this, BaseWebViewActivity.class);
-                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
-                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(this, BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
+            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+            startActivity(intent);
         });
         getPresenter().getActivitesList(mineActivitesListAdapter, true);
     }

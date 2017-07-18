@@ -109,7 +109,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
         hasShowTitle = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
-        hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, false);
+//        hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, true);
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
@@ -403,29 +403,27 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setIcon(drawable);
             secItem.setVisible(false);
         }
-        if (hasRightShare || hasRightSave) {
-            getMenuInflater().inflate(R.menu.page_menu, menu);
-            rightItem = menu.findItem(R.id.firstBtn);
-            MenuItem secItem = menu.findItem(R.id.secondBtn);
+
+        getMenuInflater().inflate(R.menu.page_menu, menu);
+        rightItem = menu.findItem(R.id.firstBtn);
+        MenuItem secItem = menu.findItem(R.id.secondBtn);
 //            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-            rightItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
-            secItem.setVisible(false);
-            rightItem.setVisible(!hasRightShare);
-        }
+        rightItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
+        secItem.setVisible(false);
+        rightItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            if (hasRightShare) {
                 pageShare();
-            } else if(item.getTitle().equals(getString(R.string.save))) {
-                String jascript = "javascript:Tools.save()";
-                mWebview.loadUrl(jascript);
-            } else if (item.getTitle().equals("设置")) {
-                DialogUtils.createSwitchBcDialog(this).show();
-            }
+//            } else if(item.getTitle().equals(getString(R.string.save))) {
+//                String jascript = "javascript:Tools.save()";
+//                mWebview.loadUrl(jascript);
+//            } else if (item.getTitle().equals("设置")) {
+//                DialogUtils.createSwitchBcDialog(this).show();
+//            }
         }
 
 
