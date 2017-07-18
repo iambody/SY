@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -124,7 +125,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     }
 
     private void initData() {
-        UserInfoDataEntity.ToCBean userInfoC = SPreference.getToCBean(this);
+        UserInfoDataEntity.ToCBean userInfoC = AppManager.getUserInfo(this).getToC();
         String vas = userInfoC.getAssetsCertificationImage();
         int status = Integer.valueOf(userInfoC.getAssetsCertificationStatus());
 

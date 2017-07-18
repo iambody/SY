@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,9 @@ import butterknife.OnClick;
  * @author chenlong
  */
 public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresenter> implements InvisiteAccountContract.View {
+
+    @BindView(R.id.title_left)
+    ImageView backImage;
 
     @BindView(R.id.title_mid)
     TextView titleMid;
@@ -61,6 +65,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
         titleRight.setText(R.string.rc_confirm);
+        backImage.setVisibility(View.VISIBLE);
         initView();
     }
 

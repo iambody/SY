@@ -197,10 +197,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         RxBus.get().post(RxConstant.SET_PAGE_SWITCH_BUTTON, false);
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-            finish();
         } else if (isFromShowAssert){
-            finish();
         }
+        finish();
     }
 
     @Override
