@@ -4,9 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
@@ -38,6 +36,9 @@ import qcloud.liveold.mvp.utils.SxbLogImpl;
 public class InitApplication extends InvestorAppli {
 
 
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -51,13 +52,13 @@ public class InitApplication extends InvestorAppli {
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
         // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
-        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext())) ) {
+        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
             Log.i("InitApplication", "----initRongConnect");
 
             /**
              * IMKit SDK调用第一步 初始化
              */
-           if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
+            if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
                 RongIM.init(this);
             }
             RongIM.registerMessageType(ProductMessage.class);
@@ -78,16 +79,17 @@ public class InitApplication extends InvestorAppli {
 
     private void initLive() {
 //        if (shouldInit()) {
-            SxbLogImpl.init(getApplicationContext());
+        SxbLogImpl.init(getApplicationContext());
 
-            //初始化APP
-            InitBusinessHelper.initApp(getApplicationContext());
+        //初始化APP
+        InitBusinessHelper.initApp(getApplicationContext());
 //        }
     }
 
 
     /**
      * 判断是否需要初始化
+     *
      * @return
      */
     private boolean shouldInit() {
@@ -103,7 +105,6 @@ public class InitApplication extends InvestorAppli {
         }
         return false;
     }
-
 
 
 }

@@ -534,10 +534,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.Log("sssaa", "首页可见");
-        if (getUserVisibleHint()) {
+    public void onHiddenChanged(boolean isVisibleToUser) {
+        super.onHiddenChanged(isVisibleToUser);
+        if (isVisibleToUser) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页可见");
             mainHomeBannerview.resume();

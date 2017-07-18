@@ -159,6 +159,8 @@
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
+    
+
 
     <!-- 投资账号-->
     <string name="real_name">真实姓名</string>
@@ -211,6 +213,7 @@
     <string name="home_visiter_up_txt">私享云-链接人与财富</string>
     <string name="home_visiter_down_txt">我们是专属您的私人银行家</string>
     <string name="account_video_go_server">去看视频</string>
+    <string name="account_video_go_look_all">查看全部</string>
 
     <string name="account_bank_cunxun_assert">续存资产(%s)</string>
     <string name="account_bank_zhaiquan_assert">债权(%1$s)-%2$s</string>

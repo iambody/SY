@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/ui_10_dip"
-        android:text="L5云卡"
+
         android:textColor="@color/app_golden" />
 </LinearLayout>

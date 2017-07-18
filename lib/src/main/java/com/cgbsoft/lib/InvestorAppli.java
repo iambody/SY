@@ -10,7 +10,7 @@ import com.chenenyu.router.Router;
  *  
  */
 public class InvestorAppli extends BaseApplication {
-
+    private boolean isMainpage;
     private UserInfo userInfo;
 
     private boolean isRequestCustom;
@@ -45,5 +45,12 @@ public class InvestorAppli extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         Router.initialize(this);
+    }
+    public boolean isMainpage() {
+        return isMainpage;
+    }
+
+    public void setMainpage(boolean mainpage) {
+        isMainpage = mainpage;
     }
 }

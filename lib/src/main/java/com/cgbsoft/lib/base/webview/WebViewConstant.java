@@ -49,7 +49,8 @@ public class WebViewConstant {
         public static final String RECOMMEND_FRIEND = "/settings/recommendation.html";
         public static final String DISCOVER_DETAILS = "/discover/details.html";
         public static final String LIFE_DETAIL = "/biz/life/detail.html";
-        public static final String LIFE_SPECIAL = "/pp6.0/biz/life/special.html";
+        public static final String LIFE_SPECIAL = "/biz/life/special.html";
+        public static final String ACTIVITTE_DRAGON_DEATIL = "/biz/indexSecond/active_detail.html";
     }
 
     public class Navigation {

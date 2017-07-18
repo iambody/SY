@@ -10,12 +10,31 @@
     android:gravity="center_vertical"
     android:paddingBottom="20dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:scrollbars="none"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/goto_has_video_data">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scrollbars="none"
+            />
+        <ImageView style="@style/normal_diveline" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/goto_look_more"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/account_video_go_look_all"
+            android:visibility="gone"
+            android:textColor="@color/color_5a5a5a"/>
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
