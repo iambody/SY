@@ -115,29 +115,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         this.finish();
     }
 
-    @OnClick(R.id.datum_manage_risk)
-    public void gotoRiskComment(){
-        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
-    }
-
-    @OnClick(R.id.datum_manage_asset_report)
-    public void gotoAssetReport(){
-        String url = CwebNetConfig.assetReport;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_report));
-        NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
-    }
-
-    @OnClick(R.id.datum_manage_asset_certify)
-    public void gotoAssetCertify(){
-        NavigationUtils.startActivity(this, AssetProveActivity.class);
-    }
-    @OnClick(R.id.datum_manage_relative_asset)
-    public void gotoRelativeAsset(){
-        NavigationUtils.startActivity(this, RelativeAssetActivity.class);
-    }
-
     private boolean validateEditView() {
         if (TextUtils.isEmpty(realName.getText().toString())) {
             Toast.makeText(this, String.format(getString(R.string.invisit_account_input_prompt), getString(R.string.real_name)), Toast.LENGTH_SHORT).show();
