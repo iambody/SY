@@ -115,11 +115,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         this.finish();
     }
 
-    @OnClick(R.id.datum_manage_account)
-    public void gotoAccount(){
-
-    }
-
     @OnClick(R.id.datum_manage_risk)
     public void gotoRiskComment(){
         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);

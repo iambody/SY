@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    public static final String PASSWROD_TYPE_START = "*";
+    public static final String PASSWROD_TYPE_START = "/*";
 
     public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
@@ -119,8 +119,8 @@ public class ViewUtils {
     /**
      * 左侧添加图片
      * @param textView
-     * @param value
-     * @param colorRes
+     * @param
+     * @param
      */
     public static void setTextViewLeftIv(Context context,TextView  textView,int ivResuorceId){
         Drawable dwLeft = context.getResources().getDrawable(ivResuorceId);

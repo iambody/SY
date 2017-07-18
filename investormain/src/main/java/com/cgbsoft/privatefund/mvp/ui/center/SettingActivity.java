@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +13,9 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -22,9 +23,9 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.chenenyu.router.annotation.Route;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * 设置页面
@@ -43,6 +44,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @BindView(R.id.sin_change_login_psd)
     SettingItemNormal changeLoginPsd;
 
+    private Observable<Boolean> switchButton;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_setting;
@@ -51,6 +54,22 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @Override
     protected void init(Bundle savedInstanceState) {
         initView(savedInstanceState);
+        showView();
+    }
+
+    private void showView() {
+        switchButton = RxBus.get().register(RxConstant.SET_PAGE_SWITCH_BUTTON, Boolean.class);
+        switchButton.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                changeGesturePsdLayout.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+                gestureSwitch.setSwitchCheck(aBoolean);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -69,15 +88,11 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         }
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_title));
-        gestureSwitch.setSwitchButtonChangeListener(new SettingItemNormal.OnSwitchButtonChangeListener() {
-            @Override
-            public void change(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
-                } else {
-
-                    NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
-                }
+        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
+            } else {
+                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
             }
         });
     }
@@ -153,6 +168,14 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 //        Intent intent = new Intent(this, PersonalInformationActivity.class);
 //        startActivity(intent);
 //        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (switchButton != null) {
+            RxBus.get().unregister(RxConstant.SET_PAGE_SWITCH_BUTTON, switchButton);
+        }
     }
 
     /**

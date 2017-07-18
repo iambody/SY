@@ -15,14 +15,11 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
 import com.cgbsoft.lib.widget.LockIndicator;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.ModifyUserInfoContract;
@@ -42,10 +39,10 @@ import butterknife.OnClick;
 @Route(RouteConfig.SET_GESTURE_PASSWORD)
 public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
 
-    public static final String PARAM_FROM_REGIST_OR_LOGIN = "PARAM_FROM_REGEIST_OR_LOGIN";
+    public static final String PARAM_FROM_SET_GESTURE = "PARAM_FROM_SET_GESTURE";
     public static final String PARAM_FROM_MODIFY = "PARAM_FROM_MODIFY";
-    public static final String PARAM_FROM_FORGET = "PARAM_FROM_FORGET";
     public static final String PARAM_FROM_SHOW_ASSERT = "PARAM_FROM_SHWO_ASSERT";
+    public static final String PARAM_FROM_FORGET = "PARAM_FROM_FORGET";
 
     /**
      * 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后=》重新设置密码（本界面）的流程进来的
@@ -54,7 +51,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     private boolean isFromVerifyForget;
     private boolean mIsFirstInput = true;
     private String mFirstPassword = null;
-    private boolean fromRegistOrLoginPage = false;
+    private boolean fromSetPageSetGestrue = false;
     private boolean isModifyPassword = false;
     private String password;
 
@@ -63,9 +60,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     @BindView(R.id.title_left)
     ImageView mBackTitle;
-
-    @BindView(R.id.title_right)
-    TextView mTextJump;
 
     @BindView(R.id.text_tip)
     TextView mTextTip;
@@ -81,9 +75,9 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @Override
     protected void before() {
         super.before();
-        fromRegistOrLoginPage = getIntent().getBooleanExtra(PARAM_FROM_REGIST_OR_LOGIN, false);
-        isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
+        fromSetPageSetGestrue = getIntent().getBooleanExtra(PARAM_FROM_SET_GESTURE, false);
         isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
+        isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)) {
             isFromVerifyForget = getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
         }
@@ -98,7 +92,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     protected void init(Bundle savedInstanceState) {
         setUpViews();
         titleNoSet.setVisibility(isFromShowAssert ? View.VISIBLE : View.GONE);
-       // setUpListeners();
+        mBackTitle.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -114,7 +108,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     private void setUpViews() {
         lock9View.setCallBack(inputCode -> {
-             System.out.println("------inputCode=" + inputCode);
             if (!isInputPassValidate(inputCode)) {
                 mTextTip.setText(Html.fromHtml(getString(R.string.please_right_gesture_password)));
                 return;
@@ -136,8 +129,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         });
         mTextTip.setText(isModifyPassword ? R.string.please_new_gesture_password : R.string.set_gesture_pattern_reason);
         updateCodeList("");
-        mTextJump.setVisibility(fromRegistOrLoginPage ? View.VISIBLE : View.GONE);
-        mBackTitle.setVisibility(fromRegistOrLoginPage ? View.GONE : View.VISIBLE);
     }
 
     private void updateCodeList(String inputCode) {
@@ -146,9 +137,9 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     @OnClick(R.id.title_left)
     void leftBackClick() {
-        if (fromRegistOrLoginPage) {
-            LogOutAccount logOutAccount = new LogOutAccount();
-            logOutAccount.accounttExit(this);
+        if (fromSetPageSetGestrue) {
+//            LogOutAccount logOutAccount = new LogOutAccount();
+//            logOutAccount.accounttExit(this);
         } else {
             finish();
         }
@@ -183,7 +174,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     @Override
     public void onBackPressed() {
-        if (fromRegistOrLoginPage) {
+        if (fromSetPageSetGestrue) {
             return;
         }
         super.onBackPressed();
@@ -213,11 +204,13 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         if (isFromShowAssert) {
             finish();
             RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
-        } else {
-            RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "1");
+        } else if (fromSetPageSetGestrue) {
+            AppInfStore.updateUserGesturePassword(this, mFirstPassword);
+            finish();
+            RxBus.get().post(RxConstant.SET_PAGE_SWITCH_BUTTON, true);
+        } else if (isModifyPassword){
             finish();
         }
-
     }
 
     @Override

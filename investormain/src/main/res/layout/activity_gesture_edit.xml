@@ -26,10 +26,11 @@
             android:layout_height="wrap_content"
             android:text="@string/gesture_new_no_set"
             android:textSize="@dimen/dimens_sp_16"
+            android:layout_alignParentEnd="true"
             android:id="@+id/gesture_top_right"
             android:gravity="center"
             android:visibility="gone"
-            android:textColor="@color/black"/>
+            android:textColor="@color/color_5a5a5a"/>
     </RelativeLayout>
 
     <LinearLayout

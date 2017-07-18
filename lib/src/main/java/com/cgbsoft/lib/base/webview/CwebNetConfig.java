@@ -69,6 +69,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 资产报告
     public static String assetReport;
 
+    // 我的云豆
+    public static String mineYunDou;
+
     // 活动详情
     public static String activitesDeatil;
 
@@ -126,6 +129,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         salonDetail = baseSxyParentUrl + "/biz/indexSecond/active_detail.html?id=";
         recommendFriends = baseSxyParentUrl + "/biz/mine/mine-recommend.html";
         myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
+        mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
 
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
 

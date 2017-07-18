@@ -97,7 +97,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> mallDeleteObservable;
-    private Observable<String> refrushGestureObservable;
+//    private Observable<String> refrushGestureObservable;
 
     @Override
     protected int layoutID() {
@@ -152,17 +152,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 }
             });
         }
-        refrushGestureObservable = RxBus.get().register(RxConstant.REFRUSH_GESTURE_OBSERVABLE, String.class);
-        refrushGestureObservable.subscribe(new RxSubscriber<String>() {
-            @Override
-            protected void onEvent(String values) {
-                mWebview.loadUrl("javascript:setGesture('" + values + "')");
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-            }
-        });
 
         mallChoiceObservable = RxBus.get().register(RxConstant.MALL_CHOICE_ADDRESS, MallAddress.class);
         mallChoiceObservable.subscribe(new RxSubscriber<MallAddress>() {
