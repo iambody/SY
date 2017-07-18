@@ -616,7 +616,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (isOnlyClose) {
             return;
         }
-        AppInfStore.saveLastExitTime(this, System.currentTimeMillis());
+        AppInfStore.saveLastSetAndValidateTime(this, System.currentTimeMillis());
         locationManger.unregistLocation();
         Process.killProcess(Process.myPid());
         System.exit(1);

@@ -50,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
+import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -196,9 +197,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             @Override
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
-
+                    hideAssert();
                 } else {
-
+                    showAssert();
                 }
             }
 
@@ -206,6 +207,29 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             protected void onRxError(Throwable error) {
             }
         });
+    }
+
+    private void showAssert() {
+        textViewShowAssert.setText(R.string.account_bank_hide_assert);
+        if (mineModel != null) {
+            return;
+        }
+        MineModel.PrivateBank privateBank = mineModel.getBank();
+        textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
+        textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+        textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+        textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+    }
+
+    private void hideAssert() {
+        textViewShowAssert.setText(R.string.account_bank_show_assert);
+        ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
+        ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
+        ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
+        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
+        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
     }
 
     @Override
