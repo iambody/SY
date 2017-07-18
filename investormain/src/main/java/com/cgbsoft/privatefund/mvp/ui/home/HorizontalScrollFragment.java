@@ -44,11 +44,13 @@ public class HorizontalScrollFragment extends BaseFragment {
     @BindView(R.id.goto_has_video_data)
     LinearLayout linearLayout;
 
+    @BindView(R.id.goto_look_video)
+    Button button;
+
     @BindView(R.id.goto_look_more)
     Button lookAll;
 
-    @BindView(R.id.goto_look_video)
-    Button button;
+    private MyHolderAdapter myHolderAdapter;
 
     private List<VideoInfoModel> list;
     private boolean isPlay;
@@ -67,12 +69,18 @@ public class HorizontalScrollFragment extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_10_dip));
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new MyHolderAdapter(getActivity(), list, isPlay));
+        myHolderAdapter = new MyHolderAdapter(getActivity(), list, isPlay);
+        recyclerView.setAdapter(myHolderAdapter);
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
+//      lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
     }
 
+    public void refrushData(List<VideoInfoModel> list) {
+        linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
+        button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
+        myHolderAdapter.refrushData(list);
+    }
 
     @OnClick(R.id.goto_look_more)
     void gotoLookAllVideo() {
@@ -106,6 +114,13 @@ public class HorizontalScrollFragment extends BaseFragment {
             mInflater = LayoutInflater.from(context);
             mDatas = datats;
             this.isPlayVideo = isPlayVideo;
+        }
+
+        public void refrushData(List<VideoInfoModel> videoInfoModelList) {
+            if (!CollectionUtils.isEmpty(videoInfoModelList)) {
+                mDatas = videoInfoModelList;
+                notifyDataSetChanged();
+            }
         }
 
         @Override

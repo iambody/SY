@@ -43,7 +43,6 @@ import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 
@@ -301,7 +300,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         return new VideoDownloadListPresenter(this, this);
     }
 
-
     @Override
     public void getLocalListSucc(List<VideoDownloadListModel> dataList, boolean isRef) {
         if (dataList.size() == 0) {//没做分页所以直接判断就行
@@ -309,8 +307,12 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             ll_avd_head.setVisibility(View.GONE);
             donedownload_title_lay.setVisibility(View.GONE);
             tvNodataLay.setVisibility(View.VISIBLE);
-        }else{
+            deleteItem.setVisible(false);
+            tv_avd_allspace.setVisibility(View.VISIBLE);
+        } else {
             tvNodataLay.setVisibility(View.GONE);
+            deleteItem.setVisible(true);
+            tv_avd_allspace.setVisibility(View.INVISIBLE);
         }
         //如果已经全部下载过了就全部开始不显示
         if (getPresenter().isAllDownLoadOver(dataList)) {
@@ -491,22 +493,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         getPresenter().getLocalDataList(isRef);
         tv_avd_allspace.setText(getPresenter().getSDCardSize());
     }
-//
-//    @Override
-//    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//    }
-//
-//    @Override
-//    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//
-//    }
 
-//    @Override
-//    public void onRefresh() {
-////        recyclerControl.onRefresh();
-//        recyclerRefreshLayout.setEnabled(false);
-//    }
 
     @Override
     protected void onDestroy() {
@@ -656,7 +643,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //            onControlGetDataList(true);
 //        }
     }
-
 
 
     /**

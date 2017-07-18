@@ -437,8 +437,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 //                DialogUtils.createSwitchBcDialog(this).show();
 //            }
         }
-
-
         return false;
     }
 

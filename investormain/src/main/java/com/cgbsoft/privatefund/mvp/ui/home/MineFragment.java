@@ -158,8 +158,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String[] videos;
     private MineModel mineModel;
     private boolean showAssert;
+    private boolean isLoading;
     private static final long DEALAY = 1000;
     private Observable<Boolean> swtichAssetObservable;
+    private List<HorizontalScrollFragment> videoList;
 
     private Handler handler = new Handler() {
         @Override
@@ -180,11 +182,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void requestDataSuccess(MineModel mineModel) {
+        isLoading = false;
         initMineInfo(mineModel);
     }
 
     @Override
     public void requestDataFailure(String errMsg) {
+        isLoading = false;
     }
 
     private void initObserver() {
@@ -207,10 +211,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void showAssert() {
-        textViewShowAssert.setText(R.string.account_bank_hide_assert);
-        if (mineModel != null) {
+        if (mineModel == null) {
             return;
         }
+        textViewShowAssert.setText(R.string.account_bank_hide_assert);
         MineModel.PrivateBank privateBank = mineModel.getBank();
         textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
         textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
@@ -221,7 +225,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void hideAssert() {
-        if (mineModel != null) {
+        if (mineModel == null) {
             return;
         }
         MineModel.PrivateBank privateBank = mineModel.getBank();
@@ -246,6 +250,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onResume() {
         super.onResume();
         System.out.println("------MineFragment--onResume");
+        if (isLoading) {
+            return;
+        }
+        isLoading = true;
         getPresenter().getMineData();
     }
 
@@ -565,18 +573,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             xTabLayout.addTab(tab);
         }
         viewPager.setOffscreenPageLimit(2);
-        List<Fragment> list = new ArrayList<>();
-        setFragmentParams(playlList, list, true);
-        setFragmentParams(downlList, list, false);
+        if (videoList == null) {
+            videoList = new ArrayList<>();
+            setFragmentParams(playlList, videoList, true);
+            setFragmentParams(downlList, videoList, false);
+        } else {
+            videoList.get(0).refrushData(playlList);
+            videoList.get(1).refrushData(downlList);
+        }
+
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
-                return list.size();
+                return videoList.size();
             }
 
             @Override
             public Fragment getItem(int position) {
-                return list.get(position);
+                return videoList.get(position);
             }
 
             @Override
@@ -594,13 +608,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
-    private void setFragmentParams(List<VideoInfoModel> valuesList, List<Fragment> fragmentList, boolean isPlay) {
+    private HorizontalScrollFragment setFragmentParams(List<VideoInfoModel> valuesList, List<HorizontalScrollFragment> fragmentList, boolean isPlay) {
         HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList)valuesList);
         bundle.putBoolean(HorizontalScrollFragment.IS_VIDEO_PLAY_PARAMS, isPlay);
         scrollFragment.setArguments(bundle);
         fragmentList.add(scrollFragment);
+        return scrollFragment;
     }
 
     @Override

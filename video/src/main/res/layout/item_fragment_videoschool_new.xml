@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_180_dip">
+        android:layout_height="@dimen/ui_200_dip">
 
         <ImageView
             android:id="@+id/item_fragment_videoschool_new_image"
@@ -20,10 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/ui_10_dip"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_20_dip"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/white_light"
+
+            android:textSize="@dimen/dimens_sp_18"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <ImageView
