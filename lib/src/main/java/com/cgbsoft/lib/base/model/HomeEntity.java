@@ -13,7 +13,7 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
     public static class Result {
         public List<Banner> banner;
         public List<Operate> module;
-        public Level member;
+        public Level myInfo;
     }
 
     public static class Banner {
@@ -30,6 +30,8 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
         public String title;//": "会员专区",
         public String jumpType;//": "h5",
         public String url;//": "https://"
+        public String isVisitorVisible;//1可点进去 2跳转登录
+
     }
 
     public static class Level {

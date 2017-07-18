@@ -33,7 +33,6 @@ import app.privatefund.com.vido.mvp.ui.video.adapter.VideoHistoryAdapter;
 import app.privatefund.com.vido.mvp.ui.video.listener.VideoHistoryListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 
@@ -212,8 +211,10 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             video_history_todaytitle_lay.setVisibility(View.GONE);
             video_history_moretitle_lay.setVisibility(View.GONE);
             videoHistoryEmpty.setVisibility(View.VISIBLE);
+            deleteItem.setVisible(false);
         } else {
             videoHistoryEmpty.setVisibility(View.GONE);
+            deleteItem.setVisible(true);
         }
 
         List<VideoHistoryModel> todylist = getPresenter().getVideoListtody(dataList, true);

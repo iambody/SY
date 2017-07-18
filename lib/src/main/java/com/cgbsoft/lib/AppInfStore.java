@@ -378,7 +378,7 @@ public class AppInfStore implements AppinfConstant {
     public static void saveHomeData(Context sContext, HomeEntity.Result homeData) {
         SharedPreferences sp = getBasePreference(sContext);
         SharedPreferences.Editor ed = sp.edit();
-        ed.putString("sxyhomedata", new Gson().toJson(homeData));
+        ed.putString(AppManager.isVisitor(sContext) ? "visitorhomedata" : "homedata", new Gson().toJson(homeData));
         ed.commit();
     }
 
@@ -388,7 +388,7 @@ public class AppInfStore implements AppinfConstant {
     public static HomeEntity.Result getHomeData(Context sContext) {
         HomeEntity.Result homeData;
         SharedPreferences sharedPreferences = getBasePreference(sContext.getApplicationContext());//.getBoolean(VISITOR_KEY, false);
-        String homeStr = sharedPreferences.getString("sxyhomedata", "");
+        String homeStr = sharedPreferences.getString(AppManager.isVisitor(sContext) ? "visitorhomedata" : "homedata", "");
         if (BStrUtils.isEmpty(homeStr)) return null;
         homeData = new Gson().fromJson(homeStr, HomeEntity.Result.class);
         return homeData;

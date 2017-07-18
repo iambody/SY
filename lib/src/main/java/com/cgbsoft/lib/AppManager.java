@@ -252,7 +252,7 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
-     * 获取首页数据 ==》如果缓存不存在就需要进行
+     * 获取首页数据 ==》如果缓存不存在就需要进行=>已经区分了游客和非游客模式
      */
     public static HomeEntity.Result getHomeCache(Context pContext) {
         return AppInfStore.getHomeData(pContext);
