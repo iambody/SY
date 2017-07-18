@@ -2,15 +2,15 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;
 import android.content.Context;
+
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 
 /**
  * @author chenlong
- * 登出账号
+ *         登出账号
  */
 public class LogOutAccount {
 
@@ -21,12 +21,12 @@ public class LogOutAccount {
             AppInfStore.saveUserId(context, "");
             AppInfStore.saveUserToken(context, "");
             AppInfStore.saveRongTokenExpired(context, 0);
-            ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
+            ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
             AppInfStore.saveUserAccount(context, null);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
-            ((Activity)context).finish();
-
+            ((Activity) context).finish();
+            AppInfStore.saveIsVisitor(context, false);
             //退出时清空融云token en
 //            SharedPreferences sharedPreferences = context.getSharedPreferences("tokenExpired.xml", Context.MODE_PRIVATE);
 //            SharedPreferences.Editor edit = sharedPreferences.edit();

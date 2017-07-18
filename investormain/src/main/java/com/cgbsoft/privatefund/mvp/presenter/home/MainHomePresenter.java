@@ -5,25 +5,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
-import com.jude.rollviewpager.adapter.StaticPagerAdapter;
-
-import java.util.List;
 
 /**
  * desc  ${DESC}
@@ -49,18 +41,15 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
                 getView().getResultError(error.getMessage());
             }
         }));
-//        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
-//            @Override
-//            protected void onEvent(String s) {
-//                LogUtils.Log("s", s);
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                LogUtils.Log("s", error.getMessage());
-//            }
-//        }));
 
+    }
+
+    /**
+     * 获取首页的缓存数据
+     */
+    @Override
+    public void getHomeCache() {
+        getView().getCacheResult(AppManager.getHomeCache(getContext()));
     }
 
     /**
@@ -150,28 +139,6 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
         };
         dialog.show();
     }
-//    //进行签到动作
-//    @Override
-//    public void todoSign() {
-////        addSubscription(ApiClient.SxySign().subscribe(new RxSubscriber<String>() {
-////            @Override
-////            protected void onEvent(String s) {
-////                if (!BStrUtils.isEmpty(s)) {
-////                    SignBean signBean = new Gson().fromJson(getV2String(s), SignBean.class);//
-////
-////                    getView().getSignResult(signBean.resultMessage);
-////                } else {
-////                    getView().getSignResult("签到失败");
-////                }
-////
-////            }
-////
-////            @Override
-////            protected void onRxError(Throwable error) {
-////
-////            }
-////        }));
-//    }
 
 
 }

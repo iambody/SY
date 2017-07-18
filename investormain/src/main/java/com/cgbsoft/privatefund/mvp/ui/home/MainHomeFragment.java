@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -30,7 +31,6 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
@@ -158,6 +158,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
         mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
+        //
         //请求数据
         getPresenter().getHomeData();
     }
@@ -322,6 +323,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getResultSucc(HomeEntity.Result data) {
         if (null != data) {
             initResultData(data);
+            //设置&&刷新缓存数据
+            AppInfStore.saveHomeData(baseActivity, data);
         }
 
     }
@@ -348,12 +351,20 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-     /* 签到动作的结果通知*/
-
+    /*获取缓存成功*/
     @Override
-    public void getSignResult(String message) {
-        PromptManager.ShowCustomToast(baseActivity, message);
+    public void getCacheResult(HomeEntity.Result cachesData) {
+        if (null == cachesData) return;
+     /*   处理缓存数据*/
+        //横向轮播
+        initHorizontalScroll(cachesData.module);
+        //banner
+        initViewPage(cachesData.banner);
+        //用户等级信息
+        initLevel(cachesData.myInfo);
     }
+
+
 
      /*横向滑动时候的数据填充*/
 

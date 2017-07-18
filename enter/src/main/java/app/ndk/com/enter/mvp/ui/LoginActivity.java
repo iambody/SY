@@ -140,8 +140,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
-
         if (savedInstanceState == null) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             recreate();
@@ -155,11 +153,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             et_al_username.setText(userInfo.userName);
         } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
             et_al_username.setText(loginName);
+        } else if (AppManager.isVisitor(baseContext)) {
+            et_al_username.setText("");
         }
         if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
             iv_al_del_un.setVisibility(View.VISIBLE);
             isUsernameInput = true;
         }
+
         if (isFromInside)
             initinSideComeId();
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
@@ -179,6 +180,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         //如果是正常进来的就偷偷加载游客信息
         if (!isFromInside)
             getPresenter().invisterLogin(baseContext);
+
     }
 
     private void initinSideComeId() {
