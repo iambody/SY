@@ -134,7 +134,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
     @Override
     protected int layoutID() {
-        return R.layout.activity_pay;
+        if (AppManager.isInvestor(this)){
+            return R.layout.activity_recharge_c;
+        }else {
+            return R.layout.activity_pay;
+        }
     }
 
     @Override

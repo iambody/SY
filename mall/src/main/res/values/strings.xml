@@ -22,4 +22,5 @@
     <string name="load_fail">加载失败</string>
     <string name="product_detail">商品详情</string>
     <string name="banner_detail">专题详情</string>
+    <string name="recharge_yd_count">充值云豆数量</string>
 </resources>
