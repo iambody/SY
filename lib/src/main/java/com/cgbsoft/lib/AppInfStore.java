@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -369,5 +370,27 @@ public class AppInfStore implements AppinfConstant {
         LocationBean locationBean = new Gson().fromJson(loaction, LocationBean.class);
         return locationBean;
 
+    }
+
+    /**
+     * 保存首页的数据
+     */
+    public static void saveHomeData(Context sContext, HomeEntity.Result homeData) {
+        SharedPreferences sp = getBasePreference(sContext);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("sxyhomedata", new Gson().toJson(homeData));
+        ed.commit();
+    }
+
+    /**
+     * 获取首页的数据
+     */
+    public static HomeEntity.Result getHomeData(Context sContext) {
+        HomeEntity.Result homeData;
+        SharedPreferences sharedPreferences = getBasePreference(sContext.getApplicationContext());//.getBoolean(VISITOR_KEY, false);
+        String homeStr = sharedPreferences.getString("sxyhomedata", "");
+        if (BStrUtils.isEmpty(homeStr)) return null;
+        homeData = new Gson().fromJson(homeStr, HomeEntity.Result.class);
+        return homeData;
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,13 +24,16 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.product.com.R;
@@ -126,6 +130,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     //获取列表需要的数据************
 
     private List<ProductlsBean> productlsBeen = new ArrayList<>();
+    private TextView product_product_wenjuan;
 
 
     @Override
@@ -143,6 +148,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+
         if (productlsBeen!=null&&productlsBeen.size()>0){
             if (isVisibleToUser){
                 initRiskEvaluat();
@@ -181,6 +187,11 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      */
     private void initRiskEvaluat() {
         isFirstShow = false;
+        if (AppManager.isVisitor(getActivity())){
+            product_product_wenjuan.setText(getResources().getString(R.string.login_see_product));
+        }else {
+            product_product_wenjuan.setText(getResources().getString(R.string.edit_risk_question));
+        }
         product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
         productlsAdapter.notifyDataSetChanged();
     }
@@ -232,6 +243,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         loadingDialog = LoadingDialog.getLoadingDialog(baseActivity, getString(R.string.getproductloading), false, false);
         product_product_riskevalust = mFragmentView.findViewById(R.id.product_product_riskevalust);
         swipeToLoadLayout.setOnLoadMoreListener(this);
+        product_product_wenjuan = (TextView) product_product_riskevalust.findViewById(R.id.product_product_wenjuan);
         swipeToLoadLayout.setOnRefreshListener(this);
         productProductfragmentProductserieslayout.setInit(true);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
@@ -570,10 +582,15 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     }
 
     //问卷调查
-
     @OnClick(R2.id.product_product_wenjuan)
     public void onViewClicked() {
-        Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+        if (AppManager.isVisitor(getActivity())){
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("insidegotologin", true);
+            NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_LOGIN, map);
+        }else {
+            Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+        }
     }
 
     /**

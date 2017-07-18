@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:drawableLeft="@drawable/fenxiang_share_nor"
-        android:text="@string/share" />
+        android:drawableLeft="@drawable/select_share_navigation"
+        android:text=" " />
 
 </RelativeLayout>
