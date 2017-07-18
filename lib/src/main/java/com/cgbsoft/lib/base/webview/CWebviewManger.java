@@ -642,7 +642,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "确消", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "确定", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -670,7 +670,7 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
-            DefaultDialog dialog = new DefaultDialog(context, text, "确消", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, text, "确定", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -1368,7 +1368,8 @@ public class CWebviewManger {
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
         if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL)) {
+                actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL)) {
             String[] split = actionUrl.split(":");
             String url = split[2];
             String title = split[3];

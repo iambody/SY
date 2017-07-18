@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
+import app.privatefund.com.vido.mvp.ui.video.VideoHistoryListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -37,6 +39,12 @@ public class HorizontalScrollFragment extends BaseFragment {
     public static final String IS_VIDEO_PLAY_PARAMS = "is_play_video_params";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.goto_has_video_data)
+    LinearLayout linearLayout;
+
+    @BindView(R.id.goto_look_more)
+    Button lookAll;
 
     @BindView(R.id.goto_look_video)
     Button button;
@@ -58,8 +66,19 @@ public class HorizontalScrollFragment extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(new MyHolderAdapter(getActivity(), list, isPlay));
-        recyclerView.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
+        linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
+        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
+    }
+
+
+    @OnClick(R.id.goto_look_more)
+    void gotoLookAllVideo() {
+        if (isPlay) {
+            NavigationUtils.startActivity(getActivity(), VideoHistoryListActivity.class);
+        } else {
+            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+        }
     }
 
     @OnClick(R.id.goto_look_video)
