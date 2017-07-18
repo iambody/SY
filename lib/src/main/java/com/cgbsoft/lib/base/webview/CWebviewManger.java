@@ -1322,10 +1322,11 @@ public class CWebviewManger {
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
-            String baseParams = URLDecoder.decode(data, "utf-8");
-            if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
+
+            if (intecepterInvister(data, rightSave, initPage, rightShare)) {
                 return;
             }
+            String baseParams = URLDecoder.decode(data, "utf-8");
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
@@ -1371,26 +1372,30 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL)) {
             String[] split = actionUrl.split(":");
-            String url = split[2];
-            String title = split[3];
-            if (!url.contains("http")) {
-                url = BaseWebNetConfig.baseParentUrl + url;
-            }
+            try {
+                String url = URLDecoder.decode(split[2], "utf-8");
+                String title = URLDecoder.decode(split[3], "utf-8");
+                if (!url.contains("http")) {
+                    url = BaseWebNetConfig.baseParentUrl + url;
+                }
 
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.push_message_url, url);
-            hashMap.put(WebViewConstant.push_message_title, title);
-            if (initPage) {
-                String pushMessage = split[4];
-                hashMap.put(WebViewConstant.push_message_value, pushMessage);
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(WebViewConstant.push_message_url, url);
+                hashMap.put(WebViewConstant.push_message_title, title);
+                if (initPage && split.length > 4) {
+                    String pushMessage = split[4];
+                    hashMap.put(WebViewConstant.push_message_value, pushMessage);
+                }
+                hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+                hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+                hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+                if (split.length >= 5) {
+                    hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+                }
+                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
-            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
-            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
-            if (split.length >= 5) {
-                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
-            }
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             return true;
         }
         return false;

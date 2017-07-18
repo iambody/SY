@@ -56,7 +56,6 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
         View view = layoutInflater.inflate(app.privatefund.com.vido.R.layout.view_item_navigation, null);
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
-
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);

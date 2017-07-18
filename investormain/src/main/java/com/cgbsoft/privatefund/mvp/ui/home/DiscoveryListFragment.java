@@ -12,7 +12,7 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.listener.listener.ListItemClickListener;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
@@ -49,12 +49,9 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
      * 类别的数据
      */
     public String CatoryValue;
-    private String currentOffset;
-
     public DiscoveryListAdapter discoveryListAdapter;
-    //标记第几页的位置
     private int CurrentPostion = 0;
-    //标记是否是架子啊更多
+    private static int LIMIT_PAGE = 20;
 
     private boolean isLoadMore;
 
@@ -85,6 +82,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         LogUtils.Log("fffa", "第一次可见:" + CatoryValue);
         List<DiscoveryListModel> list = getArguments() != null ? getArguments().getParcelableArrayList(INIT_LIST_DATA_PARAMS) : null;
         discoveryListAdapter = new DiscoveryListAdapter(fBaseActivity, list == null ? new ArrayList<>() : list);
+        CurrentPostion = CollectionUtils.isEmpty(list) ? 0 : 1;
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
@@ -95,9 +93,8 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
             hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&catagory=").concat(discoveryListModel.getCategory()));
         });
         swipeTarget.setAdapter(discoveryListAdapter);
-        //第一次显示的时候全部不需要加载数据  非全部需要进行请求网络数据
-        if (0 == discoveryListAdapter.getItemCount()) {//
-           //getPresenter().getDiscoveryListData("0", CatoryValue);
+        if (null == list) {
+            getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
         }
     }
 
@@ -107,7 +104,8 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     }
 
     @Override
-    protected void onUserInvisible() {}
+    protected void onUserInvisible() {
+    }
 
     @Override
     protected void DetoryViewAndThing() {
@@ -124,18 +122,18 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         discoveryListAdapter.refrushData(disCoveryListModels, !isAdd);
     }
 
-
     @Override
     public void onLoadMore() {
         CurrentPostion = CurrentPostion + 1;
-        getPresenter().getDiscoveryListData("0", CatoryValue);
+        isLoadMore = true;
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
     }
 
     @Override
     public void onRefresh() {
         CurrentPostion = 0;
-        isLoadMore = true;
-        getPresenter().getDiscoveryListData("0",CatoryValue);
+        isLoadMore = false;
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
     }
 
     @Override
