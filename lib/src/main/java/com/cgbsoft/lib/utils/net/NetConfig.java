@@ -83,7 +83,6 @@ public class NetConfig {
 
     static class Auth {
         //获取容云token
-        //获取容云token
         static final String GET_RONG_TOKEN = AUTH_URL_V2 + "/rc/gettoken";
         // 获取融云用户信息
         static final String RONGYUN_USERINFO = AUTH_URL_V2 + "/rc/userinfo";

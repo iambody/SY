@@ -102,7 +102,7 @@ public class OKHTTP {
             Utils.log("okHttp", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
                     "deviceId:" + Utils.getIMEI(BaseApplication.getContext()) + "\n" +
-                    "version:" + Utils.getVersionCode(context), "d");
+                    "version:" + Utils.getVersionName(context), "d");
             return chain.proceed(authorised);
         };
 

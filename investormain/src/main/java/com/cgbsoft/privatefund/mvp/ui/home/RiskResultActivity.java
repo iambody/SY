@@ -38,9 +38,6 @@ public class RiskResultActivity extends BaseActivity {
     @BindView(R.id.risk_result_restart)
     TextView restart;
 
-    @BindView(R.id.risk_result_type)
-    TextView type;
-
     @BindView(R.id.risk_result_info)
     TextView resultinfo;
 
@@ -107,11 +104,9 @@ public class RiskResultActivity extends BaseActivity {
 
                 break;
         }
-        restart.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
-        type.setTextColor(visitor ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.red_new));
-        type.setText(str);
+        restart.setTextColor(visitor ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.red_new));
         resultinfo.setText(getString(R.string.risk_result_info) + "\n" + str);
-        commit.setBackgroundResource(visitor ? R.drawable.c_common_bg_btn : R.drawable.selector_common_red_bg_btn);
+        commit.setBackgroundResource(visitor ? R.drawable.golden_shape_sel_btn1 : R.drawable.selector_common_red_bg_btn);
     }
 
     @Override
@@ -138,28 +133,22 @@ public class RiskResultActivity extends BaseActivity {
         String str = "";
         switch (value) {
             case 1:
-                str = "[ 保守型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
                 break;
             case 2:
-                str = "[ 稳健型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_steady);
                 break;
             case 3:
-                str = "[ 平衡型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_balance);
                 break;
             case 4:
-                str = "[ 成长型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_grow);
                 break;
             case 5:
-                str = "[ 进取型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_radical);
                 break;
         }
 
-        type.setText(str);
         resultinfo.setText(getString(R.string.risk_result_info) + str);
         commitRistResult();
     }
@@ -183,27 +172,21 @@ public class RiskResultActivity extends BaseActivity {
         String str = "";
         switch (value) {
             case 1:
-                str = "[ 保守型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_conservative);
                 break;
             case 2:
-                str = "[ 稳健型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_steady);
                 break;
             case 3:
-                str = "[ 平衡型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_balance);
                 break;
             case 4:
-                str = "[ 成长型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_grow);
                 break;
             case 5:
-                str = "[ 进取型 ]";
                 image.setBackgroundResource(R.drawable.ic_risk_result_radical);
                 break;
         }
-        type.setText(str);
         resultinfo.setText(getString(R.string.risk_result_info) + str);
     }
 }

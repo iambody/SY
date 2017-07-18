@@ -163,6 +163,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
         mainHomeBannerview.setPlayDelay(6 * 1000);
+
         //请求数据
         getPresenter().getHomeData();
     }
@@ -297,7 +298,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.SetTxt(viewHomeLevelStr, level.levelName);
-//        isVisibleToUser
     }
 
     @Override
@@ -447,7 +447,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
 
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确定", "呼叫") {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "取消", "呼叫") {
             @Override
             public void left() {
                 dismiss();

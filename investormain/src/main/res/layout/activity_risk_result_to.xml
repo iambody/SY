@@ -7,96 +7,78 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_title"
+        android:background="@color/c_background"
         android:scrollbars="none"
-        android:background="@color/c_background">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/result_content"
-        android:layout_margin="16dp"
-        android:paddingBottom="40dp">
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/result_content"
             android:layout_width="match_parent"
-            android:layout_height="317dp"
-            android:id="@+id/show_content"
-            android:orientation="vertical"
-            android:background="@drawable/ic_risk_result_bg"
-            android:layout_marginTop="88dp">
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:paddingBottom="40dp">
 
-        <TextView
-            android:id="@+id/risk_result_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="45dp"
-            android:lineSpacingExtra="10dp"
-            android:gravity="center"
-            android:text="@string/risk_result_info"
-            android:textColor="@color/product_item_title"
-            android:textSize="16dp" />
+            <LinearLayout
+                android:id="@+id/show_content"
+                android:layout_width="match_parent"
+                android:layout_height="317dp"
+                android:layout_marginTop="88dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/risk_result_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="45dp"
+                    android:background="@drawable/ic_risk_result_balance" />
 
-        <ImageView
-            android:id="@+id/risk_result_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/ic_risk_result_balance" />
+                <TextView
+                    android:id="@+id/risk_result_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="10dp"
+                    android:text="@string/risk_result_info"
+                    android:textColor="@color/product_item_title"
+                    android:textSize="16dp" />
+            </LinearLayout>
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/risk_result_commit"
+                android:layout_alignBottom="@+id/show_content"
+                android:layout_marginTop="47dp"
+                android:gravity="center"
+                style="@style/golden_btn"
+                android:paddingRight="10dp"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/risk_result_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="[ 保守型 ]"
-            android:layout_marginTop="73dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/orange"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/risk_result_commit"
-            android:layout_width="230dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="47dp"
-            android:background="@drawable/selector_common_bg_btn"
-            android:layout_alignBottom="@+id/show_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-20dp"
-            android:paddingRight="10dp"
-            android:text="我知道了"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/risk_result_restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="35dp"
-            android:layout_below="@id/risk_result_commit"
-            android:text="重新评测"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/orange"
-            android:textSize="20dp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/risk_result_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="@string/retest"
+                android:layout_marginTop="30dp"
+                android:layout_alignBottom="@id/risk_result_commit"
+                android:textColor="@color/app_golden"
+                android:textSize="18dp" />
+        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>
