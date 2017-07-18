@@ -292,6 +292,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             }
         });
+
     }
 
      /* 显示直播的布局*/
@@ -497,7 +498,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         @Override
         public void onClick(View v) {
-            if ("0".equals(data.isVisitorVisible)) {//需要跳转到登录页面
+            if ("0".equals(data.isVisitorVisible)&&AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
                 Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
                 toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
                 UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
