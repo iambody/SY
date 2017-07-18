@@ -5,14 +5,25 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
+import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+
+import java.util.List;
 
 /**
  * desc  ${DESC}
@@ -51,6 +62,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 //        }));
 
     }
+
     /**
      * 开始展示登录模式下的服务码的布局
      */
@@ -84,6 +96,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
         });
         animationSet.start();
     }
+
     /**
      * 消失下边大布局的的animator
      */
@@ -121,6 +134,22 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
         animationSet.start();
 
     }
+
+    public void gotoConnectAdviser() {
+        DefaultDialog dialog = new DefaultDialog(getContext(), "是否联系投资顾问", "确消", "呼叫") {
+            @Override
+            public void left() {
+                dismiss();
+            }
+
+            @Override
+            public void right() {
+                dismiss();
+                NavigationUtils.startDialgTelephone(getContext(), AppManager.getUserInfo(getContext()).adviserPhone);
+            }
+        };
+        dialog.show();
+    }
 //    //进行签到动作
 //    @Override
 //    public void todoSign() {
@@ -143,4 +172,6 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 ////            }
 ////        }));
 //    }
+
+
 }

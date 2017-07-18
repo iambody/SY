@@ -224,7 +224,9 @@
     <string name="account_bank_online">-</string>
     <string name="next">下一步</string>
     <string name="retest">重新测评</string>
-    
+    <string name="select_adviser">选择投顾</string>
+    <string name="my_adviser">我的投顾</string>
+
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>
         <item>观看下载记录</item>

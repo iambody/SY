@@ -36,7 +36,6 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
-import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
@@ -101,7 +100,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @BindView(R.id.view_live_iv_lay)
     RelativeLayout viewLiveIvLay;
-    //
     @BindView(R.id.main_home_adviser_title)
     TextView mainHomeAdviserTitle;
     @BindView(R.id.main_home_adviser_phone)
@@ -137,17 +135,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean isShowAdviserCard;
     //游客模式下是否已经展示出来
     private boolean isVisiterShow;
-
-
-//    //每天一次的签到的dialog
-//    private HomeSignDialog signDialog;
-
     // Banner适配器
     private BannerAdapter homeBannerAdapter;
-    /**
-     * Fragment当前状态是否可见
-     */
+    // Fragment当前状态是否可见
     protected boolean isVisible;
+    //是否绑定理财师
+    boolean isBindAdviser;
+    UserInfoDataEntity.UserInfo userInfo;
+    private final int PLAYDELAYTIME = 6;
 
     @Override
 
@@ -162,18 +157,78 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         homeBannerAdapter = new BannerAdapter();
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
-        mainHomeBannerview.setPlayDelay(6 * 1000);
+        mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
         //请求数据
         getPresenter().getHomeData();
     }
 
+    //登录模式点击短信
+    @OnClick(R.id.main_home_adviser_note)
+    public void onMainHomeAdviserNoteClicked() {
+        Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
+    }
 
-    boolean isBindAdviser;
-    UserInfoDataEntity.UserInfo userInfo;
+    //登录模式点击聊天
+    @OnClick(R.id.main_home_adviser_im)
+    public void onMainHomeAdviserImClicked() {
+        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
+    }
 
-    /**
-     * 配置view各种资源
-     */
+    //非游客模式头像的点击事件
+    @OnClick(R.id.main_home_adviser_inf_iv)
+    public void onViewivClicked() {
+        if (isShowAdviserCard) return;
+        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
+        isShowAdviserCard = true;
+        initShowCardAnimator(mainHomeAdviserLayyy, false);
+    }
+
+    //游客模式点击头像
+    @OnClick(R.id.main_home_vister_adviser_inf_iv)
+    public void onViewvisterivClicked() {
+        if (isVisiterShow) return;
+        mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
+        isVisiterShow = true;
+        initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
+    }
+
+    @OnClick(R.id.main_home_adviser_title)
+    public void adviserTextClick() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), false);
+    }
+
+    @OnClick(R.id.main_home_invisiter_txt_lay)
+    public void onViewinvisitertxtlayClicked() {
+        //已经绑定过的
+        if (isBindAdviser) {
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), false);
+        } else {
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), false);
+        }
+    }
+
+    //登录模式点击电话
+    @OnClick(R.id.main_home_adviser_phone)
+    public void onMainHomeAdviserPhoneClicked() {
+        getPresenter().gotoConnectAdviser();
+    }
+
+
+    /*点击消息*/
+    @OnClick(R.id.main_home_new_iv)
+    public void onNewClicked() {
+        if (AppManager.isVisitor(baseActivity)) {//游客模式
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {//非游客模式
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+    }
+
+
+   /*  配置view各种资源*/
+
     private void initConfig() {
         main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
         main_home_level_lay.setOnClickListener(this);
@@ -183,24 +238,20 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
-//        showLiveView();
         boolean isVisiter = AppManager.isVisitor(baseActivity);
         userInfo = AppManager.getUserInfo(baseActivity);
         isBindAdviser = AppManager.isBindAdviser(baseActivity);
-        if (isVisiter || !isBindAdviser) {//游客模式下或者没有绑定过理财师需要
+        //游客模式下或者没有绑定过理财师需要
+        if (isVisiter || !isBindAdviser) {
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
             mainHomeVisterLay.setVisibility(View.VISIBLE);
-
-
-//            Imageload.display(baseActivity, userInfo.headImageUrl, mainHomeVisterAdviserInfIv);
         } else {//登录模式下并且已经绑定过理财师
             //登录模式
             mainHomeLoginLay.setVisibility(View.VISIBLE);
             //游客模式
             mainHomeVisterLay.setVisibility(View.GONE);
-            LogUtils.Log("lalal", "开始加载");
             //开始填充登录模式下理财师数据
             Imageload.displayListener(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv, new RequestListener() {
                 @Override
@@ -212,21 +263,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 public boolean onResourceReady(Object resource, Object model, Target target, boolean isFromMemoryCache, boolean isFirstResource) {
 
                     mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
-                    LogUtils.Log("lalal", "已经加载");
                     return false;
                 }
             });
             BStrUtils.SetTxt(mainHomeCardnumberTxt, userInfo.bandingAdviserUniqueCode);
-
         }
         initRxEvent();
     }
 
     private Observable<LiveInfBean> liveObservable;
 
-    /**
-     * 注册监听事件
-     */
+    /*  注册监听事件*/
     private void initRxEvent() {
         //直播状态监听
         liveObservable = RxBus.get().register(LIVERXOBSERBER_TAG, LiveInfBean.class);
@@ -246,9 +293,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
     }
 
-    /**
-     * 显示直播的布局
-     */
+     /* 显示直播的布局*/
+
     private void showLiveView() {
         main_home_live_lay.setVisibility(View.VISIBLE);
         int ivWidth = (int) (screenWidth * 2.6 / 5);
@@ -280,26 +326,21 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-    /**
-     * 获取数据进行数据填充
-     *
-     * @param data
-     */
+   /* 获取数据进行数据填充*/
+
     private void initResultData(HomeEntity.Result data) {
         //横向轮播
         initHorizontalScroll(data.module);
         //banner
         initViewPage(data.banner);
         //用户等级信息
-        initLevel(data.member);
+        initLevel(data.myInfo);
     }
 
-    /**
-     * 用户等级的数据填充
-     */
+    /* 用户等级的数据填充*/
+
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.SetTxt(viewHomeLevelStr, level.memberLevel);
-//        isVisibleToUser
     }
 
     @Override
@@ -307,18 +348,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-    /**
-     * 签到动作的结果通知
-     */
+     /* 签到动作的结果通知*/
+
     @Override
     public void getSignResult(String message) {
         PromptManager.ShowCustomToast(baseActivity, message);
-
     }
 
-    /**
-     * 横向滑动时候的数据填充
-     */
+     /*横向滑动时候的数据填充*/
+
     public void initHorizontalScroll(List<HomeEntity.Operate> data) {
         mainHomeHorizontalscrollviewLay.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
@@ -334,16 +372,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    /**
-     * 开始展示下边大布局的animator
-     */
+    /*开始展示下边大布局的animator*/
+
     public void initShowCardAnimator(View V, boolean isVisiter) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0f, 1f);
-
         ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", -600f, 0f);
-
         ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0.5f, 1f);
-
         AnimatorSet animationSet = new AnimatorSet();
 
         animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
@@ -351,7 +385,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
 
             @Override
@@ -390,7 +423,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
     }
 
-    //下拉刷新展示
+    /*下拉刷新展示*/
     @Override
     public void onRefresh() {
         mainHomeSwiperefreshlayout.setRefreshing(false);
@@ -398,10 +431,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
         getPresenter().getHomeData();
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, VideoHistoryListActivity.class));
     }
 
-    ///scrollview滑动时候的监听
+    /* scrollview滑动时候的监听*/
     @Override
     public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
         LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
@@ -425,88 +457,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
-//                mainHomeCardLay.setVisibility(View.GONE);
-//                initShowCardAnimator(mainHomeAdviserLayyy);
             }
         }
     }
 
-    //点击消息
-    @OnClick(R.id.main_home_new_iv)
-    public void onNewClicked() {
-        if (AppManager.isVisitor(baseActivity)) {//游客模式
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {//非游客模式
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-    }
-
-    //登录模式点击电话
-    @OnClick(R.id.main_home_adviser_phone)
-    public void onMainHomeAdviserPhoneClicked() {
-
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "是否联系投资顾问", "确消", "呼叫") {
-            @Override
-            public void left() {
-                dismiss();
-            }
-
-            @Override
-            public void right() {
-                dismiss();
-                NavigationUtils.startDialgTelephone(baseActivity, userInfo.adviserPhone);
-            }
-        };
-        dialog.show();
-    }
-
-    //登录模式点击短信
-    @OnClick(R.id.main_home_adviser_note)
-    public void onMainHomeAdviserNoteClicked() {
-        Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
-    }
-
-    //登录模式点击聊天
-    @OnClick(R.id.main_home_adviser_im)
-    public void onMainHomeAdviserImClicked() {
-        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
-    }
-
-    //非游客模式头像的点击事件
-    @OnClick(R.id.main_home_adviser_inf_iv)
-    public void onViewivClicked() {
-        if (isShowAdviserCard) return;
-        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
-        isShowAdviserCard = true;
-        initShowCardAnimator(mainHomeAdviserLayyy, false);
-    }
-
-    //游客模式点击头像
-    @OnClick(R.id.main_home_vister_adviser_inf_iv)
-    public void onViewvisterivClicked() {
-        if (isVisiterShow) return;
-        mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
-        isVisiterShow = true;
-        initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
-
-    }
-
-    @OnClick(R.id.main_home_adviser_title)
-    public void adviserTextClick() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "选择投顾", false);
-    }
-
-    @OnClick(R.id.main_home_invisiter_txt_lay)
-    public void onViewinvisitertxtlayClicked() {
-        //已经绑定过的
-        if (isBindAdviser) {
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, "我的投顾", false);
-        } else {
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, "选择投顾", false);
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -532,7 +486,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         @Override
         public void onClick(View v) {
-            PromptManager.ShowCustomToast(baseActivity, "位置" + postion);
+            if ("0".equals(data.isVisitorVisible)) {//需要跳转到登录页面
+                Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
+                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
+                return;
+            }
             if (data.jumpType.equals("h5")) {//跳转h5
                 NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
             } else if (data.jumpType.equals("app")) {
@@ -556,12 +515,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-
-    /**
-     * banner
-     */
-    private class BannerAdapter extends StaticPagerAdapter {
-
+    public class BannerAdapter extends StaticPagerAdapter {
         List<HomeEntity.Banner> banners;
 
         public BannerAdapter() {
@@ -592,13 +546,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return view;
         }
 
-
         @Override
         public int getCount() {
             return null == banners ? 0 : banners.size();
         }
 
     }
-
 
 }
