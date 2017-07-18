@@ -235,8 +235,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
         textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START));
         textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START));
-//        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
-//        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
     }
 
     @Override
@@ -537,6 +535,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void createHealthItem(List<MineModel.HealthItem> list) {
         if (!CollectionUtils.isEmpty(list)) {
+            health_had_data_ll.removeAllViews();
             for (int i= 0; i < list.size(); i++) {
                 MineModel.HealthItem healthItem  = list.get(i);
                 TextView textView = new TextView(getActivity());

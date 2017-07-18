@@ -25,7 +25,6 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;

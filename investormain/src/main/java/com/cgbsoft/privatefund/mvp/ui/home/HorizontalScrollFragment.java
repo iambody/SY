@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.receiver.HoriizontalItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class HorizontalScrollFragment extends BaseFragment {
         System.out.println("------list=" + list.size());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_10_dip));
+        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_10_dip));
         recyclerView.setLayoutManager(linearLayoutManager);
         myHolderAdapter = new MyHolderAdapter(getActivity(), list, isPlay);
         recyclerView.setAdapter(myHolderAdapter);
