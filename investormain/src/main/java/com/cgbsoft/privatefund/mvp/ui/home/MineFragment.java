@@ -157,7 +157,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private DaoUtils daoUtils;
     private String[] videos;
     private MineModel mineModel;
-    private static final long DEALAY = 500;
+    private boolean showAssert;
+    private static final long DEALAY = 1000;
     private Observable<Boolean> swtichAssetObservable;
 
     private Handler handler = new Handler() {
@@ -178,11 +179,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void requestDataSuccess(MineModel mineModel) {
         initMineInfo(mineModel);
     }
@@ -197,9 +193,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             @Override
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
-                    hideAssert();
-                } else {
                     showAssert();
+                    showAssert = true;
+                } else {
+                    hideAssert();
                 }
             }
 
@@ -224,20 +221,32 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void hideAssert() {
+        if (mineModel != null) {
+            return;
+        }
+        MineModel.PrivateBank privateBank = mineModel.getBank();
         textViewShowAssert.setText(R.string.account_bank_show_assert);
         ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
         ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
         ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
-        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
-        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START));
+//        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
+//        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
     }
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initVideoView();
-        getPresenter().getMineData();
         initObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("------MineFragment--onResume");
+        getPresenter().getMineData();
     }
 
     @OnClick(R.id.mine_title_set_id)
@@ -279,8 +288,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
          if (currentProgress > 60) {
              return;
          }
-         roundProgressbar.setProgress(currentProgress + 5);
-         handler.sendMessageDelayed(Message.obtain(), DEALAY);
+         roundProgressbar.setProgress(currentProgress + 1);
+         handler.sendMessage(Message.obtain());
     };
 
     @OnClick(R.id.account_info_yundou_value_ll)
@@ -340,7 +349,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (this.mineModel == null) {
             return;
         }
-        GestureManager.showAssertGestureManager(getActivity());
+        if (showAssert) {
+            hideAssert();
+            showAssert = false;
+        } else {
+            GestureManager.showAssertGestureManager(getActivity());
+        }
     }
 
     @OnClick(R.id.account_bank_go_look_product)
@@ -466,16 +480,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initPrivateBank(MineModel mineModel) {
-        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE );
+        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
-        if (mineModel.getBank() != null) {
-            MineModel.PrivateBank privateBank = mineModel.getBank();
-            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
-            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
-            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+        if (showAssert) {
+            showAssert();
+        } else {
+            hideAssert();
         }
     }
 
