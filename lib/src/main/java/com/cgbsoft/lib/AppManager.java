@@ -244,6 +244,13 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 获取是否显示资产状态
+     */
+    public static boolean isShowAssert(Context context) {
+        return getBasePreference(context.getApplicationContext()).getBoolean(SHOW_ASSERT_STATUS, false);
+    }
+
+    /**
      * 获取手势密码是否打开
      *
      * @param context

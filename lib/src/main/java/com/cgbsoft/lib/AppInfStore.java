@@ -267,6 +267,18 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
+    /**
+     * 显示资产状态
+     *
+     * @param context
+     * @return
+     */
+    public static void saveShowAssetStatus(Context context, boolean showAssetStatus) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putBoolean(SHOW_ASSERT_STATUS, showAssetStatus);
+        ed.commit();
+    }
+
     //保存数据
     public static void saveSousouHistory(Context pcContext, String str) {
         SharedPreferences.Editor ed = getBasePreference(pcContext).edit();

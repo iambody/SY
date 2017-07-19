@@ -67,8 +67,8 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @BindView(R.id.lock_indicator)
     LockIndicator mLockIndicator;
 
-    @BindView(R.id.gesture_top_right)
-    TextView titleNoSet;
+//    @BindView(R.id.gesture_top_right)
+//    TextView titleNoSet;
 
     private boolean isFromShowAssert;
 
@@ -91,7 +91,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpViews();
-        titleNoSet.setVisibility(isFromShowAssert ? View.VISIBLE : View.GONE);
         mBackTitle.setVisibility(View.VISIBLE);
     }
 
@@ -145,11 +144,11 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         }
     }
 
-    @OnClick(R.id.gesture_top_right)
-    public void nowToJumpPage() {
-        finish();
-        RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
-    }
+//    @OnClick(R.id.gesture_top_right)
+//    public void nowToJumpPage() {
+//        finish();
+//        RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
+//    }
 
 //    @OnClick(R.id.text_reset)
 //    void resetClick() {

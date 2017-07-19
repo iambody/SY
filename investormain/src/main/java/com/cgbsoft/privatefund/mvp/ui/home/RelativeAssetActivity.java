@@ -1,9 +1,14 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -49,6 +54,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     private static final int CHECK_PAST = 2;
     private static final int CHECK_FAILURE = 3;
     private static final int SMOTH_CODE = 4;
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private String imagePath;
     private String imageId;
     private boolean isloading;
@@ -101,8 +107,15 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("关联我的资产");
-        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(RelativeAssetActivity.this, "4001888848"));
+        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            } else {
+                NavigationUtils.startDialgTelephone(RelativeAssetActivity.this, "4001888848");
+            }
+        });
     }
+
 
     @Override
     protected void data() {
