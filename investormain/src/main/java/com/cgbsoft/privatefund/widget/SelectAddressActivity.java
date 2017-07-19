@@ -11,9 +11,11 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.AddressSelectAdapter;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,7 @@ import butterknife.OnClick;
  *
  * @author chenlong
  */
+@Route(RouteConfig.SELECT_ADDRESS)
 public class SelectAddressActivity extends BaseActivity {
 
     @BindView(R.id.txt_dialog_title)
