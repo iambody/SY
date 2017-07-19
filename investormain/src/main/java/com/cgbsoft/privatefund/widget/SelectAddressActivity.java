@@ -11,9 +11,10 @@ import android.widget.TextView;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.AddressSelectAdapter;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,19 +27,20 @@ import butterknife.OnClick;
  *
  * @author chenlong
  */
+@Route(RouteConfig.SELECT_ADDRESS)
 public class SelectAddressActivity extends BaseActivity {
 
     @BindView(R.id.txt_dialog_title)
-    TextView txtDialogTitle;
+    public TextView txtDialogTitle;
 
     @BindView(R.id.txt_dialog_content)
-    private EditText txtDialogContent;
+    public EditText txtDialogContent;
 
     @BindView(R.id.list_view)
-    private ListView listView;
+    public ListView listView;
 
     @BindView(R.id.btn_ok)
-    private Button btnOk;
+    public Button btnOk;
 
     private AddressSelectAdapter addressSelectAdapter;
 
@@ -73,7 +75,7 @@ public class SelectAddressActivity extends BaseActivity {
     public void confirmButton() {
         if (!TextUtils.isEmpty(txtDialogContent.getText().toString())) {
             AppInfStore.saveSelectAddress(this, txtDialogContent.getText().toString());
-            NetConfig.updateRequestUrl();
+//            NetConfig.updateRequestUrl();
             finish();
         }
     }

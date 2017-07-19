@@ -81,11 +81,6 @@
     <style name="MyTheme" parent="Theme.AppCompat">
     </style>
 
-    <style name="text_dialog_title">
-        <item name="android:textColor">@color/c_black</item>
-        <item name="android:textSize">@dimen/c_text_size_high</item>
-    </style>
-
     <style name="edit_text_style_changepsd" >
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>

@@ -35,6 +35,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
@@ -164,9 +165,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         @Override
         public void onShakeFinish() {
-            Intent intent = new Intent(LoginActivity.this, SelectAddressActivity.class);
-            intent.putExtra(SelectAddressActivity.LOGIN_PARAM, true);
-            LoginActivity.this.startActivity(intent);
+            NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
         }
     };
 

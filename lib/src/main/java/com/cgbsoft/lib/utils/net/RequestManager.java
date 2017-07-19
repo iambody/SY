@@ -41,7 +41,6 @@ import rx.Observable;
  *  
  */
 interface RequestManager {
-
     /**
      * 获取资源
      *

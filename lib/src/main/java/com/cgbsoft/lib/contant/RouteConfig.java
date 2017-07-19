@@ -48,6 +48,9 @@ public class RouteConfig {
     //充值
     public static final String MALL_PAY = "mall_pay";
 
+    // 选择地址
+    public static final String SELECT_ADDRESS = "select_address_activity";
+
     // 邀请
     public static final String INVESTORMAIN_BASEWEBACTIVITY = "investornmain_invisterbasewebviewctivity";
 
