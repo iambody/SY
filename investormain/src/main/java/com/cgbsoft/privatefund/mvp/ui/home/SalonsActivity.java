@@ -20,6 +20,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogCity;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.R;
@@ -57,7 +58,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private LoadingDialog mLoadingDialog;
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
-    private String cityCode = "";
+    private String cityCode = "全国";
     private int offset = 0;
     private int limit = 100;
     private List<SalonsEntity.CityBean> citys=new ArrayList<>();
@@ -81,19 +82,15 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     }
 
     private void initView(Bundle savedInstanceState) {
+        salonCity.setText(cityCode);
         LocationBean location = AppManager.getLocation(baseContext);
-        if (null == location) {
-            cityCode = "全国";
-        } else {
-            cityCode = AppManager.getLocation(baseContext).getLocationcity();
+        if (null != location && !TextUtils.isEmpty(location.getLocationcity())) {
+            cityCode = location.getLocationcity();
         }
         if (TextUtils.isEmpty(cityCode)) {
             cityCode="全国";
         }
-        SalonsEntity.CityBean cityBean = new SalonsEntity.CityBean();
-        cityBean.setText("全国");
-        citys.add(cityBean);
-        salonCity.setText(cityCode);
+        addBeanOfState();
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setLoadMoreEnabled(false);
@@ -119,6 +116,12 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         });
         recyclerView.setAdapter(salonsAdapter);
         getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+    }
+
+    private void addBeanOfState() {
+        SalonsEntity.CityBean cityBean = new SalonsEntity.CityBean();
+        cityBean.setText("全国");
+        this.citys.add(cityBean);
     }
 
     /**
@@ -180,6 +183,8 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
             mRefreshLayout.setLoadMoreEnabled(false);
         }
         salonsAdapter.setDatas(salons);
+        this.citys.clear();
+        addBeanOfState();
         this.citys.addAll(citys);
     }
 
@@ -212,7 +217,8 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
             @Override
             public void confirm(SalonsEntity.CityBean result) {
                 salonCity.setText(result.getText());
-                getPresenter().getSalonsAndCitys(result.getCode(), offset, limit);
+                cityCode=result.getText();
+                getPresenter().getSalonsAndCitys(result.getText(), offset, limit);
             }
         });
         wheelDialogCity.show();

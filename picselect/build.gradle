@@ -27,6 +27,6 @@ dependencies {
     testCompile "junit:junit:${testC}"
     compile "com.android.support:appcompat-v7:${android_need_version}"
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile "com.android.support:recyclerview-v7:${recyclerview_version}"
+    compile "com.android.support:recyclerview-v7:${android_need_version}"
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }
