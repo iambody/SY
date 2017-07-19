@@ -119,8 +119,8 @@ public class ViewUtils {
     /**
      * 左侧添加图片
      * @param textView
-     * @param value
-     * @param colorRes
+     * @param
+     * @param
      */
     public static void setTextViewLeftIv(Context context,TextView  textView,int ivResuorceId){
         Drawable dwLeft = context.getResources().getDrawable(ivResuorceId);

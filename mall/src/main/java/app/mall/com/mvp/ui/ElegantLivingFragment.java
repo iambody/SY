@@ -29,6 +29,8 @@ import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
 
+import static com.cgbsoft.lib.BaseApplication.getContext;
+
 
 /**
  * 生活家页面
@@ -42,7 +44,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
     private LoadingDialog mLoadingDialog;
-    private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas= new ArrayList<>();
+    private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas = new ArrayList<>();
     private RecyclerAdapter recyclerAdapter;
     private LinearLayoutManager linearLayoutManager;
     private boolean isOver;

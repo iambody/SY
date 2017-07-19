@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
     android:background="@color/white"
+    android:paddingLeft="@dimen/ui_5_dip"
     android:paddingBottom="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp">
@@ -84,7 +85,7 @@
         android:layout_marginRight="@dimen/ui_5_dip"
         android:gravity="center"
         android:text="确定"
-        android:textColor="@color/text_disable"
+        android:textColor="@color/color_6a6a6a"
         android:textSize="16sp"
         android:visibility="gone" />
 

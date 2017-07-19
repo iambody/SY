@@ -25,7 +25,6 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
@@ -45,10 +44,9 @@ import butterknife.OnClick;
  */
 @Route(RouteConfig.VALIDATE_GESTURE_PASSWORD)
 public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter> implements ModifyUserInfoContract.View {
-    public static final String FROM_EXCCEED_TIIME = "exceedTime";
     public static final String PARAM_CLOSE_PASSWORD = "PARAM_CLOSE_PASSWORD";
-    public static final String PARAM_FROM_LOGIN = "PARAM_FROM_LOGIN";
     public static final String PARAM_FROM_SHOW_ASSERT = "PARAM_FROM_SHWO_ASSERT";
+    public static final String FROM_MODIFY_GESTURE = "PARAM_FROM_MODIFY";
 
     private int count = 5;
     private boolean isFromShowAssert;
@@ -72,8 +70,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     protected void before() {
         super.before();
         isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
-//        isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
-//        modifyGesturePassword = getIntent().getBooleanExtra(GestureEditActivity.PARAM_FROM_MODIFY, false);
+        isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
+        modifyGesturePassword = getIntent().getBooleanExtra(FROM_MODIFY_GESTURE, false);
     }
 
     @Override
@@ -196,15 +194,12 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     @Override
     public void modifyUserSuccess(boolean isFiveTimesError) {
         AppInfStore.updateUserGesturePassword(this, "");
-        RxBus.get().post(RxConstant.REFRUSH_GESTURE_OBSERVABLE, "2");
+        RxBus.get().post(RxConstant.SET_PAGE_SWITCH_BUTTON, false);
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
         } else if (isFromShowAssert){
-            finish();
         }
+        finish();
     }
 
     @Override
@@ -249,16 +244,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
             startActivity(intent);
             finish();
-        } else if (getIntent().getBooleanExtra(PARAM_FROM_LOGIN, false)) {
-            NavigationUtils.toMainActivity(GestureVerifyActivity.this);
-            finish();
-            return;
-        }
-
-//        if (isFromResumeIntercepter) {
-//            GestureVerifyActivity.this.finish();
-//        } else
-        if (isFromCloseGesturePassword) {
+        } else if (isFromCloseGesturePassword) {
             closeGesturePassword(false);
         } else {
             GestureVerifyActivity.this.finish();

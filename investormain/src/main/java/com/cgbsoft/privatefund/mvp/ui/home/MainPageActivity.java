@@ -110,7 +110,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
-    private Observable<Boolean> gestruePwdObservable;
+//    private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
@@ -422,21 +422,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
-        gestruePwdObservable = RxBus.get().register(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE, Boolean.class);
-        gestruePwdObservable.subscribe(new RxSubscriber<Boolean>() {
-            @Override
-            protected void onEvent(Boolean aBoolean) {
-                if (SPreference.getToCBean(MainPageActivity.this) != null && "1".equals(SPreference.getToCBean(MainPageActivity.this).getGestureSwitch())) {
-                    gesturePasswordJumpPage();
-                }
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-
-            }
-        });
-
         // 刷新用户信息
         reRefrushUserInfoObservable = RxBus.get().register(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, Boolean.class);
         reRefrushUserInfoObservable.subscribe(new RxSubscriber<Boolean>() {
@@ -565,14 +550,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
-    private void gesturePasswordJumpPage() {
-        System.out.println("------intercetpergesturePasswordJumpPage");
-        if (SPreference.getToCBean(this) != null && "1".equals(SPreference.getToCBean(this).getGestureSwitch())) {
-            Intent intent = new Intent(this, GestureVerifyActivity.class);
-            intent.putExtra(GestureVerifyActivity.FROM_EXCCEED_TIIME, true);
-            startActivity(intent);
-        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -588,10 +565,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         if (reRefrushUserInfoObservable != null) {
             RxBus.get().unregister(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, reRefrushUserInfoObservable);
-        }
-
-        if (gestruePwdObservable != null) {
-            RxBus.get().unregister(RxConstant.ON_ACTIVITY_RESUME_OBSERVABLE, gestruePwdObservable);
         }
 
         if (rongTokenRefushObservable != null) {

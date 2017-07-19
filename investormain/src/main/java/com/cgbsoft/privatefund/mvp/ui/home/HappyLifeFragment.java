@@ -58,6 +58,11 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     }
 
     @Override
+    protected void setIndex(int code) {
+        super.setIndex(code);
+    }
+
+    @Override
     protected ArrayList<TabBean> list() {
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,11 +52,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -171,6 +170,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     };
 
     @Override
+    protected void after(View view) {
+        super.after(view);
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+////            透明状态栏
+//            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+////            透明导航栏
+//            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        }
+    }
+
+    @Override
     protected int layoutID() {
         return R.layout.fragment_mine;
     }
@@ -235,8 +245,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
         textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START));
         textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START));
-//        ViewUtils.textViewFormatPasswordType(textViewGuquanText, getString(R.string.account_bank_online));
-//        ViewUtils.textViewFormatPasswordType(textViewzhaiquanText, getString(R.string.account_bank_online));
     }
 
     @Override
@@ -293,7 +301,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
-         if (currentProgress > 60) {
+         int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
+         if (currentProgress > guQuanValue) {
              return;
          }
          roundProgressbar.setProgress(currentProgress + 1);
@@ -302,7 +311,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_yundou_value_ll)
     void gotoYundouctivity() {
-        // 云豆
+        String mineYunDou = CwebNetConfig.mineYunDou;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, mineYunDou);
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.account_info_mine_yundou));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
     }
 
     @OnClick(R.id.account_info_private_bank_value_ll)
@@ -354,7 +367,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-        if (this.mineModel == null) {
+        if (this.mineModel == null || isNullPrivateBank(mineModel)) {
             return;
         }
         if (showAssert) {
@@ -367,8 +380,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_look_product)
     void gotoLookProductActivity() {
-        // 去看产品
-        RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PRODUCT_PAGE);
     }
 
     @OnClick(R.id.account_bank_go_relative_assert)
@@ -488,13 +500,23 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initPrivateBank(MineModel mineModel) {
-        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE);
-        linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
+        boolean isNullPrivateBank = isNullPrivateBank(mineModel);
+        linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
+        linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
         if (showAssert) {
             showAssert();
         } else {
             hideAssert();
         }
+    }
+
+    private boolean isNullPrivateBank(MineModel mineModel) {
+        if (mineModel.getBank() == null ||
+                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || Integer.parseInt(mineModel.getBank().getDebtAmt()) == 0) &&
+                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || Integer.parseInt(mineModel.getBank().getEquityAmt()) == 0))) {
+            return true;
+        }
+        return false;
     }
 
     private void initOrderView(MineModel mineModel) {
@@ -537,6 +559,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void createHealthItem(List<MineModel.HealthItem> list) {
         if (!CollectionUtils.isEmpty(list)) {
+            health_had_data_ll.removeAllViews();
             for (int i= 0; i < list.size(); i++) {
                 MineModel.HealthItem healthItem  = list.get(i);
                 TextView textView = new TextView(getActivity());

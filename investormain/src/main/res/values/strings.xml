@@ -120,7 +120,7 @@
     <string name="please_new_gesture_password">请设置新的手势密码</string>
     <string name="please_target_gesture_password_again">请再次绘制手势密码</string>
     <string name="setup_gesture_code">验证手势密码</string>
-    <string name="gesture_password_error_times">您已连续五次输错手势，手势密码已关闭，请重新登录</string>
+    <string name="gesture_password_error_times">您已连续五次输错手势，手势密码已关闭!</string>
     <string name="weixin_reset_gesture_password">忘记手势密码，请致电官方客户电话</string>
     <string name="forget_pwd">忘记密码?</string>
     <string name="mainhome">首页</string>

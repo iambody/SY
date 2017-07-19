@@ -18,6 +18,10 @@ public  class DiscoveryListModel implements Parcelable {
 
     private String views;
 
+    private String label;
+
+    private String times;
+
     public String getViews() {
         return views;
     }
@@ -59,6 +63,23 @@ public  class DiscoveryListModel implements Parcelable {
     }
 
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,6 +92,11 @@ public  class DiscoveryListModel implements Parcelable {
         dest.writeString(this.category);
         dest.writeString(this.title);
         dest.writeString(this.views);
+        dest.writeString(this.label);
+        dest.writeString(this.times);
+    }
+
+    public DiscoveryListModel() {
     }
 
     protected DiscoveryListModel(Parcel in) {
@@ -79,6 +105,8 @@ public  class DiscoveryListModel implements Parcelable {
         this.category = in.readString();
         this.title = in.readString();
         this.views = in.readString();
+        this.label = in.readString();
+        this.times = in.readString();
     }
 
     public static final Creator<DiscoveryListModel> CREATOR = new Creator<DiscoveryListModel>() {
