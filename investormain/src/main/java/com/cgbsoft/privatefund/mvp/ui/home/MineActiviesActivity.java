@@ -94,7 +94,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         ((TextView) findViewById(R.id.title_mid)).setText("我的活动");
     }
 
-    @OnClick(R.id.iv_title_left)
+    @OnClick(R.id.title_left)
     public void backActivity() {
         finish();
     }

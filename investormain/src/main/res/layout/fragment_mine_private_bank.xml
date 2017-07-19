@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:id="@+id/account_bank_go_relative_assert"
                 android:background="@drawable/shape_btn_goden_boader_bg"
-                android:text="@string/account_bank_upload_certify"
+                android:text="@string/account_bank_no_relative_assert"
                 android:textColor="@color/app_golden"/>
         </LinearLayout>
 

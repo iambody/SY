@@ -29,6 +29,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -80,6 +81,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     protected boolean hasRightSave;
 
+    protected boolean rightMessageIcon;
+
     protected boolean hasPushMessage;
 
     protected boolean initPage;
@@ -113,6 +116,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 //        hasRightShare = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SHARE, true);
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
+        rightMessageIcon = getIntent().getBooleanExtra(WebViewConstant.right_message_index, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         if (getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
@@ -416,17 +420,21 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         getMenuInflater().inflate(R.menu.page_menu, menu);
         rightItem = menu.findItem(R.id.firstBtn);
         MenuItem secItem = menu.findItem(R.id.secondBtn);
-//            firstItem.setTitle(hasRightShare ? R.string.umeng_socialize_share : R.string.save);
-        rightItem.setIcon(ContextCompat.getDrawable(this, R.drawable.select_share_navigation));
-        secItem.setVisible(false);
+        rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
+        secItem.setVisible(rightMessageIcon);
         rightItem.setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-            pageShare();
+            if (rightMessageIcon) {
+                NavigationUtils.startActivityByRouter(this, RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
+            } else {
+                pageShare();
+            }
 //            } else if(item.getTitle().equals(getString(R.string.save))) {
 //                String jascript = "javascript:Tools.save()";
 //                mWebview.loadUrl(jascript);

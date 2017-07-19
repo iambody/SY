@@ -9,6 +9,7 @@ public class WebViewConstant {
     public static final String push_message = "push_message";
     public static final String push_message_title = "push_message_title";
     public static final String push_message_value = "push_message_value";
+    public static final String right_message_index = "right_message_icon";
     public static final String RIGHT_SAVE = "need_save";
     public static final String PAGE_INIT = "page_init";
     public static final String RIGHT_SHARE = "right_share";

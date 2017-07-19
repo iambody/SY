@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -98,6 +100,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.account_bank_hide_assert)
     TextView textViewShowAssert;
+
+    @BindView(R.id.account_bank_go_relative_assert)
+    Button noRelativeAssert;
 
     @BindView(R.id.account_bank_assert_total_text)
     TextView textViewAssertTotalText;
@@ -325,10 +330,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_account_info_qiandao_ll)
     void gotoQiandaoActivity() {
         String url = CwebNetConfig.signInPage;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_signin));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_signin));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.mine_account_info_activity_ll)
@@ -339,10 +345,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_account_info_ticket_ll)
     void gotoCouponsActivity() {
         String url = CwebNetConfig.mineCardCoupons;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_card_coupons));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_card_coupons));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.mine_account_info_cards_ll)
@@ -356,7 +363,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-        if (this.mineModel == null || isNullPrivateBank(mineModel)) {
+        if (this.mineModel == null) {
             return;
         }
         if (showAssert) {
@@ -480,8 +487,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             MineModel.MineUserInfo mineUserInfo = mineModel.getMyInfo();
             textViewName.setText(mineUserInfo.getNickName());
             Imageload.display(getActivity(), mineUserInfo.getHeadImageUrl(), roundImageView, R.drawable.logo, R.drawable.logo);
-            userLeaguarLevel.setText(mineUserInfo.getMemberLevel());
+            userLeaguarLevel.setText(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? "无" : mineUserInfo.getMemberLevel());
             userLeaguarUpdateDesc.setText(mineUserInfo.getMemberBalance());
+            userLeaguarUpdateDesc.setVisibility(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? View.GONE : View.VISIBLE);
             textViewCaifu.setText(mineUserInfo.getMemberValue());
             textViewYundou.setText(mineUserInfo.getYdTotal());
             textViewPrivateBanker.setText(TextUtils.isEmpty(mineUserInfo.getAdviserName()) ? "无" : mineUserInfo.getAdviserName());
@@ -492,6 +500,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         boolean isNullPrivateBank = isNullPrivateBank(mineModel);
         linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
+        textViewShowAssert.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
         if (showAssert) {
             showAssert();
         } else {
