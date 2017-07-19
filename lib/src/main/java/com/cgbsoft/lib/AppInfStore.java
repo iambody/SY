@@ -10,6 +10,7 @@ import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -378,7 +379,7 @@ public class AppInfStore implements AppinfConstant {
     public static void saveHomeData(Context sContext, HomeEntity.Result homeData) {
         SharedPreferences sp = getBasePreference(sContext);
         SharedPreferences.Editor ed = sp.edit();
-        ed.putString(AppManager.isVisitor(sContext) ? "visitorhomedata" : "homedata", new Gson().toJson(homeData));
+        ed.putString(AppManager.isVisitor(sContext) ? VISITERHOME : NORMALHOME, new Gson().toJson(homeData));
         ed.commit();
     }
 
@@ -388,9 +389,33 @@ public class AppInfStore implements AppinfConstant {
     public static HomeEntity.Result getHomeData(Context sContext) {
         HomeEntity.Result homeData;
         SharedPreferences sharedPreferences = getBasePreference(sContext.getApplicationContext());//.getBoolean(VISITOR_KEY, false);
-        String homeStr = sharedPreferences.getString(AppManager.isVisitor(sContext) ? "visitorhomedata" : "homedata", "");
+        String homeStr = sharedPreferences.getString(AppManager.isVisitor(sContext) ? VISITERHOME : NORMALHOME, "");
         if (BStrUtils.isEmpty(homeStr)) return null;
         homeData = new Gson().fromJson(homeStr, HomeEntity.Result.class);
+        return homeData;
+    }
+    /**
+     * 保存学院数据VIDEOSCHOOL
+     */
+    /**
+     * 保存首页的数据
+     */
+    public static void saveVideoSchoolData(Context sContext, VideoAllModel homeData) {
+        SharedPreferences sp = getBasePreference(sContext);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(AppManager.isVisitor(sContext) ? VIDEOSCHOOLVISTER : VIDEOSCHOOLNORMAL, new Gson().toJson(homeData));
+        ed.commit();
+    }
+
+    /**
+     * 获取首页的数据
+     */
+    public static VideoAllModel getVideoSchoolData(Context sContext) {
+        VideoAllModel homeData;
+        SharedPreferences sharedPreferences = getBasePreference(sContext.getApplicationContext());//.getBoolean(VISITOR_KEY, false);
+        String homeStr = sharedPreferences.getString(AppManager.isVisitor(sContext) ? VIDEOSCHOOLVISTER : VIDEOSCHOOLNORMAL, "");
+        if (BStrUtils.isEmpty(homeStr)) return null;
+        homeData = new Gson().fromJson(homeStr, VideoAllModel.class);
         return homeData;
     }
 }

@@ -36,7 +36,7 @@ public interface AppinfConstant {
     /**
      * 存储用户的v2token
      */
-    String USERV2TOKEN="userv2token";
+    String USERV2TOKEN = "userv2token";
     /**
      * 是否登录
      */
@@ -93,8 +93,20 @@ public interface AppinfConstant {
 
 
     //登录前的token
-    String PUBLIC_KEY="publickey";
+    String PUBLIC_KEY = "publickey";
 
     //游客模式存储的key
-    String VISITOR_KEY="isvisitor";
+    String VISITOR_KEY = "isvisitor";
+
+
+    //首页游客数据
+    String VISITERHOME = "homevisiter";
+
+    //首页正常数据
+    String NORMALHOME = "homenormal";
+
+    //学院数据游客
+    String VIDEOSCHOOLVISTER="videoschoolvisiter";
+    //学院数据正常
+    String VIDEOSCHOOLNORMAL="videoschoolNORMAL";
 }

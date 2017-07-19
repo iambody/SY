@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -31,7 +34,6 @@ import java.util.List;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
-import app.privatefund.com.vido.bean.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoSchoolAllInfContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoSchoolAllInfPresenter;
 import butterknife.BindView;
@@ -81,7 +83,15 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         //fragment的适配器填充
         videoVideolistPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
+        initCache();
         getPresenter().getVideoSchoolAllInf();
+    }
+
+    /*设置缓存*/
+    private void initCache() {
+        if (null != AppManager.getVideoSchoolCache(baseActivity))
+            freashAp(AppManager.getVideoSchoolCache(baseActivity));
+
     }
 
     @Override
@@ -108,6 +118,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         if (BStrUtils.isEmpty(data)) return;
         VideoAllModel videoAllModel = new Gson().fromJson(data, VideoAllModel.class);
         freashAp(videoAllModel);
+        AppInfStore.saveVideoSchoolData(baseActivity, videoAllModel);
     }
 
     @Override

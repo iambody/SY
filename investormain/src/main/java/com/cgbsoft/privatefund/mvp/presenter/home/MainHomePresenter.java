@@ -87,18 +87,18 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
     }
 
     /**
-     * 消失下边大布局的的animator
+     * 游客模式消失下边大布局的的animator
      */
     public void initDismissCardAnimator(View V) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
 
-        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f, -600f);
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f);
 
         ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
-
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 1f, 0.94f, 0.94f, 0.94f, 0.94f, 0.9f, 0f);
         AnimatorSet animationSet = new AnimatorSet();
-        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
-        animationSet.setDuration(1 * 1000);
+        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator).with(scaleyAnimator);
+        animationSet.setDuration(1 * 400);
         animationSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -122,6 +122,46 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
         });
         animationSet.start();
 
+    }
+
+    /**
+     * 非游客模式消失下边大布局的的animator
+     */
+    public void initUserDismissCardAnimator(View V,View v1,View v2) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
+
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f);
+        ObjectAnimator transyAnimator = ObjectAnimator.ofFloat(V, "translationY", 0f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 1f, 0.84f, 0.84f, 0.84f, 0.84f, 0.84f, 0f);
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator).with(scaleyAnimator).with(transyAnimator);
+        animationSet.setDuration(1 * 400);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+                V.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animationSet.start();
+        v1.setVisibility(View.GONE);
+        v2.setVisibility(View.GONE);
     }
 
     public void gotoConnectAdviser() {

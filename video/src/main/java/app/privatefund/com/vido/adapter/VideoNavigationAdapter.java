@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.vido.R;
-import app.privatefund.com.vido.bean.VideoAllModel;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 
 /**
  * desc  ${DESC}

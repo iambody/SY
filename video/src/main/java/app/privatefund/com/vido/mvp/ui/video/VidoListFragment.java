@@ -24,7 +24,7 @@ import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.adapter.VideoListAdapter;
-import app.privatefund.com.vido.bean.VideoAllModel;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
 import butterknife.BindView;
