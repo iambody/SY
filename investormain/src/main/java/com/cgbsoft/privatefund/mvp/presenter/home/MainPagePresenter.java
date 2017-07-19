@@ -110,31 +110,12 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     public void toSignIn() {
         addSubscription(ApiClient.SxySign().subscribe(new RxSubscriber<String>() {
             protected void onEvent(String s) {
-//                try {
-//                    JSONObject response = new JSONObject(s);
-//                    if (response.has("msg")) {
-//                        new MToast(getContext()).show(response.getString("msg"), 0);
-//                    } else {
-//
-////                        SignInDialog signDialog = new SignInDialog(getContext());
-////                        signDialog.setData(response);
-////                        signDialog.show();
-//                        HomeSignDialog homeSignDialog = new HomeSignDialog(getContext());
-//                        homeSignDialog.show();
-//
-//
-//                        getView().signInSuc();
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
-
-                if(!BStrUtils.isEmpty(s)){
-                    SignBean signBean=new Gson().fromJson(getV2String(s),SignBean.class);
-                    HomeSignDialog homeSignDialog = new HomeSignDialog(getContext(),signBean);
-                    homeSignDialog.show();
+                if (!BStrUtils.isEmpty(s)) {
+                    SignBean signBean = new Gson().fromJson(getV2String(s), SignBean.class);
+                    if ("1".equals(signBean.resultCode)) {
+                        HomeSignDialog homeSignDialog = new HomeSignDialog(getContext(), signBean);
+                        homeSignDialog.show();
+                    }
                 }
             }
 

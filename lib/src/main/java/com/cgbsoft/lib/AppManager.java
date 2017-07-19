@@ -10,6 +10,7 @@ import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 
 /**
  * desc  进行不同application的管理 注意 防止误操作无修改 此处只能取状态不能村状态
@@ -258,4 +259,10 @@ public class AppManager implements AppinfConstant {
         return AppInfStore.getHomeData(pContext);
     }
 
+    /**
+     * 获取学院数据
+     */
+    public static VideoAllModel getVideoSchoolCache(Context spContext) {
+        return AppInfStore.getVideoSchoolData(spContext);
+    }
 }

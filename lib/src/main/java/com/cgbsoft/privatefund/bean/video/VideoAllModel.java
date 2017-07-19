@@ -1,4 +1,4 @@
-package app.privatefund.com.vido.bean;
+package com.cgbsoft.privatefund.bean.video;
 
 import java.util.List;
 

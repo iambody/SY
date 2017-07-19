@@ -15,12 +15,14 @@ public class MainHomeContract {
 
         public void getResultError(String error);
 
-        public void getSignResult(String notemessage);
+
+        public void getCacheResult(HomeEntity.Result cachesData);
     }
 
     public interface Presenter extends BasePresenter {
         public void getHomeData();
 
+        public void getHomeCache();
 
 
     }

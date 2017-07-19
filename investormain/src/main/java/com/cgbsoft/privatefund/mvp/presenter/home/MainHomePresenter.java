@@ -5,25 +5,17 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
-import com.jude.rollviewpager.adapter.StaticPagerAdapter;
-
-import java.util.List;
 
 /**
  * desc  ${DESC}
@@ -49,18 +41,15 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
                 getView().getResultError(error.getMessage());
             }
         }));
-//        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
-//            @Override
-//            protected void onEvent(String s) {
-//                LogUtils.Log("s", s);
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                LogUtils.Log("s", error.getMessage());
-//            }
-//        }));
 
+    }
+
+    /**
+     * 获取首页的缓存数据
+     */
+    @Override
+    public void getHomeCache() {
+        getView().getCacheResult(AppManager.getHomeCache(getContext()));
     }
 
     /**
@@ -98,18 +87,18 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
     }
 
     /**
-     * 消失下边大布局的的animator
+     * 游客模式消失下边大布局的的animator
      */
     public void initDismissCardAnimator(View V) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
 
-        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f, -600f);
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f);
 
         ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
-
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 1f, 0.94f, 0.94f, 0.94f, 0.94f, 0.9f, 0f);
         AnimatorSet animationSet = new AnimatorSet();
-        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
-        animationSet.setDuration(1 * 1000);
+        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator).with(scaleyAnimator);
+        animationSet.setDuration(1 * 400);
         animationSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -135,6 +124,46 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
 
     }
 
+    /**
+     * 非游客模式消失下边大布局的的animator
+     */
+    public void initUserDismissCardAnimator(View V,View v1,View v2) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
+
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f);
+        ObjectAnimator transyAnimator = ObjectAnimator.ofFloat(V, "translationY", 0f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleX", 1f, 0.9f, 0.5f, 0.3f, 0.2f, 0.1f, 0f);
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(V, "scaleY", 1f, 0.84f, 0.84f, 0.84f, 0.84f, 0.84f, 0f);
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator).with(scaleyAnimator).with(transyAnimator);
+        animationSet.setDuration(1 * 400);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+                V.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animationSet.start();
+        v1.setVisibility(View.GONE);
+        v2.setVisibility(View.GONE);
+    }
+
     public void gotoConnectAdviser() {
         DefaultDialog dialog = new DefaultDialog(getContext(), "是否联系投资顾问", "取消", "呼叫") {
             @Override
@@ -150,28 +179,6 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
         };
         dialog.show();
     }
-//    //进行签到动作
-//    @Override
-//    public void todoSign() {
-////        addSubscription(ApiClient.SxySign().subscribe(new RxSubscriber<String>() {
-////            @Override
-////            protected void onEvent(String s) {
-////                if (!BStrUtils.isEmpty(s)) {
-////                    SignBean signBean = new Gson().fromJson(getV2String(s), SignBean.class);//
-////
-////                    getView().getSignResult(signBean.resultMessage);
-////                } else {
-////                    getView().getSignResult("签到失败");
-////                }
-////
-////            }
-////
-////            @Override
-////            protected void onRxError(Throwable error) {
-////
-////            }
-////        }));
-//    }
 
 
 }

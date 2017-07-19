@@ -17,7 +17,7 @@ import java.util.List;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
-import app.privatefund.com.vido.bean.VideoAllModel;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
