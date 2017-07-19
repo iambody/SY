@@ -188,7 +188,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*开始倒计时十秒*/
     private void timeCountDown() {
-        if (isShowAdviserCard || isVisiterShow) return;
+//        if (isShowAdviserCard || isVisiterShow) return;
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {
@@ -207,6 +207,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             @Override
             public void onNext(Integer integer) {
+
 
             }
         });
