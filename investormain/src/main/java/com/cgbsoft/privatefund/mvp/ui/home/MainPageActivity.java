@@ -34,7 +34,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -428,7 +427,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
-                    getPresenter().getUserInfo();
+                    getPresenter().getUserInfo(false);
+                }else{//需要刷新数据
+
+                    getPresenter().getUserInfo(true);
                 }
             }
 
@@ -492,28 +494,28 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
-        //刷新webview的信息配置
-        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
-        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
-            @Override
-            protected void onEvent(Integer integer) {
-                LogUtils.Log("JavaScriptObjectToc","开始调用");
-
-//                baseWebview.reload();
-
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-
-            }
-        });
+//        //刷新webview的信息配置
+//        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
+//        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
+//            @Override
+//            protected void onEvent(Integer integer) {
+//                LogUtils.Log("JavaScriptObjectToc","开始调用");
+//
+////                baseWebview.reload();
+//
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//
+//            }
+//        });
     }
 
     private void toJumpTouziren(QrCodeBean qrCodeBean) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_title, "投资者认证");
-        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.invistorCertify + "?advisorId=" + qrCodeBean.getFatherId());
+        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.qrcoderesult + "adviserId=" + qrCodeBean.getFatherId()+"&bindChannel=4");
         NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
@@ -716,6 +718,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void signInSuc() {
         RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
+    }
+
+    @Override
+    public void toFreshUserinfHome() {
+        RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
     }
 
     private void SsetBottomNavigation() {

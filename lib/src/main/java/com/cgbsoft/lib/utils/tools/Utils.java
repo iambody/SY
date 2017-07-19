@@ -33,7 +33,6 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.google.android.exoplayer.C;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -349,6 +348,27 @@ public class Utils {
         }
         return versonName;
     }
+//    /**
+//     * [获取应用程序版本名称信息]
+//     *
+//     * @param context
+//     * @return 当前应用的版本名称
+//     */
+//    public static String getVersionName(Context context)
+//    {
+//        try
+//        {
+//            PackageManager packageManager = context.getPackageManager();
+//            PackageInfo packageInfo = packageManager.getPackageInfo(
+//                    context.getPackageName(), 0);
+//            return packageInfo.versionName;
+//
+//        } catch (PackageManager.NameNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /**
      * 得到屏幕分辨率数组

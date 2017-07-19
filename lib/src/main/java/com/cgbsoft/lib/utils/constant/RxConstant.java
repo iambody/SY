@@ -45,7 +45,8 @@ public interface RxConstant {
     String PRODUCT_FILTER_TO_FRAGMENT="product_filtr_to_fragment";
     //在首页接受需要刷新web的信息配置（游客去登录进入登录需要哦刷新）
     String MAIN_FRESH_WEB_CONFIG="mainfreshwebconfig";
-
+//游客等鹿后刷新首页数据
+    String MAIN_FRESH_LAY="mainfreshwebconfig";
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 
     String ON_ACTIVITY_RESUME_OBSERVABLE = "on_activity_resume_observable";

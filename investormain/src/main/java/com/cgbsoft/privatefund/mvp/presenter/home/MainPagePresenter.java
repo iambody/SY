@@ -148,12 +148,15 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     }
 
     @Override
-    public void getUserInfo() {
+    public void getUserInfo(boolean tofreshHome) {
         addSubscription(ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
             @Override
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
                     AppInfStore.saveUserInfo(getContext(), userInfo);
+                    if(tofreshHome){
+                        getView().toFreshUserinfHome();
+                    }
                 }
             }
 

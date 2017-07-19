@@ -90,7 +90,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@color/black"
                                     android:orientation="vertical"
-                                    android:visibility="invisible"/>
+                                    android:visibility="invisible" />
 
                                 <com.cgbsoft.lib.widget.RoundImageView
                                     android:id="@+id/main_home_adviser_inf_iv"
@@ -126,10 +126,10 @@
                                 android:layout_height="0dip"
 
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="服 务 码"
                                 android:textColor="@color/app_golden"
-                                android:textSize="@dimen/dimens_sp_7"
-                                android:gravity="center"/>
+                                android:textSize="@dimen/dimens_sp_7" />
 
                             <TextView
                                 android:id="@+id/main_home_cardnumber_txt"
@@ -157,17 +157,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="@dimen/ui_2_dip"
 
                                 android:gravity="center"
-                                android:text="您的私人顾问杨经理"
-                                android:textColor="@color/app_golden" />
+                                android:textColor="@color/app_golden"
+                                android:textSize="@dimen/dimens_sp_10" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="@dimen/ui_20_dip">
+                                android:layout_marginTop="@dimen/ui_10_dip">
 
                                 <TextView
                                     android:id="@+id/main_home_adviser_phone"
@@ -315,7 +314,7 @@
                 <include
                     android:id="@+id/main_home_live_lay"
                     layout="@layout/view_home_live_lay"
-                     />
+                    android:visibility="gone"/>
                 <!-- 直播预报的布局************ -->
                 <!-- 会员等级的布局 -->
                 <include

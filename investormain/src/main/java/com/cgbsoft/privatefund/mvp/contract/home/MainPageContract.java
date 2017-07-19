@@ -18,7 +18,7 @@ public interface MainPageContract {
 
         void initDayTask();
 
-        void getUserInfo();
+        void getUserInfo(boolean tofreshHome);
     }
 
     interface View extends BaseView{
@@ -26,6 +26,8 @@ public interface MainPageContract {
         void hasLive(boolean hasLive, JSONObject jsonObject);
 
         void signInSuc();
+
+        void toFreshUserinfHome();
 
     }
 }
