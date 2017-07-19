@@ -44,31 +44,30 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_fragment_videoschool_time"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:text="aksnaksasnsannsnas"
                 android:textColor="@color/gray_font"
                 android:textSize="13sp" />
-
 
             <TextView
                 android:id="@+id/item_fragment_videoschool_readnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_alignParentRight="true"
                 android:text="aksnaksasnsannsnas"
                 android:textColor="@color/gray_font"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>
