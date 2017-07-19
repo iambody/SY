@@ -91,6 +91,11 @@ public class CwebNetConfig extends BaseWebNetConfig {
         initSxyUrl();
     }
 
+    public static void updateRequestUrl() {
+        initApi();
+        initSxyUrl();
+    }
+
     public static void initApi() {
         // toc 我的首页
         minePgge = baseParentUrl + "/index.html";

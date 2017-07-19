@@ -1,6 +1,8 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -28,6 +30,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
@@ -55,6 +58,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import io.rong.imkit.RongContext;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -107,6 +111,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private String publicKey;
 
     private LocationManger locationManger;
+    private ShakeListener mShakeListener;
 
     //是否是app内发起的 登录操作
     private boolean isFromInside;
@@ -126,7 +131,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void before() {
-
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
 
@@ -136,7 +140,35 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //            透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+        initShakeListener();
     }
+
+    private void initShakeListener() {
+        try {
+            ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
+            String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
+            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
+                mShakeListener = new ShakeListener(this);
+                mShakeListener.setOnShakeListener(onShakeListener);
+                mShakeListener.register();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
+        @Override
+        public void onShakeStart() {
+        }
+
+        @Override
+        public void onShakeFinish() {
+            Intent intent = new Intent(LoginActivity.this, SelectAddressActivity.class);
+            intent.putExtra(SelectAddressActivity.LOGIN_PARAM, true);
+            LoginActivity.this.startActivity(intent);
+        }
+    };
 
     @Override
     protected void init(Bundle savedInstanceState) {

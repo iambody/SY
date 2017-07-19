@@ -91,6 +91,9 @@ public interface AppinfConstant {
     // 设置/验证手势密码最后时间
     String LAST_SET_VALIDATE_TIME = "last_set_validate_time";
 
+    // 选择地址
+    String SELECT_ADDRESS = "select_address";
+
 
     //登录前的token
     String PUBLIC_KEY = "publickey";
