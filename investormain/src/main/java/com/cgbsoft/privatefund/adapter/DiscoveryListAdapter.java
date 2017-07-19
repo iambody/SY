@@ -51,7 +51,7 @@ public class DiscoveryListAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);
+        View view = layoutInflater.inflate(R.layout.item_fragment_discovery, null);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
         return lsViewHolder;

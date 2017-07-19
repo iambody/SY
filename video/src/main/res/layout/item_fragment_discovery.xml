@@ -6,7 +6,6 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-
     <FrameLayout
         android:layout_width="130dp"
         android:layout_height="72dp"
@@ -17,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-
             android:scaleType="centerCrop" />
 
         <ImageView
@@ -42,34 +40,32 @@
             android:lines="2"
             android:text="aadasdfasd"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_fragment_videoschool_time"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:text="aksnaksasnsannsnas"
-                android:textColor="@color/gray_font"
-                android:textSize="13sp" />
-
+                android:textColor="@color/color_6a6a6a"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/item_fragment_videoschool_readnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:text="aksnaksasnsannsnas"
-                android:textColor="@color/gray_font"
-                android:textSize="12sp" />
-        </LinearLayout>
-
+                android:textColor="@color/color_6a6a6a"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
     </LinearLayout>
 
