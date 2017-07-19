@@ -31,16 +31,16 @@ import butterknife.OnClick;
 public class SelectAddressActivity extends BaseActivity {
 
     @BindView(R.id.txt_dialog_title)
-    TextView txtDialogTitle;
+    public TextView txtDialogTitle;
 
     @BindView(R.id.txt_dialog_content)
-    private EditText txtDialogContent;
+    public EditText txtDialogContent;
 
     @BindView(R.id.list_view)
-    private ListView listView;
+    public ListView listView;
 
     @BindView(R.id.btn_ok)
-    private Button btnOk;
+    public Button btnOk;
 
     private AddressSelectAdapter addressSelectAdapter;
 
