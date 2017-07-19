@@ -367,8 +367,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_look_product)
     void gotoLookProductActivity() {
-        // 去看产品
-        RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PRODUCT_PAGE);
     }
 
     @OnClick(R.id.account_bank_go_relative_assert)
