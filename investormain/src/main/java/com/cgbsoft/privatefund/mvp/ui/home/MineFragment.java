@@ -237,8 +237,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
         ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
         ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START));
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_SIX));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_SIX));
     }
 
     @Override
@@ -314,17 +314,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_private_bank_value_ll)
     void gotoPrivateBanktivity() {
-        // 私行
-        String realName = AppManager.getUserInfo(getActivity()).getToC().getAdviserRealName();
-        if (TextUtils.isEmpty(realName)) {
-            String url = CwebNetConfig.selectAdviser;
-            HashMap<String ,String> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.push_message_url, url);
-            hashMap.put(WebViewConstant.push_message_title, getString(R.string.select_bind_advise));
-            NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
-        } else {
-            // 去私行
-        }
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
+        intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的投顾" : "选择投顾");
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        getActivity().startActivity(intent);
     }
 
     @OnClick(R.id.mine_account_info_qiandao_ll)

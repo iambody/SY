@@ -37,7 +37,8 @@ import java.util.regex.Matcher;
  */
 public class ViewUtils {
 
-    public static final String PASSWROD_TYPE_START = "*";
+    public static final String PASSWROD_TYPE_START_SIX = "******";
+    public static final String PASSWROD_TYPE_START_FOUR = "****";
 
     public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
@@ -52,7 +53,7 @@ public class ViewUtils {
 
     public static void textViewFormatPasswordType(TextView textView) {
         String values = textView.getText().toString();
-        values = values.replace(values, PASSWROD_TYPE_START);
+        values = values.replace(values, PASSWROD_TYPE_START_SIX);
         textView.setText(values);
     }
 
@@ -71,13 +72,13 @@ public class ViewUtils {
             endIndex = values.length();
         }
         String newStr = values.substring(startIndex, endIndex);
-        values = values.replace(newStr, PASSWROD_TYPE_START);
+        values = values.replace(newStr, PASSWROD_TYPE_START_SIX);
         textView.setText(values);
     }
 
     public static void TextViewFormatNumberType(TextView textView, String showNumber) {
         String values = textView.getText().toString();
-        values = values.replaceAll(PASSWROD_TYPE_START, showNumber);
+        values = values.replaceAll(PASSWROD_TYPE_START_SIX, showNumber);
         textView.setText(values);
     }
 
