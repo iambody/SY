@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -166,6 +168,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             handler.postDelayed(runnable, DEALAY);
         }
     };
+
+    @Override
+    protected void after(View view) {
+        super.after(view);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            透明状态栏
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
 
     @Override
     protected int layoutID() {
@@ -354,7 +367,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-        if (this.mineModel == null) {
+        if (this.mineModel == null || isNullPrivateBank(mineModel)) {
             return;
         }
         if (showAssert) {
@@ -487,8 +500,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initPrivateBank(MineModel mineModel) {
-        linearLayoutBankNoData.setVisibility(isNullPrivateBank(mineModel) ? View.VISIBLE : View.GONE);
-        linearLayoutBankHadData.setVisibility(isNullPrivateBank(mineModel) ? View.GONE : View.VISIBLE);
+        boolean isNullPrivateBank = isNullPrivateBank(mineModel);
+        linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
+        linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
         if (showAssert) {
             showAssert();
         } else {

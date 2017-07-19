@@ -346,6 +346,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
         if (requestCode == REQUEST_HEAD_CAMERA || requestCode == RESULT_PIC_SELECT) {    // 修改头像
             if (resultCode == Activity.RESULT_OK) {
                 handlePhotoResult(requestCode, data);
