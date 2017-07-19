@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -22,6 +23,7 @@ import com.cgbsoft.privatefund.adapter.DiscoveryListAdapter;
 import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryListPresenter;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +93,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         discoveryListAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String, String> hashMap1 = new HashMap<>();
             hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&catagory=").concat(discoveryListModel.getCategory()));
+            NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {
