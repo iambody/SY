@@ -304,13 +304,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -319,13 +319,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         LogUtils.Log("JavaScriptObjectToc","ss");
         mWebview.loadUrl(url);
         mWebview.loadUrl("javascript:refresh()");
-//        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
-//        } else
-//        try {
-//            mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void initShakeInSetPage() {
@@ -340,7 +333,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
             int index = data.getIntExtra(BACK_PARAM, -1);
-            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) { //
+            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) {
                 return;
             }
             Intent intent = new Intent();
