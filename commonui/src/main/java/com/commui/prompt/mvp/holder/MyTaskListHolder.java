@@ -2,6 +2,7 @@ package com.commui.prompt.mvp.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,21 +21,17 @@ import butterknife.BindView;
  */
 public class MyTaskListHolder extends BaseHolder {
 
-    @BindView(R2.id.view_idt)
-    public View view_idt;
     @BindView(R2.id.tv_idt_name)
     public TextView tv_idt_name;
     @BindView(R2.id.tv_idt_content)
     public TextView tv_idt_content;
-    @BindView(R2.id.iv_idt_btn)
-    public ImageView iv_idt_btn;
-    @BindView(R2.id.rl_idt_root)
-    public RelativeLayout rl_idt_root;
+    @BindView(R2.id.task_todone)
+    public Button toDone;
 
     public MyTaskListHolder(View itemView, final MyTaskListener listener) {
         super(itemView);
 
-        rl_idt_root.setOnClickListener(new View.OnClickListener() {
+        toDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClickListener(getAdapterPosition());

@@ -7,63 +7,17 @@
     android:orientation="vertical"
     tools:context="com.commui.prompt.mvp.ui.MyTaskActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_adt_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sy_task_banner" />
-
-        <ImageView
-            android:id="@+id/iv_adt_back"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/task_back"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/tv_adt_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_adt_back"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="-8dp"
-            android:text="我的任务"
-            android:textColor="@color/white"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/tv_adt_bean"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_adt_title"
-            android:layout_marginLeft="46dp"
-            android:layout_marginTop="4dp"
-            android:text="10000"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_adt_bean"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/tv_adt_bean"
-            android:text="云豆"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
+    <include layout="@layout/title_normal_new" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_adt"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:background="@color/white"
+        />
 </LinearLayout>

@@ -84,6 +84,7 @@ public abstract class BaseAdapter<MODEL extends BaseModel, LISTENER extends OnBa
         if (dataList.size() == 0) {
             return;
         }
+
         this.list.addAll(dataList);
         notifyDataSetChanged();
     }
