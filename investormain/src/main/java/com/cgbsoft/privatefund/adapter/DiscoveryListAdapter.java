@@ -49,7 +49,6 @@ public class DiscoveryListAdapter extends RecyclerView.Adapter implements View.O
         this.notifyDataSetChanged();
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_fragment_videoschool, null);
@@ -66,6 +65,7 @@ public class DiscoveryListAdapter extends RecyclerView.Adapter implements View.O
         Imageload.display(ApContext, discoveryListModel.getImage(), lsViewHolder.Item_fragment_videoschool_image_bg);
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%s阅读", discoveryListModel.getViews()));
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, discoveryListModel.getTitle());
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, discoveryListModel.getTimes());
     }
 
     @Override

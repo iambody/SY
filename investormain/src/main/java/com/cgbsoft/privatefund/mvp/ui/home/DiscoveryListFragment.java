@@ -93,6 +93,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         discoveryListAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String, String> hashMap1 = new HashMap<>();
             hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&catagory=").concat(discoveryListModel.getCategory()));
+            hashMap1.put(WebViewConstant.push_message_title, discoveryListModel.getLabel());
             NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
         });
         swipeTarget.setAdapter(discoveryListAdapter);

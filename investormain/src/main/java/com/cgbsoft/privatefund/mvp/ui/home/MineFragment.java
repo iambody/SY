@@ -50,11 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -291,7 +288,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
-         if (currentProgress > 60) {
+         int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
+         if (currentProgress > guQuanValue) {
              return;
          }
          roundProgressbar.setProgress(currentProgress + 1);
@@ -490,13 +488,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initPrivateBank(MineModel mineModel) {
-        linearLayoutBankNoData.setVisibility(mineModel.getBank() == null ? View.VISIBLE : View.GONE);
-        linearLayoutBankHadData.setVisibility(mineModel.getBank() == null ? View.GONE : View.VISIBLE);
+        linearLayoutBankNoData.setVisibility(isNullPrivateBank(mineModel) ? View.VISIBLE : View.GONE);
+        linearLayoutBankHadData.setVisibility(isNullPrivateBank(mineModel) ? View.GONE : View.VISIBLE);
         if (showAssert) {
             showAssert();
         } else {
             hideAssert();
         }
+    }
+
+    private boolean isNullPrivateBank(MineModel mineModel) {
+        if (mineModel.getBank() == null ||
+                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || Integer.parseInt(mineModel.getBank().getDebtAmt()) == 0) &&
+                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || Integer.parseInt(mineModel.getBank().getEquityAmt()) == 0))) {
+            return true;
+        }
+        return false;
     }
 
     private void initOrderView(MineModel mineModel) {
