@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:scrollbars="none"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/bg_my">
+    android:background="@drawable/bg_my"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
