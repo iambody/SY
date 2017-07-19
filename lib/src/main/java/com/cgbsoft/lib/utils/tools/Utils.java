@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
@@ -622,5 +623,31 @@ public class Utils {
     public static void sendSmsWithNumber(Context context, String number) {
         Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + number));
         context.startActivity(sendIntent);
+    }
+
+    /**
+     * 判断当前应用是否是debug状态
+     */
+    public static boolean isApkInDebug(Context context) {
+        try {
+            ApplicationInfo info = context.getApplicationInfo();
+            return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 追加http前缀
+     * @param url
+     * @return
+     */
+    public static String appendWebViewUrl(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            if (!url.startsWith("http")) {
+                url = url.startsWith("/") ?  CwebNetConfig.baseParentUrl.concat(url.substring(1)) : CwebNetConfig.baseParentUrl.concat(url);
+           }
+        }
+        return url;
     }
 }

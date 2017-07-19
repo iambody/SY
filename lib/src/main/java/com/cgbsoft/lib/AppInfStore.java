@@ -8,6 +8,7 @@ import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
@@ -123,6 +124,19 @@ public class AppInfStore implements AppinfConstant {
         ed.putString(RONGYUN_TOKEN, rongYunToken);
         ed.commit();
     }
+
+    /**
+     * 保存选择的地址
+     * @param context
+     * @param address
+     */
+    public static void saveSelectAddress(Context context, String address) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(SELECT_ADDRESS, address);
+        ed.commit();
+    }
+
+
 
     /**
      * 融云token有效期

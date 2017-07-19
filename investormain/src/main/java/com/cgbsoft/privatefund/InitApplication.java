@@ -35,10 +35,6 @@ import qcloud.liveold.mvp.utils.SxbLogImpl;
  */
 public class InitApplication extends InvestorAppli {
 
-
-
-
-
     @Override
     public void onCreate() {
         super.onCreate();

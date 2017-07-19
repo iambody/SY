@@ -17,7 +17,7 @@ public class BaseWebNetConfig extends NetConfig {
     //
     public static String pdfUrlToC = basePdfUrl + "file=";
     //测跳的产品详细跳转到资讯页面
-    public static String detailToZiXun=baseParentUrl+"apptie/new_detail_toc.html?id=";
+    public static String detailToZiXun = baseParentUrl + "apptie/new_detail_toc.html?id=";
 
     //绑定理财师
     public static String bindAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
@@ -25,4 +25,13 @@ public class BaseWebNetConfig extends NetConfig {
     //风险测评
     public static String evaluation = baseSxyParentUrl + "/biz/assesment/index.html";
 
+    public static void updateRequestUrl() {
+        baseParentUrl = SERVER_ADD + "/";
+        baseSxyParentUrl = SERVER_ADD + "/app6.0";
+        basePdfUrl = baseParentUrl + "pdfjs/web/viewer.html?";
+        pdfUrlToC = basePdfUrl + "file=";
+        detailToZiXun = baseParentUrl + "apptie/new_detail_toc.html?id=";
+        bindAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        evaluation = baseSxyParentUrl + "/biz/assesment/index.html";
+    }
 }

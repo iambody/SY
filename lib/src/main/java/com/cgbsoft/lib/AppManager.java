@@ -92,6 +92,16 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 获取上次选择的地址
+     *
+     * @param
+     * @return
+     */
+    public static String getSelectAddress(Context context) {
+        return getBasePreference(context).getString(SELECT_ADDRESS, "");
+    }
+
+    /**
      * 获取用户登录状态
      */
     public static boolean getIsLogin(Context context) {

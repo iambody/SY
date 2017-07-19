@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -15,6 +15,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -25,7 +26,10 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineActivitesContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MineActivitesPresenter;
 
 import java.util.List;
+
+import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -34,12 +38,21 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
 
     @BindView(R.id.swipe_refresh_header)
     CustomRefreshHeadView swipeRefreshHeader;
+
     @BindView(R.id.swipe_target)
     RecyclerView swipeTarget;
+
     @BindView(R.id.swipe_load_more_footer)
     CustomRefreshFootView swipeLoadMoreFooter;
+
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
+
+    @BindView(R.id.title_left)
+    ImageView imageViewLeft;
+
+    @BindView(R.id.iv_title_right)
+    ImageView imageViewRight;
 
     private static final int PAGE_LIMIT = 20;
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
@@ -76,9 +89,19 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     }
 
     private void initTitleView() {
-        findViewById(R.id.title_left).setVisibility(View.VISIBLE);
-        findViewById(R.id.title_left).setOnClickListener(v -> finish());
-        ((TextView)findViewById(R.id.title_mid)).setText("我的活动");
+        imageViewLeft.setVisibility(View.VISIBLE);
+        imageViewRight.setVisibility(View.VISIBLE);
+        ((TextView) findViewById(R.id.title_mid)).setText("我的活动");
+    }
+
+    @OnClick(R.id.iv_title_left)
+    public void backActivity() {
+        finish();
+    }
+
+    @OnClick(R.id.iv_title_right)
+    public void gotoConversation() {
+        NavigationUtils.startActivity(this, MessageListActivity.class);
     }
 
     @Override
@@ -102,7 +125,6 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     public void onRefresh() {
         CurrentPostion = 0;
         isLoadMore = true;
-        System.out.println("-------onRefresh");
         if (mineActivitesListAdapter != null) {
             getPresenter().getActivitesList(mineActivitesListAdapter, true);
         }

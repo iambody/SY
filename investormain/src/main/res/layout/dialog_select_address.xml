@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 通用对话框 layout，包含标题、内容和两个按钮 -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:background="@drawable/round_shape_white"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/contain">
+
+    <TextView
+        android:id="@+id/txt_dialog_title"
+        style="@style/text_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请选择地址"/>
+
+   <EditText
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textColor="@color/black"
+       android:enabled="false"
+       android:layout_below="@id/txt_dialog_title"
+       android:id="@+id/txt_dialog_content"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_dialog_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:divider="@drawable/rc_cs_group_list_divide_line"
+        android:id="@+id/list_view"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/btn_ok"
+            android:text="@string/rc_confirm"
+            android:textSize="@dimen/dimens_sp_16"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/button_golden_bg"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</RelativeLayout>

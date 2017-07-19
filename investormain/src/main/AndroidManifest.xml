@@ -323,6 +323,11 @@
             android:name="com.cgbsoft.privatefund.widget.WebviewWithShareActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.cgbsoft.privatefund.widget.SelectAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogstyle_select" />
+
         <!--<activity-->
             <!--android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity"-->
             <!--android:theme="@style/transcutestyle"-->

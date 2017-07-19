@@ -240,6 +240,26 @@
         <item>进取型</item>
     </string-array>
 
+    <string-array name="address_select">
+        <item>t1-app</item>
+        <item>t2-app</item>
+        <item>t3-app</item>
+        <item>t4-app</item>
+        <item>t5-app</item>
+        <item>t6-app</item>
+        <item>t7-app</item>
+        <item>t8-app</item>
+        <item>t9-app</item>
+        <item>t10-app</item>
+        <item>d4-app</item>
+        <item>d5-app</item>
+        <item>d6-app</item>
+        <item>d7-app</item>
+        <item>d8-app</item>
+        <item>d9-app</item>
+        <item>d10-app</item>
+    </string-array>
+
     <string-array name="assert_certify">
         <item>待审核</item>
         <item>已通过</item>

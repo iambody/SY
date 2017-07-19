@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:scrollbars="none"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/bg_my">
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/bg_my"
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/mine_title_message_id"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_news_white_press"/>
+                    android:src="@drawable/select_icon_white_news"/>
             </LinearLayout>
 
             <include layout="@layout/fragment_mine_account_info" />
