@@ -84,7 +84,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     //会员
     public static String membercenter;
-
+    public static String qrcoderesult;
 
     static {
         initApi();
@@ -132,6 +132,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
 
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
-
+        qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
+//        app6.0/biz/adviser/assets_report.html?adviserId='+advisorId+'&bindChannel=4
     }
 }

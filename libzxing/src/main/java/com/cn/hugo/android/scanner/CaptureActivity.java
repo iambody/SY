@@ -387,10 +387,13 @@ public final class CaptureActivity extends Activity implements
                 String father_id = j.getString("uid");
                 String deadline = j.getString("deadline");
                 String father_name = j.getString("nickName");
+//                adviserId='+advisorId+'&bindChannel=4
+//              String.valueOf(CwebNetConfig.qrcoderesult+"advisorId=%s+&bindChannel=")
                 if (deadline.equals(DataUtils.getDay1()) || (DataUtils.compareNow(deadline) != -1)) {
                     if (!AppManager.isInvestor(this)) {
                         //upload(party_id, party_name, father_id, father_name);
                     } else {
+
                         RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
                     }
                 } else {
@@ -419,6 +422,7 @@ public final class CaptureActivity extends Activity implements
             Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
             restartPreviewAfterDelay(0L);
         }
+        finish();
     }
 
 //    public void parser(String result) {

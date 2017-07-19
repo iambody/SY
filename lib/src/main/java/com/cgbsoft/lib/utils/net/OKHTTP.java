@@ -89,7 +89,7 @@ public class OKHTTP {
             //*******V2测试**
             builder.addHeader(NetConfig.DefaultParams.deviceId, DeviceUtils.getPhoneId(context));
             builder.addHeader(NetConfig.DefaultParams.mid, DeviceUtils.getPhoneId(context));
-            builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionCode(context)));
+            builder.addHeader(NetConfig.DefaultParams.appVersion, String.valueOf(Utils.getVersionName(context)));//getVersionName
 
             builder.addHeader(NetConfig.DefaultParams.appPlatform, "android");
             builder.addHeader("Accept", "*/*");

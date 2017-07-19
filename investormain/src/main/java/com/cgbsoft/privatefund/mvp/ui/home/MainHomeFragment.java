@@ -24,6 +24,7 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -130,6 +131,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     RelativeLayout mainHomeVisterLay;
     @BindView(R.id.main_home_invisiter_txt_lay)
     LinearLayout mainHomeInvisiterTxtLay;
+
     //会员布局
     View main_home_level_lay;
     //名片动画展示时候需要的动画
@@ -146,7 +148,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     boolean isBindAdviser;
     UserInfoDataEntity.UserInfo userInfo;
     public final int PLAYDELAYTIME = 6;
-    public final int ADVISERSHOWTIME = 4;
+    public final int ADVISERSHOWTIME = 5;
+    public final int ADVISERLOADTIME = 3;
+    private Observable<LiveInfBean> liveObservable;
+    private Observable<Integer> userLayObservable;
+    private Observable<Integer> infdataObservable;
+    private boolean isLoading;
 
     @Override
 
@@ -180,8 +187,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /*开始倒计时十秒*/
-
     private void timeCountDown() {
+        if (isShowAdviserCard || isVisiterShow) return;
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {
@@ -190,13 +197,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }).subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
-//                if (AppManager.isVisitor(baseActivity)) {//游客模式
-//                    getPresenter().initDismissCardAnimator(mainHomeVisterAdviserLayyy);
-//                    isVisiterShow = false;
-//                } else {//非游客模式
-//                    getPresenter().initUserDismissCardAnimator(mainHomeAdviserLayyy, mainHomeCardLay, mainHomeAdviserRelationLay);
-//                    isShowAdviserCard = false;
-//                }
                 hindCard();
             }
 
@@ -326,19 +326,67 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             BStrUtils.SetTxt(mainHomeCardnumberTxt, userInfo.bandingAdviserUniqueCode);
         }
         initRxEvent();
+//        showLiveView();
+        mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
     }
-
-    private Observable<LiveInfBean> liveObservable;
 
     /*  注册监听事件*/
     private void initRxEvent() {
+        //游客登录进入正常模式
+//
+        userLayObservable = RxBus.get().register(RxConstant.MAIN_FRESH_LAY, Integer.class);
+        userLayObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                if (5 == integer) {//需要刷新动作
+
+                    mainHomeSwiperefreshlayout.setRefreshing(true);
+                    RxCountDown.countdown(ADVISERLOADTIME).doOnSubscribe(new Action0() {
+                        @Override
+                        public void call() {
+
+                        }
+                    }).subscribe(new Subscriber<Integer>() {
+                        @Override
+                        public void onCompleted() {
+                            mainHomeSwiperefreshlayout.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mainHomeSwiperefreshlayout.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onNext(Integer integer) {
+
+                        }
+                    });
+                }
+//开始刷新ui
+                mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
+                //登录模式
+                mainHomeLoginLay.setVisibility(View.VISIBLE);
+                //游客模式
+                mainHomeVisterLay.setVisibility(View.GONE);
+
+                mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
+                hindCard();
+                initshowlay();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         //直播状态监听
         liveObservable = RxBus.get().register(LIVERXOBSERBER_TAG, LiveInfBean.class);
         liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
             @Override
             protected void onEvent(LiveInfBean liveInfBean) {
                 if (liveInfBean.isLiveing) {//直播中
-
+                    main_home_level_lay.setVisibility(View.GONE);
                 } else {//没直播
                 }
             }
@@ -494,7 +542,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*下拉刷新展示*/
     @Override
     public void onRefresh() {
+        isLoading = true;
         mainHomeSwiperefreshlayout.setRefreshing(false);
+        isLoading = false;
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
@@ -557,14 +607,20 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onHiddenChanged(isVisibleToUser);
         if (isVisibleToUser) {
             isVisible = true;
-            LogUtils.Log("sssaa", "首页可见");
+            LogUtils.Log("sssaa", "首页不可见");
             mainHomeBannerview.resume();
         } else {
             isVisible = false;
-            LogUtils.Log("sssaa", "首页不可见");
+            LogUtils.Log("sssaa", "首页可见");
             mainHomeBannerview.pause();
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtils.Log("sssaa", "首页不可见");
     }
 
     public class BannerAdapter extends StaticPagerAdapter {
@@ -605,6 +661,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+    private void isUnvisibel(boolean isshow) {
+        if (!isshow) {//不可见
+
+        }
+    }
 
     private void hindCard() {
         if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE) {

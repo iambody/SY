@@ -325,6 +325,8 @@ public class CWebviewManger {
         } else if (action.contains("ydPay")) {
             NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
         } else if (action.contains("rootPage")) {
+            //通知刷新用户xinxi数据
+            RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, false);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
         } else if (action.contains("jumpNativeCode")) {
             jumpNativeCode(action);

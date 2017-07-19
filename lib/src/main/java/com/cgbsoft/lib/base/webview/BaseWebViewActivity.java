@@ -114,14 +114,15 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
-        if(getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
-        pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
+        if (getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
+            pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
     }
 
     /**
      * 根据次字方法来判断是否需要回调，默认是不需要回调
+     *
      * @return
      */
     protected boolean getCallBack() {
@@ -179,6 +180,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     /**
      * 获取注册rxbus的id, 如果子类需要注册一个rxbus必须重写注册方法
+     *
      * @return
      */
     protected String getRegeistRxBusId() {
@@ -187,9 +189,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     /**
      * 执行注册在此webview中事件的回调接口,根据objec对象转化成需要的数据，子类直接实现此方法即可
+     *
      * @param
      */
-    protected void onEventRxBus(Object object) {}
+    protected void onEventRxBus(Object object) {
+    }
 
     /**
      * 点击分享按钮操作，具体子类覆盖次方法，如果子类没有分享功能则不需要复写此方法
@@ -202,7 +206,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     /**
      * 执行具体业务方法，需要子类复写此回调方法，如果子类没有需要实现的业务回调则不需要复写此方法
      */
-    protected void executeOverideUrlCallBack(String actionUrl) {}
+    protected void executeOverideUrlCallBack(String actionUrl) {
+    }
 
     @Override
     protected T createPresenter() {
@@ -211,7 +216,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void init(Bundle savedInstanceState) {
-         // toolbar事件设置
+        // toolbar事件设置
         toolbar.setTitle("");
         titleMid.setText(title);
         setSupportActionBar(toolbar);
@@ -229,11 +234,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             }, 1000);
         }
         initShakeInSetPage();
+        mWebview.loadUrl(url);
     }
 
     private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
         @Override
-        public void onShakeStart() {}
+        public void onShakeStart() {
+        }
 
         @Override
         public void onShakeFinish() {
@@ -276,9 +283,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             return;
         }
 
-		if (hasPushMessage) {
+        if (hasPushMessage) {
 //			NavigationUtils.startMessageList(context);
-		}
+        }
 
         if (url.contains("rankList_share")) {
             ThreadUtils.runOnMainThreadDelay(() -> BaseWebViewActivity.this.onBackPressed(), 1000);
@@ -316,16 +323,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtils.Log("JavaScriptObjectToc","ss");
-        mWebview.loadUrl(url);
+        try {
+            mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        LogUtils.Log("JavaScriptObjectToc", "ss");
+//        mWebview.loadUrl(url);
         mWebview.loadUrl("javascript:refresh()");
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
 //        } else
-//        try {
-//            mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     private void initShakeInSetPage() {
@@ -386,7 +394,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             RxBus.get().unregister(getRegeistRxBusId(), executeObservable);
         }
         if (mallChoiceObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
-            RxBus.get().unregister(getRegeistRxBusId(),mallChoiceObservable);
+            RxBus.get().unregister(getRegeistRxBusId(), mallChoiceObservable);
         }
         if (mShakeListener != null) {
             mShakeListener.unregister();
@@ -418,7 +426,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.firstBtn) {
-                pageShare();
+            pageShare();
 //            } else if(item.getTitle().equals(getString(R.string.save))) {
 //                String jascript = "javascript:Tools.save()";
 //                mWebview.loadUrl(jascript);

@@ -323,10 +323,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
+//            RxBus.get().post(RxConstant.MAIN_FRESH_WEB_CONFIG, 1);
+            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 1);
 
-            RxBus.get().post(RxConstant.MAIN_FRESH_WEB_CONFIG, 1);
 //            BaseWebview view=new BaseWebview(baseContext,false);
 //            view.loadUrl(CwebNetConfig.pageInit);
+
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         }
