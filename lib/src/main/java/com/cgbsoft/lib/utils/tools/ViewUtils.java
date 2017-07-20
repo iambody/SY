@@ -42,6 +42,7 @@ public class ViewUtils {
 
     public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
+        view.setTag(badge);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         badge.setText(String.valueOf(value));

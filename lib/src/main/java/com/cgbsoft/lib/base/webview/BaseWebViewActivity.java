@@ -420,9 +420,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         getMenuInflater().inflate(R.menu.page_menu, menu);
         rightItem = menu.findItem(R.id.firstBtn);
         MenuItem secItem = menu.findItem(R.id.secondBtn);
+        secItem.setVisible(false);
         rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
-        secItem.setVisible(rightMessageIcon);
-        rightItem.setVisible(false);
+        rightItem.setVisible(rightMessageIcon);
 
         return super.onCreateOptionsMenu(menu);
     }

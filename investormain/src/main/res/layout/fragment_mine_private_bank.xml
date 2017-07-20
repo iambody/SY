@@ -92,6 +92,7 @@
                 pv:startAngle="60"
                 pv:ringColor="#000"
                 pv:ringWidth="10dip"
+                pv:progress = "0"
                 pv:ringProgressColor="#bf9b69"
                 pv:textIsDisplayable="false" />
             <LinearLayout
