@@ -152,6 +152,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onResume() {
         super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
+
     }
 
     @Override
