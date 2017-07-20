@@ -632,7 +632,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             LogUtils.Log("sssaa", "首页可见");
             mainHomeBannerview.pause();
         }
-
     }
 
     @Override

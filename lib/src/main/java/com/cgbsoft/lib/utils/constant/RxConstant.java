@@ -63,6 +63,8 @@ public interface RxConstant {
 
     String SWITCH_ASSERT_SHOW = "switch_assert_show_hint";
 
+    String SWITCH_GROUP_SHOW = "switch_group_show_hint";
+
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
     String ZHIBO_STATUES = "zhibo_status";

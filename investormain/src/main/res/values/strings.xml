@@ -177,7 +177,6 @@
     <string name="mine_investor_carlendar">投资日历</string>
     <string name="mine_members">我的会员</string>
     <string name="mine_health_list">我的健康</string>
-    <string name="mine_assert_order">我的资产</string>
     <string name="select_bind_advise">选择投顾</string>
     <string name="account_info_caifu_value">我的财富值</string>
     <string name="account_info_mine_yundou">我的云豆</string>
@@ -201,8 +200,11 @@
     <string name="account_order_finished">已完成</string>
     <string name="account_order_after_sale">售后服务</string>
     <string name="account_order_all">全部</string>
+    <string name="account_order_now_call">立即拨打</string>
+    <string name="account_order_server_dialog_prompt">您收到商品后有任何问题都可拨打400-188-8848享受售后服务</string>
     <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
     <string name="account_health_go_server">去看服务</string>
+    <string name="custom_server_telephone_number">400-188-8848</string>
     <string name="phone">电话</string>
     <string name="mms">短信</string>
     <string name="conversation">对话</string>

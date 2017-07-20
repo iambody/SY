@@ -15,6 +15,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -71,6 +72,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 //    TextView titleNoSet;
 
     private boolean isFromShowAssert;
+    private String isFromGroupAssert;
 
     @Override
     protected void before() {
@@ -78,6 +80,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         fromSetPageSetGestrue = getIntent().getBooleanExtra(PARAM_FROM_SET_GESTURE, false);
         isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
         isModifyPassword = getIntent().getBooleanExtra(PARAM_FROM_MODIFY, false);
+        isFromGroupAssert = getIntent().getStringExtra(GestureManager.PARAM_FROM_GROUP_ASSERT);
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)) {
             isFromVerifyForget = getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
         }
@@ -200,6 +203,13 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
             finish();
             return;
         }
+
+        if (!TextUtils.isEmpty(isFromGroupAssert)) {
+            RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, isFromGroupAssert);
+            finish();
+            return;
+        }
+
         if (isFromShowAssert) {
             finish();
             RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);

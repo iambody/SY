@@ -19,6 +19,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -52,6 +53,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     private boolean isFromShowAssert;
     private boolean isFromCloseGesturePassword;
     private boolean modifyGesturePassword;
+    private String isFromAsertGroup;
     private Dialog dialog;
 
     @BindView(R.id.lock_9_view)
@@ -72,6 +74,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         isFromShowAssert = getIntent().getBooleanExtra(PARAM_FROM_SHOW_ASSERT, false);
         isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
         modifyGesturePassword = getIntent().getBooleanExtra(FROM_MODIFY_GESTURE, false);
+        isFromAsertGroup = getIntent().getStringExtra(GestureManager.PARAM_FROM_GROUP_ASSERT);
     }
 
     @Override
@@ -107,6 +110,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                     } else if (isFromCloseGesturePassword) {
                         closeGesturePassword(false);
                     } else {
+                        if (!TextUtils.isEmpty(isFromAsertGroup)) {
+                            RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, isFromAsertGroup);
+                        }
                         GestureVerifyActivity.this.finish();
                     }
                 } else {

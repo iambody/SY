@@ -42,6 +42,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
@@ -171,6 +172,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private static final int CHECK_PAST = 2;
     private static final int CHECK_FAILURE = 3;
     private Observable<Boolean> swtichAssetObservable;
+    private Observable<String> switchGroupObservable;
     private List<HorizontalScrollFragment> videoList;
 
     private Handler handler = new Handler() {
@@ -232,6 +234,29 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     showAssert();
                 } else {
                     hideAssert();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
+        switchGroupObservable = RxBus.get().register(RxConstant.SWITCH_GROUP_SHOW, String.class);
+        switchGroupObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String valuse) {
+//                AppInfStore.saveShowAssetStatus(getActivity(), true);
+                switch (valuse) {
+                    case GestureManager.ASSERT_GROUP:
+                        toAssertMatchActivit();
+                        break;
+                    case GestureManager.INVISTE_CARLENDAR:
+                        toInvestorCarlendarActivity();
+                        break;
+                    case GestureManager.DATUM_MANAGER:
+                        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+                        break;
                 }
             }
 
@@ -328,7 +353,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
          int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
-         System.out.println("-----currentpargess=" + currentProgress + "-----guQuanValue=" + guQuanValue);
 //         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
          if (currentProgress >= guQuanValue) {
              return;
@@ -392,6 +416,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
+        intercepterAssertGesturePassword();
+    }
+
+    private void intercepterAssertGesturePassword() {
         if (this.mineModel == null) {
             return;
         }
@@ -423,25 +451,33 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_bank_asset_match_ll)
     void gotoAssetMatchActivity() {
-        String url = CwebNetConfig.mineAssertOrder;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url.concat("?labelType="));
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_order));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
+        GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+    }
+
+    @OnClick(R.id.mine_bank_datum_manager_ll)
+    void gotoDatumCarlendarActivity() {
+        GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
+    }
+
+    private void toAssertMatchActivit() {
+        String url = CwebNetConfig.mineAssertOrder;
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, url.concat("?labelType="));
+        hashMap.put(WebViewConstant.push_message_title, getString(R.string.account_bank_asset_zuhe));
+        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+    }
+
+    private void toInvestorCarlendarActivity() {
         String url = CwebNetConfig.investeCarlendar;
         HashMap<String ,String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_investor_carlendar));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
-    }
-
-    @OnClick(R.id.mine_bank_datum_manager_ll)
-    void gotoDatumCarlendarActivity() {
-        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
     }
 
     @OnClick(R.id.account_order_goto_receive_address)
@@ -478,11 +514,23 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_order_sale_ll)
     void gotoAfterSaleActivity() {
-        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=4");
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+//        String url = CwebNetConfig.mineGoodsOrder.concat("?labelType=4");
+//        HashMap<String ,String> hashMap = new HashMap<>();
+//        hashMap.put(WebViewConstant.push_message_url, url);
+//        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_order));
+//        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        new DefaultDialog(getActivity(), getString(R.string.account_order_server_dialog_prompt), getString(R.string.account_order_now_call), getString(R.string.cancel_str)) {
+            @Override
+            public void left() {
+                dismiss();
+                NavigationUtils.startDialgTelephone(getActivity(), getString(R.string.custom_server_telephone_number));
+            }
+
+            @Override
+            public void right() {
+                dismiss();
+            }
+        }.show();
     }
 
     @OnClick(R.id.account_order_all_ll)
@@ -686,6 +734,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         super.onDestroy();
         if (swtichAssetObservable != null) {
             RxBus.get().unregister(RxConstant.SWITCH_ASSERT_SHOW, swtichAssetObservable);
+        }
+        if (switchGroupObservable != null) {
+            RxBus.get().unregister(RxConstant.SWITCH_GROUP_SHOW, switchGroupObservable);
         }
     }
 }
