@@ -296,6 +296,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
+        main_home_live_lay.setOnClickListener(this);
         boolean isVisiter = AppManager.isVisitor(baseActivity);
         userInfo = AppManager.getUserInfo(baseActivity);
         isBindAdviser = AppManager.isBindAdviser(baseActivity);
@@ -568,9 +569,25 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_home_level_lay:
+            case R.id.main_home_level_lay://等级
                 String url = CwebNetConfig.membercenter;
                 NavigationUtils.gotoWebActivity(baseActivity, url, "会员", false);
+                break;
+            case R.id.main_home_live_lay://直播
+//                if (liveJsonData != null) {
+//                    liveDialog.setVisibility(View.GONE);
+//                    liveDialog.clearAnimation();
+//                    Intent intent = new Intent(this, LiveActivity.class);
+//                    intent.putExtra("liveJson", liveJsonData.toString());
+//                    intent.putExtra("type", "");
+//                    startActivity(intent);
+//                    try {
+//                        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
                 break;
         }
     }
