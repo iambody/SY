@@ -115,7 +115,6 @@ public class RoundProgressbar extends View {
         mTypedArray.recycle();
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

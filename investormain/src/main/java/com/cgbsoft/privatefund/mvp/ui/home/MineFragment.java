@@ -13,6 +13,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -191,11 +192,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (WAIT_CHECK == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
             valuse = getString(R.string.relative_asset_wait);
         } else if (CHECK_PAST == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
-            valuse = getString(R.string.relative_asset_doing);
+            valuse = getString(R.string.relative_asset_past);
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
             valuse = getString(R.string.relative_asset_failure);
         }
-        noRelativeAssert.setText(noRelativeAssert.getText().toString().concat(valuse));
+        noRelativeAssert.setText(noRelativeAssert.getText().toString().concat(TextUtils.isEmpty(valuse) ? "" : " ("+valuse + ")"));
     }
 
     @Override
@@ -326,6 +327,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
          int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
+         System.out.println("-----currentpargess=" + currentProgress + "-----guQuanValue=" + guQuanValue);
 //         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
          if (currentProgress >= guQuanValue) {
              return;
@@ -380,10 +382,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_account_info_cards_ll)
     void gotoBestCardActivity() {
         String url = CwebNetConfig.mineBestCard;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_best_card));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_best_card));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.account_bank_hide_assert)

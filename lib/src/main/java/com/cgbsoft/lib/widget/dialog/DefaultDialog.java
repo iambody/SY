@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
 
-
 /**
  * 默认对话框
  *

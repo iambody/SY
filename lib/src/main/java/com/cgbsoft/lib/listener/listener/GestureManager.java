@@ -32,7 +32,7 @@ public class GestureManager {
     }
 
     private static void showSetGestureDialog(Context context) {
-        new DefaultDialog(this, context.getString(R.string.gesture_new_no_dialog_desc), context.getString(R.string.gesture_new_no_set), context.getString(R.string.button_ok)) {
+        new DefaultDialog(context, "为保障您的私密信息安全，建议您设置手势密码。若您当前暂不想设置，随后可在我的－设置－开启手势密码", "暂不设置", "确定") {
             @Override
             public void left() {
                 this.dismiss();
