@@ -402,6 +402,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else {
             if (!isNotFirstLook) {
                 GestureManager.showAssertGestureManager(getActivity());
+                isNotFirstLook = true;
             } else {
                 showAssert();
                 showAssert = true;
