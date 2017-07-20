@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppManager;
@@ -20,6 +22,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogCity;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -41,7 +44,7 @@ import butterknife.OnClick;
  * Created by sunfei on 2017/7/13 0013.
  */
 @Route(RouteConfig.GOTO_SALONS_ACTIVITY)
-public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements SalonsContract.SalonsView, OnRefreshListener {
+public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements SalonsContract.SalonsView, OnRefreshListener,OnLoadMoreListener {
 
     @BindView(R.id.title_left)
     ImageView back;
@@ -59,9 +62,10 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
     private String cityCode = "全国";
-    private int offset = 0;
-    private int limit = 100;
+    private final int LIMIT_SALONS=8;
+    private int limit = LIMIT_SALONS;
     private List<SalonsEntity.CityBean> citys=new ArrayList<>();
+    private boolean isOver;
 
     @OnClick(R.id.title_left)
     public void clickBack() {
@@ -93,6 +97,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         addBeanOfState();
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setLoadMoreEnabled(false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(baseContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -115,7 +120,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
             }
         });
         recyclerView.setAdapter(salonsAdapter);
-        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+        getPresenter().getSalonsAndCitys(cityCode, salons.size(), limit);
     }
 
     private void addBeanOfState() {
@@ -152,7 +157,8 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+        salons.clear();
+        getPresenter().getSalonsAndCitys(cityCode, salons.size(), limit);
     }
 
     @Override
@@ -176,13 +182,24 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     @Override
     public void getDataSuccess(List<SalonsEntity.SalonItemBean> salons, List<SalonsEntity.CityBean> citys) {
         clodLsAnim(mRefreshLayout);
-        SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
-        salonItemBean.setIsButton("1");
-        salons.add(salonItemBean);
-        if (salons.size() == 0) {
+        mRefreshLayout.setLoadMoreEnabled(true);
+        if (salons.size() == 0 || salons.size() < LIMIT_SALONS) {
+            isOver = true;
+        }
+        if (this.salons.size() > 0) {
+            this.salons.remove(this.salons.size()-1);
+        }
+        this.salons.addAll(salons);
+        if (this.salons.size() == 0) {
             mRefreshLayout.setLoadMoreEnabled(false);
         }
-        salonsAdapter.setDatas(salons);
+        SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
+        salonItemBean.setIsButton("1");
+        this.salons.add(salonItemBean);
+//        if (salons.size() == 0) {
+//            mRefreshLayout.setLoadMoreEnabled(false);
+//        }
+        salonsAdapter.notifyDataSetChanged();
         this.citys.clear();
         addBeanOfState();
         this.citys.addAll(citys);
@@ -190,18 +207,22 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 
     @Override
     public void getDataError(Throwable error) {
-        List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
-        SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
-        salonItemBean.setIsButton("1");
-        salons.clear();
-        salons.add(salonItemBean);
-        salonsAdapter.setDatas(salons);
+        if (this.salons.size() == 0) {
+
+            SalonsEntity.SalonItemBean salonItemBean = new SalonsEntity.SalonItemBean();
+            salonItemBean.setIsButton("1");
+            this.salons.add(salonItemBean);
+            salonsAdapter.notifyDataSetChanged();
+        }
         clodLsAnim(mRefreshLayout);
     }
 
     @Override
     public void onRefresh() {
-        getPresenter().getSalonsAndCitys(cityCode, offset, limit);
+        salons.clear();
+        isOver=false;
+        mRefreshLayout.setLoadMoreEnabled(false);
+        getPresenter().getSalonsAndCitys(cityCode, salons.size(), limit);
     }
 
     @OnClick(R.id.ll_salon_city_all)
@@ -218,9 +239,20 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
             public void confirm(SalonsEntity.CityBean result) {
                 salonCity.setText(result.getText());
                 cityCode=result.getText();
-                getPresenter().getSalonsAndCitys(result.getText(), offset, limit);
+                salons.clear();
+                getPresenter().getSalonsAndCitys(result.getText(), salons.size(), limit);
             }
         });
         wheelDialogCity.show();
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (isOver) {
+            Toast.makeText(baseContext.getApplicationContext(), "已经加载全部", Toast.LENGTH_SHORT).show();
+            clodLsAnim(mRefreshLayout);
+            return;
+        }
+        getPresenter().getSalonsAndCitys(cityCode, salons.size()-1, limit);
     }
 }

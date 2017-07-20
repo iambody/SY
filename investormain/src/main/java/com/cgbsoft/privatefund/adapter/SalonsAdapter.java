@@ -32,17 +32,17 @@ public class SalonsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.context=context;
         this.datas=data;
     }
-    public void setDatas(List<SalonsEntity.SalonItemBean> data){
-        if (null == data || data.size() == 0) {
-            return;
-        }
-        if (null == datas) {
-            datas = new ArrayList<>();
-        }
-        datas.clear();
-        datas.addAll(data);
-        notifyDataSetChanged();
-    }
+//    public void setDatas(List<SalonsEntity.SalonItemBean> data){
+//        if (null == data || data.size() == 0) {
+//            return;
+//        }
+//        if (null == datas) {
+//            datas = new ArrayList<>();
+//        }
+//        datas.clear();
+//        datas.addAll(data);
+//        notifyDataSetChanged();
+//    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {
