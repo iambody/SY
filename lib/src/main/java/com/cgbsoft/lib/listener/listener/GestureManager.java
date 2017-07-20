@@ -9,6 +9,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 /**
  * @author chenlong
@@ -26,8 +27,24 @@ public class GestureManager {
                 RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
             }
         } else {
-            NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SHWO_ASSERT", true);
+            showSetGestureDialog(context);
         }
+    }
+
+    private static void showSetGestureDialog(Context context) {
+        new DefaultDialog(this, context.getString(R.string.gesture_new_no_dialog_desc), context.getString(R.string.gesture_new_no_set), context.getString(R.string.button_ok)) {
+            @Override
+            public void left() {
+                this.dismiss();
+                RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
+            }
+
+            @Override
+            public void right() {
+                this.dismiss();
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SHWO_ASSERT", true);
+            }
+        }.show();
     }
 
     /**

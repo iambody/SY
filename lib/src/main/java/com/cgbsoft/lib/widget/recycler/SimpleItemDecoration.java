@@ -15,6 +15,7 @@ import android.view.View;
  */
 public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
 
+    private int marginEdge=0;
     protected Drawable divider;
     protected int margin;
     private Context context;
@@ -23,6 +24,12 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
         this.context = context;
         this.margin = context.getResources().getDimensionPixelOffset(HeightId);
         this.divider = ContextCompat.getDrawable(context, ColorId);
+    }
+    public SimpleItemDecoration(Context context, int ColorId, int HeightId,int margin) {
+        this.context = context;
+        this.margin = context.getResources().getDimensionPixelOffset(HeightId);
+        this.divider = ContextCompat.getDrawable(context, ColorId);
+        this.marginEdge=margin;
     }
 
     @Override
@@ -46,8 +53,12 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void drawVertical(Canvas c, RecyclerView parent) {
-        final int left = parent.getPaddingLeft();
-        final int right = parent.getWidth() - parent.getPaddingRight();
+        int left = parent.getPaddingLeft();
+        int right = parent.getWidth() - parent.getPaddingRight();
+        if (marginEdge != 0) {
+            left+=marginEdge;
+            right-=marginEdge;
+        }
 
         final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         for (int i = 0; i < parent.getChildCount()-1; i++) {

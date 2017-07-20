@@ -94,6 +94,8 @@ public interface AppinfConstant {
     // 选择地址
     String SELECT_ADDRESS = "select_address";
 
+    // 显示资产
+    String SHOW_ASSERT_STATUS = "show_asset_status";
 
     //登录前的token
     String PUBLIC_KEY = "publickey";

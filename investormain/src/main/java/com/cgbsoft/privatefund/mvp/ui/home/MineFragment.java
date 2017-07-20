@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,12 +15,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -30,6 +29,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -162,8 +162,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String[] videos;
     private MineModel mineModel;
     private boolean showAssert;
+    private boolean isNotFirstLook;
     private boolean isLoading;
     private static final long DEALAY = 1000;
+    private static final int WAIT_CHECK = 1;
+    private static final int CHECK_PAST = 2;
+    private static final int CHECK_FAILURE = 3;
     private Observable<Boolean> swtichAssetObservable;
     private List<HorizontalScrollFragment> videoList;
 
@@ -173,6 +177,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             handler.postDelayed(runnable, DEALAY);
         }
     };
+
+    @Override
+    protected void before() {
+        super.before();
+        showAssert = AppManager.isShowAssert(getActivity());
+    }
+
+    @Override
+    protected void after(View view) {
+        super.after(view);
+        String valuse = "";
+        if (WAIT_CHECK == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
+            valuse = getString(R.string.relative_asset_wait);
+        } else if (CHECK_PAST == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
+            valuse = getString(R.string.relative_asset_doing);
+        } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
+            valuse = getString(R.string.relative_asset_failure);
+        }
+        noRelativeAssert.setText(noRelativeAssert.getText().toString().concat(valuse));
+    }
 
     @Override
     protected int layoutID() {
@@ -200,9 +224,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         swtichAssetObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean aBoolean) {
+                AppInfStore.saveShowAssetStatus(getActivity(), aBoolean);
+                showAssert = aBoolean;
                 if (aBoolean) {
                     showAssert();
-                    showAssert = true;
                 } else {
                     hideAssert();
                 }
@@ -237,8 +262,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
         ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
         ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_SIX));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_SIX));
+        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
     }
 
     @Override
@@ -284,6 +309,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
     }
 
+    @OnClick(R.id.user_leaguar_update_desc)
+    void gotoLeaguarActivity() {
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+    }
+
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
         String url = CwebNetConfig.memeberArea;
@@ -296,7 +326,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      private Runnable runnable = () -> {
          int currentProgress = roundProgressbar.getProgress();
          int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
-         if (currentProgress > guQuanValue) {
+//         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
+         if (currentProgress >= guQuanValue) {
              return;
          }
          roundProgressbar.setProgress(currentProgress + 1);
@@ -363,8 +394,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (showAssert) {
             hideAssert();
             showAssert = false;
+            AppInfStore.saveShowAssetStatus(getActivity(), false);
         } else {
-            GestureManager.showAssertGestureManager(getActivity());
+            if (!isNotFirstLook) {
+                GestureManager.showAssertGestureManager(getActivity());
+                isNotFirstLook = true;
+            } else {
+                showAssert();
+                showAssert = true;
+                AppInfStore.saveShowAssetStatus(getActivity(), true);
+            }
         }
     }
 

@@ -61,4 +61,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="netdata_empty">数据为空</string>
+
+    <string name="gesture_new_no_dialog_desc">为保障您的私密信息安全，建议您设置手势密码。若您当前暂不想设置，随后可在我的－设置－开启手势密码</string>
+    <string name="gesture_new_no_set">暂不设置</string>
 </resources>
