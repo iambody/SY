@@ -49,6 +49,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -401,7 +402,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else {
             if (!isNotFirstLook) {
                 GestureManager.showAssertGestureManager(getActivity());
-                isNotFirstLook = true;
             } else {
                 showAssert();
                 showAssert = true;
@@ -576,6 +576,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
                 if (orders.getCount() > 0) {
                     ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
+                } else {
+                    if (current.getTag() != null) {
+                        ((BadgeView)current.getTag()).setVisibility(View.INVISIBLE);
+                        ((BadgeView)current.getTag()).hide();
+                    }
                 }
             }
         }
