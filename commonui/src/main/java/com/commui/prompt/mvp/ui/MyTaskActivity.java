@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
@@ -41,28 +41,24 @@ import java.util.List;
 import app.privatefund.com.cmmonui.R;
 import app.privatefund.com.cmmonui.R2;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 @Route(RouteConfig.INVTERSTOR_MAIN_TASK)
 public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyTaskContract.View, MyTaskListener {
-
-    //    @BindView(R2.id.rv_adt)
-//    RecyclerView rcv_commui_task;
-//    @BindView(R2.id.iv_adt_back)
-    ImageView img_task_back;
-    //    @BindView(R2.id.tv_adt_bean)
-    TextView tv_task_ydCount;
+    @BindView(R2.id.title_left)
+    ImageView back;
+    @BindView(R2.id.title_mid)
+    TextView titleTV;
     MyTaskAdapter adapter;
-    //    @BindView(R2.id.iv_adt_bg)
-//    private ImageView iv_adt_bg;
-//    @BindView(R2.id.tv_adt_title)
-    TextView tv_adt_title;
 
     private Comparator comparator;
     private boolean isFromC;
-    private GridLayoutManager gridLayoutManager;
-    private ImageView iv_adt_bg;
 
 
+    @OnClick(R2.id.title_left)
+    public void clickBack() {
+        this.finish();
+    }
     @Override
     protected int layoutID() {
         return R.layout.activity_my_task;
@@ -70,24 +66,16 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        back.setVisibility(View.VISIBLE);
+        titleTV.setText(getResources().getString(R.string.task_bonus));
         isFromC = AppManager.isInvestor(getApplicationContext());
-        adapter = new MyTaskAdapter(this, isFromC);
-        gridLayoutManager = new GridLayoutManager(this, 1);
+        adapter = new MyTaskAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(baseContext);
         RecyclerView rcv_commui_task = (RecyclerView) findViewById(R.id.rv_adt);
-        img_task_back = (ImageView) findViewById(R.id.iv_adt_back);
-        tv_task_ydCount = (TextView) findViewById(R.id.tv_adt_bean);
-        iv_adt_bg = (ImageView) findViewById(R.id.iv_adt_bg);
-        tv_adt_title = (TextView) findViewById(R.id.tv_adt_title);
-        rcv_commui_task.setLayoutManager(gridLayoutManager);
+        rcv_commui_task.setLayoutManager(linearLayoutManager);
+        rcv_commui_task.addItemDecoration(new SimpleItemDecoration(baseContext,R.color.app_divider_gary, R.dimen.ui_1_dip,20));
         rcv_commui_task.setAdapter(adapter);
         rcv_commui_task.setHasFixedSize(true);
-        iv_adt_bg.setImageResource(isFromC ? R.drawable.sy_task_banner_c : R.drawable.sy_task_banner);
-        img_task_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -106,13 +94,11 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     @Override
     protected void data() {
         super.data();
-        tv_adt_title.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        tv_task_ydCount.setText(AppManager.getUserInfo(this).getMyPoint());
 
-        ViewGroup.LayoutParams lp = iv_adt_bg.getLayoutParams();
-        lp.width = Utils.getScreenWidth(this);
-        lp.height = lp.width * 321 / 750;
-        iv_adt_bg.setLayoutParams(lp);
+//        ViewGroup.LayoutParams lp = iv_adt_bg.getLayoutParams();
+//        lp.width = Utils.getScreenWidth(this);
+//        lp.height = lp.width * 321 / 750;
+//        iv_adt_bg.setLayoutParams(lp);
 
         getPresenter().getTaskList();
     }
@@ -125,6 +111,10 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     @Override
     public void getTaskLitSuc(ArrayList<DayTaskBean> list) {
         Collections.sort(list);
+        DayTaskBean dayTaskBean = new DayTaskBean();
+        dayTaskBean.type = MyTaskBean.ISHEADER;
+        dayTaskBean.setStatus("-1");
+        list.add(0, dayTaskBean);
         adapter.refAllData(list);
     }
 
@@ -143,7 +133,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
             }
         }
         Collections.sort(list);
-        adapter.refAllData(list);
+//        adapter.refAllData(list);
         adapter.notifyDataSetChanged();
     }
 
@@ -158,7 +148,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         if (model.getStatus().equals("1")) {
             return;
         }
-        switch (model.getTaskName()) {
+        switch (model.getTaskType()) {
             case MyTaskBean.ITEM_INFO_STR://查看资讯  增加需要跳转到C的页面
                 infoTaskClick();
                 break;

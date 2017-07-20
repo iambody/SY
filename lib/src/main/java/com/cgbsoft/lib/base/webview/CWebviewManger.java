@@ -1322,13 +1322,14 @@ public class CWebviewManger {
      *             initPage 页面是否初始化
      *             rightShare 右边是否有分享
      */
-    private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
+    private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare ) {
         try {
 
-            if (intecepterInvister(data, rightSave, initPage, rightShare)) {
+
+            String baseParams = URLDecoder.decode(data, "utf-8");
+            if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
                 return;
             }
-            String baseParams = URLDecoder.decode(data, "utf-8");
             String[] split = baseParams.split(":");
             String url = split[2];
             String title = split[3];
@@ -1367,6 +1368,7 @@ public class CWebviewManger {
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
+
         if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
