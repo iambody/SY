@@ -25,7 +25,6 @@ import rx.subscriptions.CompositeSubscription;
  *  
  */
 public class TaskInfo {
-
     private static final String TASK_INFO_XML = "task_info_xml";
     private static final String TASK_INFO = "task_info";
 

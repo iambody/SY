@@ -1322,11 +1322,12 @@ public class CWebviewManger {
      *             initPage 页面是否初始化
      *             rightShare 右边是否有分享
      */
-    private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare ) {
+    private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
 
 
             String baseParams = URLDecoder.decode(data, "utf-8");
+            LogUtils.Log("s","s");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
                 return;
             }
