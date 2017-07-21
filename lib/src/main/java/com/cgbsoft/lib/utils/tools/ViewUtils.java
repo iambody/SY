@@ -94,7 +94,7 @@ public class ViewUtils {
         for (String str : target) {
             if (!TextUtils.isEmpty(value)) {
                 int start = value.indexOf(str);
-                textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#ea1202")), start, start + str.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#bf9b69")), start, start + str.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }
         textView.setText(textSize);
@@ -108,8 +108,7 @@ public class ViewUtils {
             for (String keyTitle : keyTitleList) {
                 int startIndex = values.indexOf(keyTitle);
                 if (startIndex >= 0) {
-                    textSize.setSpan(new ForegroundColorSpan(AppManager.isInvestor(context) ? Color.parseColor("#f47900") :
-                            Color.parseColor("#ea1202")), startIndex, startIndex + keyTitle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#bf9b69")), startIndex, startIndex + keyTitle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     success = true;
                 }
             }

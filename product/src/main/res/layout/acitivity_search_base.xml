@@ -41,8 +41,8 @@
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
                         android:text="@string/history_search"
-                        android:textColor="@color/c_low_black"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_16" />
 
                     <ImageView
                         android:id="@+id/product_search_history_del"
@@ -72,9 +72,10 @@
                 android:id="@+id/product_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/c_background"
+                android:background="@color/white"
                 android:divider="@color/c_background"
                 android:dividerHeight="1dp"
+                android:paddingLeft="15dp"
                 android:headerDividersEnabled="false" />
         </LinearLayout>
 

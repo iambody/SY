@@ -1,8 +1,7 @@
 package app.product.com.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,12 +116,12 @@ public class HotSearchAdapter<T> extends BaseAdapter {
 //            });
             Imageload.display( mContext,hotSearch.getImgUrl(),viewHolderTitle.imageView);
             viewHolderTitle.nameView.setText(hotSearch.getInfoName());
-            viewHolderTitle.flagView.setImageResource(!AppManager.isInvestor(mContext) ? R.drawable.one : R.drawable.one_b);
+            viewHolderTitle.flagView.setImageResource(R.drawable.one);
             viewHolderTitle.timeView.setText(hotSearch.getInfoCreateTime());
             viewHolderTitle.imageViewPlay.setVisibility(SearchBaseActivity.VIDEO.equals(hotSearch.getInfoType()) ? View.VISIBLE : View.GONE);
         } else {
             if (position < 3) {
-                viewHolderTitle.number.setTextColor(mContext.getResources().getColor(!AppManager.isInvestor(mContext) ? R.color.c_btn_circle_nor : R.color.red_new));
+                viewHolderTitle.number.setTextColor(ContextCompat.getColor(mContext, R.color.app_golden));
             }
             viewHolderTitle.number.setText(String.valueOf(position + 1));
             viewHolderTitle.nameView.setText(hotSearch.getInfoName());

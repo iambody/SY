@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -83,7 +84,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     protected Button commitBtn;
 
     @BindView(R.id.check_result_flag)
-    protected ImageView resultImage;
+    protected TextView resultImage;
 
     @BindView(R.id.show_result_image)
     protected ImageView showImage;
@@ -107,7 +108,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("关联我的资产");
-        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> {
+        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
             } else {
@@ -120,14 +121,14 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     @Override
     protected void data() {
         if (WAIT_CHECK == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.ic_shenhezhong);
+            resultImage.setText(R.string.relative_asset_doing);
             resultImage.setVisibility(View.VISIBLE);
             commitBtn.setVisibility(View.GONE);
             addImage.setVisibility(View.GONE);
             relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
             initImage();
         } else if (CHECK_PAST == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.ic_chenggong);
+            resultImage.setText(R.string.relative_asset_success);
             resultImage.setVisibility(View.VISIBLE);
             commitBtn.setVisibility(View.GONE);
             addImage.setVisibility(View.GONE);
@@ -135,7 +136,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
 
             initImage();
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
-            resultImage.setImageResource(R.drawable.ic_shibai);
+            resultImage.setText(R.string.relative_asset_failure);
             resultImage.setVisibility(View.VISIBLE);
             addImage.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(SPreference.getToCBean(this).getCheckFailureReason())) {
@@ -146,6 +147,22 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         } else {
             resultImage.setVisibility(View.GONE);
             addImage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    NavigationUtils.startDialgTelephone(RelativeAssetActivity.this, "4001888848");
+                } else {
+                    // Permission Denied
+                    Toast.makeText(RelativeAssetActivity.this, "请开启用户拨打电话权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

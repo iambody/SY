@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:gravity="center_vertical"
     android:background="@color/white"
     android:clickable="true"
@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:drawableLeft="@drawable/search_chakan"
+        android:drawableLeft="@drawable/icon_search_more"
         android:drawablePadding="10dp"
         android:id="@+id/item_more"
         android:textSize="@dimen/text_size_small"
-        android:textColor="@color/item_more_color"/>
+        android:textColor="@color/app_golden"/>
 
     <ImageView
         android:layout_width="wrap_content"

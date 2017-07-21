@@ -100,6 +100,9 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
      */
     @Override
     public void showLoadDialog() {
+        if (mLoadingDialog.isShowing()) {
+            return;
+        }
         mLoadingDialog.show();
     }
 

@@ -14,7 +14,6 @@ import java.util.List;
 
 import app.product.com.R;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com

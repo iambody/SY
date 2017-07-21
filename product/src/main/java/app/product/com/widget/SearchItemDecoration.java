@@ -7,7 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+
 import app.product.com.R;
 import app.product.com.mvc.adapter.SearchAdatper;
 
@@ -16,15 +18,17 @@ import app.product.com.mvc.adapter.SearchAdatper;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/6-19:17
  */
-public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
+public class SearchItemDecoration extends RecyclerView.ItemDecoration {
 
     protected Drawable divider;
     protected Drawable headerDrawble;
     protected int margin;
     private Context context;
     private static int MARGIN_TOP = 15;
+    private boolean head;
+    private RecyclerView.ViewHolder preViewHolder;
 
-    public SimpleItemDecoration(Context context,int ColorId,int HeightId) {
+    public SearchItemDecoration(Context context, int ColorId, int HeightId) {
         this.context = context;
         this.margin = context.getResources().getDimensionPixelOffset(HeightId);
         this.divider = ContextCompat.getDrawable(context, ColorId);
@@ -36,7 +40,9 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
         RecyclerView.ViewHolder viewHolder = parent.getChildViewHolder(view);
         SearchAdatper.BaseViewHolder baseViewHolder = null;
-        outRect.bottom = margin;
+        head = preViewHolder != null && preViewHolder instanceof SearchAdatper.HeaderViewHolder;
+        preViewHolder = viewHolder;
+        outRect.bottom = head ? 1 : margin;
         if (viewHolder instanceof SearchAdatper.BaseViewHolder) {
             baseViewHolder = (SearchAdatper.BaseViewHolder) viewHolder;
         }
@@ -72,15 +78,25 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
                          RecyclerView.LayoutManager layoutManager, RecyclerView.LayoutParams params) {
         final int bottom = child.getTop() + params.topMargin;
         final int top = bottom - layoutManager.getTopDecorationHeight(child);
-        divider.setBounds(left, top, right, bottom);
-        divider.draw(c);
+        if (head) {
+            headerDrawble.setBounds(left, top, right, bottom);
+            headerDrawble.draw(c);
+        } else {
+            divider.setBounds(left, top, right, bottom);
+            divider.draw(c);
+        }
     }
 
     private void drawBottom(View child, int left, int right, Canvas c,
                             RecyclerView.LayoutManager layoutManager, RecyclerView.LayoutParams params) {
         final int top = child.getBottom() + params.bottomMargin;
         final int bottom = top + layoutManager.getBottomDecorationHeight(child);
+        if (head) {
+            headerDrawble.setBounds(left, top, right, bottom);
+            headerDrawble.draw(c);
+        } else {
             divider.setBounds(left, top, right, bottom);
             divider.draw(c);
+        }
     }
 }
