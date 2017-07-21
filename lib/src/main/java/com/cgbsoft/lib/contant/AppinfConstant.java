@@ -7,7 +7,7 @@ package com.cgbsoft.lib.contant;
  */
 public interface AppinfConstant {
 
-    String USER_SHARE_PREFERENCE_SET = "user_flag_info_prefrence";
+    String USER_SHARE_PREFERENCE_SET = "sxy_info_prefrence";
 
     /**
      * 存储理财师标识的sp的名字
@@ -112,6 +112,7 @@ public interface AppinfConstant {
 
     //学院数据游客
     String VIDEOSCHOOLVISTER="videoschoolvisiter";
+
     //学院数据正常
     String VIDEOSCHOOLNORMAL="videoschoolNORMAL";
 }
