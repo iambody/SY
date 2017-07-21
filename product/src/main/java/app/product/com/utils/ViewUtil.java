@@ -28,8 +28,7 @@ public class ViewUtil {
             for (String keyTitle : keyTitleList) {
                 int startIndex = values.indexOf(keyTitle);
                 if (startIndex >= 0) {
-                    textSize.setSpan(new ForegroundColorSpan(AppManager.isInvestor(context) ? Color.parseColor("#f47900") :
-                            Color.parseColor("#ea1202")), startIndex, startIndex + keyTitle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    textSize.setSpan(new ForegroundColorSpan(Color.parseColor("#bf9b69")), startIndex, startIndex + keyTitle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     success = true;
                 }
             }

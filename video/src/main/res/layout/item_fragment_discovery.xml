@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="aksnaksasnsannsnas"
-                android:textColor="@color/color_6a6a6a"
+                android:textColor="@color/color_a6a6a6"
                 android:textSize="14sp" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:text="aksnaksasnsannsnas"
-                android:textColor="@color/color_6a6a6a"
+                android:textColor="@color/color_a6a6a6"
                 android:textSize="14sp" />
         </RelativeLayout>
 

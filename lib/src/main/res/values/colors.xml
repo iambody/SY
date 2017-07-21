@@ -114,6 +114,7 @@
 
     <color name="color_595959">#595959</color>
     <color name="color_5a5a5a">#5a5a5a</color>
+    <color name="color_f5f5f5">#f5f5f5</color>
 
     <!-- list条目点击色 -->
     <color name="list_item_selector_color">#dfe0e1</color>
@@ -126,5 +127,5 @@
     <color name="line_30">#4c000000</color>
     <color name="apply_zx_serv_bankgroud">#efeff4</color>
     <color name = "wheel_text_blue">#007aff</color>
-    <color name = "color_6a6a6a">#a6a6a6</color>
+    <color name = "color_a6a6a6">#a6a6a6</color>
 </resources>

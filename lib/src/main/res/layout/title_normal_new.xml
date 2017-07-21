@@ -85,7 +85,7 @@
         android:layout_marginRight="@dimen/ui_5_dip"
         android:gravity="center"
         android:text="确定"
-        android:textColor="@color/color_6a6a6a"
+        android:textColor="@color/color_a6a6a6"
         android:textSize="16sp"
         android:visibility="gone" />
 
