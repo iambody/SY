@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.cgbsoft.lib.listener.listener.FeedbackListener;
@@ -57,8 +58,10 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackHolder> {
     public void onBindViewHolder(FeedbackHolder holder, final int position) {
         final String value = dataList.get(position);
         if (TextUtils.equals("+", value)) {
+//            holder.imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             Glide.with(holder.context).load(R.drawable.ic_asset_prove_upload).into(holder.imageView);
         } else
+//            holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Glide.with(holder.context).load(new File(value)).into(holder.imageView);
 
         holder.imageView.setOnClickListener(view -> {
