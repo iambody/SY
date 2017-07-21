@@ -253,9 +253,17 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
             startActivity(intent);
             finish();
+        } else if (isFromShowAssert) {
+            GestureVerifyActivity.this.finish();
+            AppInfStore.saveLastSetAndValidateTime(getAppli(), System.currentTimeMillis());
+            RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
         } else if (isFromCloseGesturePassword) {
             closeGesturePassword(false);
         } else {
+            if (!TextUtils.isEmpty(isFromAsertGroup)) {
+                AppInfStore.saveLastSetAndValidateTime(getAppli(), System.currentTimeMillis());
+                RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, isFromAsertGroup);
+            }
             GestureVerifyActivity.this.finish();
         }
     }
