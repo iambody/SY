@@ -466,7 +466,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_bank_datum_manager_ll)
     void gotoDatumCarlendarActivity() {
-//        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
         GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
     }
 

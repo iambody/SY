@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/goto_look_more"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@string/account_video_go_look_all"

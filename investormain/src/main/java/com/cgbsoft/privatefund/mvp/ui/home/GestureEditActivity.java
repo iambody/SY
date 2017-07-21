@@ -205,14 +205,16 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         }
 
         if (!TextUtils.isEmpty(isFromGroupAssert)) {
+            AppInfStore.saveLastSetAndValidateTime(getAppli(), System.currentTimeMillis());
             RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, isFromGroupAssert);
             finish();
             return;
         }
 
         if (isFromShowAssert) {
-            finish();
             RxBus.get().post(RxConstant.SWITCH_ASSERT_SHOW, true);
+            AppInfStore.saveLastSetAndValidateTime(getAppli(), System.currentTimeMillis());
+            finish();
         } else if (fromSetPageSetGestrue) {
             AppInfStore.updateUserGesturePassword(this, mFirstPassword);
             finish();
