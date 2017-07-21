@@ -152,6 +152,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onResume() {
         super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
+        if(AppManager.isVisitor(baseContext)&&4==currentPostion){//是游客模式
+            switchID = R.id.nav_left_first;
+            currentPostion = 0;
+            bottomNavigationBar.selectNavaigationPostion(0);
+            switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+        }
 
     }
 
@@ -340,6 +346,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 3;
                 break;
             case 4://左4
+
+                currentPostion = 4;
                 if (AppManager.isVisitor(InitApplication.getContext())) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -347,7 +355,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     return;
                 }
                 switchID = R.id.nav_right_second;
-                currentPostion = 4;
                 break;
             case 2://中间
                 switchID = R.id.nav_center;

@@ -8,11 +8,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
-/**
- * Created by xiaoyu.zhang on 2016/11/28 11:58
- * Email:zhangxyfs@126.com
- *  
- */
+
 public interface LoginContract {
 
     interface Presenter extends BasePresenter {
