@@ -33,6 +33,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 import com.tencent.smtt.sdk.DownloadListener;
@@ -252,6 +253,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     };
 
+    public void showPayItem(){
+        rightItem.setTitle("充值");
+        rightItem.setVisible(true);
+    }
+
     public void showShareButton() {
         if (rightItem != null) {
             rightItem.setVisible(true);
@@ -417,6 +423,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             secItem.setVisible(false);
         }
 
+        if (title.contains("活动")){
+            getMenuInflater().inflate(R.menu.page_menu, menu);
+            rightItem = menu.findItem(R.id.firstBtn);
+            MenuItem secItem = menu.findItem(R.id.secondBtn);
+            rightItem.setTitle("充值");
+        }
+
         getMenuInflater().inflate(R.menu.page_menu, menu);
         rightItem = menu.findItem(R.id.firstBtn);
         MenuItem secItem = menu.findItem(R.id.secondBtn);
@@ -432,7 +445,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (rightMessageIcon) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
-            } else {
+            } else if (title.contains("活动")){
+                NavigationUtils.startActivityByRouter(this, RouteConfig.MALL_PAY);
+            }
+            else{
                 pageShare();
             }
 //            } else if(item.getTitle().equals(getString(R.string.save))) {

@@ -57,6 +57,8 @@
     <string name="bind_phone">填写手机号</string>
     <string name="loadingmore">加载更多中...</string>
     <string name="login_see_product">登录后查看</string>
+    <string name="updata_app">立即升级</string>
+    <string name="updata_wifi_hint">建议在wifi环境下更新哦~</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

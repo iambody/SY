@@ -1,5 +1,6 @@
 package app.mall.com.mvp.ui;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -123,6 +125,16 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         et_recever_name.addTextChangedListener(this);
         et_recever_address.addTextChangedListener(this);
         et_recever_phone.addTextChangedListener(this);
+        mall_address_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    showAddressDialog();
+                }
+            }
+        });
         mall_address_area.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

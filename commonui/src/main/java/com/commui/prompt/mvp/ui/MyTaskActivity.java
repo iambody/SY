@@ -226,7 +226,6 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     private void productTaskClick() {
         if (isFromC) {//跳转到查看产品页面
             NavigationUtils.jumpNativePage(baseContext, WebViewConstant.Navigation.PRODUCT_PAGE);
-            this.finish();
         } else {
 
         }

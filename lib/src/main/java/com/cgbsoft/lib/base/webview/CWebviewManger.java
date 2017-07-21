@@ -334,6 +334,14 @@ public class CWebviewManger {
             callPhone(action);
         } else if (action.contains("showShareItem")) {
             switchShareButton();
+        } else if (action.contains("showPayItem")){
+            showPayItem(action);
+        }
+    }
+
+    private void showPayItem(String action) {
+        if (context instanceof  BaseWebViewActivity){
+            ((BaseWebViewActivity) context).showPayItem();
         }
     }
 

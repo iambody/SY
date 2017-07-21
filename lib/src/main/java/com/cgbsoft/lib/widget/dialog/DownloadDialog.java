@@ -12,7 +12,9 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,10 +61,9 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private Resources resources;
     private int screenWidth;
 
-    private TextView tv_vcd_title;
     private ProgressBar pb_vcd;
     private TextView tv_vcd_message;
-    private Button btn_vcd_sure;
+    private TextView btn_vcd_sure;
     private ImageView iv_vcd_cancel;
 
     private DaoUtils daoUtils;
@@ -70,7 +71,6 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private DownloadManagerPro downloadManagerPro;
     private int downloadApkToken;
     private String downloadApkPath;
-    private ImageView bg_dialog;
     private boolean formSetting;
 
 
@@ -90,29 +90,26 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         resources = _context.getResources();
         screenWidth = Utils.getScreenWidth(_context);
 
-        dialog = new Dialog(_context, R.style.CenterCompatDialogTheme);
+        dialog = new BaseDialog(_context, R.style.dialog_comment_style);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.view_custom_dialog);
+        dialog.setContentView(R.layout.dialog_download_c);
         window = dialog.getWindow();
-        window.setGravity(Gravity.CENTER | Gravity.CENTER);
+
+//        window.setGravity(Gravity.CENTER);
         window.setWindowAnimations(R.style.AnimBottom);
 
-        tv_vcd_title = (TextView) dialog.findViewById(R.id.tv_vcd_title);
-        bg_dialog = (ImageView) dialog.findViewById(R.id.bg_download);
         pb_vcd = (ProgressBar) dialog.findViewById(R.id.pb_vcd);
         tv_vcd_message = (TextView) dialog.findViewById(R.id.tv_vcd_message);
-        btn_vcd_sure = (Button) dialog.findViewById(R.id.btn_vcd_sure);
+        btn_vcd_sure = (TextView) dialog.findViewById(R.id.btn_vcd_sure);
         iv_vcd_cancel = (ImageView) dialog.findViewById(R.id.iv_vcd_cancel);
 
         btn_vcd_sure.setOnClickListener(this);
         iv_vcd_cancel.setOnClickListener(this);
         if (AppManager.isInvestor(_context)) {
-            bg_dialog.setImageResource(R.drawable.bg_investor_dialog);
             btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
             pb_vcd.setProgressDrawable(_context.getResources().getDrawable(R.drawable.orange_progress_bar));
         }
-        tv_vcd_title.setText("升级提示");
         btn_vcd_sure.setText("现在升级");
         pb_vcd.setMax(100);
         pb_vcd.setVisibility(View.VISIBLE);

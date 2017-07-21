@@ -20,6 +20,7 @@ import com.cgbsoft.privatefund.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.ProductFragment;
@@ -74,6 +75,13 @@ public class PrivateBanksFragment extends BasePageFragment {
                 intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的投顾" : "选择投顾");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
                 getActivity().startActivity(intent);
+            }
+        });
+        ImageView privatebank_title_right = (ImageView) titleView.findViewById(R.id.privatebank_title_right);
+        privatebank_title_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
