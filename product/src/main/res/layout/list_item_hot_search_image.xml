@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/ui_15_dip"
-    android:paddingBottom="@dimen/ui_15_dip">
+    android:paddingTop="@dimen/ui_12_dip"
+    android:paddingBottom="@dimen/ui_12_dip">
 
     <RelativeLayout
         android:id="@id/video_image"

@@ -3,52 +3,52 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="30dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:gravity="center_vertical"
-    android:paddingBottom="20dp">
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/goto_has_video_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/goto_has_video_data">
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:scrollbars="none"
-            />
-        <ImageView style="@style/normal_diveline" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scrollbars="none" />
 
-        <Button
+        <include layout="@layout/acitivity_divide_online" />
+
+        <TextView
+            android:id="@+id/goto_look_more"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/goto_look_more"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@string/account_video_go_look_all"
-            android:visibility="gone"
-            android:textColor="@color/color_5a5a5a"/>
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_14"
+            android:visibility="visible" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/goto_look_video"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:layout_marginBottom="@dimen/ui_15_dip"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:id="@+id/goto_look_video"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
         android:background="@drawable/shape_btn_goden_boader_bg"
+        android:gravity="center"
         android:text="@string/account_video_go_server"
-        android:visibility="gone"
-        android:textColor="@color/app_golden"/>
+        android:textColor="@color/app_golden"
+        android:visibility="gone" />
 
 </LinearLayout>

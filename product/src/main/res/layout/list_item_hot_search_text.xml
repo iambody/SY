@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="12dp">
+    android:paddingTop="@dimen/ui_12_dip"
+    android:paddingBottom="@dimen/ui_12_dip">
 
     <TextView
         android:id="@+id/number"

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,8 +19,10 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.receiver.HoriizontalItemDecoration;
 
 import java.util.ArrayList;
@@ -28,7 +31,6 @@ import java.util.List;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.mvp.ui.video.VideoDownloadListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoHistoryListActivity;
-import app.privatefund.investor.health.mvp.ui.HealthItemDecoration;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -39,6 +41,7 @@ public class HorizontalScrollFragment extends BaseFragment {
 
     public static final String GET_VIDEO_PARAMS = "get_video_params";
     public static final String IS_VIDEO_PLAY_PARAMS = "is_play_video_params";
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -48,13 +51,12 @@ public class HorizontalScrollFragment extends BaseFragment {
     @BindView(R.id.goto_look_video)
     Button button;
 
-    @BindView(R.id.goto_look_more)
-    Button lookAll;
-
     private MyHolderAdapter myHolderAdapter;
+    private ChangeHeightListener listener;
 
     private List<VideoInfoModel> list;
     private boolean isPlay;
+    private int heaight;
 
     @Override
     protected int layoutID() {
@@ -74,14 +76,32 @@ public class HorizontalScrollFragment extends BaseFragment {
         recyclerView.setAdapter(myHolderAdapter);
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
+        measureHeight();
+    }
+
+    private void measureHeight() {
+        heaight = CollectionUtils.isEmpty(list) ? DimensionPixelUtil.dip2px(getActivity(), 150) : DimensionPixelUtil.dip2px(getActivity(), 240);
+        if (listener != null) {
+            listener.changeData(isPlay ? 0 : 1 ,heaight);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        System.out.println("---values="  +context.getClass().getSimpleName());
+        if(context instanceof MainPageActivity){
+            listener =  (MineFragment)MainTabManager.getInstance().getFragmentByIndex(R.id.nav_right_second, 0);
+        }
     }
 
     public void refrushData(List<VideoInfoModel> list) {
+        System.out.println("------list=" + list.size());
+        this.list = list;
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        lookAll.setVisibility((list != null && list.size() > 10) ? View.VISIBLE : View.GONE);
         myHolderAdapter.refrushData(list.size() > 10 ? list.subList(0, 11) : list);
+        measureHeight();
     }
 
     @OnClick(R.id.goto_look_more)
@@ -158,5 +178,9 @@ public class HorizontalScrollFragment extends BaseFragment {
         View rootView;
         ImageView mImg;
         TextView mTxt;
+    }
+
+    public interface ChangeHeightListener{
+        void changeData(int position,int height);
     }
 }

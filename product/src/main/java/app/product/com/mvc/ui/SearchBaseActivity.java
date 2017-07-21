@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -117,6 +118,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private void initListView() {
         resultLinearLayout = (LinearLayout) findViewById(R.id.product_search_search_result);
         emptyLinearLayout = (LinearLayout) findViewById(R.id.product_search_search_empty);
+        header = (RelativeLayout) findViewById(R.id.hot_search_title_ll);
         delHistory = (ImageView) findViewById(R.id.product_search_history_del);
         initRecycleView();
         listView = (ListView) findViewById(R.id.product_search_list);
@@ -128,7 +130,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         textEdit = (ClearEditText) findViewById(R.id.search_title_ed);
         listAdapter = new HotSearchAdapter(this, currentType);
         listView.setAdapter(listAdapter);
-        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
+//        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
 //        ((ImageView) header.findViewById(R.id.hot_search_title_img)).setImageResource(AppManager.isInvestor(this) ? R.drawable.hot_c : R.drawable.hot_b);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -284,11 +286,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                    JSONArray jsonArray = response.getJSONArray("result");
                     Gson g = new Gson();
                     if (!BStrUtils.isEmpty(s)) {
-                        List<SearchResultBean.ResultBean> list = g.fromJson(getV2String(s), new TypeToken<List<SearchResultBean.ResultBean>>() {
-                        }.getType());
+                        List<SearchResultBean.ResultBean> list = g.fromJson(getV2String(s), new TypeToken<List<SearchResultBean.ResultBean>>() {}.getType());
                         if (!BUtils.isEmpty(list)) {
-                            listView.setHeaderDividersEnabled(false);
-                            listView.addHeaderView(header);
+//                            listView.setHeaderDividersEnabled(false);
+//                            listView.addHeaderView(header);
+                            header.setVisibility(View.VISIBLE);
                             listAdapter.setData(list);
                         }
                     }

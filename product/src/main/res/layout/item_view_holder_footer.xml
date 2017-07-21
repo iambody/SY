@@ -15,7 +15,7 @@
         android:drawablePadding="10dp"
         android:id="@+id/item_more"
         android:textSize="@dimen/text_size_small"
-        android:textColor="@color/app_golden"/>
+        android:textColor="@color/black"/>
 
     <ImageView
         android:layout_width="wrap_content"

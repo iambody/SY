@@ -13,7 +13,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,6 +49,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
+import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ import rx.Observable;
  *
  * 我的fragment
  */
-public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
+public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View, HorizontalScrollFragment.ChangeHeightListener {
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
@@ -159,7 +159,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     XTabLayout xTabLayout;
 
     @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    CustomViewPage viewPager;
 
     private DaoUtils daoUtils;
     private String[] videos;
@@ -296,19 +296,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
-        initVideoView();
         initObserver();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("------MineFragment--onResume");
         if (isLoading) {
             return;
         }
         isLoading = true;
+        System.out.println("------onResume");
+        initVideoView();
         getPresenter().getMineData();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @OnClick(R.id.mine_title_set_id)
@@ -689,10 +694,32 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             videoList = new ArrayList<>();
             setFragmentParams(playlList, videoList, true);
             setFragmentParams(downlList, videoList, false);
+            viewPager.resetHeight(0);
+            initViewPage();
         } else {
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
         }
+
+        xTabLayout.setupWithViewPager(viewPager);
+        for (int i = 0; i < xTabLayout.getTabCount(); i++) {
+            xTabLayout.getTabAt(i).setText(videos[i]);
+        }
+    }
+
+    private void initViewPage() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                viewPager.resetHeight(position);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
@@ -714,10 +741,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
             }
         });
-        xTabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < xTabLayout.getTabCount(); i++) {
-            xTabLayout.getTabAt(i).setText(videos[i]);
-        }
     }
 
     private HorizontalScrollFragment setFragmentParams(List<VideoInfoModel> valuesList, List<HorizontalScrollFragment> fragmentList, boolean isPlay) {
@@ -739,6 +762,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (switchGroupObservable != null) {
             RxBus.get().unregister(RxConstant.SWITCH_GROUP_SHOW, switchGroupObservable);
         }
+    }
+
+    @Override
+    public void changeData(int position, int height) {
+        viewPager.addHeight(position, height);
     }
 }
 
