@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
-
 import app.product.com.R;
 import app.product.com.mvc.adapter.SearchAdatper;
 
@@ -18,9 +16,10 @@ import app.product.com.mvc.adapter.SearchAdatper;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/6-19:17
  */
-public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
+public class SimpleItemDecoration extends RecyclerView.ItemDecoration {
 
     protected Drawable divider;
+    protected Drawable headerDrawble;
     protected int margin;
     private Context context;
     private static int MARGIN_TOP = 15;
@@ -29,14 +28,15 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
         this.context = context;
         this.margin = context.getResources().getDimensionPixelOffset(HeightId);
         this.divider = ContextCompat.getDrawable(context, ColorId);
+        this.headerDrawble = ContextCompat.getDrawable(context, R.drawable.bg_white);
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
-        outRect.bottom = margin;
         RecyclerView.ViewHolder viewHolder = parent.getChildViewHolder(view);
         SearchAdatper.BaseViewHolder baseViewHolder = null;
+        outRect.bottom = margin;
         if (viewHolder instanceof SearchAdatper.BaseViewHolder) {
             baseViewHolder = (SearchAdatper.BaseViewHolder) viewHolder;
         }
@@ -44,9 +44,10 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
         if (viewHolder instanceof SearchAdatper.FooterViewHolder ||
                 (baseViewHolder != null && baseViewHolder.displayFinished)) {
             outRect.bottom = DimensionPixelUtil.dip2px(context, MARGIN_TOP);
-            outRect.left = 10;
-            outRect.right = 10;
+            outRect.left = 15;
+            outRect.right = 15;
         }
+
     }
 
     @Override
@@ -79,7 +80,7 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
                             RecyclerView.LayoutManager layoutManager, RecyclerView.LayoutParams params) {
         final int top = child.getBottom() + params.bottomMargin;
         final int bottom = top + layoutManager.getBottomDecorationHeight(child);
-        divider.setBounds(left, top, right, bottom);
-        divider.draw(c);
+            divider.setBounds(left, top, right, bottom);
+            divider.draw(c);
     }
 }

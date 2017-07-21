@@ -18,13 +18,11 @@
         app:xTabSelectedTextColor="@color/app_golden_click"
         app:xTabSelectedTextSize="15sp"
         app:xTabTextColor="#ff000000"
-        app:xTabTextSize="15sp"
-        />
-
+        app:xTabTextSize="15sp"/>
 
     <ImageView style="@style/normal_diveline" />
 
-    <android.support.v4.view.ViewPager
+    <com.cgbsoft.privatefund.widget.CustomViewPage
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="180dp" />

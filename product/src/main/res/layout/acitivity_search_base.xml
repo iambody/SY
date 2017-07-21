@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/c_background">
+    android:background="@color/app_bg">
 
     <include layout="@layout/search_base_title" />
 
@@ -25,24 +25,25 @@
                 android:id="@+id/product_search_history_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="left|center_vertical"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@color/app_bg">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
                         android:text="@string/history_search"
-                        android:textColor="@color/c_low_black"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_16" />
 
                     <ImageView
                         android:id="@+id/product_search_history_del"
@@ -62,18 +63,50 @@
                         android:id="@+id/product_search_history_search_flag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        openXu:leftAndRightSpace="10dp"
+                        openXu:leftAndRightSpace="15dp"
                         openXu:rowSpace="10dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/hot_search_title_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_bg"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/hot_search_title_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="@dimen/ui_15_dip"
+                    android:layout_centerVertical="true"
+                    android:text="@string/hot_search"
+                    android:textSize="16sp" />
+
+                <android.support.v4.widget.Space
+                    android:id="@+id/hot_search_title_img"
+                    android:layout_width="60dp"
+                    android:layout_height="5dp"
+                    android:background="@color/app_golden"
+                    android:layout_alignStart="@id/hot_search_title_"
+                    android:layout_below="@id/hot_search_title_"
+                    android:layout_marginTop="3dp"/>
+            </RelativeLayout>
+
             <ListView
                 android:id="@+id/product_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/c_background"
+                android:background="@color/white"
                 android:divider="@color/c_background"
+                android:paddingLeft="15dp"
                 android:dividerHeight="1dp"
                 android:headerDividersEnabled="false" />
         </LinearLayout>

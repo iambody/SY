@@ -43,7 +43,11 @@ public class GestureManager {
             @Override
             public void left() {
                 this.dismiss();
-                RxBus.get().post(rxConstant, true);
+                if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
+                    RxBus.get().post(rxConstant, true);
+                } else {
+                    RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, values);
+                }
             }
 
             @Override

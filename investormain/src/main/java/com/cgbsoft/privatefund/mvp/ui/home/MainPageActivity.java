@@ -109,7 +109,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
-//    private Observable<Boolean> gestruePwdObservable;
+    //    private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
@@ -121,13 +121,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable,freshWebObservable;
+    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable;
+
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
     private int code;
 
     private InvestorAppli initApplication;
+
     /**
      * 定位管理器
      */
@@ -152,7 +154,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onResume() {
         super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
-        if(AppManager.isVisitor(baseContext)&&4==currentPostion){//是游客模式
+        if (AppManager.isVisitor(baseContext) && 4 == currentPostion) {//是游客模式
             switchID = R.id.nav_left_first;
             currentPostion = 0;
             bottomNavigationBar.selectNavaigationPostion(0);
@@ -164,7 +166,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void init(Bundle savedInstanceState) {
         Log.i("MainPageActivity", "----init");
-        initApplication= (InitApplication) getApplication();
+        initApplication = (InitApplication) getApplication();
         initApplication.setMainpage(true);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -175,7 +177,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                onTabSelected(integer,0);
+                onTabSelected(integer, 0);
                 bottomNavigationBar.selectNavaigationPostion(integer);
             }
 
@@ -444,7 +446,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
                     getPresenter().getUserInfo(false);
-                }else{//需要刷新数据
+                } else {//需要刷新数据
 
                     getPresenter().getUserInfo(true);
                 }
@@ -510,6 +512,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+        userLayObservable = RxBus.get().register(RxConstant.MAIN_FRESH_LAY, Integer.class);
+        userLayObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                switchID = R.id.nav_left_first;
+                currentPostion = 0;
+                bottomNavigationBar.selectNavaigationPostion(0);
+                switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -531,7 +548,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private void toJumpTouziren(QrCodeBean qrCodeBean) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_title, "投资者认证");
-        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.qrcoderesult + "adviserId=" + qrCodeBean.getFatherId()+"&bindChannel=4");
+        hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.qrcoderesult + "adviserId=" + qrCodeBean.getFatherId() + "&bindChannel=4");
         NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
@@ -600,7 +617,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (startConverstationObservable != null) {
             RxBus.get().unregister(RxConstant.START_CONVERSATION_OBSERVABLE, startConverstationObservable);
         }
-
+        if (null != userLayObservable) {
+            RxBus.get().unregister(RxConstant.MAIN_FRESH_LAY, userLayObservable);
+        }
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
