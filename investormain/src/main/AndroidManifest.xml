@@ -127,6 +127,16 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
+
+        <meta-data
+            android:name="versionCode"
+            android:value="${VERSION_CODE}" />
+        <meta-data
+            android:name="versionName"
+            android:value="${VERSION_NAME}" />
+        <meta-data
+            android:name="dbVersion"
+            android:value="${DATABASE_VER}" />
         <!--  &lt;!&ndash; glide &ndash;&gt;
           <meta-data
               android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
