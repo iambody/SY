@@ -25,11 +25,21 @@ public interface MyTaskContract {
 
 
     interface View extends BaseView {
+        /**
+         * 显示loading弹窗
+         */
+        void showLoadDialog();
+        /**
+         * 隐藏loading弹窗
+         */
+        void hideLoadDialog();
 
         void getTaskLitSuc(ArrayList<DayTaskBean> list);
+        void getTaskListErr(Throwable error);
 
         void finishTaskSuc(String id);
 
         void signSuc();
+        void signErr(Throwable error);
     }
 }
