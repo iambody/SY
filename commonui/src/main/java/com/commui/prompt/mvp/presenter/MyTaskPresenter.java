@@ -44,6 +44,7 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
 
     @Override
     public void getTaskList() {
+        getView().showLoadDialog();
         ApiClient.initDayTask().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -55,6 +56,7 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
                     }.getType());
 
                     getView().getTaskLitSuc(taskBeans);
+                    getView().hideLoadDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -62,7 +64,8 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
 
             @Override
             protected void onRxError(Throwable error) {
-
+                getView().getTaskListErr(error);
+                getView().hideLoadDialog();
             }
         });
     }
@@ -118,8 +121,10 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
     public void finishTask(String id) {
         switch (id) {
             case MyTaskBean.ITEM_SIGN + "":
+                getView().showLoadDialog();
                 addSubscription(ApiClient.testSignIn(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                     protected void onEvent(String s) {
+                        getView().hideLoadDialog();
                         try {
                             JSONObject response = new JSONObject(s);
                             if (response.has("msg")) {
@@ -139,7 +144,8 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
 
                     @Override
                     protected void onRxError(Throwable error) {
-
+                        getView().signErr(error);
+                        getView().hideLoadDialog();
                     }
                 }));
                 break;

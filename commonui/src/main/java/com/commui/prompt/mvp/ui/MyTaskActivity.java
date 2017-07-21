@@ -11,17 +11,20 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
 import com.chenenyu.router.Router;
@@ -43,6 +46,9 @@ import app.privatefund.com.cmmonui.R2;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ *
+ */
 @Route(RouteConfig.INVTERSTOR_MAIN_TASK)
 public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyTaskContract.View, MyTaskListener {
     @BindView(R2.id.title_left)
@@ -53,6 +59,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     private Comparator comparator;
     private boolean isFromC;
+    private LoadingDialog mLoadingDialog;
 
 
     @OnClick(R2.id.title_left)
@@ -66,6 +73,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.task_bonus));
         isFromC = AppManager.isInvestor(getApplicationContext());
@@ -81,6 +89,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     @Override
     protected void onResume() {
         super.onResume();
+        getPresenter().getTaskList();
     }
 
     @Override
@@ -100,7 +109,6 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 //        lp.height = lp.width * 321 / 750;
 //        iv_adt_bg.setLayoutParams(lp);
 
-        getPresenter().getTaskList();
     }
 
     @Override
@@ -109,6 +117,23 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     }
 
     @Override
+    public void showLoadDialog() {
+        if (mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.show();
+    }
+
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
+    }
+
+    /**
+     * 请求任务列表成功
+     * @param list
+     */
+    @Override
     public void getTaskLitSuc(ArrayList<DayTaskBean> list) {
         Collections.sort(list);
         DayTaskBean dayTaskBean = new DayTaskBean();
@@ -116,6 +141,11 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         dayTaskBean.setStatus("-1");
         list.add(0, dayTaskBean);
         adapter.refAllData(list);
+    }
+
+    @Override
+    public void getTaskListErr(Throwable error) {
+
     }
 
     @Override
@@ -135,6 +165,11 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         Collections.sort(list);
 //        adapter.refAllData(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void signErr(Throwable error) {
+        Toast.makeText(baseContext.getApplicationContext(),"签到失败,请稍后再试!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -178,10 +213,9 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     private void videoTaskClick() {
         if (isFromC) {
-//            HashMap<String, Object> hashMap = new HashMap<>();
-//            hashMap.put("index", 2);
-//            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE,hashMap, Intent.FLAG_ACTIVITY_NEW_TASK);
-            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 2);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("index", 2);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE,hashMap, Intent.FLAG_ACTIVITY_NEW_TASK);
             this.finish();
         } else {
 
@@ -190,11 +224,8 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     }
 
     private void productTaskClick() {
-        if (isFromC) {
-//            HashMap<String, Object> hashMap = new HashMap<>();
-//            hashMap.put("index", 1);
-//            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE, hashMap,Intent.FLAG_ACTIVITY_NEW_TASK);
-            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 1);
+        if (isFromC) {//跳转到查看产品页面
+            NavigationUtils.jumpNativePage(baseContext, WebViewConstant.Navigation.PRODUCT_PAGE);
             this.finish();
         } else {
 
@@ -203,11 +234,10 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     }
 
     private void infoTaskClick() {
-        if (isFromC) {//C端的跳转
-//            HashMap<String, Object> hashMap = new HashMap<>();
-//            hashMap.put("index", 2);
-//            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE, hashMap,Intent.FLAG_ACTIVITY_NEW_TASK);
-            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 2);
+        if (isFromC) {//C端的跳转-查看资讯
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("index", 2);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE, hashMap,Intent.FLAG_ACTIVITY_NEW_TASK);
             this.finish();
         } else {//原有B端的跳转
 
