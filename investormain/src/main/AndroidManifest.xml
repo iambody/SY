@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cgbsoft.privatefund">
+
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <!--唤醒锁定-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -120,7 +121,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight"
         tools:replace="android:label,android:icon, android:theme">
-
+        <meta-data
+            android:name="dbName"
+            android:value="${DATABASE_NAME}" />
+        <meta-data
+            android:name="dbVersion"
+            android:value="${DATABASE_VER}" />
         <!--  &lt;!&ndash; glide &ndash;&gt;
           <meta-data
               android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
@@ -309,8 +315,8 @@
         <!-- 修改登录密码页面-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
 
         <!-- app module 通用的webview -->
@@ -329,9 +335,9 @@
             android:theme="@style/dialogstyle_select" />
 
         <!--<activity-->
-            <!--android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity"-->
-            <!--android:theme="@style/transcutestyle"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity"-->
+        <!--android:theme="@style/transcutestyle"-->
+        <!--android:screenOrientation="portrait" />-->
 
         <activity
             android:name="com.cgbsoft.privatefund.widget.RightShareWebViewActivity"
@@ -393,9 +399,9 @@
               android:theme="@style/Theme.UMDefault" />-->
         <!--=================================================-->
         <!-- X5内核的key -->
-       <!-- <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />-->
+        <!-- <meta-data
+             android:name="com.baidu.lbsapi.API_KEY"
+             android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />-->
         <!--三方登录-->
         <!-- 三方登录 -->
 
@@ -480,8 +486,7 @@
         <service
             android:name="com.tencent.qalsdk.service.QalAssistService"
             android:exported="false"
-            android:process=":QALSERVICE" >
-        </service>
+            android:process=":QALSERVICE"></service>
 
     </application>
 

@@ -40,7 +40,7 @@ ext {
     targetSdkVersion = 24
     versionCode = 60000
     versionName = "6.0.0"
-    databaseName = "privateFundDB.db";
+    databaseName = "sxydb.db";
     databaseVer = 1;
 
     support_v4_version = '24.1.0'
