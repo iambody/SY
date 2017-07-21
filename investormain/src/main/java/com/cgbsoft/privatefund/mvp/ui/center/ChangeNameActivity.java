@@ -91,8 +91,10 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
                 int length = s.toString().length();
                 if (length > 0) {
                     rightTV.setEnabled(true);
+                    rightTV.setTextColor(getResources().getColor(R.color.black));
                 } else {
                     rightTV.setEnabled(false);
+                    rightTV.setTextColor(getResources().getColor(R.color.color_6a6a6a));
                 }
             }
         });
@@ -117,7 +119,7 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
     public void updateSuccess() {
         if (null != userInfo) {
             String newUserName = newName.getText().toString();
-            userInfo.getToC().setAdviserRealName(newUserName);
+            userInfo.setRealName(newUserName);
             AppInfStore.saveUserInfo(baseContext,userInfo);
             clearEditText();
             setResult(RESULT_OK);

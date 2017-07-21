@@ -428,10 +428,10 @@ public class Utils {
             dbName = info.metaData.getString("dbName");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            dbName = "privateFundDB";
+            dbName = "sxyFundDB";
         }
         if (TextUtils.isEmpty(dbName)) {
-            dbName = "privateFundDB";
+            dbName = "sxyFundDB";
         }
 
         return dbName;

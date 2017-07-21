@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
@@ -17,7 +16,6 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.RouteCallback;
@@ -224,7 +222,6 @@ public class NavigationUtils {
     public static void startActivityByRouter(Context context, String routerType, String key, Object object, int enterAnim, int outerAnim) {
         Router.build(routerType).with(key, object).anim(enterAnim, outerAnim).go(context);
     }
-
 
     public static void startActivityByRouter(Context context, String routerType, HashMap<String, Object> hashMap, int flag) {
         IRouter iRouter = Router.build(routerType);

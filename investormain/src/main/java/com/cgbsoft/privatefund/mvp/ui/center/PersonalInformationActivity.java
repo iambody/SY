@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -67,6 +69,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -101,6 +104,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     TextView userName;
     @BindView(R.id.tv_personal_gender)
     TextView userGender;
+    @BindView(R.id.tv_member_level)
+    TextView memberLevel;
+    @BindView(R.id.ll_my_qr)
+    LinearLayout myQrAll;
 
     /**
      * 更新头像，拍照REQUEST_CODE
@@ -128,6 +135,22 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private UserInfoDataEntity.UserInfo userInfo;
     private LoadingDialog mLoadingDialog;
     private Observable<Integer> uploadIcon;
+    private android.os.Handler handler = new android.os.Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    //上传头像成功
+                    uploadRemotePath();
+                    break;
+                case 2:
+                    //上传头像失败
+                    hideLoadDialog();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.upload_icon_fail), Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     private void startPermissionsActivity() {
         PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
@@ -136,15 +159,27 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     public void gotoMyQr(){
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.myqr);
+        intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.myqr));
+        startActivity(intent);
+    }
+    @OnClick(R.id.rl_goto_member_center)
+    public void gotoMemberCenter(){
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.mymember));
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.membercenter);
         startActivity(intent);
     }
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){
-        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
+        Intent intent = new Intent(this, ChangeNameActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
+//        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }
     @OnClick(R.id.rl_usergender_all)
     public void changeUserGender(){
-        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
+        Intent intent = new Intent(this, ChangeGenderActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_GENDER);
+//        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
     }
     @OnClick(R.id.title_left)
     public void clickBack() {
@@ -183,7 +218,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         uploadIcon.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                switch (integer) {
+                handler.sendEmptyMessage(integer);
+                /*switch (integer) {
                     case 1:
                         //上传头像成功
                         uploadRemotePath();
@@ -193,7 +229,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                         hideLoadDialog();
                         Toast.makeText(getApplicationContext(), "上传头像失败", Toast.LENGTH_SHORT).show();
                         break;
-                }
+                }*/
             }
 
             @Override
@@ -212,19 +248,27 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
         if (null != userInfo) {
-            String phoneNum = userInfo.getUserName();
+            String bandingAdviserId = userInfo.getToC().getBandingAdviserId();
+            if (!TextUtils.isEmpty(bandingAdviserId)) {
+                myQrAll.setVisibility(View.VISIBLE);
+            }
+            String phoneNum = userInfo.getPhoneNum();
             if (!TextUtils.isEmpty(phoneNum)) {
-                    phoneNum = phoneNum.substring(0, 3).concat("****").concat(phoneNum.substring(7));
+                phoneNum = phoneNum.substring(0, 3).concat("****").concat(phoneNum.substring(7));
+            } else {
+                phoneNum="未绑定手机号";
             }
             userNum.setText(phoneNum);
 
             Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
 
-            userName.setText(userInfo.getToC().getAdviserRealName());
+            userName.setText(TextUtils.isEmpty(userInfo.getRealName())?"":userInfo.getRealName());
 
-            userGender.setText(userInfo.getSex());
+            userGender.setText(TextUtils.isEmpty(userInfo.getSex())?"":userInfo.getSex());
 
-            userDate.setText(userInfo.getBirthday());
+            userDate.setText(TextUtils.isEmpty(userInfo.getBirthday())?"":userInfo.getBirthday());
+
+            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"":userInfo.getToC().getMemberLevel());
         }
 
 
@@ -346,9 +390,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
         if (requestCode == REQUEST_HEAD_CAMERA || requestCode == RESULT_PIC_SELECT) {    // 修改头像
             if (resultCode == Activity.RESULT_OK) {
                 handlePhotoResult(requestCode, data);
@@ -364,13 +405,17 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         } else if (requestCode == REQUEST_CODE) {
             mHeadIconDialog.show();
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
+            userInfo = AppManager.getUserInfo(baseContext);
             if (null != userInfo) {
-                userName.setText(userInfo.getToC().getAdviserRealName());
+                userName.setText(userInfo.getRealName());
             }
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_GENDER) {
+            if (null == data) {
+                return;
+            }
             String gender = data.getStringExtra("gender");
             userGender.setText(gender);
-            getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getToC().getAdviserRealName():"",gender,null!=userInfo?userInfo.getBirthday():"");
+            getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getRealName():"",gender,null!=userInfo?userInfo.getBirthday():"");
         }
     }
 
@@ -415,6 +460,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         if (requestCode == REQUEST_HEAD_CAMERA) {
             dispatchCropImage();    // 照片拍摄需要裁剪
         } else if (requestCode == RESULT_PIC_SELECT) {
+            if (null == resultIntent) {
+                return;
+            }
             Uri selectedImage = resultIntent.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -509,7 +557,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * @param format
      */
     private void updateServerDate(String format) {
-        getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getToC().getAdviserRealName():"",null!=userInfo?userInfo.getSex():"",format);
+        getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getRealName():"",null!=userInfo?userInfo.getSex():"",format);
     }
 
     @OnClick(R.id.rl_show_address)
@@ -624,6 +672,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @Override
     public void uploadImgError(Throwable error) {
+        Toast.makeText(baseContext.getApplicationContext(),null!=error?error.getMessage():getResources().getString(R.string.upload_icon_fail),Toast.LENGTH_SHORT).show();
         if (null != userInfo) {
             Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
         }

@@ -14,10 +14,10 @@
         android:layout_gravity="left|center_vertical"
         android:gravity="left|center_vertical"
         android:id="@+id/name"
-        android:textSize="@dimen/text_size_large_more"
+        android:textSize="@dimen/dimens_sp_15"
         android:maxLines="2"
         android:ellipsize="end"
-        android:textColor="@color/c_high_black"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="wrap_content"

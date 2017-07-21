@@ -42,6 +42,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String salonDetail;
     // 推荐好友
     public static String recommendFriends;
+    // 关于本应用
+    public static String aboutapp;
     // 我的二维码
     public static String myqr;
 
@@ -133,6 +135,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         assetReport = baseSxyParentUrl + "/biz/report/index.html";
         salonDetail = baseSxyParentUrl + "/biz/indexSecond/active_detail.html?id=";
         recommendFriends = baseSxyParentUrl + "/biz/mine/mine-recommend.html";
+        aboutapp = baseSxyParentUrl + "/biz/mine/mine-about.html";
         myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
         mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
 

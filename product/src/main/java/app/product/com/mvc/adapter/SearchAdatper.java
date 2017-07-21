@@ -395,7 +395,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
         }
     }
 
-    private class HeaderViewHolder extends BaseViewHolder {
+    public class HeaderViewHolder extends BaseViewHolder {
         public HeaderViewHolder(View itemView) {
             super(itemView);
             headView = (TextView) itemView.findViewById(R.id.title_head);

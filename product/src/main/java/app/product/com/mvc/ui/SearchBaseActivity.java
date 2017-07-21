@@ -15,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -50,8 +52,7 @@ import app.product.com.utils.BUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import app.product.com.widget.HotSearchAdapter;
 import app.product.com.widget.LineBreakLayout;
-import app.product.com.widget.SimpleItemDecoration;
-
+import app.product.com.widget.SearchItemDecoration;
 
 /**
  * desc  ${DESC}
@@ -77,7 +78,6 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private ClearEditText textEdit;
     private TextView backText;
     private View header;
-    //    private DatabaseUtils databaseUtils;
     private String currentType;
     private SearchAdatper searchAdatper;
     private RecyclerView recycleView;
@@ -102,7 +102,6 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         textEdit.requestFocus();
     }
 
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.search_cancel) {
@@ -119,6 +118,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private void initListView() {
         resultLinearLayout = (LinearLayout) findViewById(R.id.product_search_search_result);
         emptyLinearLayout = (LinearLayout) findViewById(R.id.product_search_search_empty);
+        header = (RelativeLayout) findViewById(R.id.hot_search_title_ll);
         delHistory = (ImageView) findViewById(R.id.product_search_history_del);
         initRecycleView();
         listView = (ListView) findViewById(R.id.product_search_list);
@@ -130,8 +130,8 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         textEdit = (ClearEditText) findViewById(R.id.search_title_ed);
         listAdapter = new HotSearchAdapter(this, currentType);
         listView.setAdapter(listAdapter);
-        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
-        ((ImageView) header.findViewById(R.id.hot_search_title_img)).setImageResource(AppManager.isInvestor(this) ? R.drawable.hot_c : R.drawable.hot_b);
+//        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
+//        ((ImageView) header.findViewById(R.id.hot_search_title_img)).setImageResource(AppManager.isInvestor(this) ? R.drawable.hot_c : R.drawable.hot_b);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -186,7 +186,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         searchAdatper = new SearchAdatper(this, currentType);
         recycleView.setAdapter(searchAdatper);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.addItemDecoration(new SimpleItemDecoration(this, R.color.c_background, R.dimen.ui_z_dip));
+        recycleView.addItemDecoration(new SearchItemDecoration(this, R.color.c_background, R.dimen.ui_z_dip));
     }
 
     private void requestSearch(String str) {
@@ -252,7 +252,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
                 ProductNavigationUtils.startProductDetailActivity(baseContext, resultBean.getTargetId(), resultBean.getInfoName(), 200);
                 break;
             case ZIXUN:
-                String informationUrl = "https://app.simuyun.com/app5.0/discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
+                String informationUrl = CwebNetConfig.discoveryDetail.concat("?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId());
                 NavigationUtils.startVideoInformationActivityu(baseContext, informationUrl, resultBean.getInfoName());
                 break;
             case VIDEO:
@@ -286,11 +286,11 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 //                    JSONArray jsonArray = response.getJSONArray("result");
                     Gson g = new Gson();
                     if (!BStrUtils.isEmpty(s)) {
-                        List<SearchResultBean.ResultBean> list = g.fromJson(getV2String(s), new TypeToken<List<SearchResultBean.ResultBean>>() {
-                        }.getType());
+                        List<SearchResultBean.ResultBean> list = g.fromJson(getV2String(s), new TypeToken<List<SearchResultBean.ResultBean>>() {}.getType());
                         if (!BUtils.isEmpty(list)) {
-                            listView.setHeaderDividersEnabled(false);
-                            listView.addHeaderView(header);
+//                            listView.setHeaderDividersEnabled(false);
+//                            listView.addHeaderView(header);
+                            header.setVisibility(View.VISIBLE);
                             listAdapter.setData(list);
                         }
                     }
@@ -304,12 +304,9 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
             }
         }));
-
-
     }
 
     private void initHistory() {
-
         List<HistorySearchBean> historySearches = daoUtils.getHistorysByType(currentType, AppManager.getUserId(baseContext));
         Log.i("----search history", "----search histor=" + historySearches.size());
         historySearch.setVisibility(BUtils.isEmpty(historySearches) ? View.GONE : View.VISIBLE);

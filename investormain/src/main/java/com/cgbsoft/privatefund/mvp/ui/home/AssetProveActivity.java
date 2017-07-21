@@ -1,7 +1,11 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -79,6 +83,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     protected ViewGroup viewGroup;
 
     private static final int SMOTH_CODE = 2;
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int width;
     private List<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
@@ -98,7 +103,16 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("资产证明");
 
-        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848"));
+//        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848"));
+        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            } else {
+                NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848");
+            }
+        });
+
+
         frameLayout.setmCellWidth(width / 4);
         frameLayout.setmCellHeight(width / 4);
         initData();
@@ -122,6 +136,22 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
         });
         return addImage;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848");
+                } else {
+                    // Permission Denied
+                    Toast.makeText(AssetProveActivity.this, "请开启用户拨打电话权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void initData() {

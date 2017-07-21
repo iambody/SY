@@ -54,6 +54,8 @@
 
             <include layout="@layout/fragment_mine_video"/>
 
+            <include layout="@layout/view_footer"/>
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -65,7 +65,9 @@ import rx.functions.Action0;
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener {
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
-
+    public final int PLAYDELAYTIME = 6;
+    public final int ADVISERSHOWTIME = 5;
+    public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_bannerview)
@@ -147,12 +149,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //是否绑定理财师
     boolean isBindAdviser;
     UserInfoDataEntity.UserInfo userInfo;
-    public final int PLAYDELAYTIME = 6;
-    public final int ADVISERSHOWTIME = 5;
-    public final int ADVISERLOADTIME = 3;
+
     private Observable<LiveInfBean> liveObservable;
-    private Observable<Integer> userLayObservable;
-    private Observable<Integer> infdataObservable;
+    private Observable<Integer> userLayObservable, infdataObservable;
+
     private boolean isLoading;
 
     @Override
@@ -177,8 +177,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getHomeData();
     }
 
+    /*游客模式游客布局显示 费游客模式非游客布局显示*/
     private void initshowlay() {
-        //游客模式游客布局显示 费游客模式非游客布局显示
+
         if (AppManager.isVisitor(baseActivity)) {
             onViewvisterivClicked();
         } else {
@@ -188,7 +189,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*开始倒计时十秒*/
     private void timeCountDown() {
-//        if (isShowAdviserCard || isVisiterShow) return;
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {
@@ -220,19 +220,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             initResultData(data);
     }
 
-    //登录模式点击短信
+    /*登录模式点击短信*/
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
         Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
     }
 
-    //登录模式点击聊天
+    /*登录模式点击聊天*/
     @OnClick(R.id.main_home_adviser_im)
     public void onMainHomeAdviserImClicked() {
         RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
     }
 
-    //非游客模式头像的点击事件
+    /* 非游客模式头像的点击事件*/
     @OnClick(R.id.main_home_adviser_inf_iv)
     public void onViewivClicked() {
         if (isShowAdviserCard) return;
@@ -241,7 +241,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initShowCardAnimator(mainHomeAdviserLayyy, false);
     }
 
-    //游客模式点击头像
+    /*游客模式点击头像*/
     @OnClick(R.id.main_home_vister_adviser_inf_iv)
     public void onViewvisterivClicked() {
         if (isVisiterShow) return;
@@ -257,7 +257,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
-        //已经绑定过的
+
         if (isBindAdviser) {
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), false);
         } else {
@@ -265,7 +265,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    //登录模式点击电话
+    /* 登录模式点击电话*/
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
         getPresenter().gotoConnectAdviser();
@@ -335,13 +335,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*  注册监听事件*/
     private void initRxEvent() {
         //游客登录进入正常模式
-//
         userLayObservable = RxBus.get().register(RxConstant.MAIN_FRESH_LAY, Integer.class);
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
                 if (5 == integer) {//需要刷新动作
-
                     mainHomeSwiperefreshlayout.setRefreshing(true);
                     RxCountDown.countdown(ADVISERLOADTIME).doOnSubscribe(new Action0() {
                         @Override
@@ -365,7 +363,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         }
                     });
                 }
-//开始刷新ui
+                //开始刷新ui
                 mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
                 //登录模式
                 mainHomeLoginLay.setVisibility(View.VISIBLE);
@@ -401,7 +399,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-     /* 显示直播的布局*/
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != liveObservable) {
+            RxBus.get().unregister(LIVERXOBSERBER_TAG, liveObservable);
+        }
+        if (null != userLayObservable) {
+            RxBus.get().unregister(RxConstant.MAIN_FRESH_LAY, userLayObservable);
+        }
+    }
+/* 显示直播的布局*/
 
     private void showLiveView() {
         main_home_live_lay.setVisibility(View.VISIBLE);
