@@ -612,9 +612,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
                 return;
             }
-            if (data.jumpType.equals("h5")) {//跳转h5
+            if ("h5".equals(data.jumpType)) {//跳转h5
                 NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
-            } else if (data.jumpType.equals("app")) {
+            } else if ("app".equals(data.jumpType)) {
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
         }
