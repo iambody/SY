@@ -260,7 +260,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
             userNum.setText(phoneNum);
 
-            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
+            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
 
             userName.setText(TextUtils.isEmpty(userInfo.getRealName())?"":userInfo.getRealName());
 
@@ -268,7 +268,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             userDate.setText(TextUtils.isEmpty(userInfo.getBirthday())?"":userInfo.getBirthday());
 
-            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"":userInfo.getToC().getMemberLevel());
+            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"无":userInfo.getToC().getMemberLevel());
         }
 
 
@@ -575,7 +575,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             parentList = new Gson().fromJson(sbs, new TypeToken<List<Map<String, Object>>>() {
             }.getType());
         } catch (IOException e) {
-            LogUtils.Log("aaa", "printStackTrace===");
             e.printStackTrace();
         }
 
@@ -674,7 +673,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     public void uploadImgError(Throwable error) {
         Toast.makeText(baseContext.getApplicationContext(),null!=error?error.getMessage():getResources().getString(R.string.upload_icon_fail),Toast.LENGTH_SHORT).show();
         if (null != userInfo) {
-            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg);
+            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
         }
     }
 }

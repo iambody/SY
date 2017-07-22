@@ -356,13 +356,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
      private Runnable runnable = () -> {
-         int currentProgress = roundProgressbar.getProgress();
-         int guQuanValue = Integer.parseInt(mineModel.getBank().getEquityRatio());
+         float currentProgress = (float) (roundProgressbar.getProgress());
+         float guQuanValue = Float.parseFloat(mineModel.getBank().getEquityRatio());
 //         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
          if (currentProgress >= guQuanValue) {
              return;
          }
-         roundProgressbar.setProgress(currentProgress + 1);
+         roundProgressbar.setProgress((int)currentProgress + 1);
          handler.sendMessage(Message.obtain());
     };
 

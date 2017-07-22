@@ -338,8 +338,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.Log("JavaScriptObjectToc", "ss");
 //        mWebview.loadUrl(url);
+        if (url.contains("life/order_detail.html")) {
+            return;
+        }
+        LogUtils.Log("JavaScriptObjectToc", "ss");
         mWebview.loadUrl("javascript:refresh()");
 //        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
 //        } else
