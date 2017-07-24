@@ -314,6 +314,24 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         private int myPoint;
         private String adviserRealName;
         private String wealth;
+        private String memberLevel;
+        private String memberValue;
+
+        public String getMemberLevel() {
+            return memberLevel;
+        }
+
+        public void setMemberLevel(String memberLevel) {
+            this.memberLevel = memberLevel;
+        }
+
+        public String getMemberValue() {
+            return memberValue;
+        }
+
+        public void setMemberValue(String memberValue) {
+            this.memberValue = memberValue;
+        }
 
         public int getMyPoint() {
             return myPoint;

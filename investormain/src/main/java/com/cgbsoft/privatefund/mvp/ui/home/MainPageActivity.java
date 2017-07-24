@@ -213,6 +213,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        code = getIntent().getIntExtra("code", 0);
+        initIndex(code);
+    }
+
     private void initIndex(int code) {
         if (0 != code) {
             int substring = Integer.parseInt(String.valueOf(code).substring(0, 1));

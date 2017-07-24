@@ -51,7 +51,7 @@ public class PersonalInformationModelImpl implements PersonalInformationModel {
 
             @Override
             protected void onRxError(Throwable error) {
-                listener.uploadImgError(null);
+                listener.uploadImgError(error);
             }
         }));
     }

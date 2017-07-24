@@ -57,9 +57,9 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow_icon"
                     android:layout_marginRight="@dimen/ui_10_dip"
-                    android:src="@drawable/ic_chengzhang_nor"
                     app:civ_border_width="1dp"
                     app:civ_border_color="@color/transparent"
+                    android:src="@drawable/logoshare"
                     >
                 </com.cgbsoft.lib.widget.CircleImageView>
                 <ImageView
@@ -103,6 +103,7 @@
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow"
                     android:textSize="@dimen/dimens_sp_14"
+                    android:textColor="@color/color_595959"
                     android:gravity="center_vertical"
                     />
 
@@ -145,6 +146,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:textSize="@dimen/dimens_sp_14"
+                    android:textColor="@color/color_595959"
                     android:layout_alignParentTop="true"
                     android:layout_toStartOf="@+id/iv_personalinfo_item_right_arrow_gender"
                     android:layout_marginEnd="14dp"/>
@@ -187,6 +189,7 @@
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:layout_toLeftOf="@+id/iv_personalinfo_item_right_arrow_birthday"
                     android:textSize="@dimen/dimens_sp_14"
+                    android:textColor="@color/color_595959"
                     />
                 <ImageView
                     android:id="@+id/iv_personalinfo_item_right_arrow_birthday"
@@ -250,6 +253,7 @@
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 />
             <RelativeLayout
+                android:id="@+id/rl_goto_member_center"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_70_dip"
                 android:layout_marginLeft="@dimen/ui_15_dip"
@@ -261,15 +265,17 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16"
-                    android:text="我的会员"
+                    android:text="@string/mymember"
                     />
                 <TextView
+                    android:id="@+id/tv_member_level"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_toLeftOf="@+id/iv_personal_information_arrow_hy"
                     android:layout_marginRight="@dimen/ui_10_dip"
                     android:textSize="@dimen/dimens_sp_14"
+                    android:textColor="@color/color_595959"
                     />
                 <ImageView
                     android:id="@+id/iv_personal_information_arrow_hy"
@@ -287,6 +293,14 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 />
+            <LinearLayout
+                android:id="@+id/ll_my_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
             <RelativeLayout
                 android:id="@+id/rl_personal_information_qr"
                 android:layout_width="match_parent"
@@ -300,15 +314,16 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16"
-                    android:text="我的二维码"
+                    android:text="@string/myqr"
                     />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
+                <ImageView
+                    android:layout_width="@dimen/ui_16_dip"
+                    android:layout_height="@dimen/ui_16_dip"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/iv_personal_information_arrow"
                     android:layout_marginRight="@dimen/ui_10_dip"
-                    android:textSize="@dimen/dimens_sp_14"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/personal_info_tip"
                     />
                 <ImageView
                     android:id="@+id/iv_personal_information_arrow"
@@ -326,6 +341,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -8,21 +8,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.db.DBConstant;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
 import com.chenenyu.router.annotation.Route;
+import com.google.gson.Gson;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -43,8 +51,11 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     SettingItemNormal changeGesturePsdLayout;
     @BindView(R.id.sin_change_login_psd)
     SettingItemNormal changeLoginPsd;
+    @BindView(R.id.sin_about_app)
+    SettingItemNormal aboutApp;
 
     private Observable<Boolean> switchButton;
+    private DaoUtils daoUtils;
 
     @Override
     protected int layoutID() {
@@ -53,6 +64,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        daoUtils = new DaoUtils(baseContext, DaoUtils.W_OTHER);
         initView(savedInstanceState);
         showView();
     }
@@ -73,6 +85,18 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+        OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
+        if (otherInfo != null) {
+            String json = otherInfo.getContent();
+            AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
+            if (null != result) {
+                if (TextUtils.isEmpty(result.version)||TextUtils.equals(result.version, Utils.getVersionName(baseContext))) {//无更新
+                    aboutApp.setTip("");
+                } else {//有更新
+                    aboutApp.setTip("有更新");
+                }
+            }
+        }
         String phoneNum = AppManager.getUserInfo(baseContext).getUserName();
         if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
             changeLoginPsd.setVisibility(View.GONE);
@@ -145,7 +169,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_common_question)
     public void commonQuestion() {
-//        Intent intent = new Intent(this, SalonsActivity.class);
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.aboutapp);
+        intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_common_question));
 //        startActivity(intent);
     }
 
@@ -154,7 +180,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_feedback)
     public void feedBack() {
-        NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
+        Intent intent = new Intent(this, FeedbackActivity.class);
+        startActivity(intent);
+//        NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
     }
 
     /**
@@ -164,6 +192,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     public void recommendFriend() {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.recommendFriends);
+        intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_recommend));
         startActivity(intent);
 //        Intent intent = new Intent(this, PersonalInformationActivity.class);
 //        startActivity(intent);
@@ -183,6 +212,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_about_app)
     public void aboutApp() {
-
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.aboutapp);
+        intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_about_app));
+        startActivity(intent);
     }
 }

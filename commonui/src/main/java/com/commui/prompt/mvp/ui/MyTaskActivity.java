@@ -213,9 +213,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     private void videoTaskClick() {
         if (isFromC) {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("index", 2);
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE,hashMap, Intent.FLAG_ACTIVITY_NEW_TASK);
+            NavigationUtils.jumpNativePage(this, WebViewConstant.Navigation.VIDEO_PAGE);
             this.finish();
         } else {
 
@@ -225,7 +223,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
     private void productTaskClick() {
         if (isFromC) {//跳转到查看产品页面
-            NavigationUtils.jumpNativePage(baseContext, WebViewConstant.Navigation.PRODUCT_PAGE);
+            NavigationUtils.jumpNativePage(this, WebViewConstant.Navigation.PRODUCT_PAGE);
             this.finish();
         } else {
 
@@ -234,10 +232,8 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     }
 
     private void infoTaskClick() {
-        if (isFromC) {//C端的跳转-查看资讯
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("index", 2);
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTOCMAINHONE, hashMap,Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (isFromC) {//C端的跳转-查看资讯 INFORMATION_PAGE
+            NavigationUtils.jumpNativePage(this, WebViewConstant.Navigation.INFORMATION_PAGE);
             this.finish();
         } else {//原有B端的跳转
 
