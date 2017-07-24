@@ -9,9 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -34,7 +31,6 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
-import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
@@ -66,7 +62,6 @@ import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -94,17 +89,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //    @BindView(R.id.cmain_live_dialog)
 //    LinearLayout liveDialog;
 
-    @BindView(R.id.video_live_close)
-    ImageView liveDialogClose;
+//    @BindView(R.id.video_live_close)
+//    ImageView liveDialogClose;
+//
+//    @BindView(R.id.video_live_pop)
+//    RelativeLayout livePop;
 
-    @BindView(R.id.video_live_pop)
-    RelativeLayout livePop;
-
-    @BindView(R.id.live_head)
-    ImageView liveIcon;
-
-    @BindView(R.id.live_title)
-    TextView liveTitle;
+//    @BindView(R.id.live_head)
+//    ImageView liveIcon;
+//
+//    @BindView(R.id.live_title)
+//    TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
     //    private Observable<Boolean> gestruePwdObservable;
@@ -279,8 +274,16 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity();
 
-        if (!SPreference.isThisRunOpenDownload(this))
-            new DownloadDialog(this, true, false);
+//        if (!SPreference.isThisRunOpenDownload(this))
+//        new DownloadDialog(this, true, false);
+//        downloadDialog.show();
+
+//        SignBean bean=new SignBean();
+//        bean.resultMessage="ss";
+//        bean.resultCode="2";
+//        bean.coinNum=4;
+//        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
+//        homeSignDialog.show();
     }
 
     private void switchFragment(Fragment to) {
@@ -630,7 +633,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         System.exit(1);
     }
 
-    @OnClick(R.id.video_live_pop)
+    //    @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
 //            liveDialog.setVisibility(View.GONE);
@@ -658,11 +661,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
     }
-
-    @OnClick(R.id.video_live_close)
-    public void closeLiveDialog() {
-//        liveDialog.setVisibility(View.GONE);
-    }
+//
+//    @OnClick(R.id.video_live_close)
+//    public void closeLiveDialog() {
+////        liveDialog.setVisibility(View.GONE);
+//    }
 
     @Override
     public void onBackPressed() {

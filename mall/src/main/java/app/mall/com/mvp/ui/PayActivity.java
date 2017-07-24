@@ -3,9 +3,8 @@ package app.mall.com.mvp.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,6 +25,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -48,6 +48,7 @@ import app.mall.com.model.RechargeConfigBean;
 import app.mall.com.mvp.contract.PayContract;
 import app.mall.com.mvp.presenter.PayPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
@@ -55,6 +56,8 @@ import qcloud.mall.R2;
 @Route(RouteConfig.MALL_PAY)
 public class PayActivity extends BaseActivity<PayPresenter> implements PayContract.View {
 
+    @BindView(R2.id.pay_paynumber)
+    TextView payPaynumber;
     private ImageView title_left;
     private TextView title_mid;
     private PayMethod payMethod;
@@ -134,11 +137,12 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
     @Override
     protected int layoutID() {
-        if (AppManager.isInvestor(this)){
+        if (AppManager.isInvestor(this)) {
             return R.layout.activity_recharge_c;
-        }else {
+        } else {
             return R.layout.activity_pay;
         }
+//        return R.layout.activity_pay;
     }
 
     @Override
@@ -161,7 +165,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
         up_bttag_txts.add(recharge_up_bt3_tag);
-
+        changePayNumber("301");
         pay_yundou_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -323,7 +327,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                     up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.mred));
                     up_bt_txts.get(i).setBackgroundResource(R.drawable.shap_corner_text_red);
                 } else {
-                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.black));
+                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.app_golden));
                     up_bt_txts.get(i).setBackgroundResource(R.drawable.shape_corner_txt);
                 }
             }
@@ -335,7 +339,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                 if (i == Clickpostion) {
                     pay_yundou_edit.setText(String.format("%d", rechargeConfigBean.getLevels().get(Clickpostion).getYdAmount()));
                 } else {
-                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.black));
+                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.app_golden));
                 }
             }
         }
@@ -366,44 +370,44 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
 
     @OnClick(R2.id.pay_yundou_select_method)
-    public void selectPayMothed(){
+    public void selectPayMothed() {
         Intent i = new Intent(context, PayMethodActivity.class);
         i.putExtra("payList", (Serializable) rechargeConfigBean.getPayMethodList());
         startActivityForResult(i, 101);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt3)
-    public void selRechargeCount3(){
+    public void selRechargeCount3() {
         btnKuaisuDatasite("+1000");
         addYDCount(1000);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt2)
-    public void selRechargeCount2(){
+    public void selRechargeCount2() {
         btnKuaisuDatasite("+100");
         addYDCount(100);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt1)
-    public void selRechargeCount1(){
+    public void selRechargeCount1() {
         btnKuaisuDatasite("+10");
         addYDCount(10);
     }
 
     @OnClick(R2.id.recharge_up_bt3)
-    public void selRechargeCountUp3(){
+    public void selRechargeCountUp3() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(2).getYdAmount()));
         CLickSelectbt(2);
     }
 
     @OnClick(R2.id.recharge_up_bt2)
-    public void selRechargeCountUp2(){
+    public void selRechargeCountUp2() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(1).getYdAmount()));
         CLickSelectbt(1);
     }
 
     @OnClick(R2.id.recharge_up_bt1)
-    public void selRechargeCountUp1(){
+    public void selRechargeCountUp1() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(0).getYdAmount()));
         CLickSelectbt(0);
     }
@@ -503,7 +507,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         orderUtils.setPrice(price);//单位 元
         if (AppManager.isInvestor(this)) {
             orderUtils.setWaresname("云豆-安卓-C");//开放价格名称(用户可自定义，如果不传以后台配置为准)
-        }else {
+        } else {
             orderUtils.setWaresname("云豆-安卓-B");//开放价格名称(用户可自定义，如果不传以后台配置为准)
         }
         orderUtils.setCpprivateinfo(cpprivateinfo);
@@ -529,4 +533,13 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             DataStatistApiParam.Pay_B_KuaiXuan(s);
         }
     }
+
+    private void changePayNumber(String paynumber) {
+        if (BStrUtils.isEmpty(paynumber)) return;
+        String number = "¥" + paynumber;
+        String numberFront = "支付金额：";
+        String changeNumber = numberFront + number;
+        payPaynumber.setText(SpannableUtils.setTextForeground(changeNumber, numberFront.length(), changeNumber.length()-1, R.color.app_golden));
+    }
+
 }
