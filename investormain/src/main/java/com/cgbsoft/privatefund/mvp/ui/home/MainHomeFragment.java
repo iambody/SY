@@ -175,6 +175,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         //请求数据
         getPresenter().getHomeData();
+
     }
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/

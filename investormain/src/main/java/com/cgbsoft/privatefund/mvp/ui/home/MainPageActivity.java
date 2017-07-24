@@ -9,9 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -92,9 +90,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @BindView(R.id.webView)
     BaseWebview baseWebview;
-
-    @BindView(R.id.cmain_live_dialog)
-    LinearLayout liveDialog;
+//
+//    @BindView(R.id.cmain_live_dialog)
+//    LinearLayout liveDialog;
 
     @BindView(R.id.video_live_close)
     ImageView liveDialogClose;
@@ -627,8 +625,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
-            liveDialog.setVisibility(View.GONE);
-            liveDialog.clearAnimation();
+//            liveDialog.setVisibility(View.GONE);
+//            liveDialog.clearAnimation();
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             intent.putExtra("type", "");
@@ -655,7 +653,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @OnClick(R.id.video_live_close)
     public void closeLiveDialog() {
-        liveDialog.setVisibility(View.GONE);
+//        liveDialog.setVisibility(View.GONE);
     }
 
     @Override
