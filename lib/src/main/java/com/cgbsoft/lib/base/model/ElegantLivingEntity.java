@@ -29,7 +29,16 @@ public class ElegantLivingEntity extends BaseResult<ElegantLivingEntity.Result> 
         private String url;
         private String banner;
         private String title;
+        private String code;
 
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
 
         public String getTitle() {
             return title;

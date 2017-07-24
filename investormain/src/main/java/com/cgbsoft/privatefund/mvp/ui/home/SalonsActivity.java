@@ -94,7 +94,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         if (TextUtils.isEmpty(cityCode)) {
             cityCode="全国";
         }
-        addBeanOfState();
+//        addBeanOfState();
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
@@ -201,7 +201,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 //        }
         salonsAdapter.notifyDataSetChanged();
         this.citys.clear();
-        addBeanOfState();
+//        addBeanOfState();
         this.citys.addAll(citys);
     }
 

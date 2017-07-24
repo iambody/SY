@@ -86,7 +86,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
         HashMap hashMap = new HashMap();
         hashMap.put(WebViewConstant.RIGHT_SHARE, true);
         hashMap.put(WebViewConstant.push_message_title, getResources().getString(R.string.banner_detail));
-        hashMap.put(WebViewConstant.push_message_url, elegantLivingBean.getUrl());
+        hashMap.put(WebViewConstant.push_message_url, elegantLivingBean.getUrl().concat("?promotionCode=").concat(elegantLivingBean.getCode()));
         NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
     }
 
