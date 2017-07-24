@@ -94,17 +94,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //    @BindView(R.id.cmain_live_dialog)
 //    LinearLayout liveDialog;
 
-    @BindView(R.id.video_live_close)
-    ImageView liveDialogClose;
+  //  @BindView(R.id.video_live_close)
+  //  ImageView liveDialogClose;
 
-    @BindView(R.id.video_live_pop)
-    RelativeLayout livePop;
+    //@BindView(R.id.video_live_pop)
+  //  RelativeLayout livePop;
 
-    @BindView(R.id.live_head)
-    ImageView liveIcon;
+  //  @BindView(R.id.live_head)
+//    ImageView liveIcon;
 
-    @BindView(R.id.live_title)
-    TextView liveTitle;
+//    @BindView(R.id.live_title)
+//    TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
     //    private Observable<Boolean> gestruePwdObservable;
@@ -630,7 +630,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         System.exit(1);
     }
 
-    @OnClick(R.id.video_live_pop)
+//    @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
 //            liveDialog.setVisibility(View.GONE);
@@ -659,7 +659,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
-    @OnClick(R.id.video_live_close)
+//    @OnClick(R.id.video_live_close)
     public void closeLiveDialog() {
 //        liveDialog.setVisibility(View.GONE);
     }
