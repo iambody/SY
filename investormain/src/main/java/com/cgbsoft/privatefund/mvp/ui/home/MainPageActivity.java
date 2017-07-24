@@ -31,6 +31,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
@@ -274,8 +275,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity();
 
-//        if (!SPreference.isThisRunOpenDownload(this))
-//        new DownloadDialog(this, true, false);
+        if (!SPreference.isThisRunOpenDownload(this))
+        new DownloadDialog(this, true, false);
 //        downloadDialog.show();
 
 //        SignBean bean=new SignBean();
