@@ -37,7 +37,7 @@
 
     <!--app:layout_behavior="com.cgbsoft.privatefund.widget.navigation.ScrollingBehavior"-->
 
-    <include
+    <!--<include
         android:id="@+id/cmain_live_dialog"
         layout="@layout/cmain_live_dialog"
         android:layout_gravity="bottom"
@@ -45,5 +45,5 @@
         android:layout_height="122dp"
         android:layout_marginBottom="15dp"
         android:visibility="gone"
-        />
+        />-->
 </android.support.design.widget.CoordinatorLayout>
