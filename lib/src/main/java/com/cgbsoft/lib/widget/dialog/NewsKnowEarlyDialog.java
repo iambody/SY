@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import com.cgbsoft.lib.R;
 
 /**
- * desc 获得云豆奖励dialog
+ * desc 私享云早知道dialog
  * author sunfei
  */
 public class NewsKnowEarlyDialog extends BaseDialog implements View.OnClickListener {
