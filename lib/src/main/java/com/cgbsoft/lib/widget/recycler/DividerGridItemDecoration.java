@@ -80,7 +80,6 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             int spanSize = ((GridLayoutManager) layoutManager).getSpanSizeLookup().getSpanSize(pos);
-            LogUtils.Log("aaa","spansize==="+spanSize+"-----pos==="+pos);
             if (spanSize==spanCount){
                 if (pos>0&&pos%2!=0){
                     temp--;

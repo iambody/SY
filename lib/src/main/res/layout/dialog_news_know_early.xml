@@ -52,7 +52,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/news_knows_early_bt_left"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:text="返回"
                     />
                 <Button
@@ -61,7 +61,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/news_knows_early_bt_right"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:text="查看"
                     />
             </LinearLayout>
@@ -70,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/news_know_early_top"
+            android:paddingRight="15dp"
             android:layout_centerHorizontal="true"
             />
 

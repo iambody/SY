@@ -15,6 +15,7 @@ import com.cgbsoft.lib.base.model.ElegantGoodsBeanInterface;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.string.MySpannableString;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,7 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
             NormalItemHolder normalHolder = (NormalItemHolder) holder;
             ElegantGoodsEntity.AllNewsItemBean bean = (ElegantGoodsEntity.AllNewsItemBean) elegantGoodsBeanInterface;
             String imgUrl = bean.getImageUrl();
+            LogUtils.Log("aaa","imgUrl==="+imgUrl+"---name==="+bean.getGoodsName());
             Imageload.display(context,imgUrl,normalHolder.imgIv);
             String goodsName = bean.getGoodsName();
             if (!TextUtils.isEmpty(goodsName) && goodsName.contains("【") && goodsName.contains("】")) {
