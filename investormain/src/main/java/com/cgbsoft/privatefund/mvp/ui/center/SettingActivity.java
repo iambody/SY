@@ -97,7 +97,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
                 }
             }
         }
-        String phoneNum = AppManager.getUserInfo(baseContext).getUserName();
+        String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
         if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
             changeLoginPsd.setVisibility(View.GONE);
         } else {

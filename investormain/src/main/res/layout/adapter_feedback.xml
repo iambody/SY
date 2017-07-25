@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="78dp"
+    android:layout_height="78dp">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="78dp"
         android:layout_height="78dp"
-        android:scaleType="centerInside" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_asset_prove_upload"
+        />
 
 </RelativeLayout>

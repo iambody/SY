@@ -159,7 +159,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-        if (isFromShowAssert) {
+        if (isFromShowAssert||modifyGesturePassword) {
             GestureVerifyActivity.this.finish();
         }
         return;
