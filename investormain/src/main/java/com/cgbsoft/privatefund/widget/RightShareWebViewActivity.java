@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.widget;
 
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
