@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -34,6 +34,7 @@ import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.utils.RongConnect;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -53,7 +54,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
-    private final int defaultTime = 7000;
+    private final int defaultTime = 4000;
     private final int visableBtnTime = 2000;
     private final int waitTime = 5000;
     private final int noNetTime = 3000;
@@ -83,7 +84,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
-        SPreference.saveThisRunOpenDownload(this,  false);
+        SPreference.saveThisRunOpenDownload(this, false);
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
@@ -99,9 +100,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 
@@ -244,6 +245,14 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
+        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
+
+        if (AppManager.getIsLogin(getApplicationContext())) {
+            if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), false)) { // 手势密码验证
+                finish();
+                return;
+            }
+        }
         if (isLoad) {
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
             WelcomeActivity.this.finish();
@@ -276,7 +285,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
             switch (which) {
                 case BUTTON_WAIT:
-                    btn_wel_cancle.setVisibility(View.VISIBLE);
+//                    btn_wel_cancle.setVisibility(View.VISIBLE);
                     break;
                 case DEFAULT_WAIT:
                 case WAIT:

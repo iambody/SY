@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -217,6 +218,10 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     public void regSucc() {
 //        openActivity(MainPageActivity.class);
+        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
+            finish();
+            return;
+        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
         finish();
     }

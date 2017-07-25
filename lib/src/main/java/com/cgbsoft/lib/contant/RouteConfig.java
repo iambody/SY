@@ -93,4 +93,5 @@ public class RouteConfig {
 
     //跳转到登录接口
     public static final String GOTO_LOGIN ="enter_loginactivity";
+    public static final String GOTO_PDF_ACTIVITY = "gotosharepdf";
 }

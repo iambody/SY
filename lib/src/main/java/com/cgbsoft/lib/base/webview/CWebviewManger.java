@@ -336,6 +336,8 @@ public class CWebviewManger {
             switchShareButton();
         } else if (action.contains("showPayItem")){
             showPayItem(action);
+        }else if(action.contains("viewpdf")){
+            gotoScretPdf(action);
         }
     }
 
@@ -404,10 +406,10 @@ public class CWebviewManger {
             String[] split = urcodeAction.split(":");
             String string = split[2];
 
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("pdfurl_tag", split[2] + ":" + split[3]);
-            map.put("pdftitle_tag", split[4]);
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SECRET_PDF_ACTIVITY, map);
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("pdfurl",split[2]+":"+split[3]);
+            map.put("pdftitle", split[4] );
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PDF_ACTIVITY,map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1096,21 +1098,25 @@ public class CWebviewManger {
         ((Activity) context).startActivityForResult(i, 300);
     }
 
-//    public void secretviewpdf(String action) {
-//        PromptManager.ShowCustomToast(context,"展示PDF事件");
-////        try {
-////            String baseParams = URLDecoder.decode(action, "utf-8");
-////            String[] split = baseParams.split(":");
-////            String padUrl = split[2];
-////            Intent i = new Intent(context, PDFActivity.class);
-////            i.putExtra(WebViewConstant.pdf_url, padUrl);
-////            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
-////            i.putExtra("isSecret", 1);
-////            context.startActivity(i);
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-//    }
+    public void toviewpdf(String action) {
+        PromptManager.ShowCustomToast(context,"展示PDF事件");
+        try {
+            String baseParams = URLDecoder.decode(action, "utf-8");
+            String[] split = baseParams.split(":");
+            String padUrl = split[2];
+//            Intent i = new Intent(context, PDFActivity.class);
+//            i.putExtra(WebViewConstant.pdf_url, padUrl);
+//            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
+//            i.putExtra("isSecret", 1);
+//            context.startActivity(i);
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("pdfurl",padUrl+":"+split[3]);
+            map.put("pdftitle",split[4]);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOPRODUCTDETAIL, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 //    private void drawAlert(String action) {
 //        EventBus.getDefault().post(new Redeem("chexiao"));

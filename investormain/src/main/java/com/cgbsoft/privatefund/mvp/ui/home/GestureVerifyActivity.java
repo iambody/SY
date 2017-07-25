@@ -93,6 +93,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     }
 
     private void setUpViews() {
+        backView.setVisibility(modifyGesturePassword || isFromCloseGesturePassword ? View.VISIBLE : View.GONE);
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
@@ -188,7 +189,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @OnClick(R.id.text_cancel)
     public void backText() {
-        System.exit(0);
+        finish();
     }
 
     private void validateResetPassword(final Dialog dialog, String password) {
