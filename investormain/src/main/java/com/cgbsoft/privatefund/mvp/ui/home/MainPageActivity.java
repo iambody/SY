@@ -428,6 +428,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             @Override
             protected void onRxError(Throwable error) {
+
             }
         });
 
@@ -439,7 +440,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 if (aBoolean) {
                     getPresenter().getUserInfo(false);
                 } else {//需要刷新数据
-
                     getPresenter().getUserInfo(true);
                 }
             }
