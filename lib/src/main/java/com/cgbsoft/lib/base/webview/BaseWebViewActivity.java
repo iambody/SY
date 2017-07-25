@@ -426,7 +426,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             secItem.setVisible(false);
         }
 
-        if (title.contains("活动")){
+        if (title != null && title.contains("活动")) {
             getMenuInflater().inflate(R.menu.page_menu, menu);
             rightItem = menu.findItem(R.id.firstBtn);
             MenuItem secItem = menu.findItem(R.id.secondBtn);

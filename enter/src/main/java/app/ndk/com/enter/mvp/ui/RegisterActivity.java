@@ -218,11 +218,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     public void regSucc() {
-//        openActivity(MainPageActivity.class);
-        if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), true)) {
-            finish();
-            return;
-        }
         Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
         finish();
     }

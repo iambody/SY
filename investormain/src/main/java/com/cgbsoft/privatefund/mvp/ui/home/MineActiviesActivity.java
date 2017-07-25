@@ -82,6 +82,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
             Intent intent = new Intent(this, BaseWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
+            intent.putExtra(WebViewConstant.push_message_title, mineActivitesItem.getTitle());
             intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
             startActivity(intent);
         });
