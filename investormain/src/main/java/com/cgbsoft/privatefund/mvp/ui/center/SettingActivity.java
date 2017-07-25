@@ -170,9 +170,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @OnClick(R.id.sin_common_question)
     public void commonQuestion() {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.aboutapp);
+        intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.common_problem);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_common_question));
-//        startActivity(intent);
+        startActivity(intent);
     }
 
     /**

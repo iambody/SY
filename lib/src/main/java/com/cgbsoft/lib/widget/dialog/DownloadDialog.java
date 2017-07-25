@@ -4,17 +4,25 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BuildConfig;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
@@ -86,9 +94,15 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         dialog = new BaseDialog(_context, R.style.dialog_comment_style);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.dialog_download_c);
+        View inflate = LayoutInflater.from(_context).inflate(R.layout.dialog_download_c, null);
+        dialog.setContentView(inflate);
         window = dialog.getWindow();
-
+//配置信息
+        WindowManager.LayoutParams wparams = window.getAttributes();
+        wparams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wparams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        wparams.gravity = Gravity.BOTTOM;
+        window.setAttributes(wparams);
 //        window.setGravity(Gravity.CENTER);
         window.setWindowAnimations(R.style.AnimBottom);
 
@@ -100,7 +114,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         btn_vcd_sure.setOnClickListener(this);
         iv_vcd_cancel.setOnClickListener(this);
         if (AppManager.isInvestor(_context)) {
-            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
+//            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
             pb_vcd.setProgressDrawable(_context.getResources().getDrawable(R.drawable.orange_progress_bar));
         }
         btn_vcd_sure.setText("现在升级");

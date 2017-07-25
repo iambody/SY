@@ -2,35 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent1"
-
-    >
+    android:background="@color/dialog_transparent1">
 
     <LinearLayout
         android:id="@+id/dialog_sign_uplay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/transparent"
+        android:layout_marginLeft="@dimen/ui_40_dip"
+        android:layout_marginRight="@dimen/ui_40_dip"
+        android:background="@drawable/shape_sign_bg"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
-                android:src="@drawable/updata_dialog_bg" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/updata_dialog_bg">
 
             <TextView
                 android:id="@+id/new_version_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="1878"
                 android:textColor="@color/white_light"
+                android:text="1878"
                 android:textSize="@dimen/dimens_sp_16" />
         </RelativeLayout>
 
@@ -49,12 +44,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:text="@string/updata_wifi_hint"
+            android:textSize="12sp"
             android:textColor="@color/gray_font"
-            android:textSize="12sp" />
-
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/updata_wifi_hint"/>
         <ProgressBar
             android:id="@+id/pb_vcd"
             style="@style/progress_bar_horizontal_style"
@@ -63,7 +57,6 @@
             android:indeterminate="false"
             android:indeterminateOnly="false"
             android:visibility="invisible" />
-
         <TextView
             android:id="@+id/btn_vcd_sure"
             android:layout_width="match_parent"
@@ -72,8 +65,8 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/updata_app"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimens_sp_17" />
+            android:textSize="@dimen/dimens_sp_17"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 
