@@ -9,9 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -66,7 +63,6 @@ import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -94,15 +90,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //    @BindView(R.id.cmain_live_dialog)
 //    LinearLayout liveDialog;
 
-  //  @BindView(R.id.video_live_close)
-  //  ImageView liveDialogClose;
+//    @BindView(R.id.video_live_close)
+//    ImageView liveDialogClose;
+//
+//    @BindView(R.id.video_live_pop)
+//    RelativeLayout livePop;
 
-    //@BindView(R.id.video_live_pop)
-  //  RelativeLayout livePop;
-
-  //  @BindView(R.id.live_head)
+//    @BindView(R.id.live_head)
 //    ImageView liveIcon;
-
+//
 //    @BindView(R.id.live_title)
 //    TextView liveTitle;
 
@@ -171,19 +167,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
-        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
-        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
-            @Override
-            protected void onEvent(Integer integer) {
-                onTabSelected(integer, 0);
-                bottomNavigationBar.selectNavaigationPostion(integer);
-            }
 
-            @Override
-            protected void onRxError(Throwable error) {
-
-            }
-        });
 
 //        initActionPoint();
 
@@ -211,6 +195,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             initDayTask();
             initRongInterface();
         }
+        RxBus.get().post(RxConstant.LOGIN_KILL, 1);
     }
 
     @Override
@@ -281,6 +266,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         if (!SPreference.isThisRunOpenDownload(this))
             new DownloadDialog(this, true, false);
+//        downloadDialog.show();
+
+//        SignBean bean=new SignBean();
+//        bean.resultMessage="ss";
+//        bean.resultCode="2";
+//        bean.coinNum=4;
+//        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
+//        homeSignDialog.show();
     }
 
     private void switchFragment(Fragment to) {
@@ -525,6 +518,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
+        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                onTabSelected(integer, 0);
+                bottomNavigationBar.selectNavaigationPostion(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -618,7 +624,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (null != userLayObservable) {
             RxBus.get().unregister(RxConstant.MAIN_FRESH_LAY, userLayObservable);
         }
-
+        if (null != showIndexObservable) {
+            RxBus.get().unregister(RxConstant.INVERSTOR_MAIN_PAGE, showIndexObservable);
+        }
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         if (isOnlyClose) {
@@ -630,7 +638,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         System.exit(1);
     }
 
-//    @OnClick(R.id.video_live_pop)
+    //    @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
 //            liveDialog.setVisibility(View.GONE);
@@ -658,11 +666,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
     }
-
+//
 //    @OnClick(R.id.video_live_close)
-    public void closeLiveDialog() {
-//        liveDialog.setVisibility(View.GONE);
-    }
+//    public void closeLiveDialog() {
+////        liveDialog.setVisibility(View.GONE);
+//    }
 
     @Override
     public void onBackPressed() {

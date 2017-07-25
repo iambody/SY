@@ -30,7 +30,6 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.RegisterContract;
 import app.ndk.com.enter.mvp.presenter.RegisterPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -128,7 +127,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @OnClick(R2.id.iv_ar_back)
     void backClick() {
         DataStatistApiParam.onStaticToCRegeistBack();
-        openActivity(LoginActivity.class);
+//        openActivity(LoginActivity.class);
         finish();
     }
 

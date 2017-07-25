@@ -21,22 +21,27 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_10_dip">
 
             <ImageView
                 android:id="@+id/iv_ab_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="@dimen/ui_15_dip"
+                android:src="@drawable/ic_toolbar_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="24dp"
+
                 android:text="@string/bind_phone"
-                android:textColor="@color/orange"
+
+                android:textColor="@color/black"
                 android:textSize="@dimen/dimens_sp_18" />
 
             <TextView
@@ -44,18 +49,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:paddingBottom="@dimen/ui_5_dip"
-                android:paddingLeft="@dimen/ui_10_dip"
-                android:paddingRight="@dimen/ui_10_dip"
-                android:paddingTop="@dimen/ui_5_dip"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
                 android:text="@string/ab_jump_next_str"
-                android:textColor="@color/orange_dark"
-                android:textSize="@dimen/dimens_sp_16"
-                android:visibility="gone" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_16" />
 
-            />
+
         </RelativeLayout>
 
 
@@ -66,22 +66,55 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="@dimen/ui_80_dip">
 
-            <EditText
-                android:id="@+id/et_ab_username"
-                style="@style/normal_edit"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:hint="@string/enter_phone_hint_str"
-                android:inputType="number"
-                android:maxLength="11"
-                android:maxLines="1"
-                android:saveEnabled="false"
-                android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:layout_toLeftOf="@+id/btn_ab_check"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_ab_username"
+                        style="@style/normal_edit1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:hint="@string/enter_phone_hint_str"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:saveEnabled="false"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+
+                    <ImageView
+                        android:id="@+id/iv_phone_del_un"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/et_ab_username"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="@dimen/ui_5_dip"
+                        android:src="@drawable/ic_et_del"
+                         android:visibility="invisible"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ui_1_dip"
+                    android:src="@color/app_split_line" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_ab_check"
@@ -97,9 +130,6 @@
         </RelativeLayout>
 
 
-        <View style="@style/normal_line" />
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +139,7 @@
 
             <EditText
                 android:id="@+id/et_ab_check"
-                style="@style/normal_edit"
+                style="@style/normal_edit1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -134,7 +164,7 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <View style="@style/normal_line" />
+        <View style="@style/normal_line3" />
 
         <TextView
             android:layout_width="match_parent"
