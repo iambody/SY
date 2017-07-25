@@ -50,6 +50,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
@@ -471,10 +472,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void toAssertMatchActivit() {
         String url = CwebNetConfig.mineAssertOrder;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url.concat("?labelType="));
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.account_bank_asset_zuhe));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), RightShareWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url.concat("?labelType="));
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_bank_asset_zuhe));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     private void toInvestorCarlendarActivity() {
@@ -600,8 +602,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private boolean isNullPrivateBank(MineModel mineModel) {
         if (mineModel.getBank() == null ||
-                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || Integer.parseInt(mineModel.getBank().getDebtAmt()) == 0) &&
-                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || Integer.parseInt(mineModel.getBank().getEquityAmt()) == 0))) {
+                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || "0".equals(mineModel.getBank().getDebtAmt())) &&
+                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || "0".equals(mineModel.getBank().getEquityAmt())))) {
             return true;
         }
         return false;
@@ -656,16 +658,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             for (int i= 0; i < list.size(); i++) {
                 MineModel.HealthItem healthItem  = list.get(i);
                 TextView textView = new TextView(getActivity());
+                textView.setPadding(5, 0, 0, 0);
                 textView.setGravity(Gravity.CENTER);
+                textView.setSingleLine(true);
+                textView.setEllipsize(TextUtils.TruncateAt.END);
                 textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
-                textView.setText(healthItem.getTitle());
+                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
                 textView.setTextColor(Color.parseColor("#5a5a5a"));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 textView.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
                     hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                    hashMap.put(WebViewConstant.right_message_index, true);
+                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
                 });
                 health_had_data_ll.addView(textView);
                 if (i != list.size() -1) {
