@@ -8,6 +8,7 @@ import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
@@ -84,8 +85,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
-//        discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
-//        initBanner(DiscoverModel.formatBanner(discoverModel.banner));
+        discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
+        initBanner(DiscoverModel.formatBanner(discoverModel.banner));
         initIndicatorList(discoverModel);
     }
 
