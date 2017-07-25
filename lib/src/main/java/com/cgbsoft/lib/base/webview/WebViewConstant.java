@@ -25,6 +25,7 @@ public class WebViewConstant {
 
     /**
      * 需要回调的指令集
+     *
      */
     public class AppCallBack {
         public static final String BUY_NEW = "app:buynow";
