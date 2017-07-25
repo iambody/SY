@@ -65,7 +65,14 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
-
+    <style name="normal_edit1">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/gray_font</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColorHint">@color/tv_gray</item>
+    </style>
     <style name="normal_line">
         <item name="android:layout_marginLeft">40dp</item>
         <item name="android:layout_marginRight">40dp</item>
@@ -73,7 +80,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
-
+    <style name="normal_line3">
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:background">@color/app_split_line</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
     <style name="normal_line1">
         <item name="android:layout_marginLeft">60dp</item>
         <item name="android:layout_marginRight">40dp</item>

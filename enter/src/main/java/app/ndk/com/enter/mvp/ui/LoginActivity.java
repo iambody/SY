@@ -56,6 +56,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import rx.Observable;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -205,9 +206,29 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         getPresenter().toGetPublicKey();
         initLocation();
         //如果是正常进来的就偷偷加载游客信息
-        if (!isFromInside)
+        if (isFromInside) {
+            btnStroll.setVisibility(View.INVISIBLE);
+        } else {
             getPresenter().invisterLogin(baseContext);
+        }
+        initRxObservable();
+    }
 
+    private Observable<Integer> killSelfRxObservable;
+
+    private void initRxObservable() {
+        killSelfRxObservable = RxBus.get().register(RxConstant.LOGIN_KILL, Integer.class);
+        killSelfRxObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                baseContext.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void initinSideComeId() {
@@ -243,6 +264,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onDestroy() {
         super.onDestroy();
         locationManger.unregistLocation();
+        if (null != killSelfRxObservable) {
+            RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, killSelfRxObservable);
+        }
     }
 
     @Override
@@ -349,11 +373,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
-//            RxBus.get().post(RxConstant.MAIN_FRESH_WEB_CONFIG, 1);
             RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 1);
-
-//            BaseWebview view=new BaseWebview(baseContext,false);
-//            view.loadUrl(CwebNetConfig.pageInit);
 
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
@@ -374,7 +394,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(this, BindPhoneActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     //游客登录成功

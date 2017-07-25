@@ -11,6 +11,7 @@
     <string name="al_forget_str">忘记密码?</string>
     <string name="al_wx_login_strs">微信登录</string>
     <string name="un_null_str">请输入您的账号</string>
+    <string name="phone_null_str">请输入您的手机号</string>
     <string name="pw_null_str">请输入您的密码</string>
     <string name="company_name">北京盈泰财富云电子商务有限公司</string>
     <string name="web_address">www.caifuyun.cn</string>

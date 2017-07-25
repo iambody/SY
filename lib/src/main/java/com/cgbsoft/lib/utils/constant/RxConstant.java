@@ -92,4 +92,6 @@ public interface RxConstant {
 
     //商城删除地址
     String DELETE_ADDRESS = "delete_address";
+
+    String LOGIN_KILL="login_kill";
 }

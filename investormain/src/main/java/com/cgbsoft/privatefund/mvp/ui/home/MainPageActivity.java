@@ -167,19 +167,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
-        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
-        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
-            @Override
-            protected void onEvent(Integer integer) {
-                onTabSelected(integer, 0);
-                bottomNavigationBar.selectNavaigationPostion(integer);
-            }
 
-            @Override
-            protected void onRxError(Throwable error) {
-
-            }
-        });
 
 //        initActionPoint();
 
@@ -207,6 +195,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             initDayTask();
             initRongInterface();
         }
+        RxBus.get().post(RxConstant.LOGIN_KILL, 1);
     }
 
     @Override
@@ -276,7 +265,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setActivity();
 
         if (!SPreference.isThisRunOpenDownload(this))
-        new DownloadDialog(this, true, false);
+            new DownloadDialog(this, true, false);
 //        downloadDialog.show();
 
 //        SignBean bean=new SignBean();
@@ -529,6 +518,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+        showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
+        showIndexObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                onTabSelected(integer, 0);
+                bottomNavigationBar.selectNavaigationPostion(integer);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -622,7 +624,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (null != userLayObservable) {
             RxBus.get().unregister(RxConstant.MAIN_FRESH_LAY, userLayObservable);
         }
-
+        if (null != showIndexObservable) {
+            RxBus.get().unregister(RxConstant.INVERSTOR_MAIN_PAGE, showIndexObservable);
+        }
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         if (isOnlyClose) {
