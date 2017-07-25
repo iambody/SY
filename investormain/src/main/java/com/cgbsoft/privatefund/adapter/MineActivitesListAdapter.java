@@ -93,6 +93,8 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         Imageload.display(ApContext, activitesItem.getImageUrl(), lsViewHolder.imageViewLogo);
         lsViewHolder.textViewSpeaker.setText(activitesItem.getSpeaker());
         lsViewHolder.linearLayoutPrompt.setVisibility(TextUtils.isEmpty(activitesItem.getPlaybackVideoUrl()) ? View.GONE : View.VISIBLE);
+        lsViewHolder.endStatusImageView.setVisibility("0".equals(activitesItem.getState()) ? View.VISIBLE : View.GONE);
+        lsViewHolder.endStatusLinearlayout.setVisibility("0".equals(activitesItem.getState()) ? View.VISIBLE : View.GONE);
 
         lsViewHolder.textViewPlayLook.setOnClickListener(v -> {
             MineActivitesModel.ActivitesItem activitesItem1 = listModelListdata.get(position);
@@ -131,6 +133,10 @@ public class MineActivitesListAdapter extends RecyclerView.Adapter implements Vi
         TextView textViewStatusDesc;
         @BindView(R.id.mine_play_look)
         TextView textViewPlayLook;
+        @BindView(R.id.mine_activites_end_status)
+        LinearLayout endStatusLinearlayout;
+        @BindView(R.id.mine_activity_end_status)
+        ImageView endStatusImageView;
 
         MyActivitesHolder(View view) {
             super(view);

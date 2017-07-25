@@ -120,12 +120,18 @@
                 android:text="@string/account_info_mine_yundou"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
+            <com.cgbsoft.lib.widget.AutoAjustSizeTextView
+                android:id="@+id/mine_yundou_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/mine_account_info_value"
-                android:text="2350"
-                android:id="@+id/mine_yundou_id"/>
+                style="@style/mine_account_info_value" />
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--style="@style/mine_account_info_value"-->
+                <!--android:text="2350"-->
+                <!--android:id="@+id/mine_yundou_id"/>-->
         </LinearLayout>
 
         <LinearLayout

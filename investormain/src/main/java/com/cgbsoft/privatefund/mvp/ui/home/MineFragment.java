@@ -39,6 +39,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.lib.widget.AutoAjustSizeTextView;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -85,7 +86,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView textViewCaifu;
 
     @BindView(R.id.mine_yundou_id)
-    TextView textViewYundou;
+    AutoAjustSizeTextView textViewYundou;
 
     @BindView(R.id.mine_private_banker_id)
     TextView textViewPrivateBanker;
