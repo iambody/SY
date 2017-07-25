@@ -50,6 +50,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.ArrayList;
@@ -167,7 +168,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private boolean showAssert;
     private boolean isNotFirstLook;
     private boolean isLoading;
-    private static final long DEALAY = 1000;
+    private static final long DEALAY = 500;
     private static final int WAIT_CHECK = 1;
     private static final int CHECK_PAST = 2;
     private static final int CHECK_FAILURE = 3;
@@ -178,7 +179,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            handler.postDelayed(runnable, DEALAY);
+            float currentProgress = (float) (roundProgressbar.getProgress());
+//         float guQuanValue = Float.parseFloat(mineModel.getBank().getEquityRatio());
+            float zhaiQuanValue = Float.parseFloat(mineModel.getBank().getDebtRatio());
+            if (currentProgress >= zhaiQuanValue) {
+                return;
+            }
+            roundProgressbar.setProgress((int)currentProgress + 1);
         }
     };
 
@@ -356,15 +363,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
      private Runnable runnable = () -> {
-         float currentProgress = (float) (roundProgressbar.getProgress());
-         float guQuanValue = Float.parseFloat(mineModel.getBank().getEquityRatio());
-//         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
-         if (currentProgress >= guQuanValue) {
-             return;
+         Message.obtain(handler).sendToTarget();
+         try {
+             Thread.sleep(50);
+         } catch (InterruptedException e) {
+             e.printStackTrace();
          }
-         roundProgressbar.setProgress((int)currentProgress + 1);
-         handler.sendMessage(Message.obtain());
-    };
+     };
 
     @OnClick(R.id.account_info_yundou_value_ll)
     void gotoYundouctivity() {
@@ -390,7 +395,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_signin));
-        intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
     }
 
@@ -471,10 +475,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void toAssertMatchActivit() {
         String url = CwebNetConfig.mineAssertOrder;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url.concat("?labelType="));
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.account_bank_asset_zuhe));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), RightShareWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url.concat("?labelType="));
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_bank_asset_zuhe));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     private void toInvestorCarlendarActivity() {
@@ -564,11 +569,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
             this.mineModel = mineModel;
-            handler.postDelayed(runnable, DEALAY);
             initUserInfo(mineModel);
             initPrivateBank(mineModel);
             initOrderView(mineModel);
             initHealthView(mineModel);
+            new Thread(runnable).start();
         }
     }
 
@@ -600,43 +605,38 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private boolean isNullPrivateBank(MineModel mineModel) {
         if (mineModel.getBank() == null ||
-                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || Integer.parseInt(mineModel.getBank().getDebtAmt()) == 0) &&
-                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || Integer.parseInt(mineModel.getBank().getEquityAmt()) == 0))) {
+                ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || "0".equals(mineModel.getBank().getDebtAmt())) &&
+                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || "0".equals(mineModel.getBank().getEquityAmt())))) {
             return true;
         }
         return false;
     }
 
     private void initOrderView(MineModel mineModel) {
+        hideOrderNumber(account_order_send_text);
+        hideOrderNumber(account_order_receive_text);
         if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
             for (MineModel.Orders orders : mineModel.mallOrder) {
                 TextView current = null;
-                switch (orders.getGoodsStatusCode()) {
-                    case "1":
-                        current = account_order_send_text;
-                        break;
-                    case "2":
-                        current = account_order_receive_text;
-                        break;
-                    case "3":
-                        current = account_order_finished_text;
-                        break;
-                    case "4":
-                        current = account_order_sale_text;
-                        break;
-                    case "0":
-                        current = account_order_all_text;
-                        break;
+                if ("1".equals(orders.getGoodsStatusCode())) {
+                    current = account_order_send_text;
+                } else if ("2".equals(orders.getGoodsStatusCode())) {
+                    current = account_order_receive_text;
                 }
-                if (orders.getCount() > 0) {
+
+                if (orders.getCount() > 0 && current != null) {
                     ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
                 } else {
-                    if (current.getTag() != null) {
-                        ((BadgeView)current.getTag()).setVisibility(View.INVISIBLE);
-                        ((BadgeView)current.getTag()).hide();
-                    }
+                    hideOrderNumber(current);
                 }
             }
+        }
+    }
+
+    private void hideOrderNumber(TextView textView) {
+        if (textView.getTag() != null) {
+            ((BadgeView)textView.getTag()).setVisibility(View.INVISIBLE);
+            ((BadgeView)textView.getTag()).hide();
         }
     }
 
@@ -656,16 +656,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             for (int i= 0; i < list.size(); i++) {
                 MineModel.HealthItem healthItem  = list.get(i);
                 TextView textView = new TextView(getActivity());
+                textView.setPadding(5, 0, 0, 0);
                 textView.setGravity(Gravity.CENTER);
+                textView.setSingleLine(true);
+                textView.setEllipsize(TextUtils.TruncateAt.END);
                 textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
-                textView.setText(healthItem.getTitle());
+                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
                 textView.setTextColor(Color.parseColor("#5a5a5a"));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 textView.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
                     hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                    hashMap.put(WebViewConstant.right_message_index, true);
+                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
                 });
                 health_had_data_ll.addView(textView);
                 if (i != list.size() -1) {

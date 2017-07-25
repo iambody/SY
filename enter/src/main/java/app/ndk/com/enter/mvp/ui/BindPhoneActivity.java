@@ -26,6 +26,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
 import app.ndk.com.enter.mvp.presenter.BindPhonePresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -59,6 +60,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 
     @BindView(R2.id.btn_ab_ok)
     Button btn_ab_ok;//完成
+    @BindView(R2.id.iv_phone_del_un)
+    ImageView ivPhoneDelUn;
 
     private LoadingDialog mLoadingDialog;//等待弹窗
     private boolean isUsernameInput, isCheckInput;
@@ -91,8 +94,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 ////            tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
 ////            tv_ab_next.setTextColor(0xffffffff);
 //        }
-        et_ab_username.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
-        et_ab_check.addTextChangedListener(new BindTextWatcher(CHECK_KEY));
+        et_ab_check.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
+        et_ab_username.addTextChangedListener(new BindTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
         defaultDialog = new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
             @Override
@@ -114,7 +117,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
      */
     @OnClick(R2.id.iv_ab_back)
     void backClick() {
-        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
+//        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }
 
@@ -134,8 +137,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
      */
     @OnClick(R2.id.btn_ab_check)
     void checkClick() {
-        if (!isUsernameInput) {
-            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
+        if (!isCheckInput) {
+            MToast.makeText(getApplicationContext(), getString(R.string.phone_null_str), Toast.LENGTH_SHORT);
             return;
         }
         defaultDialog.show();
@@ -170,6 +173,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     public void sendSucc() {
         btn_ab_check.setEnabled(false);
         btn_ab_check.setBackgroundResource(R.drawable.bg_write_down);
+        btn_ab_check.setTextColor(getResources().getColor(R.color.gray_font));
         btn_ab_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
         lastInputPhoneNum = et_ab_username.getText().toString();
         countDownSub = Observable.interval(1000, TimeUnit.MILLISECONDS)
@@ -216,11 +220,20 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     }
 
 
-
     @OnClick(R2.id.tv_ab_next)
     public void onViewClicked() {//跳转首页
-//        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
-//        finish();
+        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
+        finish();
+    }
+
+
+    @OnClick(R2.id.iv_phone_del_un)
+    public void onphonedelViewClicked() {
+
+        if (et_ab_username.getText().toString().length() > 0) {
+            et_ab_username.setText("");
+        }
+        ivPhoneDelUn.setVisibility(View.GONE);
     }
 
 
@@ -246,6 +259,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
                     break;
                 case CHECK_KEY:
                     isCheckInput = isTextHasLength;
+                    ivPhoneDelUn.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
             }
         }

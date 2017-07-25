@@ -1332,8 +1332,6 @@ public class CWebviewManger {
      */
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
-
-
             String baseParams = URLDecoder.decode(data, "utf-8");
             LogUtils.Log("s","s");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
@@ -1381,7 +1379,9 @@ public class CWebviewManger {
         if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL)) {
+                actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)) {
+//            actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
             String[] split = actionUrl.split(":");
             try {
                 String url = URLDecoder.decode(split[2], "utf-8");

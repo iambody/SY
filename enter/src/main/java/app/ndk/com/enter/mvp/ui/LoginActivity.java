@@ -56,6 +56,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import rx.Observable;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -205,14 +206,36 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         getPresenter().toGetPublicKey();
         initLocation();
         //如果是正常进来的就偷偷加载游客信息
-        if (!isFromInside)
+        if (isFromInside) {
+            btnStroll.setVisibility(View.INVISIBLE);
+        } else {
             getPresenter().invisterLogin(baseContext);
+        }
+        initRxObservable();
+    }
 
+    private Observable<Integer> killSelfRxObservable;
+
+    private void initRxObservable() {
+        killSelfRxObservable = RxBus.get().register(RxConstant.LOGIN_KILL, Integer.class);
+        killSelfRxObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                baseContext.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     private void initinSideComeId() {
         loginCancle.setVisibility(View.VISIBLE);
-        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
+//        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
+        btn_al_login.setBackground(getResources().getDrawable(R.drawable.shape_btn_normal_down));
+
         btn_al_login.setTextColor(getResources().getColor(R.color.white));
         //开始展示
         enterLoginWxloginLay.setVisibility(View.GONE);
@@ -241,6 +264,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onDestroy() {
         super.onDestroy();
         locationManger.unregistLocation();
+        if (null != killSelfRxObservable) {
+            RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, killSelfRxObservable);
+        }
     }
 
     @Override
@@ -274,10 +300,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-//        getPresenter().invisterLogin(baseContext);
-//
-//        dialg.show();
-//        if (true) return;
+        //需要判断
         LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))
             getPresenter().toNormalLogin(mLoadingDialog, et_al_username.getText().toString(), et_al_password.getText().toString(), publicKey, false);
@@ -323,7 +346,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @OnClick(R2.id.tv_al_forget)
@@ -334,7 +357,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     //点击微信上边布局 显示微信登录的按钮页面
@@ -350,11 +373,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
-//            RxBus.get().post(RxConstant.MAIN_FRESH_WEB_CONFIG, 1);
             RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 1);
-
-//            BaseWebview view=new BaseWebview(baseContext,false);
-//            view.loadUrl(CwebNetConfig.pageInit);
 
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
@@ -375,7 +394,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(this, BindPhoneActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     //游客登录成功
@@ -484,7 +503,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
+            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
+
             switch (which) {
+
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
                     iv_al_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
@@ -555,11 +577,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void visitorLogin() {
         AppInfStore.saveIsVisitor(baseContext, true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
-
         //xxxxxxxxxxx
 
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
-
         finish();
     }
+
+    /*是否符合条件*/
+    boolean isFixAdjust() {
+        String userName = et_al_username.getText().toString().trim();
+        String userPwd = et_al_password.getText().toString().trim();
+        if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
+            return false;
+        }
+        if (BStrUtils.isEmpty(userPwd)) {
+            return false;
+        }
+        return true;
+    }
+
+
 }

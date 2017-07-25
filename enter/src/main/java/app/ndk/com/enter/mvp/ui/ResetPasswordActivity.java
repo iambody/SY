@@ -30,6 +30,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 import app.ndk.com.enter.mvp.presenter.ResetPasswordPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -46,6 +47,8 @@ import rx.android.schedulers.AndroidSchedulers;
 public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> implements ResetPasswordContract.View {
 
     public static final String FROMVERIFYTAG = "from_verify_forget_pwd";
+    @BindView(R2.id.et_usernames_del_un)
+    ImageView etUsernameDelUn;
     /**
      * 标记是否从手势密码弹出框中的忘记密码进来的  需要在完成一些列操作之后重新设置一遍手势密码
      **/
@@ -125,7 +128,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
 //            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
 //            btn_af_next.setTextColor(0xffffffff);
 //        }
-//        et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
+        et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
         defaultDialog = new DefaultDialog(this, getString(R.string.ra_send_code_str, VOICE_PHONE), getString(R.string.btn_cancel_str), getString(R.string.ra_enter_code_str)) {
@@ -148,7 +151,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
      */
     @OnClick(R2.id.iv_af_back)
     void backClick() {
-        openActivity(LoginActivity.class);
+//        openActivity(LoginActivity.class);
         DataStatistApiParam.onStaticToCFindPasswordBack();
         finish();
     }
@@ -262,6 +265,17 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     }
 
 
+    @OnClick(R2.id.et_usernames_del_un)
+    public void onViewClicked() {
+
+        if (et_af_username.getText().toString().length() > 0) {
+            et_af_username.setText("");
+        }
+        etUsernameDelUn.setVisibility(View.GONE);
+        isUsernameInput=false;
+    }
+
+
     private class ForgetTextWatcher implements TextWatcher {
         private int which;
 
@@ -279,10 +293,11 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             boolean isTextHasLength = s.length() > 0;
             switch (which) {
                 case USERNAME_KEY:
-
+                    isUsernameInput = isTextHasLength;
+                    etUsernameDelUn.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
                 case CHECK_KEY:
-                    isUsernameInput = isTextHasLength;
+
                     iv_af_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
             }

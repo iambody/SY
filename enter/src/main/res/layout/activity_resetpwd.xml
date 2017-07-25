@@ -50,23 +50,41 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="@dimen/ui_50_dip">
 
-            <EditText
-                android:id="@+id/et_af_username"
-                style="@style/normal_edit"
+            <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_toLeftOf="@+id/btn_af_check"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:hint="请输入验证码"
-                android:inputType="number"
-                android:maxLength="11"
-                android:maxLines="1"
-                android:saveEnabled="false"
-                android:scrollHorizontally="true"
-                android:singleLine="true" />
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et_af_username"
+                    style="@style/normal_edit"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="请输入您的手机号"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:saveEnabled="false"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/et_usernames_del_un"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/ic_et_del"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_af_check"
@@ -88,8 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="@dimen/ui_10_dip"
-            >
+            android:layout_marginTop="@dimen/ui_10_dip">
 
             <EditText
                 android:id="@+id/et_af_check"

@@ -22,16 +22,24 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/recharge_yd_count"
-            android:textSize="16sp"
-            android:padding="10dp"/>
+            android:textSize="16sp" />
+
         <include layout="@layout/layout_chongzhi_mony_ed" />
 
-
+        <TextView
+            android:id="@+id/pay_paynumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/ui_10_dip"
+            android:textColor="@color/black"
+            android:background="@color/white"/>
         <!--可选择的三个按钮 -->
         <include layout="@layout/recharge_layout_up" />
         <!--下边增加云豆的三个按钮 -->
@@ -40,16 +48,17 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
 
         <!-- 回显金额  注意这个可以作为公用的view 其他布局也可使用-->
         <include layout="@layout/layout_commont_left_right_txt" />
@@ -57,7 +66,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
         <!-- 选择支付方式-->
         <include
             android:id="@+id/pay_yundou_select_method"
@@ -66,15 +75,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#d0d0d0"/>
+            android:background="#d0d0d0" />
     </LinearLayout>
 
 
     <TextView
         android:id="@+id/pay_yd"
+        style="@style/golden_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        style="@style/golden_btn"
         android:clickable="true"
         android:gravity="center"
         android:text="@string/recharge"

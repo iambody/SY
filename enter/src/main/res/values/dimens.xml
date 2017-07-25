@@ -4,4 +4,6 @@
     <dimen name="ui_130_dip">130dp</dimen>
     <dimen name="ui_150_dip">150dp</dimen>
     <dimen name="dimens_sp_22">22sp</dimen>
+    <dimen name="ui_12_dip">12dp</dimen>
+    <dimen name="ui_14_dip">14dp</dimen>
 </resources>

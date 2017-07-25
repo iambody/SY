@@ -48,6 +48,7 @@ import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.List;
 
+import app.mall.com.mvp.ui.PayActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
@@ -674,7 +675,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
+//                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
+                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
                 }
             });
             return view;
