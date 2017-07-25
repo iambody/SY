@@ -168,7 +168,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private boolean showAssert;
     private boolean isNotFirstLook;
     private boolean isLoading;
-    private static final long DEALAY = 1000;
+    private static final long DEALAY = 500;
     private static final int WAIT_CHECK = 1;
     private static final int CHECK_PAST = 2;
     private static final int CHECK_FAILURE = 3;
@@ -179,7 +179,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            handler.postDelayed(runnable, DEALAY);
+            float currentProgress = (float) (roundProgressbar.getProgress());
+//         float guQuanValue = Float.parseFloat(mineModel.getBank().getEquityRatio());
+            float zhaiQuanValue = Float.parseFloat(mineModel.getBank().getDebtRatio());
+            if (currentProgress >= zhaiQuanValue) {
+                return;
+            }
+            roundProgressbar.setProgress((int)currentProgress + 1);
         }
     };
 
@@ -357,15 +363,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
      private Runnable runnable = () -> {
-         float currentProgress = (float) (roundProgressbar.getProgress());
-         float guQuanValue = Float.parseFloat(mineModel.getBank().getEquityRatio());
-//         int zhaiQuanValue = Integer.parseInt(mineModel.getBank().getDebtRatio());
-         if (currentProgress >= guQuanValue) {
-             return;
+         Message.obtain(handler).sendToTarget();
+         try {
+             Thread.sleep(50);
+         } catch (InterruptedException e) {
+             e.printStackTrace();
          }
-         roundProgressbar.setProgress((int)currentProgress + 1);
-         handler.sendMessage(Message.obtain());
-    };
+     };
 
     @OnClick(R.id.account_info_yundou_value_ll)
     void gotoYundouctivity() {
@@ -391,7 +395,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_signin));
-        intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
     }
 
@@ -566,11 +569,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
             this.mineModel = mineModel;
-            handler.postDelayed(runnable, DEALAY);
             initUserInfo(mineModel);
             initPrivateBank(mineModel);
             initOrderView(mineModel);
             initHealthView(mineModel);
+            new Thread(runnable).start();
         }
     }
 
@@ -610,35 +613,30 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initOrderView(MineModel mineModel) {
+        hideOrderNumber(account_order_send_text);
+        hideOrderNumber(account_order_receive_text);
         if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
             for (MineModel.Orders orders : mineModel.mallOrder) {
                 TextView current = null;
-                switch (orders.getGoodsStatusCode()) {
-                    case "1":
-                        current = account_order_send_text;
-                        break;
-                    case "2":
-                        current = account_order_receive_text;
-                        break;
-                    case "3":
-                        current = account_order_finished_text;
-                        break;
-                    case "4":
-                        current = account_order_sale_text;
-                        break;
-                    case "0":
-                        current = account_order_all_text;
-                        break;
+                if ("1".equals(orders.getGoodsStatusCode())) {
+                    current = account_order_send_text;
+                } else if ("2".equals(orders.getGoodsStatusCode())) {
+                    current = account_order_receive_text;
                 }
-                if (orders.getCount() > 0) {
+
+                if (orders.getCount() > 0 && current != null) {
                     ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
                 } else {
-                    if (current.getTag() != null) {
-                        ((BadgeView)current.getTag()).setVisibility(View.INVISIBLE);
-                        ((BadgeView)current.getTag()).hide();
-                    }
+                    hideOrderNumber(current);
                 }
             }
+        }
+    }
+
+    private void hideOrderNumber(TextView textView) {
+        if (textView.getTag() != null) {
+            ((BadgeView)textView.getTag()).setVisibility(View.INVISIBLE);
+            ((BadgeView)textView.getTag()).hide();
         }
     }
 
