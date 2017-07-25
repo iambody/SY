@@ -247,12 +247,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         weakHandler = null;
         RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
-        if (AppManager.getIsLogin(getApplicationContext())) {
-            if (GestureManager.intercepterGestureActivity(this, AppManager.getUserInfo(this), false)) { // 手势密码验证
-                finish();
-                return;
-            }
-        }
         if (isLoad) {
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
             WelcomeActivity.this.finish();

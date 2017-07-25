@@ -84,6 +84,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     protected boolean rightMessageIcon;
 
+    protected boolean rightRechargeShow;
+
     protected boolean hasPushMessage;
 
     protected boolean initPage;
@@ -118,6 +120,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasPushMessage = getIntent().getBooleanExtra(WebViewConstant.PUSH_MESSAGE_COME_HERE, false);
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         rightMessageIcon = getIntent().getBooleanExtra(WebViewConstant.right_message_index, false);
+        rightRechargeShow = getIntent().getBooleanExtra(WebViewConstant.RIGHT_RECHARGE_HAS, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         if (getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
@@ -416,30 +419,21 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if ("设置".equals(title)) {
-            getMenuInflater().inflate(R.menu.page_menu, menu);
-            rightItem = menu.findItem(R.id.firstBtn);
-            MenuItem secItem = menu.findItem(R.id.secondBtn);
-            rightItem.setTitle("设置");
-            Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
-            rightItem.setIcon(drawable);
-            secItem.setVisible(false);
-        }
-
-        if (title.contains("活动")){
-            getMenuInflater().inflate(R.menu.page_menu, menu);
-            rightItem = menu.findItem(R.id.firstBtn);
-            MenuItem secItem = menu.findItem(R.id.secondBtn);
-            rightItem.setTitle("充值");
-        }
-
         getMenuInflater().inflate(R.menu.page_menu, menu);
         rightItem = menu.findItem(R.id.firstBtn);
         MenuItem secItem = menu.findItem(R.id.secondBtn);
         secItem.setVisible(false);
-        rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
-        rightItem.setVisible(rightMessageIcon);
 
+        if ("设置".equals(title)) {
+            rightItem.setTitle("设置");
+            Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
+            rightItem.setIcon(drawable);
+        } else if ((title != null && title.contains("活动")) || rightRechargeShow) {
+            rightItem.setTitle("充值");
+        } else {
+            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
+            rightItem.setVisible(rightMessageIcon);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -448,18 +442,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (rightMessageIcon) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
-            } else if (title.contains("活动")){
+            } else if (title.contains("活动") || rightRechargeShow){
                 NavigationUtils.startActivityByRouter(this, RouteConfig.MALL_PAY);
-            }
-            else{
+            } else{
                 pageShare();
             }
-//            } else if(item.getTitle().equals(getString(R.string.save))) {
-//                String jascript = "javascript:Tools.save()";
-//                mWebview.loadUrl(jascript);
-//            } else if (item.getTitle().equals("设置")) {
-//                DialogUtils.createSwitchBcDialog(this).show();
-//            }
         }
         return false;
     }
