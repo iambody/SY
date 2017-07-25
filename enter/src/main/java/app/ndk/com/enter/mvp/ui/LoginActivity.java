@@ -357,7 +357,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
-//        finish();
     }
 
     //点击微信上边布局 显示微信登录的按钮页面
