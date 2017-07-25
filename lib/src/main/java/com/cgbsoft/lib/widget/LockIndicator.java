@@ -46,6 +46,7 @@ public class LockIndicator extends View {
             patternHeight = patternPressed.getIntrinsicHeight();
             this.f = (patternWidth / 4);
             this.g = (patternHeight / 4);
+//            DimensionPixelUtil.dip2px(getContext(), 6)
             patternPressed.setBounds(0, 0, patternWidth, patternHeight);
             patternNoraml.setBounds(0, 0, patternWidth, patternHeight);
         }

@@ -33,7 +33,6 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
 import com.tencent.smtt.sdk.DownloadListener;
@@ -103,7 +102,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> mallDeleteObservable;
-//    private Observable<String> refrushGestureObservable;
 
     @Override
     protected int layoutID() {
@@ -347,8 +345,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
         LogUtils.Log("JavaScriptObjectToc", "ss");
         mWebview.loadUrl("javascript:refresh()");
-//        if ("设置".equals(title) || url.contains("/calendar/index.html") || url.contains("invite_ordinary.html") || url.contains("set_det_gesture.html")) {
-//        } else
 
     }
 

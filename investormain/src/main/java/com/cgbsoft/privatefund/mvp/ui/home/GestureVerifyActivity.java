@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -30,13 +32,13 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.DubButtonWithLinkDialog;
+import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.ModifyUserInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.ModifyUserInfoPresenter;
 import com.chenenyu.router.annotation.Route;
 import com.takwolf.android.lock9.Lock9View;
 
-import app.ndk.com.enter.mvp.ui.LoginActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -68,6 +70,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     @BindView(R.id.text_cancel)
     TextView backView;
 
+    @BindView(R.id.app_image)
+    RoundImageView imageLog;
+
     @Override
     protected void before() {
         super.before();
@@ -93,6 +98,9 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     }
 
     private void setUpViews() {
+        if (!TextUtils.isEmpty(AppManager.getUserInfo(this).getHeadImageUrl())) {
+            Imageload.display(this, AppManager.getUserInfo(this).getHeadImageUrl(), imageLog);
+        }
         backView.setVisibility(modifyGesturePassword || isFromCloseGesturePassword ? View.VISIBLE : View.GONE);
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
@@ -159,7 +167,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-        if (isFromShowAssert) {
+        if (isFromShowAssert || modifyGesturePassword) {
             GestureVerifyActivity.this.finish();
         }
         return;
