@@ -11,6 +11,7 @@ public class WebViewConstant {
     public static final String push_message_value = "push_message_value";
     public static final String right_message_index = "right_message_icon";
     public static final String RIGHT_RECHARGE_HAS = "right_recharge_text";
+    public static final String RIGHT_YUNDOU_RULE_HAS = "right_yundou_rule_text";
     public static final String RIGHT_SAVE = "need_save";
     public static final String PAGE_INIT = "page_init";
     public static final String RIGHT_SHARE = "right_share";
@@ -25,6 +26,7 @@ public class WebViewConstant {
 
     /**
      * 需要回调的指令集
+     *
      */
     public class AppCallBack {
         public static final String BUY_NEW = "app:buynow";

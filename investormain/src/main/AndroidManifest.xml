@@ -330,7 +330,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
-
         <!-- app module 通用的webview -->
         <activity
             android:name="com.cgbsoft.privatefund.widget.InverstorBaseWebviewActivity"
@@ -344,7 +343,7 @@
         <activity
             android:name="com.cgbsoft.privatefund.widget.SelectAddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/dialogstyle_select" />
+            android:theme="@android:style/Theme.Dialog" />
 
         <!--<activity-->
         <!--android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity"-->

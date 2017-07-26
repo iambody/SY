@@ -1101,6 +1101,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    //获取直播预告
+    public static Observable<String> getProLiveList(String userId){
+        Map<String, String> map = new ArrayMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager().getProLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     /**
      * 主播开房间
      * key-->value

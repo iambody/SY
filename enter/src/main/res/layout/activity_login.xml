@@ -173,7 +173,7 @@
 
         <Button
             android:id="@+id/btn_al_login"
-            style="@style/normal_alphbtn"
+            style="@style/normal_alphbtn2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -183,6 +183,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -214,7 +215,7 @@
                 android:focusable="true">
 
                 <TextView
-                    android:id="@+id/weixin_text"
+                    android:id="@+id/login_weixins_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -222,7 +223,7 @@
                     android:layout_marginRight="10dp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:text="@string/al_wx_login_strs"
+                    android:text="@string/al_wx_login_strss"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -232,7 +233,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="@dimen/ui_30_dip"
-                    android:layout_toLeftOf="@+id/weixin_text"
+                    android:layout_toLeftOf="@id/login_weixins_text"
                     android:background="#d0d0d0" />
 
                 <View
@@ -241,7 +242,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_marginRight="40dp"
-                    android:layout_toRightOf="@+id/weixin_text"
+                    android:layout_toRightOf="@id/login_weixins_text"
                     android:background="#d0d0d0" />
 
             </RelativeLayout>

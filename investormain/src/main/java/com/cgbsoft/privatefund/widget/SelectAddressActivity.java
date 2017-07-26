@@ -1,17 +1,18 @@
 package com.cgbsoft.privatefund.widget;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.WindowManager;
+import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.AddressSelectAdapter;
 import com.chenenyu.router.annotation.Route;
@@ -28,35 +29,34 @@ import butterknife.OnClick;
  * @author chenlong
  */
 @Route(RouteConfig.SELECT_ADDRESS)
-public class SelectAddressActivity extends BaseActivity {
+public class SelectAddressActivity extends Activity {
 
-    @BindView(R.id.txt_dialog_title)
     public TextView txtDialogTitle;
 
-    @BindView(R.id.txt_dialog_content)
     public EditText txtDialogContent;
 
-    @BindView(R.id.list_view)
     public ListView listView;
 
-    @BindView(R.id.btn_ok)
     public Button btnOk;
 
     private AddressSelectAdapter addressSelectAdapter;
 
     @Override
-    protected void after() {
-        super.after();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    @Override
-    protected int layoutID() {
-        return R.layout.dialog_select_address;
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_select_address);
+        txtDialogTitle = (TextView)findViewById(R.id.txt_dialog_title);
+        txtDialogContent = (EditText)findViewById(R.id.txt_dialog_content);
+        listView = (ListView) findViewById(R.id.list_view);
+        btnOk = (Button) findViewById(R.id.btn_ok);
+        btnOk.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(txtDialogContent.getText().toString())) {
+                AppInfStore.saveSelectAddress(this, txtDialogContent.getText().toString());
+                NetConfig.updateRequestUrl();
+                finish();
+            }
+        });
         bindView();
         initData();
         findViewById(R.id.contain).setOnTouchListener((v, event) -> {
@@ -66,19 +66,6 @@ public class SelectAddressActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
-    }
-
-    @OnClick(R.id.btn_ok)
-    public void confirmButton() {
-        if (!TextUtils.isEmpty(txtDialogContent.getText().toString())) {
-            AppInfStore.saveSelectAddress(this, txtDialogContent.getText().toString());
-//            NetConfig.updateRequestUrl();
-            finish();
-        }
-    }
 
     private void bindView() {
         listView.setOnItemClickListener((parent, view, position, id) -> {

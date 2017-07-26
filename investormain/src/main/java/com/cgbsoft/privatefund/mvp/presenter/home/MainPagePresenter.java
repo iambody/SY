@@ -42,7 +42,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
      * 获取直播列表
      */
     @Override
-    public void getLiveList() {
+    public void getProLiveList() {
         ApiClient.getLiveList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -50,9 +50,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 try {
                     jsonArray = new JSONObject(s).getJSONArray("result");
                 } catch (JSONException e) {
-                    getView().hasLive(false, null);
+                    getView().hasLive(2, null);
                     e.printStackTrace();
                 }
+                int liveState = 0;
                 if (jsonArray != null && jsonArray.length() > 0) {
                     Gson g = new Gson();
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -60,18 +61,27 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                             JSONObject liveJson = (JSONObject) jsonArray.get(i);
                             if (liveJson.getInt("state") == 1) {
                                 System.out.println("-----------live---on");
-                                getView().hasLive(true, liveJson);
+                                getView().hasLive(1, liveJson);
+                                liveState = 1;
                                 break;
                             } else {
-                                getView().hasLive(false, null);
+                                liveState = 0;
+//                                getView().hasLive(false, null);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
+                    if (liveState == 0) {
+                        try {
+                            getView().hasLive(0, (JSONObject) jsonArray.get(0));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 } else {
-                    getView().hasLive(false, null);
+                    getView().hasLive(2, null);
                 }
             }
 
@@ -154,7 +164,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
                     AppInfStore.saveUserInfo(getContext(), userInfo);
-                    if(tofreshHome){
+                    if (tofreshHome) {
                         getView().toFreshUserinfHome();
                     }
                 }

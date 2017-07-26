@@ -108,7 +108,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
                 intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的投顾" : "选择投顾");
-                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
                 getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件

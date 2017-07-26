@@ -381,6 +381,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())){
+            return;
+        }
         if (null != orderbyPop && orderbyPop.isShowing()) {
             orderbyPop.dismiss();
             return;
@@ -394,6 +397,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_shaixuan)
     public void onProductProductfragmentShaixuanClicked() {
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())){
+            return;
+        }
         if (null == filterPop)
             filterPop = new FilterPop(baseActivity, CurrentFilter);
         if (null == CurrentFilter) {

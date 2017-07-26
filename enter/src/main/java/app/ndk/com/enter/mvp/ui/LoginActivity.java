@@ -1,6 +1,8 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -33,6 +35,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
@@ -56,6 +59,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import io.rong.imkit.RongContext;
 import rx.Observable;
 
 
@@ -92,6 +96,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //内容登录动作的布局
     @BindView(R2.id.login_cancle)
     ImageView loginCancle;
+
+    @BindView(R2.id.login_weixins_text)
+    TextView loginWeixinsText;
 
     //是否已经显示了微信登录的按钮  默认进来是不显示的
     private boolean isShowWxBt;
@@ -138,33 +145,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //            透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-//        initShakeListener();
     }
 
-//    private void initShakeListener() {
-//        try {
-//            ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
-//            String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-//            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
-//                mShakeListener = new ShakeListener(this);
-//                mShakeListener.setOnShakeListener(onShakeListener);
-//                mShakeListener.register();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
-//        @Override
-//        public void onShakeStart() {
-//        }
-//
-//        @Override
-//        public void onShakeFinish() {
-//            NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
-//        }
-//    };
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -177,20 +159,25 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
-        if (userInfo != null && !AppManager.isVisitor(baseContext)) {
-            et_al_username.setText(userInfo.userName);
-        } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
-            et_al_username.setText(loginName);
-        } else if (AppManager.isVisitor(baseContext)) {
-            et_al_username.setText("");
-        }
+//        if (AppManager.isVisitor(baseContext) || null == userInfo || BStrUtils.isEmpty(loginName)) {
+//            et_al_username.setText("");
+//        } else if (userInfo != null && !AppManager.isVisitor(baseContext)) {
+//            et_al_username.setText(userInfo.userName);
+//        } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
+//            et_al_username.setText(loginName);
+//        }
+
         if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
             iv_al_del_un.setVisibility(View.VISIBLE);
             isUsernameInput = true;
         }
 
-        if (isFromInside)
-            initinSideComeId();
+        if (isFromInside) {
+            initinSideComeIn();
+        } else {
+            initoutSideComeIn();
+        }
+
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
@@ -212,7 +199,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             getPresenter().invisterLogin(baseContext);
         }
         initRxObservable();
+        initShakeListener();
     }
+
 
     private Observable<Integer> killSelfRxObservable;
 
@@ -231,17 +220,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         });
     }
 
-    private void initinSideComeId() {
+    private void initoutSideComeIn() {
+        loginWeixinsText.setText(getResources().getString(R.string.al_wx_login_strss));
+    }
+
+    private void initinSideComeIn() {
+        loginWeixinsText.setText(getResources().getString(R.string.al_wx_login_strs));
         loginCancle.setVisibility(View.VISIBLE);
 //        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
         btn_al_login.setBackground(getResources().getDrawable(R.drawable.shape_btn_normal_down));
 
         btn_al_login.setTextColor(getResources().getColor(R.color.white));
         //开始展示
-        enterLoginWxloginLay.setVisibility(View.GONE);
-        enterLoginWxBtLay.setVisibility(View.VISIBLE);
-        isShowWxBt = true;
-        getPresenter().setAnimation(enterLoginWxBtLay);
+//        enterLoginWxloginLay.setVisibility(View.GONE);
+//        enterLoginWxBtLay.setVisibility(View.VISIBLE);
+//        isShowWxBt = true;
+//        getPresenter().setAnimation(enterLoginWxBtLay);
     }
 
     private void initLocation() {
@@ -336,6 +330,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
+//        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
+
     }
 
     @OnClick(R2.id.tv_al_register)
@@ -487,6 +483,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
+
+
     private class LoginTextWatcher implements TextWatcher {
         private int which;
 
@@ -502,7 +500,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
-            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
+//            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
 
             switch (which) {
 
@@ -595,5 +593,26 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         return true;
     }
 
+    private void initShakeListener() {
+        try {
+            ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
+            String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
+            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
+                mShakeListener = new ShakeListener(this);
+                mShakeListener.setOnShakeListener(onShakeListener);
+                mShakeListener.register();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
+        @Override
+        public void onShakeStart() {}
+        @Override
+        public void onShakeFinish() {
+            NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
+        }
+    };
 }

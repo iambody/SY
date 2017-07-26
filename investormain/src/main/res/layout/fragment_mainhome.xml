@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,21 +25,6 @@
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ui_50_dip"
-                    android:background="@drawable/home_title_bg">
-
-                    <ImageView
-                        android:id="@+id/main_home_new_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/ui_30_dip"
-                        android:clickable="true"
-                        android:src="@drawable/main_home_new_iv" />
-                </RelativeLayout>
 
 
                 <LinearLayout
@@ -57,271 +42,6 @@
                             android:id="@+id/main_home_bannerview"
                             android:layout_width="match_parent"
                             android:layout_height="260dp" />
-                        <!-- 登录模式下的布局文件 -->
-                        <!-- 下边布局 -->
-                        <RelativeLayout
-                            android:id="@+id/main_home_login_lay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ui_30_dip"
-                            android:visibility="gone">
-                            <!-- 下边的图片 -->
-                            <LinearLayout
-                                android:id="@+id/main_home_adviser_layyy"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <RelativeLayout
-                                    android:layout_width="@dimen/ui_340_dip"
-                                    android:layout_height="@dimen/ui_100_dip"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="@dimen/ui_240_dip"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/black"
-                                        android:orientation="vertical" />
-
-                                    <ImageView
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginRight="@dimen/ui_50_dip"
-                                        android:background="@drawable/shape_home_circle" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-                            <!-- 下边布局*********************************** -->
-                            <!-- 上边的圆图-->
-                            <LinearLayout
-                                android:id="@+id/main_home_adviser_layy"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/ui_1_dip"
-                                android:orientation="vertical">
-
-                                <RelativeLayout
-                                    android:layout_width="@dimen/ui_80_dip"
-                                    android:layout_height="@dimen/ui_80_dip"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/main_home_adviser_inf_lay"
-                                        android:layout_width="@dimen/ui_40_dip"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/black"
-                                        android:orientation="vertical"
-                                        android:visibility="invisible" />
-
-                                    <com.cgbsoft.lib.widget.RoundImageView
-                                        android:id="@+id/main_home_adviser_inf_iv"
-                                        android:layout_width="@dimen/ui_80_dip"
-                                        android:layout_height="@dimen/ui_80_dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:clickable="true"
-                                        android:src="@drawable/touxiang_default"
-                                        app:border_outside_color="@color/black"
-                                        app:border_thickness="5dp" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-                            <!-- 上边的圆图**********************************-->
-
-                            <!--游客模式和登录模式之间的差异部分 -->
-
-                            <!--服务码的布局(登录模式)-->
-                            <LinearLayout
-                                android:id="@+id/main_home_card_lay"
-                                android:layout_width="@dimen/ui_70_dip"
-                                android:layout_height="30dp"
-                                android:layout_marginLeft="@dimen/ui_8_dip"
-                                android:layout_marginTop="@dimen/ui_62_dip"
-                                android:background="@drawable/main_home_card_bg"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dip"
-
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="服 务 码"
-                                    android:textColor="@color/app_golden"
-                                    android:textSize="@dimen/dimens_sp_7" />
-
-                                <TextView
-                                    android:id="@+id/main_home_cardnumber_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dip"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="8888"
-                                    android:textColor="@color/app_golden"
-                                    android:textSize="@dimen/dimens_sp_12" />
-                            </LinearLayout>
-                            <!--服务码的布局(登录模式)**************-->
-                            <!--理财师信息的的布局(登录模式)-->
-                            <LinearLayout
-                                android:id="@+id/main_home_adviser_relation_lay"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/ui_90_dip"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:id="@+id/main_home_adviser_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-
-                                    android:gravity="center"
-                                    android:textColor="@color/app_golden"
-                                    android:textSize="@dimen/dimens_sp_10" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/ui_10_dip">
-
-                                    <TextView
-                                        android:id="@+id/main_home_adviser_phone"
-                                        style="@style/home_banker_bt_style"
-                                        android:text="@string/phone" />
-
-                                    <TextView
-                                        android:id="@+id/main_home_adviser_note"
-                                        style="@style/home_banker_bt_style"
-                                        android:layout_marginLeft="@dimen/ui_5_dip"
-                                        android:layout_marginRight="@dimen/ui_5_dip"
-                                        android:text="@string/mms" />
-
-                                    <TextView
-                                        android:id="@+id/main_home_adviser_im"
-                                        style="@style/home_banker_bt_style"
-                                        android:text="@string/conversation" />
-                                </LinearLayout>
-                            </LinearLayout>
-                            <!--理财师信息的的布局(登录模式)************-->
-
-                        </RelativeLayout>
-
-                        <!-- 登录模式下的布局文件************************* -->
-                        <!-- 游客模式下的布局文件-->
-                        <RelativeLayout
-                            android:id="@+id/main_home_vister_lay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ui_30_dip">
-                            <!-- 游客模式下的下边的布局-->
-                            <LinearLayout
-                                android:id="@+id/main_home_vister_adviser_layyy"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <RelativeLayout
-                                    android:layout_width="@dimen/ui_340_dip"
-                                    android:layout_height="@dimen/ui_80_dip"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="@dimen/ui_240_dip"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/black"
-                                        android:orientation="vertical" />
-
-                                    <ImageView
-                                        android:layout_width="80dp"
-                                        android:layout_height="80dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginRight="@dimen/ui_60_dip"
-                                        android:background="@drawable/shape_home_circle" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-                            <!-- 游客模式下的下边的布局***************-->
-
-
-                            <!-- 游客模式下的上边的布局-->
-                            <LinearLayout
-                                android:id="@+id/main_home_vister_adviser_layy"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/ui_1_dip"
-                                android:orientation="vertical">
-
-                                <RelativeLayout
-                                    android:layout_width="@dimen/ui_80_dip"
-                                    android:layout_height="@dimen/ui_80_dip"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/main_home_vister_adviser_inf_lay"
-                                        android:layout_width="@dimen/ui_40_dip"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/black"
-                                        android:orientation="vertical" />
-
-                                    <com.cgbsoft.lib.widget.RoundImageView
-                                        android:id="@+id/main_home_vister_adviser_inf_iv"
-                                        android:layout_width="@dimen/ui_80_dip"
-                                        android:layout_height="@dimen/ui_80_dip"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:clickable="true"
-                                        android:src="@drawable/touxiang_default"
-                                        app:border_outside_color="@color/black"
-                                        app:border_thickness="5dp" />
-                                </RelativeLayout>
-
-                            </LinearLayout>
-                            <!-- 游客模式下的上边的布局***************-->
-
-                            <!-- 游客模式下的右侧点击去理财师认证的按钮 -->
-                            <LinearLayout
-                                android:id="@+id/main_home_invisiter_txt_lay"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/ui_90_dip"
-                                android:clickable="true"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/ui_16_dip"
-                                    android:gravity="center"
-                                    android:text="@string/home_visiter_up_txt"
-                                    android:textColor="@color/app_golden"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/ui_10_dip"
-                                    android:gravity="center"
-                                    android:text="@string/home_visiter_down_txt"
-                                    android:textColor="@color/app_golden"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-                            <!-- 游客模式下的右侧点击去理财师认证的按钮***************** -->
-                        </RelativeLayout>
-                        <!-- 游客模式下的布局文件******************** -->
 
                     </RelativeLayout>
                     <!-- Banner*** -->
@@ -361,4 +81,295 @@
             </RelativeLayout>
         </com.cgbsoft.lib.widget.SmartScrollView>
     </com.cgbsoft.lib.widget.MySwipeRefreshLayout>
-</LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_50_dip"
+        android:background="@drawable/home_title_bg"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/main_home_new_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/ui_30_dip"
+            android:clickable="true"
+            android:src="@drawable/main_home_new_iv" />
+    </RelativeLayout>
+
+    <!-- 上边图********************** -->
+    <!-- 登录模式下的布局文件 -->
+    <!-- 下边布局 -->
+    <RelativeLayout
+        android:id="@+id/main_home_login_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/ui_20_dip"
+        android:visibility="gone">
+        <!-- 下边的图片 -->
+        <LinearLayout
+            android:id="@+id/main_home_adviser_layyy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="@dimen/ui_340_dip"
+                android:layout_height="@dimen/ui_100_dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/ui_240_dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ui_50_dip"
+                    android:background="@drawable/shape_home_circle" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 下边布局*********************************** -->
+        <!-- 上边的圆图-->
+        <LinearLayout
+            android:id="@+id/main_home_adviser_layy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_1_dip"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="@dimen/ui_80_dip"
+                android:layout_height="@dimen/ui_80_dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/main_home_adviser_inf_lay"
+                    android:layout_width="@dimen/ui_40_dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical"
+                    android:visibility="invisible" />
+
+                <com.cgbsoft.lib.widget.RoundImageView
+                    android:id="@+id/main_home_adviser_inf_iv"
+                    android:layout_width="@dimen/ui_80_dip"
+                    android:layout_height="@dimen/ui_80_dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:src="@drawable/touxiang_default"
+                    app:border_outside_color="@color/black"
+                    app:border_thickness="5dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 上边的圆图**********************************-->
+
+        <!--游客模式和登录模式之间的差异部分 -->
+
+        <!--服务码的布局(登录模式)-->
+        <LinearLayout
+            android:id="@+id/main_home_card_lay"
+            android:layout_width="@dimen/ui_70_dip"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/ui_8_dip"
+            android:layout_marginTop="@dimen/ui_62_dip"
+            android:background="@drawable/main_home_card_bg"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="服 务 码"
+                android:textColor="@color/app_golden"
+                android:textSize="@dimen/dimens_sp_7" />
+
+            <TextView
+                android:id="@+id/main_home_cardnumber_txt"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="8888"
+                android:textColor="@color/app_golden"
+                android:textSize="@dimen/dimens_sp_12" />
+        </LinearLayout>
+        <!--服务码的布局(登录模式)**************-->
+        <!--理财师信息的的布局(登录模式)-->
+        <LinearLayout
+            android:id="@+id/main_home_adviser_relation_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_90_dip"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/main_home_adviser_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:gravity="center"
+                android:textColor="@color/app_golden"
+                android:textSize="@dimen/dimens_sp_10" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_10_dip">
+
+                <TextView
+                    android:id="@+id/main_home_adviser_phone"
+                    style="@style/home_banker_bt_style"
+                    android:text="@string/phone" />
+
+                <TextView
+                    android:id="@+id/main_home_adviser_note"
+                    style="@style/home_banker_bt_style"
+                    android:layout_marginLeft="@dimen/ui_5_dip"
+                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:text="@string/mms" />
+
+                <TextView
+                    android:id="@+id/main_home_adviser_im"
+                    style="@style/home_banker_bt_style"
+                    android:text="@string/conversation" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--理财师信息的的布局(登录模式)************-->
+
+    </RelativeLayout>
+
+    <!-- 登录模式下的布局文件************************* -->
+    <!-- 游客模式下的布局文件-->
+    <RelativeLayout
+        android:id="@+id/main_home_vister_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/ui_20_dip">
+        <!-- 游客模式下的下边的布局-->
+        <LinearLayout
+            android:id="@+id/main_home_vister_adviser_layyy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="@dimen/ui_340_dip"
+                android:layout_height="@dimen/ui_80_dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/ui_240_dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ui_60_dip"
+                    android:background="@drawable/shape_home_circle" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 游客模式下的下边的布局***************-->
+
+
+        <!-- 游客模式下的上边的布局-->
+        <LinearLayout
+            android:id="@+id/main_home_vister_adviser_layy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_1_dip"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="@dimen/ui_80_dip"
+                android:layout_height="@dimen/ui_80_dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/main_home_vister_adviser_inf_lay"
+                    android:layout_width="@dimen/ui_40_dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="vertical" />
+
+                <com.cgbsoft.lib.widget.RoundImageView
+                    android:id="@+id/main_home_vister_adviser_inf_iv"
+                    android:layout_width="@dimen/ui_80_dip"
+                    android:layout_height="@dimen/ui_80_dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:src="@drawable/touxiang_default"
+                    app:border_outside_color="@color/black"
+                    app:border_thickness="5dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <!-- 游客模式下的上边的布局***************-->
+
+        <!-- 游客模式下的右侧点击去理财师认证的按钮 -->
+        <LinearLayout
+            android:id="@+id/main_home_invisiter_txt_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_90_dip"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_16_dip"
+                android:gravity="center"
+                android:text="@string/home_visiter_up_txt"
+                android:textColor="@color/app_golden"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:gravity="center"
+                android:text="@string/home_visiter_down_txt"
+                android:textColor="@color/app_golden"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <!-- 游客模式下的右侧点击去理财师认证的按钮***************** -->
+    </RelativeLayout>
+    <!-- 游客模式下的布局文件******************** -->
+
+    <!--上边图************************** -->
+</RelativeLayout>

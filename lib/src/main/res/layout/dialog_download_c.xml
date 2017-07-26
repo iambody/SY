@@ -66,6 +66,8 @@
             android:padding="10dp"
             android:text="@string/updata_app"
             android:textSize="@dimen/dimens_sp_17"
+            android:clickable="true"
+            android:focusable="true"
             android:textColor="@color/white" />
     </LinearLayout>
 

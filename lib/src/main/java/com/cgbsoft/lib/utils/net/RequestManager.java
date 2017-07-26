@@ -639,6 +639,10 @@ interface RequestManager {
     @GET(NetConfig.LIVE.GET_LIVE_LIST)
     Observable<ResponseBody> getLiveList(@QueryMap Map<String, String> paramsMap);
 
+    //获取直播预告
+    @GET(NetConfig.LIVE.GET_PRO_LIST)
+    Observable<ResponseBody> getProLiveList(@QueryMap Map<String,String> paramsMap);
+
     //主播开房间
     @POST(NetConfig.LIVE.HOST_OPEN_LIVE)
     Observable<ResponseBody> hostOpenLive(@Body RequestBody responseBody);

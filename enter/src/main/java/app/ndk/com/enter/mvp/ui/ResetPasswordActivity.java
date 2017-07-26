@@ -30,7 +30,6 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 import app.ndk.com.enter.mvp.presenter.ResetPasswordPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -219,6 +218,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     public void sendSucc() {
         btn_af_check.setEnabled(false);
         btn_af_check.setBackgroundResource(R.drawable.bg_write_down);
+        btn_af_check.setTextColor(getResources().getColor(R.color.gray_font));
         btn_af_check.setText(String.valueOf("倒计时" + countDownTime-- + "s"));
         lastInputPhoneNum = et_af_username.getText().toString();
         countDownSub = Observable.interval(1000, TimeUnit.MILLISECONDS)
