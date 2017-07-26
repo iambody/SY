@@ -35,6 +35,8 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
@@ -587,12 +589,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     boolean isFixAdjust() {
         String userName = et_al_username.getText().toString().trim();
         String userPwd = et_al_password.getText().toString().trim();
-        if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
+        if (BStrUtils.isEmpty(userName) || 11 != userName.length()||BStrUtils.isEmpty(userPwd)) {
             return false;
         }
-        if (BStrUtils.isEmpty(userPwd)) {
-            return false;
-        }
+
         return true;
     }
 

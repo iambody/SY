@@ -24,6 +24,8 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -56,6 +58,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action0;
@@ -407,10 +410,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         liveObservable.subscribe(new RxSubscriber<LiveInfBean>() {
             @Override
             protected void onEvent(LiveInfBean liveInfBean) {
+
+                homeliveInfBean = liveInfBean;
                 switch (liveInfBean.type) {
+
                     case 0://预告
-                        main_home_level_lay.setVisibility(View.VISIBLE);
-                        main_home_level_lay.setClickable(false);
+                        main_home_live_lay.setVisibility(View.VISIBLE);
+                        main_home_live_lay.setClickable(false);
 
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
@@ -422,8 +428,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         view_live_title_tag_iv.setVisibility(View.GONE);
                         break;
                     case 1://直播中
-                        main_home_level_lay.setVisibility(View.VISIBLE);
-                        main_home_level_lay.setClickable(true);
+                        main_home_live_lay.setVisibility(View.VISIBLE);
+                        main_home_live_lay.setClickable(true);
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
@@ -432,7 +438,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         break;
                     case 2://无直播
-                        main_home_level_lay.setVisibility(View.GONE);
+                        main_home_live_lay.setVisibility(View.GONE);
                         break;
                 }
 
@@ -451,6 +457,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
 
     }
+
+    int liveType = 2;
+    LiveInfBean homeliveInfBean;
 
     @Override
     public void onDestroy() {
@@ -637,20 +646,27 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 NavigationUtils.gotoWebActivity(baseActivity, url, "会员", false);
                 break;
             case R.id.main_home_live_lay://直播
-//                if (liveJsonData != null) {
-//                    liveDialog.setVisibility(View.GONE);
-//                    liveDialog.clearAnimation();
-//                    Intent intent = new Intent(this, LiveActivity.class);
-//                    intent.putExtra("liveJson", liveJsonData.toString());
-//                    intent.putExtra("type", "");
-//                    startActivity(intent);
-//                    try {
-//                        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
+                if (null == homeliveInfBean || 0 == homeliveInfBean.type) return;
+
+                switch (homeliveInfBean.type) {
+                    case 0://预告
+
+                        break;
+                    case 1://直播
+
+                        Intent intent = new Intent(baseActivity, LiveActivity.class);
+                        intent.putExtra("liveJson", homeliveInfBean.jsonstr);
+                        intent.putExtra("type", "");
+                        startActivity(intent);
+
+                        SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
+
+                        break;
+                    case 2://无直播
+                        break;
+                }
+
+
                 break;
         }
     }

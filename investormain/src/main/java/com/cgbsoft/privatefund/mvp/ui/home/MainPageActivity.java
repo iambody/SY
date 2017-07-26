@@ -504,6 +504,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
+                loginLive();
+                autoSign();
+                initDayTask();
+                initRongInterface();
 
                 if(5==integer){
                     switchID = R.id.nav_right_second;
@@ -738,14 +742,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (bottomNavigationBar != null) {
 //            bottomNavigationBar.setLive(hasLive);
         }
-        if (hasLive) {//有直播
+//        if (hasLive) {//有直播
             liveJsonData = jsonObject;
             LiveInfBean liveInfBean = new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
-            liveInfBean.isLiveing = true;
+
             try {
                 liveInfBean.title = jsonObject.getString("title");
                 liveInfBean.image = jsonObject.getString("image");
                 liveInfBean.content = jsonObject.getString("slogan");
+                liveInfBean.id=jsonObject.getString("id");
                 liveInfBean.jsonstr = jsonObject.toString();
                 liveInfBean.type = liveState;
                 liveInfBean.create_time=jsonObject.getString("create_time");
@@ -765,14 +770,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //                e.printStackTrace();
 //            }
 
-        } else {
-            LiveInfBean liveInfBeanerr = new LiveInfBean();
-            liveInfBeanerr.isLiveing = false;
-//            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
-//            liveJsonData = null;
-//            liveDialog.setVisibility(View.GONE);
-//            liveDialog.clearAnimation();
-        }
+//        } else {
+//            LiveInfBean liveInfBeanerr = new LiveInfBean();
+//            liveInfBeanerr.isLiveing = false;
+////            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
+////            liveJsonData = null;
+////            liveDialog.setVisibility(View.GONE);
+////            liveDialog.clearAnimation();
+//        }
 
     }
 

@@ -48,6 +48,7 @@
                     <include
                         android:id="@+id/main_home_live_lay"
                         layout="@layout/view_home_live_lay"
+
                         android:visibility="gone" />
                     <!-- 直播预报的布局************ -->
                     <!-- 会员等级的布局 -->

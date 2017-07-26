@@ -10,6 +10,7 @@ public class LiveInfBean {
     public String image;
     public String content;
     public String jsonstr;
+    public String id;
     public boolean isLiveing;
     //     0-->预告  1-->直播中  2-->无直播
     public int type;
