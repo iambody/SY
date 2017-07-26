@@ -19,7 +19,6 @@ import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
-import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.LockIndicator;
 import com.cgbsoft.privatefund.R;

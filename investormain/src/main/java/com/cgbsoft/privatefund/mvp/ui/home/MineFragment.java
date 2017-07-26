@@ -647,8 +647,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initOrderView(MineModel mineModel) {
-        hideOrderNumber(account_order_send_text);
-        hideOrderNumber(account_order_receive_text);
+//        hideOrderNumber(account_order_send_text);
+//        hideOrderNumber(account_order_receive_text);
         if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
             for (MineModel.Orders orders : mineModel.mallOrder) {
                 TextView current = null;
