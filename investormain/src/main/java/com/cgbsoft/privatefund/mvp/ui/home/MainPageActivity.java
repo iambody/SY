@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -713,9 +712,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     /**
-     *
-     * @param liveState 0-->预告  1-->直播中  2-->无直播
-     * @param jsonObject  有直播（预告） jsonObject不为空，无直播jsonObject为空
+     * @param liveState  0-->预告  1-->直播中  2-->无直播
+     * @param jsonObject 有直播（预告） jsonObject不为空，无直播jsonObject为空
      */
     @Override
     public void hasLive(int liveState, JSONObject jsonObject) {

@@ -5,7 +5,7 @@ public class NetConfig {
 
     public static final String UPLOAD_FILE = "https://upload.simuyun.com/";
 
-//    private static final String START_APP = "https://app";
+    //    private static final String START_APP = "https://app";
     private static final String START_APP = "https://d10-app";
     private static final String START_DS = "http://muninubc";
     private static final String START_WWW = "http://www";
@@ -293,9 +293,9 @@ public class NetConfig {
         // 我的接口
         static final String GET_MINE = API_URL + "/enjoycloud" + "/usercentre";
         // 我的活动
-        static final String ACTIVITES = API_URL  + "/salons/mine";
+        static final String ACTIVITES = API_URL + "/salons/mine";
         // 提交投资账号
-        static final String CommitInvisitAccount = API_URL  + "/auth/user/certSubmit";
+        static final String CommitInvisitAccount = API_URL + "/auth/user/certSubmit";
     }
 
     /**
@@ -330,12 +330,14 @@ public class NetConfig {
         static final String GETGOODSFIRST = API_URL + elegantLiving + "/listhotgoods";
         static final String GETGOODSMORE = API_URL + elegantLiving + "/category";
     }
-    static class ChangePsd{
+
+    static class ChangePsd {
         static final String CHANGE_PSD = AUTH_URL + "/user/updatePassword";
         static final String UPDATE_USERINFO = AUTH_URL + "/user/updateUserInfo";
         static final String UPDATE_USERICON = AUTH_URL + "/user/uploadUserImage";
     }
-    static class Salon{
+
+    static class Salon {
         static final String UPDATE_SALON_AND_CITY = API_URL + "/salons/main";
         static final String UPDATE_SALON = API_URL + "/salons";
     }
