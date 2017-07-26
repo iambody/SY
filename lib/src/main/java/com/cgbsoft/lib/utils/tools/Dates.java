@@ -10,7 +10,21 @@ import java.util.Date;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/7/11-14:39
  */
-public class DateUtils {
+public class Dates {
+
+    public static String videoChange(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//小写的mm表示的是分钟
+        SimpleDateFormat sdfss = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+
+        try {
+            Date date = sdf.parse(time);
+            return sdfss.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sdfss.format(new Date());
+    }
+
     /**
      * 获取当前时间
      *
@@ -212,8 +226,8 @@ public class DateUtils {
      * @return
      */
     public static boolean isTheDay(final Date date, final Date day) {
-        return date.getTime() >= DateUtils.dayBegin(day).getTime()
-                && date.getTime() <= DateUtils.dayEnd(day).getTime();
+        return date.getTime() >= Dates.dayBegin(day).getTime()
+                && date.getTime() <= Dates.dayEnd(day).getTime();
     }
 
     /**
@@ -223,7 +237,7 @@ public class DateUtils {
      * @return
      */
     public static boolean isToday(final Date date) {
-        return isTheDay(date, DateUtils.now());
+        return isTheDay(date, Dates.now());
     }
 
     /**
@@ -234,7 +248,7 @@ public class DateUtils {
      */
     public static boolean isToday(final long date) {
         try {
-            return isTheDay(LongToDare(date), DateUtils.now());
+            return isTheDay(LongToDare(date), Dates.now());
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
@@ -249,7 +263,7 @@ public class DateUtils {
      * @throws ParseException
      */
     public static Date LongToDare(long str) throws ParseException {
-        return new Date(str );
+        return new Date(str);
     }
 
     /**

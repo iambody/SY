@@ -12,12 +12,13 @@ import android.widget.TextView;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.Dates;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 
 import java.util.List;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
-import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -75,7 +76,7 @@ public class VideoListAdapter extends RecyclerView.Adapter implements View.OnCli
         Imageload.display(ApContext, videoListModel.coverImageUrl, lsViewHolder.item_fragment_videoschool_new_image);
         BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_looknumber, String.format("%d观看", videoListModel.likes));
         BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_title, videoListModel.shortName);
-        BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_time, videoListModel.updateTime);
+        BStrUtils.SetTxt(lsViewHolder.item_fragment_videoschool_new_time, Dates.videoChange(videoListModel.createTime));
 
     }
 

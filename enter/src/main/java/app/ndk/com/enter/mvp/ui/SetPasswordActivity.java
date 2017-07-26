@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -26,6 +29,7 @@ import app.ndk.com.enter.mvp.contract.SetPasswordContract;
 import app.ndk.com.enter.mvp.presenter.SetPasswordPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * 重新设置密码
@@ -93,10 +97,12 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         return R.layout.activity_setpwd;
     }
 
+    private Observable<Integer> killSelfRxObservable;
+
     @Override
     protected void init(Bundle savedInstanceState) {
-        if(getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)){
-            isFromVerify =getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
+        if (getIntent().getExtras().containsKey(ResetPasswordActivity.FROMVERIFYTAG)) {
+            isFromVerify = getIntent().getStringExtra(ResetPasswordActivity.FROMVERIFYTAG).equals("1");
         }
         userName = getIntent().getStringExtra("userName");
         code = getIntent().getStringExtra("code");
@@ -114,6 +120,20 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
         et_as_password2.addTextChangedListener(new SetPasswordTextWatcher(PASSWORD2_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.reseting_str), false, false);
         getPresenter().toGetPublicKey();
+
+
+        killSelfRxObservable = RxBus.get().register(RxConstant.LOGIN_KILL, Integer.class);
+        killSelfRxObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                baseContext.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     @OnClick(R2.id.iv_as_back)
@@ -147,11 +167,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 //            MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
 //            return;
 //        }
-        if(TextUtils.isEmpty(pwd1)||TextUtils.isEmpty(pwd1)){
+        if (TextUtils.isEmpty(pwd1) || TextUtils.isEmpty(pwd1)) {
             MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if(pwd1.length()<6||pwd1.length()>16||pwd2.length()<6||pwd2.length()>16){
+        if (pwd1.length() < 6 || pwd1.length() > 16 || pwd2.length() < 6 || pwd2.length() > 16) {
             MToast.makeText(getApplicationContext(), getString(R.string.pw_lenth_str), Toast.LENGTH_SHORT);
             return;
         }
@@ -162,6 +182,13 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
         getPresenter().resetPwd(mLoadingDialog, userName, pwd1, code, myPublicKey, isFromVerify);
         DataStatistApiParam.onStaticToCSetPasswordNext();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != killSelfRxObservable)
+            RxBus.get().unregister(RxConstant.LOGIN_KILL, killSelfRxObservable);
     }
 
     @Override
@@ -176,15 +203,15 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordPresenter> impl
 
     @Override
     public void setGesturePassword() {
-        HashMap<String,Object> parms=new HashMap<>();
-        parms.put(ResetPasswordActivity.FROMVERIFYTAG,"1");//标识 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后 是这个流程
+        HashMap<String, Object> parms = new HashMap<>();
+        parms.put(ResetPasswordActivity.FROMVERIFYTAG, "1");//标识 是否是手势密码=》忘记密码=》重置密码=》重置密码成功后 是这个流程
         NavigationUtils.startActivityByRouter(this, RouteConfig.SET_GESTURE_PASSWORD, parms);
         finish();
     }
 
     @Override
     public void publicKeySuccess(String publickey) {
-        myPublicKey=publickey;
+        myPublicKey = publickey;
     }
 
     private class SetPasswordTextWatcher implements TextWatcher {

@@ -250,7 +250,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         intent.putExtra("code", et_af_check.getText().toString());
         intent.putExtra(FROMVERIFYTAG, isFromVerifyFogetPwd ? "1" : "0");
         startActivity(intent);
-        finish();
+
     }
 
     /**
