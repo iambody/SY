@@ -275,7 +275,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        bean.coinNum=4;
 //        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
 //        homeSignDialog.show();
-
     }
 
     private void switchFragment(Fragment to) {
@@ -716,7 +715,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     /**
      *
      * @param liveState 0-->预告  1-->直播中  2-->无直播
-     * @param jsonObject
+     * @param jsonObject  有直播（预告） jsonObject不为空，无直播jsonObject为空
      */
     @Override
     public void hasLive(int liveState, JSONObject jsonObject) {
