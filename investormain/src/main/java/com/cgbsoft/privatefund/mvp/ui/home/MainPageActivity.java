@@ -138,9 +138,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.after();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
 
     }
@@ -695,7 +695,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        getPresenter().getLiveList();
+                        getPresenter().getProLiveList();
                     }
                 });
     }
@@ -712,8 +712,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         loginHelper.imLogin(AppManager.getUserId(this) + "_C", sign);
     }
 
+    /**
+     *
+     * @param liveState 0-->预告  1-->直播中  2-->无直播
+     * @param jsonObject
+     */
     @Override
-    public void hasLive(boolean hasLive, JSONObject jsonObject) {
+    public void hasLive(int liveState, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
         if (jsonObject == null) {
             return;

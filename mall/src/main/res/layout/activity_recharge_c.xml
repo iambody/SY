@@ -12,38 +12,107 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <include
             android:id="@+id/yd_hint"
-            layout="@layout/layout_pay_hint" />
+            layout="@layout/layout_pay_hint"
+            android:visibility="gone" />
         <!-- 手动输入回显布局 -->
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="0.5dp"
             android:background="#d0d0d0" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
             android:text="@string/recharge_yd_count"
             android:textSize="16sp" />
 
-        <include layout="@layout/layout_chongzhi_mony_ed" />
+
+        <EditText
+            android:id="@+id/pay_yundou_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:maxLength="6"
+            android:text="500"
+            android:textColor="@color/black"
+            android:textSize="55sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#d0d0d0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/comment_leftright_lay_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付金额："
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/comment_leftright_lay_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="¥50"
+                android:textColor="@color/app_golden"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/pay_paynumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:paddingLeft="@dimen/ui_10_dip"
             android:textColor="@color/black"
-            android:background="@color/white"/>
+            android:visibility="gone"/>
         <!--可选择的三个按钮 -->
-        <include layout="@layout/recharge_layout_up" />
+        <include layout="@layout/recharge_layout_up"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            />
         <!--下边增加云豆的三个按钮 -->
-        <include layout="@layout/recharge_layout_down" />
+        <include layout="@layout/recharge_layout_down"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#e9e9e9" />
+
+        <!-- 选择支付方式-->
+        <include
+            android:id="@+id/pay_yundou_select_method"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            layout="@layout/layout_commont_left_righticon_select" />
 
         <View
             android:layout_width="match_parent"
@@ -53,29 +122,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="#d0d0d0" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#d0d0d0" />
-
-        <!-- 回显金额  注意这个可以作为公用的view 其他布局也可使用-->
-        <include layout="@layout/layout_commont_left_right_txt" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#d0d0d0" />
-        <!-- 选择支付方式-->
-        <include
-            android:id="@+id/pay_yundou_select_method"
-            layout="@layout/layout_commont_left_righticon_select" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#d0d0d0" />
+            android:background="#e9e9e9" />
     </LinearLayout>
 
 
@@ -86,7 +133,7 @@
         android:layout_height="50dp"
         android:clickable="true"
         android:gravity="center"
-        android:text="@string/recharge"
+        android:text="@string/pay"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
