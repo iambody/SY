@@ -262,7 +262,9 @@
         <!-- 已经反馈 -->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
 
         <!-- 设置手势密码 -->
         <activity

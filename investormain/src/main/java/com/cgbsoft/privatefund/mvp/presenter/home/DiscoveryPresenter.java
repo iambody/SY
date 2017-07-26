@@ -37,7 +37,7 @@ public class DiscoveryPresenter extends BasePresenterImpl<DiscoverContract.View>
                     jsonObject = new JSONObject(s);
                     String vas = jsonObject.getString("result");
                     DiscoverModel result = new Gson().fromJson(vas, new TypeToken<DiscoverModel>() {}.getType());
-                    System.out.println("-----result=" + result.informations);
+                    System.out.println("-----result=" + result.informations.size());
                     getView().requestFirstDataSuccess(result);
                 } catch (JSONException e) {
                     e.printStackTrace();

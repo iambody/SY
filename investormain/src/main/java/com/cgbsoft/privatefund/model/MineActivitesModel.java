@@ -46,6 +46,8 @@ public class MineActivitesModel {
 
         private String startTime;
 
+        private String state;
+
         public String getId() {
             return id;
         }
@@ -116,6 +118,14 @@ public class MineActivitesModel {
 
         public void setStartTime(String startTime) {
             this.startTime = startTime;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
         }
     }
 }

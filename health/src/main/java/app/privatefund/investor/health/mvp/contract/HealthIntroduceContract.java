@@ -3,7 +3,6 @@ package app.privatefund.investor.health.mvp.contract;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
-import app.privatefund.investor.health.adapter.CheckHealthAdapter;
 import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
 
 
