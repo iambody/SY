@@ -26,6 +26,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
@@ -43,6 +44,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
+import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
 
@@ -275,7 +277,7 @@ public class CWebviewManger {
         } else if (action.contains("closeGestruePassword")) { // 关闭手势密码
             NavigationUtils.startActivityByRouter(context, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else if (action.contains("openInformation")) {
-//            gotoDiscoverDetail(action);
+            gotoDiscoverDetail(action);
         } else if (action.contains("shareAchievement")) {
             cutScreenShare(action);
         } else if (action.contains("openCustomerChat")) {
@@ -700,7 +702,6 @@ public class CWebviewManger {
         }
     }
 
-
     private void isTouGuOnline(String action) {
         String[] split = action.split(":");
         try {
@@ -770,36 +771,34 @@ public class CWebviewManger {
 //        shareDialog.show();
     }
 
-//    private void gotoDiscoverDetail(String action) {
-//        String[] split = action.split(":");
-//        try {
-//            String infoId = URLDecoder.decode(split[2], "utf-8");
-//            String category = URLDecoder.decode(split[3], "utf-8");
-//            String title = URLDecoder.decode(split[4], "utf-8");
-//            String summary = URLDecoder.decode(split[5], "utf-8");
-//            String likes = URLDecoder.decode(split[6], "utf-8");
-//            String isLike = URLDecoder.decode(split[7], "utf-8");
-//            NewsBean newsBean = new NewsBean();
-//            newsBean.setInfoId(infoId);
-//            newsBean.setCategory(category);
-//            newsBean.setTitle(title);
-//            newsBean.setSummary(summary);
-//            newsBean.setLikes(Integer.valueOf(likes));
-//            newsBean.setIsLike(isLike);
-//
-//            Intent i = new Intent(context, FoundNewsDetailActivity.class);
-//            Bundle bundle = new Bundle();
+    private void gotoDiscoverDetail(String action) {
+        String[] split = action.split(":");
+        try {
+            String infoId = URLDecoder.decode(split[2], "utf-8");
+            String category = URLDecoder.decode(split[3], "utf-8");
+            String title = URLDecoder.decode(split[4], "utf-8");
+            String summary = URLDecoder.decode(split[5], "utf-8");
+            String likes = URLDecoder.decode(split[6], "utf-8");
+            String isLike = URLDecoder.decode(split[7], "utf-8");
+            NewsBean newsBean = new NewsBean();
+            newsBean.setInfoId(infoId);
+            newsBean.setCategory(category);
+            newsBean.setTitle(title);
+            newsBean.setSummary(summary);
+            newsBean.setLikes(Integer.valueOf(likes));
+            newsBean.setIsLike(isLike);
+
+            Intent i = new Intent(context, BaseWebViewActivity.class);
+            Bundle bundle = new Bundle();
+            i.putExtra(WebViewConstant.push_message_title, title);
+            i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.touTiaoHao);
 //            bundle.putSerializable(FoundNewsDetailActivity.NEW_PARAM_NAME, newsBean);
 //            i.putExtras(bundle);
-//            context.startActivity(i);
-//            String[] param = new String[]{newsBean.getCategory(), MApplication.getUser().getToB().isColorCloud(), MApplication.getUser().getToB().getOrganizationName(), newsBean.getTitle()};
-//            if (Utils.isVisteRole(context)) {
-//                new RundouTaskManager(context).executeRundouTask("查看资讯");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+            context.startActivity(i);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 //    private void SignIn() {
 //        JSONObject j = new JSONObject();

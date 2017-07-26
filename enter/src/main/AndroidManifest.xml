@@ -163,6 +163,7 @@
         <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
         <activity
             android:name=".mvp.ui.start.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -178,15 +179,16 @@
         </activity>
         <activity
             android:name=".mvp.ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask" />
-        <activity android:name=".mvp.ui.AnimActivity"></activity>
-        <activity android:name=".mvp.ui.ChoiceIdentityActivity" />
-        <activity android:name=".mvp.ui.start.PermissionsActivity" />
-        <activity android:name=".mvp.ui.RegisterActivity" />
+        <activity android:name=".mvp.ui.AnimActivity"  android:screenOrientation="portrait"></activity>
+        <activity android:name=".mvp.ui.ChoiceIdentityActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.start.PermissionsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.RegisterActivity"  android:screenOrientation="portrait" />
         <activity android:name=".test.TestWebview" />
-        <activity android:name=".mvp.ui.ResetPasswordActivity" />
-        <activity android:name=".mvp.ui.SetPasswordActivity" />
-        <activity android:name=".mvp.ui.BindPhoneActivity" />
+        <activity android:name=".mvp.ui.ResetPasswordActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.SetPasswordActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.BindPhoneActivity"  android:screenOrientation="portrait"/>
     </application>
 
 

@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.widget;
 
+import android.text.TextUtils;
+
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -44,7 +46,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         String[] split = actionDecode.split(":");
         String sharePYQtitle = "";
 
-        String titles = split[2];
+        String titles = TextUtils.isEmpty(split[2]) ? title : split[2];
         String subTitle = split[3];
         String imageTitle = split[4];
         String link = split[5];

@@ -14,7 +14,30 @@ import com.cgbsoft.lib.BaseApplication;
  *  
  */
 public class NetUtils {
+    /**
+     * 网络是否可用
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null && info.isConnected())
+            {
+                // 当前网络是连接的
+                if (info.getState() == NetworkInfo.State.CONNECTED)
+                {
+                    // 当前所连接的网络可用
+                    return true;
+                }
+            }
 
+        }
+        PromptManager.ShowCustomToast(context,"网络断开请连接网络");
+        return false;
+    }
     public static NetState getNetState() {
         NetState stateCode = NetState.NET_NO;
         ConnectivityManager cm = (ConnectivityManager) BaseApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);

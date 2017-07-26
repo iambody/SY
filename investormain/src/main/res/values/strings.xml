@@ -88,7 +88,7 @@
     <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
     <string name="app_name_customer">私享云</string>
 
-    <string name="shouchishenfenzheng">请上传手持身份证照</string>
+    <string name="shouchishenfenzheng">请上传本人手持证件照片</string>
     <string name="paizhaoshifan">拍照示范:</string>
     <string name="biaozhun">标准</string>
     <string name="biankuangqueshi">边框缺失</string>
@@ -159,8 +159,6 @@
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
     
-
-
     <!-- 投资账号-->
     <string name="real_name">真实姓名</string>
     <string name="centify_type">证件类型</string>
@@ -175,7 +173,7 @@
     <string name="mine_best_card">我的贺卡</string>
     <string name="mine_assert_report">资产报告</string>
     <string name="mine_investor_carlendar">投资日历</string>
-    <string name="mine_members">我的会员</string>
+    <string name="mine_members">会员专区</string>
     <string name="mine_health_list">我的健康</string>
     <string name="select_bind_advise">选择投顾</string>
     <string name="account_info_caifu_value">我的财富值</string>
@@ -227,12 +225,11 @@
     <string name="next">下一步</string>
     <string name="retest">重新测评</string>
     <string name="select_adviser">选择投顾</string>
-    <string name="my_adviser">我的投顾</string>
+    <string name="my_adviser">私人银行家名片</string>
     <string name="myqr">我的二维码</string>
     <string name="mymember">我的会员</string>
     <string name="upload_icon_fail">上传头像失败</string>
 
-    <string name="relative_asset_wait">待审核</string>
     <string name="relative_asset_past">审核通过</string>
     <string name="relative_asset_doing">审核中</string>
     <string name="relative_asset_success">审核成功</string>
@@ -270,6 +267,20 @@
         <item>d8-app</item>
         <item>d9-app</item>
         <item>d10-app</item>
+    </string-array>
+
+    <string-array name="select_identify">
+        <item value="身份证">身份证</item>
+        <item value="中国护照">中国护照</item>
+        <item value="外籍护照">外籍护照</item>
+        <item value="军官证">军官证</item>
+        <item value="士兵证">士兵证</item>
+        <item value="台胞证">台胞证</item>
+        <item value="港澳居民来往内地通行证">港澳居民来往内地通行证</item>
+        <item value="社会信用代码">社会信用代码</item>
+        <item value="营业执照">营业执照</item>
+        <item value="组织机构代码证">组织机构代码证</item>
+        <item value="其它">其它</item>
     </string-array>
 
     <string-array name="assert_certify">

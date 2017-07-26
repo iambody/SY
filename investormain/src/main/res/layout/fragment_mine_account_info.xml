@@ -27,7 +27,7 @@
         android:layout_toRightOf="@+id/account_info_image_id"
         android:layout_marginTop="5dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimens_sp_22"
+        android:textSize="@dimen/dimens_sp_20"
         android:text="王老师"
         android:id="@+id/account_info_name"/>
 

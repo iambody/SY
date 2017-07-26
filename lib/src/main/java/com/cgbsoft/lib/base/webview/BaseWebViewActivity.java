@@ -431,7 +431,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if ((title != null && title.contains("活动")) || rightRechargeShow) {
             rightItem.setTitle("充值");
         } else if (rightYundouRule) {
-            rightItem.setTitle("云豆规则");
+            rightItem.setTitle("使用规则");
         } else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
@@ -449,7 +449,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else if (rightYundouRule) {
                 Intent intent = new Intent(this, BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.yundouRule);
-                intent.putExtra(WebViewConstant.push_message_title, "云豆规则");
+                intent.putExtra(WebViewConstant.push_message_title, "使用规则");
                 startActivity(intent);
             } else{
                 pageShare();

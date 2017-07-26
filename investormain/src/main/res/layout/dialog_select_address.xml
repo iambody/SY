@@ -30,6 +30,7 @@
         android:layout_below="@id/txt_dialog_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="40dp"
+        android:scrollbars="none"
         android:dividerHeight="@dimen/ui_1_dip"
         android:divider="@color/c_low_black"
         android:id="@+id/list_view"/>
