@@ -4,24 +4,26 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
-import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.ClearEditText;
+import com.cgbsoft.lib.widget.OnWheelChangedListener;
+import com.cgbsoft.lib.widget.WheelAdapter;
+import com.cgbsoft.lib.widget.WheelView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.InvisiteAccountContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.InvisiteAccountPresenter;
-import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
-import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
-import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
-import java.util.HashMap;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +40,9 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     TextView titleMid;
 
     @BindView(R.id.title_right)
+    TextView titleRightNeedHide;
+
+    @BindView(R.id.title_right_newc)
     TextView titleRight;
 
     @BindView(R.id.invisite_realname)
@@ -52,8 +57,16 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @BindView(R.id.invisite_certifiy_prompt)
     TextView invisiteCertifyPrompt;
 
+    @BindView(R.id.wheelview)
+    WheelView wheelView;
+
+    @BindView(R.id.gunlun_ll)
+    LinearLayout linearLayout;
+
     private boolean isBindAdviser;
     private boolean loading;
+
+    private List<String> mList;
 
     @Override
     protected int layoutID() {
@@ -65,7 +78,9 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
         titleRight.setText(R.string.rc_confirm);
+        titleRightNeedHide.setVisibility(View.GONE);
         backImage.setVisibility(View.VISIBLE);
+        mList =  Arrays.asList(getResources().getStringArray(R.array.select_identify));
         initView();
     }
 
@@ -80,6 +95,29 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         }
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
+        linearLayout.setVisibility(View.VISIBLE);
+        wheelView.addChangingListener((wheel, oldValue, newValue) -> {
+            certifyType.setText(mList.get(newValue));
+        });
+        wheelView.setAdapter(new MyAdapter());
+    }
+
+    class MyAdapter implements WheelAdapter {
+
+        @Override
+        public int getItemsCount() {
+            return mList.size();
+        }
+
+        @Override
+        public String getItem(int index) {
+           return mList.get(index);
+        }
+
+        @Override
+        public int getMaximumLength() {
+            return mList.size();
+        }
     }
 
     @Override

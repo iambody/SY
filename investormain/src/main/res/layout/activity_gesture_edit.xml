@@ -14,7 +14,7 @@
         android:paddingRight="16dip">
 
         <ImageView
-            android:id="@+id/title_left"
+            android:id="@+id/title_back_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

@@ -59,7 +59,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @BindView(R.id.lock_9_view)
     Lock9View lock9View;
 
-    @BindView(R.id.title_left)
+    @BindView(R.id.title_back_left)
     ImageView mBackTitle;
 
     @BindView(R.id.text_tip)
@@ -95,6 +95,7 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     protected void init(Bundle savedInstanceState) {
         setUpViews();
         mBackTitle.setVisibility(View.VISIBLE);
+        mBackTitle.setOnClickListener(v -> finish());
     }
 
     @Override
@@ -137,16 +138,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
         mLockIndicator.setPath(inputCode);
     }
 
-    @OnClick(R.id.title_left)
-    void leftBackClick() {
-        if (fromSetPageSetGestrue) {
-//            LogOutAccount logOutAccount = new LogOutAccount();
-//            logOutAccount.accounttExit(this);
-        } else {
-            finish();
-        }
-    }
-
 //    @OnClick(R.id.gesture_top_right)
 //    public void nowToJumpPage() {
 //        finish();
@@ -176,9 +167,9 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
 
     @Override
     public void onBackPressed() {
-        if (fromSetPageSetGestrue) {
-            return;
-        }
+//        if (fromSetPageSetGestrue) {
+//            return;
+//        }
         super.onBackPressed();
     }
 

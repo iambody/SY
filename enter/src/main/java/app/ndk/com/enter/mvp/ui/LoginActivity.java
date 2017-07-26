@@ -612,7 +612,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         public void onShakeStart() {}
         @Override
         public void onShakeFinish() {
-            NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
+            if (!"SelectAddressActivity".equals(getAppli().getBackgroundManager().getCurrentActivity().getClass().getSimpleName())) {
+                NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
+            }
         }
     };
 }

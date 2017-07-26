@@ -47,4 +47,10 @@ public class AutoAjustSizeTextView extends TextView {
         super.onDraw(canvas);
         refitText(this.getText().toString(), this.getWidth());
     }
+
+    @Override
+    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter);
+        refitText(this.getText().toString(), this.getWidth());
+    }
 }

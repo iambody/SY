@@ -35,7 +35,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:id="@+id/show_current_select_address"/>
 
                 <ImageView
