@@ -190,6 +190,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*开始倒计时十秒*/
     private void timeCountDown() {
+//        LogUtils.Log("cvcvcv","开始倒计时");
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {
@@ -198,6 +199,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }).subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
+//                LogUtils.Log("cvcvcv"," 倒计时结束");
                 hindCard();
             }
 
