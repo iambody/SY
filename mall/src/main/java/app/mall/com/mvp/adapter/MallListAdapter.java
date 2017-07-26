@@ -37,7 +37,7 @@ public class MallListAdapter extends BaseAdapter<MallAddressBean, MallAddressLis
 
         if (holder instanceof MallAddressListHolder) {
             MallAddressListHolder vhh = (MallAddressListHolder) holder;
-            vhh.mall_item_address.setText(model.getAddress());
+            vhh.mall_item_address.setText(model.getRegionAddress() + model.getAddress());
             vhh.mall_item_name.setText(model.getShopping_name());
             vhh.mall_item_phone.setText(model.getPhone());
             if (model.getDefault_flag().equals("1")) {

@@ -138,9 +138,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.after();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 
@@ -319,6 +319,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onRestart() {
         super.onRestart();
         initUserInfo();
+        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
 

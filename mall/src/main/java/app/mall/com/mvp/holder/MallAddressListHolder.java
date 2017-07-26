@@ -36,7 +36,7 @@ public class MallAddressListHolder extends BaseHolder {
     public LinearLayout item_linear;
 
     @BindView(R2.id.mall_address_normal)
-    public ImageView mall_address_normal;
+    public TextView mall_address_normal;
 
     @BindView(R2.id.mall_edit_address)
     public ImageView mall_edit_address;
