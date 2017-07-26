@@ -25,7 +25,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
     @Override
     protected void before() {
         super.before();
-        if(url.contains("discover")){//是资讯页面
+        if(url.contains("information/details.html")){//是资讯页面
             TaskInfo.complentTask("查看资讯");
         }
     }
@@ -54,20 +54,18 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         if (null != commonShareDialog && commonShareDialog.isShowing()) return;
         ShareCommonBean shareCommonBean = new ShareCommonBean(titles, subTitle, link, "");
-        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, shareType -> {
-            //分享微信朋友圈成功
-            if(CommonShareDialog.SHARE_WXCIRCLE == shareType && url.contains("discover")){
-                //自选页面分享朋友圈成功
-                TaskInfo.complentTask("分享资讯");
-                DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
+
+        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+            @Override
+            public void completShare(int shareType) {
+                //分享微信朋友圈成功
+                if(CommonShareDialog.SHARE_WXCIRCLE==shareType&&url.contains("information/details.html")){
+                    //自选页面分享朋友圈成功
+                    TaskInfo.complentTask("分享资讯");
+                    DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
+                }
             }
         });
         commonShareDialog.show();
-    }
-
-    @Override
-    protected void pageShare() {
-        String javascript = "javascript:shareClick()";
-        mWebview.loadUrl(javascript);
     }
 }

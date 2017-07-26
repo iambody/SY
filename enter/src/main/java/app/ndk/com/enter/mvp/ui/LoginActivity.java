@@ -36,6 +36,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
@@ -66,6 +67,7 @@ import rx.Observable;
 @Route(RouteConfig.GOTO_LOGIN)
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     public static final String TAG_GOTOLOGIN = "insidegotologin";
+    public static final String TAG_GOTOLOGIN_FROMCENTER = "insidegotologincenter";
     @BindView(R2.id.et_al_username)
     EditText et_al_username;//用户名
 
@@ -120,7 +122,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     //是否是app内发起的 登录操作
     private boolean isFromInside;
-
+  //是否从app内的我的进来的
+  private boolean isFromInsidemy;
 
     private InvestorAppli initApplication;
 
@@ -137,13 +140,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void before() {
         super.before();
-        setIsNeedGoneNavigationBar(true);//不显示导航条
+//        setIsNeedGoneNavigationBar(true);//不显示导航条
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 
@@ -156,6 +159,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         initApplication = (InvestorAppli) getApplication();
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
+        isFromInsidemy=getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER,false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -294,6 +298,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
+        if (!NetUtils.isNetworkAvailable(baseContext)) return;
         //需要判断
         LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))
@@ -331,7 +336,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onResume() {
         super.onResume();
 //        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
-
+        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
     }
 
     @OnClick(R2.id.tv_al_register)
@@ -358,6 +363,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //点击微信上边布局 显示微信登录的按钮页面
     @OnClick(R2.id.enter_login_wxlogin_lay)
     public void onViewClickedlayout() {
+        if (!NetUtils.isNetworkAvailable(baseContext)) return;
         enterLoginWxloginLay.setVisibility(View.GONE);
         enterLoginWxBtLay.setVisibility(View.VISIBLE);
         isShowWxBt = true;
@@ -368,8 +374,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
-            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 1);
-
+            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy?5:1);
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         }
@@ -500,7 +505,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
-//            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
+            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
 
             switch (which) {
 
@@ -584,12 +589,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     boolean isFixAdjust() {
         String userName = et_al_username.getText().toString().trim();
         String userPwd = et_al_password.getText().toString().trim();
-        if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
+        if (BStrUtils.isEmpty(userName) || 11 != userName.length()||BStrUtils.isEmpty(userPwd)) {
             return false;
         }
-        if (BStrUtils.isEmpty(userPwd)) {
-            return false;
-        }
+
         return true;
     }
 

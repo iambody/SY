@@ -175,7 +175,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onResume() {
         super.onResume();
-        videoRootFrame.play();
+//        videoRootFrame.play();
     }
 
     @Override

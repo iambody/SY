@@ -24,6 +24,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.OldSalonsAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.OldSalonsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.OldSalonsPresenterImpl;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> impl
      * @param bean
      */
     private void gotoSalonDetail(OldSalonsEntity.SalonItemBean bean) {
-        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        Intent intent = new Intent(this, RightShareWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.salonDetail.concat(bean.getId()));

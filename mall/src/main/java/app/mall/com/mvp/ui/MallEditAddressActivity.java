@@ -295,14 +295,14 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         List<Map<String, Object>> parentList=null;
         try {
             StringBuilder sb = new StringBuilder();
-            InputStream open = getResources().getAssets().open("address.json");
+            InputStream open = getResources().getAssets().open("city.json");
             BufferedReader bis = new BufferedReader(new InputStreamReader(open));
             String line = "";
             while ((line = bis.readLine()) != null) {
                 sb.append(line);
             }
             String sbs = sb.toString();
-            parentList = new Gson().fromJson(sbs, new TypeToken<List<Map<String, Object>>>() {
+            parentList = new Gson().fromJson(sbs, new TypeToken<List<Province>>() {
             }.getType());
         } catch (IOException e) {
             LogUtils.Log("aaa", "printStackTrace===");
