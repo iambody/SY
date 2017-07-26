@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -33,11 +36,14 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.AutoAjustSizeTextView;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -61,6 +67,7 @@ import java.util.List;
 import app.mall.com.mvp.ui.MallAddressListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongContext;
 import rx.Observable;
 
 /**
@@ -72,6 +79,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
+
+    @BindView(R.id.show_current_select_address)
+    TextView textViewCurrentAddress;
 
     @BindView(R.id.account_info_image_id)
     RoundImageView roundImageView;
@@ -194,6 +204,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void before() {
         super.before();
         showAssert = AppManager.isShowAssert(getActivity());
+        showSelectAddress();
+    }
+
+    private void showSelectAddress() {
+        try {
+            ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
+            String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
+            if (("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(getActivity()))) {
+                textViewCurrentAddress.setVisibility(View.VISIBLE);
+                textViewCurrentAddress.setText("你当前的地址是：".concat(NetConfig.SERVER_ADD));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

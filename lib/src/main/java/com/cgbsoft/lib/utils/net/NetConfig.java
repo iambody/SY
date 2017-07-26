@@ -11,7 +11,7 @@ public class NetConfig {
     public static boolean isLocal = true;
 
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-    private static String START_APPEND = "https://";
+    public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
     private static String START_APP = "https://d10-app";

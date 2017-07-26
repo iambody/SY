@@ -31,10 +31,13 @@
                     android:src="@drawable/icon_settings_press"
                     android:layout_gravity="center_vertical"/>
 
-                <android.support.v4.widget.Space
+                <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="1dp" />
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/show_current_select_address"/>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
