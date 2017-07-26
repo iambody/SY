@@ -685,7 +685,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void loginLiveSucc() {
         liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
-                //延时3000 ，每间隔3000，时间单位
+                //延时0 ，每间隔5000，时间单位
                 .compose(this.<Long>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
