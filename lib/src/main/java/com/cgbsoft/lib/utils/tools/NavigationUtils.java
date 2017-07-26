@@ -134,7 +134,16 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowRightShare);
         activity.startActivity(intent);
     }
-
+    /**
+     * 跳转到统一的webactivity页面
+     */
+    public static void gotoWebActivityWithPay(Activity activity, String url, String title) {
+        Intent intent = new Intent(activity, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, title);
+        intent.putExtra(WebViewConstant.RIGHT_RECHARGE_HAS,  true);
+        activity.startActivity(intent);
+    }
     /**
      * 跳转到产品详情的操作
      *

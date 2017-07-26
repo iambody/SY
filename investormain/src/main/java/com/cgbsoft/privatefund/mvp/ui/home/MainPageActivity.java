@@ -141,6 +141,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
         }
 
     }
@@ -275,6 +276,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        bean.coinNum=4;
 //        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
 //        homeSignDialog.show();
+
     }
 
     private void switchFragment(Fragment to) {

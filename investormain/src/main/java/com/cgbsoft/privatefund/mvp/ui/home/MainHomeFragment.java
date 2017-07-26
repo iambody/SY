@@ -48,7 +48,6 @@ import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.List;
 
-import app.mall.com.mvp.ui.PayActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import butterknife.BindView;
@@ -623,7 +622,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 return;
             }
             if ("h5".equals(data.jumpType)) {//跳转h5
-                NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+                if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
+                    NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
+                } else {
+
+                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+                }
+
             } else if ("app".equals(data.jumpType)) {
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
@@ -675,8 +680,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
-                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
+                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
+//                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
                 }
             });
             return view;
