@@ -643,7 +643,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         switch (v.getId()) {
             case R.id.main_home_level_lay://等级
                 String url = CwebNetConfig.membercenter;
-                NavigationUtils.gotoWebActivity(baseActivity, url, "会员", false);
+                NavigationUtils.gotoWebActivity(baseActivity, url, "会员专区", false);
                 break;
             case R.id.main_home_live_lay://直播
                 if (null == homeliveInfBean || 0 == homeliveInfBean.type) return;
