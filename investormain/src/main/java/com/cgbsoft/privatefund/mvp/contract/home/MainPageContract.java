@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public interface MainPageContract {
 
     interface Presenter extends BasePresenter{
-        void getLiveList();
+        void getProLiveList();
 
         void initDayTask();
 
@@ -23,7 +23,13 @@ public interface MainPageContract {
 
     interface View extends BaseView{
         //判断是否有直播
-        void hasLive(boolean hasLive, JSONObject jsonObject);
+
+        /**
+         *
+         * @param liveState 0-->预告  1-->直播中  2-->无直播
+         * @param jsonObject
+         */
+        void hasLive(int liveState, JSONObject jsonObject);
 
         void signInSuc();
 

@@ -263,69 +263,72 @@ public class NavigationUtils {
                 hashMap.put(WebViewConstant.RIGHT_SHARE, false);
                 NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 break;
+            case WebViewConstant.Navigation.RECHARGE_PAGE:
+                NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.MALL_PAY);
+                break;
             case WebViewConstant.Navigation.TASK_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
                 break;
             case WebViewConstant.Navigation.YD_ENJOY_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.SHARE_FRIEND_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
                 break;
             case WebViewConstant.Navigation.PRIVATE_BANK_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.PRODUCT_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.INFORMATION_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.VIDEO_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.LIFE_ENJOY_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.LIFT_HOME_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.LIFT_MALL_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.HEALTH_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.HEALTH_CHECK_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.HEALTH_MEDICAL_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.MINE_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.MINE_SIGN_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.MINE_ACTION_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.MINE_CARD_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.MINE_GREETING_CARD_PAGE:
-                jumpNativeMain(context,map);
+                jumpNativeMain(context, map);
                 break;
         }
     }
 
-    private static void jumpNativeMain(Context context, HashMap<String, Object> map){
+    private static void jumpNativeMain(Context context, HashMap<String, Object> map) {
         if (context.toString().contains("MainPageActivity")) {
-            RxBus.get().post(RxConstant.JUMP_INDEX, (int)map.get("code"));
+            RxBus.get().post(RxConstant.JUMP_INDEX, (int) map.get("code"));
         } else {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, map);
         }
