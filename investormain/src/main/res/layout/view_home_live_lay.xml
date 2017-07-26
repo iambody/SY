@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:clickable="true"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/ui_10_dip"
@@ -11,7 +11,8 @@
     <RelativeLayout
         android:id="@+id/view_live_iv_lay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
 
         <ImageView
             android:id="@+id/view_live_iv"
@@ -26,9 +27,11 @@
             android:layout_alignParentBottom="true"
             android:background="@color/orange"
             android:padding="@dimen/ui_5_dip">
-<ImageView
-    android:layout_width="@dimen/ui_1_dip"
-    android:layout_height="@dimen/ui_1_dip" />
+
+            <ImageView
+                android:layout_width="@dimen/ui_1_dip"
+                android:layout_height="@dimen/ui_1_dip" />
+
             <TextView
                 android:id="@+id/view_live_title_tag"
                 android:layout_width="wrap_content"
@@ -54,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/ui_4_dip"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="5">
 
         <TextView
 
