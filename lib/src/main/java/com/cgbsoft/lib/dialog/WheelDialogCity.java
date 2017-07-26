@@ -44,10 +44,12 @@ public class WheelDialogCity extends Dialog implements View.OnClickListener {
     private String titleStr;
     private int currentPosition;
     private SalonsEntity.CityBean parentSelect;
+    private int selectPosition=0;
 
-    public void setList(List<SalonsEntity.CityBean> list) {
+    public void setListAndPosition(List<SalonsEntity.CityBean> list,int selectPosition) {
         mList.clear();
 		this.mList.addAll(list);
+        this.selectPosition=selectPosition;
 	}
     public void setTitle(String titleStr){
         this.titleStr=titleStr;
@@ -106,6 +108,7 @@ public class WheelDialogCity extends Dialog implements View.OnClickListener {
                 return cityBean.getText();
             }
         });
+        parent.setCurrentItem(selectPosition);
         parent.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {

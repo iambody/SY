@@ -139,6 +139,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         DayTaskBean dayTaskBean = new DayTaskBean();
         dayTaskBean.type = MyTaskBean.ISHEADER;
         dayTaskBean.setStatus("-1");
+        dayTaskBean.setTaskName("列表头部");
         list.add(0, dayTaskBean);
         adapter.refAllData(list);
     }
@@ -158,7 +159,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 //        TaskInfo.complentTask("每日签到");
         List<DayTaskBean> list = adapter.getList();
         for (DayTaskBean dayTaskBean : list) {
-            if (dayTaskBean.getTaskName().equals("每日签到")) {
+            if ("每日签到".equals(dayTaskBean.getTaskName())) {
                 dayTaskBean.setStatus("1");
             }
         }

@@ -31,6 +31,7 @@ import com.cgbsoft.privatefund.adapter.SalonsAdapter;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.SalonsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.SalonsPresenterImpl;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
@@ -90,6 +91,9 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
         LocationBean location = AppManager.getLocation(baseContext);
         if (null != location && !TextUtils.isEmpty(location.getLocationcity())) {
             cityCode = location.getLocationcity();
+            if (cityCode.contains("市")) {
+                cityCode=cityCode.replace("市", "");
+            }
         }
         if (TextUtils.isEmpty(cityCode)) {
             cityCode="全国";
@@ -134,7 +138,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
      * @param bean
      */
     private void gotoSalonDetail(SalonsEntity.SalonItemBean bean) {
-        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        Intent intent = new Intent(this, RightShareWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, bean.getTitle());
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.salonDetail.concat(bean.getId()));
@@ -227,12 +231,21 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
 
     @OnClick(R.id.ll_salon_city_all)
     public void showCitySelect() {
-//        if (null == citys || citys.size() == 0) {
-//            Toast.makeText(getApplicationContext(), "暂无其它城市", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (null == citys || citys.size() == 0) {
+            Toast.makeText(getApplicationContext(), "暂无其它城市", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String selectCityStr = salonCity.getText().toString();
+        int selectCityPosition = citys.indexOf(selectCityStr);
+        for (int i=0;i<citys.size();i++){
+            SalonsEntity.CityBean cityBean = citys.get(i);
+            if (cityBean.getText().equals(selectCityStr)) {
+                selectCityPosition=i;
+                break;
+            }
+        }
         WheelDialogCity wheelDialogCity = new WheelDialogCity(this);
-        wheelDialogCity.setList(citys);
+        wheelDialogCity.setListAndPosition(citys,selectCityPosition);
         wheelDialogCity.setTitle("请选择城市");
         wheelDialogCity.setConfirmCallback(new WheelDialogCity.ConfirmListenerInteface() {
             @Override

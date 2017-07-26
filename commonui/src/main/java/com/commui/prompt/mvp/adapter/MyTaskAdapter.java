@@ -46,7 +46,7 @@ public class MyTaskAdapter extends BaseAdapter<DayTaskBean, MyTaskListener, Recy
         }else if (model.type == MyTaskBean.LIST) {
             MyTaskListHolder dth = (MyTaskListHolder) holder;
             dth.tv_idt_name.setText(model.getTaskName());
-            dth.tv_idt_content.setText(model.getTaskDescribe());
+            dth.tv_idt_content.setText(model.getTaskDescribe().concat(model.getTaskCoin()).concat("个云豆"));
             String status = model.getStatus();
             int statusInt = Integer.parseInt(status);
             dth.toDone.setEnabled(statusInt==1?false:true);
