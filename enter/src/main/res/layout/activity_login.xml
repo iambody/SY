@@ -61,6 +61,7 @@
                 android:layout_marginLeft="@dimen/ui_40_dip"
                 android:layout_marginTop="68dp"
                 android:background="@drawable/login_logo" />
+
             <ImageView
                 android:id="@+id/login_cancle"
                 android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="@dimen/ui_20_dip"
                 android:src="@drawable/login_right_cha"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -183,7 +184,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
-            android:textColor="@color/gray_font"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -191,6 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ui_20_dip"
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingBottom="@dimen/ui_10_dip"
@@ -198,7 +200,6 @@
             android:paddingRight="@dimen/ui_30_dip"
             android:paddingTop="@dimen/ui_10_dip"
             android:text="先逛逛"
-            android:layout_marginTop="@dimen/ui_20_dip"
             android:textColor="@color/black" />
 
         <LinearLayout

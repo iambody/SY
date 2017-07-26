@@ -82,7 +82,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     ImageView ivBankDelPw;
 
     private LoadingDialog mLoadingDialog;
-    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel=true, isBankCode = true;
+    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true, isBankCode = true;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3, BANK_KEY = 4;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
@@ -161,7 +161,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @OnClick(R2.id.btn_ar_check)
     void checkClick() {
-        if(!NetUtils.isNetworkAvailable(baseContext))return;
+        if (!NetUtils.isNetworkAvailable(baseContext)) return;
 //        toUmengStatistics(UMENG_KEY, "按钮", "发送验证码");
 //        if (!isUsernameInput) {
 //            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
@@ -176,7 +176,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @OnClick(R2.id.btn_ar_register)
     void registerClick() {
-        if(!NetUtils.isNetworkAvailable(baseContext))return;
+        if (!NetUtils.isNetworkAvailable(baseContext)) return;
         String userName = et_ar_username.getText().toString();
         String password = et_ar_password.getText().toString();
         String code = et_ar_check.getText().toString();
@@ -285,6 +285,9 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
+            btn_ar_register.setBackground(getResources().getDrawable(isAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
+            btn_ar_register.setTextColor(getResources().getColor(isAdjust() ? R.color.white :R.color.black));
+
             switch (which) {
                 case USERNAME_KEY:
 //                    isUsernameInput = isTextHasLength;
@@ -309,5 +312,23 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+    private boolean isAdjust() {
+        //手机号
+        String phonenumber = et_ar_username.getText().toString().trim();
+        String sheckcode = et_ar_check.getText().toString().trim();
+        String password = et_ar_password.getText().toString().trim();
+        if (!Utils.isMobileNO(phonenumber)) {
+            return false;
+        }
+        if (BStrUtils.isEmpty(sheckcode)) {
+            return false;
+        }
+        if (BStrUtils.isEmpty(password)) {
+          return   false;
+        }
+        return true;
+
     }
 }

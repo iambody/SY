@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -26,7 +28,6 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
 import app.ndk.com.enter.mvp.presenter.BindPhonePresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -252,6 +253,11 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
+
+            btn_ab_ok.setBackground(getResources().getDrawable(isAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
+            btn_ab_ok.setTextColor(getResources().getColor(isAdjust() ? R.color.white : R.color.black));
+
+
             switch (which) {
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
@@ -268,5 +274,17 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+    private boolean isAdjust() {
+        String phone = et_ab_username.getText().toString().trim();
+        String checkcode = et_ab_check.getText().toString().trim();
+        if (!Utils.isMobileNO(phone)) {
+            return false;
+        }
+        if (BStrUtils.isEmpty(checkcode)) {
+            return false;
+        }
+        return true;
     }
 }

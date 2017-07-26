@@ -35,7 +35,7 @@ public class VideoSchoolAllInfPresenter extends BasePresenterImpl<VideoSchoolAll
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().getSchoolAllDataSucc(error.getMessage());
+                getView().getSchoolAllDataError(error.getMessage());
             }
         }));
     }

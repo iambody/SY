@@ -552,7 +552,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         for (int i = 0; i < data.size(); i++) {
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
-            params.setMargins(DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
+
+            params.setMargins(0==i?0:DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
             view.setLayoutParams(params);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);

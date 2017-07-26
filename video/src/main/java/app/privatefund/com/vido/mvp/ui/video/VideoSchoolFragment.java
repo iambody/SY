@@ -15,6 +15,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
@@ -123,6 +124,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     @Override
     public void getSchoolAllDataError(String message) {
+        PromptManager.ShowCustomToast(baseActivity, message);
 
     }
 
