@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -87,6 +88,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     protected boolean hasPushMessage;
 
+    protected boolean rightYundouRule;
+
     protected boolean initPage;
 
     protected String pushMessageValue;
@@ -119,6 +122,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         hasRightSave = getIntent().getBooleanExtra(WebViewConstant.RIGHT_SAVE, false);
         rightMessageIcon = getIntent().getBooleanExtra(WebViewConstant.right_message_index, false);
         rightRechargeShow = getIntent().getBooleanExtra(WebViewConstant.RIGHT_RECHARGE_HAS, false);
+        rightYundouRule = getIntent().getBooleanExtra(WebViewConstant.RIGHT_YUNDOU_RULE_HAS, false);
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         if (getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
@@ -426,6 +430,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setIcon(drawable);
         } else if ((title != null && title.contains("活动")) || rightRechargeShow) {
             rightItem.setTitle("充值");
+        } else if (rightYundouRule) {
+            rightItem.setTitle("云豆规则");
         } else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
@@ -438,8 +444,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (rightMessageIcon) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
-            } else if (title.contains("活动") || rightRechargeShow){
+            } else if (title.contains("活动") || rightRechargeShow) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.MALL_PAY);
+            } else if (rightYundouRule) {
+                HashMap<String, String> hashMap = new HashMap<>();
+                String urls =   CwebNetConfig.yundouRule;
+                hashMap.put(WebViewConstant.push_message_url, urls);
+                hashMap.put(WebViewConstant.push_message_title, "云豆规则");
+                NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
             } else{
                 pageShare();
             }
