@@ -143,7 +143,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         }
-
     }
 
     @Override
@@ -156,7 +155,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             bottomNavigationBar.selectNavaigationPostion(0);
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
-
     }
 
     @Override
@@ -169,7 +167,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
-
 
 //        initActionPoint();
 
