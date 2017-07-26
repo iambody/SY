@@ -15,7 +15,7 @@
         android:layout_weight="4">
 
         <ImageView
-            android:id="@+id/view_live_iv"
+            android:id="@+id/view_live_iv_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
@@ -39,10 +39,10 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:text="观看直播"
-
                 android:textColor="@color/white" />
 
             <ImageView
+                android:id="@+id/view_live_title_tag_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -61,7 +61,7 @@
         android:layout_weight="5">
 
         <TextView
-
+            android:id="@+id/view_live_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -69,7 +69,7 @@
             android:text="正在直播：" />
 
         <TextView
-            android:id="@+id/view_live_title"
+            android:id="@+id/view_live_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"

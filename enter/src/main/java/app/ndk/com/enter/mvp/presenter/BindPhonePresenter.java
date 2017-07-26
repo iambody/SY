@@ -10,8 +10,10 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.google.gson.Gson;
 
 import app.ndk.com.enter.R;
+import app.ndk.com.enter.mvp.bean.BindBean;
 import app.ndk.com.enter.mvp.contract.BindPhoneContract;
 import app.ndk.com.enter.view.MergeDialg;
 
@@ -50,10 +52,10 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
         addSubscription(ApiClient.wxTestMergePhone(un, code).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String ss) {
-
-                if (TextUtils.equals(getV2String(ss).trim().trim(), "1")) {//之前没有手机号账号，不需要合并数据。
+                BindBean bindBean=new Gson().fromJson(getV2String(ss).trim(),BindBean.class);
+                if (TextUtils.equals(bindBean.result, "1")) {//之前没有手机号账号，不需要合并数据。
                     loadingDialog.setResult(true, getContext().getString(R.string.bing_phone_succ_str), 1000, () -> getView().margeSucc());
-                } else if (TextUtils.equals(getV2String(ss).trim().trim(), "2")) {//有手机号账号，需要对合并数据进行确认
+                } else if (TextUtils.equals(bindBean.result, "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);
                     loadingDialog.dismiss();
 
@@ -61,7 +63,6 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                     MergeDialg dialg = new MergeDialg(getContext(), vas, new MergeDialg.MergeDialogListener() {
                         @Override
                         public void left() {
-
                             getView().margeSucc();
                         }
 
@@ -92,7 +93,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
 //                        }
 //                    };
 //                    defaultDialog.show();
-                } else if (TextUtils.equals(getV2String(ss).trim().trim(), "3")) {//绑定中
+                } else if (TextUtils.equals(bindBean.result, "3")) {//绑定中
                     loadingDialog.dismiss();
                     showToast(R.string.bind_phone_not_repeat_str);
                 } else {

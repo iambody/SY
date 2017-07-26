@@ -17,6 +17,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -185,11 +186,11 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     void nextClick() {
         String userName = et_af_username.getText().toString();
         String code = et_af_check.getText().toString();
-        if (!isUsernameInput) {
+        if (BStrUtils.isEmpty(userName)) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!isCheckInput) {
+        if (BStrUtils.isEmpty(code)) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }

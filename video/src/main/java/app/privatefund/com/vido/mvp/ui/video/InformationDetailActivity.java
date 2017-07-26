@@ -33,7 +33,7 @@ public class InformationDetailActivity extends BaseWebViewActivity {
     @Override
     protected void data() {
         super.data();
-        TaskInfo.complentTask("查看资讯");
+//        TaskInfo.complentTask("查看资讯");
     }
 
     @Override

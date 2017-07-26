@@ -16,6 +16,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
@@ -160,7 +161,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @OnClick(R2.id.btn_ar_check)
     void checkClick() {
-        toUmengStatistics(UMENG_KEY, "按钮", "发送验证码");
+        if(!NetUtils.isNetworkAvailable(baseContext))return;
+//        toUmengStatistics(UMENG_KEY, "按钮", "发送验证码");
 //        if (!isUsernameInput) {
 //            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
 //            return;
@@ -174,6 +176,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @OnClick(R2.id.btn_ar_register)
     void registerClick() {
+        if(!NetUtils.isNetworkAvailable(baseContext))return;
         String userName = et_ar_username.getText().toString();
         String password = et_ar_password.getText().toString();
         String code = et_ar_check.getText().toString();

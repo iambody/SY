@@ -154,7 +154,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             bottomNavigationBar.selectNavaigationPostion(0);
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
-
     }
 
     @Override
@@ -347,11 +346,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 3;
                 break;
             case 4://左4
-
                 currentPostion = 4;
                 if (AppManager.isVisitor(InitApplication.getContext())) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+                    intent.putExtra(LoginActivity.TAG_GOTOLOGIN_FROMCENTER, true);
                     UiSkipUtils.toNextActivityWithIntent(this, intent);
                     return;
                 }
@@ -507,6 +506,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
+
+                if(5==integer){
+                    switchID = R.id.nav_right_second;
+                    currentPostion =4;
+                    bottomNavigationBar.selectNavaigationPostion(4);
+                    switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+                    return;
+                }
                 switchID = R.id.nav_left_first;
                 currentPostion = 0;
                 bottomNavigationBar.selectNavaigationPostion(0);
@@ -737,7 +744,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             liveJsonData = jsonObject;
             LiveInfBean liveInfBean = new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
             liveInfBean.isLiveing = true;
+            try {
+                liveInfBean.title = jsonObject.getString("title");
+                liveInfBean.image = jsonObject.getString("image");
+                liveInfBean.content = jsonObject.getString("slogan");
+                liveInfBean.jsonstr = jsonObject.toString();
+                liveInfBean.type = liveState;
+                liveInfBean.create_time=jsonObject.getString("create_time");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
+
 //            liveDialog.setVisibility(View.VISIBLE);
 //            Animation animation = AnimationUtils.loadAnimation(
 //                    this, R.anim.live_dialog_anim);
@@ -752,7 +770,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             LiveInfBean liveInfBeanerr = new LiveInfBean();
             liveInfBeanerr.isLiveing = false;
-            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
+//            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
 //            liveJsonData = null;
 //            liveDialog.setVisibility(View.GONE);
 //            liveDialog.clearAnimation();
