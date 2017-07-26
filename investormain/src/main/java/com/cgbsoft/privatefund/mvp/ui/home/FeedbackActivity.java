@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -171,7 +172,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 super.run();
                 remoteParams.clear();
                 for (final String localPath : imagePaths) {
-                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")) {
+                    LogUtils.Log("aaa","localpath==="+localPath);
+                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")||localPath.equals("+")) {
                         continue;
                     }
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
