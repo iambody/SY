@@ -1,6 +1,8 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -33,7 +35,6 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
@@ -57,6 +58,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+import io.rong.imkit.RongContext;
 import rx.Observable;
 
 
@@ -94,7 +96,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //内容登录动作的布局
     @BindView(R2.id.login_cancle)
     ImageView loginCancle;
-
 
     @BindView(R2.id.login_weixins_text)
     TextView loginWeixinsText;
@@ -200,6 +201,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             getPresenter().invisterLogin(baseContext);
         }
         initRxObservable();
+        initShakeListener();
     }
 
 
@@ -455,11 +457,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                         break;
                     case WxAuthorManger.WxAuthorCANCLE:
                         mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-
                         break;
                     case WxAuthorManger.WxAuthorERROR:
                         mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-//                        if(mLoadingDialog.isShowing())mLoadingDialog.dismiss();
                         break;
                 }
             }
@@ -484,6 +484,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onViewlogincancleClicked() {//登录取消
         LoginActivity.this.finish();
     }
+
+
 
 
     private class LoginTextWatcher implements TextWatcher {
@@ -594,5 +596,26 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         return true;
     }
 
+    private void initShakeListener() {
+        try {
+            ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
+            String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
+            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
+                mShakeListener = new ShakeListener(this);
+                mShakeListener.setOnShakeListener(onShakeListener);
+                mShakeListener.register();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
+        @Override
+        public void onShakeStart() {}
+        @Override
+        public void onShakeFinish() {
+            NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
+        }
+    };
 }

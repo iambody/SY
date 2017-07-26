@@ -447,11 +447,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else if (title.contains("活动") || rightRechargeShow) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.MALL_PAY);
             } else if (rightYundouRule) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                String urls =   CwebNetConfig.yundouRule;
-                hashMap.put(WebViewConstant.push_message_url, urls);
-                hashMap.put(WebViewConstant.push_message_title, "云豆规则");
-                NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
+                Intent intent = new Intent(this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.yundouRule);
+                intent.putExtra(WebViewConstant.push_message_title, "云豆规则");
+                startActivity(intent);
             } else{
                 pageShare();
             }

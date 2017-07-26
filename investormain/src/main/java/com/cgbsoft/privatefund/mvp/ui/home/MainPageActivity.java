@@ -141,7 +141,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-
     }
 
     @Override
@@ -166,7 +165,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
-
 
 //        initActionPoint();
 
@@ -695,7 +693,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void loginLiveSucc() {
         liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
-                //延时3000 ，每间隔3000，时间单位
+                //延时0 ，每间隔5000，时间单位
                 .compose(this.<Long>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {

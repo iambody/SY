@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,9 +61,15 @@ public class RiskResultActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        titleMid.setText(R.string.risk_evaluating_title);
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        titleMid.setText(R.string.risk_evaluating_title);
         initView();
     }
 

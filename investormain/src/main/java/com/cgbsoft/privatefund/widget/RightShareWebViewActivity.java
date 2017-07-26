@@ -25,7 +25,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
     @Override
     protected void before() {
         super.before();
-        if(url.contains("discover")){//是资讯页面
+        if(url.contains("information/details.html")){//是资讯页面
             TaskInfo.complentTask("查看资讯");
         }
     }
@@ -59,7 +59,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
             @Override
             public void completShare(int shareType) {
                 //分享微信朋友圈成功
-                if(CommonShareDialog.SHARE_WXCIRCLE==shareType&&url.contains("discover")){
+                if(CommonShareDialog.SHARE_WXCIRCLE==shareType&&url.contains("information/details.html")){
                     //自选页面分享朋友圈成功
                     TaskInfo.complentTask("分享资讯");
                     DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );

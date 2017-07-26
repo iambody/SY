@@ -137,6 +137,8 @@ public class LoginHelper extends Presenter {
 
             @Override
             protected void onRxError(Throwable error) {
+                Log.e("liveSign",error.toString());
+
 
             }
         });
