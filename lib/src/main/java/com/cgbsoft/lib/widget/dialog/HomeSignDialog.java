@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.privatefund.bean.commui.SignBean;
 
@@ -28,7 +30,7 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
     private TextView homesign_data_title;
     private TextView homesign_next_title;
     private ImageView homesign_cancle_iv;
-
+    private TextView to_duihuan;
     //签到的数据
     private SignBean mysSignBean;
     private Context pContext;
@@ -58,6 +60,8 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
      *
      */
     private void initfindview() {
+        to_duihuan = (TextView) findViewById(R.id.to_duihuan);
+        to_duihuan.setOnClickListener(this);
         homesign_title = (TextView) findViewById(R.id.homesign_title);
         homesign_data_title = (TextView) findViewById(R.id.homesign_data_title);
         homesign_next_title = (TextView) findViewById(R.id.homesign_next_title);
@@ -70,7 +74,7 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
 //填充数据
         SpannableString spannableString = SpannableUtils.setTextColorSize(pContext, content, left.length(), left.length() + award.length(), R.color.app_golden, 140);
         homesign_data_title.setText(spannableString);
-        homesign_title.setText(String.format("尊敬的%s,欢迎来到私享云", BStrUtils.isEmpty(AppManager.getUserInfo(pContext).getRealName())?"用户":AppManager.getUserInfo(pContext).getRealName()));
+        homesign_title.setText(String.format("尊敬的%s,欢迎您来到私享云", BStrUtils.isEmpty(AppManager.getUserInfo(pContext).getRealName()) ? "用户" : AppManager.getUserInfo(pContext).getRealName()));
         homesign_next_title.setText(String.format("明日奖励%s云豆", (mysSignBean.coinNum + 1) + ""));
     }
 
@@ -91,6 +95,11 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.homesign_cancle_iv) {
             HomeSignDialog.this.dismiss();
+        }
+        if (v.getId() == R.id.to_duihuan) {
+            HomeSignDialog.this.dismiss();
+            NavigationUtils.jumpNativePage(pContext, WebViewConstant.Navigation.LIFT_MALL_PAGE);
+
         }
     }
 }

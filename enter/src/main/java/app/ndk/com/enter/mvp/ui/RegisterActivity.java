@@ -11,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -82,7 +81,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     ImageView ivBankDelPw;
 
     private LoadingDialog mLoadingDialog;
-    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel, isBankCode = true;
+    private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel=true, isBankCode = true;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3, BANK_KEY = 4;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
@@ -180,18 +179,18 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         String code = et_ar_check.getText().toString();
         String privateBanckCode = privateBankCode.getText().toString();
         toUmengStatistics(UMENG_KEY, "按钮", "注册");
-        if (!isUsernameInput) {
+        if (BStrUtils.isEmpty(userName)) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!isPasswordInput) {
+        if (BStrUtils.isEmpty(password)) {
             MToast.makeText(getApplicationContext(), getString(R.string.pw_null_str), Toast.LENGTH_SHORT);
             return;
         } else if (password.length() > 16 || password.length() < 6) {
             MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!isCheckInput) {
+        if (BStrUtils.isEmpty(code)) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }

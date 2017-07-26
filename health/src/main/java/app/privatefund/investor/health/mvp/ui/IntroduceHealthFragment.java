@@ -6,25 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.BaseWebview;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
-import com.tencent.qcload.playersdk.util.BuildUtil;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
@@ -36,12 +28,8 @@ import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
 import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
 import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
-import butterknife.BindFloat;
 import butterknife.BindView;
 import rx.Observable;
-
-import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSERVABLE;
-import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_PLAY5MINUTES_OBSERVABLE;
 
 /**
  * @author chenlong
@@ -181,13 +169,13 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onPause() {
         super.onPause();
-//        videoRootFrame.pause();
+        videoRootFrame.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        videoRootFrame.play();
+        videoRootFrame.play();
     }
 
     @Override

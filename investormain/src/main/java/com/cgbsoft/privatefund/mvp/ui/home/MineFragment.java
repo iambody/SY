@@ -39,6 +39,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.lib.widget.AutoAjustSizeTextView;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -85,7 +86,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView textViewCaifu;
 
     @BindView(R.id.mine_yundou_id)
-    TextView textViewYundou;
+    AutoAjustSizeTextView textViewYundou;
 
     @BindView(R.id.mine_private_banker_id)
     TextView textViewPrivateBanker;
@@ -374,10 +375,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.account_info_yundou_value_ll)
     void gotoYundouctivity() {
         String mineYunDou = CwebNetConfig.mineYunDou;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, mineYunDou);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.account_info_mine_yundou));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, mineYunDou);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_info_mine_yundou));
+        intent.putExtra(WebViewConstant.RIGHT_YUNDOU_RULE_HAS, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.account_info_private_bank_value_ll)

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -60,7 +63,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @BindView(R.id.commit)
     protected Button commit;
 
-    private List<String> imagePaths = new ArrayList<>();
+    private ArrayList<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
     private FeedbackAdapter feedbackAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -79,8 +82,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        feedbackAdapter = new FeedbackAdapter(this);
+        imagePaths.add("+");
+        feedbackAdapter = new FeedbackAdapter(this,imagePaths);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), 4);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(feedbackAdapter);
@@ -96,13 +99,13 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @OnClick(R.id.commit)
     void commitButtonClick() {
         String editStr = afb_et.getText().toString();
-        if (editStr.length() >= 10 && editStr.length() <= 200) {
+        if (editStr.length() >= 5 && editStr.length() <= 300) {
             uploadFile(editStr);
         } else {
-            if (editStr.length() < 10) {
-                Toast.makeText(FeedbackActivity.this, "您输入的文字不能少于10个", Toast.LENGTH_SHORT).show();
-            } else if (editStr.length() > 200) {
-                Toast.makeText(FeedbackActivity.this, "您输入的文字不能大于200个", Toast.LENGTH_SHORT).show();
+            if (editStr.length() < 5) {
+                Toast.makeText(FeedbackActivity.this, "您输入的文字不能少于5个", Toast.LENGTH_SHORT).show();
+            } else if (editStr.length() > 300) {
+                Toast.makeText(FeedbackActivity.this, "您输入的文字不能大于300个", Toast.LENGTH_SHORT).show();
             }/* else if (imagePaths.size() == 0) {
                         new MToast(FeedbackActivity.this).show("您输入的文字不能大于200个", 0);
                     }*/
@@ -113,10 +116,11 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     public void picClickListener(int pos, String path) {
         if (TextUtils.equals(path, "+")) {
             if (imagePaths.size() > 12) {
-                Toast.makeText(FeedbackActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FeedbackActivity.this, "最多上传12张图片", Toast.LENGTH_SHORT).show();
                 return;
             }
-            NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE);
+            imagePaths.remove(imagePaths.size() - 1);
+            NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
         } else {
             picClickPosition = pos;
             Intent intent = new Intent(this, SmoothImageActivity.class);
@@ -133,15 +137,25 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             if (resultCode == RESULT_OK) {
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
-                    imagePaths.add(mSelectPath.get(0));
-                    feedbackAdapter.addPic(mSelectPath.get(0));
+                    imagePaths.clear();
+                    if (mSelectPath.size() < 12) {
+                        mSelectPath.add("+");
+                    }
+                    imagePaths.addAll(mSelectPath);
+                    feedbackAdapter.notifyDataSetChanged();
+//                    imagePaths.add(mSelectPath.get(0));
+//                    feedbackAdapter.addPic(mSelectPath.get(0));
                 }
             }
         } else if (requestCode == SMOTH_CODE) {
             if (resultCode == RESULT_OK) {
                 if (picClickPosition > -1) {
                     imagePaths.remove(picClickPosition);
-                    feedbackAdapter.removeOne(picClickPosition);
+                    if (imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+                        imagePaths.add("+");
+                    }
+                    feedbackAdapter.notifyDataSetChanged();
+//                    feedbackAdapter.removeOne(picClickPosition);
                 }
             }
         }
@@ -158,7 +172,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 super.run();
                 remoteParams.clear();
                 for (final String localPath : imagePaths) {
-                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")) {
+                    LogUtils.Log("aaa","localpath==="+localPath);
+                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")||localPath.equals("+")) {
                         continue;
                     }
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);

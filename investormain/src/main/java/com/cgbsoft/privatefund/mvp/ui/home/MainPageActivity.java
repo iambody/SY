@@ -275,6 +275,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        bean.coinNum=4;
 //        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
 //        homeSignDialog.show();
+
     }
 
     private void switchFragment(Fragment to) {

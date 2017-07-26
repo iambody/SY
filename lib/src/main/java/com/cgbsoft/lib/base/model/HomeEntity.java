@@ -31,7 +31,7 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
         public String jumpType;//": "h5",
         public String url;//": "https://"
         public String isVisitorVisible;//1可点进去 2跳转登录
-
+       public boolean isAppInAudit;//ios
     }
 
     public static class Level {

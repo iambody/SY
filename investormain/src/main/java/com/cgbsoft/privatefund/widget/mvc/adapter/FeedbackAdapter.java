@@ -23,10 +23,11 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackHolder> {
     private FeedbackListener feedbackListener;
     private List<String> dataList;
 
-    public FeedbackAdapter(FeedbackListener listener) {
+    public FeedbackAdapter(FeedbackListener listener,List<String> datas) {
         feedbackListener = listener;
-        dataList = new ArrayList<>();
-        dataList.add("+");
+        dataList=datas;
+//        dataList = new ArrayList<>();
+//        dataList.add("+");
     }
 
     public void addPic(String picPath) {
@@ -51,7 +52,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackHolder> {
 
     @Override
     public FeedbackHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FeedbackHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_feedback, null));
+        return new FeedbackHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_feedback,parent,false));
     }
 
     @Override
