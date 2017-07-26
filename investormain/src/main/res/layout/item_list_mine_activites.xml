@@ -146,7 +146,6 @@
                     android:text="播放回看" />
             </RelativeLayout>
 
-
         </RelativeLayout>
     </LinearLayout>
 
