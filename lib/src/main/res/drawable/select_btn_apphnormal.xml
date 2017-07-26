@@ -3,12 +3,12 @@
 
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="@color/gray_font" />
+            <solid android:color="@color/dialog_transparent1" />
         </shape>
     </item>
     <item>
         <shape>
-            <solid android:color="@color/dialog_transparent1" />
+            <solid android:color="@color/transparent2" />
         </shape>
     </item>
 

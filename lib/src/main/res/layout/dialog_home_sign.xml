@@ -36,7 +36,7 @@
                 android:layout_below="@id/dialog_sign_iv"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/white_light"
-                android:textSize="@dimen/dimens_sp_16" />
+                android:textSize="@dimen/dimens_sp_14" />
         </RelativeLayout>
 
         <ImageView
@@ -81,6 +81,7 @@
             android:background="@color/white" />
 
         <TextView
+            android:id="@+id/to_duihuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/select_sign_bt"
