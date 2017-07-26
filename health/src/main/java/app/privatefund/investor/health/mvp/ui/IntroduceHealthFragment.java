@@ -29,7 +29,6 @@ import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
 import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
 import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
 import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Observable;
 
 /**
@@ -105,7 +104,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             videos.add(v1);
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             videoRootFrame.play(videos);
-            videoRootFrame.pause();
+//            videoRootFrame.pause();
         }
     }
 
