@@ -49,6 +49,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 我的二维码
     public static String myqr;
 
+    // 云豆规则
+    public static String yundouRule;
+
     // 我的订单
     public static String mineGoodsOrder;
     // 我的资产订单
@@ -141,6 +144,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         common_problem = baseSxyParentUrl + "/biz/mine/mine-help.htmll";
         myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
         mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
+        yundouRule = baseSxyParentUrl + "/biz/mine/yd-rules.html";
 
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
