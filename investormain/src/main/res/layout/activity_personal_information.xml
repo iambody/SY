@@ -50,7 +50,7 @@
                     android:textSize="@dimen/dimens_sp_16"
                     android:text="头像"
                     />
-                <com.cgbsoft.lib.widget.CircleImageView
+                <com.cgbsoft.lib.widget.RoundImageView
                     android:id="@+id/civ_personal_information_icon"
                     android:layout_width="@dimen/ui_64_dip"
                     android:layout_height="@dimen/ui_64_dip"
@@ -61,7 +61,7 @@
                     app:civ_border_color="@color/transparent"
                     android:src="@drawable/logoshare"
                     >
-                </com.cgbsoft.lib.widget.CircleImageView>
+                </com.cgbsoft.lib.widget.RoundImageView>
                 <ImageView
                     android:id="@+id/iv_personalinfo_item_right_arrow_icon"
                     android:layout_width="14dp"

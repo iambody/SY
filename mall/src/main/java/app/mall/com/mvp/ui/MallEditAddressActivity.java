@@ -302,10 +302,9 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
                 sb.append(line);
             }
             String sbs = sb.toString();
-            parentList = new Gson().fromJson(sbs, new TypeToken<List<Province>>() {
+            parentList = new Gson().fromJson(sbs, new TypeToken<List<Map<String, Object>>>() {
             }.getType());
         } catch (IOException e) {
-            LogUtils.Log("aaa", "printStackTrace===");
             e.printStackTrace();
         }
 
@@ -317,7 +316,20 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             @Override
             public void confirm(Map<String, Object> map) {
                 if (map != null) {
-                    Iterator<Map.Entry<String, Object>> iterators = map.entrySet().iterator();
+                    String province = (String) map.get("province");
+                    List<Map<String,Object>> cityList = (List<Map<String, Object>>) map.get("city");
+                    String childPositionStr = (String) map.get("child_position");
+                    String grandSonPositionStr = (String) map.get("grandson_position");
+                    int childPositionInt = Integer.parseInt(childPositionStr);
+                    int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
+                    Map<String, Object> cityObj = cityList.get(childPositionInt);
+                    String cityName = (String) cityObj.get("n");
+                    List<Map<String,Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
+                    Map<String, Object> districtObj = districtList.get(grandSonPositionInt);
+                    String districtName = (String) districtObj.get("s");
+                    mall_address_area.setText(province.concat(cityName).concat(districtName));
+
+                    /*Iterator<Map.Entry<String, Object>> iterators = map.entrySet().iterator();
                     Map.Entry<String, Object> entry = iterators.next();
                     String key = entry.getKey();
                     if (!TextUtils.isEmpty(key) && key.equals("sub") && iterators.hasNext()) {
@@ -352,7 +364,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
                             districtNum = (String) grandSonEntry.getValue();
                         }
                     }
-                    mall_address_area.setText(nameChinese.concat(childNameChinese).concat(districtName));
+                    mall_address_area.setText(nameChinese.concat(childNameChinese).concat(districtName));*/
                 }
             }
         });
