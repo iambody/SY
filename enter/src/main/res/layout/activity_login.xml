@@ -183,7 +183,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_font"
             android:textSize="18sp" />
 
         <TextView
