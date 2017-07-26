@@ -144,7 +144,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         salonDetail = baseSxyParentUrl + "/biz/indexSecond/active_detail.html?id=";
         recommendFriends = baseSxyParentUrl + "/biz/mine/mine-recommend.html";
         aboutapp = baseSxyParentUrl + "/biz/mine/mine-about.html";
-        common_problem = baseSxyParentUrl + "/biz/mine/mine-help.htmll";
+        common_problem = baseSxyParentUrl + "/biz/mine/mine-help.html";
         myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
         mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
         yundouRule = baseSxyParentUrl + "/biz/mine/yd-rules.html";
