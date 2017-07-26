@@ -187,6 +187,8 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
         }
     }
 
+
+
     public interface ConfirmListenerInteface {
 		void confirm(Map<String, Object> result);
 	}
