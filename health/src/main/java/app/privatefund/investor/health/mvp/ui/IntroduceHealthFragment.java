@@ -34,7 +34,7 @@ import rx.Observable;
 /**
  * @author chenlong
  */
-public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresenter> implements PlayerListener, HealthIntroduceContract.View{
+public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresenter> implements PlayerListener, HealthIntroduceContract.View {
 
     @BindView(R2.id.introduce_health_text)
     TextView introduce_health_text;
@@ -76,8 +76,8 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         videoStateObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean b) {
-                if (b){
-                    if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+                if (b) {
+                    if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
                         videoRootFrame.pause();
                     }
                 }
@@ -125,10 +125,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
+        if (isVisibleToUser) {
 
-        }else {
-            if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+        } else {
+            if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
                 videoRootFrame.pause();
             }
 
@@ -138,7 +138,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onStart() {
         super.onStart();
-        if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+        if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
             videoRootFrame.pause();
         }
     }
