@@ -70,6 +70,7 @@
             app:kswBackDrawable="@drawable/back_drawable"
             app:kswThumbWidth="29dp"
             app:kswThumbHeight="29dp"
+            android:clickable="false"
             >
         </com.cgbsoft.lib.widget.SwitchButton>
     </FrameLayout>

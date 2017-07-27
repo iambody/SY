@@ -137,6 +137,7 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 childCurrentPosition =newValue;
+                setGrandSonAdapter(newValue);
             }
         });
         grandson.addChangingListener(new OnWheelChangedListener() {

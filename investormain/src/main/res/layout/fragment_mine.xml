@@ -26,8 +26,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:padding="11dp"
                     android:id="@+id/mine_title_set_id"
                     android:src="@drawable/icon_settings_press"
                     android:layout_gravity="center_vertical"/>
@@ -40,8 +41,9 @@
                     android:id="@+id/show_current_select_address"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:padding="11dp"
                     android:id="@+id/mine_title_message_id"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/select_icon_white_news"/>

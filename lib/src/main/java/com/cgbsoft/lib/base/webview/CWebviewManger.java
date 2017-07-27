@@ -253,9 +253,11 @@ public class CWebviewManger {
                 AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
                 String newVersion = result.version;
                 String oldVersion = Utils.getVersionName(context);
+                LogUtils.Log("aaa","newVersion==="+newVersion+"---oldversion==="+oldVersion);
                 String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
                 webview.loadUrl(language);
             } else {
+                LogUtils.Log("aaa","newVersion===");
                 String oldVersion = String.valueOf(Utils.getVersionName(context));
                 String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
                 webview.loadUrl(language);
