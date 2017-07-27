@@ -352,10 +352,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/ui_16_dip"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/home_visiter_up_txt"
                 android:textColor="@color/app_golden"
                 android:textSize="14sp" />
@@ -363,9 +362,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/ui_10_dip"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/home_visiter_down_txt"
                 android:textColor="@color/app_golden"
                 android:textSize="12sp" />

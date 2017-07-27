@@ -8,6 +8,7 @@ import android.view.View;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
+import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.adapter.VideoListAdapter;
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
@@ -103,9 +105,13 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 //                Intent toHomeIntent = new Intent(fBaseActivity, LoginActivity.class);
 //                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
 //                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
-                HashMap<String ,Object >map=new HashMap<String, Object>();
-                map.put("insidegotologin",true);
-                NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN,map);
+                if (AppManager.isVisitor(fBaseActivity)) {
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put("insidegotologin", true);
+                    NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN, map);
+                } else {
+                    VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
+                }
             }
 
         });

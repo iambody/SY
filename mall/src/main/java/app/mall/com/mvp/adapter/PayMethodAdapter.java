@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
+
 import java.util.ArrayList;
 
 import app.mall.com.model.PayMethod;
@@ -69,10 +71,18 @@ public class PayMethodAdapter extends BaseAdapter {
         viewHolder.payIcon.setImageResource(403 == payMethod.getTypeCode() ? R.drawable.pay_weixin_icon : 401 == payMethod.getTypeCode() ? R.drawable.pay_zhifubao_icon : R.drawable.pay_yinlian_icon);
         viewHolder.limit.setText(String.format("(最高限额 : ¥%d)", payMethod.getMaxLimit()));
 
-        if (checked == payMethod.getTypeCode()) {
-            viewHolder.check.setImageResource(R.drawable.paymethod_select_pre);
-        } else {
-            viewHolder.check.setImageResource(R.drawable.paymethod_select_nor);
+        if (AppManager.isInvestor(context)){
+            if (checked == payMethod.getTypeCode()) {
+                viewHolder.check.setImageResource(R.drawable.check_gorden);
+            } else {
+                viewHolder.check.setImageResource(R.drawable.paymethod_select_nor);
+            }
+        }else {
+            if (checked == payMethod.getTypeCode()) {
+                viewHolder.check.setImageResource(R.drawable.paymethod_select_pre);
+            } else {
+                viewHolder.check.setImageResource(R.drawable.paymethod_select_nor);
+            }
         }
 
         return view;

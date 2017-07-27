@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.iapppay.alpha.pay.channel.alipay.PayResult;
 
 import app.mall.com.mvp.contract.PayResultContract;
@@ -37,7 +40,11 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
 
     @Override
     protected int layoutID() {
-        return R.layout.activity_recharge_result;
+        if (AppManager.isInvestor(this)){
+            return R.layout.activity_recharge_result_c;
+        }else {
+            return R.layout.activity_recharge_result;
+        }
     }
 
     @Override
@@ -72,7 +79,11 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
             String rechargeCount = getIntent().getStringExtra("rechargeCount");
             disRecharge.setVisibility(View.GONE);
             rechargeSuc.setVisibility(View.VISIBLE);
-            rechargeIcon.setBackgroundResource(R.drawable.recharge_recharge_success);
+            if (AppManager.isInvestor(this)){
+                rechargeIcon.setBackgroundResource(R.drawable.icon_pay_completed);
+            }else {
+                rechargeIcon.setBackgroundResource(R.drawable.recharge_recharge_success);
+            }
             rechargeState.setText("充值成功");
             rechargeState.setTextColor(0xffea1202);
             ydCount.setText(rechargeCount);
@@ -80,7 +91,7 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
             goMall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RechargeResultActivity.this.finish();
+                    NavigationUtils.jumpNativePage(RechargeResultActivity.this,WebViewConstant.Navigation.LIFT_MALL_PAGE);
                 }
             });
 
@@ -89,7 +100,11 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
             String rechargeResultDesc = getIntent().getStringExtra("rechargeResult");
             rechargeSuc.setVisibility(View.GONE);
             disRecharge.setVisibility(View.VISIBLE);
-            rechargeIcon.setBackgroundResource(R.drawable.recharge_recharge_failure);
+            if (AppManager.isInvestor(this)){
+                rechargeIcon.setBackgroundResource(R.drawable.icon_pay_uncompleted);
+            }else {
+                rechargeIcon.setBackgroundResource(R.drawable.recharge_recharge_failure);
+            }
             rechargeState.setText("充值失败");
             rechargeState.setTextColor(0xff222222);
             result.setText(rechargeResultDesc);

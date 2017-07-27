@@ -43,7 +43,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
      */
     @Override
     public void getProLiveList() {
-        ApiClient.getLiveList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+        ApiClient.getProLiveList(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 JSONArray jsonArray = null;
@@ -164,6 +164,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
                     AppInfStore.saveUserInfo(getContext(), userInfo);
+                    if("0".equals(userInfo.isSingIn)){
+                        toSignIn();
+                    }
+//                    getView().toFreshUserinfHome()
                     if (tofreshHome) {
                         getView().toFreshUserinfHome();
                     }
