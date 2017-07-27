@@ -5,8 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -24,7 +22,6 @@ import android.widget.TextView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -39,13 +36,11 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
-import com.cgbsoft.lib.widget.AutoAjustSizeTextView;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -68,6 +63,7 @@ import app.mall.com.mvp.ui.MallAddressListActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
+import me.grantland.widget.AutofitTextView;
 import rx.Observable;
 
 /**
@@ -96,7 +92,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView textViewCaifu;
 
     @BindView(R.id.mine_yundou_id)
-    AutoAjustSizeTextView textViewYundou;
+    AutofitTextView textViewYundou;
 
     @BindView(R.id.mine_private_banker_id)
     TextView textViewPrivateBanker;
@@ -177,7 +173,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String[] videos;
     private MineModel mineModel;
     private boolean showAssert;
-    private boolean isNotFirstLook;
     private boolean isLoading;
     private static final long DEALAY = 500;
     private static final int WAIT_CHECK = 1;
@@ -339,7 +334,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
             valuse = getString(R.string.relative_asset_failure);
         }
-        noRelativeAssert.setText(noRelativeAssert.getText().toString().concat(TextUtils.isEmpty(valuse) ? "" : " ("+valuse + ")"));
+        noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert).concat(TextUtils.isEmpty(valuse) ? "" : " ("+valuse + ")"));
     }
 
     @Override
@@ -409,8 +404,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoPrivateBanktivity() {
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
-        intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "私人银行家" : "私人银行家");
-        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);
+        intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? getString(R.string.mine_private_bank) : getString(R.string.private_bank_jia));
+        intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+
         getActivity().startActivity(intent);
     }
 
@@ -462,14 +458,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             showAssert = false;
             AppInfStore.saveShowAssetStatus(getActivity(), false);
         } else {
-            if (!isNotFirstLook) {
-                GestureManager.showAssertGestureManager(getActivity());
-                isNotFirstLook = true;
-            } else {
-                showAssert();
-                showAssert = true;
-                AppInfStore.saveShowAssetStatus(getActivity(), true);
-            }
+            GestureManager.showAssertGestureManager(getActivity());
         }
     }
 
@@ -485,17 +474,29 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_bank_asset_match_ll)
     void gotoAssetMatchActivity() {
-        GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+        if (showAssert) {
+            toAssertMatchActivit();
+        } else {
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+        }
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
-        GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+        if (showAssert) {
+            toInvestorCarlendarActivity();
+        } else {
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+        }
     }
 
     @OnClick(R.id.mine_bank_datum_manager_ll)
     void gotoDatumCarlendarActivity() {
-        GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
+        if (showAssert) {
+            NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+        } else {
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
+        }
     }
 
     private void toAssertMatchActivit() {
@@ -610,7 +611,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (mineModel.getMyInfo() != null) {
             MineModel.MineUserInfo mineUserInfo = mineModel.getMyInfo();
             textViewName.setText(mineUserInfo.getNickName());
-            Imageload.display(getActivity(), mineUserInfo.getHeadImageUrl(), roundImageView, R.drawable.logo, R.drawable.logo);
+            Imageload.display(getActivity(), mineUserInfo.getHeadImageUrl(), roundImageView, R.drawable.logo, null);
             userLeaguarLevel.setText(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? "无" : mineUserInfo.getMemberLevel());
             userLeaguarUpdateDesc.setText(mineUserInfo.getMemberBalance());
             userLeaguarUpdateDesc.setVisibility(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? View.GONE : View.VISIBLE);
@@ -659,7 +660,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
 
                 if (orders.getCount() > 0 && current != null) {
-                    ViewUtils.createTopRightBadgerView(getActivity(), current, orders.getCount());
+                    ViewUtils.createLeftTopRedPoint(getActivity(), current, orders.getCount());
                 } else {
                     hideOrderNumber(current);
                 }

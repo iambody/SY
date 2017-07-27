@@ -1085,7 +1085,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
-        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, commonShareBean, null);
+        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);
         commonShareDialog.show();
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName);

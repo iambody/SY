@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -362,11 +363,16 @@ public class SearchAdatper extends RecyclerView.Adapter {
 //                                NavigationUtils.startMessageActivity(context, resultBean, keyName);
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.INFOMATION, resultBean);
                                 String url;
+//                                if (TextUtils.equals("1", resultBean.getIsMore())) {
+//                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_toB.html?id=" + resultBean.getCategoryId();
+//
+//                                } else {
+//                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
+//                                }
                                 if (TextUtils.equals("1", resultBean.getIsMore())) {
-                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_toB.html?id=" + resultBean.getCategoryId();
-
+                                    url = CwebNetConfig.msgDetal + resultBean.getCategoryId();
                                 } else {
-                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
+                                    url = CwebNetConfig.msgMoreDetail + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }
                                 HashMap hashMap = new HashMap();
                                 hashMap.put(WebViewConstant.push_message_url, url);

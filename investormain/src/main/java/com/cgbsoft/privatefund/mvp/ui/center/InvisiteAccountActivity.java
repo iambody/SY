@@ -95,7 +95,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         }
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
-        linearLayout.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         wheelView.addChangingListener((wheel, oldValue, newValue) -> {
             certifyType.setText(mList.get(newValue));
         });

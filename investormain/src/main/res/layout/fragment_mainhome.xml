@@ -172,7 +172,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
-                    android:src="@drawable/touxiang_default"
+                    android:src="@drawable/home_touxiang_default"
                     app:border_outside_color="@color/black"
                     app:border_thickness="5dp" />
             </RelativeLayout>
@@ -331,7 +331,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
-                    android:src="@drawable/touxiang_default"
+                    android:src="@drawable/home_touxiang_default"
                     app:border_outside_color="@color/black"
                     app:border_thickness="5dp" />
             </RelativeLayout>

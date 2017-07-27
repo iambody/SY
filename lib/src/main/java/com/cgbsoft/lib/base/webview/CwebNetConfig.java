@@ -24,6 +24,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     //webView消息详情列表
     public static String msgDetal;
+    // Webview
+    public static String msgMoreDetail;
 
     // 风险评测结果页面
     public static String riskEvaluationQuestion;
@@ -48,7 +50,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String common_problem;
     // 我的二维码
     public static String myqr;
-
     // 云豆规则
     public static String yundouRule;
 
@@ -62,7 +63,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String discoveryDetail;
     // 会员专区
     public static String memeberArea;
-
+    // 会员规则
+    public static String memberRule;
     // 签到页面
     public static String signInPage;
     // 我的卡券
@@ -88,7 +90,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String choiceAdviser;
     //私享云 投顾页面  已经绑定过
     public static String BindchiceAdiser;
-
     //会员
     public static String membercenter;
     public static String qrcoderesult;
@@ -114,7 +115,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         clubPage = baseParentUrl + "/bank/default.html";
         pageInit = baseSxyParentUrl + "/setData.html";
         productDetail = baseSxyParentUrl + "/biz/product/index.html?schemeId=";
-        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
         product = baseParentUrl + "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
@@ -128,6 +128,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
+//      msgDetal = baseSxyParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
+        msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
+        msgMoreDetail = baseSxyParentUrl + "/biz/product/notice_detail.html?id=";
         signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
         mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
@@ -148,10 +151,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
         myqr = baseSxyParentUrl + "/biz/mine/mine-myCode.html";
         mineYunDou = baseSxyParentUrl + "/biz/mine/mine_ydaccount.html";
         yundouRule = baseSxyParentUrl + "/biz/mine/yd-rules.html";
+        memberRule = baseSxyParentUrl + "/biz/members/rules.html";
 
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
-//        app6.0/biz/adviser/assets_report.html?adviserId='+advisorId+'&bindChannel=4
     }
 }

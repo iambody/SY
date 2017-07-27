@@ -1386,8 +1386,10 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
-                 ) {
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.PRODUCT_DETAIL)) {
+
 //            actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
             String[] split = actionUrl.split(":");
             try {
