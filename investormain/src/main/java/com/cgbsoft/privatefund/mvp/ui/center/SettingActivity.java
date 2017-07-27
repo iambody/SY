@@ -121,6 +121,18 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+        gestureSwitch.setSwitchCheck(gestureFlag);
+        if (gestureFlag) {//开
+            changeGesturePsdLayout.setVisibility(View.VISIBLE);
+        } else {
+            changeGesturePsdLayout.setVisibility(View.GONE);
+        }
+    }
+
     private void turnOffGesturePsd() {
         NavigationUtils.startActivityByRouter(baseContext, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
     }

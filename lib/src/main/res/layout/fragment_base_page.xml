@@ -7,12 +7,17 @@
     android:orientation="vertical"
      >
 
+    <View
+        android:id="@+id/status_replace"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/black"
+        />
     <FrameLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:background="@color/transparent"
         android:layout_height="50dp"
-        android:layout_marginTop="@dimen/ui_10_dip"
         />
     <include
         layout="@layout/acitivity_divide_online"
