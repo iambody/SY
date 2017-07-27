@@ -56,12 +56,9 @@ public class SettingItemNormal extends LinearLayout {
         if (showSwitchBt) {
             right.setVisibility(View.GONE);
             sButton.setVisibility(View.VISIBLE);
-            sButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (null != switchButtonChangeListener) {
-                        switchButtonChangeListener.change(buttonView,isChecked);
-                    }
+            sButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (null != switchButtonChangeListener) {
+                    switchButtonChangeListener.change(buttonView,isChecked);
                 }
             });
         } else {
