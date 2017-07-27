@@ -41,12 +41,12 @@ public class ViewUtils {
 
     public static BadgeView createLeftTopRedPoint(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
-        view.setTag(badge);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         badge.setText(String.valueOf(value));
         badge.setTextColor(Color.parseColor("#ffffff"));
         badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
+        badge.setVisibility(View.VISIBLE);
         badge.show();
         return badge;
     }

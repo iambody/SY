@@ -14,6 +14,8 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -80,6 +82,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             }
         });
         getPresenter().getElegantLivingBanners(datas.size());
+        DataStatistApiParam.intoElegantLiving();
     }
 
     private void gotoBannerDetail(ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
@@ -156,5 +159,10 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
             return;
         }
         getPresenter().getElegantLivingBanners(datas.size());
+    }
+
+    @Override
+    protected void viewBeShow() {
+        DataStatistApiParam.intoElegantLiving();
     }
 }

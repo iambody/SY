@@ -253,14 +253,14 @@ public class CWebviewManger {
                 AppResourcesEntity.Result result = new Gson().fromJson(json, AppResourcesEntity.Result.class);
                 String newVersion = result.version;
                 String oldVersion = Utils.getVersionName(context);
-                LogUtils.Log("aaa","newVersion==="+newVersion+"---oldversion==="+oldVersion);
                 String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
                 webview.loadUrl(language);
+                LogUtils.Log("aaa","language==="+language);
             } else {
-                LogUtils.Log("aaa","newVersion===");
                 String oldVersion = String.valueOf(Utils.getVersionName(context));
                 String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
                 webview.loadUrl(language);
+                LogUtils.Log("aaa","language=---=="+language);
             }
         } else if (action.contains("updated")) {
             versonUpdate();
@@ -793,7 +793,10 @@ public class CWebviewManger {
             Intent i = new Intent(context, BaseWebViewActivity.class);
             Bundle bundle = new Bundle();
             i.putExtra(WebViewConstant.push_message_title, title);
-            i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.touTiaoHao);
+            String url = CwebNetConfig.touTiaoHao.concat(newsBean.getInfoId()).concat("&category=").concat(newsBean.getCategory());
+            System.out.println("------url=" + url);
+            i.putExtra(WebViewConstant.push_message_url, url);
+//        shareurl = Domain.foundNewshare + newsBean.getInfoId() + "&category=" + newsBean.getCategory() + "&share=2";
 //            bundle.putSerializable(FoundNewsDetailActivity.NEW_PARAM_NAME, newsBean);
 //            i.putExtras(bundle);
             context.startActivity(i);

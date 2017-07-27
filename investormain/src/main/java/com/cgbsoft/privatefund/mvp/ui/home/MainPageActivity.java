@@ -321,6 +321,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onRestart() {
         super.onRestart();
         initUserInfo();
+        getPresenter().getProLiveList();
         RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
