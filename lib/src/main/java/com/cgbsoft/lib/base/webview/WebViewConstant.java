@@ -12,6 +12,7 @@ public class WebViewConstant {
     public static final String right_message_index = "right_message_icon";
     public static final String RIGHT_RECHARGE_HAS = "right_recharge_text";
     public static final String RIGHT_YUNDOU_RULE_HAS = "right_yundou_rule_text";
+    public static final String RIGHT_MEMBER_RULE_HAS = "right_member_rule_text";
     public static final String RIGHT_SAVE = "need_save";
     public static final String PAGE_INIT = "page_init";
     public static final String RIGHT_SHARE = "right_share";
@@ -56,6 +57,9 @@ public class WebViewConstant {
         public static final String LIFE_SPECIAL = "/biz/life/special.html";
         public static final String HEALTH_SPECIAL = "/biz/health/special.html";
         public static final String HEALTH_DETAIL = "/biz/health/detail.html";
+        public static final String PRODUCT_DETAIL = "/biz/product/index.html";
+//        public static final String HEALTH_DETAIL = "/biz/health/detail.html";
+
         public static final String ACTIVITTE_DRAGON_DEATIL = "/biz/indexSecond/active_detail.html";
     }
 

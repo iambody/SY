@@ -750,7 +750,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 //        if (hasLive) {//有直播
             liveJsonData = jsonObject;
-            LiveInfBean liveInfBean = new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
+            LiveInfBean liveInfBean = new LiveInfBean();//new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
 
             try {
                 liveInfBean.title = jsonObject.getString("title");
@@ -759,7 +759,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 liveInfBean.id=jsonObject.getString("id");
                 liveInfBean.jsonstr = jsonObject.toString();
                 liveInfBean.type = liveState;
-                liveInfBean.create_time=jsonObject.getString("create_time");
+                liveInfBean.create_time=jsonObject.getString("createTime");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

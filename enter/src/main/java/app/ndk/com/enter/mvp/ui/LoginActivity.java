@@ -125,6 +125,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //是否从app内的我的进来的
     private boolean isFromInsidemy;
 
+    private boolean showSelectAddress;
+
+    public static final int SELECT_ADDRESS = 3;
+
     private InvestorAppli initApplication;
 
     @Override
@@ -564,6 +568,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_ADDRESS) {
+            showSelectAddress = false;
+            return;
+        }
+
         if (REQUEST_CODE == requestCode) {
             picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
         }
@@ -572,7 +581,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             PromptManager.ShowCustomToast(LoginActivity.this, result);
             LogUtils.Log("daa", result);
         }
-
     }
 
     /**
@@ -635,8 +643,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         @Override
         public void onShakeFinish() {
+            if (showSelectAddress) return;
             if (!"SelectAddressActivity".equals(getAppli().getBackgroundManager().getCurrentActivity().getClass().getSimpleName())) {
-                NavigationUtils.startActivityByRouter(LoginActivity.this, RouteConfig.SELECT_ADDRESS);
+                NavigationUtils.startActivityByRouterForResult(LoginActivity.this, RouteConfig.SELECT_ADDRESS, SELECT_ADDRESS);
+                showSelectAddress = true;
             }
         }
     };

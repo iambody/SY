@@ -2,7 +2,6 @@ package app.privatefund.com.im.utils;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 
 /**

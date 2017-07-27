@@ -130,7 +130,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         ConversationType[] defConversationType = new ConversationType[]{ConversationType.PRIVATE, ConversationType.GROUP, ConversationType.DISCUSSION, ConversationType.SYSTEM, ConversationType.CUSTOMER_SERVICE, ConversationType.CHATROOM, ConversationType.PUBLIC_SERVICE, ConversationType.APP_PUBLIC_SERVICE};
         ConversationType[] type = defConversationType;
         int arr$ = defConversationType.length;
-
         int len$;
         for(len$ = 0; len$ < arr$; ++len$) {
             ConversationType i$ = type[len$];
@@ -1043,7 +1042,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     }
                 }
             }
-
         }
     }
 
@@ -1494,28 +1492,26 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
 
     private void buildSingleDialog(final UIConversation uiConversation) {
         String[] items = new String[]{RongContext.getInstance().getString(string.rc_conversation_list_dialog_remove)};
-        OptionsPopupDialog.newInstance(this.getActivity(), items).setOptionsPopupDialogListener(new OnOptionsItemClickedListener() {
-            public void onOptionsItemClicked(int which) {
-                RongIM.getInstance().getConversationList(new ResultCallback<List<Conversation>>() {
-                    public void onSuccess(List<Conversation> conversations) {
-                        if(conversations != null && conversations.size() > 0) {
-                            Iterator i$ = conversations.iterator();
+        OptionsPopupDialog.newInstance(this.getActivity(), items).setOptionsPopupDialogListener(which -> {
+            RongIM.getInstance().getConversationList(new ResultCallback<List<Conversation>>() {
+                public void onSuccess(List<Conversation> conversations) {
+                    if(conversations != null && conversations.size() > 0) {
+                        Iterator i$ = conversations.iterator();
 
-                            while(i$.hasNext()) {
-                                Conversation conversation = (Conversation)i$.next();
-                                RongIMClient.getInstance().removeConversation(conversation.getConversationType(), conversation.getTargetId(), (ResultCallback)null);
-                            }
+                        while(i$.hasNext()) {
+                            Conversation conversation = (Conversation)i$.next();
+                            RongIMClient.getInstance().removeConversation(conversation.getConversationType(), conversation.getTargetId(), (ResultCallback)null);
                         }
-
                     }
 
-                    public void onError(ErrorCode errorCode) {
-                    }
-                }, new ConversationType[]{uiConversation.getConversationType()});
-                int position = RongConversationListFragment.this.mAdapter.findGatheredItem(uiConversation.getConversationType());
-                RongConversationListFragment.this.mAdapter.remove(position);
-                RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
-            }
+                }
+
+                public void onError(ErrorCode errorCode) {
+                }
+            }, new ConversationType[]{uiConversation.getConversationType()});
+            int position = RongConversationListFragment.this.mAdapter.findGatheredItem(uiConversation.getConversationType());
+            RongConversationListFragment.this.mAdapter.remove(position);
+            RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
         }).show();
     }
 

@@ -2,6 +2,7 @@ package com.cgbsoft.lib.listener.listener;
 
 import android.content.Context;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -23,6 +24,7 @@ public class GestureManager {
     public static final String ASSERT_GROUP = "1";
     public static final String INVISTE_CARLENDAR = "2";
     public static final String DATUM_MANAGER = "3";
+    public static boolean isNotFirstLook;
 
     public static void showAssertGestureManager(Context context) {
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
@@ -38,27 +40,36 @@ public class GestureManager {
     }
 
     private static void showSetGestureDialog(Context context, String rxConstant, String values) {
-        new DefaultDialog(context, context.getString(R.string.gesture_new_no_dialog_desc), context.getString(R.string.gesture_new_no_set), context.getString(R.string.button_ok)) {
-            @Override
-            public void left() {
-                this.dismiss();
-                if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
-                    RxBus.get().post(rxConstant, true);
-                } else {
-                    RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, values);
+        if (!isNotFirstLook) {
+            isNotFirstLook = true;
+            new DefaultDialog(context, context.getString(R.string.gesture_new_no_dialog_desc), context.getString(R.string.gesture_new_no_set), context.getString(R.string.button_ok)) {
+                @Override
+                public void left() {
+                    this.dismiss();
+                    if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
+                        RxBus.get().post(rxConstant, true);
+                    } else {
+                        RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, values);
+                    }
                 }
-            }
 
-            @Override
-            public void right() {
-                this.dismiss();
-                if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
-                    NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SHWO_ASSERT", true);
-                } else {
-                    NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, PARAM_FROM_GROUP_ASSERT, values);
+                @Override
+                public void right() {
+                    this.dismiss();
+                    if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SHWO_ASSERT", true);
+                    } else {
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.SET_GESTURE_PASSWORD, PARAM_FROM_GROUP_ASSERT, values);
+                    }
                 }
+            }.show();
+        } else {
+            if (rxConstant.equals(RxConstant.SWITCH_ASSERT_SHOW)) {
+                RxBus.get().post(rxConstant, true);
+            } else {
+                RxBus.get().post(RxConstant.SWITCH_GROUP_SHOW, values);
             }
-        }.show();
+        }
     }
 
     public static void showGroupGestureManage(Context context, String values) {
