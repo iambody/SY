@@ -590,10 +590,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.health_all_title_ll)
     void gotoHealthAllctivity() {
         String url = CwebNetConfig.mineHealthOrder;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+        intent.putExtra(WebViewConstant.right_message_index, true);
+        startActivity(intent);
     }
 
     private void initMineInfo(MineModel mineModel) {
