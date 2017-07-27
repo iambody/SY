@@ -428,6 +428,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         view_live_title_tag_iv.setVisibility(View.GONE);
                         break;
                     case 1://直播中
+
                         main_home_live_lay.setVisibility(View.VISIBLE);
                         main_home_live_lay.setClickable(true);
 
@@ -435,6 +436,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
+                        BStrUtils.SetTxt(view_live_title, "正在直播");
+                        BStrUtils.SetTxt(view_live_title_tag, "观看直播");
 
                         break;
                     case 2://无直播
@@ -657,7 +660,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         Intent intent = new Intent(baseActivity, LiveActivity.class);
                         intent.putExtra("liveJson", homeliveInfBean.jsonstr);
-                        intent.putExtra("type", "");
+                        intent.putExtra("type", "a");
                         startActivity(intent);
 
                         SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
