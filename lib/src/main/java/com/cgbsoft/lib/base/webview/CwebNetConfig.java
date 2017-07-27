@@ -155,6 +155,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
-        touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
+        touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html?id=";
     }
 }

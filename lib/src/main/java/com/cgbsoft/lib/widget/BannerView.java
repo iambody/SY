@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import java.util.ArrayList;
 import java.util.List;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 
 /**
  * @author chenlong
@@ -211,6 +212,9 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         }
 
         public int getCount() {
+            if (CollectionUtils.isEmpty(bannerList)) {
+                return 0;
+            }
             return Integer.MAX_VALUE;
         }
 

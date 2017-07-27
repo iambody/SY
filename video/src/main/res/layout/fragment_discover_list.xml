@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
+        android:scrollbars="none"
         android:theme="@style/AppTheme.AppBarLayout">
 
         <com.cgbsoft.lib.widget.BannerView
             android:id="@+id/discover_bannerview"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="230dp"
             app:layout_scrollFlags="scroll|enterAlways" />
 
         <!--<net.lucode.hackware.magicindicator.MagicIndicator-->
@@ -23,6 +24,7 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="@dimen/ui_80_dip"-->
             <!--android:background="@color/white"/>-->
+
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/discover_list_indicator"
             android:layout_width="match_parent"
