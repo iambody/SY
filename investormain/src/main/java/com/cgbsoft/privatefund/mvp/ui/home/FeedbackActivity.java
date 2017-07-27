@@ -172,7 +172,6 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 super.run();
                 remoteParams.clear();
                 for (final String localPath : imagePaths) {
-                    LogUtils.Log("aaa","localpath==="+localPath);
                     if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")||localPath.equals("+")) {
                         continue;
                     }
@@ -215,6 +214,9 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 
     @Override
     public void requestFailure(String errorMsg) {
+        if (loading != null && loading.isShowing()) {
+            loading.dismiss();
+        }
         Toast.makeText(FeedbackActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
