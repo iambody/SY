@@ -105,6 +105,12 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             videoRootFrame.play(videos);
             videoRootFrame.pause();
+            iv_mvv_cover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    videoRootFrame.pause();
+                }
+            });
         }
     }
 
