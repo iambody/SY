@@ -70,7 +70,11 @@ public abstract class PushDialog extends BaseDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_push_dialog);
+//        if (AppManager.isInvestor(_context)){
+//            setContentView(R.layout.view_push_dialog_c);
+//        }else {
+            setContentView(R.layout.view_push_dialog);
+//        }
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         init();
