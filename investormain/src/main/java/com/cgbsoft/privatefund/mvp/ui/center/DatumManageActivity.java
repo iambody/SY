@@ -68,7 +68,7 @@ public class DatumManageActivity extends BaseActivity {
         riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
         assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
         assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
-        ViewUtils.createTopRightBadgerView(this, assetRelative, "0");
+        ViewUtils.createLeftTopRedPoint(this, assetRelative, "0");
     }
 
     private void initView(Bundle savedInstanceState) {

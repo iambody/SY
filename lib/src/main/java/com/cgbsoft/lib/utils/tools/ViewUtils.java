@@ -39,7 +39,7 @@ public class ViewUtils {
     public static final String PASSWROD_TYPE_START_SIX = "******";
     public static final String PASSWROD_TYPE_START_FOUR = "****";
 
-    public static BadgeView createTopRightBadgerView(Context context, View view, int value) {
+    public static BadgeView createLeftTopRedPoint(Context context, View view, int value) {
         BadgeView badge = new BadgeView(context, view);
         view.setTag(badge);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
@@ -51,10 +51,10 @@ public class ViewUtils {
         return badge;
     }
 
-    public static BadgeView createTopRightBadgerView(Context context, View view, String value) {
+    public static BadgeView createLeftTopRedPoint(Context context, View view, String value) {
         BadgeView badge = new BadgeView(context, view);
         view.setTag(badge);
-        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5);
         badge.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
         badge.setText(value);
         badge.setTextColor(Color.parseColor("#d73a2e"));
