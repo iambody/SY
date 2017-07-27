@@ -100,7 +100,7 @@ public class HorizontalScrollFragment extends BaseFragment {
         this.list = list;
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
         button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        myHolderAdapter.refrushData(list.size() > 10 ? list.subList(0, 11) : list);
+        myHolderAdapter.refrushData(list);
         measureHeight();
     }
 
@@ -135,13 +135,13 @@ public class HorizontalScrollFragment extends BaseFragment {
 
         public MyHolderAdapter(Context context, List<VideoInfoModel> datats, boolean isPlayVideo) {
             mInflater = LayoutInflater.from(context);
-            mDatas = datats;
+            mDatas = (!CollectionUtils.isEmpty(datats) && datats.size() > 10) ? mDatas.subList(0, 11) : datats;
             this.isPlayVideo = isPlayVideo;
         }
 
         public void refrushData(List<VideoInfoModel> videoInfoModelList) {
             if (!CollectionUtils.isEmpty(videoInfoModelList)) {
-                mDatas = videoInfoModelList;
+                mDatas = (!CollectionUtils.isEmpty(videoInfoModelList) && videoInfoModelList.size() > 10) ? mDatas.subList(0, 11) : videoInfoModelList;
                 notifyDataSetChanged();
             }
         }
