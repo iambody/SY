@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.widget;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 
@@ -57,5 +58,21 @@ public class CustomViewPage extends ViewPager {
 
     public void addHeight(int current, int height) {
         map.put(current, height);
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        return false;
+    }
+
+    @Override
+    public void setCurrentItem(int item) {
+        super.setCurrentItem(item, false);
     }
 }

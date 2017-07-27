@@ -5,7 +5,6 @@
                 android:layout_height="70dp"
                 android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/tv_setting_item_left_title"
         android:layout_width="match_parent"
@@ -43,8 +42,15 @@
                 android:layout_marginRight="12dp"
                 android:textSize="@dimen/dimens_sp_14"
                 android:textColor="@color/app_golden"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@color/app_red"
+                android:layout_marginLeft="10dp"
                 android:visibility="gone"
-                />
+                android:id="@+id/show_red_circle"/>
 
             <ImageView
                 android:id="@+id/iv_setting_item_right_arrow"

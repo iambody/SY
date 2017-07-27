@@ -43,6 +43,7 @@ import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
+import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.jude.rollviewpager.RollPagerView;
@@ -438,7 +439,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
                         BStrUtils.SetTxt(view_live_title, "正在直播");
                         BStrUtils.SetTxt(view_live_title_tag, "观看直播");
-
+                        view_live_title_tag_iv.setVisibility(View.VISIBLE);
                         break;
                     case 2://无直播
                         main_home_live_lay.setVisibility(View.GONE);
@@ -647,7 +648,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         switch (v.getId()) {
             case R.id.main_home_level_lay://等级
                 String url = CwebNetConfig.membercenter;
-                NavigationUtils.gotoWebActivity(baseActivity, url, "会员专区", false);
+//
+//                NavigationUtils.gotoWebActivity(baseActivity, url, "会员专区", false);
+
+UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 break;
             case R.id.main_home_live_lay://直播
                 if (null == homeliveInfBean || 0 == homeliveInfBean.type) return;

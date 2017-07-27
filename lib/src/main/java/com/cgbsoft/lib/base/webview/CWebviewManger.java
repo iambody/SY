@@ -793,7 +793,10 @@ public class CWebviewManger {
             Intent i = new Intent(context, BaseWebViewActivity.class);
             Bundle bundle = new Bundle();
             i.putExtra(WebViewConstant.push_message_title, title);
-            i.putExtra(WebViewConstant.push_message_url, CwebNetConfig.touTiaoHao);
+            String url = CwebNetConfig.touTiaoHao.concat(newsBean.getInfoId()).concat("&category=").concat(newsBean.getCategory());
+            System.out.println("------url=" + url);
+            i.putExtra(WebViewConstant.push_message_url, url);
+//        shareurl = Domain.foundNewshare + newsBean.getInfoId() + "&category=" + newsBean.getCategory() + "&share=2";
 //            bundle.putSerializable(FoundNewsDetailActivity.NEW_PARAM_NAME, newsBean);
 //            i.putExtras(bundle);
             context.startActivity(i);

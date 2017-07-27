@@ -31,7 +31,7 @@ public class InvisiteAccountPresenter extends BasePresenterImpl<InvisiteAccountC
 
     @Override
     public void commitInvisiteAccount(String userId, String customerName, String customerIdType, String customerIdNumber) {
-        addSubscription(ApiClient.getDiscoverListData(ApiBusParam.commitInvisiteAccount(userId, customerName, customerIdType, customerIdNumber)).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.commitInvisitAccount(ApiBusParam.commitInvisiteAccount(userId, customerName, customerIdType, customerIdNumber)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {

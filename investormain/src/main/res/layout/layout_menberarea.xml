@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#292B2A"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:clickable="true"
+            android:onClick="toback"
+            android:src="@drawable/ic_back_white_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+
+            android:text="会员专区"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_sp_18" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_5_dip"
+            android:padding="@dimen/ui_5_dip"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="torule"
+            android:text="会员规则"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_sp_18" />
+    </RelativeLayout>
+
+    <com.cgbsoft.lib.base.webview.BaseWebview
+        android:id="@+id/memberarea_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
+
+</LinearLayout>

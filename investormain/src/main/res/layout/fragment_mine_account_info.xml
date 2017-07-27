@@ -133,6 +133,8 @@
                 android:id="@+id/mine_yundou_id"
                 android:maxLines="1"
                 android:textSize="@dimen/dimens_sp_24"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:textColor="@color/black"
                 autofit:minTextSize="16sp"/>
 

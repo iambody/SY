@@ -178,7 +178,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             String infoId = URLDecoder.decode(split[2], "utf-8");
             String category = URLDecoder.decode(split[3], "utf-8");
             String title = URLDecoder.decode(split[4], "utf-8");
-            String Url = BaseWebNetConfig.detailToZiXun + infoId + "&category=" + category;
+            String Url = CwebNetConfig.touTiaoHao + infoId + "&category=" + category;
             Router.build(RouteConfig.GOTO_VIDEO_INFORMATIOON)
                     .with(WebViewConstant.push_message_url, Url)
                     .with(WebViewConstant.push_message_title, title)
