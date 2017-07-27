@@ -263,7 +263,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
             userNum.setText(phoneNum);
 
-            Imageload.display(PersonalInformationActivity.this,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
+            Imageload.display(PersonalInformationActivity.this,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
 
             userName.setText(TextUtils.isEmpty(userInfo.getRealName())?"":userInfo.getRealName());
 
@@ -692,7 +692,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     public void uploadImgError(Throwable error) {
         Toast.makeText(baseContext.getApplicationContext(),null!=error?error.getMessage():getResources().getString(R.string.upload_icon_fail),Toast.LENGTH_SHORT).show();
         if (null != userInfo) {
-            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
+            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
         }
     }
 }

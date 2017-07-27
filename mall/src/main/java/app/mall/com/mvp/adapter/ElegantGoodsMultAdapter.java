@@ -84,7 +84,7 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 hotHolder.productNameTv.setText(goodsName);
             }
-            hotHolder.ydNumTv.setText(String.valueOf(bean.getYdQuantity()));
+            hotHolder.ydNumTv.setText(String.valueOf(bean.getCurrentQuantity()));
             if (goodsClickListener != null) {
                 hotHolder.layoutAll.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -105,7 +105,7 @@ public class ElegantGoodsMultAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 normalHolder.productNameTv.setText(goodsName);
             }
-            normalHolder.ydNumTv.setText(String.valueOf(bean.getYdQuantity()));
+            normalHolder.ydNumTv.setText(String.valueOf(bean.getCurrentQuantity()));
             if (goodsClickListener != null) {
                 normalHolder.layoutAll.setOnClickListener(new View.OnClickListener() {
                     @Override

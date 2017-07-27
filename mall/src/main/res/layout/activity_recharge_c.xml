@@ -36,6 +36,7 @@
             android:layout_marginTop="15dp"
             android:background="@color/white"
             android:text="@string/recharge_yd_count"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
 
@@ -45,14 +46,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
             android:gravity="center_vertical"
             android:inputType="number"
             android:maxLength="6"
             android:text="500"
             android:textColor="@color/black"
-            android:textSize="55sp" />
+            android:textSize="48sp" />
 
         <View
             android:layout_width="match_parent"
@@ -82,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="支付金额："
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="12dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -93,7 +94,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="¥50"
                 android:textColor="@color/app_golden"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -124,7 +125,7 @@
         <include
             android:id="@+id/pay_yundou_select_method"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             layout="@layout/layout_commont_left_righticon_select" />
 
         <View

@@ -479,9 +479,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
      */
     public void startPay(int payMethod) {
         int ydCount = Integer.parseInt(pay_yundou_edit.getText().toString());
-        if (ydCount < 500) {
-            Toast.makeText(this, "充值金额不能小于500云豆", Toast.LENGTH_SHORT).show();
-            return;
+        if (!AppManager.isInvestor(this)){
+            if (ydCount < 500) {
+                Toast.makeText(this, "充值金额不能小于500云豆", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         float iprice = 0;
