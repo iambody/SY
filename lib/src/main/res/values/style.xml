@@ -141,7 +141,14 @@
 
         <item name="android:layout_marginRight">20dp</item>
     </style>
+    <style name="btn_checkcode_bg_style">
 
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/shape_regist_line</item>
+        <item name="android:textSize">12sp</item>
+
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
     <style name="btn_red_bg_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

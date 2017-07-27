@@ -264,8 +264,7 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <!-- 设置手势密码 -->
         <activity
@@ -330,7 +329,9 @@
             android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name=".mvc.ui.MembersAreaActivity"
+            android:screenOrientation="portrait" />
         <!-- app module 通用的webview -->
         <activity
             android:name="com.cgbsoft.privatefund.widget.InverstorBaseWebviewActivity"
