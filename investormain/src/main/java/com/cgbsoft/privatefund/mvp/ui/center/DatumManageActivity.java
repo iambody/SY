@@ -13,6 +13,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
@@ -67,6 +68,7 @@ public class DatumManageActivity extends BaseActivity {
         riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
         assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
         assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
+        ViewUtils.createTopRightBadgerView(this, assetRelative, "0");
     }
 
     private void initView(Bundle savedInstanceState) {
