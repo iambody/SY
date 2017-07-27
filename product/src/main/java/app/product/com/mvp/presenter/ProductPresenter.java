@@ -56,6 +56,11 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             jsonObject.put("limit", Constant.LOAD_PRODUCT_lIMIT + "");
             jsonObject.put("userId", AppManager.getUserId(getContext().getApplicationContext()));
 //            if (!"0".equals(series))
+            if (AppManager.isInvestor(getContext())){
+                jsonObject.put("category","c");
+            }else {
+                jsonObject.put("category","b");
+            }
             jsonObject.put("series", BStrUtils.StrToJsonArray(series));
             jsonObject.put("orderBy", BStrUtils.StrToJsonArray(orderBy));
             //单选的

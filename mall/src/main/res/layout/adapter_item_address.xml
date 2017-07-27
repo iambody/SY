@@ -44,13 +44,17 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="#000"
                     android:textSize="16sp" />
-                <ImageView
+                <TextView
                     android:id="@+id/mall_address_normal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="16sp"
                     android:layout_marginLeft="10dp"
+                    android:text="默认"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
                     android:visibility="gone"
-                    android:background="@drawable/mall_check_address"/>
+                    android:background="@drawable/red_point"/>
             </LinearLayout>
 
             <TextView
