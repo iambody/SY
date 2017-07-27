@@ -1412,7 +1412,7 @@ public class ApiClient {
      */
     public static Observable<String> visiterGetUserId(Context context) {
         Map<String, String> map = new HashMap<>();
-        map.put("mid", "A-" + DeviceUtils.getPhoneId(context));
+        map.put("mid",  DeviceUtils.getPhoneId(context));
         map.put("client", "C");
         map.put("version", String.valueOf(Utils.getVersionCode(context)));
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
