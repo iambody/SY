@@ -404,7 +404,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoPrivateBanktivity() {
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
-        intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "私人银行家" : "私人银行家");
+        intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? getString(R.string.mine_private_bank) : getString(R.string.private_bank_jia));
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
 
         getActivity().startActivity(intent);
