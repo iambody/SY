@@ -22,6 +22,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
+import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -29,6 +30,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -158,6 +160,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void init(Bundle savedInstanceState) {
         Log.i("MainPageActivity", "----init");
+        StatusBarUtil.translucentStatusBar(this);
         initApplication = (InitApplication) getApplication();
         initApplication.setMainpage(true);
         mFragmentManager = getSupportFragmentManager();
@@ -333,6 +336,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         int switchID = -1;
         switch (position) {
             case 0://左1
+                StatusBarUtil.translucentStatusBar(this);
                 switchID = R.id.nav_left_first;
                 currentPostion = 0;
                 break;
@@ -345,6 +349,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 currentPostion = 3;
                 break;
             case 4://左4
+                StatusBarUtil.translucentStatusBar(this);
                 currentPostion = 4;
                 if (AppManager.isVisitor(InitApplication.getContext())) {
                     Intent intent = new Intent(this, LoginActivity.class);

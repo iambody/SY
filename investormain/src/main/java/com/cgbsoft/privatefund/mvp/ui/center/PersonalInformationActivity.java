@@ -254,6 +254,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             String bandingAdviserId = userInfo.getToC().getBandingAdviserId();
             if (!TextUtils.isEmpty(bandingAdviserId)) {
                 myQrAll.setVisibility(View.VISIBLE);
+            } else {
+                myQrAll.setVisibility(View.GONE);
             }
             String phoneNum = userInfo.getPhoneNum();
             if (!TextUtils.isEmpty(phoneNum)) {

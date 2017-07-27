@@ -63,12 +63,7 @@ public class RiskResultActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText(R.string.risk_evaluating_title);
         initView();
     }
@@ -108,7 +103,6 @@ public class RiskResultActivity extends BaseActivity {
                 image.setBackgroundResource(visitor ? R.drawable.ic_jinqu_nor : R.drawable.ic_risk_result_radical);
                 break;
             default:
-
                 break;
         }
         restart.setTextColor(visitor ? getResources().getColor(R.color.app_golden) : getResources().getColor(R.color.red_new));

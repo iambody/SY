@@ -1,5 +1,7 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
+import com.cgbsoft.lib.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,8 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
+    @BindView(R2.id.status_replace)
+    View statusReplace;
 
     protected abstract int titleLayoutId();
 
@@ -55,6 +60,10 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        int statusBarHeight = StatusBarUtil.getStatusBarHeight(baseActivity);
+        ViewGroup.LayoutParams layoutParams = statusReplace.getLayoutParams();
+        layoutParams.height = statusBarHeight;
+        statusReplace.setLayoutParams(layoutParams);
         LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
         bindTitle(title_layout);
         if (list() != null) {

@@ -19,6 +19,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -58,6 +59,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
+//        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
             if (AppManager.isAdViser(this)) {
                 getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
