@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/ui_10_dip"
     android:paddingTop="@dimen/ui_10_dip"
     android:paddingRight="@dimen/ui_5_dip"
+    android:gravity="center_vertical"
     android:clickable="true"
     android:focusable="true">
 

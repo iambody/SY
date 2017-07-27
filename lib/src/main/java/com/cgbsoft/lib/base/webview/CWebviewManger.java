@@ -32,6 +32,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -934,15 +935,15 @@ public class CWebviewManger {
         String[] split = decode.split(":");
         String args = split[4] + ",$";
         String[] split1 = args.split(",");
-//        if (split[3].startsWith("1")) {
+        if (split[3].startsWith("1")) {
 //            split1[1] = AppManager.getUserInfo(context).getToB().isColorCloud();
 //            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
 //            DataStatisticsUtils.push(context, params);
-//        } else {
-//            split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
-//            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
-//            DataStatisticsUtils.push(context, params);
-//        }
+        } else {
+            split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
+            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
+            DataStatisticsUtils.push(context, params,true);
+        }
     }
 
     private void startActivityOverridePendingTransition(String action) {

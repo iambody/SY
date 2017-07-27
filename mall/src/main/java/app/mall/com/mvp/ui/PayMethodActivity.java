@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +35,8 @@ import app.mall.com.mvp.presenter.PayMethodPresenter;
 import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
+
+import static android.view.View.GONE;
 
 public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implements PayMethodContract.View, Toolbar.OnMenuItemClickListener {
 
@@ -58,6 +61,9 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
     private PayMethodAdapter adapter;
 
     private int checkPosition;
+
+    @BindView(R2.id.pay_method_ll)
+    LinearLayout pay_method_ll;
 
     @BindView(R2.id.title_mid)
     TextView titleMid;
@@ -102,6 +108,13 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
 //        showTileLeft();
 //        showTileMid("支付方式");
 //        showTileRight("确认");
+
+
+        if (AppManager.isInvestor(this)) {
+            pay_method_ll.setVisibility(GONE);
+        } else {
+            pay_method_ll.setVisibility(View.VISIBLE);
+        }
 
         String payConfig = SPreference.getString(this, "payConfig");
         if (!TextUtils.isEmpty(payConfig)) {
