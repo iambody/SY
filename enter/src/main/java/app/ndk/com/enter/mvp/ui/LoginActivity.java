@@ -122,8 +122,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     //是否是app内发起的 登录操作
     private boolean isFromInside;
-  //是否从app内的我的进来的
-  private boolean isFromInsidemy;
+    //是否从app内的我的进来的
+    private boolean isFromInsidemy;
 
     private InvestorAppli initApplication;
 
@@ -159,7 +159,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         initApplication = (InvestorAppli) getApplication();
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
-        isFromInsidemy=getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER,false);
+        isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -298,6 +298,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
+
+
+        if (!isFixAdjustEd()) return;
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
         //需要判断
         LocationBean bean = AppManager.getLocation(baseContext);
@@ -374,7 +377,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
-            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy?5:1);
+            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy ? 5 : 1);
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         }
@@ -488,8 +491,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
 
-
-
     private class LoginTextWatcher implements TextWatcher {
         private int which;
 
@@ -506,7 +507,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
             btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
-            btn_al_login.setTextColor(getResources().getColor(isFixAdjust() ? R.color.white :R.color.black));
+            btn_al_login.setTextColor(getResources().getColor(isFixAdjust() ? R.color.white : R.color.black));
 
             switch (which) {
 
@@ -590,7 +591,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     boolean isFixAdjust() {
         String userName = et_al_username.getText().toString().trim();
         String userPwd = et_al_password.getText().toString().trim();
-        if (BStrUtils.isEmpty(userName) || 11 != userName.length()||BStrUtils.isEmpty(userPwd)) {
+        if (BStrUtils.isEmpty(userName) || 11 != userName.length() || BStrUtils.isEmpty(userPwd)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /*是否符合条件*/
+    boolean isFixAdjustEd() {
+        String userName = et_al_username.getText().toString().trim();
+        String userPwd = et_al_password.getText().toString().trim();
+        if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
+            PromptManager.ShowCustomToast(baseContext, "请输入正确手机号");
+            return false;
+        }
+        if (BStrUtils.isEmpty(userPwd)) {
+            PromptManager.ShowCustomToast(baseContext, "请输入密码");
             return false;
         }
 
@@ -613,7 +630,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
         @Override
-        public void onShakeStart() {}
+        public void onShakeStart() {
+        }
+
         @Override
         public void onShakeFinish() {
             if (!"SelectAddressActivity".equals(getAppli().getBackgroundManager().getCurrentActivity().getClass().getSimpleName())) {

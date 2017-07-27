@@ -126,6 +126,17 @@ public class DataStatisticsUtils {
         }
     }
 
+
+    public static HashMap<String, String> getParams(String grp, String act, String[] args) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("grp", grp);
+        map.put("act", act);
+        for (int i = 1; i <= args.length; i++) {
+            map.put("arg" + i, args[i - 1]);
+        }
+        return map;
+    }
+
     private static String getUniqueCode() {
         String m_szDevIDShort = Build.BOARD.length() % 10 + "" +
                 Build.BRAND.length() % 10 + "" +

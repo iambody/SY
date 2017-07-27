@@ -9,6 +9,7 @@
     <include layout="@layout/title_layout" />
 
     <LinearLayout
+        android:id="@+id/pay_method_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"

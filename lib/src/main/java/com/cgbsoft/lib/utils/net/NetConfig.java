@@ -222,7 +222,7 @@ public class NetConfig {
         //获取直播签名
         final static String GET_LIVE_SIGN = LIVE_URL_V2 + live + "/user/sig";
         //获取直播预告
-        final static String GET_PRO_LIST = LIVE_URL_V2 + live + "/preview/latest";
+        final static String GET_PRO_LIST = LIVE_URL_V2 + live + "/rooms/news";
         //获取直播列表
         final static String GET_LIVE_LIST = LIVE_URL_V2 + live + "/rooms";
         //获取房间号

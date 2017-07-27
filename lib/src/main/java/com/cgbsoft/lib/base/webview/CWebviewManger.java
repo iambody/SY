@@ -26,12 +26,12 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -934,15 +934,15 @@ public class CWebviewManger {
         String[] split = decode.split(":");
         String args = split[4] + ",$";
         String[] split1 = args.split(",");
-//        if (split[3].startsWith("1")) {
+        if (split[3].startsWith("1")) {
 //            split1[1] = AppManager.getUserInfo(context).getToB().isColorCloud();
 //            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
 //            DataStatisticsUtils.push(context, params);
-//        } else {
-//            split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
-//            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
-//            DataStatisticsUtils.push(context, params);
-//        }
+        } else {
+            split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
+            HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
+            DataStatisticsUtils.push(context, params,true);
+        }
     }
 
     private void startActivityOverridePendingTransition(String action) {
@@ -1385,7 +1385,9 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)) {
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
+                 ) {
 //            actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
             String[] split = actionUrl.split(":");
             try {
