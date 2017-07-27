@@ -104,7 +104,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             videos.add(v1);
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             videoRootFrame.play(videos);
-//            videoRootFrame.pause();
+            videoRootFrame.pause();
         }
     }
 

@@ -43,6 +43,12 @@ public class DataStatisticsUtils {
     public static Subscription subscription;
     private static DaoUtils daoUtils;
 
+    /**
+     *
+     * @param context
+     * @param param
+     * @param isRealTime true 实时  false 不实时
+     */
     public static void push(Context context, final HashMap<String, String> param, boolean isRealTime) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();

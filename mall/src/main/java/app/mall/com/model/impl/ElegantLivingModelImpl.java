@@ -20,7 +20,6 @@ public class ElegantLivingModelImpl implements ElegantLivingModel {
         subscription.add(ApiClient.getElegantLivingObservable(offset).subscribe(new RxSubscriber<ElegantLivingEntity.Result>() {
             @Override
             protected void onEvent(ElegantLivingEntity.Result result) {
-                LogUtils.Log("aaa","living onevent");
                 if (null != result) {
                     listener.onModelSuccess(result);
                 } else {

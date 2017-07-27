@@ -887,6 +887,16 @@ public class DataStatistApiParam {
         data3.put("arg4", payname);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
+    /**
+     * 进入生活家页面
+     */
+    public static void intoElegantLiving() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2041");
+        data3.put("act", "20279");
+        data3.put("arg1", "进入生活家");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
 
     public static void onClickLiveRoomCloseToB(String videoName) {

@@ -99,8 +99,8 @@
                 android:layout_marginBottom="@dimen/ui_40_dip"
                 android:text="退出登录"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimens_sp_24"
-                android:background="@color/app_golden"/>
+                android:textSize="@dimen/dimens_sp_16"
+                android:background="@drawable/shape_button_elegant"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -80,7 +80,12 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
 
         if (isVisibleToUser && isCreateView) {
             lazyLoad();
+            viewBeShow();
         }
+    }
+
+    protected void viewBeShow() {
+
     }
 
     private void lazyLoad() {
