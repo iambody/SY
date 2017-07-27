@@ -59,6 +59,7 @@ public class VideoAllModel {
         public String createUser;//": "1882",
         public String updateTime;//": "2017-06-23 14:10:21",
         public String createTime;//": "2017-06-23 14:10:21"
+        public String playCount;
     }
 
 }

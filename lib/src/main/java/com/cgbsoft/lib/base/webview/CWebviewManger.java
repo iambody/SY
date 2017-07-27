@@ -26,7 +26,6 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
@@ -1385,7 +1384,9 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)) {
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
+                 ) {
 //            actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
             String[] split = actionUrl.split(":");
             try {

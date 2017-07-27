@@ -164,6 +164,10 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
                     AppInfStore.saveUserInfo(getContext(), userInfo);
+                    if("0".equals(userInfo.isSingIn)){
+                        toSignIn();
+                    }
+//                    getView().toFreshUserinfHome()
                     if (tofreshHome) {
                         getView().toFreshUserinfHome();
                     }
