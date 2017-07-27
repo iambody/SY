@@ -61,10 +61,12 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
             @Override
             public void completShare(int shareType) {
                 //分享微信朋友圈成功
-                if(CommonShareDialog.SHARE_WXCIRCLE==shareType&&url.contains("information/details.html")){
+                if(url.contains("information/details.html")){
                     //自选页面分享朋友圈成功
                     TaskInfo.complentTask("分享资讯");
-                    DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
+                    if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
+                        DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
+                    }
                 }
             }
         });
