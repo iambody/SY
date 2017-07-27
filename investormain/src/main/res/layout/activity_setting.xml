@@ -28,7 +28,9 @@
                 app:setting_item_title="@string/setting_item_change_pwd"
                 >
             </com.cgbsoft.lib.widget.SettingItemNormal>
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sit_gesture_switch"
                 android:layout_width="match_parent"
@@ -37,6 +39,16 @@
                 app:setting_item_title="@string/setting_item_gesture_pwd"
                 >
             </com.cgbsoft.lib.widget.SettingItemNormal>
+
+                <Button
+                    android:id="@+id/view_switch_clickarea"
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:background="@color/transparent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    />
+            </RelativeLayout>
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_gesture_psd"
                 android:layout_width="match_parent"
@@ -87,8 +99,8 @@
                 android:layout_marginBottom="@dimen/ui_40_dip"
                 android:text="退出登录"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimens_sp_24"
-                android:background="@color/app_golden"/>
+                android:textSize="@dimen/dimens_sp_16"
+                android:background="@drawable/shape_button_elegant"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

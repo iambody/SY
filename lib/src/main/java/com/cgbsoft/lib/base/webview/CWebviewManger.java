@@ -255,10 +255,12 @@ public class CWebviewManger {
                 String oldVersion = Utils.getVersionName(context);
                 String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
                 webview.loadUrl(language);
+                LogUtils.Log("aaa","language==="+language);
             } else {
                 String oldVersion = String.valueOf(Utils.getVersionName(context));
                 String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
                 webview.loadUrl(language);
+                LogUtils.Log("aaa","language=---=="+language);
             }
         } else if (action.contains("updated")) {
             versonUpdate();

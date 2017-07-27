@@ -15,6 +15,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
@@ -110,7 +111,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
 //                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,4);
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
-                intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "私人银行家" : "私人银行家");
+                intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
                 getActivity().startActivity(intent);
                 break;

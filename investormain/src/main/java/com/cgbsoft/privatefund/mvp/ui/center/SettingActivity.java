@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -85,6 +86,16 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+//        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
+//            boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+//            if (isChecked) {
+//                LogUtils.Log("aaa","setpsd");
+//                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
+//            } else {
+//                LogUtils.Log("aaa","valpsd");
+//                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+//            }
+//        });
         OtherInfo otherInfo = daoUtils.getOtherInfo(DBConstant.APP_UPDATE_INFO);
         if (otherInfo != null) {
             String json = otherInfo.getContent();
@@ -112,13 +123,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         }
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_title));
-        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
-            } else {
-                NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
-            }
-        });
     }
 
     @Override
@@ -157,6 +161,16 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     public void LogOut() {
         LogOutAccount returnLogin = new LogOutAccount();
         returnLogin.accounttExit(this);
+    }
+
+    @OnClick(R.id.view_switch_clickarea)
+    public void switchGesture(){
+        boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+        if (gestureFlag) {
+            NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
+        } else {
+            NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
+        }
     }
 
     /**
