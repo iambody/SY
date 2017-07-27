@@ -108,7 +108,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             iv_mvv_cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    videoRootFrame.pause();
+                    videoRootFrame.play();
                 }
             });
         }
