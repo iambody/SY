@@ -93,6 +93,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //会员
     public static String membercenter;
     public static String qrcoderesult;
+//会员规则
+    public static String adviserrules;
+
 
     // 头条号
     public static String touTiaoHao;
@@ -156,5 +159,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         membercenter = baseSxyParentUrl + "/biz/members/index.html";
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
+
+        adviserrules = baseSxyParentUrl +"/biz/members/rules.html";
     }
 }
