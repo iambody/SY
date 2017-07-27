@@ -7,7 +7,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.tools.DataUtils;
-import com.cgbsoft.lib.utils.tools.DateUtils;
+import com.cgbsoft.lib.utils.tools.Dates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +67,9 @@ public class VideoHistoryListPresenter extends BasePresenterImpl<VideoHistoryLis
         if (null == datas || 0 == datas.size()) return new ArrayList<>();
         List<VideoHistoryModel> historyModels = new ArrayList<>();
         for (int i = 0; i < datas.size(); i++) {
-            if (isTody && DateUtils.isToday(datas.get(i).finalPlayTime))
+            if (isTody && Dates.isToday(datas.get(i).finalPlayTime))
                 historyModels.add(datas.get(i));
-            if (!isTody && !DateUtils.isToday(datas.get(i).finalPlayTime))
+            if (!isTody && !Dates.isToday(datas.get(i).finalPlayTime))
                 historyModels.add(datas.get(i));
         }
         return historyModels;

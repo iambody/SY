@@ -140,6 +140,9 @@ public class ProductSeriesLayout extends ViewGroup {
                 tv.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (TextUtils.isEmpty(AppManager.getUserInfo(context).getToC().getCustomerType())){
+                            return;
+                        }
                         if (currentView != null && !(TextUtils.equals(((TextView) v).getText().toString(), "更多") || TextUtils.equals(((TextView) v).getText().toString(), "收起"))) {
                             Series series = (Series) v.getTag();
                             if (series.getName().equals(((TextView) currentView).getText().toString())) {

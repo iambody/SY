@@ -45,6 +45,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.CircleImageView;
+import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.BuildConfig;
 import com.cgbsoft.privatefund.R;
@@ -89,7 +90,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.civ_personal_information_icon)
-    CircleImageView iconImg;
+    RoundImageView iconImg;
     @BindView(R.id.tv_user_date)
     TextView userDate;
     @BindView(R.id.rl_show_datepicker)
@@ -140,6 +141,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    hideLoadDialog();
                     //上传头像成功
                     uploadRemotePath();
                     break;
@@ -247,6 +249,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
+        userInfo = AppManager.getUserInfo(baseContext);
         if (null != userInfo) {
             String bandingAdviserId = userInfo.getToC().getBandingAdviserId();
             if (!TextUtils.isEmpty(bandingAdviserId)) {
@@ -260,7 +263,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
             userNum.setText(phoneNum);
 
-            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
+            Imageload.display(PersonalInformationActivity.this,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, R.drawable.logo);
 
             userName.setText(TextUtils.isEmpty(userInfo.getRealName())?"":userInfo.getRealName());
 
@@ -565,7 +568,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         List<Map<String, Object>> parentList=null;
         try {
             StringBuilder sb = new StringBuilder();
-            InputStream open = getResources().getAssets().open("address.json");
+            InputStream open = getResources().getAssets().open("city.json");
             BufferedReader bis = new BufferedReader(new InputStreamReader(open));
             String line = "";
             while ((line = bis.readLine()) != null) {
@@ -586,43 +589,56 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             @Override
             public void confirm(Map<String, Object> map) {
                 if (map != null) {
-                    Iterator<Map.Entry<String, Object>> iterators = map.entrySet().iterator();
-                    Map.Entry<String, Object> entry = iterators.next();
-                    String key = entry.getKey();
-                    if (!TextUtils.isEmpty(key) && key.equals("sub") && iterators.hasNext()) {
-                        entry = iterators.next();
-                    }
-                    String nameChinese = entry.getKey();
-                    String nameEnglish = (String) entry.getValue();
-                    List<Map<String, Object>> child = (List<Map<String, Object>>) map.get("sub");
-                    String childNameChinese = "";
-                    String childNameEnglish = "";
-                    String districtName = "";
-                    String districtNum = "";
-                    if (null != child) {
-                        String childPositionStr = (String) map.get("child_position");
-                        String grandSonPositionStr = (String) map.get("grandson_position");
-                        int childPositionInt = Integer.parseInt(childPositionStr);
-                        int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
-                        Map<String, Object> childMap = child.get(childPositionInt);
-                        Iterator<Map.Entry<String, Object>> iteratorsChild = childMap.entrySet().iterator();
-                        Map.Entry<String, Object> childEntry = iteratorsChild.next();
-                        String childKey = childEntry.getKey();
-                        if (!TextUtils.isEmpty(childKey) && childKey.equals("sub") && iteratorsChild.hasNext()) {
-                            childEntry = iteratorsChild.next();
-                        }
-                        childNameChinese = childEntry.getKey();
-                        childNameEnglish = (String) childEntry.getValue();
-                        List<Map<String, Object>> grandson = (List<Map<String, Object>>) childMap.get("sub");
-                        if (null != grandson) {
-                            Map<String, Object> grandSonMap = grandson.get(grandSonPositionInt);
-                            Map.Entry<String, Object> grandSonEntry = grandSonMap.entrySet().iterator().next();
-                            districtName = grandSonEntry.getKey();
-                            districtNum = (String) grandSonEntry.getValue();
-                        }
-                    }
-                    userAddress.setText(nameChinese.concat(childNameChinese).concat(districtName));
-                    Toast.makeText(getApplicationContext(), "nameChinese==="+nameChinese+"---childNameChinese==="+childNameChinese+"---districtName==="+districtName, Toast.LENGTH_SHORT).show();
+                    String province = (String) map.get("province");
+                    List<Map<String,Object>> cityList = (List<Map<String, Object>>) map.get("city");
+                    String childPositionStr = (String) map.get("child_position");
+                    String grandSonPositionStr = (String) map.get("grandson_position");
+                    int childPositionInt = Integer.parseInt(childPositionStr);
+                    int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
+                    Map<String, Object> cityObj = cityList.get(childPositionInt);
+                    String cityName = (String) cityObj.get("n");
+                    List<Map<String,Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
+                    Map<String, Object> districtObj = districtList.get(grandSonPositionInt);
+                    String districtName = (String) districtObj.get("s");
+                    userAddress.setText(province.concat(cityName).concat(districtName));
+                    Toast.makeText(getApplicationContext(), "province==="+province+"---cityName==="+cityName+"---districtName==="+districtName, Toast.LENGTH_SHORT).show();
+
+//                    Iterator<Map.Entry<String, Object>> iterators = map.entrySet().iterator();
+//                    Map.Entry<String, Object> entry = iterators.next();
+//                    String key = entry.getKey();
+//                    if (!TextUtils.isEmpty(key) && key.equals("sub") && iterators.hasNext()) {
+//                        entry = iterators.next();
+//                    }
+//                    String nameChinese = entry.getKey();
+//                    String nameEnglish = (String) entry.getValue();
+//                    List<Map<String, Object>> child = (List<Map<String, Object>>) map.get("sub");
+//                    String childNameChinese = "";
+//                    String childNameEnglish = "";
+//                    String districtName = "";
+//                    String districtNum = "";
+//                    if (null != child) {
+//                        String childPositionStr = (String) map.get("child_position");
+//                        String grandSonPositionStr = (String) map.get("grandson_position");
+//                        int childPositionInt = Integer.parseInt(childPositionStr);
+//                        int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
+//                        Map<String, Object> childMap = child.get(childPositionInt);
+//                        Iterator<Map.Entry<String, Object>> iteratorsChild = childMap.entrySet().iterator();
+//                        Map.Entry<String, Object> childEntry = iteratorsChild.next();
+//                        String childKey = childEntry.getKey();
+//                        if (!TextUtils.isEmpty(childKey) && childKey.equals("sub") && iteratorsChild.hasNext()) {
+//                            childEntry = iteratorsChild.next();
+//                        }
+//                        childNameChinese = childEntry.getKey();
+//                        childNameEnglish = (String) childEntry.getValue();
+//                        List<Map<String, Object>> grandson = (List<Map<String, Object>>) childMap.get("sub");
+//                        if (null != grandson) {
+//                            Map<String, Object> grandSonMap = grandson.get(grandSonPositionInt);
+//                            Map.Entry<String, Object> grandSonEntry = grandSonMap.entrySet().iterator().next();
+//                            districtName = grandSonEntry.getKey();
+//                            districtNum = (String) grandSonEntry.getValue();
+//                        }
+//                    }
+//                    userAddress.setText(nameChinese.concat(childNameChinese).concat(districtName));
 //                    callback2(function, nameChinese, nameEnglish, childNameChinese, childNameEnglish);
                 }
             }
@@ -632,10 +648,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @Override
     public void showLoadDialog() {
-        if (mLoadingDialog.isShowing()) {
-            return;
+        try {
+            if (mLoadingDialog.isShowing()) {
+                return;
+            }
+            mLoadingDialog.show();
+        } catch (Exception e) {
         }
-        mLoadingDialog.show();
     }
 
     @Override

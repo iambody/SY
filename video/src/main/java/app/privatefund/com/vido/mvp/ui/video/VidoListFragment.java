@@ -9,22 +9,24 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
+import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
-import app.privatefund.com.vido.VideoNavigationUtils;
 import app.privatefund.com.vido.adapter.VideoListAdapter;
-import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import app.privatefund.com.vido.mvp.contract.video.VideoListContract;
 import app.privatefund.com.vido.mvp.presenter.video.VideoListPresenter;
 import butterknife.BindView;
@@ -97,7 +99,13 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         videoListAdapter.setOnItemClickListener(new ListItemClickListener<VideoAllModel.VideoListModel>() {
             @Override
             public void onItemClick(int position, VideoAllModel.VideoListModel videoListModel) {
-                VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
+//                VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
+//                Intent toHomeIntent = new Intent(fBaseActivity, LoginActivity.class);
+//                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
+                HashMap<String ,Object >map=new HashMap<String, Object>();
+                map.put("insidegotologin",true);
+                NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN,map);
             }
 
         });

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -318,6 +319,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onRestart() {
         super.onRestart();
         initUserInfo();
+        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
 

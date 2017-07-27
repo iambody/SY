@@ -54,6 +54,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
             protected void onEvent(String ss) {
                 BindBean bindBean=new Gson().fromJson(getV2String(ss).trim(),BindBean.class);
                 if (TextUtils.equals(bindBean.result, "1")) {//之前没有手机号账号，不需要合并数据。
+                    loadingDialog.dismiss();
                     loadingDialog.setResult(true, getContext().getString(R.string.bing_phone_succ_str), 1000, () -> getView().margeSucc());
                 } else if (TextUtils.equals(bindBean.result, "2")) {//有手机号账号，需要对合并数据进行确认
                     String vas = String.format(getContext().getResources().getString(R.string.account_merge_str), un);

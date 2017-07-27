@@ -135,6 +135,14 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (videoRootFrame!=null&&videoRootFrame.getCurrentStatus()==5){
+            videoRootFrame.pause();
+        }
+    }
+
     private void changeVideoViewSize(int orientation) {
         ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

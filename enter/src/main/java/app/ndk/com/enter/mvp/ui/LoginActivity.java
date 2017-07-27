@@ -232,10 +232,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         loginWeixinsText.setText(getResources().getString(R.string.al_wx_login_strs));
         loginCancle.setVisibility(View.VISIBLE);
 //        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
-        btn_al_login.setBackground(getResources().getDrawable(R.drawable.shape_btn_normal_down));
-
-        btn_al_login.setTextColor(getResources().getColor(R.color.white));
-        //开始展示
+//        btn_al_login.setBackground(getResources().getDrawable(R.drawable.shape_btn_normal_down));
+//
+//        btn_al_login.setTextColor(getResources().getColor(R.color.white));
+//        //开始展示
 //        enterLoginWxloginLay.setVisibility(View.GONE);
 //        enterLoginWxBtLay.setVisibility(View.VISIBLE);
 //        isShowWxBt = true;
@@ -505,7 +505,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
-            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.shape_btn_normal_down));
+            btn_al_login.setBackground(getResources().getDrawable(isFixAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
+            btn_al_login.setTextColor(getResources().getColor(isFixAdjust() ? R.color.white :R.color.black));
 
             switch (which) {
 

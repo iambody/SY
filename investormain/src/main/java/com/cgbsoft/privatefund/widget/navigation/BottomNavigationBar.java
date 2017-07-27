@@ -167,7 +167,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
 
     public void setBottonTxt(TextView textView, int textId, boolean isselect) {
         textView.setText(getResources().getString(textId));
-        textView.setTextColor(getResources().getColor(isselect ? R.color.app_golden : R.color.gray_font));
+        textView.setTextColor(getResources().getColor(isselect ? R.color.app_golden : R.color.black));
     }
 
     public void selectNavaigationPostion(int index) {

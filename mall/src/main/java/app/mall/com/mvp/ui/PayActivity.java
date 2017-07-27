@@ -181,8 +181,13 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             public void afterTextChanged(Editable s) {
                 try {
                     int count = Integer.parseInt(s.toString());
-                    ydHint.setVisibility(count < 500 ? View.VISIBLE : View.GONE);
-                    pay_yundou_queding.setBackgroundColor(count < 500 ? 0xffbebebe : 0xffea1202);
+                    if (AppManager.isInvestor(PayActivity.this)){
+                        pay_yundou_queding.setBackgroundColor(0xffbf9b69);
+                    }else {
+                        ydHint.setVisibility(count < 500 ? View.VISIBLE : View.GONE);
+                        pay_yundou_queding.setBackgroundColor(count < 500 ? 0xffbebebe : 0xffea1202);
+                    }
+
                     if (rechargeConfigBean.getLevels() != null) {
                         if (count >= rechargeConfigBean.getLevels().get(2).getYdAmount()) {
                             if (rechargeConfigBean.getLevels().get(2).getDonationRatio() != 0.0) {

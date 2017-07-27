@@ -113,14 +113,15 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
             @Override
             public String getItem(int index) {
                 Map<String, Object> map = mList.get(index);
-                Set<Map.Entry<String, Object>> entries = map.entrySet();
-                Iterator<Map.Entry<String, Object>> iterators = entries.iterator();
-                Map.Entry<String, Object> entry = iterators.next();
-                String key = entry.getKey();
-                if (!TextUtils.isEmpty(key) && key.equals("sub") && iterators.hasNext()) {
-                    entry = iterators.next();
-                }
-                return entry.getKey();
+                String province = (String) map.get("province");
+//                Set<Map.Entry<String, Object>> entries = map.entrySet();
+//                Iterator<Map.Entry<String, Object>> iterators = entries.iterator();
+//                Map.Entry<String, Object> entry = iterators.next();
+//                String key = entry.getKey();
+//                if (!TextUtils.isEmpty(key) && key.equals("sub") && iterators.hasNext()) {
+//                    entry = iterators.next();
+//                }
+                return province;
             }
         });
         setChildAdapter(0);
@@ -148,19 +149,19 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
 
     private void setChildAdapter(int newValue) {
         Map<String, Object> map = mList.get(newValue);
-        List<Map<String, Object>> childListTemp = (List<Map<String, Object>>) map.get("sub");
+        List<Map<String, Object>> childListTemp = (List<Map<String, Object>>) map.get("city");
         childList.clear();
-        if (null == childListTemp) {
-            childListTemp=new ArrayList<Map<String, Object>>();
-            HashMap<String, Object> tempMap = new HashMap<>();
-            tempMap.put("暂无", "000000");
-            ArrayList<Map<String, Object>> tempList = new ArrayList<>();
-            HashMap<String, Object> tempMap2 = new HashMap<>();
-            tempMap2.put("暂无", "000000");
-            tempList.add(tempMap2);
-            tempMap.put("sub", tempList);
-            childListTemp.add(tempMap);
-        }
+//        if (null == childListTemp) {
+//            childListTemp=new ArrayList<Map<String, Object>>();
+//            HashMap<String, Object> tempMap = new HashMap<>();
+//            tempMap.put("暂无", "000000");
+//            ArrayList<Map<String, Object>> tempList = new ArrayList<>();
+//            HashMap<String, Object> tempMap2 = new HashMap<>();
+//            tempMap2.put("暂无", "000000");
+//            tempList.add(tempMap2);
+//            tempMap.put("sub", tempList);
+//            childListTemp.add(tempMap);
+//        }
         childList.addAll(childListTemp);
         if (childList != null && childList.size() > 0) {
             child.setAdapter(new ChildAdapter());
@@ -171,14 +172,14 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
     }
     private void setGrandSonAdapter(int newValue) {
         Map<String, Object> map = childList.get(newValue);
-        List<Map<String, Object>> grandSonListTemp = (List<Map<String, Object>>) map.get("sub");
+        List<Map<String, Object>> grandSonListTemp = (List<Map<String, Object>>) map.get("areas");
         grandSonList.clear();
-        if (null == grandSonListTemp) {
-            grandSonListTemp=new ArrayList<Map<String, Object>>();
-            HashMap<String, Object> tempMap = new HashMap<>();
-            tempMap.put("暂无", "000000");
-            grandSonListTemp.add(tempMap);
-        }
+//        if (null == grandSonListTemp) {
+//            grandSonListTemp=new ArrayList<Map<String, Object>>();
+//            HashMap<String, Object> tempMap = new HashMap<>();
+//            tempMap.put("暂无", "000000");
+//            grandSonListTemp.add(tempMap);
+//        }
         grandSonList.addAll(grandSonListTemp);
         if (grandSonList != null && grandSonList.size() > 0) {
             grandson.setAdapter(new GrandSonAdapter());
@@ -202,9 +203,10 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
         @Override
         public String getItem(int index) {
             Map<String, Object> map = childList.get(index);
-            Set<Map.Entry<String, Object>> entries = map.entrySet();
-            Map.Entry<String, Object> entry = entries.iterator().next();
-            return entry.getKey();
+            String city = (String) map.get("n");
+//            Set<Map.Entry<String, Object>> entries = map.entrySet();
+//            Map.Entry<String, Object> entry = entries.iterator().next();
+            return city;
         }
 
         @Override
@@ -222,9 +224,10 @@ public class WheelDialogAddress extends Dialog implements View.OnClickListener {
         @Override
         public String getItem(int index) {
             Map<String, Object> map = grandSonList.get(index);
-            Set<Map.Entry<String, Object>> entries = map.entrySet();
-            Map.Entry<String, Object> entry = entries.iterator().next();
-            return entry.getKey();
+            String district = (String) map.get("s");
+//            Set<Map.Entry<String, Object>> entries = map.entrySet();
+//            Map.Entry<String, Object> entry = entries.iterator().next();
+            return district;
         }
 
         @Override

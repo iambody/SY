@@ -15,10 +15,13 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <include
+        <LinearLayout
             android:id="@+id/yd_hint"
-            layout="@layout/layout_pay_hint"
-            android:visibility="gone" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            />
         <!-- 手动输入回显布局 -->
 
         <View
@@ -57,6 +60,16 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="#d0d0d0" />
+        <TextView
+            android:id="@+id/pay_yundou_zengsong_txt"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/pay_yundou_edit_bt"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"

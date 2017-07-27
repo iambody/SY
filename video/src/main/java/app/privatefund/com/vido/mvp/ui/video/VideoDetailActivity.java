@@ -76,7 +76,6 @@ import app.privatefund.com.vido.mvp.presenter.video.VideoDetailPresenter;
 import app.privatefund.com.vido.mvp.ui.video.adapter.CommentAdapter;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -202,7 +201,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @BindView(R2.id.jiangjieren_lay)
     LinearLayout jiangjierenLay;
 
-TextView video_videplay_time_playnumber_toc;
+    TextView video_videplay_time_playnumber_toc;
 
     private View title_videodetail_lay;
     //加载时候的dialog
@@ -296,7 +295,7 @@ TextView video_videplay_time_playnumber_toc;
     }
 
     private void findview() {
-        video_videplay_time_playnumber_toc= (TextView) findViewById(R.id.video_videplay_time_playnumber_toc);
+        video_videplay_time_playnumber_toc = (TextView) findViewById(R.id.video_videplay_time_playnumber_toc);
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.getvidoingloading), false, false);
         title_videodetail_lay = findViewById(R.id.title_videodetail_lay);
         videplay_produxt_view = findViewById(R.id.videplay_produxt_view);
@@ -380,9 +379,10 @@ TextView video_videplay_time_playnumber_toc;
     @OnClick(R2.id.iv_avd_back_play)
     void iv_avd_back_play() {
 //        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+        finish();
         FloatVideoService.startService(videoId);
         DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
-        finish();
+
     }
 
     @OnClick(R2.id.ll_mvv_nowifi)
@@ -952,8 +952,8 @@ TextView video_videplay_time_playnumber_toc;
     }
 
     private void setData() {
-        jiangjierenLay.setVisibility(BStrUtils.isEmpty(videoInfoModel.lecturerRemark)?View.GONE:View.VISIBLE);
-        BStrUtils.SetTxt(jiangjieren,videoInfoModel.lecturerRemark);
+        jiangjierenLay.setVisibility(BStrUtils.isEmpty(videoInfoModel.lecturerRemark) ? View.GONE : View.VISIBLE);
+        BStrUtils.SetTxt(jiangjieren, videoInfoModel.lecturerRemark);
         tv_avd_like_num.setText(String.valueOf(videoInfoModel.likeNum));
         tv_avd_title.setText(videoInfoModel.videoName);
         tv_avd_content.setText(videoInfoModel.content);
@@ -981,9 +981,10 @@ TextView video_videplay_time_playnumber_toc;
             videplay_produxt_view.setVisibility(View.GONE);
 
         }
-try{
-    video_videplay_time_playnumber_toc.setText(videoAllInf.rows.createDate+"  |  播放次数"+videoAllInf.rows.playCount);
-}catch (Exception e){}
+        try {
+            video_videplay_time_playnumber_toc.setText(videoAllInf.rows.createDate + "  |  播放次数" + videoAllInf.rows.playCount);
+        } catch (Exception e) {
+        }
 
         //剩余额度
 
@@ -1089,7 +1090,6 @@ try{
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName);
     }
-
 
 
     class AnimListener implements Animation.AnimationListener {

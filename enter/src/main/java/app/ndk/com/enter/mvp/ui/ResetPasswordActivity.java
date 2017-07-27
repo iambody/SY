@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,6 +18,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -194,10 +194,10 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!TextUtils.equals(userName, lastInputPhoneNum)) {
-            MToast.makeText(this, "手机号码与验证码不匹配", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!TextUtils.equals(userName, lastInputPhoneNum)) {
+//            MToast.makeText(this, "手机号码与验证码不匹配", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (AppManager.isAdViser(this)) {
             toUmengStatistics(UMENG_KEY, "按钮", "找回下一步");
         } else {
@@ -250,7 +250,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         intent.putExtra("code", et_af_check.getText().toString());
         intent.putExtra(FROMVERIFYTAG, isFromVerifyFogetPwd ? "1" : "0");
         startActivity(intent);
-        finish();
+
     }
 
     /**
@@ -273,7 +273,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             et_af_username.setText("");
         }
         etUsernameDelUn.setVisibility(View.GONE);
-        isUsernameInput=false;
+        isUsernameInput = false;
     }
 
 
@@ -292,6 +292,10 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
+
+            btn_af_next.setBackground(getResources().getDrawable(isAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
+            btn_af_next.setTextColor(getResources().getColor(isAdjust() ? R.color.white :R.color.black));
+
             switch (which) {
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
@@ -308,6 +312,19 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+    private boolean isAdjust() {
+        String phone = et_af_username.getText().toString().trim();
+        String code = et_af_check.getText().toString().trim();
+        if (!Utils.isMobileNO(phone)) {
+            return false;
+        }
+        if (BStrUtils.isEmpty(code)) {
+            return false;
+        }
+        return true;
+
     }
 
 }
