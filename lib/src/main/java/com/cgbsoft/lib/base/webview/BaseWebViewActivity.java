@@ -41,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -131,6 +130,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
+        if (rightMemberRule) {
+            toolbar.setBackgroundResource(R.color.black);
+        }
     }
 
     /**
