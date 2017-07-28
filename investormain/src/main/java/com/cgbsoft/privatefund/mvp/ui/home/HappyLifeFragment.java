@@ -84,6 +84,13 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         return null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
+    }
 
     /**
      * 加载Tab数据

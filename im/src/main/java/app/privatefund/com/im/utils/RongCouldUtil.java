@@ -1,8 +1,15 @@
 package app.privatefund.com.im.utils;
 
+import android.content.Context;
+
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.constant.Constant;
+
+import app.privatefund.com.im.Contants;
+import app.privatefund.com.im.R;
+import app.privatefund.com.im.adapter.RongConversationListAdapter;
+import io.rong.imkit.model.UIConversation;
 
 /**
  * Created by lee on 2016/9/17.
@@ -53,5 +60,37 @@ public class RongCouldUtil {
             return true;
         }
         return false;
+    }
+
+    public static void customServerTop(Context context, RongConversationListAdapter rongConversationListAdapter) {
+        UIConversation tempServer = null;
+        UIConversation topGroupConversation = null;
+        int index = 0;
+        int topGroupConversationIndex = 0;
+        for (int i = 0; i < rongConversationListAdapter.getCount(); i++) {
+            UIConversation itemConversation = rongConversationListAdapter.getItem(i);
+            if (context.getString(R.string.simuyun_server).equals(itemConversation.getUIConversationTitle())) {
+                tempServer = itemConversation;
+                index = i;
+            }
+        }
+        if (tempServer != null) {
+            rongConversationListAdapter.remove(index);
+            rongConversationListAdapter.add(tempServer, 0);
+        }
+
+        for (int i = 0; i < rongConversationListAdapter.getCount(); i++) {
+            UIConversation itemConversation = rongConversationListAdapter.getItem(i);
+            if (Contants.topConversationGroupId.equals(itemConversation.getConversationTargetId())) {
+                topGroupConversationIndex = i;
+                topGroupConversation = itemConversation;
+                break;
+            }
+        }
+
+        if (topGroupConversation != null) {
+            rongConversationListAdapter.remove(topGroupConversationIndex);
+            rongConversationListAdapter.add(topGroupConversation, 1);
+        }
     }
 }
