@@ -157,7 +157,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     // Fragment当前状态是否可见
     protected boolean isVisible;
     //是否绑定理财师
-    boolean isBindAdviser;
+//    boolean isBindAdviser;
     UserInfoDataEntity.UserInfo userInfo;
 
     private Observable<LiveInfBean> liveObservable;
@@ -268,11 +268,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), false);
         VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), 200);
     }
-
+/*游客模式的点击跳转理财师*/
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
 
-        if (isBindAdviser) {
+        if (AppManager.isBindAdviser(baseActivity)) {
 //            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), false);
             VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
 
@@ -325,9 +325,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_live_lay.setOnClickListener(this);
         boolean isVisiter = AppManager.isVisitor(baseActivity);
         userInfo = AppManager.getUserInfo(baseActivity);
-        isBindAdviser = AppManager.isBindAdviser(baseActivity);
+//        isBindAdviser = AppManager.isBindAdviser(baseActivity);
         //游客模式下或者没有绑定过理财师需要
-        if (isVisiter || !isBindAdviser) {
+        if (isVisiter || !AppManager.isBindAdviser(baseActivity)) {
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
