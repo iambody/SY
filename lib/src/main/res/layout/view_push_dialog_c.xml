@@ -18,7 +18,7 @@
             android:background="@drawable/news_know_early_bottom_bg"
             >
             <TextView
-                android:id="@+id/tv_news_know_early_title"
+                android:id="@+id/tv_vcd_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -28,6 +28,7 @@
                 android:text="私享云早知道"
                 />
             <TextView
+                android:id="@+id/tv_vcd_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -35,7 +36,7 @@
                 android:layout_marginRight="24dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:layout_below="@+id/tv_news_know_early_title"
+                android:layout_below="@+id/tv_vcd_title"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:text="2017年中国互联网大会将于7月11日至13日在国家会议中心拉开帷幕，请大家参加！"
@@ -47,6 +48,7 @@
                 android:orientation="horizontal"
                 >
                 <Button
+                    android:id="@+id/iv_vcd_cancel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -56,6 +58,7 @@
                     android:text="返回"
                     />
                 <Button
+                    android:id="@+id/btn_vcd_sure"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
