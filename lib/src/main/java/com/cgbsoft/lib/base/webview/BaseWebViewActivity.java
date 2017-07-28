@@ -262,6 +262,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     };
 
     public void showPayItem(){
+        rightRechargeShow = true;
         rightItem.setTitle("充值");
         rightItem.setVisible(true);
     }
@@ -431,7 +432,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setTitle("设置");
             Drawable drawable = getResources().getDrawable(R.drawable.qiehuan);
             rightItem.setIcon(drawable);
-        } else if ((title != null && title.contains("活动")) || rightRechargeShow) {
+        } else if ((title != null && title.contains("活动")) && rightRechargeShow) {
             rightItem.setTitle("充值");
         } else if (rightYundouRule) {
             rightItem.setTitle("使用规则");
@@ -449,7 +450,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (item.getItemId() == R.id.firstBtn) {
             if (rightMessageIcon) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.IM_MESSAGE_LIST_ACTIVITY);
-            } else if (title.contains("活动") || rightRechargeShow) {
+            } else if (title.contains("活动") && rightRechargeShow) {
                 NavigationUtils.startActivityByRouter(this, RouteConfig.MALL_PAY);
             } else if (rightYundouRule) {
                 Intent intent = new Intent(this, BaseWebViewActivity.class);
