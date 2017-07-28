@@ -283,4 +283,13 @@
         <item name="android:windowEnterAnimation">@anim/dialog_commont_anim_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_commont_anim_exit</item>
     </style>
+    <style name="textInputStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_font</item>
+    </style>
+    <style name="textinput_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_font</item>
+    </style>
+
 </resources>
