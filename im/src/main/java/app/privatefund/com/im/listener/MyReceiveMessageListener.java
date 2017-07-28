@@ -7,15 +7,15 @@ import android.util.Log;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.base.model.bean.UnReadCMSG;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.google.gson.Gson;
 
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
-import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -53,9 +53,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         }
 
         if (Constant.msgNoKnowInformation.equals(message.getSenderUserId())) {
-            UnReadCMSG unReadCMSG = new UnReadCMSG();
-            unReadCMSG.setUnreadCount(1);
-            EventBus.getDefault().post(unReadCMSG);
             RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, "INTIME49999");
             RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, "INTIME49999");
         }
@@ -125,16 +122,11 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
     public void onMessageIncreased(int i) {
         int intime49999 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME49999");
         Log.e(this.getClass().getSimpleName(), i + "-------intime49999=" + intime49999);
-        //b346 c7
-        int intime40003 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40003");
-        int intime40004 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40004");
-        int intime40006 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40006");
-        int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
-
-        int cUnread = i - intime40003 - intime40004 - intime40006;
-
-        UnReadCMSG unReadCMSG = new UnReadCMSG();
-        unReadCMSG.setUnreadCount(cUnread);
-        EventBus.getDefault().post(unReadCMSG);
+//        int intime40003 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40003");
+//        int intime40004 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40004");
+//        int intime40006 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40006");
+//        int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
+//        int cUnread = i - intime40003 - intime40004 - intime40006;
+        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, i);
     }
 }

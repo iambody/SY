@@ -5,11 +5,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,6 +40,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -62,6 +65,8 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action0;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -101,6 +106,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @BindView(R2.id.login_weixins_text)
     TextView loginWeixinsText;
+    @BindView(R2.id.home_name_input)
+    TextInputLayout homeNameInput;
 
     //是否已经显示了微信登录的按钮  默认进来是不显示的
     private boolean isShowWxBt;
@@ -208,6 +215,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         initRxObservable();
         initShakeListener();
+
+
+        et_al_username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                homeNameInput.setHintEnabled(true);
+                return false;
+            }
+        });
     }
 
 
@@ -493,6 +509,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onViewlogincancleClicked() {//登录取消
         LoginActivity.this.finish();
     }
+
 
 
     private class LoginTextWatcher implements TextWatcher {

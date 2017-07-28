@@ -92,6 +92,15 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 获取未读消息数
+     * @param context
+     * @return
+     */
+    public static int getUnreadInfoNumber(Context context) {
+        return getBasePreference(context).getInt(UNREAD_INFOMATION, 12);
+    }
+
+    /**
      * 获取上次选择的地址
      *
      * @param

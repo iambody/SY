@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -24,7 +23,6 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,7 +83,6 @@
         </com.cgbsoft.lib.widget.SmartScrollView>
     </com.cgbsoft.lib.widget.MySwipeRefreshLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_50_dip"
@@ -99,6 +96,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/ui_30_dip"
+            android:padding="10dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
     </RelativeLayout>

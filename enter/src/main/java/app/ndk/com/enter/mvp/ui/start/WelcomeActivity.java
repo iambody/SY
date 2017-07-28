@@ -48,7 +48,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE,PERMISSION_READ_STORAGE};//PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
+    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_READ_STORAGE};
+    //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
@@ -88,6 +89,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
+
         } else {
         }
 
@@ -102,7 +104,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 //            透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 

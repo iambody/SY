@@ -19,6 +19,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
 
     ImageView toolbarLeft;
     ImageView toolbarRight;
+    private UnreadInfoNumber unreadInfoNumber;
+
     @Override
     protected int titleLayoutId() {
         return R.layout.title_normal_new;
@@ -59,6 +62,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         toolbarRight.setVisibility(View.VISIBLE);
         toolbarLeft.setOnClickListener(this);
         toolbarRight.setOnClickListener(this);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight);
     }
 
     @Override
@@ -146,6 +150,14 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                 NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
 //                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.onDestroy();
         }
     }
 }

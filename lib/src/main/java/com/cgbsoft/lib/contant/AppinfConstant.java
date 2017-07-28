@@ -53,6 +53,11 @@ public interface AppinfConstant {
     String CHAT_NAME = "chatName";
 
     /**
+     * 未读消息
+     */
+    String UNREAD_INFOMATION = "unread_infomation";
+
+    /**
      * 聊天名称
      */
     String CONVERSATION_TYPE = "conversationType";

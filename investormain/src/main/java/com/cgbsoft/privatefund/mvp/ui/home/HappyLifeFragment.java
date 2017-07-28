@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
 
     ImageView toolbarLeft;
     ImageView toolbarRight;
+    private UnreadInfoNumber unreadInfoNumber;
 
     @Override
     protected int titleLayoutId() {
@@ -60,6 +62,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         toolbarRight.setVisibility(View.VISIBLE);
         toolbarLeft.setOnClickListener(this);
         toolbarRight.setOnClickListener(this);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight);
     }
 
     @Override
@@ -143,5 +146,11 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     public void setCode(int index) {
         super.setIndex(index);
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.onDestroy();
+        }
+    }
 }
