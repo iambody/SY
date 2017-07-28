@@ -41,7 +41,6 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.MToast;
-import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
@@ -531,7 +530,7 @@ public class CWebviewManger {
             String title = URLDecoder.decode(split[3], "utf-8");
             String content = URLDecoder.decode(split[4], "utf-8");
             String btnText = URLDecoder.decode(split[5], "utf-8");
-            new PushDialog(context, title, content, btnText, "", "") {
+            new DefaultDialog(context, content, "", btnText) {
                 public void left() {
                     this.cancel();
                 }

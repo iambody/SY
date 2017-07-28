@@ -6,4 +6,5 @@
     <color name="lucency">#80000000</color>
     <color name="text_input_layout">#666666</color>
     <color name="text_input_layout_err">#FF0000</color>
+
 </resources>

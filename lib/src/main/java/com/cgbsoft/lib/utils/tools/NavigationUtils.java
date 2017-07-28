@@ -141,7 +141,7 @@ public class NavigationUtils {
         Intent intent = new Intent(activity, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, title);
-        intent.putExtra(WebViewConstant.RIGHT_RECHARGE_HAS,  true);
+        intent.putExtra(WebViewConstant.RIGHT_RECHARGE_HAS,  false);
         activity.startActivity(intent);
     }
     /**

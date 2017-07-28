@@ -10,6 +10,6 @@ import com.cgbsoft.lib.base.mvp.model.BaseResult;
 public class ProtocolEntity extends BaseResult<ProtocolEntity.Result> {
 
     public static class Result {
-        public String userAgree;
+        public String result;
     }
 }

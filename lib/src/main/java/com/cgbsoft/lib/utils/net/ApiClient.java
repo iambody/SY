@@ -319,7 +319,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> getProtocol() {
-        return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_WWW, false).getProtocol().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getProtocol().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
