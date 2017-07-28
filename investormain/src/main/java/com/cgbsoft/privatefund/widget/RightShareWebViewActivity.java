@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.widget;
 
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -27,7 +28,9 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
     @Override
     protected void before() {
         super.before();
-        if(url.contains("information/details.html")){//是资讯页面
+        //游客模式下禁止的Api 添加限制条件
+//        if (!AppManager.isVisitor(baseContext)) {
+        if(!AppManager.isVisitor(baseContext)&&url.contains("information/details.html")){//是资讯页面
             TaskInfo.complentTask("查看资讯");
         }
     }
@@ -62,8 +65,10 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
             public void completShare(int shareType) {
                 //分享微信朋友圈成功
                 if(url.contains("information/details.html")){
-                    //自选页面分享朋友圈成功
-                    TaskInfo.complentTask("分享资讯");
+                    if (!AppManager.isVisitor(baseContext)) {
+                        //自选页面分享朋友圈成功
+                        TaskInfo.complentTask("分享资讯");
+                    }
                     if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
                         DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
                     }

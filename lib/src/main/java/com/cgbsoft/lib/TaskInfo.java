@@ -2,6 +2,7 @@ package com.cgbsoft.lib;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -133,6 +134,9 @@ public class TaskInfo {
     private static DayTaskBean getTaskBean(String taskName) {
         SharedPreferences sp = getBasePreference(BaseApplication.getContext());
         String taskStr = sp.getString(TASK_INFO, "");
+        if (TextUtils.isEmpty(taskStr)) {
+            return null;
+        }
         ArrayList<DayTaskBean> taskBeans = new Gson().fromJson(taskStr, new TypeToken<ArrayList<DayTaskBean>>() {
         }.getType());
 

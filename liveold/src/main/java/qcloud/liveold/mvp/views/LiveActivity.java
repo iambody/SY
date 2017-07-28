@@ -1938,7 +1938,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("user_id", AppManager.getUserId(BaseApplication.getContext()));
             if (TextUtils.isEmpty(AppManager.getUserInfo(LiveActivity.this).getNickName())) {
-                hashMap.put("user_name", "私募云用户");
+                hashMap.put("user_name", "私享云用户");
             } else {
                 hashMap.put("user_name", AppManager.getUserInfo(LiveActivity.this).getNickName());
             }
