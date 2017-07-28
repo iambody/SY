@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 
 import app.privatefund.com.im.Contants;
 import app.privatefund.com.im.R;
+import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.imkit.model.UIConversation;
 
 /**
@@ -23,7 +24,7 @@ public class RongConversationListAdapter extends RongConversationBaseListAdapter
 
     @Override
     public void notifyDataSetChanged() {
-        customServerTop();
+        RongCouldUtil.customServerTop(context, RongConversationListAdapter.this);
         super.notifyDataSetChanged();
     }
 
