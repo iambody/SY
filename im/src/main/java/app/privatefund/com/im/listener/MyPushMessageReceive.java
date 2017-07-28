@@ -14,11 +14,14 @@ import android.util.Log;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.Router;
 
 import app.privatefund.com.im.R;
 import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.imkit.RongContext;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
@@ -39,6 +42,12 @@ public class MyPushMessageReceive extends PushMessageReceiver {
             if (!Boolean.parseBoolean(pushNotificationMessage.getPushFlag())) {
                 return true;
             }
+
+        if (Constant.msgSecretary.equals(pushNotificationMessage.getSenderId())) { // 不收小秘书消息
+            RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, Constant.msgSecretary);
+            RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, Constant.msgSecretary);
+            return true;
+        }
 
             Uri uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName()).buildUpon().appendPath("conversationList").build();
             Intent intent = Router.build(Uri.parse("jumpmodule://com.cgbsoft.privatefund/welcomeactivity")).getIntent(context);

@@ -46,6 +46,12 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             return true;
         }
 
+        if (Constant.msgSecretary.equals(message.getSenderUserId())) { // 不收小秘书消息
+            RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, Constant.msgSecretary);
+            RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, Constant.msgSecretary);
+            return true;
+        }
+
         if (Constant.msgNoKnowInformation.equals(message.getSenderUserId())) {
             UnReadCMSG unReadCMSG = new UnReadCMSG();
             unReadCMSG.setUnreadCount(1);
