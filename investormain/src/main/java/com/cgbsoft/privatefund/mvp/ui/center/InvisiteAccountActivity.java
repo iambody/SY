@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.ClearEditText;
 import com.cgbsoft.lib.widget.OnWheelChangedListener;
 import com.cgbsoft.lib.widget.WheelAdapter;
@@ -40,9 +43,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     TextView titleMid;
 
     @BindView(R.id.title_right)
-    TextView titleRightNeedHide;
-
-    @BindView(R.id.title_right_newc)
     TextView titleRight;
 
     @BindView(R.id.invisite_realname)
@@ -78,7 +78,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
         titleRight.setText(R.string.rc_confirm);
-        titleRightNeedHide.setVisibility(View.GONE);
         backImage.setVisibility(View.VISIBLE);
         mList =  Arrays.asList(getResources().getStringArray(R.array.select_identify));
         initView();
@@ -96,6 +95,10 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         linearLayout.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
+        certifyType.setOnFocusChangeListener((v, hasFocus) -> {
+            linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+            ViewUtils.hideInputMethod(certifyType);
+        });
         wheelView.addChangingListener((wheel, oldValue, newValue) -> {
             certifyType.setText(mList.get(newValue));
         });
@@ -127,6 +130,10 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
 
     @OnClick(R.id.title_right)
     void commitInvisiteAccount() {
+        commitAccount();
+    }
+
+    private void commitAccount() {
         if (loading) {
             return;
         }
@@ -143,6 +150,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     public void commitSuccess() {
         loading = false;
         Toast.makeText(this,"投资账号提交成功！", Toast.LENGTH_SHORT).show();
+        RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, true);
         finish();
     }
 

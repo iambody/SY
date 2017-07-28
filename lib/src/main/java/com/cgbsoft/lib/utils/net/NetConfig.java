@@ -275,8 +275,6 @@ public class NetConfig {
         final static String VIDEO_SCHOOL_ALL_IND = API_URL + video + "/all";
         //获取视频列表
         final static String VIDEO_SCHOOL_LS = API_URL + video + "s";
-
-
     }
 
     //用户授权相关 V2********
@@ -287,7 +285,6 @@ public class NetConfig {
         //V2登录
         final static String LOGIN_V2_URL = auth + "/v2/appAuthenticate";
     }
-
 
     /**
      * ****************以下为6.0私享云 新增新增接口的配置路径接口的配置路径*******************
@@ -319,7 +316,7 @@ public class NetConfig {
         // 我的活动
         final static String ACTIVITES = API_URL + "/salons/mine";
         // 提交投资账号
-        final static String CommitInvisitAccount = API_URL + "/auth/user/certSubmit";
+        final static String CommitInvisitAccount = AUTH_URL_V2 + "/user/certSubmit";
     }
 
     /**

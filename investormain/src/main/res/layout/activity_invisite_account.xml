@@ -39,6 +39,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textSize="@dimen/dimens_sp_16"
                 android:background="@null"
                 android:layout_weight="3" />
@@ -89,6 +91,8 @@
                 android:textColor="@color/black"
                 android:background="@null"
                 android:textSize="@dimen/dimens_sp_16"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_weight="3" />
         </LinearLayout>
 
