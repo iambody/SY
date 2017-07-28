@@ -73,7 +73,7 @@ import rx.functions.Action0;
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     public static final String TAG_GOTOLOGIN = "insidegotologin";
     public static final String TAG_GOTOLOGIN_FROMCENTER = "insidegotologincenter";
-    public static final String TAG_BACK_HOME =   "gotohome";
+    public static final String TAG_BACK_HOME =   "backgohome";
     @BindView(R2.id.et_al_username)
     EditText et_al_username;//用户名
 

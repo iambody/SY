@@ -341,7 +341,7 @@ public class CWebviewManger {
             showPayItem(action);
         }else if(action.contains("viewpdf")){
             gotoScretPdf(action);
-        }else if(action.contains("gologinbackhome")){
+        }else if(action.contains("goLoginBackHome")){
             //直接跳转到
             HashMap<String, Object> map = new HashMap<>();
             map.put("insidegotologin", true);
