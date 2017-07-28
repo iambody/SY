@@ -44,14 +44,6 @@
                 android:textColor="@color/app_golden"
                 android:visibility="gone"/>
 
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@color/app_red"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:id="@+id/show_red_circle"/>
-
             <ImageView
                 android:id="@+id/iv_setting_item_right_arrow"
                 android:layout_width="14dp"
@@ -61,6 +53,7 @@
                 android:src="@drawable/arrow_right"
                 />
         </LinearLayout>
+
 
         <com.cgbsoft.lib.widget.SwitchButton
             android:id="@+id/setting_item_switchButton"
@@ -80,6 +73,16 @@
             >
         </com.cgbsoft.lib.widget.SwitchButton>
     </FrameLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/shape_circle_red"
+        android:layout_marginEnd="33dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/show_red_circle"/>
 
     <include
         layout="@layout/acitivity_divide_online"
