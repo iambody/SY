@@ -130,9 +130,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
-        if (rightMemberRule) {
-            toolbar.setBackgroundResource(R.color.black);
-        }
     }
 
     /**
@@ -247,6 +244,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 String javascript = "javascript:Tools.init('" + pushMessageValue + "')";
                 mWebview.loadUrl(javascript);
             }, 1000);
+        }
+        if (rightMemberRule) {
+            toolbar.setBackgroundResource(R.color.black);
         }
         initShakeInSetPage();
         mWebview.loadUrl(url);
