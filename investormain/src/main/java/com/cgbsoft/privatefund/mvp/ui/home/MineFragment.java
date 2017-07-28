@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
+import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -75,6 +77,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.account_info_name)
     TextView textViewName;
+
+    @BindView(R.id.mine_title_message_id)
+    ImageView imageViewMessagIcon;
 
     @BindView(R.id.show_current_select_address)
     TextView textViewCurrentAddress;
@@ -184,6 +189,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private BadgeView waitSender;
     private BadgeView waitReceiver;
+    private UnreadInfoNumber unreadInfoNumber;
 
 //    private Handler handler = new Handler() {
 //        @Override
@@ -313,6 +319,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initObserver();
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon);
     }
 
     @Override
@@ -378,10 +385,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
         String url = CwebNetConfig.memeberArea;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_members));
-        NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_members));
+        intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+        startActivity(intent);
     }
 
 //     private Runnable runnable = () -> {
@@ -813,6 +821,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
         if (switchGroupObservable != null) {
             RxBus.get().unregister(RxConstant.SWITCH_GROUP_SHOW, switchGroupObservable);
+        }
+
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.onDestroy();
         }
     }
 

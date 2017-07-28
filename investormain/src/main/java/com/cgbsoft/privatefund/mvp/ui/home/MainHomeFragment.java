@@ -47,6 +47,7 @@ import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
+import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
@@ -167,7 +168,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     private boolean isLoading;
 
-    private BadgeView badgeView;
+    private UnreadInfoNumber unreadInfoNumber;
 
     @Override
 
@@ -189,6 +190,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         //请求数据
         getPresenter().getHomeData();
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv);
     }
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/
@@ -388,6 +390,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         }
                     });
                 }
+
                 //开始刷新ui
                 mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
                 //登录模式
@@ -465,6 +468,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         if (null != userLayObservable) {
             RxBus.get().unregister(RxConstant.MAIN_FRESH_LAY, userLayObservable);
+        }
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.onDestroy();
         }
     }
 /* 显示直播的布局*/
@@ -606,24 +612,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onResume();
         LogUtils.Log("saassaa", "resume");
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
-        initUnreadInfo();
     }
 
-    /**
-     * 初始化未读消息
-     */
-    private void initUnreadInfo() {
-        int numberNum = AppManager.getUnreadInfoNumber(getActivity());
-        if (badgeView == null) {
-            badgeView = ViewUtils.createLeftTopRedPoint(getActivity(), mainHomeNewIv, numberNum);
-        } else {
-            if (numberNum > 0) {
-                badgeView.setText(String.valueOf(numberNum));
-            } else {
-                badgeView.hide();
-            }
-        }
-    }
 
     /*下拉刷新展示*/
     @Override

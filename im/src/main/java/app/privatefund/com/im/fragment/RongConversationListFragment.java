@@ -169,7 +169,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         if (!isNoticeList) {
 //            showUserBelongGroupList();
             addNoticeItem();
-            addSystemNotifyItem();
         }
     }
 
@@ -248,44 +247,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             position = RongConversationListFragment.this.mAdapter.findGatheredItem(ConversationType.PRIVATE);
         } else {
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, noticeId);
-        }
-        conversation.setConversationTitle("");
-        conversation.setPortraitUrl(NetConfig.getDefaultRemoteLogin);
-        UIConversation uiConversation;
-
-        if(position < 0) {
-            conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
-            uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
-            if (!CollectionUtils.isEmpty(cacheConversationList)) {
-                UIConversation cacheConversation = cacheConversationList.get(0);
-                long showTime = cacheConversation.getUIConversationTime();
-                uiConversation.setUIConversationTime(showTime == 0 ? System.currentTimeMillis() : showTime);
-                uiConversation.setConversationContent(cacheConversation.getConversationContent());
-                int value = 0;
-                for (UIConversation conversation2 : cacheConversationList) {
-                    value += conversation2.getUnReadMessageCount();
-                }
-                if (value > 0) {
-                    uiConversation.setUnReadMessageCount(value);
-                }
-            }
-            int index = RongConversationListFragment.this.getPosition(uiConversation);
-            RongConversationListFragment.this.mAdapter.add(uiConversation, index);
-            RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
-        } else {
-            uiConversation = (UIConversation)RongConversationListFragment.this.mAdapter.getItem(position);
-            uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
-            RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
-        }
-    }
-
-    private void addSystemNotifyItem() {
-        Conversation conversation = Conversation.obtain(ConversationType.PRIVATE, SystemNotifyId, "");
-        int position;
-        if(RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE)) {
-            position = RongConversationListFragment.this.mAdapter.findGatheredItem(ConversationType.PRIVATE);
-        } else {
-            position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, SystemNotifyId);
         }
         conversation.setConversationTitle("");
         conversation.setPortraitUrl(NetConfig.getDefaultRemoteLogin);

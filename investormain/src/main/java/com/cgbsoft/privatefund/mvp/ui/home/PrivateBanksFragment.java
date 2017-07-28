@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,8 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String PRODUCT_CODE = "2001";
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
+    private ImageView privatebank_title_right;
+    private UnreadInfoNumber unreadInfoNumber;
 
     @Override
     protected int titleLayoutId() {
@@ -60,50 +64,44 @@ public class PrivateBanksFragment extends BasePageFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
+    protected void init(View view, Bundle savedInstanceState) {
+        super.init(view, savedInstanceState);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void bindTitle(View titleView) {
         LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
         ImageView privatebank_title_left = (ImageView) titleView.findViewById(R.id.privatebank_title_left);
-        privatebank_title_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
-                intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
-                intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
-                getActivity().startActivity(intent);
-            }
+        privatebank_title_left.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
+            intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
+            intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
+            getActivity().startActivity(intent);
         });
-        ImageView privatebank_title_right = (ImageView) titleView.findViewById(R.id.privatebank_title_right);
-        privatebank_title_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (AppManager.isVisitor(InitApplication.getContext())) {
-                    Intent intentRight = new Intent(getActivity(), LoginActivity.class);
-                    intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-                    intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN_FROMCENTER, true);
-                    UiSkipUtils.toNextActivityWithIntent(getActivity(), intentRight);
-                    return;
-                }
-                NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+        privatebank_title_right = (ImageView) titleView.findViewById(R.id.privatebank_title_right);
+        privatebank_title_right.setOnClickListener(v -> {
+            if (AppManager.isVisitor(InitApplication.getContext())) {
+                Intent intentRight = new Intent(getActivity(), LoginActivity.class);
+                intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+                intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN_FROMCENTER, true);
+                UiSkipUtils.toNextActivityWithIntent(getActivity(), intentRight);
+                return;
             }
+            NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
         });
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(baseActivity, SearchBaseActivity.class);
-                i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
-                baseActivity.startActivity(i);
-                DataStatistApiParam.onStatisToCProductSearchClick();
-            }
+        search.setOnClickListener(v -> {
+            Intent i = new Intent(baseActivity, SearchBaseActivity.class);
+            i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
+            baseActivity.startActivity(i);
+            DataStatistApiParam.onStatisToCProductSearchClick();
         });
-
     }
 
     @Override
@@ -140,5 +138,13 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     public void setCode(int index) {
         super.setIndex(index);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.onDestroy();
+        }
     }
 }

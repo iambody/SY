@@ -434,10 +434,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setIcon(drawable);
         } else if ((title != null && title.contains("活动")) && rightRechargeShow) {
             rightItem.setTitle("充值");
+            rightItem.setVisible(true);
         } else if (rightYundouRule) {
             rightItem.setTitle("使用规则");
+            rightItem.setVisible(true);
         } else if (rightMemberRule) {
             rightItem.setTitle("会员规则");
+            rightItem.setVisible(true);
         }else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);

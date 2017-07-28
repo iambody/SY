@@ -95,7 +95,6 @@ public class DataStatisticsUtils {
                 protected void onEvent(String string) {
                     subscription.unsubscribe();
                 }
-
                 @Override
                 protected void onRxError(Throwable error) {
                     subscription.unsubscribe();
