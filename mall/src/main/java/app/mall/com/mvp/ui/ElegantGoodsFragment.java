@@ -18,6 +18,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -71,6 +72,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        DataStatistApiParam.intoElegantGoods();
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -272,5 +274,11 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         }
 //        offsetMore+=LOAD_ELEGANT_GOODS_MORE_lIMIT;
         getPresenter().getElegantGoodsMore(prosDatas.size(),category);
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        DataStatistApiParam.intoElegantGoods();
     }
 }

@@ -898,13 +898,54 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
+     * 点击尚品按钮
+     */
+    public static void clickElegantGoodsButton() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2041");
+        data3.put("act", "20280");
+        data3.put("arg1", "尚品");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
      * 进入尚品页面
      */
     public static void intoElegantGoods() {
         HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20284");
+        data3.put("arg1", "进入尚品");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 生活家页面点击私行家
+     */
+    public static void clickFPInElegantPage() {
+        HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2041");
-        data3.put("act", "20279");
-        data3.put("arg1", "进入生活家");
+        data3.put("act", "20281");
+        data3.put("arg1", "私行家");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 生活家页面点击消息中心
+     */
+    public static void clickMsgCenterInElegantPage() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2041");
+        data3.put("act", "20282");
+        data3.put("arg1", "消息中心");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 生活家页面点击专题图，参数-专题名称
+     */
+    public static void clickElegantLivingBanner(String bannerName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2041");
+        data3.put("act", "20283");
+        data3.put("arg1", "专题图");
+        data3.put("arg3", bannerName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 

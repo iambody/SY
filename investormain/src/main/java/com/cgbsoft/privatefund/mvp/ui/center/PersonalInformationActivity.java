@@ -264,7 +264,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             Imageload.display(PersonalInformationActivity.this,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
 
-            userName.setText(TextUtils.isEmpty(userInfo.getRealName())?"":userInfo.getRealName());
+            userName.setText(TextUtils.isEmpty(userInfo.getNickName())?"":userInfo.getNickName());
 
             userGender.setText(TextUtils.isEmpty(userInfo.getSex())?"":userInfo.getSex());
 
@@ -417,7 +417,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
             userInfo = AppManager.getUserInfo(baseContext);
             if (null != userInfo) {
-                userName.setText(userInfo.getRealName());
+                userName.setText(userInfo.getNickName());
             }
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_GENDER) {
             if (null == data) {
