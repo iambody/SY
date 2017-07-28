@@ -19,6 +19,7 @@ import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
 import com.cgbsoft.lib.utils.StatusBarUtil;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 
 import java.util.ArrayList;
 
@@ -102,7 +103,20 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                 if (list().get(i).getCode() == index)
                     viewPager.setCurrentItem(i);
             }
+            tabLayout.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(XTabLayout.Tab tab) {
+                    onTabSelectedForAmbush(tab);
+                }
 
+                @Override
+                public void onTabUnselected(XTabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(XTabLayout.Tab tab) {
+                }
+            });
         }
     }
 
@@ -130,23 +144,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         return null;
     }
 
-    private TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            //选择的tab
-            Log.e("TT", "onTabSelected:" + tab.getText().toString());
-        }
+    public void onTabSelectedForAmbush(XTabLayout.Tab tab){
 
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-            //离开的那个tab
-            Log.e("TT", "onTabUnselected" + tab.getText().toString());
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-            //再次选择tab
-            Log.e("TT", "onTabReselected" + tab.getText().toString());
-        }
-    };
+    }
 }

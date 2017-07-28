@@ -227,7 +227,7 @@
     <string name="next">下一步</string>
     <string name="retest">重新测评</string>
     <string name="select_adviser">私人银行家</string>
-    <string name="my_adviser">私人银行家名片</string>
+    <string name="my_adviser">我的私人银行家</string>
     <string name="myqr">我的二维码</string>
     <string name="mymember">我的会员</string>
     <string name="upload_icon_fail">上传头像失败</string>
