@@ -1,8 +1,10 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,6 +34,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.RegisterContract;
 import app.ndk.com.enter.mvp.presenter.RegisterPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -80,6 +83,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     EditText privateBankCode;
     @BindView(R2.id.iv_bank_del_pw)
     ImageView ivBankDelPw;
+    @BindView(R2.id.regist_name_input)
+    TextInputLayout registNameInput;
 
     private LoadingDialog mLoadingDialog;
     private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true, isBankCode = true;
@@ -124,6 +129,13 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         };
 
         cb_ar.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckBoxSel = isChecked);
+        et_ar_username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                registNameInput.setHintEnabled(true);
+                return false;
+            }
+        });
     }
 
     @OnClick(R2.id.iv_ar_back)
@@ -286,7 +298,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             boolean isTextHasLength = s.length() > 0;
             btn_ar_register.setBackground(getResources().getDrawable(isAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
-            btn_ar_register.setTextColor(getResources().getColor(isAdjust() ? R.color.white :R.color.black));
+            btn_ar_register.setTextColor(getResources().getColor(isAdjust() ? R.color.white : R.color.black));
 
             switch (which) {
                 case USERNAME_KEY:
@@ -326,7 +338,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             return false;
         }
         if (BStrUtils.isEmpty(password)) {
-          return   false;
+            return false;
         }
         return true;
 

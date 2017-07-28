@@ -28,6 +28,8 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -124,6 +126,30 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));*/
+    }
+    /**
+     * 获取全局导航
+     */
+    @Override
+    public void getNavigation() {
+        addSubscription(ApiClient.getNavigation().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String json) {
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    SPreference.putString(getContext(), "Navigation", result.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        }));
+
     }
 
     /**
