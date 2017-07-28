@@ -105,13 +105,13 @@ public class ChatMsgListAdapter extends BaseAdapter {
             String userName = msg.substring(0, msg.indexOf("&"));
 //            String userName =  entity.getSenderName();
             if (TextUtils.isEmpty(userName)) {
-                userName = "私募云用户";
+                userName = "私享云用户";
             }
             Pattern p = Pattern.compile("^((13[0-9])|(14[5-7])|(15[0-9])|(17[0-8])|(18[0-9]))\\d{8}$");
             Matcher m = p.matcher(userName);
             boolean b = m.matches();
             if (b) {
-                userName = "私募云用户";
+                userName = "私享云用户";
             }
             String html = "<font color='#5ba8f3'>" + userName + ":" + "</font>" + "<font color='#ffffff'>" + content + "</font>";
             CharSequence charSequence = Html.fromHtml(html);

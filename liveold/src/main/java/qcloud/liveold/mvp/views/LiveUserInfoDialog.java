@@ -63,13 +63,13 @@ public abstract class LiveUserInfoDialog extends BaseDialog {
             Matcher m = p.matcher(name);
             boolean b = m.matches();
             if (name.equals("null")) {
-                name = "私募云用户";
+                name = "私享云用户";
             } else if (b) {
-                name = "私募云用户";
+                name = "私享云用户";
             }
             name1.setText(name);
         } else {
-            name1.setText("私募云用户");
+            name1.setText("私享云用户");
         }
 
         close.setOnClickListener(new View.OnClickListener() {
