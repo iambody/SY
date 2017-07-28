@@ -262,7 +262,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isVisiterShow = true;
         initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
     }
-
+    /*登录模式的点击跳转理财师*/
     @OnClick(R.id.main_home_adviser_title)
     public void adviserTextClick() {
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), false);
