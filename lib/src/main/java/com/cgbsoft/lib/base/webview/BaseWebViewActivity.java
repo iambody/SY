@@ -41,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -246,6 +245,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
+        if (rightMemberRule) {
+            toolbar.setBackgroundResource(R.color.black);
+        }
         initShakeInSetPage();
         mWebview.loadUrl(url);
     }
@@ -434,10 +436,13 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setIcon(drawable);
         } else if ((title != null && title.contains("活动")) && rightRechargeShow) {
             rightItem.setTitle("充值");
+            rightItem.setVisible(true);
         } else if (rightYundouRule) {
             rightItem.setTitle("使用规则");
+            rightItem.setVisible(true);
         } else if (rightMemberRule) {
             rightItem.setTitle("会员规则");
+            rightItem.setVisible(true);
         }else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_happy_life_toolbar_right : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);

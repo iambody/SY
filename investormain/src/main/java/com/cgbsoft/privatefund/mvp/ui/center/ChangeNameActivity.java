@@ -119,7 +119,7 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
     public void updateSuccess() {
         if (null != userInfo) {
             String newUserName = newName.getText().toString();
-            userInfo.setRealName(newUserName);
+            userInfo.setNickName(newUserName);
             AppInfStore.saveUserInfo(baseContext,userInfo);
             clearEditText();
             setResult(RESULT_OK);

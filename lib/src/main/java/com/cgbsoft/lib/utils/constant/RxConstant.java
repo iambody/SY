@@ -49,6 +49,8 @@ public interface RxConstant {
     String MAIN_FRESH_LAY="mainfreshwebconfig";
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 
+    String REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE = "refrush_unread_number_observable";
+
     String ON_ACTIVITY_RESUME_OBSERVABLE = "on_activity_resume_observable";
 
     String RC_CONNECT_STATUS_OBSERVABLE = "rc_connect_status_observable";

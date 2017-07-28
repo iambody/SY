@@ -103,20 +103,6 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                 if (list().get(i).getCode() == index)
                     viewPager.setCurrentItem(i);
             }
-            tabLayout.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(XTabLayout.Tab tab) {
-                    onTabSelectedForAmbush(tab);
-                }
-
-                @Override
-                public void onTabUnselected(XTabLayout.Tab tab) {
-                }
-
-                @Override
-                public void onTabReselected(XTabLayout.Tab tab) {
-                }
-            });
         }
     }
 
@@ -144,7 +130,4 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         return null;
     }
 
-    public void onTabSelectedForAmbush(XTabLayout.Tab tab){
-
-    }
 }

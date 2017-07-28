@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.HashMap;
 
@@ -98,10 +100,11 @@ public class DatumManageActivity extends BaseActivity {
     @OnClick(R.id.datum_manage_asset_report)
     public void gotoAssetReport(){
         String url = CwebNetConfig.assetReport;
-        HashMap<String ,String> hashMap = new HashMap<>();
-        hashMap.put(WebViewConstant.push_message_url, url);
-        hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_assert_report));
-        NavigationUtils.startActivity(this, BaseWebViewActivity.class, hashMap);
+        Intent intent = new Intent(this, RightShareWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_assert_report));
+        intent.putExtra(WebViewConstant.RIGHT_SHARE, true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.datum_manage_asset_certify)
