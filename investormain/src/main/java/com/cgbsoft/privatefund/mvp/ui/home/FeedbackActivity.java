@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.listener.listener.FeedbackListener;
+import com.cgbsoft.lib.permission.MyPermissionsActivity;
+import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
@@ -29,6 +31,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
+import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
@@ -38,7 +41,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -75,6 +77,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     private LoadingDialog loading;
     private static final int SMOTH_CODE = 2;
     private int picClickPosition = -1;
+    private MyPermissionsChecker mPermissionsChecker;
 
     @Override
     protected int layoutID() {
@@ -117,7 +120,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         }
     }
     private void startPermissionsActivity() {
-        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+        MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
     @Override
     public void picClickListener(int pos, String path) {
@@ -134,8 +137,11 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 
     private void addPic() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
             // 缺少权限时, 进入权限配置页面
-            if (needPermissions(PERMISSIONS)) {
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
                 startPermissionsActivity();
                 return;
             }

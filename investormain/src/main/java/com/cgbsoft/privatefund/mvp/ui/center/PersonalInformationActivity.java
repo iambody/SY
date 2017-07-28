@@ -38,6 +38,8 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
+import com.cgbsoft.lib.permission.MyPermissionsActivity;
+import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -49,6 +51,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.chenenyu.router.annotation.Route;
@@ -66,7 +69,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -147,9 +149,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         }
     };
+    private MyPermissionsChecker mPermissionsChecker;
 
     private void startPermissionsActivity() {
-        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+        MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
     @OnClick(R.id.rl_personal_information_qr)
     public void gotoMyQr(){
@@ -185,8 +188,11 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_personal_information_icon_all)
     public void changeIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
             // 缺少权限时, 进入权限配置页面
-            if (needPermissions(PERMISSIONS)) {
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
                 startPermissionsActivity();
                 return;
             }

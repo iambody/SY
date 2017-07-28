@@ -153,14 +153,6 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     public void setCode(int index) {
         super.setIndex(index);
     }
-
-    @Override
-    public void onTabSelectedForAmbush(XTabLayout.Tab tab) {
-        super.onTabSelectedForAmbush(tab);
-        String tabName = tab.getText().toString();
-        LogUtils.Log("aaa","onTabSelected==="+tab.getText());
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
