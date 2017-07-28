@@ -14,7 +14,7 @@
     <string name="vbnb_tougu_dangan">投资顾问档案</string>
 
     <string name="permission_help">帮助</string>
-    <string name="permission_help_text">私募云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
+    <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
     <string name="permission_quit">退出</string>
     <string name="permission_setting">设置</string>
     <string name="permission_audio_str">音频录制权限\n</string>
@@ -75,7 +75,7 @@
     <string name="send_code_str">发送验证码</string>
     <string name="ab_jump_next_str"><![CDATA[跳过>]]></string>
     <string name="al_need_bind_phone_str">您需要绑定手机号</string>
-    <string name="account_merge_str">您的手机号%1$s在此之前已经注册过私募云App的帐号，为保障您的信息安全和提供一致的在线服务，私募云需要您将手机帐号与微信帐号进行合并操作，届时您将可以通过微信号或手机号登录使用App。选择“我要合并”，客服人员将会在48小时内与您电话确认合并需求并告知您合并之后的相关使用事项，在此期间您可以正常使用App（不会受影响）。如果您不需要合并帐号，请选择“继续使用”。如有疑问，请拨打400-188-8848咨询</string>
+    <string name="account_merge_str">您的手机号%1$s在此之前已经注册过私享云App的帐号，为保障您的信息安全和提供一致的在线服务，私享云需要您将手机帐号与微信帐号进行合并操作，届时您将可以通过微信号或手机号登录使用App。选择“我要合并”，客服人员将会在48小时内与您电话确认合并需求并告知您合并之后的相关使用事项，在此期间您可以正常使用App（不会受影响）。如果您不需要合并帐号，请选择“继续使用”。如有疑问，请拨打400-188-8848咨询</string>
     <string name="bpna_marge_str">账号合并</string>
     <string name="bpna_marge_no_str">继续使用</string>
     <string name="bpna_marge_yes_str">我要合并</string>
@@ -227,7 +227,7 @@
     <string name="next">下一步</string>
     <string name="retest">重新测评</string>
     <string name="select_adviser">私人银行家</string>
-    <string name="my_adviser">私人银行家名片</string>
+    <string name="my_adviser">我的私人银行家</string>
     <string name="myqr">我的二维码</string>
     <string name="mymember">我的会员</string>
     <string name="upload_icon_fail">上传头像失败</string>

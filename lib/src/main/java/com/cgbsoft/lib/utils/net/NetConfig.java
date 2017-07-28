@@ -14,7 +14,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
-    private static String START_APP = "https://t4-app";
+    private static String START_APP = "https://d10-app";
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -34,6 +34,7 @@ public class NetConfig {
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
 
+    public final static String API_NOV2_URL = "api";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -71,7 +72,7 @@ public class NetConfig {
     //获取ip
     final static String GETIP_URL = "cityjson";
     //客户风险评测提交接口
-    final static String USERAGENT_URL = "/peyunupload/label/userAgree.json";
+    final static String USERAGENT_URL = API_NOV2_URL + "/useragree/sixiangyun";
 
     final static String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
@@ -165,7 +166,7 @@ public class NetConfig {
         //获取用户信息
         final static String GET_USERINFO_URL = AUTH_URL + user + "/userInfo";
         //验证微信验证unionid是否已存在
-        final  static String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
+        final static String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
         // 微信登录
         final static String WX_LOGIN_URL = AUTH_URL + user + "/weChatLogin";
         //注册

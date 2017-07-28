@@ -142,9 +142,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
         //没绑定过的
-        choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
+        choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html?bindChannel=5";
         //绑定过的
-        BindchiceAdiser = baseSxyParentUrl + "/biz/adviser/details_bind.html";
+        BindchiceAdiser = baseSxyParentUrl + "/biz/adviser/details_bind.html?bindChannel=5";
         activitesDeatil = baseSxyParentUrl + "/biz/indexSecond/active_detail.html";
         assetReport = baseSxyParentUrl + "/biz/report/index.html";
         salonDetail = baseSxyParentUrl + "/biz/indexSecond/active_detail.html?id=";
@@ -162,5 +162,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
         adviserrules = baseSxyParentUrl +"/biz/members/rules.html";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html?id=";
+
+
+
     }
 }
