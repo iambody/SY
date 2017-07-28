@@ -265,25 +265,21 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isVisiterShow = true;
         initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
     }
+
     /*登录模式的点击跳转理财师*/
     @OnClick(R.id.main_home_adviser_title)
     public void adviserTextClick() {
-//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), false);
-        VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.select_adviser), 200);
+        if (AppManager.isBindAdviser(baseActivity)) {
+            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
+        } else {
+            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+        }
     }
-/*游客模式的点击跳转理财师*/
+
+    /*游客模式的点击跳转理财师*/
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
-
-        if (AppManager.isBindAdviser(baseActivity)) {
-//            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), false);
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
-
-        } else {
-//            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), false);
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-
-        }
+        VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
     }
 
     /* 登录模式点击电话*/
@@ -552,7 +548,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
 
-            params.setMargins(0==i?0:DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
+            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
             view.setLayoutParams(params);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -662,7 +658,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //
 //                NavigationUtils.gotoWebActivity(baseActivity, url, "会员专区", false);
 
-UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
+                UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 break;
             case R.id.main_home_live_lay://直播
                 if (null == homeliveInfBean || 0 == homeliveInfBean.type) return;

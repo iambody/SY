@@ -131,11 +131,11 @@ public class ProtocolDialog implements DBConstant {
             @Override
             protected void onEvent(String s) {
                 ProtocolEntity.Result result = new Gson().fromJson(s, ProtocolEntity.Result.class);
-                if (TextUtils.isEmpty(result.userAgree)) {
+                if (TextUtils.isEmpty(result.result)) {
                     return;
                 }
-                mContentTv.setText(result.userAgree);
-                daoUtils.saveOrUpdataOther(PROTO_TITLE, result.userAgree);
+                mContentTv.setText(result.result);
+                daoUtils.saveOrUpdataOther(PROTO_TITLE, result.result);
             }
 
             @Override

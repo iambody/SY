@@ -33,7 +33,7 @@ public abstract class PushDialog extends BaseDialog {
     private TextView tv_vcd_title;
     private TextView tv_vcd_message;
     private Button btn_vcd_sure;
-    private ImageView iv_vcd_cancel;
+    private Button iv_vcd_cancel;
 
     private ImageView push_dlg_img;
     private String title, content, left, right, imgUrl;
@@ -70,11 +70,11 @@ public abstract class PushDialog extends BaseDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (AppManager.isInvestor(_context)){
-//            setContentView(R.layout.view_push_dialog_c);
-//        }else {
+        if (AppManager.isInvestor(_context)){
+            setContentView(R.layout.view_push_dialog_c);
+        }else {
             setContentView(R.layout.view_push_dialog);
-//        }
+        }
         setCanceledOnTouchOutside(false);
         setCancelable(false);
         init();
@@ -85,12 +85,8 @@ public abstract class PushDialog extends BaseDialog {
         tv_vcd_title = (TextView) findViewById(R.id.tv_vcd_title);
         tv_vcd_message = (TextView) findViewById(R.id.tv_vcd_message);
         btn_vcd_sure = (Button) findViewById(R.id.btn_vcd_sure);
-        iv_vcd_cancel = (ImageView) findViewById(R.id.iv_vcd_cancel);
+        iv_vcd_cancel = (Button) findViewById(R.id.iv_vcd_cancel);
         push_dlg_img = (ImageView) findViewById(R.id.push_dialog_image);
-        if (AppManager.isInvestor(_context)){
-            push_dlg_img.setImageResource(R.drawable.bg_investor_dialog);
-            btn_vcd_sure.setBackgroundResource(R.drawable.btn_orange_bg_sel);
-        }
         btn_vcd_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,9 +99,9 @@ public abstract class PushDialog extends BaseDialog {
                 left();
             }
         });
-        if (!TextUtils.isEmpty(imgUrl)) {
-            Imageload.display(_context, imgUrl, push_dlg_img);
-        }
+//        if (!TextUtils.isEmpty(imgUrl)) {
+//            Imageload.display(_context, imgUrl, push_dlg_img);
+//        }
         btn_vcd_sure.setText(right);
         tv_vcd_message.setText(content);
         tv_vcd_title.setText(title);

@@ -120,7 +120,7 @@
     <color name="color_f8f9fa">#F8F9FA</color>
     <color name="color_6a6a6a">#6a6a6a</color>
 
-
+    <color name="homeblack">#000000</color>
     <!-- list条目点击色 -->
     <color name="list_item_selector_color">#dfe0e1</color>
     <!-- 黑色20%透明度 -->

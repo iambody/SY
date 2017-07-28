@@ -129,7 +129,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/ui_240_dip"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/homeblack"
                     android:orientation="vertical" />
 
                 <ImageView
@@ -159,7 +159,7 @@
                     android:id="@+id/main_home_adviser_inf_lay"
                     android:layout_width="@dimen/ui_40_dip"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/homeblack"
                     android:orientation="vertical"
                     android:visibility="invisible" />
 
@@ -171,7 +171,7 @@
                     android:layout_centerVertical="true"
                     android:clickable="true"
                     android:src="@drawable/home_touxiang_default"
-                    app:border_outside_color="@color/black"
+                    app:border_outside_color="@color/homeblack"
                     app:border_thickness="5dp" />
             </RelativeLayout>
 
@@ -287,7 +287,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/ui_240_dip"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/homeblack"
                     android:orientation="vertical" />
 
                 <ImageView
@@ -319,7 +319,7 @@
                     android:id="@+id/main_home_vister_adviser_inf_lay"
                     android:layout_width="@dimen/ui_40_dip"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/homeblack"
                     android:orientation="vertical" />
 
                 <com.cgbsoft.lib.widget.RoundImageView
@@ -330,7 +330,7 @@
                     android:layout_centerVertical="true"
                     android:clickable="true"
                     android:src="@drawable/home_touxiang_default"
-                    app:border_outside_color="@color/black"
+                    app:border_outside_color="@color/homeblack"
                     app:border_thickness="5dp" />
             </RelativeLayout>
 
