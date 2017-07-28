@@ -144,8 +144,19 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             Toast.makeText(FeedbackActivity.this, "最多上传12张图片", Toast.LENGTH_SHORT).show();
             return;
         }
-        imagePaths.remove(imagePaths.size() - 1);
+        if (imagePaths.get(imagePaths.size() - 1).equals("+")) {
+            imagePaths.remove(imagePaths.size() - 1);
+        }
         NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+            imagePaths.add("+");
+            feedbackAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
