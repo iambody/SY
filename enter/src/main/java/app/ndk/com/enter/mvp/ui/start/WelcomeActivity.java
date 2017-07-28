@@ -89,6 +89,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
+
         } else {
         }
 
