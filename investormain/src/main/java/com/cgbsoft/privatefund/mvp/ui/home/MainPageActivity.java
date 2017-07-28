@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -30,7 +31,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -139,7 +139,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.after();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
@@ -321,6 +321,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onRestart() {
         super.onRestart();
         initUserInfo();
+        getPresenter().getProLiveList();
         RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);

@@ -40,14 +40,14 @@
                 >
             </com.cgbsoft.lib.widget.SettingItemNormal>
 
-                <Button
-                    android:id="@+id/view_switch_clickarea"
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
-                    android:background="@color/transparent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    />
+            <Button
+                android:id="@+id/view_switch_clickarea"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:background="@color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                />
             </RelativeLayout>
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_gesture_psd"

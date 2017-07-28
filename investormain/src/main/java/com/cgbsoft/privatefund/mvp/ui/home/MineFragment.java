@@ -182,6 +182,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private Observable<String> switchGroupObservable;
     private List<HorizontalScrollFragment> videoList;
 
+    private BadgeView waitSender;
+    private BadgeView waitReceiver;
+
 //    private Handler handler = new Handler() {
 //        @Override
 //        public void handleMessage(Message msg) {
@@ -653,28 +656,38 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //        hideOrderNumber(account_order_receive_text);
         if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
             for (MineModel.Orders orders : mineModel.mallOrder) {
-                TextView current = null;
                 if ("1".equals(orders.getGoodsStatusCode())) {
-                    current = account_order_send_text;
+                    if (orders.getCount() > 0) {
+                        if (waitSender == null) {
+                            waitSender = ViewUtils.createLeftTopRedPoint(getActivity(), account_order_send_text, orders.getCount());
+                        } else {
+                            waitSender.setText(orders.getCount());
+                        }
+                    } else if (waitSender != null) {
+                        waitSender.hide();
+                    }
                 } else if ("2".equals(orders.getGoodsStatusCode())) {
-                    current = account_order_receive_text;
+                    if (orders.getCount() > 0) {
+                        if (waitReceiver == null) {
+                            waitReceiver = ViewUtils.createLeftTopRedPoint(getActivity(), account_order_receive_text, orders.getCount());
+                        } else {
+                            waitReceiver.setText(orders.getCount());
+                        }
+                    } else if (waitReceiver != null) {
+                        waitReceiver.hide();
+                    }
                 }
 
-                if (orders.getCount() > 0 && current != null) {
-                    ViewUtils.createLeftTopRedPoint(getActivity(), current, orders.getCount());
-                } else {
-                    hideOrderNumber(current);
-                }
             }
         }
     }
 
-    private void hideOrderNumber(TextView textView) {
-        if (textView.getTag() != null) {
-            ((BadgeView)textView.getTag()).setVisibility(View.INVISIBLE);
-            ((BadgeView)textView.getTag()).hide();
-        }
-    }
+//    private void hideOrderNumber(TextView textView) {
+//        if (textView.getTag() != null) {
+//            ((BadgeView)textView.getTag()).setVisibility(View.INVISIBLE);
+//            ((BadgeView)textView.getTag()).hide();
+//        }
+//    }
 
     private void initHealthView(MineModel mineModel) {
         if (mineModel != null && mineModel.getHealthy() != null) {

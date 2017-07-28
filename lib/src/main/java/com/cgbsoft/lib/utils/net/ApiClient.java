@@ -1313,7 +1313,6 @@ public class ApiClient {
         if (!TextUtils.isEmpty(js.toString()))
             params.put("param", js.toString());
         return OKHTTP.getInstance().getRequestManager().videoSchoolAllInf(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**

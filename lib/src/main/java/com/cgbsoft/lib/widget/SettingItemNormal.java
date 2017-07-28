@@ -24,6 +24,7 @@ public class SettingItemNormal extends LinearLayout {
     private TextView tipTV;
     private OnSwitchButtonChangeListener switchButtonChangeListener;
     private SwitchButton sButton;
+    private View updateView;
 
     public SettingItemNormal(Context context) {
         this(context,null);
@@ -45,6 +46,7 @@ public class SettingItemNormal extends LinearLayout {
         titleTV = (TextView) view.findViewById(R.id.tv_setting_item_left_title);
         tipTV = (TextView) view.findViewById(R.id.tv_setting_item_right_tip);
         sButton = (SwitchButton) view.findViewById(R.id.setting_item_switchButton);
+        updateView = view.findViewById(R.id.show_red_circle);
         LinearLayout right = (LinearLayout) view.findViewById(R.id.ll_setting_item_right_part);
         titleTV.setText(title);
         if (!TextUtils.isEmpty(tip)) {
@@ -54,12 +56,9 @@ public class SettingItemNormal extends LinearLayout {
         if (showSwitchBt) {
             right.setVisibility(View.GONE);
             sButton.setVisibility(View.VISIBLE);
-            sButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (null != switchButtonChangeListener) {
-                        switchButtonChangeListener.change(buttonView,isChecked);
-                    }
+            sButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (null != switchButtonChangeListener) {
+                    switchButtonChangeListener.change(buttonView,isChecked);
                 }
             });
         } else {
@@ -72,6 +71,14 @@ public class SettingItemNormal extends LinearLayout {
     public void setTitle(String title){
         tipTV.setVisibility(View.GONE);
         titleTV.setText(title);
+    }
+
+    public void showUpdateView() {
+        updateView.setVisibility(VISIBLE);
+    }
+
+    public void hidepdateView() {
+        updateView.setVisibility(GONE);
     }
 
     public void setTip(String tip) {
