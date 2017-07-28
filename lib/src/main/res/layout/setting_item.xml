@@ -54,13 +54,6 @@
                 />
         </LinearLayout>
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@drawable/shape_circle_red"
-            android:layout_marginRight="25dp"
-            android:visibility="gone"
-            android:id="@+id/show_red_circle"/>
 
         <com.cgbsoft.lib.widget.SwitchButton
             android:id="@+id/setting_item_switchButton"
@@ -80,6 +73,15 @@
             >
         </com.cgbsoft.lib.widget.SwitchButton>
     </FrameLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/shape_circle_red"
+        android:layout_marginRight="33dp"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        android:id="@+id/show_red_circle"/>
 
     <include
         layout="@layout/acitivity_divide_online"
