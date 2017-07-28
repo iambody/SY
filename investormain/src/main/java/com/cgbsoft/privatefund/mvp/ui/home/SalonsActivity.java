@@ -253,6 +253,13 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                 salonCity.setText(result.getText());
                 cityCode=result.getText();
                 salons.clear();
+                LocationBean location = AppManager.getLocation(baseContext);
+                if (cityCode.equals("全国")&&null != location && !TextUtils.isEmpty(location.getLocationcity())) {
+                    cityCode = null==location.getLocationcity()?"全国":location.getLocationcity();
+                    if (cityCode.contains("市")) {
+                        cityCode=cityCode.replace("市", "");
+                    }
+                }
                 getPresenter().getSalonsAndCitys(result.getText(), salons.size(), limit);
             }
         });
