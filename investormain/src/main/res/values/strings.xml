@@ -286,7 +286,7 @@
     </string-array>
 
     <string-array name="assert_certify">
-        <item>待审核</item>
+        <item>审核中</item>
         <item>已通过</item>
         <item>被驳回</item>
     </string-array>
