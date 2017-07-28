@@ -33,8 +33,8 @@ public interface Constant {
     //身份 key
     String IDS_KEY = "identify";
 
-    String WEIXIN_APPID = "wx7259d65d4382e566";
-    String WEIXIN_APPSECRET = "6e1deaa7b9a8c1380bd69e3de47fcc21";
+    String WEIXIN_APPID = "wx1622f3ec2d611b59";
+    String WEIXIN_APPSECRET = "81eb3bce61b825bab4d95bbade40153c";
 
     String NIGHT_MODE = "appcompat_night_mode";
 

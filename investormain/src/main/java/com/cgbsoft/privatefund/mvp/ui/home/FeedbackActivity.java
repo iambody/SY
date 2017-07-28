@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -62,6 +65,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 
     @BindView(R.id.commit)
     protected Button commit;
+    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private int REQUEST_CODE = 2000; // 请求码
 
     private ArrayList<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
@@ -111,22 +116,46 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                     }*/
         }
     }
-
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
     @Override
     public void picClickListener(int pos, String path) {
         if (TextUtils.equals(path, "+")) {
-            if (imagePaths.size() > 12) {
-                Toast.makeText(FeedbackActivity.this, "最多上传12张图片", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            imagePaths.remove(imagePaths.size() - 1);
-            NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+            addPic();
         } else {
             picClickPosition = pos;
             Intent intent = new Intent(this, SmoothImageActivity.class);
             intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, path);
             intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, true);
             startActivityForResult(intent, SMOTH_CODE);
+        }
+    }
+
+    private void addPic() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 缺少权限时, 进入权限配置页面
+            if (needPermissions(PERMISSIONS)) {
+                startPermissionsActivity();
+                return;
+            }
+        }
+        if (imagePaths.size() > 12) {
+            Toast.makeText(FeedbackActivity.this, "最多上传12张图片", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (imagePaths.get(imagePaths.size() - 1).equals("+")) {
+            imagePaths.remove(imagePaths.size() - 1);
+        }
+        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+            imagePaths.add("+");
+            feedbackAdapter.notifyDataSetChanged();
         }
     }
 
@@ -158,6 +187,9 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 //                    feedbackAdapter.removeOne(picClickPosition);
                 }
             }
+        }else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+            addPic();
+//            mHeadIconDialog.show();
         }
     }
 

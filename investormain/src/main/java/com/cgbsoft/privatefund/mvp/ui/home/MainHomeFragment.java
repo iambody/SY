@@ -253,7 +253,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 非游客模式头像的点击事件*/
     @OnClick(R.id.main_home_adviser_inf_iv)
     public void onViewivClicked() {
-        if (isShowAdviserCard) return;
+        if (isShowAdviserCard) {
+            if (AppManager.isBindAdviser(baseActivity)) {
+                VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
+            } else {
+                VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+            }
+            return;
+        }
         mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
         isShowAdviserCard = true;
         initShowCardAnimator(mainHomeAdviserLayyy, false);
@@ -262,7 +269,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*游客模式点击头像*/
     @OnClick(R.id.main_home_vister_adviser_inf_iv)
     public void onViewvisterivClicked() {
-        if (isVisiterShow) return;
+        if (isVisiterShow) {
+            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+
+            return;
+        }
         mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
         isVisiterShow = true;
         initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
