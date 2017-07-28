@@ -46,6 +46,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
     private LinearLayoutManager linearLayoutManager;
+    private DiscoveryFragment discoveryFragment;
 
     /**
      * 类别的数据
@@ -61,9 +62,10 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     }
 
     @SuppressLint("ValidFragment")
-    public DiscoveryListFragment(String postionString) {
+    public DiscoveryListFragment(DiscoveryFragment discoveryFragment, String postionString) {
         super();
         this.CatoryValue = postionString;
+        this.discoveryFragment = discoveryFragment;
     }
 
     @Override
@@ -138,6 +140,9 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         CurrentPostion = 0;
         isLoadMore = false;
         getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        if (discoveryFragment != null) {
+            discoveryFragment.refrushListData();
+        }
     }
 
     @Override

@@ -87,11 +87,17 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
         discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
         initBanner(DiscoverModel.formatBanner(discoverModel.banner));
-        initIndicatorList(discoverModel);
+        if (CollectionUtils.isEmpty(lazyFragments)) {
+            initIndicatorList(discoverModel);
+        }
     }
 
     @Override
     public void requestFirstDataFailure(String errMsg) {
+    }
+
+    public void refrushListData() {
+        getPresenter().getDiscoveryFirstData();
     }
 
     private void initBanner(List<BannerBean> valuelist) {
@@ -110,7 +116,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     private void initIndicatorList(DiscoverModel discoverModel) {
         lazyFragments = new ArrayList<>();
         for (int i = 0; i < discoverModel.category.size(); i++) {
-            DiscoveryListFragment baseLazyFragment = new DiscoveryListFragment(discoverModel.category.get(i).value + "");
+            DiscoveryListFragment baseLazyFragment = new DiscoveryListFragment(this, discoverModel.category.get(i).value + "");
             lazyFragments.add(baseLazyFragment);
             if (0 == i) {
                 Bundle bundle = new Bundle();
