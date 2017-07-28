@@ -38,15 +38,10 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
-import com.cgbsoft.lib.premission.PermissionsActivity;
-import com.cgbsoft.lib.premission.PermissionsChecker;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.widget.CircleImageView;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.BuildConfig;
@@ -67,12 +62,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Handler;
 
+import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -126,7 +120,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private static final int REQUEST_CROP = 1403;
     private static final int HEAD_WIDTH = 128;//头像宽度
     private static final int HEAD_HEIGHT = 128;//头像高度
-    private PermissionsChecker mPermissionsChecker;
     private int REQUEST_CODE = 2000; // 请求码
     private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private SimpleDateFormat simpleDateFormat;
@@ -192,11 +185,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_personal_information_icon_all)
     public void changeIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (null == mPermissionsChecker) {
-                mPermissionsChecker = new PermissionsChecker(this);
-            }
             // 缺少权限时, 进入权限配置页面
-            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            if (needPermissions(PERMISSIONS)) {
                 startPermissionsActivity();
                 return;
             }
@@ -337,16 +327,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * 相机拍摄图片
      */
     private void takePhotoByCamera() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (null == mPermissionsChecker) {
-                mPermissionsChecker = new PermissionsChecker(this);
-            }
-            // 缺少权限时, 进入权限配置页面
-            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-                startPermissionsActivity();
-                return;
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            // 缺少权限时, 进入权限配置页面
+//            if (needPermissions(PERMISSIONS)) {
+//                startPermissionsActivity();
+//                return;
+//            }
+//        }
         String action = MediaStore.ACTION_IMAGE_CAPTURE;
         if (!isIntentAvailable(this, action)) {
             Toast.makeText(getApplicationContext(), "您的手机不支持相机拍摄", Toast.LENGTH_SHORT).show();
@@ -418,8 +405,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 iconImg.setImageBitmap(bitmap);
                 updateLoadIcon();
             }
-        } else if (requestCode == REQUEST_CODE) {
-            mHeadIconDialog.show();
+        } else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+            changeIcon();
+//            mHeadIconDialog.show();
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
             userInfo = AppManager.getUserInfo(baseContext);
             if (null != userInfo) {
