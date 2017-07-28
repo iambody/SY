@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ui_10_dip"
             android:layout_marginTop="@dimen/ui_20_dip"
-            android:paddingTop="@dimen/ui_10_dip">
+            android:paddingTop="@dimen/ui_5_dip">
 
             <ImageView
                 android:id="@+id/iv_af_back"
@@ -52,27 +53,35 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_toLeftOf="@+id/btn_af_check"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/btn_af_check">
 
-                <EditText
-                    android:id="@+id/et_af_username"
-                    style="@style/normal_edit"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lost_name_input"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    app:hintEnabled="false"
+                    app:hintTextAppearance="@style/textinput_style">
 
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:hint="请输入您的手机号"
-                    android:inputType="number"
-                    android:maxLength="11"
-                    android:maxLines="1"
-                    android:saveEnabled="false"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    <EditText
+                        android:id="@+id/et_af_username"
+                        style="@style/normal_edit"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:hint="请输入您的手机号"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:saveEnabled="false"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/et_usernames_del_un"
@@ -83,7 +92,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="13dp"
                     android:background="@drawable/ic_et_del"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <Button
@@ -108,28 +117,35 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="@dimen/ui_10_dip">
 
-            <EditText
-                android:id="@+id/et_af_check"
-                style="@style/normal_edit"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lost_check_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:hint="请输入验证码"
-                android:inputType="number"
-                android:maxLength="4"
-                android:maxLines="1"
-                android:saveEnabled="false"
-                android:scrollHorizontally="true"
-                android:singleLine="true" />
+                app:hintTextAppearance="@style/textinput_style">
+
+                <EditText
+                    android:id="@+id/et_af_check"
+                    style="@style/normal_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="请输入验证码"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:saveEnabled="false"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <ImageView
                 android:id="@+id/iv_af_del_un"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@id/et_af_check"
-                android:layout_alignTop="@id/et_af_check"
+                android:layout_alignRight="@id/lost_check_input"
+                android:layout_alignTop="@id/lost_check_input"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="13dp"
                 android:background="@drawable/ic_et_del"

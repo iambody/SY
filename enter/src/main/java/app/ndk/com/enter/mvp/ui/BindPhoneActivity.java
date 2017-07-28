@@ -82,19 +82,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//        if (AppManager.isAdViser(this)) {
-//            iv_ab_back.setImageResource(R.drawable.ic_toolbar_back);
-//            btn_ab_ok.setBackgroundResource(R.drawable.select_btn_advister);
-//            btn_ab_ok.setTextColor(0xff666666);
-//            tv_ab_next.setBackgroundResource(R.drawable.select_btn_advister);
-//            tv_ab_next.setTextColor(0xff666666);
-//        } else {
-//            iv_ab_back.setImageResource(R.drawable.ic_toolbar_back);
-//            btn_ab_ok.setBackgroundResource(R.drawable.select_btn_inverstor);
-//            btn_ab_ok.setTextColor(0xffffffff);
-////            tv_ab_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-////            tv_ab_next.setTextColor(0xffffffff);
-//        }
+
         et_ab_check.addTextChangedListener(new BindTextWatcher(USERNAME_KEY));
         et_ab_username.addTextChangedListener(new BindTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);

@@ -341,6 +341,12 @@ public class CWebviewManger {
             showPayItem(action);
         }else if(action.contains("viewpdf")){
             gotoScretPdf(action);
+        }else if(action.contains("gologinbackhome")){
+            //直接跳转到
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("insidegotologin", true);
+            map.put("backgohome", true);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
         }
     }
 
