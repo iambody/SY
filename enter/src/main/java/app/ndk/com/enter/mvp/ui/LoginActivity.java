@@ -181,7 +181,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
 //            et_al_username.setText(loginName);
 //        }
-
+        getPresenter().getNavigation();
         if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
             iv_al_del_un.setVisibility(View.VISIBLE);
             isUsernameInput = true;
