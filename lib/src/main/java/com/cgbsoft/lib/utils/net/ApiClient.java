@@ -1501,7 +1501,7 @@ public class ApiClient {
      */
     public static Observable<String> updateUserInfoNewC(String userName, String gender, String birthday) {
         Map<String, String> params = new HashMap<>();
-        params.put("realName", userName);
+        params.put("nickName", userName);
         params.put("sex", gender);
         params.put("birthday", birthday);
         return OKHTTP.getInstance().getRequestManager().updateUserInfoNewC(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
