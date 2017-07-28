@@ -379,8 +379,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @OnClick(R2.id.iv_avd_back_play)
     void iv_avd_back_play() {
 //        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
-        finish();
+
         FloatVideoService.startService(videoId);
+        finish();
         DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
 
     }
@@ -926,9 +927,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         if (allPlayTime < fiveMinutes) {
             allPlayTime += System.currentTimeMillis() - startPlayTime;
-            if (allPlayTime > fiveMinutes) {
-                RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
-            }
+//            if (allPlayTime > fiveMinutes) {
+//                RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
+//            }
         } else {
             RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
         }

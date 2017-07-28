@@ -3,8 +3,10 @@ package app.ndk.com.enter.mvp.ui;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,6 +33,7 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 import app.ndk.com.enter.mvp.presenter.ResetPasswordPresenter;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -49,6 +52,8 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
     public static final String FROMVERIFYTAG = "from_verify_forget_pwd";
     @BindView(R2.id.et_usernames_del_un)
     ImageView etUsernameDelUn;
+    @BindView(R2.id.lost_name_input)
+    TextInputLayout lostNameInput;
     /**
      * 标记是否从手势密码弹出框中的忘记密码进来的  需要在完成一些列操作之后重新设置一遍手势密码
      **/
@@ -119,15 +124,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             isFromVerifyFogetPwd = getIntent().getStringExtra(FROMVERIFYTAG).equals("1");
         }
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-//        if (AppManager.isAdViser(this)) {
-//            iv_af_back.setImageResource(R.drawable.ic_toolbar_back);
-//            btn_af_next.setBackgroundResource(R.drawable.select_btn_advister);
-//            btn_af_next.setTextColor(0xff666666);
-//        } else {
-//            iv_af_back.setImageResource(R.drawable.ic_toolbar_back);
-//            btn_af_next.setBackgroundResource(R.drawable.select_btn_inverstor);
-//            btn_af_next.setTextColor(0xffffffff);
-//        }
+
         et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);
@@ -144,6 +141,13 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
                 getPresenter().sendCode(mLoadingDialog, et_af_username.getText().toString());
             }
         };
+        et_af_username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                lostNameInput.setHintEnabled(true);
+                return false;
+            }
+        });
     }
 
     /**
@@ -268,7 +272,6 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
 
     @OnClick(R2.id.et_usernames_del_un)
     public void onViewClicked() {
-
         if (et_af_username.getText().toString().length() > 0) {
             et_af_username.setText("");
         }
@@ -294,7 +297,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             boolean isTextHasLength = s.length() > 0;
 
             btn_af_next.setBackground(getResources().getDrawable(isAdjust() ? R.drawable.select_btn_normal : R.drawable.select_btn_apphnormal));
-            btn_af_next.setTextColor(getResources().getColor(isAdjust() ? R.color.white :R.color.black));
+            btn_af_next.setTextColor(getResources().getColor(isAdjust() ? R.color.white : R.color.black));
 
             switch (which) {
                 case USERNAME_KEY:
