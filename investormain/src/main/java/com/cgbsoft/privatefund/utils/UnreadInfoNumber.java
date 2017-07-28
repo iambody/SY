@@ -43,6 +43,7 @@ public class UnreadInfoNumber {
         } else {
             if (numberNum > 0) {
                 badgeView.setText(String.valueOf(numberNum));
+                badgeView.invalidate();
             } else {
                 badgeView.hide();
             }

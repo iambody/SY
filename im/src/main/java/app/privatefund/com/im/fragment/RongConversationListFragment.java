@@ -359,6 +359,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
 
                 if(data != null && data.size() > 0) {
+                    RongCouldUtil.customServerTop(getContext(), mAdapter);
                     RongConversationListFragment.this.makeUiConversationList(data);
                     RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
                 } else {
