@@ -13,7 +13,8 @@
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
+        <activity android:name="com.cgbsoft.lib.premission.PermissionsActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"/>
 
         <!-- ****************百度定位****************-->
         <meta-data
