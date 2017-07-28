@@ -49,6 +49,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.chenenyu.router.annotation.Route;
@@ -66,7 +67,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
