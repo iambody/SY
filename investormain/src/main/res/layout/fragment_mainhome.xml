@@ -173,7 +173,7 @@
                     android:layout_centerVertical="true"
                     android:clickable="true"
                     android:src="@drawable/home_touxiang_default"
-                    app:border_outside_color="@color/black"
+                    app:border_outside_color="@color/homeblack"
                     app:border_thickness="5dp" />
             </RelativeLayout>
 
