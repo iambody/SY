@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.cgbsoft.lib.base.mvp.presenter.BasePagePresenter;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -71,6 +73,36 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             for (TabBean tabBean : list()) {
                 XTabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(tabBean.getTabName());
+                //这里使用到反射，拿到Tab对象后获取Class
+                Class c = tab.getClass();
+                try {
+                    //Filed “字段、属性”的意思,c.getDeclaredField 获取私有属性。
+                    //"mView"是Tab的私有属性名称(可查看TabLayout源码),类型是 TabView,TabLayout私有内部类。
+                    Field field = c.getDeclaredField("mView");
+                    //值为 true 则指示反射的对象在使用时应该取消 Java 语言访问检查。值为 false 则指示反射的对象应该实施 Java 语言访问检查。
+                    //如果不这样会报如下错误
+                    // java.lang.IllegalAccessException:
+                    //Class com.test.accessible.Main
+                    //can not access
+                    //a member of class com.test.accessible.AccessibleTest
+                    //with modifiers "private"
+                    field.setAccessible(true);
+                    final View viewTab = (View) field.get(tab);
+                    if (viewTab == null) return;
+                    viewTab.setTag(tabBean.getTabName());
+                    viewTab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String tabName = (String) viewTab.getTag();
+                            //这里就可以根据业务需求处理点击事件了。
+                            if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
+                                clickGoodsButton();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 tabLayout.addTab(tab);
             }
             viewPager.setOffscreenPageLimit(3);
@@ -104,6 +136,13 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                     viewPager.setCurrentItem(i);
             }
         }
+    }
+
+    /**
+     * 点击尚品按钮
+     */
+    protected void clickGoodsButton() {
+
     }
 
     protected void setIndex(int code) {
