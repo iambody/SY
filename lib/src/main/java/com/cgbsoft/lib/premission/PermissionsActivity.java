@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.mvp.ui.center;
+package com.cgbsoft.lib.premission;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,8 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.Window;
-
-import com.cgbsoft.privatefund.utils.PermissionsChecker;
 
 
 /**
