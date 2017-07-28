@@ -208,7 +208,7 @@
                 android:layout_height="0dip"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="8888"
+
                 android:textColor="@color/app_golden"
                 android:textSize="@dimen/dimens_sp_12" />
         </LinearLayout>

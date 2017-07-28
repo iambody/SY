@@ -73,6 +73,7 @@ import rx.functions.Action0;
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     public static final String TAG_GOTOLOGIN = "insidegotologin";
     public static final String TAG_GOTOLOGIN_FROMCENTER = "insidegotologincenter";
+    public static final String TAG_BACK_HOME =   "backgohome";
     @BindView(R2.id.et_al_username)
     EditText et_al_username;//用户名
 
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //是否已经显示了微信登录的按钮  默认进来是不显示的
     private boolean isShowWxBt;
     //是否点击了游客模式的按钮
-    boolean isVisitorLoginClick;
+    boolean isVisitorLoginClick,isVisitorBackHome;
 
     private LoadingDialog mLoadingDialog;
     private int identity;
@@ -171,6 +172,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         initApplication = (InvestorAppli) getApplication();
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
         isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
+        isVisitorBackHome=getIntent().getBooleanExtra(TAG_BACK_HOME, false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -338,6 +340,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
                 @Override
                 protected void onRxError(Throwable error) {
+                    LogUtils.Log("s",error.toString());
                 }
             }));
         }
@@ -398,10 +401,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
             RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy ? 5 : 1);
+            if(isVisitorBackHome) Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         }
         AppInfStore.saveIsVisitor(baseContext, false);
+
         finish();
     }
 
