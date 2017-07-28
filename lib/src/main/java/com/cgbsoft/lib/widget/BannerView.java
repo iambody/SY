@@ -45,6 +45,8 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     private final static int BANNER_CHANGE = 0;
     private final static int DELAY_SCROLL_TIME = 5000;
     private OnclickBannerItemView onclickBannerItemView;
+    private HomeBannerAdapter bannerAdapter;
+    private  LinearLayout ly_indication;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -88,7 +90,10 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
      *
      */
     public void initShowImageForNet(Activity activity, List<BannerBean> list) {
-        LinearLayout ly_indication = new LinearLayout(activity);
+        if (ly_indication != null) {
+            removeView(ly_indication);
+        }
+        ly_indication = new LinearLayout(activity);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.bottomMargin = 15;
         params.addRule(ALIGN_PARENT_BOTTOM);
@@ -125,8 +130,12 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             indicationList.add(iv2);
             ly_indication.addView(iv2);
         }
-        HomeBannerAdapter bannerAdapter = new HomeBannerAdapter(bannerList);
-        targetVp.setAdapter(bannerAdapter);
+        if (bannerAdapter == null) {
+            bannerAdapter = new HomeBannerAdapter(bannerList);
+            targetVp.setAdapter(bannerAdapter);
+        } else {
+            bannerAdapter.notifyData(bannerList);
+        }
     }
 
     private void bannerPointLight(int currentPoint) {
@@ -203,6 +212,13 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             }
             ((ViewGroup)container).addView(view);
             return view;
+        }
+
+        public void notifyData(List<View> listView) {
+            if (!CollectionUtils.isEmpty(listView)) {
+                this.views = listView;
+                notifyDataSetChanged();
+            }
         }
 
         @Override

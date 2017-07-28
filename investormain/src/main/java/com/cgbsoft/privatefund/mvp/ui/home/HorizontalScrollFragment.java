@@ -133,15 +133,15 @@ public class HorizontalScrollFragment extends BaseFragment {
         private List<VideoInfoModel> mDatas;
         private boolean isPlayVideo;
 
-        public MyHolderAdapter(Context context, List<VideoInfoModel> datats, boolean isPlayVideo) {
+        public MyHolderAdapter(Context context, List<VideoInfoModel> datatsList, boolean isPlayVideo) {
             mInflater = LayoutInflater.from(context);
-            mDatas = (!CollectionUtils.isEmpty(datats) && datats.size() > 10) ? mDatas.subList(0, 11) : datats;
+            mDatas = (!CollectionUtils.isEmpty(datatsList) && datatsList.size() > 10) ? datatsList.subList(0, 11) : datatsList;
             this.isPlayVideo = isPlayVideo;
         }
 
         public void refrushData(List<VideoInfoModel> videoInfoModelList) {
             if (!CollectionUtils.isEmpty(videoInfoModelList)) {
-                mDatas = (!CollectionUtils.isEmpty(videoInfoModelList) && videoInfoModelList.size() > 10) ? mDatas.subList(0, 11) : videoInfoModelList;
+                mDatas = (!CollectionUtils.isEmpty(videoInfoModelList) && videoInfoModelList.size() > 10) ? videoInfoModelList.subList(0, 11) : videoInfoModelList;
                 notifyDataSetChanged();
             }
         }

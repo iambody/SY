@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,7 +100,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         if (!TextUtils.isEmpty(AppManager.getUserInfo(this).getHeadImageUrl())) {
             Imageload.display(this, AppManager.getUserInfo(this).getHeadImageUrl(), imageLog);
         }
-        backView.setVisibility(modifyGesturePassword || isFromCloseGesturePassword ? View.VISIBLE : View.GONE);
+        backView.setVisibility(isFromShowAssert || modifyGesturePassword || isFromCloseGesturePassword || !TextUtils.isEmpty(isFromAsertGroup) ? View.VISIBLE : View.GONE);
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
@@ -167,7 +166,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     @Override
     public void onBackPressed() {
-        if (isFromShowAssert || modifyGesturePassword) {
+        if (isFromShowAssert || modifyGesturePassword || !TextUtils.isEmpty(isFromAsertGroup) || isFromCloseGesturePassword) {
             GestureVerifyActivity.this.finish();
         }
         return;

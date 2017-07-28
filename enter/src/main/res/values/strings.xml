@@ -24,14 +24,14 @@
     <string name="la_getinfo_error_str">获取用户信息失败</string>
     <string name="la_login_succ_str">登录成功</string>
 
-    <string name="la_cd_content_str">您将使用微信号%1$s创建私募云账号</string>
+    <string name="la_cd_content_str">您将使用微信号%1$s创建私享云账号</string>
     <string name="sending_str">发送中……</string>
     <string name="sending_succ_str">发送成功</string>
     <string name="sending_fail_str">发送失败</string>
     <string name="ra_code_resend_str">重新发送</string>
     <string name="checking_str">验证中……</string>
     <string name="checking_fail_str">验证失败</string>
-    <string name="account_merge_str">您的手机号%1$s在此之前已经注册过私募云App的帐号，为保障您的信息安全和提供一致的在线服务，私募云需要您将手机帐号与微信帐号进行合并操作，届时您将可以通过微信号或手机号登录使用App。选择“我要合并”，客服人员将会在48小时内与您电话确认合并需求并告知您合并之后的相关使用事项，在此期间您可以正常使用App（不会受影响）。如果您不需要合并帐号，请选择“继续使用”。如有疑问，请拨打400-188-8848咨询</string>
+    <string name="account_merge_str">您的手机号%1$s在此之前已经注册过私享云App的帐号，为保障您的信息安全和提供一致的在线服务，私享云需要您将手机帐号与微信帐号进行合并操作，届时您将可以通过微信号或手机号登录使用App。选择“我要合并”，客服人员将会在48小时内与您电话确认合并需求并告知您合并之后的相关使用事项，在此期间您可以正常使用App（不会受影响）。如果您不需要合并帐号，请选择“继续使用”。如有疑问，请拨打400-188-8848咨询</string>
     <string name="bpna_marge_str">账号合并</string>
     <string name="bpna_marge_no_str">继续使用</string>
     <string name="bing_phone_succ_str">绑定成功</string>
@@ -64,7 +64,7 @@
     <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。</string>
 
     <string name="permission_help">帮助</string>
-    <string name="permission_help_text">私募云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
+    <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
     <string name="permission_quit">退出</string>
     <string name="permission_setting">设置</string>
     <string name="permission_audio_str">音频录制权限\n</string>
@@ -90,7 +90,7 @@
     <string name="ra_enter_code_str">确认接收</string>
 
     <string name="pwd_noright_str">请输入6-16位密码</string>
-    <string name="proto_notread_str">请阅读私募云使用协议并确认</string>
+    <string name="proto_notread_str">请阅读私享云使用协议并确认</string>
 
     <string name="as_nosame_str">请输入相同的密码</string>
     <string name="modify_password_failure">修改失败</string>

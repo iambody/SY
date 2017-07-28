@@ -260,7 +260,7 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
                         cityCode=cityCode.replace("市", "");
                     }
                 }
-                getPresenter().getSalonsAndCitys(result.getText(), salons.size(), limit);
+                getPresenter().getSalonsAndCitys(cityCode, salons.size(), limit);
             }
         });
         wheelDialogCity.show();

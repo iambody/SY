@@ -1,8 +1,9 @@
-package com.cgbsoft.privatefund.utils;
+package com.cgbsoft.lib.premission;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
+
 
 
 /**

@@ -200,7 +200,7 @@ public class ConversationActivity extends BaseActivity {
                                         this.cancel();
                                     }
                                 }.show();
-                            } else if (conversationName.equals("私募云客服")) {
+                            } else if (conversationName.equals("客服")) {
                                 new DefaultDialog(ConversationActivity.this, "拨打客服电话：400-188-8848", "取消", "确定") {
 
                                     @Override

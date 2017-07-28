@@ -51,7 +51,7 @@
     <string name="author_error_str">授权失败</string>
     <string name="author_cancel_str">授权取消</string>
     <string name="la_wxlogin_str">微信登录</string>
-    <string name="la_cd_content_str">您将使用微信号%1$s创建私募云账号</string>
+    <string name="la_cd_content_str">您将使用微信号%1$s创建私享云账号</string>
     <string name="enter_str">确认</string>
     <string name="ra_register_loading_str">注册中……</string>
     <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。 </string>
@@ -59,7 +59,7 @@
     <string name="ra_enter_code_str">确认接收</string>
     <string name="code_null_str">请输入您的验证码</string>
     <string name="pwd_noright_str">请输入6-16位密码</string>
-    <string name="proto_notread_str">请阅读私募云使用协议并确认</string>
+    <string name="proto_notread_str">请阅读私享云使用协议并确认</string>
     <string name="ra_register_success_str">注册成功</string>
     <string name="ra_register_fail_str">注册失败</string>
     <string name="sending_str">发送中……</string>
@@ -286,7 +286,7 @@
     </string-array>
 
     <string-array name="assert_certify">
-        <item>待审核</item>
+        <item>审核中</item>
         <item>已通过</item>
         <item>被驳回</item>
     </string-array>

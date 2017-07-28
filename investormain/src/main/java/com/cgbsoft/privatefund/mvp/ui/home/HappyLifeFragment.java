@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
@@ -143,4 +144,10 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         super.setIndex(index);
     }
 
+    @Override
+    public void onTabSelectedForAmbush(XTabLayout.Tab tab) {
+        super.onTabSelectedForAmbush(tab);
+        String tabName = tab.getText().toString();
+        LogUtils.Log("aaa","onTabSelected==="+tab.getText());
+    }
 }
