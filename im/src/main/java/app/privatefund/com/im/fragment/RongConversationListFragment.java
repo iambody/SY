@@ -176,7 +176,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     /**
      * {"result":[{"headImgUrl":"[{\"name\":\"937fd0a6c1cdcbda63480f56075d2baf.jpg\",\"url\":\"https:\/\/upload.simuyun.com\/android\/8716016e-163f-4073-8923-31aa15084d4d.jpg\"}]",
      * "id":"337f294bfa6a4a73959b9c516e765074","name":"互联网群聊测试"}]}
-     *
      * 显示彩云追月群列表
      */
 //    private void showUserBelongGroupList() {
@@ -470,7 +469,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     }
                 }
             }
-
         }
     }
 

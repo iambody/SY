@@ -197,6 +197,18 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存未读消息数
+     *
+     * @param context
+     * @return
+     */
+    public static void saveUnreadInfoNum(Context context, int unReadNumber) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putInt(UNREAD_INFOMATION, unReadNumber);
+        ed.commit();
+    }
+
+    /**
      * 保存是否有团队长
      *
      * @param context

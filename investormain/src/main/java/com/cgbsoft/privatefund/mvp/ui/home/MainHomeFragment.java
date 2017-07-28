@@ -38,6 +38,7 @@ import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
@@ -49,6 +50,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.List;
 
@@ -165,6 +167,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     private boolean isLoading;
 
+    private BadgeView badgeView;
+
     @Override
 
     protected int layoutID() {
@@ -185,7 +189,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         //请求数据
         getPresenter().getHomeData();
-
     }
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/
@@ -418,8 +421,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     case 0://预告
                         main_home_live_lay.setVisibility(View.VISIBLE);
                         main_home_live_lay.setClickable(false);
-
-
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         //标题和内容view_live_title
@@ -429,7 +430,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         view_live_title_tag_iv.setVisibility(View.GONE);
                         break;
                     case 1://直播中
-
                         main_home_live_lay.setVisibility(View.VISIBLE);
                         main_home_live_lay.setClickable(true);
 
@@ -446,20 +446,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                 }
 
-
-//
 //                if (liveInfBean.isLiveing) {//直播中
 //                    main_home_level_lay.setVisibility(View.GONE);
 //                } else {//没直播
 //                }
             }
-
             @Override
             protected void onRxError(Throwable error) {
 
             }
         });
-
     }
 
     int liveType = 2;
@@ -486,7 +482,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //下边需要填充
         //viewLiveIv 直播的图片
         //viewLiveTitle直播的title
-
     }
 
     //初始化banner
@@ -610,12 +605,28 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.start();
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
         LogUtils.Log("saassaa", "resume");
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
+        initUnreadInfo();
+    }
+
+    /**
+     * 初始化未读消息
+     */
+    private void initUnreadInfo() {
+        int numberNum = AppManager.getUnreadInfoNumber(getActivity());
+        if (badgeView == null) {
+            badgeView = ViewUtils.createLeftTopRedPoint(getActivity(), mainHomeNewIv, numberNum);
+        } else {
+            if (numberNum > 0) {
+                badgeView.setText(String.valueOf(numberNum));
+            } else {
+                badgeView.hide();
+            }
+        }
     }
 
     /*下拉刷新展示*/

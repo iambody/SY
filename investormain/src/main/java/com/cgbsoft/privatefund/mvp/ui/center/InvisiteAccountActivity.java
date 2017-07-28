@@ -88,16 +88,16 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
             realName.setEnabled(false);
             certifyType.setEnabled(false);
             certifyNumber.setEnabled(false);
-            realName.setText(AppManager.getUserInfo(this).getToC().getCustomerName());
-            certifyType.setText(AppManager.getUserInfo(this).getToC().getCustomerIdType());
-            certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerIdNumber());
         }
+        realName.setText(AppManager.getUserInfo(this).getToC().getCustomerName());
+        certifyType.setText(AppManager.getUserInfo(this).getToC().getCustomerIdType());
+        certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerIdNumber());
         titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         linearLayout.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
         certifyType.setOnFocusChangeListener((v, hasFocus) -> {
-            linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
             ViewUtils.hideInputMethod(certifyType);
+            linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
         wheelView.addChangingListener((wheel, oldValue, newValue) -> {
             certifyType.setText(mList.get(newValue));
