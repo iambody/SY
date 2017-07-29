@@ -1,9 +1,11 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +65,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     Button btn_ab_ok;//完成
     @BindView(R2.id.iv_phone_del_un)
     ImageView ivPhoneDelUn;
+    @BindView(R2.id.bind_name_input)
+    TextInputLayout bindNameInput;
 
     private LoadingDialog mLoadingDialog;//等待弹窗
     private boolean isUsernameInput, isCheckInput;
@@ -98,6 +102,13 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
                 getPresenter().sendCode(mLoadingDialog, et_ab_username.getText().toString());
             }
         };
+        et_ab_username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                bindNameInput.setHintEnabled(true);
+                return false;
+            }
+        });
 
     }
 
@@ -224,6 +235,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
         }
         ivPhoneDelUn.setVisibility(View.GONE);
     }
+
+
 
 
     private class BindTextWatcher implements TextWatcher {

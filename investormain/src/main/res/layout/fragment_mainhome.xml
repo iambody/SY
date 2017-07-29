@@ -59,9 +59,8 @@
                         android:id="@+id/main_home_horizontalscrollview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/ui_10_dip"
-                        android:layout_marginLeft="@dimen/ui_10_dip"
-                        android:layout_marginRight="@dimen/ui_10_dip"
+                        android:layout_marginLeft="@dimen/ui_13_dip"
+                        android:layout_marginRight="@dimen/ui_13_dip"
                         android:scrollbars="none">
 
                         <LinearLayout
@@ -69,9 +68,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-
                             android:orientation="horizontal" />
                     </HorizontalScrollView>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_13_dip"
+                        android:background="@color/white">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ui_z_dip"
+                            android:src="@color/app_divider_gary"
+                            android:layout_alignParentBottom="true"/>
+                    </RelativeLayout>
                     <!-- 横向滑动的布局。。。。。 -->
                     <com.cgbsoft.lib.base.webview.BaseWebview
                         android:id="@+id/mainhome_webview"
@@ -95,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/ui_30_dip"
+            android:layout_marginTop="@dimen/ui_15_dip"
+            android:layout_marginRight="@dimen/ui_15_dip"
             android:padding="10dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />

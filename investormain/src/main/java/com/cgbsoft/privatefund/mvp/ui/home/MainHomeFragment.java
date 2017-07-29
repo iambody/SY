@@ -38,7 +38,6 @@ import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
-import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
@@ -51,7 +50,6 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.List;
 
@@ -182,7 +180,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter();
         mainHomeBannerview.setAdapter(homeBannerAdapter);
-        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor));
+        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor,58));
+        mainHomeBannerview.setHintPadding(0,0,0,50);
         mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
         initshowlay();
         timeCountDown();
@@ -437,7 +436,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         BStrUtils.SetTxt(view_live_title, "直播预告");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
                         BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time);
-                        view_live_title_tag_iv.setVisibility(View.GONE);
+
+                        view_live_title_tag_iv.setVisibility(View.INVISIBLE);
                         break;
                     case 1://直播中
                         main_home_live_lay.setVisibility(View.VISIBLE);
@@ -532,7 +532,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 用户等级的数据填充*/
 
     private void initLevel(HomeEntity.Level level) {
-        BStrUtils.SetTxt(viewHomeLevelStr, level.memberLevel);
+        BStrUtils.SetTxt1(viewHomeLevelStr, level.memberLevel);
     }
 
     @Override
@@ -565,7 +565,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
 
-            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 10), 0, DimensionPixelUtil.dip2px(baseActivity, 10), 0);
+            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 6), 0, DimensionPixelUtil.dip2px(baseActivity, 6), 0);
             view.setLayoutParams(params);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
