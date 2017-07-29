@@ -70,9 +70,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color_5a5a5a</item>
     </style>
-    <style name="hintColor" parent="TextAppearance.AppCompat">
-        <item name="android:textColorHint">@color/black</item>
-    </style>
+
     <style name="errorAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_input_layout_err</item>

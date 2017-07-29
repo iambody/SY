@@ -23,6 +23,9 @@
     <style name="BaseActionBar.MenuText1Style" parent="BaseActionBar.MenuTextStyle">
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="hintColor" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/black</item>
+    </style>
 
     <style name="BaseActionBar.MenuTextStyle" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">18sp</item>

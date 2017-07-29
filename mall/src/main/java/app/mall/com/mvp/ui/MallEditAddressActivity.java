@@ -25,6 +25,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
+import com.cgbsoft.lib.widget.MToast;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -184,6 +185,10 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         String phone = et_recever_phone.getText().toString().trim();
         String name = et_recever_name.getText().toString().trim();
         String area = mall_address_area.getText().toString().trim();
+        if (!phone.startsWith("1")||phone.length()!=11){
+            MToast.makeText(this,"手机号码格式不正确！",Toast.LENGTH_LONG).show();
+            return;
+        }
         if (addressBean != null) { //如果有传入值不是新增
             addressBean.setAddress(address);
             addressBean.setPhone(phone);

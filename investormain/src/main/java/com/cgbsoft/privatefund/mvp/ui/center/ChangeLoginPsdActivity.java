@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -54,6 +55,7 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_item_change_pwd));
         initView(savedInstanceState);
+        DataStatistApiParam.changePsdPage();
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -103,6 +105,7 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
             return;
         }
         getPresenter().submitChangeRequest(AppManager.getUserId(baseContext), MD5Utils.getShortMD5(oldPsdStr),MD5Utils.getShortMD5(newConfirm));
+        DataStatistApiParam.changePsdPageSubmit();
     }
     private void showToast(String content){
         Toast.makeText(getApplicationContext(),content,Toast.LENGTH_SHORT).show();

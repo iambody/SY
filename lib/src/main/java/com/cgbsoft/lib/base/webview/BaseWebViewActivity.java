@@ -30,6 +30,7 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -240,7 +241,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
