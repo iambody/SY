@@ -39,6 +39,13 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
+        <include layout="@layout/title_normal_new"
+            android:id="@+id/title_normal_new"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@color/white"/>
+
         <include layout="@layout/acitivity_divide_online" />
 
         <com.cgbsoft.lib.base.webview.BaseWebview

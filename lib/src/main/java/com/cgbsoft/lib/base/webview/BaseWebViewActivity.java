@@ -12,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -251,13 +254,31 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-        if (rightMemberRule) {
-            toolbar.setBackgroundResource(R.color.black);
-            titleMid.setTextColor(ContextCompat.getColor(this, R.color.white));
-            toolbar.setNavigationIcon(R.drawable.ic_back_white_24dp);
-        }
+        changeTitileStyle();
         initShakeInSetPage();
         mWebview.loadUrl(url);
+    }
+
+    private void changeTitileStyle() {
+        if (rightMemberRule) {
+            toolbar.setVisibility(View.GONE);
+            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
+            relativeLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+            relativeLayout.setVisibility(View.VISIBLE);
+            ImageView imageView = (ImageView) findViewById(R.id.title_left);
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setOnClickListener(v -> finish());
+            TextView titleTextView = (TextView)findViewById(R.id.title_mid);
+            titleTextView.setText("会员专区");
+            TextView rightText =(TextView)findViewById(R.id.title_right);
+            rightText.setVisibility(View.VISIBLE);
+            rightText.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
+                intent.putExtra(WebViewConstant.push_message_title, "会员规则");
+                startActivity(intent);
+            });
+        }
     }
 
     private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {

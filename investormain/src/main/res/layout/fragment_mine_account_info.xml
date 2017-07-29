@@ -164,6 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_value"
+                android:textSize="@dimen/dimens_sp_22"
                 android:id="@+id/mine_private_banker_id"/>
         </LinearLayout>
     </LinearLayout>
