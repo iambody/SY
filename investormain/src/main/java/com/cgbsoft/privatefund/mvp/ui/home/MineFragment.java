@@ -1,12 +1,15 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppInfStore;
@@ -70,8 +74,8 @@ import rx.Observable;
 
 /**
  * @author chenlong
- *
- * 我的fragment
+ *         <p>
+ *         我的fragment
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View, HorizontalScrollFragment.ChangeHeightListener {
 
@@ -183,6 +187,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private static final int WAIT_CHECK = 1;
     private static final int CHECK_PAST = 2;
     private static final int CHECK_FAILURE = 3;
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 10;
     private Observable<Boolean> swtichAssetObservable;
     private Observable<String> switchGroupObservable;
     private List<HorizontalScrollFragment> videoList;
@@ -330,11 +335,25 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
         initRelativeStatus();
         isLoading = true;
-        System.out.println("------onResume");
         initVideoView();
         getPresenter().getMineData();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfo();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    NavigationUtils.startDialgTelephone(getActivity(), getString(R.string.custom_server_telephone_number));
+                } else {
+                    Toast.makeText(getActivity(), "请开启用户拨打电话权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -347,7 +366,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
             valuse = getString(R.string.relative_asset_failure);
         }
-        noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert).concat(TextUtils.isEmpty(valuse) ? "" : " ("+valuse + ")"));
+        noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert).concat(TextUtils.isEmpty(valuse) ? "" : " (" + valuse + ")"));
     }
 
     @Override
@@ -524,7 +543,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void toInvestorCarlendarActivity() {
         String url = CwebNetConfig.investeCarlendar;
-        HashMap<String ,String> hashMap = new HashMap<>();
+        HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, url);
         hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_investor_carlendar));
         NavigationUtils.startActivity(getActivity(), BaseWebViewActivity.class, hashMap);
@@ -576,7 +595,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             @Override
             public void left() {
                 dismiss();
-                NavigationUtils.startDialgTelephone(getActivity(), getString(R.string.custom_server_telephone_number));
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                } else {
+                    NavigationUtils.startDialgTelephone(getActivity(), getString(R.string.custom_server_telephone_number));
+                }
             }
 
             @Override
@@ -641,9 +664,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
         textViewShowAssert.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
-        if (!TextUtils.isEmpty(mineModel.getBank().getDebtRatio())){
+        if (!TextUtils.isEmpty(mineModel.getBank().getDebtRatio())) {
             float zhaiQuanValue = Float.parseFloat(mineModel.getBank().getDebtRatio());
-            roundProgressbar.setProgress((int)zhaiQuanValue);
+            roundProgressbar.setProgress((int) zhaiQuanValue);
         }
 
         if (showAssert) {
@@ -656,7 +679,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private boolean isNullPrivateBank(MineModel mineModel) {
         if (mineModel.getBank() == null ||
                 ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || "0".equals(mineModel.getBank().getDebtAmt())) &&
-                (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || "0".equals(mineModel.getBank().getEquityAmt())))) {
+                        (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || "0".equals(mineModel.getBank().getEquityAmt())))) {
             return true;
         }
         return false;
@@ -713,11 +736,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void createHealthItem(List<MineModel.HealthItem> list) {
         if (!CollectionUtils.isEmpty(list)) {
             health_had_data_ll.removeAllViews();
-            for (int i= 0; i < list.size(); i++) {
-                MineModel.HealthItem healthItem  = list.get(i);
+            for (int i = 0; i < list.size(); i++) {
+                MineModel.HealthItem healthItem = list.get(i);
                 TextView textView = new TextView(getActivity());
                 textView.setPadding(5, 0, 0, 0);
-                textView.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
                 textView.setSingleLine(true);
                 textView.setEllipsize(TextUtils.TruncateAt.END);
                 textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
@@ -732,7 +755,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
                 });
                 health_had_data_ll.addView(textView);
-                if (i != list.size() -1) {
+                if (i != list.size() - 1) {
                     View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
                     lineView.setLayoutParams(layoutParams);
@@ -746,7 +769,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
         List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
-        Log.i("MineFragment", "playlist=" + + playlList.size() + "-----downlList=" + downlList.size());
+        Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
         for (String name : videos) {
             XTabLayout.Tab tab = xTabLayout.newTab();
             tab.setText(name);
@@ -775,10 +798,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 viewPager.resetHeight(position);
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
             }
@@ -807,9 +832,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private HorizontalScrollFragment setFragmentParams(List<VideoInfoModel> valuesList, List<HorizontalScrollFragment> fragmentList, boolean isPlay) {
-        HorizontalScrollFragment scrollFragment= new HorizontalScrollFragment();
+        HorizontalScrollFragment scrollFragment = new HorizontalScrollFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList)valuesList);
+        bundle.putParcelableArrayList(HorizontalScrollFragment.GET_VIDEO_PARAMS, valuesList == null ? new ArrayList<>() : (ArrayList) valuesList);
         bundle.putBoolean(HorizontalScrollFragment.IS_VIDEO_PLAY_PARAMS, isPlay);
         scrollFragment.setArguments(bundle);
         fragmentList.add(scrollFragment);

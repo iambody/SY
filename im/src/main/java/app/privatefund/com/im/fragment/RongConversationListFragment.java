@@ -1409,7 +1409,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
 //            uiConversation.setUnReadMessageCount(0);
 //            RongIM.getInstance().startConversation(this.getActivity(), conversationType, uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
 //        }
-//
 //    }
 //
 //    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
