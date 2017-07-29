@@ -170,8 +170,10 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         DataStatistApiParam.clickGesture();
         boolean gestureFlag = AppManager.getGestureFlag(baseContext);
         if (gestureFlag) {
+//            DataStatistApiParam.switchGestureClick("关");
             NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else {
+//            DataStatistApiParam.switchGestureClick("开");
             NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
         }
     }

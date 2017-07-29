@@ -949,35 +949,26 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
-     * 热门物品点击事件
+     * 尚品类型点击事件
      */
-    public static void clickHotProduct(String productName) {
+    public static void clickCategory(String categoryName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2042");
         data3.put("act", "20285");
-        data3.put("arg1", "热门物品");
-        data3.put("arg3", productName);
+        data3.put("arg1", "尚品类型");
+        data3.put("arg3", categoryName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
-     * 全新上架物品点击事件
+     * 商品点击事件
      */
-    public static void clickNormalProduct(String productName) {
+    public static void clickProduct(String productName,String categoryName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2042");
         data3.put("act", "20286");
-        data3.put("arg1", "全新上架物品");
+        data3.put("arg1", "商品");
         data3.put("arg3", productName);
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
-    }
-    /**
-     * 尚品分类的点击事件
-     */
-    public static void clickCategoryEat(String categoryName) {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2043");
-        data3.put("act", "20287");
-        data3.put("arg1", "尚品好吃");
+        data3.put("arg4", categoryName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
@@ -1113,6 +1104,18 @@ public class DataStatistApiParam {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2073");
         data3.put("act", "20385");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     *手势密码开关
+     * @param
+     */
+    public static void switchGestureClick(String switchStr) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2040");
+        data3.put("act", "20271");
+        data3.put("arg1", "手势密码开关");
+        data3.put("arg3", switchStr);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
