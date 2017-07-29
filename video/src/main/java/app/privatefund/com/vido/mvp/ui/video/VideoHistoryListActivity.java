@@ -110,7 +110,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     protected void init(Bundle savedInstanceState) {
         initFindId();
         videoHistoryAdapter = new VideoHistoryAdapter(this);
-        linearLayoutManager = new FullyLinearLayoutManager(this );
+        linearLayoutManager = new FullyLinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setSmoothScrollbarEnabled(true);
         //更多**********
@@ -199,7 +199,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             }
         }
         unChoiceChangeText();
-        getHandler().postDelayed(() -> onControlGetDataList(true), 100);
+        getHandler().postDelayed(() -> onControlGetDataList(true), 400);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
 
         List<VideoHistoryModel> todylist = getPresenter().getVideoListtody(dataList, true);
-        List<VideoHistoryModel> morelist = getPresenter().getVideoListtody(dataList, true);
+        List<VideoHistoryModel> morelist = getPresenter().getVideoListtody(dataList, false);
         video_history_todaytitle_lay.setVisibility(0 == todylist.size() ? View.GONE : View.VISIBLE);
         video_history_moretitle_lay.setVisibility(0 == morelist.size() ? View.GONE : View.VISIBLE);
         if (isRef) {

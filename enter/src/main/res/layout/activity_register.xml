@@ -29,7 +29,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
                 android:padding="@dimen/ui_15_dip"
                 android:src="@drawable/ic_toolbar_back" />
 
@@ -77,6 +76,17 @@
                         android:scrollHorizontally="true"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
+                <ImageView
+                    android:id="@+id/regist_del_un"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/regist_name_input"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_6_dip"
+                    android:background="@drawable/ic_et_del"
+                    android:visibility="invisible" />
+
             </RelativeLayout>
             <!-- 手机号输入框***********-->
             <Button
@@ -266,7 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:text="您已同意并遵守《私享云用户使用协议》"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="12dp" />
             </LinearLayout>
         </RelativeLayout>

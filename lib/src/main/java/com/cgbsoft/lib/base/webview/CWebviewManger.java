@@ -254,12 +254,12 @@ public class CWebviewManger {
                 String oldVersion = Utils.getVersionName(context);
                 String language = "javascript:newVersion('" + oldVersion + "','" + (TextUtils.isEmpty(newVersion) ? "0" : newVersion) + "'," + values + ")";
                 webview.loadUrl(language);
-                LogUtils.Log("aaa","language==="+language);
+                LogUtils.Log("aaa", "language===" + language);
             } else {
                 String oldVersion = String.valueOf(Utils.getVersionName(context));
                 String language = "javascript:newVersion('" + oldVersion + "',0," + values + ")";
                 webview.loadUrl(language);
-                LogUtils.Log("aaa","language=---=="+language);
+                LogUtils.Log("aaa", "language=---==" + language);
             }
         } else if (action.contains("updated")) {
             versonUpdate();
@@ -337,11 +337,11 @@ public class CWebviewManger {
             callPhone(action);
         } else if (action.contains("showShareItem")) {
             switchShareButton();
-        } else if (action.contains("showPayItem")){
+        } else if (action.contains("showPayItem")) {
             showPayItem(action);
-        }else if(action.contains("viewpdf")){
+        } else if (action.contains("viewpdf")) {
             gotoScretPdf(action);
-        }else if(action.contains("goLoginBackHome")){
+        } else if (action.contains("goLoginBackHome")) {
             //直接跳转到
             HashMap<String, Object> map = new HashMap<>();
             map.put("insidegotologin", true);
@@ -351,7 +351,7 @@ public class CWebviewManger {
     }
 
     private void showPayItem(String action) {
-        if (context instanceof  BaseWebViewActivity){
+        if (context instanceof BaseWebViewActivity) {
             ((BaseWebViewActivity) context).showPayItem();
         }
     }
@@ -415,10 +415,10 @@ public class CWebviewManger {
             String[] split = urcodeAction.split(":");
             String string = split[2];
 
-            HashMap<String,Object>map=new HashMap<>();
-            map.put("pdfurl",split[2]+":"+split[3]);
-            map.put("pdftitle", split[4] );
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PDF_ACTIVITY,map);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("pdfurl", split[2] + ":" + split[3]);
+            map.put("pdftitle", split[4]);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PDF_ACTIVITY, map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -951,7 +951,7 @@ public class CWebviewManger {
         } else {
             split1[1] = AppManager.getUserInfo(context).getToC().getBindTeacher();
             HashMap<String, String> params = DataStatisticsUtils.getParams(split[2], split[3], split1);
-            DataStatisticsUtils.push(context, params,true);
+            DataStatisticsUtils.push(context, params, true);
         }
     }
 
@@ -1108,7 +1108,7 @@ public class CWebviewManger {
     }
 
     public void toviewpdf(String action) {
-        PromptManager.ShowCustomToast(context,"展示PDF事件");
+        PromptManager.ShowCustomToast(context, "展示PDF事件");
         try {
             String baseParams = URLDecoder.decode(action, "utf-8");
             String[] split = baseParams.split(":");
@@ -1118,9 +1118,9 @@ public class CWebviewManger {
 //            i.putExtra("pdfName", URLDecoder.decode(split[3], "utf-8"));
 //            i.putExtra("isSecret", 1);
 //            context.startActivity(i);
-            HashMap<String,Object>map=new HashMap<>();
-            map.put("pdfurl",padUrl+":"+split[3]);
-            map.put("pdftitle",split[4]);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("pdfurl", padUrl + ":" + split[3]);
+            map.put("pdftitle", split[4]);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOPRODUCTDETAIL, map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1348,7 +1348,7 @@ public class CWebviewManger {
     private void openpage(String data, boolean rightSave, boolean initPage, boolean rightShare) {
         try {
             String baseParams = URLDecoder.decode(data, "utf-8");
-            LogUtils.Log("s","s");
+            LogUtils.Log("s", "s");
             if (intecepterInvister(baseParams, rightSave, initPage, rightShare)) {
                 return;
             }
@@ -1358,7 +1358,11 @@ public class CWebviewManger {
             if (url.startsWith("app6.0")) {
                 url = "/" + url;
             }
-            url = BaseWebNetConfig.SERVER_ADD + url;
+            if (url.contains("http")) {
+                url = split[2] + ":" + split[3];
+            } else {
+                url = BaseWebNetConfig.SERVER_ADD + url;
+            }
             Intent i = new Intent(context, BaseWebViewActivity.class);
 
             i.putExtra(WebViewConstant.push_message_url, url);
@@ -1395,7 +1399,7 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
-                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL)||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.PRODUCT_DETAIL)) {
