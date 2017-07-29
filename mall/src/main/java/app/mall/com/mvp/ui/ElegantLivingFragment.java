@@ -86,6 +86,8 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     }
 
     private void gotoBannerDetail(ElegantLivingEntity.ElegantLivingBean elegantLivingBean) {
+        //进入专题详情页面的埋点
+        DataStatistApiParam.clickElegantLivingBanner(elegantLivingBean.getTitle());
         HashMap hashMap = new HashMap();
         hashMap.put(WebViewConstant.RIGHT_SHARE, true);
         hashMap.put(WebViewConstant.push_message_title, getResources().getString(R.string.banner_detail));

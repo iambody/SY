@@ -29,7 +29,6 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_20"
-        android:text="王老师"
         android:id="@+id/account_info_name"/>
 
     <LinearLayout
@@ -165,7 +164,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_value"
-                android:text="陈龙"
                 android:id="@+id/mine_private_banker_id"/>
         </LinearLayout>
     </LinearLayout>

@@ -122,11 +122,11 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
     public void onMessageIncreased(int i) {
         int intime49999 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME49999");
         Log.e(this.getClass().getSimpleName(), i + "-------intime49999=" + intime49999);
-//        int intime40003 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40003");
-//        int intime40004 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40004");
-//        int intime40006 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40006");
-//        int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
-//        int cUnread = i - intime40003 - intime40004 - intime40006;
-        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, i);
+        int intime40003 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40003");
+        int intime40004 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40004");
+        int intime40006 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40006");
+        int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
+        int cUnread = i - intime40003 - intime40004 - intime40006;
+        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, cUnread);
     }
 }

@@ -129,32 +129,15 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         if (RongIMClient.getInstance() != null) {
 //            if (RongIMClient.getInstance() != null && !((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
             if (RongIMClient.getInstance() != null) {
-                List<Conversation> conversationList = RongIMClient.getInstance().getConversationList();
-                if (conversationList != null) {
-                    for (int i = 0; i < conversationList.size(); i++) {
-                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
-                            return;
-                        }
-                    }
-                }
+//                List<Conversation> conversationList = RongIMClient.getInstance().getConversationList();
+//                if (conversationList != null) {
+//                    for (int i = 0; i < conversationList.size(); i++) {
+//                        if (conversationList.get(i).getTargetId().equals("dd0cc61140504258ab474b8f0a38bb56")) {
+//                            return;
+//                        }
+//                    }
+//                }
 
-//            ApiClient.getPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<CommonEntity.Result>() {
-//                @Override
-//                protected void onEvent(CommonEntity.Result result) {
-//                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-//                    if (null != conversationList) {
-//                        Log.i("MainMessageFragment", "7 RongYun conversationList size= " + conversationList.size());
-//                    }
-//                    if (!((InvestorAppli)InvestorAppli.getContext()).isRequestCustom()) {
-////                            EventBus.getDefault().post(new RefreshKefu());
-//                    }
-//                    ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(true);
-//                }
-//                @Override
-//                protected void onRxError(Throwable error) {
-//                    Log.e("MainMessageFragment", "----platformcustomer=" + error.getMessage());
-//                }
-//            });
                 Log.e("MainMessageFragment", "---startplatformCustomer");
                 ApiClient.getTestGetPlatformCustomer(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
                     @Override
@@ -163,10 +146,6 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
                         if (null != conversationList) {
                             Log.i("MainMessageFragment", "7 RongYun conversationList size= " + conversationList.size());
                         }
-                        if (!((InvestorAppli) InvestorAppli.getContext()).isRequestCustom()) {
-//                            EventBus.getDefault().post(new RefreshKefu());
-                        }
-                        ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(true);
                     }
 
                     @Override

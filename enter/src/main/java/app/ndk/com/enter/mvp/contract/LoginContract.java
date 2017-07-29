@@ -49,6 +49,8 @@ public interface LoginContract {
          */
         void toGetPublicKey();
 
+        void getNavigation();
+
 //        /**
 //         * 获取融云Token id
 //         * @param userId

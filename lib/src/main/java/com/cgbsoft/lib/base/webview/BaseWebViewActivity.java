@@ -247,6 +247,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
         if (rightMemberRule) {
             toolbar.setBackgroundResource(R.color.black);
+            titleMid.setTextColor(ContextCompat.getColor(this, R.color.white));
+            toolbar.setNavigationIcon(R.drawable.ic_back_white_24dp);
         }
         initShakeInSetPage();
         mWebview.loadUrl(url);

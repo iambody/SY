@@ -16,6 +16,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -84,6 +85,13 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         return null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
+    }
 
     /**
      * 加载Tab数据
@@ -112,6 +120,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_left://toolbar左边按钮点击事件
+                DataStatistApiParam.clickFPInElegantPage();
 //                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,4);
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
@@ -120,6 +129,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
+                DataStatistApiParam.clickMsgCenterInElegantPage();
                 if (AppManager.isVisitor(InitApplication.getContext())) {
                     Intent intentRight = new Intent(getActivity(), LoginActivity.class);
                     intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -152,5 +162,11 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         if (unreadInfoNumber != null) {
             unreadInfoNumber.onDestroy();
         }
+    }
+
+    @Override
+    protected void clickGoodsButton() {
+        super.clickGoodsButton();
+        DataStatistApiParam.clickElegantGoodsButton();
     }
 }

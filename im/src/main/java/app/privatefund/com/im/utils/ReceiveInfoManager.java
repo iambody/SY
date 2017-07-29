@@ -40,7 +40,8 @@ public class ReceiveInfoManager {
     private static ReceiveInfoManager receiveInfoManager;
     private PushDialog infoDialog;
 
-    private ReceiveInfoManager() {}
+    private ReceiveInfoManager() {
+    }
 
     public synchronized static ReceiveInfoManager getInstance() {
         if (receiveInfoManager == null) {
@@ -52,11 +53,11 @@ public class ReceiveInfoManager {
     private Handler mainHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            Activity mCurrentActivityContext = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+            Activity mCurrentActivityContext = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
             if ((("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
                     "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
                     "LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null )) {
+                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null)) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
                 message.what = msg.what;
@@ -80,7 +81,7 @@ public class ReceiveInfoManager {
                             infoDialog.dismiss();
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        BackgroundManager backgroundManager = ((BaseApplication)BaseApplication.getContext()).getBackgroundManager();
+                        BackgroundManager backgroundManager = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager();
                         infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, rightText, "返回", jumpUrl) {
                             @Override
                             public void left() {
@@ -102,7 +103,7 @@ public class ReceiveInfoManager {
                         break;
                     case Constant.RECEIVER_SEND_CODE_NEW_INFO:
                         SMMessage smMessage = (SMMessage) bundle.getSerializable("smMessage");
-                        Activity mCurrentActivity= ((BaseApplication)BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+                        Activity mCurrentActivity = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
                         if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
                             if (infoDialog != null && infoDialog.isShowing()) {
                                 infoDialog.dismiss();
@@ -127,10 +128,12 @@ public class ReceiveInfoManager {
                             String saveValue = PushPreference.getPushInfo(InvestorAppli.getContext());
                             List<SMMessage> messageList = new ArrayList<>();
                             if (!TextUtils.isEmpty(saveValue)) {
-                                messageList = gson.fromJson(saveValue, new TypeToken<List<SMMessage>>() {}.getType());
+                                messageList = gson.fromJson(saveValue, new TypeToken<List<SMMessage>>() {
+                                }.getType());
                             }
                             messageList.add(smMessage);
-                            String values = gson.toJson(messageList, new TypeToken<List<SMMessage>>() {}.getType());
+                            String values = gson.toJson(messageList, new TypeToken<List<SMMessage>>() {
+                            }.getType());
                             PushPreference.savePushInfo(InvestorAppli.getContext(), values);
                         }
                         break;
@@ -175,35 +178,9 @@ public class ReceiveInfoManager {
 //                            public void onErrorResponse(String error, int statueCode) {}
 //                        });
                     } else if (jumpActivityName.equals("PlayVideoActivity")) {
-                        try {
-                            j.put("id", id);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        new VideoDetailTask(context).start(j.toString(), new HttpResponseListener() {
-//
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    Gson g = new Gson();
-//                                    JSONObject schoolVideoO = response.getJSONObject("rows");
-//                                    String string = schoolVideoO.toString();
-//                                    SchoolVideo schoolVideo = g.fromJson(string, SchoolVideo.class);
-//                                    ToolsUtils.toPlayVideoActivity(context, schoolVideo);
-//                                    RongIM.getInstance().getRongIMClient().clearMessages(Conversation.ConversationType.PRIVATE, "INTIME49999");
-//                                    RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, "INTIME49999");
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onErrorResponse(String error, int statueCode) {
-//
-//                            }
-//                        });
-//                    }
-
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("videoId",id);
+                        NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTOVIDEOPLAY, hashMap);
                     } else {
 //                    try {
 //                        Intent in = new Intent(context, Class.forName("com.cgbsoft.privatefund.activity." + android));

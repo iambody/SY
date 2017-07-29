@@ -231,6 +231,10 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             if (CollectionUtils.isEmpty(bannerList)) {
                 return 0;
             }
+
+            if (bannerList.size() == 1) {
+                return 1;
+            }
             return Integer.MAX_VALUE;
         }
 

@@ -333,6 +333,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         System.out.println("------onResume");
         initVideoView();
         getPresenter().getMineData();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
     }
 
     private void initRelativeStatus() {

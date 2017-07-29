@@ -622,6 +622,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onResume() {
         super.onResume();
         LogUtils.Log("saassaa", "resume");
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
     }
 
