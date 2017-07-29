@@ -37,6 +37,9 @@ public class UnreadInfoNumber {
      * 初始化未读消息
      */
     public void initUnreadInfo() {
+        if (AppManager.isVisitor(activity)) {
+            return;
+        }
         int numberNum = AppManager.getUnreadInfoNumber(activity);
         if (badgeView == null) {
             badgeView = ViewUtils.createLeftTopRedPoint(activity, showView, numberNum);
