@@ -43,11 +43,11 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     @BindView(R.id.swipe_target)
     RecyclerView swipeTarget;
 
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout switpToLoadLayout;
+
     @BindView(R.id.swipe_load_more_footer)
     CustomRefreshFootView swipeLoadMoreFooter;
-
-    @BindView(R.id.swipeToLoadLayout)
-    SwipeToLoadLayout swipeToLoadLayout;
 
     @BindView(R.id.title_left)
     ImageView imageViewLeft;
@@ -78,8 +78,8 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         initTitleView();
         mineActivitesListAdapter = new MineActivitesListAdapter(this);
         swipeTarget.setAdapter(mineActivitesListAdapter);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        swipeToLoadLayout.setOnRefreshListener(this);
+        switpToLoadLayout.setOnLoadMoreListener(this);
+        switpToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(this);
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
@@ -137,17 +137,17 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
 
     @Override
     public void requestDataSuccess(boolean isRef) {
-        clodLsAnim(swipeToLoadLayout);
+        clodLsAnim(switpToLoadLayout);
         isLoadMore = false;
         if (isRef) {
-            swipeTarget.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
+            switpToLoadLayout.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
             emptyLinearLayout.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
         }
     }
 
     @Override
     public void requestDataFailure(String errMsg) {
-        clodLsAnim(swipeToLoadLayout);
+        clodLsAnim(switpToLoadLayout);
         isLoadMore = false;
     }
 }
