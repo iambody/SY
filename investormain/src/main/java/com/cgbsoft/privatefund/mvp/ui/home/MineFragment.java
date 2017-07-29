@@ -686,8 +686,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void initOrderView(MineModel mineModel) {
-//        hideOrderNumber(account_order_send_text);
-//        hideOrderNumber(account_order_receive_text);
         if (!CollectionUtils.isEmpty(mineModel.getMallOrder())) {
             for (MineModel.Orders orders : mineModel.mallOrder) {
                 if ("1".equals(orders.getGoodsStatusCode())) {
@@ -695,7 +693,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         if (waitSender == null) {
                             waitSender = ViewUtils.createLeftTopRedPoint(getActivity(), account_order_send_text, orders.getCount());
                         } else {
-                            waitSender.setText(orders.getCount());
+                            waitSender.setText(String.valueOf(orders.getCount() > 99 ? 99 : orders.getCount()));
+                            waitSender.invalidate();
                         }
                     } else if (waitSender != null) {
                         waitSender.hide();
@@ -705,7 +704,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         if (waitReceiver == null) {
                             waitReceiver = ViewUtils.createLeftTopRedPoint(getActivity(), account_order_receive_text, orders.getCount());
                         } else {
-                            waitReceiver.setText(orders.getCount());
+                            waitReceiver.setText(String.valueOf(orders.getCount() > 99 ? 99 : orders.getCount()));
+                            waitReceiver.invalidate();
                         }
                     } else if (waitReceiver != null) {
                         waitReceiver.hide();
@@ -715,13 +715,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
         }
     }
-
-//    private void hideOrderNumber(TextView textView) {
-//        if (textView.getTag() != null) {
-//            ((BadgeView)textView.getTag()).setVisibility(View.INVISIBLE);
-//            ((BadgeView)textView.getTag()).hide();
-//        }
-//    }
 
     private void initHealthView(MineModel mineModel) {
         if (mineModel != null && mineModel.getHealthy() != null) {
