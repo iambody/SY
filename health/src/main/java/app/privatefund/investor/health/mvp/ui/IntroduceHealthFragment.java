@@ -15,6 +15,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
@@ -114,6 +115,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         }
     }
 
+
     @Override
     public void requestDataFailure(String errorMsg) {
 //        List<VideoInfo> videos = new ArrayList<>();
@@ -132,7 +134,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-
+            DataStatistApiParam.operateHealthIntroduceClick();
         } else {
             if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
                 videoRootFrame.pause();
@@ -140,6 +142,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
         }
     }
+
 
     @Override
     public void onStart() {

@@ -14,13 +14,12 @@ import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
-import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,6 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
-import io.rong.imkit.RongIM;
 
 /**
  *@author chenlong
@@ -148,6 +146,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                 getActivity().startActivity(intent);
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
+                DataStatistApiParam.operateMessageCenterClick();
                 if (AppManager.isVisitor(InitApplication.getContext())) {
                     Intent intentRight = new Intent(getActivity(), LoginActivity.class);
                     intentRight.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -156,6 +155,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     return;
                 }
                 NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+
 //                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
         }

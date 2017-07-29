@@ -13,6 +13,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -90,6 +91,7 @@ public class DatumManageActivity extends BaseActivity {
     @OnClick(R.id.datum_manage_account)
     public void gotoAccount(){
         NavigationUtils.startActivity(this, InvisiteAccountActivity.class);
+        DataStatistApiParam.operateInvestorAccountClick();
     }
 
     @OnClick(R.id.datum_manage_risk)
