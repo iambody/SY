@@ -147,13 +147,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void data() {
-        mWebview.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String s, String s1, String s2, String s3, long l) {
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+        mWebview.setDownloadListener((s, s1, s2, s3, l) -> {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 //        mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {
@@ -238,12 +235,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
@@ -263,15 +255,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
-            relativeLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
             relativeLayout.setVisibility(View.VISIBLE);
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
-            imageView.setVisibility(View.VISIBLE);
             imageView.setOnClickListener(v -> finish());
-            TextView titleTextView = (TextView)findViewById(R.id.title_mid);
+            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
             titleTextView.setText("会员专区");
             TextView rightText =(TextView)findViewById(R.id.title_right);
-            rightText.setVisibility(View.VISIBLE);
             rightText.setOnClickListener(v -> {
                 Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);

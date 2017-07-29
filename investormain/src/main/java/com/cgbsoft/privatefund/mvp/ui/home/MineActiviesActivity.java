@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -42,17 +43,20 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     @BindView(R.id.swipe_target)
     RecyclerView swipeTarget;
 
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout switpToLoadLayout;
+
     @BindView(R.id.swipe_load_more_footer)
     CustomRefreshFootView swipeLoadMoreFooter;
-
-    @BindView(R.id.swipeToLoadLayout)
-    SwipeToLoadLayout swipeToLoadLayout;
 
     @BindView(R.id.title_left)
     ImageView imageViewLeft;
 
     @BindView(R.id.iv_title_right)
     ImageView imageViewRight;
+
+    @BindView(R.id.empty_ll)
+    LinearLayout emptyLinearLayout;
 
     private static final int PAGE_LIMIT = 20;
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
@@ -74,8 +78,8 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         initTitleView();
         mineActivitesListAdapter = new MineActivitesListAdapter(this);
         swipeTarget.setAdapter(mineActivitesListAdapter);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        swipeToLoadLayout.setOnRefreshListener(this);
+        switpToLoadLayout.setOnLoadMoreListener(this);
+        switpToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(this);
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
@@ -133,13 +137,17 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
 
     @Override
     public void requestDataSuccess(boolean isRef) {
-        clodLsAnim(swipeToLoadLayout);
+        clodLsAnim(switpToLoadLayout);
         isLoadMore = false;
+        if (isRef) {
+            switpToLoadLayout.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
+            emptyLinearLayout.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
     public void requestDataFailure(String errMsg) {
-        clodLsAnim(swipeToLoadLayout);
+        clodLsAnim(switpToLoadLayout);
         isLoadMore = false;
     }
 }
