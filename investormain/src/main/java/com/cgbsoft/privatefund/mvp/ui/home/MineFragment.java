@@ -743,8 +743,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 textView.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
-                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-                    hashMap.put(WebViewConstant.right_message_index, true);
+//                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
+                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
                     NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
                 });
                 health_had_data_ll.addView(textView);
