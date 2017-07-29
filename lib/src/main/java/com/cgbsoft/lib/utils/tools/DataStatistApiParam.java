@@ -1317,6 +1317,38 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 我的活动
+     */
+    public static void operateMineActivityClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2079");
+        data3.put("act", "20400");
+        data3.put("arg1", "我的活动");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 我的卡券
+     */
+    public static void operateMineCardQuanClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2080");
+        data3.put("act", "20403");
+        data3.put("arg1", "卡券");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 投资账号
+     */
+    public static void operateInvestorAccountClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20409");
+        data3.put("arg1", "投资账号");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
 
     public static void onClickLiveRoomCloseToB(String videoName) {
