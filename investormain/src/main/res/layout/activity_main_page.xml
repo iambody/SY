@@ -24,14 +24,14 @@
     <include
         layout="@layout/acitivity_divide_online"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="49dp" />
+        android:layout_marginBottom="48dp" />
 
     <com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="bottom"
         tools:context="com.cgbsoft.privatefund.mvp.ui.home.MainPageActivity" />
 
