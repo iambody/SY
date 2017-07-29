@@ -60,6 +60,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 //    private int offsetMore=0;
     private final String CATEGORY_ALL = "300200";
     private String category = CATEGORY_ALL;//记录被点击的分类标记，默认是全部分类
+    private String categoryStr = "全部";//记录被点击的分类标记，默认是全部分类
     private ElegantGoodsRecyclerAdapter categoryAdapter;
     private ElegantGoodsMultAdapter proAdapter;
     private boolean isOver;//是否已经加载全部数据
@@ -119,13 +120,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                     ElegantGoodsEntity.HotListItemBean clickBean = (ElegantGoodsEntity.HotListItemBean) bean;
                     name=clickBean.getGoodsName();
                     id=clickBean.getId();
-                    DataStatistApiParam.clickHotProduct(name);
                 } else {//全部产品
                     ElegantGoodsEntity.AllNewsItemBean clickBean = (ElegantGoodsEntity.AllNewsItemBean) bean;
                     id=clickBean.getId();
                     name=clickBean.getGoodsName();
-                    DataStatistApiParam.clickNormalProduct(name);
                 }
+                    DataStatistApiParam.clickProduct(name,categoryStr);
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
@@ -175,6 +175,8 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     private void loadCategory(ElegantGoodsEntity.ElegantGoodsCategoryBean posBean) {
         mRefreshLayout.setLoadMoreEnabled(false);
         category=posBean.getCode();
+        categoryStr=posBean.getTitle();
+        DataStatistApiParam.clickCategory(categoryStr);
         isOver=false;
 //        LogUtils.Log("aaa","click item is==="+category);
         prosDatas.clear();
