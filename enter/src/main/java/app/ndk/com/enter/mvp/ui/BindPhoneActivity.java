@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -222,6 +223,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 
     @OnClick(R2.id.tv_ab_next)
     public void onViewClicked() {//跳转首页
+        AppInfStore.saveIsVisitor(baseContext,false);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }
