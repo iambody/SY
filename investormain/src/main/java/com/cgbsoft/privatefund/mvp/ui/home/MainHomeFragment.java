@@ -31,6 +31,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -180,8 +181,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter();
         mainHomeBannerview.setAdapter(homeBannerAdapter);
-        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor,58));
-        mainHomeBannerview.setHintPadding(0,0,0,50);
+        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
+        mainHomeBannerview.setHintPadding(0, 0, 0, 50);
         mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
         initshowlay();
         timeCountDown();
@@ -190,6 +191,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //请求数据
         getPresenter().getHomeData();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv);
+        DataStatistApiParam.gohome();
     }
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/
@@ -461,6 +463,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //                } else {//没直播
 //                }
             }
+
             @Override
             protected void onRxError(Throwable error) {
 
@@ -679,7 +682,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         startActivity(intent);
 
                         SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
-
+                        DataStatistApiParam.homeliveclick();
                         break;
                     case 2://无直播
                         break;
@@ -721,6 +724,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             } else if ("app".equals(data.jumpType)) {
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
+            DataStatistApiParam.operateBannerClick();
         }
     }
 
