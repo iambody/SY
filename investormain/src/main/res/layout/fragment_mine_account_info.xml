@@ -97,12 +97,17 @@
                 android:text="@string/account_info_caifu_value"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <me.grantland.widget.AutofitTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/mine_caifu_value"
+                android:maxLines="1"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 style="@style/mine_account_info_value"
-                android:text="256"
-                android:id="@+id/mine_caifu_value"/>
+                autofit:minTextSize="16sp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -160,12 +165,16 @@
                 android:text="@string/account_info_mine_private_banker"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <me.grantland.widget.AutofitTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_value"
                 android:textSize="@dimen/dimens_sp_22"
-                android:id="@+id/mine_private_banker_id"/>
+                android:id="@+id/mine_private_banker_id"
+                android:maxLines="1"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                autofit:minTextSize="16sp"/>
         </LinearLayout>
     </LinearLayout>
 
