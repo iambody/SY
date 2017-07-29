@@ -1,4 +1,3 @@
-
 package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;
@@ -43,22 +42,10 @@ public class ViewUtils {
         BadgeView badge = new BadgeView(context, view);
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        badge.setText(String.valueOf(value));
+        badge.setText(String.valueOf(value > 99 ? 99 : value));
         badge.setTextColor(Color.parseColor("#ffffff"));
         badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
         badge.setVisibility(View.VISIBLE);
-        badge.show();
-        return badge;
-    }
-
-    public static BadgeView createLeftTopRedPoint(Context context, View view, String value) {
-        BadgeView badge = new BadgeView(context, view);
-        view.setTag(badge);
-        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5);
-        badge.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
-        badge.setText(value);
-        badge.setTextColor(Color.parseColor("#d73a2e"));
-        badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
         badge.show();
         return badge;
     }

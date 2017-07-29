@@ -36,12 +36,11 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
      */
     @Override
     public boolean onReceived(Message message, int left) {
-        Log.i(this.getClass().getSimpleName(), "messageinfo= " + message.getExtra() + "---content=" + message.getContent().toString());
+        Log.i(this.getClass().getSimpleName(), "messageinfo= " + message.getExtra() + "---content=" + message.getContent().toString() + "----senderID=" + message.getSenderUserId() + "----targetId=" + message.getTargetId());
         //开发者根据自己需求自行处理
         if (message.getSenderUserId().equals("0003fce75cd122ceaf1ac2d721a5f78e")) {
             CommandMessage content = (CommandMessage) message.getContent();
             Log.e("RongReceived", content.getData());
-
             BaseApplication.getContext().sendBroadcast(new Intent(Constant.ACTION_LIVE_SEND_MSG).putExtra(Constant.ACTION_LIVE_SEND_CONTENT, content.getData()));
             return true;
         }
@@ -61,6 +60,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
             TextMessage content = (TextMessage) message.getContent();
             if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra())) {
                 String msg = ((TextMessage) message.getContent()).getExtra();
+                System.out.println(this.getClass().getSimpleName().concat("------msg=" + msg));
                 Gson g = new Gson();
                 SMMessage smMessage = g.fromJson(msg, SMMessage.class);
                 smMessage.setContent(content.getContent());

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  * 日期 2017/7/10-09:47
  */
 public class FullyLinearLayoutManager extends LinearLayoutManager {
+
     private static final String TAG = FullyLinearLayoutManager.class.getSimpleName();
 
     public FullyLinearLayoutManager(Context context) {
@@ -33,11 +34,6 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
         final int widthSize = View.MeasureSpec.getSize(widthSpec);
         final int heightSize = View.MeasureSpec.getSize(heightSpec);
 
-//        Log.i(TAG, "onMeasure called. \nwidthMode " + widthMode
-//                + " \nheightMode " + heightSpec
-//                + " \nwidthSize " + widthSize
-//                + " \nheightSize " + heightSize
-//                + " \ngetItemCount() " + getItemCount());
 
         int width = 0;
         int height = 0;

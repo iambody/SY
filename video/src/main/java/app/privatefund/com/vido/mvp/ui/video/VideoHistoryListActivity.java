@@ -110,18 +110,21 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     protected void init(Bundle savedInstanceState) {
         initFindId();
         videoHistoryAdapter = new VideoHistoryAdapter(this);
-        linearLayoutManager = new FullyLinearLayoutManager(this);
+        linearLayoutManager = new FullyLinearLayoutManager(this );
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setSmoothScrollbarEnabled(true);
         //更多**********
         morevideoHistoryAdapter = new VideoHistoryAdapter(new HistoryLisener());
         morelinearLayoutManager = new FullyLinearLayoutManager(this);
         morelinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        morelinearLayoutManager.setSmoothScrollbarEnabled(true);
 //        recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
 //        recyclerRefreshLayout.setOnRefreshListener(this);
 //        recyclerRefreshLayout.setEnabled(false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoHistoryAdapter);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
         //更多**********
         moreRecyclerView.setLayoutManager(morelinearLayoutManager);
         moreRecyclerView.setAdapter(morevideoHistoryAdapter);
@@ -218,7 +221,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
 
         List<VideoHistoryModel> todylist = getPresenter().getVideoListtody(dataList, true);
-        List<VideoHistoryModel> morelist = getPresenter().getVideoListtody(dataList, false);
+        List<VideoHistoryModel> morelist = getPresenter().getVideoListtody(dataList, true);
         video_history_todaytitle_lay.setVisibility(0 == todylist.size() ? View.GONE : View.VISIBLE);
         video_history_moretitle_lay.setVisibility(0 == morelist.size() ? View.GONE : View.VISIBLE);
         if (isRef) {
@@ -289,6 +292,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         deleteItem = menu.findItem(R.id.firstBtn);
         MenuItem secItem = menu.findItem(R.id.secondBtn);
         deleteItem.setTitle(R.string.delete_str);
+
         deleteItem.setIcon(R.drawable.ic_local_delete);
         secItem.setVisible(false);
         return true;
