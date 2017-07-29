@@ -263,6 +263,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
+            relativeLayout.setBackgroundColor(R.color.black);
             relativeLayout.setVisibility(View.VISIBLE);
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setVisibility(View.VISIBLE);
