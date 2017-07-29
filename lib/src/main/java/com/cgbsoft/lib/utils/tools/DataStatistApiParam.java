@@ -971,13 +971,113 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
-     * 尚品好吃分类的点击事件
+     * 尚品分类的点击事件
      */
-    public static void clickCategoryEat() {
+    public static void clickCategoryEat(String categoryName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2043");
         data3.put("act", "20287");
         data3.put("arg1", "尚品好吃");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 进入修改登录密码页面
+     */
+    public static void changePsdPage() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2072");
+        data3.put("act", "20381");
+        data3.put("arg1", "修改密码");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 进入修改登录密码页面提交按钮
+     */
+    public static void changePsdPageSubmit() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2072");
+        data3.put("act", "20382");
+        data3.put("arg1", "确定");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 签到
+     */
+    public static void signInEveryDay() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2078");
+        data3.put("act", "20397");
+        data3.put("arg1", "签到");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 设置
+     */
+    public static void intoSettingPage() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20408");
+        data3.put("arg1", "设置");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击推荐给好友
+     */
+    public static void recommendFriend() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20410");
+        data3.put("arg1", "推荐给朋友");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击帮助和反馈
+     */
+    public static void clickFeedBack() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20411");
+        data3.put("arg1", "帮助与反馈");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击关于本应用
+     */
+    public static void aboutApp() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20412");
+        data3.put("arg1", "关于本应用");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击手势密码
+     */
+    public static void clickGesture() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20413");
+        data3.put("arg1", "手势密码");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击修改手势密码
+     */
+    public static void clickChangeGesture() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20416");
+        data3.put("arg1", "修改手势密码");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 点击修改登录密码
+     */
+    public static void clickChangePsd() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20414");
+        data3.put("arg1", "修改登录密码");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 

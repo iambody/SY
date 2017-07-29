@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -68,6 +69,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         daoUtils = new DaoUtils(baseContext, DaoUtils.W_OTHER);
         initView(savedInstanceState);
         showView();
+        DataStatistApiParam.intoSettingPage();
     }
 
     private void showView() {
@@ -165,6 +167,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     @OnClick(R.id.view_switch_clickarea)
     public void switchGesture(){
+        DataStatistApiParam.clickGesture();
         boolean gestureFlag = AppManager.getGestureFlag(baseContext);
         if (gestureFlag) {
             NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
@@ -178,6 +181,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_change_login_psd)
     public void changeLoginPsd() {
+        DataStatistApiParam.clickChangePsd();
         Intent intent = new Intent(this, ChangeLoginPsdActivity.class);
         startActivity(intent);
     }
@@ -187,6 +191,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_change_gesture_psd)
     public void changeGesturePsd() {
+        DataStatistApiParam.clickChangeGesture();
         NavigationUtils.startActivityByRouter(this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_FROM_MODIFY", true);
     }
 
@@ -206,6 +211,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_feedback)
     public void feedBack() {
+        DataStatistApiParam.clickFeedBack();
         Intent intent = new Intent(this, FeedbackActivity.class);
         startActivity(intent);
 //        NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
@@ -216,6 +222,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_recommend_friend)
     public void recommendFriend() {
+        DataStatistApiParam.recommendFriend();
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.recommendFriends);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_recommend));
@@ -238,6 +245,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
      */
     @OnClick(R.id.sin_about_app)
     public void aboutApp() {
+        DataStatistApiParam.aboutApp();
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.aboutapp);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_about_app));

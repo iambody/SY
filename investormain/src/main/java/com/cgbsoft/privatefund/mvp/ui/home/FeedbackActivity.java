@@ -96,6 +96,27 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(feedbackAdapter);
         recyclerView.setHasFixedSize(true);
+        afb_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String content = s.toString();
+                if (TextUtils.isEmpty(content) || content.length() < 5) {
+                    commit.setEnabled(false);
+                } else {
+                    commit.setEnabled(true);
+                }
+            }
+        });
 //        recyclerView.addItemDecoration(new DividerGridItemDecoration(getApplicationContext()));
     }
 
