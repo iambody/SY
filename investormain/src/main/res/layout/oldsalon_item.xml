@@ -50,7 +50,6 @@
             android:textSize="@dimen/dimens_sp_14"
             android:layout_marginTop="@dimen/ui_30_dip"
             android:layout_toRightOf="@+id/tv_oldsalon_separate"
-            android:text="2017.05.06"
             />
         <TextView
             android:id="@+id/tv_oldsalon_time"
@@ -60,7 +59,6 @@
             android:textSize="@dimen/dimens_sp_14"
             android:layout_marginTop="@dimen/ui_30_dip"
             android:layout_toRightOf="@+id/tv_oldsalon_date"
-            android:text="14:09"
             />
         <TextView
             android:id="@+id/tv_oldsalon_title"
@@ -72,7 +70,6 @@
             android:layout_marginTop="@dimen/ui_15_dip"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:layout_below="@+id/tv_oldsalon_address"
-            android:text="投资与未来对话"
             />
         <TextView
             android:id="@+id/tv_oldsalon_depict"

@@ -98,13 +98,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView userLeaguarUpdateDesc;
 
     @BindView(R.id.mine_caifu_value)
-    TextView textViewCaifu;
+    AutofitTextView textViewCaifu;
 
     @BindView(R.id.mine_yundou_id)
     AutofitTextView textViewYundou;
 
     @BindView(R.id.mine_private_banker_id)
-    TextView textViewPrivateBanker;
+    AutofitTextView textViewPrivateBanker;
 
     @BindView(R.id.mine_account_info_qiandao_ll)
     LinearLayout linearLayoutQiandao;
