@@ -77,9 +77,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
 
-    @BindView(R2.id.title_normal_new)
-    protected RelativeLayout title_Relative;
-
     protected boolean hasEmailShare;
 
     protected boolean hasShowTitle;
