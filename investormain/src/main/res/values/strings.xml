@@ -139,7 +139,7 @@
     <string name="setting_item_about_app">关于本应用</string>
     <string name="elegantliving_str">生活家</string>
     <string name="elegantgoods_str">尚品</string>
-    <string name="feedback_hint">请写下您的建议或意见，对于有价值的反馈我们将会给予云豆奖励！</string>
+    <string name="feedback_hint">请写下您的建议或意见,对于有价值的反馈我们将会给予云豆奖励!(至少5个字)</string>
     <!-- 个人信息页面用到 -->
     <string name="personal_information_title">我的信息</string>
     <string name="personal_information_title_changename">姓名</string>
@@ -214,6 +214,7 @@
     <string name="private_bank_jia">私人银行家</string>
 
     <string name="mine_video_detail">视频详情</string>
+    <string name="mine_zhuanti_detail">健康专题</string>
 
     <string name="home_visiter_up_txt">私享云-连接人与财富</string>
     <string name="home_visiter_down_txt">我们是专属您的私人银行家</string>

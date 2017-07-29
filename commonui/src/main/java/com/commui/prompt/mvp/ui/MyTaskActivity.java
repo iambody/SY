@@ -22,6 +22,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -202,6 +203,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
                 break;
             case MyTaskBean.ITEM_SIGN_STR://每日签到
                 signTask();
+                DataStatistApiParam.signInEveryDay();
                 break;
         }
 

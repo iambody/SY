@@ -63,7 +63,8 @@ public class DiscoveryListAdapter extends RecyclerView.Adapter implements View.O
         lsViewHolder.itemView.setTag(position);
         DiscoveryListModel discoveryListModel = listModelListdata.get(position);
         Imageload.display(ApContext, discoveryListModel.getImage(), lsViewHolder.Item_fragment_videoschool_image_bg);
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%s阅读", discoveryListModel.getViews()));
+//        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, String.format("%s阅读", discoveryListModel.getViews()));
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, discoveryListModel.getViews());
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, discoveryListModel.getTitle());
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, discoveryListModel.getTimes());
     }

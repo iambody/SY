@@ -22,6 +22,7 @@
         android:clickable="true"
         android:padding="@dimen/ui_11_dip"
         android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/select_happy_life_toolbar_left"
         android:visibility="gone" />
 
@@ -53,6 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginEnd="60dp"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginStart="60dp"

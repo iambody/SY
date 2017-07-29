@@ -11,8 +11,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="私 享 云"
+        android:text="下拉即可刷新"
         android:textColor="@color/app_golden"
-        android:textSize="@dimen/dimens_sp_20"
-        android:textStyle="italic" />
+        android:textSize="@dimen/dimens_sp_14"
+        />
+        <!--android:textStyle="italic" />-->
 </LinearLayout>

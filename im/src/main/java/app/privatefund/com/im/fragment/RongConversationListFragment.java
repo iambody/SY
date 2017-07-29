@@ -301,6 +301,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, Constant.msgCustomerService);
         }
         conversation.setConversationTitle("");
+        conversation.setTop(true);
         conversation.setPortraitUrl(NetConfig.getDefaultRemoteLogin);
         UIConversation uiConversation;
 
@@ -1124,7 +1125,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
             }
         }
-
     }
 
     public void onEventMainThread(PublicServiceProfile profile) {
@@ -1173,7 +1173,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 this.mAdapter.getView(position, this.mList.getChildAt(position - this.mList.getFirstVisiblePosition()), this.mList);
             }
         }
-
     }
 
     public void onEventMainThread(ConversationTopEvent setTopEvent) {
@@ -1195,7 +1194,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
             }
         }
-
     }
 
     public void onEventMainThread(ConversationRemoveEvent removeEvent) {
@@ -1409,7 +1407,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
 //            uiConversation.setUnReadMessageCount(0);
 //            RongIM.getInstance().startConversation(this.getActivity(), conversationType, uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
 //        }
-//
 //    }
 //
 //    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

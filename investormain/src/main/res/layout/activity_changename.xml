@@ -22,6 +22,7 @@
             android:background="@color/transparent"
             android:textColor="@color/black"
             android:layout_marginLeft="@dimen/ui_20_dip"
+            android:maxLength="10"
             android:hint="请输入您的真实姓名"
             />
         <ImageView

@@ -1,7 +1,13 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +44,7 @@ import app.privatefund.com.im.MessageListActivity;
  *         <p>
  *         乐享生活
  */
-public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener {
+public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener ,Toolbar.OnMenuItemClickListener{
 
     private final String NAVIGATION_CODE = "30";
     private final String LIFE_HOME_CODE = "3001";
@@ -47,15 +53,30 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     ImageView toolbarLeft;
     ImageView toolbarRight;
     private UnreadInfoNumber unreadInfoNumber;
+    private Toolbar toolbar;
+    private MenuItem rightItem;
 
     @Override
     protected int titleLayoutId() {
+//        return R.layout.title_normal_elegant;
         return R.layout.title_normal_new;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //setHasOptionsMenu(true);//加上这句话，menu才会显示出来
     }
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
+//        toolbar = (Toolbar) title_layout.findViewById(R.id.tb_toolbar);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setNavigationIcon(R.drawable.select_happy_life_toolbar_left);
+//        toolbar.setOnMenuItemClickListener(this);
         ((TextView) title_layout.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
         toolbarLeft = (ImageView) title_layout.findViewById(R.id.iv_title_left);
         toolbarRight = (ImageView) title_layout.findViewById(R.id.iv_title_right);
@@ -168,5 +189,19 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     protected void clickGoodsButton() {
         super.clickGoodsButton();
         DataStatistApiParam.clickElegantGoodsButton();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.elegant_menu, menu);
+        rightItem = menu.findItem(R.id.firstBtn);
+        Drawable drawable = getResources().getDrawable(R.drawable.select_happy_life_toolbar_right);
+        rightItem.setIcon(drawable);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
     }
 }

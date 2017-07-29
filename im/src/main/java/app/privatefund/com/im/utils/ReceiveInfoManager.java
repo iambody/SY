@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import app.privatefund.com.im.bean.SMMessage;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
@@ -54,16 +55,18 @@ public class ReceiveInfoManager {
         @Override
         public void handleMessage(Message msg) {
             Activity mCurrentActivityContext = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
-            if ((("GestureVerifyActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "GestureEditActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
-                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null)) {
+            if (("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
                 message.what = msg.what;
                 mainHandler.sendMessageDelayed(message, 1000 * 30);
                 return;
             }
+
+            RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, Constant.msgNoKnowInformation);
+            RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, Constant.msgNoKnowInformation);
+
             // 进行相应操作
             try {
                 Bundle bundle = msg.getData();

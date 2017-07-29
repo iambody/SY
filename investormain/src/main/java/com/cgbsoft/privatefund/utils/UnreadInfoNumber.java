@@ -45,7 +45,7 @@ public class UnreadInfoNumber {
             badgeView = ViewUtils.createLeftTopRedPoint(activity, showView, numberNum);
         } else {
             if (numberNum > 0) {
-                badgeView.setText(String.valueOf(numberNum));
+                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
                 badgeView.invalidate();
             } else {
                 badgeView.hide();

@@ -158,7 +158,7 @@ public class BStrUtils {
         return num;
     }
     public static void switchColorToBandC(Context context, TextView textView) {
-        textView.setTextColor(AppManager.isInvestor(context) ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.color5));
+        textView.setTextColor(AppManager.isInvestor(context) ? context.getResources().getColor(R.color.app_golden) : context.getResources().getColor(R.color.color5));
     }
 
     /**
