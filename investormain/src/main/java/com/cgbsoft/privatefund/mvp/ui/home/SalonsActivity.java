@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,12 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     LinearLayout salonCityAll;
     @BindView(R.id.tv_salon_city)
     TextView salonCity;
+    @BindView(R.id.salon_no_data_all)
+    RelativeLayout noDataAll;
+    @BindView(R.id.salons_no_data_tag)
+    ImageView noDataPic;
+    @BindView(R.id.tv_salons_no_data_tip)
+    TextView noDataStr;
     private LoadingDialog mLoadingDialog;
     private List<SalonsEntity.SalonItemBean> salons = new ArrayList<>();
     private SalonsAdapter salonsAdapter;
