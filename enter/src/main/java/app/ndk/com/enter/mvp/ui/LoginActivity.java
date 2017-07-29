@@ -40,7 +40,6 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -65,8 +64,6 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -362,7 +359,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void onResume() {
         super.onResume();
 //        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
-        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
+//        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
     }
 
     @OnClick(R2.id.tv_al_register)

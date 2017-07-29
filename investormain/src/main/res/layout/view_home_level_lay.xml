@@ -4,7 +4,10 @@
     android:layout_height="60dp"
     android:background="@drawable/home_level_bg"
     android:orientation="horizontal"
-    android:layout_margin="@dimen/ui_10_dip"
+    android:layout_marginLeft="@dimen/ui_13_dip"
+    android:layout_marginRight="@dimen/ui_13_dip"
+    android:layout_marginTop="@dimen/ui_13_dip"
+    android:layout_marginBottom="@dimen/ui_13_dip"
     android:padding="@dimen/ui_10_dip">
 
     <ImageView

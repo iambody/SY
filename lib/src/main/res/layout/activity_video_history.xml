@@ -46,7 +46,8 @@
             android:id="@+id/recyclerRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">】
+com.cgbsoft.lib.widget.recycler.MyScrollview
     -->
 
 
@@ -57,11 +58,13 @@
         android:layout_below="@id/video_history_appbarlayout"
         android:layout_marginTop="@dimen/ui_60_dip"
         android:background="@color/app_bg"
+        android:orientation="vertical"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
             <include
@@ -85,7 +88,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </com.cgbsoft.lib.widget.recycler.MyScrollview>
+</com.cgbsoft.lib.widget.recycler.MyScrollview>
     <!--  </com.dinuscxj.refresh.RecyclerRefreshLayout>-->
 
     <LinearLayout

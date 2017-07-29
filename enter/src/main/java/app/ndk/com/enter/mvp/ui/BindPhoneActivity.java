@@ -1,9 +1,11 @@
 package app.ndk.com.enter.mvp.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -63,6 +66,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     Button btn_ab_ok;//完成
     @BindView(R2.id.iv_phone_del_un)
     ImageView ivPhoneDelUn;
+    @BindView(R2.id.bind_name_input)
+    TextInputLayout bindNameInput;
 
     private LoadingDialog mLoadingDialog;//等待弹窗
     private boolean isUsernameInput, isCheckInput;
@@ -98,6 +103,13 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
                 getPresenter().sendCode(mLoadingDialog, et_ab_username.getText().toString());
             }
         };
+        et_ab_username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                bindNameInput.setHintEnabled(true);
+                return false;
+            }
+        });
 
     }
 
@@ -211,6 +223,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
 
     @OnClick(R2.id.tv_ab_next)
     public void onViewClicked() {//跳转首页
+        AppInfStore.saveIsVisitor(baseContext,false);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }
@@ -224,6 +237,8 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
         }
         ivPhoneDelUn.setVisibility(View.GONE);
     }
+
+
 
 
     private class BindTextWatcher implements TextWatcher {

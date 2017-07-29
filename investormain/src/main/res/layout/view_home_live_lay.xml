@@ -4,15 +4,16 @@
     android:layout_height="120dp"
     android:clickable="true"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/ui_10_dip"
-    android:paddingRight="@dimen/ui_10_dip"
+    android:paddingLeft="@dimen/ui_13_dip"
+    android:paddingRight="@dimen/ui_13_dip"
     android:paddingTop="@dimen/ui_10_dip">
 
     <RelativeLayout
         android:id="@+id/view_live_iv_lay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:background="@drawable/shap_home_live_bg">
 
         <ImageView
             android:id="@+id/view_live_iv_bg"
@@ -25,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/orange"
+            android:background="@color/app_golden"
             android:padding="@dimen/ui_5_dip">
 
             <ImageView
@@ -38,15 +39,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
+                android:paddingRight="@dimen/ui_5_dip"
                 android:text="观看直播"
                 android:textColor="@color/white" />
+
 
             <ImageView
                 android:id="@+id/view_live_title_tag_iv"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ui_2_dip"
+
                 android:layout_toRightOf="@+id/view_live_title_tag"
 
                 android:src="@drawable/main_live_play_iv" />
