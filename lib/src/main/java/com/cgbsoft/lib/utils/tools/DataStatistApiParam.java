@@ -1119,6 +1119,72 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    public static void RechargeButton() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2070");
+        data3.put("act", "20376");
+        data3.put("arg1", "充值云豆");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+    public static void RechargeNum(String num) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2069");
+        data3.put("act", "20373");
+        data3.put("arg1", num);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+
+    public static void AddAddress() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2053");
+        data3.put("act", "20323");
+        data3.put("arg1", "填写地址");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+    public static void AddAddressBack() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2053");
+        data3.put("act", "20324");
+        data3.put("arg1", "返回");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+
+    public static void editAddress() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2054");
+        data3.put("act", "20325");
+        data3.put("arg1", "编辑地址");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+
+    public static void editAddressBack() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2054");
+        data3.put("act", "20326");
+        data3.put("arg1", "返回");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+
+    public static void editAddressSave() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2054");
+        data3.put("act", "20327");
+        data3.put("arg1", "保存");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
 
     public static void onClickLiveRoomCloseToB(String videoName) {
 

@@ -527,7 +527,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
      */
     private void payDataStaist() {
         if (AppManager.isInvestor(this)) {
-            DataStatistApiParam.Pay_C_BtClick();
+            DataStatistApiParam.RechargeButton();
         } else {
             DataStatistApiParam.Pay_B_BtClick();
         }
@@ -535,7 +535,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
 
     private void btnKuaisuDatasite(String s) {
         if (AppManager.isInvestor(this)) {
-            DataStatistApiParam.Pay_C_KuaiXuan(s);
+            DataStatistApiParam.RechargeNum(s);
         } else {
             DataStatistApiParam.Pay_B_KuaiXuan(s);
         }

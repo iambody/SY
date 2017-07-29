@@ -23,6 +23,8 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -103,6 +105,11 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             @Override
             public void onClick(View v) {
                 finish();
+                if (null == addressBean) {
+                    DataStatistApiParam.AddAddressBack();
+                } else {
+                    DataStatistApiParam.editAddressBack();
+                }
             }
         });
         addressBean = (MallAddressBean) getIntent().getSerializableExtra("addressBean");
@@ -112,10 +119,10 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             et_recever_phone.setText(addressBean.getPhone());
             btn_address_save.setEnabled(true);
             mall_address_area.setText(addressBean.getRegionAddress());
-            if (addressBean.getDefault_flag().equals("1")){
+            if (addressBean.getDefault_flag().equals("1")) {
                 normal_layout_add.setVisibility(GONE);
                 isAddressNormal = true;
-            }else {
+            } else {
                 normal_layout_edit.setVisibility(GONE);
                 isAddressNormal = false;
             }
@@ -129,7 +136,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         mall_address_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     showAddressDialog();
@@ -145,25 +152,27 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         if (addressBean != null) {
             titleMid.setText("编辑地址");
             btn_address_save.setText("保存并使用");
+            DataStatistApiParam.editAddress();
         } else {
             titleMid.setText("添加新地址");
             btn_address_save.setText("添加新地址");
             normal_layout_edit.setVisibility(GONE);
+            DataStatistApiParam.AddAddress();
         }
 
-        if (isAddressNormal){
-            set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_check_address,0,0,0);
-        }else {
-            set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_normal_address,0,0,0);
+        if (isAddressNormal) {
+            set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_check_address, 0, 0, 0);
+        } else {
+            set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_normal_address, 0, 0, 0);
         }
         normal_layout_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAddressNormal){
+                if (isAddressNormal) {
                     isAddressNormal = false;
-                    set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_normal_address,0,0,0);
-                }else {
-                    set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_check_address,0,0,0);
+                    set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_normal_address, 0, 0, 0);
+                } else {
+                    set_normal_address.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.mall_check_address, 0, 0, 0);
                     isAddressNormal = true;
                 }
             }
@@ -185,8 +194,8 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         String phone = et_recever_phone.getText().toString().trim();
         String name = et_recever_name.getText().toString().trim();
         String area = mall_address_area.getText().toString().trim();
-        if (!phone.startsWith("1")||phone.length()!=11){
-            MToast.makeText(this,"手机号码格式不正确！",Toast.LENGTH_LONG).show();
+        if (!phone.startsWith("1") || phone.length() != 11) {
+            MToast.makeText(this, "手机号码格式不正确！", Toast.LENGTH_LONG).show();
             return;
         }
         if (addressBean != null) { //如果有传入值不是新增
@@ -194,18 +203,18 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             addressBean.setPhone(phone);
             addressBean.setShopping_name(name);
             addressBean.setRegionAddress(area);
-            if (isAddressNormal){
+            if (isAddressNormal) {
                 addressBean.setDefault_flag("1");
-            }else {
+            } else {
                 addressBean.setDefault_flag("0");
             }
             getPresenter().saveMallAddress(addressBean);
 
         } else {
             String defaultAddress = "0";
-            if (isAddressNormal){
+            if (isAddressNormal) {
                 defaultAddress = "1";
-            }else {
+            } else {
                 defaultAddress = "0";
             }
             getPresenter().addMallAddress(
@@ -218,6 +227,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
                             area)
             );
         }
+        DataStatistApiParam.editAddressSave();
     }
 
     @Override
@@ -243,7 +253,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     public void deleteSuc(String id) {
-        RxBus.get().post(RxConstant.DELETE_ADDRESS,id);
+        RxBus.get().post(RxConstant.DELETE_ADDRESS, id);
         finish();
     }
 
@@ -296,8 +306,9 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         }
         return false;
     }
+
     public void showAddressDialog() {
-        List<Map<String, Object>> parentList=null;
+        List<Map<String, Object>> parentList = null;
         try {
             StringBuilder sb = new StringBuilder();
             InputStream open = getResources().getAssets().open("city.json");
@@ -322,14 +333,14 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             public void confirm(Map<String, Object> map) {
                 if (map != null) {
                     String province = (String) map.get("province");
-                    List<Map<String,Object>> cityList = (List<Map<String, Object>>) map.get("city");
+                    List<Map<String, Object>> cityList = (List<Map<String, Object>>) map.get("city");
                     String childPositionStr = (String) map.get("child_position");
                     String grandSonPositionStr = (String) map.get("grandson_position");
                     int childPositionInt = Integer.parseInt(childPositionStr);
                     int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
                     Map<String, Object> cityObj = cityList.get(childPositionInt);
                     String cityName = (String) cityObj.get("n");
-                    List<Map<String,Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
+                    List<Map<String, Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
                     Map<String, Object> districtObj = districtList.get(grandSonPositionInt);
                     String districtName = (String) districtObj.get("s");
                     mall_address_area.setText(province.concat(cityName).concat(districtName));
