@@ -26,11 +26,11 @@ public class FeedbackHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
         context = itemView.getContext();
 
-        size = (Utils.getScreenWidth(context.getApplicationContext()) - Utils.convertDipOrPx(context.getApplicationContext(), 44)) / 4 - 12;
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-        lp.width = size;
-        lp.height = size;
-        lp.setMargins(4, 4, 4, 4);
-        imageView.setLayoutParams(lp);
+//        size = (Utils.getScreenWidth(context.getApplicationContext()) - Utils.convertDipOrPx(context.getApplicationContext(), 44)) / 4 - 12;
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+//        lp.width = size;
+//        lp.height = size;
+//        lp.setMargins(4, 4, 4, 4);
+//        imageView.setLayoutParams(lp);
     }
 }
