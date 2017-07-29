@@ -17,7 +17,9 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -225,6 +227,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                 AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                 AppInfStore.saveIsVisitor(getContext(),false);
+                RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  5  );
                 if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
@@ -238,6 +241,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
             @Override
             protected void onRxError(Throwable error) {
+
                 loadingDialog.setResult(false, getContext().getString(R.string.la_getinfo_error_str), 1000, () -> getView().loginFail());
             }
         }));
