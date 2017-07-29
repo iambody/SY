@@ -29,7 +29,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
                 android:padding="@dimen/ui_15_dip"
                 android:src="@drawable/ic_toolbar_back" />
 
@@ -266,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:text="您已同意并遵守《私享云用户使用协议》"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="12dp" />
             </LinearLayout>
         </RelativeLayout>

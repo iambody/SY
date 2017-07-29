@@ -63,7 +63,7 @@ public class ExitLoginService extends Service {
         childView = LayoutInflater.from(this).inflate(R.layout.view_custom_dialog, null);
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(Utils.getScreenWidth(this), Utils.getScreenHeight(this));
         childView.setLayoutParams(lp);
-
+//
         floatView = new FloatView(this, 0, 0, childView, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         floatView.setIsAllowTouch(false);
 
