@@ -25,7 +25,8 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取是否是理财师的标识
-     *.
+     * .
+     *
      * @param context
      * @return
      */
@@ -93,6 +94,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取未读消息数
+     *
      * @param context
      * @return
      */
@@ -262,7 +264,7 @@ public class AppManager implements AppinfConstant {
     /**
      * 获取手势密码是否打开
      *
-     * @param context
+     * @param
      * @return
      */
     public static boolean getGestureFlag(Context context) {

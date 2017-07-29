@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -198,6 +200,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @Override
     public void margeSucc() {
 //        openActivity(MainPageActivity.class);
+        RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  1);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
 
@@ -224,6 +227,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @OnClick(R2.id.tv_ab_next)
     public void onViewClicked() {//跳转首页
         AppInfStore.saveIsVisitor(baseContext,false);
+        RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  1);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }

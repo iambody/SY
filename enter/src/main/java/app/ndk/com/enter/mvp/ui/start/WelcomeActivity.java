@@ -136,7 +136,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         getPresenter().getMyLocation();
 
         //解压一些资源
-        Observable.just(R.raw.res).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
+        Observable.just(R.raw.ress).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
                 String path = CacheManager.getCachePath(getApplicationContext(), CacheManager.RES);

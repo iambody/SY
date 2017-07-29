@@ -85,10 +85,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     ImageView ivBankDelPw;
     @BindView(R2.id.regist_name_input)
     TextInputLayout registNameInput;
+    @BindView(R2.id.regist_del_un)
+    ImageView registDelUn;
 
     private LoadingDialog mLoadingDialog;
     private boolean isUsernameInput, isPasswordInput, isCheckInput, isCheckBoxSel = true, isBankCode = true;
-    private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3, BANK_KEY = 4;
+    private final int USERNAME_KEY = 1, PASSWORD_KEY = 2, CHECK_KEY = 3, BANK_KEY = 4, PHONE = 6;
     private int identity;
     private final String UMENG_KEY = "logReg_click";
     private DefaultDialog defaultDialog;
@@ -213,9 +215,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             MToast.makeText(getApplicationContext(), getString(R.string.proto_notread_str), Toast.LENGTH_SHORT);
             return;
         }
-        toDataStatistics(1002, 10012, "提交注册");
+//        toDataStatistics(1002, 10012, "提交注册");
         getPresenter().toRegister(mLoadingDialog, userName, password, code, privateBanckCode.trim());
-
 
         DataStatistApiParam.onStaticToCRegeistClick();
     }
@@ -282,6 +283,18 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     }
 
 
+    @OnClick(R2.id.regist_del_un)
+    public void onViewClicked() {
+        String phoneNumbe = et_ar_username.getText().toString().trim();
+        if (BStrUtils.isEmpty(phoneNumbe)) {
+
+        } else {
+            et_ar_username.setText("");
+        }
+        registDelUn.setVisibility(View.GONE);
+    }
+
+
     private class RegisterTextWatcher implements TextWatcher {
         private int which;
 
@@ -303,7 +316,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             switch (which) {
                 case USERNAME_KEY:
 //                    isUsernameInput = isTextHasLength;
-//                    iv_code_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
+                    registDelUn.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
                     break;
                 case PASSWORD_KEY:
                     isPasswordInput = isTextHasLength;
