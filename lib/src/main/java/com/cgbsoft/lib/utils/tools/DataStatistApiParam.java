@@ -1238,7 +1238,10 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
-
+    /**
+     * 资讯进入banner
+     * @param bannerTitle
+     */
     public static void operatePrivateBankDiscoverClick(String bannerTitle) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2067");
@@ -1248,6 +1251,9 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * banner刷新
+     */
     public static void operatePrivateBankDiscoverUpRefrushClick() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2067");
@@ -1256,6 +1262,9 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 下拉刷新
+     */
     public static void operatePrivateBankDiscoverDownLoadClick() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2067");
@@ -1263,6 +1272,52 @@ public class DataStatistApiParam {
         data3.put("arg1", "下方上拉刷新");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
+    /**
+     * 全部订单
+     */
+    public static void operateMineOrderAllClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2055");
+        data3.put("act", "20328");
+        data3.put("arg1", "我的订单");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 待发货订单
+     */
+    public static void operateWaitSendClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2056");
+        data3.put("act", "20332");
+        data3.put("arg1", "待发货");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 待收货订单
+     */
+    public static void operateWaitReceiveClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2057");
+        data3.put("act", "20333");
+        data3.put("arg1", "待收货");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 进入财富专题
+     */
+    public static void operateDiscoverDetailClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2068");
+        data3.put("act", "20367");
+        data3.put("arg1", "进入财富专题");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
 
     public static void onClickLiveRoomCloseToB(String videoName) {
 
