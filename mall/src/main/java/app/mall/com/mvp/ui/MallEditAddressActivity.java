@@ -209,7 +209,6 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
                 addressBean.setDefault_flag("0");
             }
             getPresenter().saveMallAddress(addressBean);
-
         } else {
             String defaultAddress = "0";
             if (isAddressNormal) {
