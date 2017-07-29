@@ -948,6 +948,38 @@ public class DataStatistApiParam {
         data3.put("arg3", bannerName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+    /**
+     * 热门物品点击事件
+     */
+    public static void clickHotProduct(String productName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20285");
+        data3.put("arg1", "热门物品");
+        data3.put("arg3", productName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 全新上架物品点击事件
+     */
+    public static void clickNormalProduct(String productName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20286");
+        data3.put("arg1", "全新上架物品");
+        data3.put("arg3", productName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 尚品好吃分类的点击事件
+     */
+    public static void clickCategoryEat() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2043");
+        data3.put("act", "20287");
+        data3.put("arg1", "尚品好吃");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
 
     public static void onClickLiveRoomCloseToB(String videoName) {

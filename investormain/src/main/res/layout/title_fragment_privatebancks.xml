@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:orientation="horizontal"
-    android:padding="@dimen/ui_5_dip"
     >
 
     <ImageView
         android:id="@+id/privatebank_title_left"
-        android:layout_width="@dimen/ui_40_dip"
-        android:layout_height="@dimen/ui_40_dip"
+        android:layout_width="@dimen/ui_44_dip"
+        android:layout_height="@dimen/ui_44_dip"
         android:layout_gravity="center_vertical"
-        android:padding="@dimen/ui_10_dip"
-
-        android:src="@drawable/privatebank_title_left" />
+        android:clickable="true"
+        android:padding="@dimen/ui_11_dip"
+        android:scaleType="fitCenter"
+        android:src="@drawable/select_happy_life_toolbar_left" />
 
     <LinearLayout
         android:id="@+id/search_layout_main"
@@ -42,10 +42,11 @@
 
     <ImageView
         android:id="@+id/privatebank_title_right"
-        android:layout_width="@dimen/ui_40_dip"
-        android:layout_height="@dimen/ui_40_dip"
+        android:layout_width="@dimen/ui_44_dip"
+        android:layout_height="@dimen/ui_44_dip"
         android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/ui_5_dip"
-        android:padding="@dimen/ui_10_dip"
-        android:src="@drawable/title_new" />
+        android:clickable="true"
+        android:padding="@dimen/ui_11_dip"
+        android:scaleType="fitCenter"
+        android:src="@drawable/select_happy_life_toolbar_right" />
 </LinearLayout>

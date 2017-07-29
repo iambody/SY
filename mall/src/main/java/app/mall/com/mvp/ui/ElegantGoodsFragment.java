@@ -119,10 +119,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                     ElegantGoodsEntity.HotListItemBean clickBean = (ElegantGoodsEntity.HotListItemBean) bean;
                     name=clickBean.getGoodsName();
                     id=clickBean.getId();
+                    DataStatistApiParam.clickHotProduct(name);
                 } else {//全部产品
                     ElegantGoodsEntity.AllNewsItemBean clickBean = (ElegantGoodsEntity.AllNewsItemBean) bean;
                     id=clickBean.getId();
                     name=clickBean.getGoodsName();
+                    DataStatistApiParam.clickNormalProduct(name);
                 }
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
