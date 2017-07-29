@@ -139,6 +139,10 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     public void requestDataSuccess(boolean isRef) {
         clodLsAnim(swipeToLoadLayout);
         isLoadMore = false;
+        if (isRef) {
+            swipeTarget.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
+            emptyLinearLayout.setVisibility(mineActivitesListAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
