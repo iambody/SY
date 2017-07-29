@@ -112,6 +112,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.hasRecord = VideoStatus.RECORD;
                 viModel.encrypt = 1;
                 viModel.isDelete = VideoStatus.UNDELETE;
+                viModel.lecturerRemark=result.rows.lecturerRemark;
                 if (isInitData) {
                     viModel.status = VideoStatus.NONE;
                 }

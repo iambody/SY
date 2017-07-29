@@ -32,11 +32,11 @@
 
 
         </android.support.v7.widget.Toolbar>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_1_dip"
-            android:src="@color/app_split_line"
-            />
+            android:src="@color/app_split_line" />
     </android.support.design.widget.AppBarLayout>
 
 
@@ -103,12 +103,15 @@
                      android:layout_height="match_parent"
                      android:layout_above="@+id/tv_avd_allspace"
                      android:layout_below="@+id/v_avd_line">-->
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
                 <!--  </com.dinuscxj.refresh.RecyclerRefreshLayout>-->
                 <include
                     android:id="@+id/donedownload_title_lay"

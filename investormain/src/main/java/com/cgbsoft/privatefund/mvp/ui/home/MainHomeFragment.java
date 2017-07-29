@@ -20,7 +20,6 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
-import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -160,7 +159,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected boolean isVisible;
     //是否绑定理财师
 //    boolean isBindAdviser;
-    UserInfoDataEntity.UserInfo userInfo;
+//    UserInfoDataEntity.UserInfo userInfo;
 
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, infdataObservable;
@@ -242,13 +241,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*登录模式点击短信*/
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
-        Utils.sendSmsWithNumber(baseActivity, userInfo.adviserPhone);
+        Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
     }
 
     /*登录模式点击聊天*/
     @OnClick(R.id.main_home_adviser_im)
     public void onMainHomeAdviserImClicked() {
-        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, userInfo.toC.bandingAdviserId, userInfo.adviserRealName);
+        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId, AppManager.getUserInfo(baseActivity).adviserRealName);
     }
 
     /* 非游客模式头像的点击事件*/
@@ -336,11 +335,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
         main_home_live_lay.setOnClickListener(this);
-        boolean isVisiter = AppManager.isVisitor(baseActivity);
-        userInfo = AppManager.getUserInfo(baseActivity);
+//        userInfo = AppManager.getUserInfo(baseActivity);
 //        isBindAdviser = AppManager.isBindAdviser(baseActivity);
         //游客模式下或者没有绑定过理财师需要
-        if (isVisiter || !AppManager.isBindAdviser(baseActivity)) {
+        initDataInf();
+        initRxEvent();
+//        showLiveView();
+        mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
+    }
+
+    void initDataInf(){
+        if ( AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
@@ -351,7 +356,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             //游客模式
             mainHomeVisterLay.setVisibility(View.GONE);
             //开始填充登录模式下理财师数据
-            Imageload.displayListener(baseActivity, userInfo.bandingAdviserHeadImageUrl, mainHomeAdviserInfIv, new RequestListener() {
+            Imageload.displayListener(baseActivity, AppManager.getUserInfo(baseActivity).bandingAdviserHeadImageUrl, mainHomeAdviserInfIv, new RequestListener() {
                 @Override
                 public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
                     return false;
@@ -364,13 +369,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     return false;
                 }
             });
-            BStrUtils.SetTxt(mainHomeCardnumberTxt, userInfo.bandingAdviserUniqueCode);
+            BStrUtils.SetTxt(mainHomeCardnumberTxt, AppManager.getUserInfo(baseActivity).bandingAdviserUniqueCode);
         }
-        initRxEvent();
-//        showLiveView();
-        mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
     }
-
     /*  注册监听事件*/
     private void initRxEvent() {
         //游客登录进入正常模式
@@ -413,6 +414,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
                 hindCard();
                 initshowlay();
+                initDataInf();
             }
 
             @Override
@@ -642,6 +644,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
         getPresenter().getHomeData();
+
+        RxBus.get().post(RxConstant.MAIN_FRESH_LAY,5);
     }
 
     /* scrollview滑动时候的监听*/
