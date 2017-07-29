@@ -147,13 +147,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void data() {
-        mWebview.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String s, String s1, String s2, String s3, long l) {
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+        mWebview.setDownloadListener((s, s1, s2, s3, l) -> {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 //        mWebview.loadUrl(url);
         if (!TextUtils.isEmpty(getRegeistRxBusId())) {

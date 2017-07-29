@@ -63,7 +63,8 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @BindView(R.id.gunlun_ll)
     LinearLayout linearLayout;
 
-    private boolean isBindAdviser;
+//    private boolean isBindAdviser;
+    private String accountType;
     private boolean loading;
 
     private List<String> mList;
@@ -75,7 +76,8 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
+//        isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
+        accountType = AppManager.getUserInfo(this).getToC().getCustomerIdType();
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
         titleRight.setText(R.string.rc_confirm);
         backImage.setVisibility(View.VISIBLE);
@@ -84,7 +86,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     }
 
     private void initView() {
-        if (isBindAdviser) {
+        if (!TextUtils.isEmpty(accountType)) {
             realName.setEnabled(false);
             certifyType.setEnabled(false);
             certifyNumber.setEnabled(false);
@@ -92,9 +94,9 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         realName.setText(AppManager.getUserInfo(this).getToC().getCustomerName());
         certifyType.setText(AppManager.getUserInfo(this).getToC().getCustomerIdType());
         certifyNumber.setText(AppManager.getUserInfo(this).getToC().getCustomerIdNumber());
-        titleRight.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
-        invisiteCertifyPrompt.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
-        linearLayout.setVisibility(isBindAdviser ? View.GONE : View.VISIBLE);
+        titleRight.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
+        invisiteCertifyPrompt.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
+        linearLayout.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         certifyType.setOnFocusChangeListener((v, hasFocus) -> {
             ViewUtils.hideInputMethod(certifyType);
             linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);

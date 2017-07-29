@@ -28,6 +28,31 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center"
+            android:id="@+id/empty_ll">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_empty_list"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前暂无活动"
+                android:textSize="@dimen/dimens_sp_14"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+
+
+        </LinearLayout>
+
         <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
             android:id="@+id/swipe_load_more_footer"
             android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -53,6 +54,9 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
 
     @BindView(R.id.iv_title_right)
     ImageView imageViewRight;
+
+    @BindView(R.id.empty_ll)
+    LinearLayout emptyLinearLayout;
 
     private static final int PAGE_LIMIT = 20;
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
