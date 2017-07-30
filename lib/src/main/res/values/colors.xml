@@ -47,13 +47,14 @@
     <color name="dialog_transparent">#55666666</color>
     <color name="dialog_transparent1">#80000000</color>
     <color name="transparent1">#eecccccc</color>
-    <color name="transparent2">#40cccccc</color>
+    <color name="transparent2">#40eeeeee</color>
     <color name="gray_font">#bebebe</color> <!-- 字体灰 -->
 
     <color name="tv_gray">#666666</color>
     <color name="tv_blue">#308BE9</color>
     <color name="divider_gray">#d9d9d9</color>
     <color name="orange">#f47900</color>
+    <color name="halfblack">#44000000</color>
 
     <color name="color1">#ff8836</color>
     <color name="color2">#e84c1a</color>
@@ -133,4 +134,6 @@
     <color name="apply_zx_serv_bankgroud">#efeff4</color>
     <color name = "wheel_text_blue">#007aff</color>
     <color name = "color_a6a6a6">#a6a6a6</color>
+
+    <color name="hintcolor">#595959</color>
 </resources>

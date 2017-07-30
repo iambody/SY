@@ -8,6 +8,8 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 
+import java.util.HashMap;
+
 /**
  * @author chenlong
  *         登出账号
@@ -23,10 +25,12 @@ public class LogOutAccount {
             AppInfStore.saveRongTokenExpired(context, 0);
             ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
             AppInfStore.saveUserAccount(context, null);
-            NavigationUtils.startActivityByRouter(context, "enter_loginactivity");
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("ialoginout",true);
+            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map);
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity) context).finish();
-            AppInfStore.saveIsVisitor(context, false);
+            AppInfStore.saveIsVisitor(context, true);
             //退出时清空融云token en
 //            SharedPreferences sharedPreferences = context.getSharedPreferences("tokenExpired.xml", Context.MODE_PRIVATE);
 //            SharedPreferences.Editor edit = sharedPreferences.edit();

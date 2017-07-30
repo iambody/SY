@@ -51,7 +51,6 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
     }
 
     private void initView() {
-
         initConfig();
         initfindview();
     }
@@ -74,8 +73,8 @@ public class HomeSignDialog extends BaseDialog implements View.OnClickListener {
 //填充数据
         SpannableString spannableString = SpannableUtils.setTextColorSize(pContext, content, left.length(), left.length() + award.length(), R.color.app_golden, 140);
         homesign_data_title.setText(spannableString);
-        homesign_title.setText(String.format("尊敬的%s,欢迎您来到私享云", BStrUtils.isEmpty(AppManager.getUserInfo(pContext).getRealName()) ? "用户" : AppManager.getUserInfo(pContext).getRealName()));
-        homesign_next_title.setText(String.format("明日奖励%s云豆", (mysSignBean.coinNum + 1) + ""));
+        homesign_title.setText(String.format("尊敬的%s,欢迎您来到私享云", BStrUtils.isEmpty(AppManager.getUserInfo(pContext).getNickName()) ? "用户" : AppManager.getUserInfo(pContext).getNickName()));
+        homesign_next_title.setText(String.format("明日奖励%s云豆", mysSignBean.tomorrowCoinNum  + ""));
     }
 
     private void initConfig() {

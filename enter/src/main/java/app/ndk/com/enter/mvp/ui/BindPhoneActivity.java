@@ -228,6 +228,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     public void onViewClicked() {//跳转首页
         AppInfStore.saveIsVisitor(baseContext,false);
         RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  1);
+        RxBus.get().post(RxConstant.LOGIN_KILL,2);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }

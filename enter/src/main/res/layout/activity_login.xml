@@ -99,6 +99,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/al_username_str"
                     android:inputType="number"
+
                     android:maxLength="11"
                     android:maxLines="1"
                     android:scrollHorizontally="true" />
@@ -132,7 +133,6 @@
                 android:id="@+id/home_name_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 app:hintTextAppearance="@style/textinput_style">
 
                 <EditText
@@ -145,9 +145,12 @@
                     android:gravity="center_vertical"
                     android:hint="@string/al_password_str"
                     android:inputType="textPassword"
+
                     android:maxLines="1"
                     android:saveEnabled="false"
-                    android:scrollHorizontally="true" />
+                    android:scrollHorizontally="true"
+
+                    android:textStyle="bold" />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
@@ -175,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/al_register_str"
-                android:textColor="@color/tv_gray"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -184,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="@string/al_forget_str"
-                android:textColor="@color/tv_gray"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -200,7 +203,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
-            android:textColor="@color/black"
+            android:textColor="@color/halfblack"
             android:textSize="18sp" />
 
         <TextView

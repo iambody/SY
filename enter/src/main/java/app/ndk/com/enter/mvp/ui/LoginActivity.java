@@ -131,6 +131,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isFromInside;
     //是否从app内的我的进来的
     private boolean isFromInsidemy;
+    //是否退出登录进来
+    private boolean ialoginout;
 
     private boolean showSelectAddress;
 
@@ -172,6 +174,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
         isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
+        ialoginout=getIntent().getBooleanExtra("ialoginout", false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -193,7 +196,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         } else {
             initoutSideComeIn();
         }
-
+//        et_al_username.setTextColor(getResources().getColor(R.color.hintcolor));
+//        et_al_username.setHintTextColor(getResources().getColor(R.color.hintcolor));
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
@@ -615,7 +619,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         AppInfStore.saveIsVisitor(baseContext, true);
         AppInfStore.saveIsLogin(baseContext.getApplicationContext(), true);
         //xxxxxxxxxxx
-
         Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         finish();
     }

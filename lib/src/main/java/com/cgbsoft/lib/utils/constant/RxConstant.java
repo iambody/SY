@@ -96,4 +96,8 @@ public interface RxConstant {
     String DELETE_ADDRESS = "delete_address";
 
     String LOGIN_KILL="login_kill";
+
+    String MAIN_PAGE_KILL = "mainpagekill";
+
+    String MAIN_PAGE_KILL_START = "mainpagekillstart";
 }

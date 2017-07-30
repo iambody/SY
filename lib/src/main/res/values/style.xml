@@ -23,6 +23,7 @@
     <style name="BaseActionBar.MenuText1Style" parent="BaseActionBar.MenuTextStyle">
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="hintColor" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@color/black</item>
     </style>
@@ -48,6 +49,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="normal_alphbtn2">
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/black</item>
@@ -56,6 +58,7 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="normal_alphbtn1">
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/black</item>
@@ -69,12 +72,13 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/gray_font</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColorHint">@color/tv_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColorHint">@color/hintcolor</item>
+        <item name="android:textColor">@color/hintcolor</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="normal_edit1">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -83,6 +87,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColorHint">@color/tv_gray</item>
     </style>
+
     <style name="normal_line">
         <item name="android:layout_marginLeft">40dp</item>
         <item name="android:layout_marginRight">40dp</item>
@@ -90,6 +95,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
+
     <style name="normal_line3">
         <item name="android:layout_marginLeft">40dp</item>
         <item name="android:layout_marginRight">40dp</item>
@@ -97,6 +103,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
     </style>
+
     <style name="normal_line1">
         <item name="android:layout_marginLeft">60dp</item>
         <item name="android:layout_marginRight">40dp</item>
@@ -144,6 +151,7 @@
 
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="btn_checkcode_bg_style">
 
         <item name="android:textColor">@color/black</item>
@@ -152,6 +160,7 @@
 
         <item name="android:layout_marginRight">20dp</item>
     </style>
+
     <style name="btn_red_bg_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -246,6 +255,7 @@
         <item name="android:windowBackground">@color/dialog_transparent1</item>
 
     </style>
+
     <style name="dialog_comment_style4">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -254,6 +264,7 @@
         <item name="android:windowBackground">@color/transparent</item>
 
     </style>
+
     <style name="dialog_alpha">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
@@ -287,13 +298,15 @@
         <item name="android:windowEnterAnimation">@anim/dialog_commont_anim_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_commont_anim_exit</item>
     </style>
+
     <style name="textInputStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/gray_font</item>
     </style>
+
     <style name="textinput_style">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray_font</item>
+        <item name="android:textColor">@color/hintcolor</item>
     </style>
 
 </resources>
