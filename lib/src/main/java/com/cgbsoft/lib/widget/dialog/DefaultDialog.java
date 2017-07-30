@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,13 +40,10 @@ public abstract class DefaultDialog extends BaseDialog {
      * @param right   右按钮显示内容
      */
     public DefaultDialog(Context context, String content, String left, String right) {
-        this(context, R.style.ios_dialog_alpha);
+        this(context, R.style.dialog_comment_style);
         this.content = content;
         this.left = left;
         this.right = right;
-        if (TextUtils.isEmpty(left)) {
-            setSingleBtn();
-        }
     }
 
     /**
@@ -60,9 +60,24 @@ public abstract class DefaultDialog extends BaseDialog {
         setContentView(R.layout.view_dialog_default);
         bindViews();
         init();
+        initConfig();
     }
+    private void initConfig() {
+        //配置信息
+        WindowManager.LayoutParams wparams = getWindow().getAttributes();
+        wparams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wparams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        wparams.gravity = Gravity.BOTTOM;
+        getWindow().setAttributes(wparams);
+        //开始初始化
 
+        getWindow().setWindowAnimations(R.style.dialog_commont_anims_style);
+
+    }
     private void init() {
+        if (TextUtils.isEmpty(left)) {
+            setSingleBtn();
+        }
         mContent.setText(content);
         mQuxiao.setText(left);
         mQueren.setText(right);
