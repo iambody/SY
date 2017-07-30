@@ -13,6 +13,7 @@
         android:clickable="true"
         android:padding="@dimen/ui_11_dip"
         android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/select_happy_life_toolbar_left" />
 
     <LinearLayout
@@ -48,5 +49,6 @@
         android:clickable="true"
         android:padding="@dimen/ui_11_dip"
         android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/select_happy_life_toolbar_right" />
 </LinearLayout>
