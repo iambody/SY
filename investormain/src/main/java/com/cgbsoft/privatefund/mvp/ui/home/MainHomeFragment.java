@@ -316,10 +316,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 
     }
-
-
    /*  配置view各种资源*/
-
     private void initConfig() {
         /* 直播 */
         view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
@@ -443,7 +440,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
-                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time+"开播");
+                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
 
                         view_live_title_tag_iv.setVisibility(View.INVISIBLE);
                         break;
@@ -455,7 +452,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
-                        BStrUtils.SetTxt(view_live_title, "正在直播");
+                        BStrUtils.SetTxt(view_live_title, "正在直播:");
                         BStrUtils.SetTxt(view_live_title_tag, "正在直播");
                         view_live_title_tag_iv.setVisibility(View.VISIBLE);
                         break;
@@ -648,7 +645,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //请求数据
         getPresenter().getHomeData();
 
-        RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
+      RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
     }
 
     /* scrollview滑动时候的监听*/

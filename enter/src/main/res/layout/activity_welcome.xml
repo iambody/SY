@@ -13,6 +13,7 @@
         android:id="@+id/iv_wel_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_gravity="bottom|center_horizontal"
         android:src="@drawable/bg_bottom_welcomenew"
          />

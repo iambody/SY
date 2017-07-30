@@ -154,11 +154,11 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     void okClick() {
         String userName = et_ab_username.getText().toString();
         String code = et_ab_check.getText().toString();
-        if (!isUsernameInput) {
+        if (BStrUtils.isEmpty(userName)) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!isCheckInput) {
+        if (BStrUtils.isEmpty(code)) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }
