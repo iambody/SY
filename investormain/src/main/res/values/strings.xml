@@ -163,6 +163,7 @@
     <string name="certify_number">证件号码</string>
     <string name="invisite_account_prompt">温馨提示：请填写您的真实信息，以便私行家为您提供更精准的服务</string>
     <string name="invisit_account_input_prompt">请输入%s</string>
+    <string name="invisit_account_input_right_prompt">请输入正确的%s</string>
 
     <!-- 我的 -->
     <string name="mine_order">我的订单</string>
