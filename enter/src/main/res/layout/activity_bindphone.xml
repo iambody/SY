@@ -32,9 +32,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"
                 android:padding="@dimen/ui_15_dip"
-                android:src="@drawable/ic_toolbar_back" />
+                android:src="@drawable/ic_toolbar_back"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="wrap_content"
