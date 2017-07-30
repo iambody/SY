@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="订单"
+            android:text="生活订单"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16"/>
 
@@ -30,6 +30,7 @@
             android:text="管理收货地址"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/icon_right_arrow"
+            android:gravity="center"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dimens_sp_14"/>
 

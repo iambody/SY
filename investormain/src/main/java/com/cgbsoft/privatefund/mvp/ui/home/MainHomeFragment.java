@@ -249,7 +249,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*登录模式点击聊天*/
     @OnClick(R.id.main_home_adviser_im)
     public void onMainHomeAdviserImClicked() {
-        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId, AppManager.getUserInfo(baseActivity).adviserRealName);
+        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId.concat(ADVICE_ID), AppManager.getUserInfo(baseActivity).adviserRealName);
     }
 
     /* 非游客模式头像的点击事件*/

@@ -139,6 +139,8 @@ public interface Constant {
     public static final String IMAGE_RIGHT_DELETE = "show_right_delete";
     public static final String IMAGE_THREM_LOCAL = "image_thmb_local";
 
+    public static final String ADVICE_ID = "_B";
+
     //消息模块特殊处理的ID
     //平台客服
     public static final String msgCustomerService = "dd0cc61140504258ab474b8f0a38bb56";
