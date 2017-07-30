@@ -135,7 +135,6 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
     }
 
 
-
     @Override
     public void sendMsg(HashMap<String, Object> map) {
 
@@ -161,11 +160,7 @@ public class LivePresenter extends BasePresenterImpl<LiveContract.view> implemen
         ApiClient.getLivePDF(roomId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                try {
-                    getView().getPDFSuc(new JSONObject(s).getJSONArray("result").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                getView().getPDFSuc(s);
             }
 
             @Override
