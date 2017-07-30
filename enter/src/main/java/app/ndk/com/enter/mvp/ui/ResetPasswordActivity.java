@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -33,7 +34,6 @@ import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.ResetPasswordContract;
 import app.ndk.com.enter.mvp.presenter.ResetPasswordPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -124,7 +124,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPresenter> 
             isFromVerifyFogetPwd = getIntent().getStringExtra(FROMVERIFYTAG).equals("1");
         }
         identity = getIntent().getIntExtra(IDS_KEY, -1);
-
+        AppInfStore.saveIsVisitor(baseContext,false);
         et_af_username.addTextChangedListener(new ForgetTextWatcher(USERNAME_KEY));
         et_af_check.addTextChangedListener(new ForgetTextWatcher(CHECK_KEY));
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.sending_str), false, false);

@@ -949,26 +949,35 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
-     * 尚品类型点击事件
+     * 热门物品点击事件
      */
-    public static void clickCategory(String categoryName) {
+    public static void clickHotProduct(String productName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2042");
         data3.put("act", "20285");
-        data3.put("arg1", "尚品类型");
-        data3.put("arg3", categoryName);
+        data3.put("arg1", "热门物品");
+        data3.put("arg3", productName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
-     * 商品点击事件
+     * 全新上架物品点击事件
      */
-    public static void clickProduct(String productName,String categoryName) {
+    public static void clickNormalProduct(String productName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2042");
         data3.put("act", "20286");
-        data3.put("arg1", "商品");
+        data3.put("arg1", "全新上架物品");
         data3.put("arg3", productName);
-        data3.put("arg4", categoryName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 尚品分类的点击事件
+     */
+    public static void clickCategoryEat(String categoryName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2043");
+        data3.put("act", "20287");
+        data3.put("arg1", "尚品好吃");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
     /**
@@ -1413,6 +1422,42 @@ public class DataStatistApiParam {
         data3.put("grp", "2054");
         data3.put("act", "20327");
         data3.put("arg1", "保存");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击短信
+     */
+    public static void homeClickNote() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20075");
+        data3.put("arg1", "短信");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击对话
+     */
+    public static void homeClickDuiHua() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20076");
+        data3.put("arg1", "短信");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击客服
+     */
+    public static void homeClickKeFu() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20078");
+        data3.put("arg1", "客服");
+        data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 

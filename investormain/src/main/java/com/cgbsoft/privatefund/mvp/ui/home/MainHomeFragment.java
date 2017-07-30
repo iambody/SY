@@ -242,6 +242,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
         Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
+        DataStatistApiParam.homeClickNote();
     }
 
     /*登录模式点击聊天*/
@@ -299,6 +300,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
         getPresenter().gotoConnectAdviser();
+        DataStatistApiParam.homeClickDuiHua();
     }
 
 
@@ -312,6 +314,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {//非游客模式
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
+
     }
 
 
@@ -344,8 +347,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
     }
 
-    void initDataInf(){
-        if ( AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
+    void initDataInf() {
+        if (AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
             //登录模式
             mainHomeLoginLay.setVisibility(View.GONE);
             //游客模式
@@ -372,6 +375,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             BStrUtils.SetTxt(mainHomeCardnumberTxt, AppManager.getUserInfo(baseActivity).bandingAdviserUniqueCode);
         }
     }
+
     /*  注册监听事件*/
     private void initRxEvent() {
         //游客登录进入正常模式
@@ -439,7 +443,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
-                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time);
+                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time+"开播");
 
                         view_live_title_tag_iv.setVisibility(View.INVISIBLE);
                         break;
@@ -450,9 +454,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         //标题和内容
-                        BStrUtils.SetTxt(view_live_content, liveInfBean.content);
+                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
                         BStrUtils.SetTxt(view_live_title, "正在直播");
-                        BStrUtils.SetTxt(view_live_title_tag, "观看直播");
+                        BStrUtils.SetTxt(view_live_title_tag, "正在直播");
                         view_live_title_tag_iv.setVisibility(View.VISIBLE);
                         break;
                     case 2://无直播
@@ -511,7 +515,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected MainHomePresenter createPresenter() {
         return new MainHomePresenter(baseActivity, this);
     }
-
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {
@@ -645,7 +648,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //请求数据
         getPresenter().getHomeData();
 
-        RxBus.get().post(RxConstant.MAIN_FRESH_LAY,5);
+        RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
     }
 
     /* scrollview滑动时候的监听*/
