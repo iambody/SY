@@ -42,7 +42,9 @@ public class UnreadInfoNumber {
         }
         int numberNum = AppManager.getUnreadInfoNumber(activity);
         if (badgeView == null) {
-            badgeView = ViewUtils.createLeftTopRedPoint(activity, showView, numberNum);
+            if (numberNum > 0) {
+                badgeView = ViewUtils.createLeftTopRedPoint(activity, showView, numberNum);
+            }
         } else {
             if (numberNum > 0) {
                 badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
