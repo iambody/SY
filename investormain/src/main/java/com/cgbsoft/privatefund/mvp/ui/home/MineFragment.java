@@ -42,6 +42,7 @@ import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -98,13 +99,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView userLeaguarUpdateDesc;
 
     @BindView(R.id.mine_caifu_value)
-    TextView textViewCaifu;
+    AutofitTextView textViewCaifu;
 
     @BindView(R.id.mine_yundou_id)
     AutofitTextView textViewYundou;
 
     @BindView(R.id.mine_private_banker_id)
-    TextView textViewPrivateBanker;
+    AutofitTextView textViewPrivateBanker;
 
     @BindView(R.id.mine_account_info_qiandao_ll)
     LinearLayout linearLayoutQiandao;
@@ -455,6 +456,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_account_info_activity_ll)
     void gotoMineActiviteActivity() {
         NavigationUtils.startActivity(getActivity(), MineActiviesActivity.class);
+        DataStatistApiParam.operateMineActivityClick();
     }
 
     @OnClick(R.id.mine_account_info_ticket_ll)
@@ -465,6 +467,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_card_coupons));
         intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
+        DataStatistApiParam.operateMineCardQuanClick();
     }
 
     @OnClick(R.id.mine_account_info_cards_ll)
@@ -562,6 +565,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_order));
         intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
+        DataStatistApiParam.operateWaitSendClick();
     }
 
     @OnClick(R.id.account_order_receive_ll)
@@ -572,6 +576,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_order));
         intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
+        DataStatistApiParam.operateWaitReceiveClick();
     }
 
     @OnClick(R.id.account_order_finished_ll)
@@ -617,6 +622,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_order));
         intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
+        DataStatistApiParam.operateMineOrderAllClick();
     }
 
     @OnClick(R.id.account_health_to_look_server)
@@ -632,6 +638,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
         intent.putExtra(WebViewConstant.right_message_index, true);
         startActivity(intent);
+        DataStatistApiParam.operateMineHealthClick();
     }
 
     private void initMineInfo(MineModel mineModel) {

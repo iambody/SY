@@ -171,7 +171,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             Toast.makeText(FeedbackActivity.this, "最多上传12张图片", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (imagePaths.get(imagePaths.size() - 1).equals("+")) {
+        if (imagePaths.size()>0&&imagePaths.get(imagePaths.size() - 1).equals("+")) {
             imagePaths.remove(imagePaths.size() - 1);
         }
         NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
@@ -180,7 +180,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void onResume() {
         super.onResume();
-        if (imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+        if (imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
             imagePaths.add("+");
             feedbackAdapter.notifyDataSetChanged();
         }

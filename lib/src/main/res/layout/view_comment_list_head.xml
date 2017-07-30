@@ -14,6 +14,7 @@
         android:text="下拉即可刷新"
         android:textColor="@color/app_golden"
         android:textSize="@dimen/dimens_sp_14"
+        android:padding="10dp"
         />
         <!--android:textStyle="italic" />-->
 </LinearLayout>

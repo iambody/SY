@@ -87,6 +87,7 @@ public class PrivateBanksFragment extends BasePageFragment {
             intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
             intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
             getActivity().startActivity(intent);
+            DataStatistApiParam.operatePrivateBankPersonalClick();
         });
         privatebank_title_right = (ImageView) titleView.findViewById(R.id.privatebank_title_right);
         privatebank_title_right.setOnClickListener(v -> {
@@ -98,12 +99,13 @@ public class PrivateBanksFragment extends BasePageFragment {
                 return;
             }
             NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+            DataStatistApiParam.operatePrivateBankMessageClick();
         });
         search.setOnClickListener(v -> {
             Intent i = new Intent(baseActivity, SearchBaseActivity.class);
             i.putExtra(SearchBaseActivity.TYPE_PARAM, SearchBaseActivity.PRODUCT);
             baseActivity.startActivity(i);
-            DataStatistApiParam.onStatisToCProductSearchClick();
+            DataStatistApiParam.operatePrivateBankSearchClick();
         });
     }
 

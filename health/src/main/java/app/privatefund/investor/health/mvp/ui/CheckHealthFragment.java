@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
@@ -76,6 +77,18 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
     @Override
     protected HealthListPresenter createPresenter() {
         return new HealthListPresenter(getActivity(), this, isCheckHealth);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (isCheckHealth) {
+                DataStatistApiParam.operateHealthCheckClick();
+            } else {
+                DataStatistApiParam.operateHealthMedcialClick();
+            }
+        }
     }
 
     @Override

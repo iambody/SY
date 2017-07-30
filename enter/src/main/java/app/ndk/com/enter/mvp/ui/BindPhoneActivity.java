@@ -121,7 +121,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     @OnClick(R2.id.iv_ab_back)
     void backClick() {
 //        Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
-        finish();
+//        finish();
     }
 
     /**

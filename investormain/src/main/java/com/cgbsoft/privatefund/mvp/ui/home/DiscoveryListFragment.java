@@ -13,6 +13,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -133,6 +134,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         CurrentPostion = CurrentPostion + 1;
         isLoadMore = true;
         getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
     }
 
     @Override
@@ -143,6 +145,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         if (discoveryFragment != null) {
             discoveryFragment.refrushListData();
         }
+        DataStatistApiParam.operatePrivateBankDiscoverUpRefrushClick();
     }
 
     @Override
