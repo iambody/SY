@@ -75,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_below="@+id/user_leaguar_update_desc"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
@@ -109,6 +109,11 @@
                 autofit:minTextSize="16sp"/>
 
         </LinearLayout>
+
+        <TextView
+            android:layout_height="30dp"
+            android:layout_width="0.5dp"
+            android:background="@color/app_split_line"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -149,6 +154,11 @@
                 <!--android:text="2350"-->
                 <!--android:id="@+id/mine_yundou_id"/>-->
         </LinearLayout>
+
+        <TextView
+            android:layout_height="30dp"
+            android:layout_width="0.5dp"
+            android:background="@color/app_split_line"/>
 
         <LinearLayout
             android:layout_width="0dp"
