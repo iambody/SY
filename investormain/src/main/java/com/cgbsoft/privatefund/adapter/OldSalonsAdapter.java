@@ -41,7 +41,7 @@ public class OldSalonsAdapter extends RecyclerView.Adapter<OldSalonsAdapter.OldS
         holder.salonAddress.setText(salonItemBean.getCity());
         holder.salonDate.setText(salonItemBean.getStartTime());
         holder.salonTitle.setText(salonItemBean.getTitle());
-        holder.salonDepict.setText("主讲嘉宾：".concat(salonItemBean.getSpeaker()));
+        holder.salonDepict.setText("已结束");
         if (null != listener) {
             holder.layoutAll.setOnClickListener(new View.OnClickListener() {
                 @Override
