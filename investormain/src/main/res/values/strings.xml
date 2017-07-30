@@ -232,6 +232,7 @@
     <string name="myqr">我的二维码</string>
     <string name="mymember">我的会员</string>
     <string name="upload_icon_fail">上传头像失败</string>
+    <string name="private_bank_personal">私行家-</string>
 
     <string name="relative_asset_past">审核通过</string>
     <string name="relative_asset_doing">审核中</string>
