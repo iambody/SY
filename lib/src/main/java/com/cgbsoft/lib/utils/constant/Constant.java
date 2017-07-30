@@ -184,5 +184,5 @@ public interface Constant {
     };
 
     //分享时候的外网log地址
-    public static final String SHARE_LOG="http://www.simuyun.com/images/MobileImages/simuyunlogo.png";//"http://www.simuyun.com/images/simuyunlogo.png";
+    public static final String SHARE_LOG="https://upload.simuyun.com/live/106985cc-749d-449e-aaf0-2adfef274469.png";//"http://www.simuyun.com/images/simuyunlogo.png";
 }

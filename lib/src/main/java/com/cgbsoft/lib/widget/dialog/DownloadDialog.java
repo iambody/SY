@@ -69,6 +69,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     private int downloadApkToken;
     private String downloadApkPath;
     private boolean formSetting;
+    private TextView new_version_code;
 
 
     public DownloadDialog(Context context, boolean isOpenWindow, boolean fromSetting) {
@@ -106,6 +107,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         tv_vcd_message = (TextView) dialog.findViewById(R.id.tv_vcd_message);
         btn_vcd_sure = (TextView) dialog.findViewById(R.id.btn_vcd_sure);
         iv_vcd_cancel = (ImageView) dialog.findViewById(R.id.iv_vcd_cancel);
+        new_version_code = (TextView) dialog.findViewById(R.id.new_version_code);
 
         btn_vcd_sure.setOnClickListener(this);
         iv_vcd_cancel.setOnClickListener(this);
@@ -139,6 +141,8 @@ public class DownloadDialog implements View.OnClickListener, Constant {
                     iv_vcd_cancel.setVisibility(View.GONE);
                 }
                 tv_vcd_message.setText(result.adverts);
+                new_version_code.setText(result.version);
+
                 downloadUrl = result.downUrl;
 
                 OtherInfo info = daoUtils.getOtherInfo(APP_DOWNLOAD_PATH);
