@@ -1,6 +1,8 @@
 package app.privatefund.com.im.listener;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -78,7 +80,7 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
     @Override
     public void onItemClick(View view, int i, ProductMessage productMessage, UIMessage uiMessage) {
         final String schemeId = productMessage.getSchemeId();
-        if (!AppManager.isInvestor(view.getContext())) {
+//        if (!AppManager.isInvestor(view.getContext())) {
 //            JSONObject j = new JSONObject();
 //            try {
 //                j.put("schemeId", schemeId);
@@ -101,16 +103,26 @@ public class ProductMessageItemProvider extends IContainerItemProvider.MessagePr
 //                public void onErrorResponse(String error, int statueCode) {
 //                }
 //            });
-        } else {
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.product + schemeId);
-            hashMap.put(WebViewConstant.push_message_title, "产品详情");
-            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
-            hashMap.put(WebViewConstant.RIGHT_SAVE, false);
-            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-            hashMap.put(WebViewConstant.PAGE_INIT, false);
-            NavigationUtils.startActivityByRouter(view.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap, 300);
-        }
+//        } else {
+//            HashMap<String, Object> hashMap = new HashMap<>();
+//            hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.product + schemeId);
+//            hashMap.put(WebViewConstant.push_message_title, "产品详情");
+//            hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
+//            hashMap.put(WebViewConstant.RIGHT_SAVE, false);
+//            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+//            hashMap.put(WebViewConstant.PAGE_INIT, false);
+//            NavigationUtils.startActivityByRouter(view.getContext(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap, 300);
+
+        HashMap hashMap = new HashMap();
+        hashMap.put(WebViewConstant.push_message_url,  CwebNetConfig.productDetail.concat(schemeId));
+        hashMap.put(WebViewConstant.push_message_title,  "产品详情");
+        hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, true);
+        hashMap.put(WebViewConstant.RIGHT_SAVE, false);
+        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+        hashMap.put(WebViewConstant.PAGE_INIT, false);
+        NavigationUtils.startActivityByRouter(view.getContext(), RouteConfig.GOTOPRODUCTDETAIL, hashMap, 300);
+
+//        }
     }
 
     @Override
