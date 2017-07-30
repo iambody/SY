@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="私行"
+            android:text="金融资产"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16"/>
 
@@ -36,7 +36,10 @@
 
     </LinearLayout>
 
-    <include layout="@layout/acitivity_divide_online"/>
+    <include layout="@layout/acitivity_divide_online"
+        android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        />
     
     <FrameLayout
         android:layout_width="match_parent"
@@ -54,21 +57,25 @@
                 android:text="@string/account_bank_no_bugy"
                 android:gravity="center"/>
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
                 android:id="@+id/account_bank_go_look_product"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_bank_browse_buy"
                 android:gravity="center"
                 android:textColor="@color/app_golden"/>
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
                 android:id="@+id/account_bank_go_relative_assert"
                 android:background="@drawable/shape_btn_goden_boader_bg"
                 android:text="@string/account_bank_no_relative_assert"

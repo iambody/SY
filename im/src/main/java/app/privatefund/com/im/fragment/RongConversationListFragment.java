@@ -73,7 +73,6 @@ import io.rong.imkit.model.Event.SyncReadStatusEvent;
 import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.utilities.OptionsPopupDialog;
-import io.rong.imkit.utilities.OptionsPopupDialog.OnOptionsItemClickedListener;
 import io.rong.imkit.widget.adapter.ConversationListAdapter.OnPortraitItemClick;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.RongIMClient.ConnectionStatusListener.ConnectionStatus;
@@ -246,7 +245,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, noticeId);
         }
         conversation.setConversationTitle("");
-        conversation.setPortraitUrl(NetConfig.getDefaultRemoteLogin);
+        conversation.setPortraitUrl(NetConfig.noticeRemoteLogin);
         UIConversation uiConversation;
 
 
@@ -300,9 +299,34 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         } else {
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, Constant.msgCustomerService);
         }
-        conversation.setConversationTitle("");
+        conversation.setConversationTitle("私享云客服");
         conversation.setTop(true);
-        conversation.setPortraitUrl(NetConfig.getDefaultRemoteLogin);
+        conversation.setPortraitUrl(NetConfig.defaultRemoteLogin);
+        UIConversation uiConversation;
+
+        if(position < 0) {
+            conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
+            uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
+            int index = RongConversationListFragment.this.getPosition(uiConversation);
+            RongConversationListFragment.this.mAdapter.add(uiConversation, index);
+            RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
+        } else {
+            uiConversation = (UIConversation)RongConversationListFragment.this.mAdapter.getItem(position);
+            uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
+            RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
+        }
+    }
+
+    public void addSystemServer() {
+        Conversation conversation = Conversation.obtain(ConversationType.PRIVATE, Constant.msgSystemStatus, "");
+        int position;
+        if(RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE)) {
+            position = RongConversationListFragment.this.mAdapter.findGatheredItem(ConversationType.PRIVATE);
+        } else {
+            position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, Constant.msgSystemStatus);
+        }
+        conversation.setConversationTitle("系统通知");
+        conversation.setPortraitUrl(NetConfig.systemRemoteLogin);
         UIConversation uiConversation;
 
         if(position < 0) {
@@ -371,6 +395,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 if (!isNoticeList) {
                     addNoticeItem();
                     addPlamtformServer();
+                    addSystemServer();
                 }
 
             }
@@ -557,6 +582,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(SyncReadStatusEvent event) {
+        System.out.println("-----------rongconversation------SyncReadStatusEvent");
         ConversationType conversationType = event.getConversationType();
         String targetId = event.getTargetId();
         RLog.d(this.TAG, "SyncReadStatusEvent " + conversationType + " " + targetId);
@@ -580,6 +606,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(ReadReceiptEvent event) {
+        System.out.println("-----------rongconversation------ReadReceiptEvent");
         ConversationType conversationType = event.getMessage().getConversationType();
         String targetId = event.getMessage().getTargetId();
         int originalIndex = this.mAdapter.findPosition(conversationType, targetId);
@@ -595,6 +622,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(AudioListenedEvent event) {
+        System.out.println("-----------rongconversation------AudioListenedEvent");
         Message message = event.getMessage();
         ConversationType conversationType = message.getConversationType();
         String targetId = message.getTargetId();
@@ -698,6 +726,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(OnReceiveMessageEvent event) {
+        System.out.println("-----------rongconversation------OnReceiveMessageEvent");
         Message message = event.getMessage();
         String targetId = message.getTargetId();
         ConversationType conversationType = message.getConversationType();
@@ -764,6 +793,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(MessageLeftEvent event) {
+        System.out.println("-----------rongconversation------MessageLeftEvent");
         if(event.left == 0) {
             this.syncUnreadCount();
         }
@@ -814,6 +844,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(MessageRecallEvent event) {
+        System.out.println("-----------rongconversation------MessageRecallEvent");
         RLog.d(this.TAG, "MessageRecallEvent");
         int count = this.mAdapter.getCount();
 
@@ -866,10 +897,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 break;
             }
         }
-
     }
 
     public void onEventMainThread(RemoteMessageRecallEvent event) {
+        System.out.println("-----------rongconversation------RemoteMessageRecallEvent");
         RLog.d(this.TAG, "RemoteMessageRecallEvent");
         int count = this.mAdapter.getCount();
 
@@ -892,7 +923,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                                 RongConversationListFragment.this.mAdapter.add(uiConversation, newIndex);
                                 RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
                             }
-
                         }
 
                         public void onError(ErrorCode e) {
@@ -923,6 +953,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(Message message) {
+        System.out.println("-----------rongconversation------Message");
         ConversationType conversationType = message.getConversationType();
         String targetId = message.getTargetId();
         RLog.d(this.TAG, "Message: " + message.getObjectName() + " " + message.getMessageId() + " " + conversationType + " " + message.getSentStatus());
@@ -958,11 +989,13 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(ConnectionStatus status) {
+        System.out.println("-----------rongconversation------ConnectionStatus");
         RLog.d(this.TAG, "ConnectionStatus, " + status.toString());
         this.setNotificationBarVisibility(status);
     }
 
     public void onEventMainThread(ConnectEvent event) {
+        System.out.println("-----------rongconversation------ConnectEvent");
         if(this.isShowWithoutConnected) {
             this.getConversationList(this.getConfigConversationTypes());
             this.isShowWithoutConnected = false;
@@ -970,6 +1003,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(final CreateDiscussionEvent createDiscussionEvent) {
+        System.out.println("-----------rongconversation------CreateDiscussionEvent");
         RLog.d(this.TAG, "createDiscussionEvent");
         final String targetId = createDiscussionEvent.getDiscussionId();
         if(this.isConfigured(ConversationType.DISCUSSION)) {
@@ -1011,6 +1045,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(final DraftEvent draft) {
+        System.out.println("-----------rongconversation------DraftEvent");
         ConversationType conversationType = draft.getConversationType();
         String targetId = draft.getTargetId();
         RLog.i(this.TAG, "Draft : " + conversationType);
@@ -1047,6 +1082,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(Group groupInfo) {
+        System.out.println("-----------rongconversation------Group");
         RLog.d(this.TAG, "Group: " + groupInfo.getName() + " " + groupInfo.getId());
         int count = this.mAdapter.getCount();
         if(groupInfo.getName() != null) {
@@ -1060,11 +1096,11 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     this.mAdapter.getView(i, this.mList.getChildAt(i - first), this.mList);
                 }
             }
-
         }
     }
 
     public void onEventMainThread(Discussion discussion) {
+        System.out.println("-----------rongconversation------Discussion");
         RLog.d(this.TAG, "Discussion: " + discussion.getName() + " " + discussion.getId());
         if(this.isConfigured(ConversationType.DISCUSSION)) {
             int last = this.mList.getLastVisiblePosition();
@@ -1086,10 +1122,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 }
             }
         }
-
     }
 
     public void onEventMainThread(GroupUserInfo groupUserInfo) {
+        System.out.println("-----------rongconversation------GroupUserInfo");
         RLog.d(this.TAG, "GroupUserInfo " + groupUserInfo.getGroupId() + " " + groupUserInfo.getUserId() + " " + groupUserInfo.getNickname());
         if(groupUserInfo.getNickname() != null && groupUserInfo.getGroupId() != null) {
             int count = this.mAdapter.getCount();
@@ -1109,6 +1145,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(UserInfo userInfo) {
+        System.out.println("-----------rongconversation------UserInfo");
         RLog.i(this.TAG, "UserInfo " + userInfo.getUserId() + " " + userInfo.getName());
         int count = this.mAdapter.getCount();
         int last = this.mList.getLastVisiblePosition();
@@ -1128,6 +1165,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(PublicServiceProfile profile) {
+        System.out.println("-----------rongconversation------PublicServiceProfile");
         RLog.d(this.TAG, "PublicServiceProfile");
         int count = this.mAdapter.getCount();
         boolean gatherState = this.getGatherState(profile.getConversationType());
@@ -1145,6 +1183,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(PublicServiceFollowableEvent event) {
+        System.out.println("-----------rongconversation------PublicServiceFollowableEvent");
         RLog.d(this.TAG, "PublicServiceFollowableEvent");
         if(!event.isFollow()) {
             if (isNoticeList) {
@@ -1156,10 +1195,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 this.mAdapter.notifyDataSetChanged();
             }
         }
-
     }
 
     public void onEventMainThread(ConversationUnreadEvent unreadEvent) {
+        System.out.println("-----------rongconversation------ConversationUnreadEvent");
         RLog.d(this.TAG, "ConversationUnreadEvent");
         ConversationType conversationType = unreadEvent.getType();
         String targetId = unreadEvent.getTargetId();
@@ -1176,6 +1215,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(ConversationTopEvent setTopEvent) {
+        System.out.println("-----------rongconversation------ConversationTopEvent");
         RLog.d(this.TAG, "ConversationTopEvent");
         ConversationType conversationType = setTopEvent.getConversationType();
         String targetId = setTopEvent.getTargetId();
@@ -1197,12 +1237,14 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(ConversationRemoveEvent removeEvent) {
+        System.out.println("-----------rongconversation------ConversationRemoveEvent");
         RLog.d(this.TAG, "ConversationRemoveEvent");
         ConversationType conversationType = removeEvent.getType();
         this.removeConversation(conversationType, removeEvent.getTargetId());
     }
 
     public void onEventMainThread(ClearConversationEvent clearConversationEvent) {
+        System.out.println("-----------rongconversation------ClearConversationEvent");
         RLog.d(this.TAG, "ClearConversationEvent");
         List typeList = clearConversationEvent.getTypes();
 
@@ -1216,6 +1258,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(MessageDeleteEvent event) {
+        System.out.println("-----------rongconversation------MessageDeleteEvent");
         RLog.d(this.TAG, "MessageDeleteEvent");
         int count = this.mAdapter.getCount();
 
@@ -1271,6 +1314,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(ConversationNotificationEvent notificationEvent) {
+        System.out.println("-----------rongconversation------ConversationNotificationEvent");
         int originalIndex = this.mAdapter.findPosition(notificationEvent.getConversationType(), notificationEvent.getTargetId());
         if(originalIndex >= 0) {
             this.mAdapter.getView(originalIndex, this.mList.getChildAt(originalIndex - this.mList.getFirstVisiblePosition()), this.mList);
@@ -1279,6 +1323,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(MessagesClearEvent clearMessagesEvent) {
+        System.out.println("-----------rongconversation------MessagesClearEvent");
         RLog.d(this.TAG, "MessagesClearEvent");
         ConversationType conversationType = clearMessagesEvent.getType();
         String targetId = clearMessagesEvent.getTargetId();
@@ -1292,6 +1337,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(OnMessageSendErrorEvent sendErrorEvent) {
+        System.out.println("-----------rongconversation------OnMessageSendErrorEvent");
         Message message = sendErrorEvent.getMessage();
         ConversationType conversationType = message.getConversationType();
         String targetId = message.getTargetId();
@@ -1313,11 +1359,13 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void onEventMainThread(QuitDiscussionEvent event) {
+        System.out.println("-----------rongconversation------QuitDiscussionEvent");
         RLog.d(this.TAG, "QuitDiscussionEvent");
         this.removeConversation(ConversationType.DISCUSSION, event.getDiscussionId());
     }
 
     public void onEventMainThread(QuitGroupEvent event) {
+        System.out.println("-----------rongconversation------QuitGroupEvent");
         RLog.d(this.TAG, "QuitGroupEvent");
         this.removeConversation(ConversationType.GROUP, event.getGroupId());
     }

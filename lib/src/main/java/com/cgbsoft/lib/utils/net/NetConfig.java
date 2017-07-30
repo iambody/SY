@@ -7,7 +7,6 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
-
 public class NetConfig {
     public static boolean isLocal = true;
 
@@ -15,7 +14,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
-    private static String START_APP = "https://t4-app";//sim
+    private static String START_APP = "https://sim-app";//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -259,8 +258,9 @@ public class NetConfig {
         final static String YD_RECHARGE = API_URL + pay + "/ydrecharge";
     }
 
-    public static String defaultRemoteLogin = "http://p1.bqimg.com/1949/efd21f89ac519468.png";
-    public static String getDefaultRemoteLogin = "https://upload.simuyun.com/live/80983f89-0baf-407f-9bff-a0e297757642.png";
+    public static String defaultRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/logo.png";
+    public static String noticeRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/notice.png";
+    public static String systemRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/system.png";
 
     //视频相关模块
     static class VIDEO {

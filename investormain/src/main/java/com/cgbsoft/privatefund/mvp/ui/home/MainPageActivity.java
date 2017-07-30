@@ -117,7 +117,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable;
+    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable,killObservable,killstartObservable;
 
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -229,7 +229,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void autoSign() {
-        if ("0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
+        if (!AppManager.isVisitor(baseContext)&&"0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
     }
@@ -398,6 +398,32 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initRxObservable() {
+        killstartObservable=RxBus.get().register(RxConstant.MAIN_PAGE_KILL_START,Integer.class);
+        killstartObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        killObservable=RxBus.get().register(RxConstant.MAIN_PAGE_KILL, Integer.class);
+        killObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                MainPageActivity.this.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         jumpIndexObservable = RxBus.get().register(RxConstant.JUMP_INDEX, Integer.class);
         jumpIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -646,6 +672,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         if (null != showIndexObservable) {
             RxBus.get().unregister(RxConstant.INVERSTOR_MAIN_PAGE, showIndexObservable);
+        }
+        if(null!=killObservable){
+            RxBus.get().unregister(RxConstant.MAIN_PAGE_KILL, killObservable);
+
         }
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();

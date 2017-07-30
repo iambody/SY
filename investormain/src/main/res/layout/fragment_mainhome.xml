@@ -131,7 +131,7 @@
 
             <RelativeLayout
                 android:layout_width="@dimen/ui_340_dip"
-                android:layout_height="@dimen/ui_100_dip"
+                android:layout_height="@dimen/ui_110_dip"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -141,8 +141,8 @@
                     android:orientation="vertical" />
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/ui_50_dip"
                     android:background="@drawable/shape_home_circle" />
@@ -155,10 +155,12 @@
             android:id="@+id/main_home_adviser_layy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/ui_1_dip"
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/main_home_advise_iniv_lay"
                 android:layout_width="@dimen/ui_80_dip"
                 android:layout_height="@dimen/ui_80_dip"
                 android:orientation="horizontal">
@@ -289,7 +291,7 @@
 
             <RelativeLayout
                 android:layout_width="@dimen/ui_340_dip"
-                android:layout_height="@dimen/ui_80_dip"
+                android:layout_height="@dimen/ui_90_dip"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -299,8 +301,8 @@
                     android:orientation="vertical" />
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/ui_60_dip"
                     android:background="@drawable/shape_home_circle" />

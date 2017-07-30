@@ -11,5 +11,6 @@ public class SignBean {
 
     public int signDays;//":1,
     public int coinNum;//":1,
+    public int tomorrowCoinNum;
 
 }

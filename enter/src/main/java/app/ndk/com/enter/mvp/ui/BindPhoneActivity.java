@@ -154,11 +154,11 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     void okClick() {
         String userName = et_ab_username.getText().toString();
         String code = et_ab_check.getText().toString();
-        if (!isUsernameInput) {
+        if (BStrUtils.isEmpty(userName)) {
             MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
             return;
         }
-        if (!isCheckInput) {
+        if (BStrUtils.isEmpty(code)) {
             MToast.makeText(getApplicationContext(), getString(R.string.code_null_str), Toast.LENGTH_SHORT);
             return;
         }
@@ -228,6 +228,7 @@ public class BindPhoneActivity extends BaseActivity<BindPhonePresenter> implemen
     public void onViewClicked() {//跳转首页
         AppInfStore.saveIsVisitor(baseContext,false);
         RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  1);
+        RxBus.get().post(RxConstant.LOGIN_KILL,2);
         Router.build(RouteConfig.GOTOCMAINHONE).go(BindPhoneActivity.this);
         finish();
     }

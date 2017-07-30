@@ -23,9 +23,14 @@
                 android:id="@+id/new_version_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:textColor="@color/white_light"
-                android:text="1878"
+                android:text="V6.0.0"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="110dp"
+                android:background="@drawable/gorden_point"
                 android:textSize="@dimen/dimens_sp_16" />
         </RelativeLayout>
 
@@ -38,7 +43,8 @@
                 android:id="@+id/tv_vcd_message"
                 android:layout_width="wrap_content"
                 android:layout_height="120dp"
-                android:textSize="@dimen/dimens_sp_24" />
+                android:layout_margin="5dp"
+                android:textSize="@dimen/dimens_sp_16" />
         </RelativeLayout>
 
         <TextView
