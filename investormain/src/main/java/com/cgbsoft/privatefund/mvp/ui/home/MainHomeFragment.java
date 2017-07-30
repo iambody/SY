@@ -242,6 +242,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_note)
     public void onMainHomeAdviserNoteClicked() {
         Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
+        DataStatistApiParam.homeClickNote();
     }
 
     /*登录模式点击聊天*/
@@ -299,6 +300,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
         getPresenter().gotoConnectAdviser();
+        DataStatistApiParam.homeClickDuiHua();
     }
 
 
@@ -312,6 +314,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {//非游客模式
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
+
     }
 
 
@@ -511,7 +514,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected MainHomePresenter createPresenter() {
         return new MainHomePresenter(baseActivity, this);
     }
-
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {

@@ -764,7 +764,7 @@ public class DataStatistApiParam {
      * C端资讯分享到朋友圈
      * type 1标识早知道 2标识大视野
      */
-    public static void onStatisToCShareInfOnCircle(String infTitle,String type){
+    public static void onStatisToCShareInfOnCircle(String infTitle, String type) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2016");
         data3.put("act", "200265");
@@ -774,11 +774,6 @@ public class DataStatistApiParam {
         data3.put("arg5", type);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
-
-
-
-
-
 
 
     /**
@@ -887,6 +882,7 @@ public class DataStatistApiParam {
         data3.put("arg4", payname);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
+
     /**
      * 进入生活家页面
      */
@@ -897,6 +893,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "进入生活家");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击尚品按钮
      */
@@ -907,6 +904,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "尚品");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 进入尚品页面
      */
@@ -917,6 +915,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "进入尚品");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 生活家页面点击私行家
      */
@@ -927,6 +926,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "私行家");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 生活家页面点击消息中心
      */
@@ -937,6 +937,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "消息中心");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 生活家页面点击专题图，参数-专题名称
      */
@@ -948,6 +949,7 @@ public class DataStatistApiParam {
         data3.put("arg3", bannerName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 热门物品点击事件
      */
@@ -959,6 +961,7 @@ public class DataStatistApiParam {
         data3.put("arg3", productName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 全新上架物品点击事件
      */
@@ -970,6 +973,7 @@ public class DataStatistApiParam {
         data3.put("arg3", productName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 尚品分类的点击事件
      */
@@ -980,6 +984,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "尚品好吃");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 进入修改登录密码页面
      */
@@ -990,6 +995,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "修改密码");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 进入修改登录密码页面提交按钮
      */
@@ -1000,6 +1006,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "确定");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 签到
      */
@@ -1010,6 +1017,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "签到");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 设置
      */
@@ -1020,6 +1028,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "设置");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击推荐给好友
      */
@@ -1030,6 +1039,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "推荐给朋友");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击帮助和反馈
      */
@@ -1040,6 +1050,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "帮助与反馈");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击关于本应用
      */
@@ -1050,6 +1061,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "关于本应用");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击手势密码
      */
@@ -1060,6 +1072,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "手势密码");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击修改手势密码
      */
@@ -1070,6 +1083,7 @@ public class DataStatistApiParam {
         data3.put("arg1", "修改手势密码");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
      * 点击修改登录密码
      */
@@ -1080,7 +1094,6 @@ public class DataStatistApiParam {
         data3.put("arg1", "修改登录密码");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
-
 
 
     /**
@@ -1095,24 +1108,63 @@ public class DataStatistApiParam {
     }
 
     /**
-     *首页直播点击
+     * 首页直播点击
+     *
      * @param
      */
-    public static void  homeliveclick() {
+    public static void homeliveclick() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2073");
         data3.put("act", "20384");
         data3.put("arg1", "直播");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
-     *首页运营位点击
+     * 首页运营位点击
+     *
      * @param
      */
     public static void operateBannerClick() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2073");
         data3.put("act", "20385");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击短信
+     */
+    public static void homeClickNote() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20075");
+        data3.put("arg1", "短信");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击对话
+     */
+    public static void homeClickDuiHua() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20076");
+        data3.put("arg1", "短信");
+        data3.put("arg2", BaseApplication.BindAdviserState());
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击客服
+     */
+    public static void homeClickKeFu() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2015");
+        data3.put("act", "20078");
+        data3.put("arg1", "客服");
+        data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
