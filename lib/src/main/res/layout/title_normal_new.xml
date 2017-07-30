@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:scaleType="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_back_black_24dp"
         android:visibility="gone" />
 
@@ -35,6 +36,7 @@
         android:clickable="true"
         android:padding="@dimen/ui_11_dip"
         android:scaleType="fitCenter"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/select_happy_life_toolbar_right"
         android:visibility="gone" />
 
@@ -111,6 +113,7 @@
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="gone">
 
         <ImageView

@@ -96,7 +96,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
 //会员规则
     public static String adviserrules;
 
-
     // 头条号
     public static String touTiaoHao;
 
@@ -119,7 +118,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         pageInit = baseSxyParentUrl + "/setData.html";
         productDetail = baseSxyParentUrl + "/biz/product/index.html?schemeId=";
         riskEvaluationQuestion = baseParentUrl + "/settings/index.html";
-        product = baseParentUrl + "/apptie/detail.html?schemeId=";
+        product = baseSxyParentUrl + "/apptie/detail.html?schemeId=";
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
@@ -136,7 +135,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
         msgMoreDetail = baseSxyParentUrl + "/biz/product/notice_detail.html?id=";
         signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
-        mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
+        mineCardCoupons = baseSxyParentUrl + "/biz/card/mine_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";

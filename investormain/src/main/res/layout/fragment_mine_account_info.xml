@@ -75,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_below="@+id/user_leaguar_update_desc"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
@@ -97,7 +97,6 @@
                 android:text="@string/account_info_caifu_value"
                 android:layout_marginBottom="8dp"/>
 
-
             <me.grantland.widget.AutofitTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,8 +106,12 @@
                 android:gravity="center_horizontal"
                 style="@style/mine_account_info_value"
                 autofit:minTextSize="16sp"/>
-
         </LinearLayout>
+
+        <TextView
+            android:layout_height="30dp"
+            android:layout_width="0.5dp"
+            android:background="@color/app_split_line"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -150,6 +153,11 @@
                 <!--android:id="@+id/mine_yundou_id"/>-->
         </LinearLayout>
 
+        <TextView
+            android:layout_height="30dp"
+            android:layout_width="0.5dp"
+            android:background="@color/app_split_line"/>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -184,7 +192,6 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/account_info_base_value_ll">
 
         <LinearLayout

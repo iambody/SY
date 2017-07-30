@@ -29,13 +29,16 @@
             android:layout_height="wrap_content"
             android:text="管理收货地址"
             android:drawablePadding="10dp"
-            android:drawableRight="@drawable/ic_right_arrow"
+            android:drawableRight="@drawable/icon_right_arrow"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dimens_sp_14"/>
 
     </LinearLayout>
 
-    <include layout="@layout/acitivity_divide_online"/>
+    <include layout="@layout/acitivity_divide_online"
+        android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        />
     
     <LinearLayout
         android:layout_width="match_parent"

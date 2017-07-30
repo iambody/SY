@@ -123,7 +123,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView textViewShowAssert;
 
     @BindView(R.id.account_bank_go_relative_assert)
-    Button noRelativeAssert;
+    TextView noRelativeAssert;
 
     @BindView(R.id.account_bank_assert_total_text)
     TextView textViewAssertTotalText;
