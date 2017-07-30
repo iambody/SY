@@ -47,6 +47,11 @@ public class RongCouldUtil {
                 return true;
             }
         }
+//        else if (!AppManager.isInvestor(InvestorAppli.getContext())) {
+//            if (senderUserId.equals(Constant.msgTradeInformation)) {
+//                return true;
+//            }
+//        }
         return false;
     }
 
