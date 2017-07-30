@@ -97,7 +97,6 @@
                 android:text="@string/account_info_caifu_value"
                 android:layout_marginBottom="8dp"/>
 
-
             <me.grantland.widget.AutofitTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,7 +106,6 @@
                 android:gravity="center_horizontal"
                 style="@style/mine_account_info_value"
                 autofit:minTextSize="16sp"/>
-
         </LinearLayout>
 
         <TextView
@@ -194,7 +192,6 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/account_info_base_value_ll">
 
         <LinearLayout
