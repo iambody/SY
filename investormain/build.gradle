@@ -54,10 +54,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("D:/privatefund.keystore")
-            storePassword "privatefund"
-            keyAlias "beijing"
-            keyPassword "privatefund"
+//            storeFile file("D:/privatefund.keystore")
+//            storePassword "privatefund"
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
         }
         release {
 //            storeFile file("D:/privatefund.keystore")
