@@ -99,11 +99,11 @@ public class RongConversationBaseListAdapter extends BaseAdapter<UIConversation>
                 holder.dividerItem.setVisibility(isKehu ? View.VISIBLE : View.GONE);
                 View view = holder.contentView.inflate(provider);
                 provider.bindView(view, position, data);
-                if (data.isTop()) {
-                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
-                } else {
-                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_list_selector));
-                }
+//                if (data.isTop()) {
+//                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
+//                } else {
+//                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_list_selector));
+//                }
                 ConversationProviderTag tag = RongContext.getInstance().getConversationProviderTag(data.getConversationType().getName());
                 boolean defaultId = false;
                 int defaultId1;

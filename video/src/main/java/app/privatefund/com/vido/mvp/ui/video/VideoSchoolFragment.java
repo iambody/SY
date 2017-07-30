@@ -105,7 +105,10 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         //Navagation的数据填充
         lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
-            VidoListFragment baseLazyFragment = new VidoListFragment(videoAllModel.category.get(i).value + "");
+            VidoListFragment baseLazyFragment = new VidoListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(VidoListFragment.FRAGMETN_PARAMS, String.valueOf(videoAllModel.category.get(i).value));
+            baseLazyFragment.setArguments(bundle);
             lazyFragments.add(baseLazyFragment);
             if (0 == i) baseLazyFragment.freshData(videoAllModel.video);
         }

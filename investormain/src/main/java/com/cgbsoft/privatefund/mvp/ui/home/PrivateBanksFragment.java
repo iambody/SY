@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         LinearLayout search = (LinearLayout) titleView.findViewById(R.id.search_layout_main);
         ImageView privatebank_title_left = (ImageView) titleView.findViewById(R.id.privatebank_title_left);
         privatebank_title_left.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+            Intent intent = new Intent(getActivity(), RightShareWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
             intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
             intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
