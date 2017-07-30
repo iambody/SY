@@ -136,7 +136,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
         msgMoreDetail = baseSxyParentUrl + "/biz/product/notice_detail.html?id=";
         signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
-        mineCardCoupons = baseSxyParentUrl + "/biz/card/no_card.html";
+        mineCardCoupons = baseSxyParentUrl + "/biz/card/mine_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
         discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";

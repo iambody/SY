@@ -10,31 +10,34 @@
         android:id="@+id/goto_has_video_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="30dp">
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollbars="none" />
 
-        <include layout="@layout/acitivity_divide_online" />
+        <include
+            layout="@layout/acitivity_divide_online"
+            android:layout_height="0.5dp"
+            android:layout_width="match_parent"
+            />
 
         <TextView
             android:id="@+id/goto_look_more"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@string/account_video_go_look_all"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_14"
             android:visibility="visible" />
-
     </LinearLayout>
 
     <Button
