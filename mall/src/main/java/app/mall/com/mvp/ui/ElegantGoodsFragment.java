@@ -125,7 +125,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                     id=clickBean.getId();
                     name=clickBean.getGoodsName();
                 }
-                    DataStatistApiParam.clickProduct(name,categoryStr);
+//                    DataStatistApiParam.clickProduct(name,categoryStr);
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
@@ -176,7 +176,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         mRefreshLayout.setLoadMoreEnabled(false);
         category=posBean.getCode();
         categoryStr=posBean.getTitle();
-        DataStatistApiParam.clickCategory(categoryStr);
+//        DataStatistApiParam.clickCategory(categoryStr);
         isOver=false;
 //        LogUtils.Log("aaa","click item is==="+category);
         prosDatas.clear();
