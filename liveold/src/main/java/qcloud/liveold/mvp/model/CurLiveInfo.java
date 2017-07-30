@@ -39,6 +39,17 @@ public class CurLiveInfo {
 
     public static int currentRequestCount = 0;
 
+    public static int equipment;
+
+
+    public static int getEquipment() {
+        return equipment;
+    }
+
+    public static void setEquipment(int equipment) {
+        CurLiveInfo.equipment = equipment;
+    }
+
     public static String getSlogan() {
         return slogan;
     }
