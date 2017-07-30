@@ -84,8 +84,6 @@
     <string name="bing_phone_succ_str">绑定成功</string>
     <string name="bing_phone_fail_str">绑定失败</string>
     <string name="bind_phone_not_repeat_str">您的手机号正在绑定中，不用重复绑定</string>
-    <string name="token_error_510_str">账号加密信息已过期，请重新登录获取，如有疑问，请致电客服：400-188-8848</string>
-    <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
     <string name="app_name_customer">私享云</string>
 
     <string name="shouchishenfenzheng">请上传本人手持证件照片</string>

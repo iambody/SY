@@ -1,16 +1,32 @@
 package com.cgbsoft.lib.base.mvc;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +57,8 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     protected CompositeSubscription mCompositeSubscription;
     //上下文
     protected Activity baseContext;
+    private LogoutReceiver receiver;
+    private LocalBroadcastManager manager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +67,78 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
             getWindow().setStatusBarColor(Color.BLACK);
         }
         initConifg();
+        registerLogoutBroadcast();
+    }
+
+    /**
+     * 监听用户被踢出的广播
+     */
+    private void registerLogoutBroadcast() {
+        manager = LocalBroadcastManager.getInstance(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.RECEIVER_EXIT_ACTION);
+        receiver = new LogoutReceiver();
+        manager.registerReceiver(receiver, filter);
+    }
+
+    /**
+     * 取消监听用户被踢出的广播
+     */
+    private void unRegisterLogoutBroadcast(){
+        if (null != manager && null != receiver) {
+            manager.unregisterReceiver(receiver);
+        }
+    }
+
+    class LogoutReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null)
+                return;
+            String action = intent.getAction();
+            if (TextUtils.equals(action, Constant.RECEIVER_EXIT_ACTION)) {
+                int mCode = intent.getIntExtra(Constant.RECEIVER_ERRORCODE, -1);
+                String msg = "";
+                if (mCode == 510) {
+                    msg = getString(R.string.token_error_510_str);
+                } else if (mCode == 511) {
+                    msg = getString(R.string.token_error_511_str);
+                }
+
+                DefaultDialog dialog = new DefaultDialog(BaseMvcActivity.this, msg, null, "确认"){
+
+                    @Override
+                    public void left() {
+
+                    }
+
+                    @Override
+                    public void right() {
+                        relogin();
+                        dismiss();
+                    }
+                };
+//                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+            if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
+                NavigationUtils.startActivityByRouter(BaseMvcActivity.this, RouteConfig.GOTO_LOGIN);
+            }
+        }
+    }
+    private void relogin() {
+//        floatView.removeFromWindow();
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_LOGIN);
+        RxBus.get().post(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE,0);
+//        Intent intent = new Intent();
+//        intent.setClass(this, LoginActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+
+
+//        stopService();
     }
 
     private void initConifg() {
@@ -71,6 +161,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     protected void onDestroy() {
         super.onDestroy();
         onUnsubscribe();
+        unRegisterLogoutBroadcast();
     }
 
 

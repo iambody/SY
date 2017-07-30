@@ -321,9 +321,6 @@
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeGenderActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.PermissionsActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
         <!-- 修改登录密码页面-->
         <activity
             android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
@@ -356,11 +353,11 @@
             android:name="com.cgbsoft.privatefund.widget.RightShareWebViewActivity"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".utils.receiver.ExitLoginReceiver">
+        <!--<receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <service android:name="app.privatefund.com.vido.service.FloatVideoService">
             <intent-filter>
