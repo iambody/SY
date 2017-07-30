@@ -63,6 +63,8 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @BindView(R.id.gunlun_ll)
     LinearLayout linearLayout;
 
+    private String Identy = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
+
 //    private boolean isBindAdviser;
     private String accountType;
     private boolean loading;
@@ -180,6 +182,14 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         if (TextUtils.isEmpty(certifyNumber.getText().toString())) {
             Toast.makeText(this, String.format(getString(R.string.invisit_account_input_prompt), getString(R.string.certify_number)), Toast.LENGTH_SHORT).show();
             return false;
+        }
+
+        if ("身份证".equals(certifyType.getText().toString())) {
+            String value = certifyNumber.getText().toString();
+            if (!value.matches(Identy)) {
+                Toast.makeText(this, String.format(getString(R.string.invisit_account_input_right_prompt), getString(R.string.certify_number)), Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
         return true;
     }

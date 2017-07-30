@@ -73,7 +73,6 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
     private boolean isLoadMore;
 
 
-
     @Override
     protected void create(Bundle Mybundle) {
         if (getArguments() != null) {

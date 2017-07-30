@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
@@ -91,17 +92,22 @@ public class BaseApplication extends MultiDexApplication {
      */
     private void initX5Webview(){
         //x5内核初始化接口
-        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
-            @Override
-            public void onCoreInitFinished() {
+        try {
+            QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+                @Override
+                public void onCoreInitFinished() {
 
-            }
+                }
 
-            @Override
-            public void onViewInitFinished(boolean b) {
+                @Override
+                public void onViewInitFinished(boolean b) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            LogUtils.Log("BaseApplication", e.getMessage());
+            e.printStackTrace();
+        }
     }
     /**
      * 供埋点使用

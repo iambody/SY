@@ -56,6 +56,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     private static final int CHECK_FAILURE = 3;
     private static final int SMOTH_CODE = 4;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_CAMALE = 2;
     private String imagePath;
     private String imageId;
     private boolean isloading;
@@ -161,6 +162,21 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
                     Toast.makeText(RelativeAssetActivity.this, "请开启用户拨打电话权限", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case MY_PERMISSIONS_REQUEST_CAMALE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (camenIntent.resolveActivity(getPackageManager()) != null) {
+                        ImageSelector selectSec = ImageSelector.create();
+                        selectSec.single();  // 选择一张图片
+                        selectSec.showCamera(false);
+                        selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+                    } else {
+                        Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(RelativeAssetActivity.this, "请开启应该拍照权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -225,14 +241,18 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     }
 
     private void startCameraActivity() {
-        Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (camenIntent.resolveActivity(getPackageManager()) != null) {
-            ImageSelector selectSec = ImageSelector.create();
-            selectSec.single();  // 选择一张图片
-            selectSec.showCamera(false);
-            selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMALE);
         } else {
-            Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
+            Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (camenIntent.resolveActivity(getPackageManager()) != null) {
+                ImageSelector selectSec = ImageSelector.create();
+                selectSec.single();  // 选择一张图片
+                selectSec.showCamera(false);
+                selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+            } else {
+                Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
