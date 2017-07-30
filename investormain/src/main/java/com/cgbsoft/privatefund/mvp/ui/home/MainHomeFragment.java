@@ -196,8 +196,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/
     private void initshowlay() {
-
-        if (AppManager.isVisitor(baseActivity)) {
+        if (AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
             onViewvisterivClicked();
         } else {
             onViewivClicked();
@@ -265,7 +264,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
         isShowAdviserCard = true;
-        initShowCardAnimator(mainHomeAdviserLayyy,false);// AppManager.isBindAdviser(baseActivity) ? false : true);
+        initShowCardAnimator(mainHomeAdviserLayyy, false);// AppManager.isBindAdviser(baseActivity) ? false : true);
     }
 
     /*游客模式点击头像*/
@@ -315,7 +314,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {//非游客模式
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
-
+        DataStatistApiParam.homeClickNew();
     }
 
     /*  配置view各种资源*/
@@ -714,7 +713,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     case 2://无直播
                         break;
                 }
-
+                DataStatistApiParam.homeliveclick();
 
                 break;
         }
