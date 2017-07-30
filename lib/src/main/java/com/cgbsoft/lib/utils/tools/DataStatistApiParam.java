@@ -711,7 +711,7 @@ public class DataStatistApiParam {
     public static void onStatisToCProductTabTag(String seriseName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2011");
-        data3.put("act", "200394");
+        data3.put("act", "20394");
         data3.put("arg1", "产品系列");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", seriseName);
@@ -726,7 +726,7 @@ public class DataStatistApiParam {
     public static void onStatisToCProductItemClick(String productId, String productName, boolean isHot) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2011");
-        data3.put("act", "200109");
+        data3.put("act", "20109");
         data3.put("arg1", "产品详情");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", productId);
@@ -741,7 +741,7 @@ public class DataStatistApiParam {
     public static void onStatisToCProductSearchClick() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2011");
-        data3.put("act", "200040");
+        data3.put("act", "20040");
         data3.put("arg1", "搜索");
         data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
@@ -753,7 +753,7 @@ public class DataStatistApiParam {
     public static void onStatisToCProductDetailBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2012");
-        data3.put("act", "200041");
+        data3.put("act", "20041");
         data3.put("arg1", "返回");
         data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
@@ -767,7 +767,7 @@ public class DataStatistApiParam {
     public static void onStatisToCShareInfOnCircle(String infTitle, String type) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2016");
-        data3.put("act", "200265");
+        data3.put("act", "20265");
         data3.put("arg1", "转发文章到朋友圈");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", infTitle);
