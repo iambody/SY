@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -37,6 +39,12 @@ public class SplashMovieActivity extends Activity implements SurfaceHolder.Callb
         setContentView(R.layout.activity_splash_movie);
         bindViews();
         SPreference.putString(this, "splash", "s");
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            透明导航栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
     }
 
     @Override
@@ -53,7 +61,7 @@ public class SplashMovieActivity extends Activity implements SurfaceHolder.Callb
 
  
     private void bindViews() {
-        int resID = R.raw.movie_tob;
+        int resID = R.raw.movie_toc;
         
         surface_movie = (SurfaceView) findViewById(R.id.splish_movie);
         start_app = (Button) findViewById(R.id.start_app);
