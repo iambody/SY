@@ -126,6 +126,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             @Override
             protected void onRxError(Throwable error) {
                 loadingDialog.dismiss();
+               getView().getNetVideoInfoErr(error.getMessage());
                 LogUtils.Log("s", error.toString());
             }
         }));

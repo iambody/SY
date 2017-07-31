@@ -34,6 +34,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -299,6 +300,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 登录模式点击电话*/
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
+
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
     }
@@ -438,7 +440,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                     case 0://预告
                         main_home_live_lay.setVisibility(View.VISIBLE);
-                        main_home_live_lay.setClickable(false);
+//                        main_home_live_lay.setClickable(false);
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
                         Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         //标题和内容view_live_title
@@ -694,11 +696,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 break;
             case R.id.main_home_live_lay://直播
-                if (null == homeliveInfBean || 0 == homeliveInfBean.type) return;
+                if (null == homeliveInfBean ) return;
 
                 switch (homeliveInfBean.type) {
                     case 0://预告
-
+                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
                         break;
                     case 1://直播
 
