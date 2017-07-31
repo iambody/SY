@@ -3,8 +3,8 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,25 +12,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
-import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,9 +182,11 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     }
 
     @Override
-    protected void clickGoodsButton() {
-        super.clickGoodsButton();
-        DataStatistApiParam.clickElegantGoodsButton();
+    protected void clickTabButton(String tabName) {
+        super.clickTabButton(tabName);
+//        if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
+            DataStatistApiParam.clickElegantGoodsButton(tabName);
+//        }
     }
 
     @Override

@@ -1,14 +1,9 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +89,9 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                         @Override
                         public void onClick(View v) {
                             String tabName = (String) viewTab.getTag();
+                            LogUtils.Log("aaa","tabName==="+tabName);
                             //这里就可以根据业务需求处理点击事件了。
-                            if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
-                                clickGoodsButton();
-                            }
+                            clickTabButton(tabName);
                         }
                     });
                 } catch (Exception e) {
@@ -140,8 +134,9 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     /**
      * 点击尚品按钮
+     * @param tabName
      */
-    protected void clickGoodsButton() {
+    protected void clickTabButton(String tabName) {
 
     }
 
