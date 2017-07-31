@@ -10,20 +10,20 @@
     <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         app:xTabMode="fixed"
         app:xTabIndicatorColor="@color/app_golden"
         app:xTabIndicatorHeight="4dp"
         app:xTabIndicatorWidth="25dp"
         app:xTabSelectedTextColor="@color/app_golden_click"
-        app:xTabSelectedTextSize="15sp"
+        app:xTabSelectedTextSize="16sp"
         app:xTabTextColor="#ff000000"
-        app:xTabTextSize="15sp"/>
+        app:xTabTextSize="16sp"/>
 
     <ImageView style="@style/normal_diveline" />
 
     <com.cgbsoft.privatefund.widget.CustomViewPage
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_height="140dp" />
 </LinearLayout>

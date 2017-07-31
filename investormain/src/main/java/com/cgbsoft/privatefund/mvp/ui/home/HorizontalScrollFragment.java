@@ -49,7 +49,7 @@ public class HorizontalScrollFragment extends BaseFragment {
     LinearLayout linearLayout;
 
     @BindView(R.id.goto_look_video)
-    Button button;
+    TextView loookVideo;
 
     private MyHolderAdapter myHolderAdapter;
     private ChangeHeightListener listener;
@@ -75,7 +75,7 @@ public class HorizontalScrollFragment extends BaseFragment {
         myHolderAdapter = new MyHolderAdapter(getActivity(), list, isPlay);
         recyclerView.setAdapter(myHolderAdapter);
         linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
-        button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
+        loookVideo.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
         measureHeight();
     }
 
@@ -100,7 +100,7 @@ public class HorizontalScrollFragment extends BaseFragment {
         if (linearLayout != null) {
             this.list = list;
             linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
-            button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
+            loookVideo.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
             myHolderAdapter.refrushData(list);
             measureHeight();
         }
@@ -168,7 +168,7 @@ public class HorizontalScrollFragment extends BaseFragment {
             Imageload.display(getContext(), videoInfoModel.videoCoverUrl, holder.mImg);
             holder.mTxt.setText(videoInfoModel.videoName);
             holder.rootView.setOnClickListener(v ->
-                    VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.id), videoInfoModel.videoCoverUrl));
+                    VideoNavigationUtils.stareVideoDetail(getActivity(), String.valueOf(videoInfoModel.videoId), videoInfoModel.videoCoverUrl));
         }
     }
 

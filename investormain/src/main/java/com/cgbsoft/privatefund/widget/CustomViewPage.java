@@ -29,8 +29,8 @@ public class CustomViewPage extends ViewPager {
     }
 
     private void init(Context context) {
-        map.put(0, DimensionPixelUtil.dip2px(context, 150));
-        map.put(0, DimensionPixelUtil.dip2px(context, 150));
+        map.put(0, DimensionPixelUtil.dip2px(context, 140));
+        map.put(0, DimensionPixelUtil.dip2px(context, 140));
     }
 
     @Override
