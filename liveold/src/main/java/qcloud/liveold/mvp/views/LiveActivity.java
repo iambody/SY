@@ -2536,6 +2536,8 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         final List<String> permissionsList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Constants.HOST != MySelfInfo.getInstance().getIdStatus()) {
+                if ((checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.RECORD_AUDIO);
                 if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
                     permissionsList.add(Manifest.permission.WAKE_LOCK);
                 if ((checkSelfPermission(Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED))
