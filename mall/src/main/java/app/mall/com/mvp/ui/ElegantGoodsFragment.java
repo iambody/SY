@@ -140,6 +140,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                LogUtils.Log("aaa","newState==="+newState);
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         isScorlling = true;
@@ -163,6 +164,10 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
                         if (categoryAll.getVisibility() == View.GONE)
                             categoryAll.setVisibility(View.VISIBLE);
                     }
+                }
+                if (!recyclerView.canScrollVertically(-1)) {
+                    if (categoryAll.getVisibility() == View.GONE)
+                        categoryAll.setVisibility(View.VISIBLE);
                 }
             }
         });

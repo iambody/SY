@@ -20,12 +20,12 @@ public class ExitLoginReceiver extends BroadcastReceiver {
         if (intent == null)
             return;
         String action = intent.getAction();
-        if (TextUtils.equals(action, Constant.RECEIVER_EXIT_ACTION)) {
-            ExitLoginService.startService(intent.getIntExtra(Constant.RECEIVER_ERRORCODE, -1));
-        }
-        if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
+//        if (TextUtils.equals(action, Constant.RECEIVER_EXIT_ACTION)) {
 //            ExitLoginService.startService(intent.getIntExtra(Constant.RECEIVER_ERRORCODE, -1));
-            context.startActivity(new Intent(context, LoginActivity.class));
-        }
+//        }
+//        if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
+//            ExitLoginService.startService(intent.getIntExtra(Constant.RECEIVER_ERRORCODE, -1));
+//            context.startActivity(new Intent(context, LoginActivity.class));
+//        }
     }
 }

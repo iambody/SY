@@ -84,7 +84,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@drawable/ios_right_btn_select"
+                android:background="@drawable/dialog_single_btn_select"
                 android:gravity="center"
                 android:text="确认"
                 android:textColor="#FFF" />

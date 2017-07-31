@@ -4,7 +4,13 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
 
@@ -24,8 +30,10 @@ import app.privatefund.com.im.listener.ProductInputModule;
 import app.privatefund.com.im.listener.ProductMessageItemProvider;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
 import qcloud.liveold.mvp.utils.SxbLogImpl;
+import rx.Observable;
 
 /**
  * desc
@@ -34,7 +42,7 @@ import qcloud.liveold.mvp.utils.SxbLogImpl;
  *  
  */
 public class InitApplication extends InvestorAppli {
-
+    private Observable<Integer> logoutObservable;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -70,6 +78,47 @@ public class InitApplication extends InvestorAppli {
             RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
             RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
             RongIM.getInstance().setMessageAttachedUserInfo(true);
+            registerLogoutObservable();
+        }
+    }
+
+    private void registerLogoutObservable() {
+        logoutObservable = RxBus.get().register(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE, Integer.class);
+        logoutObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                AppInfStore.saveIsLogin(getApplicationContext(), false);
+                AppInfStore.saveUserAccount(getApplicationContext(), null);
+                AppInfStore.saveRongTokenExpired(getApplicationContext(), 0);
+                ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
+                SPreference.putBoolean(InvestorAppli.getContext(), Constant.weixin_login, false);
+                if(RongIM.getInstance().getRongIMClient()!=null){
+                    RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.PRIVATE);
+                    RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.GROUP);
+                }
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().disconnect();
+                }
+
+                RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        unRegisterLogoutObservable();
+    }
+
+    private void unRegisterLogoutObservable() {
+        if (logoutObservable != null) {
+            RxBus.get().unregister(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE,logoutObservable);
         }
     }
 

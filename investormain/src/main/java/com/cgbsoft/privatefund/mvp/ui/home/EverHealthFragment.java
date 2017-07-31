@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +140,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.iv_title_left://toolbar左边按钮点击事件
 //                RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE,4);
-                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                Intent intent = new Intent(getActivity(), RightShareWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
                 intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);

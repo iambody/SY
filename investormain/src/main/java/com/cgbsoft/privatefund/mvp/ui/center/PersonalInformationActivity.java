@@ -123,7 +123,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private static final int HEAD_WIDTH = 128;//头像宽度
     private static final int HEAD_HEIGHT = 128;//头像高度
     private int REQUEST_CODE = 2000; // 请求码
-    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private SimpleDateFormat simpleDateFormat;
     private int mYear;
     private int mMonth;

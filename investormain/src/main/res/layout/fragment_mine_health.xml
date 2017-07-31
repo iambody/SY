@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="健康"
+            android:text="健康咨询记录"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16"/>
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="查看全部"
             android:drawablePadding="10dp"
-            android:drawableRight="@drawable/ic_right_arrow"
+            android:drawableRight="@drawable/icon_right_arrow"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/dimens_sp_14"/>
 

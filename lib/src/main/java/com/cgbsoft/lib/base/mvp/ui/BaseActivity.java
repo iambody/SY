@@ -1,14 +1,18 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -18,15 +22,21 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.WeakHandler;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import org.json.JSONException;
@@ -55,6 +65,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     private boolean mIsNeedAdapterPhone = true;
     private boolean mIsNeedGoneNavigationBar;
     private long mExitPressedTime = 0;
+    private LogoutReceiver receiver;
+    private LocalBroadcastManager manager;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +87,79 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             init(savedInstanceState);
             data();
         }
+        registerLogoutBroadcast();
     }
 
+    /**
+     * 监听用户被踢出的广播
+     */
+    private void registerLogoutBroadcast() {
+        manager = LocalBroadcastManager.getInstance(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.RECEIVER_EXIT_ACTION);
+        receiver = new LogoutReceiver();
+        manager.registerReceiver(receiver, filter);
+    }
+
+    /**
+     * 取消监听用户被踢出的广播
+     */
+    private void unRegisterLogoutBroadcast(){
+        if (null != manager && null != receiver) {
+            manager.unregisterReceiver(receiver);
+        }
+    }
+
+    class LogoutReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null)
+                return;
+            String action = intent.getAction();
+            if (TextUtils.equals(action, Constant.RECEIVER_EXIT_ACTION)) {
+                int mCode = intent.getIntExtra(Constant.RECEIVER_ERRORCODE, -1);
+                String msg = "";
+                if (mCode == 510) {
+                    msg = getString(R.string.token_error_510_str);
+                } else if (mCode == 511) {
+                    msg = getString(R.string.token_error_511_str);
+                }
+
+                DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认"){
+
+                    @Override
+                    public void left() {
+
+                    }
+
+                    @Override
+                    public void right() {
+                        relogin();
+                        dismiss();
+                    }
+                };
+//                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+            if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
+                NavigationUtils.startActivityByRouter(BaseActivity.this, RouteConfig.GOTO_LOGIN);
+            }
+        }
+    }
+    private void relogin() {
+//        floatView.removeFromWindow();
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_LOGIN);
+        RxBus.get().post(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE,0);
+//        Intent intent = new Intent();
+//        intent.setClass(this, LoginActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+
+
+//        stopService();
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -249,6 +332,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unRegisterLogoutBroadcast();
         if (mBaseHandler != null) {
             mBaseHandler.removeCallbacksAndMessages(null);
             mBaseHandler = null;

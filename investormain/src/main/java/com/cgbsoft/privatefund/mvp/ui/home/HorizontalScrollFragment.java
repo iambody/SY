@@ -97,11 +97,13 @@ public class HorizontalScrollFragment extends BaseFragment {
 
     public void refrushData(List<VideoInfoModel> list) {
         System.out.println("------list=" + list.size());
-        this.list = list;
-        linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
-        button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
-        myHolderAdapter.refrushData(list);
-        measureHeight();
+        if (linearLayout != null) {
+            this.list = list;
+            linearLayout.setVisibility(CollectionUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
+            button.setVisibility(CollectionUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
+            myHolderAdapter.refrushData(list);
+            measureHeight();
+        }
     }
 
     @OnClick(R.id.goto_look_more)

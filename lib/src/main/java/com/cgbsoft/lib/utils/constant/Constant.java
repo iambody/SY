@@ -139,6 +139,8 @@ public interface Constant {
     public static final String IMAGE_RIGHT_DELETE = "show_right_delete";
     public static final String IMAGE_THREM_LOCAL = "image_thmb_local";
 
+    public static final String ADVICE_ID = "_B";
+
     //消息模块特殊处理的ID
     //平台客服
     public static final String msgCustomerService = "dd0cc61140504258ab474b8f0a38bb56";
@@ -182,5 +184,5 @@ public interface Constant {
     };
 
     //分享时候的外网log地址
-    public static final String SHARE_LOG="http://www.simuyun.com/images/MobileImages/simuyunlogo.png";//"http://www.simuyun.com/images/simuyunlogo.png";
+    public static final String SHARE_LOG="https://upload.simuyun.com/live/106985cc-749d-449e-aaf0-2adfef274469.png";//"http://www.simuyun.com/images/simuyunlogo.png";
 }
