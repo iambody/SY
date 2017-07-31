@@ -1438,6 +1438,29 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 尊享私行中产品/资讯/学院tab点击埋点
+     */
+    public static void honourPBitemClick(String tabName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2068");
+        data3.put("act", "20368");
+        data3.put("arg1", "tab点击");
+        data3.put("arg3", tabName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 永享健康中介绍/检测/医疗tab点击埋点
+     */
+    public static void everHealthClick(String tabName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2059");
+        data3.put("act", "20340");
+        data3.put("arg1", "tab点击");
+        data3.put("arg3", tabName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
     public static void editAddressSave() {
         HashMap<String, String> data3 = new HashMap<>();
