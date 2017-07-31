@@ -29,6 +29,7 @@ public class VideoInfoEntity extends BaseResult<VideoInfoEntity.Result> {
         public String playCount;
         public String lecturerRemark;
         public String playLimit;
+        public String categoryName;
 
         public String videoName;
         public String videoSummary;

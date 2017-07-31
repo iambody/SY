@@ -22,6 +22,7 @@ public class VideoInfoModel implements Parcelable {
     public int likeNum;
 public String lecturerRemark;
     public String localVideoPath;
+    public String categoryName;
 
     public int currentTime;  //增加当前播放时间
     public int status;
@@ -36,43 +37,6 @@ public String lecturerRemark;
 
     public VideoInfoModel() {}
 
-    protected VideoInfoModel(Parcel in) {
-        id = in.readInt();
-        videoId = in.readString();
-        videoCoverUrl = in.readString();
-        sdUrl = in.readString();
-        hdUrl = in.readString();
-        isLike = in.readByte() != 0;
-        videoName = in.readString();
-        shortName = in.readString();
-        content = in.readString();
-        likeNum = in.readInt();
-        lecturerRemark = in.readString();
-        localVideoPath = in.readString();
-        currentTime = in.readInt();
-        status = in.readInt();
-        finalPlayTime = in.readLong();
-        size = in.readLong();
-        percent = in.readDouble();
-        downloadtype = in.readInt();
-        downloadTime = in.readLong();
-        encrypt = in.readInt();
-        hasRecord = in.readInt();
-        isDelete = in.readInt();
-    }
-
-    public static final Creator<VideoInfoModel> CREATOR = new Creator<VideoInfoModel>() {
-        @Override
-        public VideoInfoModel createFromParcel(Parcel in) {
-            return new VideoInfoModel(in);
-        }
-
-        @Override
-        public VideoInfoModel[] newArray(int size) {
-            return new VideoInfoModel[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -80,27 +44,66 @@ public String lecturerRemark;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(videoId);
-        dest.writeString(videoCoverUrl);
-        dest.writeString(sdUrl);
-        dest.writeString(hdUrl);
-        dest.writeByte((byte) (isLike ? 1 : 0));
-        dest.writeString(videoName);
-        dest.writeString(shortName);
-        dest.writeString(content);
-        dest.writeInt(likeNum);
-        dest.writeString(lecturerRemark);
-        dest.writeString(localVideoPath);
-        dest.writeInt(currentTime);
-        dest.writeInt(status);
-        dest.writeLong(finalPlayTime);
-        dest.writeLong(size);
-        dest.writeDouble(percent);
-        dest.writeInt(downloadtype);
-        dest.writeLong(downloadTime);
-        dest.writeInt(encrypt);
-        dest.writeInt(hasRecord);
-        dest.writeInt(isDelete);
+        dest.writeInt(this.id);
+        dest.writeString(this.videoId);
+        dest.writeString(this.videoCoverUrl);
+        dest.writeString(this.sdUrl);
+        dest.writeString(this.hdUrl);
+        dest.writeByte(this.isLike ? (byte) 1 : (byte) 0);
+        dest.writeString(this.videoName);
+        dest.writeString(this.shortName);
+        dest.writeString(this.content);
+        dest.writeInt(this.likeNum);
+        dest.writeString(this.lecturerRemark);
+        dest.writeString(this.localVideoPath);
+        dest.writeString(this.categoryName);
+        dest.writeInt(this.currentTime);
+        dest.writeInt(this.status);
+        dest.writeLong(this.finalPlayTime);
+        dest.writeLong(this.size);
+        dest.writeDouble(this.percent);
+        dest.writeInt(this.downloadtype);
+        dest.writeLong(this.downloadTime);
+        dest.writeInt(this.encrypt);
+        dest.writeInt(this.hasRecord);
+        dest.writeInt(this.isDelete);
     }
+
+    protected VideoInfoModel(Parcel in) {
+        this.id = in.readInt();
+        this.videoId = in.readString();
+        this.videoCoverUrl = in.readString();
+        this.sdUrl = in.readString();
+        this.hdUrl = in.readString();
+        this.isLike = in.readByte() != 0;
+        this.videoName = in.readString();
+        this.shortName = in.readString();
+        this.content = in.readString();
+        this.likeNum = in.readInt();
+        this.lecturerRemark = in.readString();
+        this.localVideoPath = in.readString();
+        this.categoryName = in.readString();
+        this.currentTime = in.readInt();
+        this.status = in.readInt();
+        this.finalPlayTime = in.readLong();
+        this.size = in.readLong();
+        this.percent = in.readDouble();
+        this.downloadtype = in.readInt();
+        this.downloadTime = in.readLong();
+        this.encrypt = in.readInt();
+        this.hasRecord = in.readInt();
+        this.isDelete = in.readInt();
+    }
+
+    public static final Creator<VideoInfoModel> CREATOR = new Creator<VideoInfoModel>() {
+        @Override
+        public VideoInfoModel createFromParcel(Parcel source) {
+            return new VideoInfoModel(source);
+        }
+
+        @Override
+        public VideoInfoModel[] newArray(int size) {
+            return new VideoInfoModel[size];
+        }
+    };
 }

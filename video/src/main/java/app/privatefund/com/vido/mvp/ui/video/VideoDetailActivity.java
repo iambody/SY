@@ -553,7 +553,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         setData();
         play(true);
         if (videoInfoModel != null) {
-            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, videoInfoModel.);
+            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, (model != null && !TextUtils.isEmpty(model.categoryName)) ? model.categoryName : "全部");
         }
     }
 
@@ -1110,7 +1110,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);
         commonShareDialog.show();
 
-        DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName);
+        DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName, videoInfoModel.categoryName);
     }
 
 

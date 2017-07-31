@@ -109,6 +109,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.videoName = result.rows.videoName;
                 viModel.shortName = result.rows.shortName;
                 viModel.content = result.rows.videoSummary;
+                viModel.categoryName = result.rows.categoryName;
                 viModel.likeNum = Integer.parseInt(result.rows.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
                 viModel.hasRecord = VideoStatus.RECORD;

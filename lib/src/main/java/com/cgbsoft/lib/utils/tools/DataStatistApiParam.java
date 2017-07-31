@@ -649,13 +649,14 @@ public class DataStatistApiParam {
     /**
      * C端点击视频详情中的分享按钮点击事件
      */
-    public static void onStatisToCVideoDetailShareClick(String videoName) {
+    public static void onStatisToCVideoDetailShareClick(String videoName, String videoType) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2029");
         data3.put("act", "20227");
         data3.put("arg1", "分享");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", videoName);
+        data3.put("arg5", videoType);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
 
     }
