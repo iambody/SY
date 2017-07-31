@@ -90,7 +90,7 @@
         android:text="确定"
         android:enabled="false"
         android:textColor="@color/color_6a6a6a"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:visibility="gone" />
 
     <TextView
