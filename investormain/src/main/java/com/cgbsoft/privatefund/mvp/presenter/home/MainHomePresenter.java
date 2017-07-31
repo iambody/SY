@@ -127,7 +127,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
     /**
      * 非游客模式消失下边大布局的的animator
      */
-    public void initUserDismissCardAnimator(View V,View v1,View v2) {
+    public void initUserDismissCardAnimator(View V, View v1, View v2) {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 1f, 0f);
 
         ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", 0f);
@@ -174,7 +174,12 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             @Override
             public void right() {
                 dismiss();
-                NavigationUtils.startDialgTelephone(getContext(), AppManager.getUserInfo(getContext()).adviserPhone);
+                try {
+                    NavigationUtils.startDialgTelephone(getContext(), AppManager.getUserInfo(getContext()).adviserPhone);
+                } catch (Exception e) {
+
+                }
+
             }
         };
         dialog.show();

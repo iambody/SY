@@ -3,12 +3,8 @@ package app.privatefund.com.vido.mvp.ui.video;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -41,16 +37,16 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSE
 /**
  * 播放历史
  */
-public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, VideoHistoryListener,
-        Toolbar.OnMenuItemClickListener {
-    @BindView(R2.id.coordinatorLayout)
-    CoordinatorLayout coordinatorLayout;
-
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R2.id.tv_title)
-    TextView tv_title;
+public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, VideoHistoryListener
+        {
+//    @BindView(R2.id.coordinatorLayout)
+//    CoordinatorLayout coordinatorLayout;
+//
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
+//
+//    @BindView(R2.id.tv_title)
+//    TextView tv_title;
 
 //    @BindView(R2.id.recyclerRefreshLayout)
 //    RecyclerRefreshLayout recyclerRefreshLayout;
@@ -91,7 +87,11 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     private Observable<Integer> refItemObservable;
     private boolean isChoiceAll;
 
-    private MenuItem deleteItem;
+//    private MenuItem deleteItem;
+
+
+    TextView history_del_txt;
+    ImageView history_del_iv;
 
     @Override
     protected void after() {
@@ -130,19 +130,57 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         moreRecyclerView.setAdapter(morevideoHistoryAdapter);
         moreRecyclerView.setHasFixedSize(true);
 
-
-        toolbar.setTitle(null);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(null);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationOnClickListener(v -> finish());
-        tv_title.setText(R.string.play_history_str);
+//
+//        toolbar.setTitle(null);
+////        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setTitle(null);
+////        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationOnClickListener(v -> finish());
+//        tv_title.setText(R.string.play_history_str);
     }
 
     private void initFindId() {
+        history_del_iv = (ImageView) findViewById(R.id.history_del_iv);
+        history_del_txt = (TextView) findViewById(R.id.history_del_txt);
         video_history_todaytitle_lay = findViewById(R.id.video_history_todaytitle_lay);
         video_history_moretitle_lay = findViewById(R.id.video_history_moretitle_lay);
+        history_del_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoHistoryAdapter.getList().size() == 1 && morevideoHistoryAdapter.getList().size() == 1) {
+                    if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR && morevideoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+                        return;
+                }
+                videoHistoryAdapter.changeCheck();
+                morevideoHistoryAdapter.changeCheck();
+
+
+                if (videoHistoryAdapter.getCheckStatus() && morevideoHistoryAdapter.getCheckStatus()) {
+                    visableBottomLayout();
+                } else {
+                    unVisableBottomLayout();
+                }
+            }
+        });
+        history_del_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoHistoryAdapter.getList().size() == 1 && morevideoHistoryAdapter.getList().size() == 1) {
+                    if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR && morevideoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+                        return;
+                }
+                videoHistoryAdapter.changeCheck();
+                morevideoHistoryAdapter.changeCheck();
+
+
+                if (videoHistoryAdapter.getCheckStatus() && morevideoHistoryAdapter.getCheckStatus()) {
+                    visableBottomLayout();
+                } else {
+                    unVisableBottomLayout();
+                }
+            }
+        });
     }
 
     @Override
@@ -214,10 +252,10 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             video_history_todaytitle_lay.setVisibility(View.GONE);
             video_history_moretitle_lay.setVisibility(View.GONE);
             videoHistoryEmpty.setVisibility(View.VISIBLE);
-            deleteItem.setVisible(false);
+//            deleteItem.setVisible(false);
         } else {
             videoHistoryEmpty.setVisibility(View.GONE);
-            deleteItem.setVisible(true);
+//            deleteItem.setVisible(true);
         }
 
         List<VideoHistoryModel> todylist = getPresenter().getVideoListtody(dataList, true);
@@ -266,37 +304,45 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         onRefresh();
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.firstBtn) {
-            if (videoHistoryAdapter.getList().size() == 1 && morevideoHistoryAdapter.getList().size() == 1) {
-                if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR && morevideoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-                    return false;
-            }
-            videoHistoryAdapter.changeCheck();
-            morevideoHistoryAdapter.changeCheck();
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+////        if (item.getItemId() == R.id.firstBtn) {
+////            if (videoHistoryAdapter.getList().size() == 1 && morevideoHistoryAdapter.getList().size() == 1) {
+////                if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR && morevideoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+////                    return false;
+////            }
+////            videoHistoryAdapter.changeCheck();
+////            morevideoHistoryAdapter.changeCheck();
+////
+////
+////            if (videoHistoryAdapter.getCheckStatus() && morevideoHistoryAdapter.getCheckStatus()) {
+////                visableBottomLayout();
+////            } else {
+////                unVisableBottomLayout();
+////            }
+////        }
+////        return false;
+//    }
 
-
-            if (videoHistoryAdapter.getCheckStatus() && morevideoHistoryAdapter.getCheckStatus()) {
-                visableBottomLayout();
-            } else {
-                unVisableBottomLayout();
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.page_menu, menu);
-        deleteItem = menu.findItem(R.id.firstBtn);
-        MenuItem secItem = menu.findItem(R.id.secondBtn);
-        deleteItem.setTitle(R.string.delete_str);
-
-        deleteItem.setIcon(R.drawable.ic_local_delete);
-        secItem.setVisible(false);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        //*******
+//
+//        //********
+////        getMenuInflater().inflate(R.menu.page_menu, menu);
+////        deleteItem = menu.findItem(R.id.firstBtn);
+////        MenuItem secItem = menu.findItem(R.id.secondBtn);
+////        deleteItem.setTitle(R.string.delete_str);
+////
+////        deleteItem.setIcon(R.drawable.ic_local_delete);
+////        secItem.setVisible(false);
+////        //**********
+////        MenuInflater inflater = getMenuInflater();
+//
+//
+//        //*****************
+//        return true;
+//    }
 
     //    @Override
     public void onRefresh() {
@@ -377,15 +423,22 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     private void visableBottomLayout() {
         ll_avh.setVisibility(View.VISIBLE);
 //        setRefLayoutMarginBottom(44);
-        deleteItem.setIcon(null);
-        deleteItem.setTitle(R.string.cancel_str);
+//        deleteItem.setIcon(null);
+//        deleteItem.setTitle(R.string.cancel_str);
+        history_del_txt.setVisibility(View.VISIBLE);
+        history_del_iv.setVisibility(View.GONE);
+        history_del_txt.setText("取消");
+
+
     }
 
     private void unVisableBottomLayout() {
         ll_avh.setVisibility(View.GONE);
+        history_del_txt.setVisibility(View.GONE);
+        history_del_iv.setVisibility(View.VISIBLE);
 //        setRefLayoutMarginBottom(0);
-        deleteItem.setIcon(R.drawable.ic_local_delete);
-        deleteItem.setTitle(R.string.delete_str);
+//        deleteItem.setIcon(R.drawable.ic_local_delete);
+//        deleteItem.setTitle(R.string.delete_str);
     }
 
 

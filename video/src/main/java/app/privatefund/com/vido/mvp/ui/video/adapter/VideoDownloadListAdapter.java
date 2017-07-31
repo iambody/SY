@@ -51,8 +51,10 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.tv_avd_id.setText(model.videoId);
 
             if (openCheck) {
+//                vdlh.ll_avd.setVisibility(View.VISIBLE);
                 vdlh.cb_avd.setVisibility(View.VISIBLE);
             } else {
+//                vdlh.ll_avd.setVisibility(View.GONE);
                 vdlh.cb_avd.setVisibility(View.GONE);
             }
 

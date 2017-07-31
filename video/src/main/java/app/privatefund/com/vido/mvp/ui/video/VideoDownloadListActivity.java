@@ -3,14 +3,10 @@ package app.privatefund.com.vido.mvp.ui.video;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.format.Formatter;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -31,7 +27,6 @@ import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.lzy.okserver.download.DownloadManager;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.com.vido.R;
@@ -41,7 +36,6 @@ import app.privatefund.com.vido.mvp.presenter.video.VideoDownloadListPresenter;
 import app.privatefund.com.vido.mvp.ui.video.adapter.VideoDownloadListAdapter;
 import app.privatefund.com.vido.mvp.ui.video.listener.VideoDownloadListListener;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
-import app.privatefund.com.vido.mvp.ui.video.model.VideoHistoryModel;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -55,16 +49,15 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_O
  * 视频下载列表 单线程下载
  *  
  */
-public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener,
-        Toolbar.OnMenuItemClickListener {
-    @BindView(R2.id.coordinatorLayout)
-    CoordinatorLayout coordinatorLayout;
+public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener{
+//    @BindView(R2.id.coordinatorLayout)
+//    CoordinatorLayout coordinatorLayout;
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
 
-    @BindView(R2.id.tv_title)
-    TextView tv_title;
+//    @BindView(R2.id.tv_title)
+//    TextView tv_title;
 
     @BindView(R2.id.ll_avd_head)
     LinearLayout ll_avd_head;
@@ -117,9 +110,11 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     private Observable<String> nowPlayVideoIdObservable;
     private Observable<Boolean> downloadToListObservable;
     private boolean isChoiceAll, isAllDownloadStart;
-    private MenuItem deleteItem;
+//    private MenuItem deleteItem;
     private DefaultDialog defaultDialog;
     private String nowPlayVideoId;
+    TextView down_del_txt;
+    ImageView down_del_iv;
 
     @Override
     protected void after() {
@@ -137,7 +132,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     @Override
     protected void init(Bundle savedInstanceState) {
         initFindview();
-        tv_title.setText(R.string.local_video_str);
+//        tv_title.setText(R.string.local_video_str);
         videoDownloadListAdapter = new VideoDownloadListAdapter(this);
         videoHaveDownloadListAdapter = new VideoDownloadListAdapter(new HaveDownloadListListener());
 
@@ -158,12 +153,12 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         recyclerView.setHasFixedSize(true);
         donerecyclerView.setHasFixedSize(true);
 
-        toolbar.setTitle(null);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(null);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setTitle(null);
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setTitle(null);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationOnClickListener(v -> finish());
 
 
         defaultDialog = new DefaultDialog(this, getString(R.string.vdla_is_sure_delete_str), getString(R.string.cancel_str), getString(R.string.enter_str)) {
@@ -180,9 +175,53 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                 this.dismiss();
             }
         };
+
+
+        down_del_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
+//                    if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+//                        return  ;
+//                }
+
+                videoHaveDownloadListAdapter.changeCheck();
+                videoDownloadListAdapter.changeCheck();
+
+                if (videoDownloadListAdapter.getCheckStatus()&&videoHaveDownloadListAdapter.getCheckStatus()) {
+                    visableBottomLayout();
+                } else {
+                    unVisableBottomLayout();
+                }
+
+            }
+        });
+
+        down_del_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
+//                    if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+//                        return  ;
+//                }
+
+                videoHaveDownloadListAdapter.changeCheck();
+                videoDownloadListAdapter.changeCheck();
+
+                if (videoDownloadListAdapter.getCheckStatus() && videoHaveDownloadListAdapter.getCheckStatus()) {
+                    visableBottomLayout();
+                } else {
+                    unVisableBottomLayout();
+                }
+
+            }
+        });
     }
 
     private void initFindview() {
+        down_del_iv = (ImageView) findViewById(R.id.down_del_iv);
+        down_del_txt = (TextView) findViewById(R.id.down_del_txt);
+
         donedownload_title_lay = findViewById(R.id.donedownload_title_lay);
     }
 
@@ -257,14 +296,17 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
         List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
-        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
+//        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             list.get(i).isCheck = isChoiceAll;
+        }
+        for (int i = 0; i < donelist.size(); i++) {
+            donelist.get(i).isCheck = isChoiceAll;
         }
         videoDownloadListAdapter.notifyDataSetChanged();
         videoHaveDownloadListAdapter.notifyDataSetChanged();
         if (isChoiceAll) {
-            choiceChangeText(list.size());
+            choiceChangeText(list.size()+donelist.size());
         } else {
             unChoiceChangeText();
         }
@@ -275,7 +317,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
         List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
-        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
+//        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
@@ -291,7 +333,36 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                 }
             }
         }
+        for (int i = 0; i < donelist.size(); i++) {
+            if (donelist.get(i).isCheck) {
+                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
+                    defaultDialog.show();
+                } else {
+                    getPresenter().delete(donelist.get(i).videoId);
+                    if (donelist.get(i).status == VideoStatus.FINISH) {
+                        File file = new File(donelist.get(i).localPath);
+                        if (file.isFile() && file.exists()) {
+                            file.delete();
+                        }
+                    }
+                }
+            }
+        }
         unChoiceChangeText();
+
+//        if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
+//            if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+//                return  ;
+//        }
+
+//        videoHaveDownloadListAdapter.changeCheck();
+//        videoDownloadListAdapter.changeCheck();
+//
+//        if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
+//            visableBottomLayout();
+//        } else {
+//            unVisableBottomLayout();
+//        }
         getHandler().postDelayed(() -> onControlGetDataList(true), 100);
     }
 
@@ -307,11 +378,14 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             ll_avd_head.setVisibility(View.GONE);
             donedownload_title_lay.setVisibility(View.GONE);
             tvNodataLay.setVisibility(View.VISIBLE);
-            deleteItem.setVisible(false);
+//            deleteItem.setVisible(false);
             tv_avd_allspace.setVisibility(View.VISIBLE);
+            donerecyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+
         } else {
             tvNodataLay.setVisibility(View.GONE);
-            deleteItem.setVisible(true);
+//            deleteItem.setVisible(true);
             tv_avd_allspace.setVisibility(View.INVISIBLE);
         }
         //如果已经全部下载过了就全部开始不显示
@@ -322,7 +396,10 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             videoHaveDownloadListAdapter.deleteAllData();
             videoHaveDownloadListAdapter.refAllData(dataList);
             return;
+        }else{
+            ll_avd_head.setVisibility(View.VISIBLE);
         }
+
         //获取未下载的数据
         List<VideoDownloadListModel> downloadingData = getPresenter().getVideoList(dataList, false);
         //获取已下载的数据
@@ -376,37 +453,37 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     }
 
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.page_menu, menu);
+//        deleteItem = menu.findItem(R.id.firstBtn);
+//        MenuItem secItem = menu.findItem(R.id.secondBtn);
+//        deleteItem.setTitle(R.string.delete_str);
+//        deleteItem.setIcon(R.drawable.ic_local_delete);
+//        secItem.setVisible(false);
+//        return true;
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.page_menu, menu);
-        deleteItem = menu.findItem(R.id.firstBtn);
-        MenuItem secItem = menu.findItem(R.id.secondBtn);
-        deleteItem.setTitle(R.string.delete_str);
-        deleteItem.setIcon(R.drawable.ic_local_delete);
-        secItem.setVisible(false);
-        return true;
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.firstBtn) {//点击右上角的删除按钮
-            if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
-                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-                    return false;
-            }
-
-            videoHaveDownloadListAdapter.changeCheck();
-            videoDownloadListAdapter.changeCheck();
-
-            if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
-                visableBottomLayout();
-            } else {
-                unVisableBottomLayout();
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        if (item.getItemId() == R.id.firstBtn) {//点击右上角的删除按钮
+//            if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
+//                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
+//                    return false;
+//            }
+//
+//            videoHaveDownloadListAdapter.changeCheck();
+//            videoDownloadListAdapter.changeCheck();
+//
+//            if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
+//                visableBottomLayout();
+//            } else {
+//                unVisableBottomLayout();
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public void onItemClick(int position, ImageView iv_avd_cover, ImageView iv_avd_pause, TextView tv_avd_pause) {
@@ -523,22 +600,35 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     }
 
     private void unChoiceChangeText() {
+
+
         tv_avd_choiceAll.setText(R.string.choice_all_str);
         tv_avd_delete.setTextColor(getResources().getColor(R.color.color_999999));
         tv_avd_delete.setText(R.string.delete_str);
+
+
     }
 
     private void visableBottomLayout() {
         setRefLayoutMarginBottom(44);
-        deleteItem.setIcon(null);
-        deleteItem.setTitle(R.string.cancel_str);
+//        deleteItem.setIcon(null);/*
+//        deleteItem.setTitle(R.string.cancel_str);*/
+
+        down_del_iv.setVisibility(View.GONE);
+                down_del_txt.setVisibility(View.VISIBLE);
 
     }
 
     private void unVisableBottomLayout() {
         setRefLayoutMarginBottom(0);
-        deleteItem.setIcon(R.drawable.ic_local_delete);
-        deleteItem.setTitle(R.string.delete_str);
+
+
+        down_del_iv.setVisibility(View.VISIBLE);
+        down_del_txt.setVisibility(View.GONE);
+
+
+//        deleteItem.setIcon(R.drawable.ic_local_delete);
+//        deleteItem.setTitle(R.string.delete_str);
     }
 
     private void changeAllStart() {

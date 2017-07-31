@@ -87,6 +87,7 @@ public interface VideoDetailContract {
         void getLocalVideoInfoSucc(VideoInfoModel model);
 
         void getNetVideoInfoSucc(VideoInfoModel model, VideoInfoEntity.Result result);
+        void getNetVideoInfoErr(String str);
 
         void toVideoLikeSucc(int likeRes, int likeNum);
 

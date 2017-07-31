@@ -31,6 +31,12 @@ public class MembersAreaActivity extends BaseMvcActivity {
         baseContext.finish();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        memberareaWebview.loadUrl("javascript:refresh()");
+    }
+
     public void torule(View V) {
         NavigationUtils.gotoWebActivity(baseContext, CwebNetConfig.adviserrules, "会员规则", false);
     }
