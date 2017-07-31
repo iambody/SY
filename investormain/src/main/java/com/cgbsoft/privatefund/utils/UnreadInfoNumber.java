@@ -29,26 +29,26 @@ public class UnreadInfoNumber {
     public UnreadInfoNumber(Activity activity, View showView) {
         this.activity = activity;
         this.showView = showView;
-        initUnreadInfo();
+        initUnreadInfo(0);
         initRegeist();
     }
 
     /**
      * 初始化未读消息
      */
-    public void initUnreadInfo() {
+    private void initUnreadInfo(int numberNum) {
         if (AppManager.isVisitor(activity)) {
             return;
         }
-        int numberNum = AppManager.getUnreadInfoNumber(activity);
+//        int numberNum = AppManager.getUnreadInfoNumber(activity);
         if (badgeView == null) {
             if (numberNum > 0) {
-                badgeView = ViewUtils.createLeftTopRedPoint(activity, showView, numberNum);
+                badgeView = ViewUtils.createLeftTopRedStringPoint(activity, showView, "");
             }
         } else {
             if (numberNum > 0) {
 //                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
-                badgeView.setText(" ");
+                badgeView.setText("");
                 badgeView.invalidate();
             } else {
                 badgeView.hide();
@@ -72,8 +72,8 @@ public class UnreadInfoNumber {
             unReadNumberObservable.subscribe(new RxSubscriber<Integer>() {
                 @Override
                 protected void onEvent(Integer integer) {
-                    AppInfStore.saveUnreadInfoNum(activity, integer.intValue());
-                    initUnreadInfo();
+                    //AppInfStore.saveUnreadInfoNum(activity, integer.intValue());
+                    initUnreadInfo(integer);
                 }
 
                 @Override
