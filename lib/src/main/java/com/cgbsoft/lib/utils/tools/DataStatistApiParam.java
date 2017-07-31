@@ -643,7 +643,6 @@ public class DataStatistApiParam {
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", videoName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-
     }
 
     /**
@@ -658,7 +657,6 @@ public class DataStatistApiParam {
         data3.put("arg4", videoName);
         data3.put("arg5", videoType);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-
     }
 
     /**

@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.utils;
 import android.app.Activity;
 import android.view.View;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -23,6 +22,8 @@ public class UnreadInfoNumber {
     private BadgeView badgeView;
 
     private View showView;
+
+    private boolean hasUnreadNumber;
 
     private static Observable<Integer> unReadNumberObservable;
 
