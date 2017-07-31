@@ -105,6 +105,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
         hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthListModel.getUrl()).concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
                 .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()));
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+        DataStatistApiParam.operateHealthIntroduceClick(healthListModel.getTitle());
     }
 
     @Override
