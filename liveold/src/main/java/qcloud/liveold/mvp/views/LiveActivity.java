@@ -262,13 +262,15 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
 
     private void checkRotation() {
         screenChange = 0;
-        try {
-            screenChange = Settings.System.getInt(this.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION);
-            if (screenChange == 1) {
-                Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
+        if (Build.VERSION.SDK_INT < 23) {
+            try {
+                screenChange = Settings.System.getInt(this.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION);
+                if (screenChange == 1) {
+                    Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
+                }
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -2533,21 +2535,35 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
     void checkPermission() {
         final List<String> permissionsList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if ((checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED))
-                permissionsList.add(Manifest.permission.CAMERA);
-            if ((checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED))
-                permissionsList.add(Manifest.permission.RECORD_AUDIO);
-            if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
-                permissionsList.add(Manifest.permission.WAKE_LOCK);
-            if ((checkSelfPermission(Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED))
-                permissionsList.add(Manifest.permission.WRITE_SETTINGS);
-            if ((checkSelfPermission(Manifest.permission.MODIFY_AUDIO_SETTINGS) != PackageManager.PERMISSION_GRANTED))
-                permissionsList.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
-            if (permissionsList.size() != 0) {
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-                        REQUEST_PHONE_PERMISSIONS);
+            if (Constants.HOST != MySelfInfo.getInstance().getIdStatus()) {
+                if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.WAKE_LOCK);
+                if ((checkSelfPermission(Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.WRITE_SETTINGS);
+                if ((checkSelfPermission(Manifest.permission.MODIFY_AUDIO_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
+                if (permissionsList.size() != 0) {
+                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                            REQUEST_PHONE_PERMISSIONS);
+                }
+            } else {
+                if ((checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.CAMERA);
+                if ((checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.RECORD_AUDIO);
+                if ((checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.WAKE_LOCK);
+                if ((checkSelfPermission(Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.WRITE_SETTINGS);
+                if ((checkSelfPermission(Manifest.permission.MODIFY_AUDIO_SETTINGS) != PackageManager.PERMISSION_GRANTED))
+                    permissionsList.add(Manifest.permission.MODIFY_AUDIO_SETTINGS);
+                if (permissionsList.size() != 0) {
+                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                            REQUEST_PHONE_PERMISSIONS);
+                }
             }
         }
+
     }
 
     // 清除老房间数据
