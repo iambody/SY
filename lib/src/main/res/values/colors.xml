@@ -85,7 +85,7 @@
     <color name="c_main_tabbar_select">#2a2a2a</color>
 
     <color name="black">#000000</color>
-    <color name="black50">#80000000</color>
+    <color name="black50">#77000000</color>
 
     <color name="toc_login_orange_press">#aaf47900</color>
     <color name="toc_cornor_no_alpha">#f47900</color>
