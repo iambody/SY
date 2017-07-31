@@ -116,16 +116,19 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
             public void onClick(ElegantGoodsBeanInterface bean, boolean isHot) {
                 String id;
                 String name;
+                String hotOrNew = "";
                 if (isHot) {//热门清单产品
                     ElegantGoodsEntity.HotListItemBean clickBean = (ElegantGoodsEntity.HotListItemBean) bean;
                     name=clickBean.getGoodsName();
                     id=clickBean.getId();
+                    hotOrNew = "热门";
                 } else {//全部产品
                     ElegantGoodsEntity.AllNewsItemBean clickBean = (ElegantGoodsEntity.AllNewsItemBean) bean;
                     id=clickBean.getId();
                     name=clickBean.getGoodsName();
+                    hotOrNew = "最新";
                 }
-//                    DataStatistApiParam.clickProduct(name,categoryStr);
+                    DataStatistApiParam.clickProduct(name,categoryStr,hotOrNew);
 //                Toast.makeText(baseActivity.getApplicationContext(),id,Toast.LENGTH_SHORT).show();
                 HashMap hashMap = new HashMap();
                 hashMap.put(WebViewConstant.RIGHT_SHARE, true);
@@ -181,7 +184,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         mRefreshLayout.setLoadMoreEnabled(false);
         category=posBean.getCode();
         categoryStr=posBean.getTitle();
-//        DataStatistApiParam.clickCategory(categoryStr);
+        DataStatistApiParam.clickCategory(categoryStr);
         isOver=false;
 //        LogUtils.Log("aaa","click item is==="+category);
         prosDatas.clear();
