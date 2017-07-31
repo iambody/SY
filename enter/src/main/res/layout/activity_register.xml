@@ -100,13 +100,13 @@
                 android:focusable="true"
                 android:text="发送验证码"
 
-                android:textColor="@color/black"
+                android:textColor="@color/black50"
                 android:textStyle="normal" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_z_dip"
+            android:layout_height="1px"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:layout_marginRight="130dp"
             android:src="@color/black" />
@@ -156,7 +156,9 @@
 
         </RelativeLayout>
 
-        <ImageView style="@style/enter_ed_line" />
+
+
+        <ImageView style="@style/enter_ed_line1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -200,7 +202,7 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <ImageView style="@style/enter_ed_line" />
+        <ImageView style="@style/enter_ed_line1" />
         <!--服务码 -->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -246,7 +248,7 @@
         </RelativeLayout>
 
         <!-- 服务码*********-->
-        <ImageView style="@style/enter_ed_line" />
+        <ImageView style="@style/enter_ed_line1" />
 
 
         <Button
