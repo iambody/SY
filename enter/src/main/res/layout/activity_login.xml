@@ -99,7 +99,7 @@
 
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:hint="@string/al_username_str"
+                    android:hint="请输入手机号"
                     android:inputType="number"
                     android:maxLength="11"
                     android:maxLines="1"

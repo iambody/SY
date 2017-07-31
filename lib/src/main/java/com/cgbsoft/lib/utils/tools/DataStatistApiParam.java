@@ -1126,10 +1126,11 @@ public class DataStatistApiParam {
      *
      * @param
      */
-    public static void operateBannerClick() {
+    public static void operateBannerClick(String s) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2073");
         data3.put("act", "20385");
+        data3.put("arg3", s);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 

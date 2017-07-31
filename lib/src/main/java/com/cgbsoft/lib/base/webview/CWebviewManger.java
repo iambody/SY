@@ -349,7 +349,7 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
         }else if(action.contains("bindAdviserSucc")){
             //绑定成功
-
+RxBus.get().post(RxConstant.BindAdviser,1);
         }
     }
 
