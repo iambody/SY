@@ -1591,7 +1591,7 @@ public class DataStatistApiParam {
 
     /**
      * 首页点击消息
-     * @param videoName
+     * @param
      */
     public static void homeNewClick() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -1609,6 +1609,21 @@ public class DataStatistApiParam {
         data3.put("arg1", "登录后查看");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
+    /**
+     * 视频详情
+     * @param
+     */
+    public static void openVideoDetailActivityClick(String videoName, String videoType) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2085");
+        data3.put("act", "20426");
+        data3.put("arg1", "进入视频");
+        data3.put("arg4", videoName);
+        data3.put("arg5", videoType);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
 
     public static void onClickLiveRoomCloseToB(String videoName) {
 
