@@ -156,7 +156,7 @@
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
-    
+
     <!-- 投资账号-->
     <string name="real_name">真实姓名</string>
     <string name="centify_type">证件类型</string>
@@ -270,6 +270,7 @@
         <item>d8-app</item>
         <item>d9-app</item>
         <item>d10-app</item>
+        <item>sim-app</item>
     </string-array>
 
     <string-array name="select_identify">

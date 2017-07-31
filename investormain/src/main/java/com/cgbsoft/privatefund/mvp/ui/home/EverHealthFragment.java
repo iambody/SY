@@ -169,4 +169,10 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
             unreadInfoNumber.onDestroy();
         }
     }
+
+    @Override
+    protected void clickTabButton(String tabName) {
+        super.clickTabButton(tabName);
+        DataStatistApiParam.everHealthClick(tabName);
+    }
 }

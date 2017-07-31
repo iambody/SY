@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
@@ -258,10 +259,18 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             if (AppManager.isAdViser(this)) {
                 openActivity(ChoiceIdentityActivity.class);
             } else {
-                openActivity(LoginActivity.class);
+                if (null==SPreference.getString(this,"splash")){
+                    NavigationUtils.startActivityByRouter(this,RouteConfig.SPLASH_MOVIE);
+                }else {
+                    openActivity(LoginActivity.class);
+                }
             }
         } else {
-            openActivity(LoginActivity.class);
+            if (null==SPreference.getString(this,"splash")){
+                NavigationUtils.startActivityByRouter(this,RouteConfig.SPLASH_MOVIE);
+            }else {
+                openActivity(LoginActivity.class);
+            }
         }
         finish();
     }

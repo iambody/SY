@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingLeft="@dimen/ui_15_dip"
         android:paddingRight="@dimen/ui_10_dip"
         android:id="@+id/health_all_title_ll"
         android:gravity="center_vertical">

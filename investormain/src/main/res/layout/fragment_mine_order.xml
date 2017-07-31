@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingLeft="@dimen/ui_15_dip"
         android:paddingRight="@dimen/ui_10_dip"
         android:gravity="center_vertical"
         android:id="@+id/account_order_goto_receive_address">
@@ -138,7 +138,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="146dp"
+            android:layout_height="match_parent"
             android:id="@+id/account_order_all_ll"
             android:background="@color/app_bg"
             android:gravity="center">

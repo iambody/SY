@@ -1237,8 +1237,10 @@ public class CWebviewManger {
     private void getContentFromPasteBoard(String action) {
         String[] split = action.split(":");
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        String content = clipboardManager.getText().toString();
-        webview.loadUrl("javascript:setPasteServeCode('" + content + "')");
+        if (clipboardManager.getText() != null) {
+            String content = clipboardManager.getText().toString();
+            webview.loadUrl("javascript:setPasteServeCode('" + content + "')");
+        }
     }
 
     /**

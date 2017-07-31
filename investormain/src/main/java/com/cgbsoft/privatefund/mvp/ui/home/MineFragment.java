@@ -739,7 +739,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             for (int i = 0; i < list.size(); i++) {
                 MineModel.HealthItem healthItem = list.get(i);
                 TextView textView = new TextView(getActivity());
-                textView.setPadding(5, 0, 0, 0);
+                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
                 textView.setSingleLine(true);
                 textView.setEllipsize(TextUtils.TruncateAt.END);

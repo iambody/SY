@@ -552,6 +552,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
+        if (videoInfoModel != null) {
+            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, "全部");
+        }
     }
 
     @Override

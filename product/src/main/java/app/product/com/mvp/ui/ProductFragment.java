@@ -132,6 +132,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private List<ProductlsBean> productlsBeen = new ArrayList<>();
     private TextView product_product_wenjuan;
 
+    private Observable<Boolean> riskStateObservable;
+
 
     @Override
     protected int layoutID() {
@@ -145,12 +147,27 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         initRiskEvaluat();
         initCache();
         initData();
+        riskStateObservable = RxBus.get().register(RxConstant.RefreshRiskState, Boolean.class);
+        riskStateObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean b) {
+                if (productlsBeen != null && productlsBeen.size() > 0) {
+                    initRiskEvaluat();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
 
-        if (productlsBeen!=null&&productlsBeen.size()>0){
-            if (isVisibleToUser){
+        if (productlsBeen != null && productlsBeen.size() > 0) {
+            if (isVisibleToUser) {
                 initRiskEvaluat();
             }
         }
@@ -187,9 +204,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      */
     private void initRiskEvaluat() {
         isFirstShow = false;
-        if (AppManager.isVisitor(getActivity())){
+        if (AppManager.isVisitor(getActivity())) {
             product_product_wenjuan.setText(getResources().getString(R.string.login_see_product));
-        }else {
+        } else {
             product_product_wenjuan.setText(getResources().getString(R.string.edit_risk_question));
         }
         product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
@@ -381,7 +398,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
-        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())){
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {
             return;
         }
         if (null != orderbyPop && orderbyPop.isShowing()) {
@@ -397,7 +414,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
     @OnClick(R2.id.product_productfragment_shaixuan)
     public void onProductProductfragmentShaixuanClicked() {
-        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())){
+        if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {
             return;
         }
         if (null == filterPop)
@@ -590,11 +607,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     //问卷调查
     @OnClick(R2.id.product_product_wenjuan)
     public void onViewClicked() {
-        if (AppManager.isVisitor(getActivity())){
+        if (AppManager.isVisitor(getActivity())) {
             HashMap<String, Object> map = new HashMap<>();
             map.put("insidegotologin", true);
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_LOGIN, map);
-        }else {
+            DataStatistApiParam.productLogin();
+        } else {
             Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
         }
     }
