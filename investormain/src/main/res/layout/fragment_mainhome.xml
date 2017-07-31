@@ -103,9 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/ui_1_dip"
-            android:layout_marginTop="20dp"
-            android:padding="11dp"
+            android:layout_marginRight="@dimen/ui_12_dip"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
     </RelativeLayout>

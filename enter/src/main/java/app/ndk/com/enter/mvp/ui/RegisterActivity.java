@@ -235,7 +235,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     public void regSucc() {
-        Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
+        Router.build(RouteConfig.GOTO_LOGIN).go(RegisterActivity.this);
         finish();
     }
 
