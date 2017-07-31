@@ -72,7 +72,6 @@ public class UnreadInfoNumber {
             unReadNumberObservable.subscribe(new RxSubscriber<Integer>() {
                 @Override
                 protected void onEvent(Integer integer) {
-                    //AppInfStore.saveUnreadInfoNum(activity, integer.intValue());
                     initUnreadInfo(integer);
                 }
 

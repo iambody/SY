@@ -20,7 +20,9 @@
         app:xTabTextColor="#ff000000"
         app:xTabTextSize="16sp"/>
 
-    <ImageView style="@style/normal_diveline" />
+    <ImageView style="@style/normal_diveline"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
 
     <com.cgbsoft.privatefund.widget.CustomViewPage
         android:id="@+id/viewpager"

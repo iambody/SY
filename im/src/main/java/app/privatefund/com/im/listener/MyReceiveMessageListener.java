@@ -129,5 +129,6 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         int cUnread = i - intime40003 - intime40004 - intime40006 - intime49999;
 //        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, cUnread < 0 ? 0 : cUnread);
         RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, i);
+
     }
 }
