@@ -594,6 +594,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             HashMap<String, Object> map = new HashMap<>();
             map.put("insidegotologin", true);
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_LOGIN, map);
+            DataStatistApiParam.productLogin();
         }else {
             Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
         }

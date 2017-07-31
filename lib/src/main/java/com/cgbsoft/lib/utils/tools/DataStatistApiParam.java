@@ -1578,6 +1578,38 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 首页点击直播
+     */
+    public static void homeLiveClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2073");
+        data3.put("act", "20384");
+        data3.put("arg1", "直播");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 首页点击消息
+     * @param videoName
+     */
+    public static void homeNewClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2065");
+        data3.put("act", "20360");
+        data3.put("arg1", "消息");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+
+    public static void productLogin() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2068");
+        data3.put("act", "20367");
+        data3.put("arg1", "登录后查看");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
     public static void onClickLiveRoomCloseToB(String videoName) {
 
     }
