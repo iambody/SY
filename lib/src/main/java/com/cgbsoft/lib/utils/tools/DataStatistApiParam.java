@@ -976,6 +976,30 @@ public class DataStatistApiParam {
     }
 
     /**
+     * 尚品类型点击事件
+     */
+    public static void clickCategory(String categoryName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20285");
+        data3.put("arg1", "尚品类型");
+        data3.put("arg3", categoryName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 商品点击事件
+     */
+    public static void clickProduct(String productName,String categoryName,String hotOrNew) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20286");
+        data3.put("arg1", "商品");
+        data3.put("arg3", productName);
+        data3.put("arg4", categoryName);
+        data3.put("arg5", hotOrNew);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
      * 尚品分类的点击事件
      */
     public static void clickCategoryEat(String categoryName) {
