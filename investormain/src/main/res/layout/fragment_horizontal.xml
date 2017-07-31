@@ -16,8 +16,8 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollbars="none" />
@@ -35,17 +35,16 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@string/account_video_go_look_all"
-            android:textColor="@color/black"
+            android:textColor="@color/color_5a5a5a"
             android:textSize="@dimen/dimens_sp_14"
             android:visibility="visible" />
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/goto_look_video"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/ui_15_dip"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
         android:background="@drawable/shape_btn_goden_boader_bg"

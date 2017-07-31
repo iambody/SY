@@ -191,7 +191,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         } else {
             resetGesturePasswordDialog(GestureVerifyActivity.this);
         }
-        DataStatistApiParam.onForgetGesturePassword();
+        DataStatistApiParam.forgetGesturePassword();
     }
 
     @OnClick(R.id.text_cancel)
@@ -257,6 +257,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
 
     private void processResult() {
         if (modifyGesturePassword) {
+            DataStatistApiParam.realModifyGesturePassword();
             Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
             intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);
             startActivity(intent);

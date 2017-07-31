@@ -247,8 +247,8 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
             Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (camenIntent.resolveActivity(getPackageManager()) != null) {
                 ImageSelector selectSec = ImageSelector.create();
-                selectSec.single();  // 选择一张图片
-                selectSec.showCamera(false);
+//                selectSec.single();  // 选择一张图片
+                selectSec.openCameraOnly(true);
                 selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
             } else {
                 Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();

@@ -1438,6 +1438,29 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 尊享私行中产品/资讯/学院tab点击埋点
+     */
+    public static void honourPBitemClick(String tabName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2068");
+        data3.put("act", "20368");
+        data3.put("arg1", "tab点击");
+        data3.put("arg3", tabName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 永享健康中介绍/检测/医疗tab点击埋点
+     */
+    public static void everHealthClick(String tabName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2059");
+        data3.put("act", "20340");
+        data3.put("arg1", "tab点击");
+        data3.put("arg3", tabName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
     public static void editAddressSave() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -1506,6 +1529,55 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+
+    /**
+     * 进入资讯详情
+     *
+     * @param
+     */
+    public static void operatePrivateBankDiscoverDetailClick(String title, String categoryType) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2067");
+        data3.put("act", "20364");
+        data3.put("arg1", "文章");
+        data3.put("arg3", title);
+        data3.put("arg4", categoryType);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 修改手势密码
+     */
+    public static void realModifyGesturePassword() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2040");
+        data3.put("act", "20272");
+        data3.put("arg1", "修改手势密码");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 忘记手势密码
+     */
+    public static void forgetGesturePassword() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2040");
+        data3.put("act", "20273");
+        data3.put("arg1", "忘记手势密码");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 消息免打扰
+     */
+    public static void operateMessageFreeAccessClick() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2081");
+        data3.put("act", "20415");
+        data3.put("arg1", "消息免打扰");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
     /**
      * 首页点击直播
      */
@@ -1519,7 +1591,7 @@ public class DataStatistApiParam {
 
     /**
      * 首页点击消息
-     * @param videoName
+     * @param
      */
     public static void homeNewClick() {
         HashMap<String, String> data3 = new HashMap<>();
@@ -1529,28 +1601,30 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
-    /**
-     * 尊享私行中产品/资讯/学院tab点击埋点
-     */
-    public static void honourPBitemClick(String tabName) {
+
+    public static void productLogin() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2068");
-        data3.put("act", "20368");
-        data3.put("arg1", "tab点击");
-        data3.put("arg3", tabName);
+        data3.put("act", "20367");
+        data3.put("arg1", "登录后查看");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
     /**
-     * 永享健康中介绍/检测/医疗tab点击埋点
+     * 视频详情
+     * @param
      */
-    public static void everHealthClick(String tabName) {
+    public static void openVideoDetailActivityClick(String videoName, String videoType) {
         HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2059");
-        data3.put("act", "20340");
-        data3.put("arg1", "tab点击");
-        data3.put("arg3", tabName);
+        data3.put("grp", "2085");
+        data3.put("act", "20426");
+        data3.put("arg1", "进入视频");
+        data3.put("arg4", videoName);
+        data3.put("arg5", videoType);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
+
+
     public static void onClickLiveRoomCloseToB(String videoName) {
 
     }

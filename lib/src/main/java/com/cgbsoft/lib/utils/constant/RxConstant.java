@@ -95,9 +95,14 @@ public interface RxConstant {
     //商城删除地址
     String DELETE_ADDRESS = "delete_address";
 
+    String RefreshRiskState = "refresh_risk_state";
+
     String LOGIN_KILL="login_kill";
     String LOGIN_STATUS_DISABLE_OBSERVABLE = "login_status_disable_observable";
     String MAIN_PAGE_KILL = "mainpagekill";
 
     String MAIN_PAGE_KILL_START = "mainpagekillstart";
+
+    //绑定理财师
+    String BindAdviser = "bindadviser";
 }

@@ -163,7 +163,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //    UserInfoDataEntity.UserInfo userInfo;
 
     private Observable<LiveInfBean> liveObservable;
-    private Observable<Integer> userLayObservable, infdataObservable;
+    private Observable<Integer> userLayObservable, infdataObservable, bindAdviserObservable;
 
     private boolean isLoading;
 
@@ -178,7 +178,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
-
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter();
         mainHomeBannerview.setAdapter(homeBannerAdapter);
@@ -193,6 +192,31 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getHomeData();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv);
         DataStatistApiParam.gohome();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.Log("saassaa", "resume");
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
+//        mainHomeSmartscrollview.smoothScrollTo(0,20);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean isVisibleToUser) {
+        super.onHiddenChanged(isVisibleToUser);
+        if (isVisibleToUser) {
+            isVisible = true;
+            LogUtils.Log("sssaa", "首页不可见");
+            mainHomeBannerview.resume();
+        } else {
+            isVisible = false;
+            LogUtils.Log("sssaa", "首页可见");
+            mainhomeWebview.loadUrls("javascript:refresh()");
+            mainHomeBannerview.pause();
+        }
     }
 
     /*游客模式游客布局显示 费游客模式非游客布局显示*/
@@ -274,7 +298,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onViewvisterivClicked() {
         if (isVisiterShow) {
             VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-
             return;
         }
         mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
@@ -381,6 +404,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*  注册监听事件*/
     private void initRxEvent() {
+        /**
+         *  绑定理财师
+         */
+        bindAdviserObservable = RxBus.get().register(RxConstant.BindAdviser, Integer.class);
+        bindAdviserObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                getPresenter().getUserInf(1);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         //游客登录进入正常模式
         userLayObservable = RxBus.get().register(RxConstant.MAIN_FRESH_LAY, Integer.class);
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
@@ -443,7 +482,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         main_home_live_lay.setVisibility(View.VISIBLE);
 //                        main_home_live_lay.setClickable(false);
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
+//                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 15, view_live_iv_bg);
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告:");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
@@ -456,7 +496,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         main_home_live_lay.setClickable(true);
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
+//                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 15, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
                         BStrUtils.SetTxt(view_live_title, "正在直播:");
@@ -496,6 +537,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         if (unreadInfoNumber != null) {
             unreadInfoNumber.onDestroy();
+        }
+        if(null!=bindAdviserObservable ){
+            RxBus.get().unregister(RxConstant.BindAdviser , bindAdviserObservable);
         }
     }
 /* 显示直播的布局*/
@@ -564,6 +608,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initViewPage(cachesData.banner);
         //用户等级信息
         initLevel(cachesData.myInfo);
+    }
+
+    @Override
+    public void getUseriInfsucc(int type) {
+        switch (type) {
+            case 1:
+                initshowlay();
+                hindCard();
+//         timeCountDown();
+                break;
+        }
     }
 
 
@@ -648,16 +703,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.start();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        LogUtils.Log("saassaa", "resume");
-        if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
-        }
-//        mainHomeSmartscrollview.smoothScrollTo(0,20);
-    }
-
 
     /*下拉刷新展示*/
     @Override
@@ -697,7 +742,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 break;
             case R.id.main_home_live_lay://直播
-                if (null == homeliveInfBean ) return;
+                if (null == homeliveInfBean) return;
 
                 switch (homeliveInfBean.type) {
                     case 0://预告
@@ -757,19 +802,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean isVisibleToUser) {
-        super.onHiddenChanged(isVisibleToUser);
-        if (isVisibleToUser) {
-            isVisible = true;
-            LogUtils.Log("sssaa", "首页不可见");
-            mainHomeBannerview.resume();
-        } else {
-            isVisible = false;
-            LogUtils.Log("sssaa", "首页可见");
-            mainHomeBannerview.pause();
-        }
-    }
 
     @Override
     public void onPause() {

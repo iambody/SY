@@ -347,6 +347,9 @@ public class CWebviewManger {
             map.put("insidegotologin", true);
             map.put("backgohome", true);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
+        }else if(action.contains("bindAdviserSucc")){
+            //绑定成功
+
         }
     }
 
@@ -1234,8 +1237,10 @@ public class CWebviewManger {
     private void getContentFromPasteBoard(String action) {
         String[] split = action.split(":");
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        String content = clipboardManager.getText().toString();
-        webview.loadUrl("javascript:setPasteServeCode('" + content + "')");
+        if (clipboardManager.getText() != null) {
+            String content = clipboardManager.getText().toString();
+            webview.loadUrl("javascript:setPasteServeCode('" + content + "')");
+        }
     }
 
     /**

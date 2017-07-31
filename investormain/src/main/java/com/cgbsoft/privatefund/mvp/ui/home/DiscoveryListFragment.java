@@ -98,6 +98,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
             hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&category=").concat(discoveryListModel.getCategory()));
             hashMap1.put(WebViewConstant.push_message_title, discoveryListModel.getLabel());
             NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
+            DataStatistApiParam.operatePrivateBankDiscoverDetailClick(discoveryListModel.getTitle(), discoveryListModel.getLabel());
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {

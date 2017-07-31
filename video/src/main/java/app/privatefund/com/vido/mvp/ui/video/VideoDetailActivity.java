@@ -552,6 +552,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
+        if (videoInfoModel != null) {
+            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, "全部");
+        }
     }
 
     @Override
@@ -1071,6 +1074,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             @Override
             public void right(String extra) {
                 this.dismiss();
+
                 getPresenter().addCommont(extra, videoAllInf.videoId);
             }
         };
@@ -1096,8 +1100,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     //点击视频详情页的分享按钮
     @OnClick(R2.id.view_title_right_txt)
     public void onViewTitleRightTxtClicked() {
-
-        if (null == videoAllInf.rows) return;
+        if(!NetUtils.isNetworkAvailable(baseContext)){
+            PromptManager.ShowCustomToast(baseContext,"请链接网络");
+            return;
+        }
+        if (null==videoAllInf||null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);

@@ -126,7 +126,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
         int intime40004 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40004");
         int intime40006 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40006");
         int intime40007 = RongIMClient.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, "INTIME40007");
-        int cUnread = i - intime40003 - intime40004 - intime40006;
-        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, cUnread);
+        int cUnread = i - intime40003 - intime40004 - intime40006 - intime49999;
+        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, cUnread < 0 ? 0 : cUnread);
     }
 }
