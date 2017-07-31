@@ -73,9 +73,9 @@ public class PrivateBanksFragment extends BasePageFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        if (unreadInfoNumber != null) {
-//            unreadInfoNumber.initUnreadInfo();
-//        }
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
     }
 
     @Override

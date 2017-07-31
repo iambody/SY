@@ -338,9 +338,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
-//        if (unreadInfoNumber != null) {
-//            unreadInfoNumber.initUnreadInfo();
-//        }
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
     }
 
     @Override

@@ -105,9 +105,9 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-//        if (unreadInfoNumber != null) {
-//            unreadInfoNumber.initUnreadInfo();
-//        }
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfo();
+        }
     }
 
     /**
