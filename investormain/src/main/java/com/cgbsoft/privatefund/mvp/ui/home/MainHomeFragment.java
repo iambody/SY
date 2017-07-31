@@ -214,7 +214,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {
             isVisible = false;
             LogUtils.Log("sssaa", "首页可见");
-            mainhomeWebview.loadUrls("javascript:refresh()");
+//            mainhomeWebview.loadUrls("javascript:refresh()");
             mainHomeBannerview.pause();
         }
     }
@@ -799,7 +799,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             } else if ("app".equals(data.jumpType)) {
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
-            DataStatistApiParam.operateBannerClick();
+            DataStatistApiParam.operateBannerClick(null==data||BStrUtils.isEmpty(data.title)?"":data.title);
         }
     }
 

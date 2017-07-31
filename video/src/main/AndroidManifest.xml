@@ -6,11 +6,11 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
-        <activity android:name=".mvp.ui.video.VideoDownloadListActivity" />
-        <activity android:name=".mvp.ui.video.VideoHistoryListActivity" />
-        <activity android:name=".mvp.ui.video.VideoDetailActivity" />
+        <activity android:name=".mvp.ui.video.VideoDownloadListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.video.VideoHistoryListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.video.VideoDetailActivity"  />
 
-        <activity android:name=".mvp.ui.video.InformationDetailActivity" />
+        <activity android:name=".mvp.ui.video.InformationDetailActivity" android:screenOrientation="portrait" />
 
       <!--  <service android:name=".mvc.services.PlayerService">
             <intent-filter>

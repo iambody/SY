@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+
             android:layout_marginTop="@dimen/ui_40_dip"
             android:orientation="horizontal">
             <!-- 手机号输入框-->
@@ -94,8 +94,8 @@
                 style="@style/btn_red_line_bg_style"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="bottom"
+
                 android:contextClickable="true"
                 android:focusable="true"
                 android:text="发送验证码"
@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
             android:layout_marginLeft="@dimen/ui_20_dip"
-            android:layout_marginRight="140dp"
+            android:layout_marginRight="130dp"
             android:src="@color/black" />
 
         <RelativeLayout
@@ -116,8 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="@dimen/ui_10_dip"
-            >
+            android:layout_marginTop="@dimen/ui_10_dip">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/regist_edi_input"
@@ -289,12 +288,13 @@
                     android:text="您已同意并遵守"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
+
                 <TextView
                     android:id="@+id/tv_ar_proto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
                     android:layout_marginLeft="4dp"
+                    android:clickable="true"
                     android:text="《私享云用户使用协议》"
                     android:textColor="@color/app_golden"
                     android:textSize="12dp" />
