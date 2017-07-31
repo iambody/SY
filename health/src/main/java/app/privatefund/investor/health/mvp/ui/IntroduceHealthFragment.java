@@ -77,12 +77,13 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
                 }
             });
         }
+        getPresenter().introduceHealth();
         videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Boolean.class);
         videoStateObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean b) {
                 if (b) {
-                    if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
+                    if (videoRootFrame != null) {
                         videoRootFrame.pause();
                     }
                 }
@@ -93,7 +94,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
             }
         });
-        getPresenter().introduceHealth();
+
     }
 
     @Override
@@ -108,12 +109,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             v1.url = healthIntroduceModel.getSdVideo();
             videos.add(v1);
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-            videoRootFrame.play(videos);
-            videoRootFrame.pause();
             iv_mvv_cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    videoRootFrame.play();
+                    videoRootFrame.play(videos);
                 }
             });
         }
@@ -139,11 +138,13 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             DataStatistApiParam.operateHealthIntroduceClick();
+            if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
+                videoRootFrame.pause();
+            }
         } else {
             if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
                 videoRootFrame.pause();
             }
-
         }
     }
 
