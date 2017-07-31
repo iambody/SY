@@ -146,5 +146,5 @@
         android:gravity="center"
         android:text="确认"
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 </LinearLayout>
