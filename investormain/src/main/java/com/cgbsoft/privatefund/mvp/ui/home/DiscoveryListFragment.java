@@ -92,7 +92,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.gray_font, R.dimen.ui_1_dip));
+        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
         discoveryListAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String, String> hashMap1 = new HashMap<>();
             hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(discoveryListModel.getId()).concat("&category=").concat(discoveryListModel.getCategory()));
