@@ -75,7 +75,7 @@ public class BaseApplication extends MultiDexApplication {
         }
 
         backgroundManager = new BackgroundManager(this);
-        AppInfStore.saveDialogTag(this,true);
+        AppInfStore.saveDialogTag(this,false);
     }
 
     /**
