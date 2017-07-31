@@ -139,10 +139,19 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         }
         if (v.getId() == R.id.product_filtepop_enter_filter) //确定按钮
         {
-
             List<FilterItem> getData = new ArrayList<>();
             for (int i = 0; i < filelaLayouts.size(); i++) {
-                getData.add((FilterItem) filelaLayouts.get(i).getTag());
+                FilterItem filter = (FilterItem) filelaLayouts.get(i).getTag();
+                if (filter.getType().equals(EDIT)) {
+                    if (Float.parseFloat(filter.getMinNumber()) > Float.parseFloat(filter.getMaxNumber())) {
+                        String minNumber = filter.getMinNumber();
+                        String maxNumber = filter.getMaxNumber();
+                        filter.setMaxNumber(minNumber);
+                        filter.setMinNumber(maxNumber);
+                    }
+                }
+                getData.add(filter);
+
             }
             RxBus.get().post(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, new EventFiltBean(getData));
             this.dismiss();
@@ -186,8 +195,6 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 BStrUtils.SetTxt(titleView, h.getName());
                 editTextleft.addTextChangedListener(new EditChangeListene(h, 0));
                 editTextright.addTextChangedListener(new EditChangeListene(h, 1));
-
-
                 break;
 
         }
@@ -286,7 +293,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         for (FilterItem h : resetFilterDate) {
             for (int i = 0; i < h.getItems().size(); i++) {
                 h.getItems().get(i).setChecked(false);
-                 h.setMinNumber("");
+                h.setMinNumber("");
                 h.setMaxNumber("");
             }
         }

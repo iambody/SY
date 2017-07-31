@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/app_bg">
 
     <RelativeLayout
         android:id="@id/rc_item_conversation"
@@ -105,9 +106,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
-        android:background="@color/app_bg"
         android:visibility="gone"
         android:layout_below="@id/rc_item_conversation"
         android:id="@+id/rc_item_height_divider"/>

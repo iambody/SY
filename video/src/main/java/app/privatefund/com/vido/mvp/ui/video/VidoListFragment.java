@@ -48,6 +48,8 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
+    public static final String FRAGMETN_PARAMS = "video_params_fragment";
+
     private LinearLayoutManager linearLayoutManager;
     /**
      * 类别的数据
@@ -70,13 +72,12 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
     private boolean isLoadMore;
 
-    public VidoListFragment(String postionString) {
-        super();
-        this.CatoryValue = postionString;
-    }
 
     @Override
     protected void create(Bundle Mybundle) {
+        if (getArguments() != null) {
+            CatoryValue = getArguments().getString(FRAGMETN_PARAMS, "");
+        }
     }
 
     @Override
