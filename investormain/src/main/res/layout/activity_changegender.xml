@@ -23,7 +23,7 @@
             android:background="@color/transparent"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_sp_22"
+            android:textSize="@dimen/dimens_sp_16"
             android:textColor="@color/black"
             android:text="男"
             />
@@ -58,7 +58,7 @@
             android:background="@color/transparent"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_sp_22"
+            android:textSize="@dimen/dimens_sp_16"
             android:textColor="@color/black"
             android:text="女"
             />

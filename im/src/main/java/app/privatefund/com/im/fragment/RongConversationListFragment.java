@@ -245,7 +245,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         conversation.setPortraitUrl(NetConfig.noticeRemoteLogin);
         UIConversation uiConversation;
 
-
         if(position < 0) {
             conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
             uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
@@ -296,7 +295,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         } else {
             position = RongConversationListFragment.this.mAdapter.findPosition(ConversationType.PRIVATE, Constant.msgCustomerService);
         }
-        conversation.setConversationTitle("私享云客服");
+        conversation.setConversationTitle("客服");
         conversation.setTop(true);
         conversation.setPortraitUrl(NetConfig.defaultRemoteLogin);
         UIConversation uiConversation;

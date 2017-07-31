@@ -3,6 +3,7 @@ package app.product.com.widget;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -143,7 +144,14 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             for (int i = 0; i < filelaLayouts.size(); i++) {
                 FilterItem filter = (FilterItem) filelaLayouts.get(i).getTag();
                 if (filter.getType().equals(EDIT)) {
-                    if (Float.parseFloat(filter.getMinNumber()) > Float.parseFloat(filter.getMaxNumber())) {
+
+                    if (TextUtils.isEmpty(filter.getMaxNumber())) {
+                        filter.setMaxNumber("0");
+                    }
+                    if (TextUtils.isEmpty(filter.getMinNumber())) {
+                        filter.setMinNumber("0");
+                    }
+                    if (Float.valueOf(filter.getMinNumber()) > Float.valueOf(filter.getMaxNumber())) {
                         String minNumber = filter.getMinNumber();
                         String maxNumber = filter.getMaxNumber();
                         filter.setMaxNumber(minNumber);

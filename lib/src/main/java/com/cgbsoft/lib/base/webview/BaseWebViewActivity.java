@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.R;
@@ -241,29 +244,34 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl(javascript);
             }, 1000);
         }
-//        changeTitileStyle();
+        changeTitileStyle();
         initShakeInSetPage();
         mWebview.loadUrl(url);
     }
 
-//    private void changeTitileStyle() {
-//        if (rightMemberRule) {
-//            toolbar.setVisibility(View.GONE);
-//            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
-//            relativeLayout.setVisibility(View.VISIBLE);
-//            ImageView imageView = (ImageView) findViewById(R.id.title_left);
-//            imageView.setOnClickListener(v -> finish());
-//            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
-//            titleTextView.setText("会员专区");
-//            TextView rightText =(TextView)findViewById(R.id.title_right);
-//            rightText.setOnClickListener(v -> {
-//                Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
-//                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
-//                intent.putExtra(WebViewConstant.push_message_title, "会员规则");
-//                startActivity(intent);
-//            });
-//        }
-//    }
+    private void changeTitileStyle() {
+        if (rightMemberRule) {
+            toolbar.setVisibility(View.GONE);
+            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
+            relativeLayout.setVisibility(View.VISIBLE);
+            relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
+            ImageView imageView = (ImageView) findViewById(R.id.title_left);
+            imageView.setImageResource(R.drawable.ic_back_white_24dp);
+            imageView.setOnClickListener(v -> finish());
+            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
+            titleTextView.setText("会员专区");
+            titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+            TextView rightText =(TextView)findViewById(R.id.title_right);
+            rightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+            rightText.setText("会员规则");
+            rightText.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
+                intent.putExtra(WebViewConstant.push_message_title, "会员规则");
+                startActivity(intent);
+            });
+        }
+    }
 
     private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
         @Override

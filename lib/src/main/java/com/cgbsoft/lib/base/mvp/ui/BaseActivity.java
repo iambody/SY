@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
@@ -109,7 +110,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             manager.unregisterReceiver(receiver);
         }
     }
-
+    private DefaultDialog dialog;
     class LogoutReceiver extends BroadcastReceiver {
 
         @Override
@@ -126,22 +127,28 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                     msg = getString(R.string.token_error_511_str);
                 }
 
-                DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认"){
+                boolean dialogShow = AppManager.getDialogShow(BaseActivity.this);
+                if (!dialogShow) {
+                    DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认"){
 
-                    @Override
-                    public void left() {
+                        @Override
+                        public void left() {
 
-                    }
+                        }
 
-                    @Override
-                    public void right() {
-                        relogin();
-                        dismiss();
-                    }
-                };
-//                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                dialog.setCancelable(false);
-                dialog.show();
+                        @Override
+                        public void right() {
+                            relogin();
+                            dismiss();
+                            AppInfStore.saveDialogTag(BaseActivity.this,false);
+                        }
+                    };
+    //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                    AppInfStore.saveDialogTag(BaseActivity.this,true);
+                }
+
             }
             if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
                 NavigationUtils.startActivityByRouter(BaseActivity.this, RouteConfig.GOTO_LOGIN);

@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_70_dip"
                 android:gravity="center"
-                android:textSize="@dimen/dimens_sp_28"
+                android:textSize="@dimen/dimens_sp_20"
                 android:textColor="@color/black"
                 />
             <include

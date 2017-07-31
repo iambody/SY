@@ -279,6 +279,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         HashMap<String, String> map = new HashMap<>();
         map.put("infoType", formateType());
         map.put("category", AppManager.isInvestor(baseContext) ? "c" : "b");
+        map.put("userId", AppManager.getUserId(baseContext));
         addSubscription(ApiClient.getHotSousouData(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

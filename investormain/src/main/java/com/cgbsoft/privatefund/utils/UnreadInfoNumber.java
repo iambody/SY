@@ -47,7 +47,8 @@ public class UnreadInfoNumber {
             }
         } else {
             if (numberNum > 0) {
-                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
+//                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
+                badgeView.setText(" ");
                 badgeView.invalidate();
             } else {
                 badgeView.hide();

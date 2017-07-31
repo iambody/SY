@@ -11,11 +11,11 @@
         >
 
         <activity
-            android:name=".ui.ImageSelectActivity"
+            android:name="com.jhworks.library.ui.ImageSelectActivity"
             android:configChanges="orientation|screenSize"/>
 
         <activity
-            android:name=".ui.ImageActivity"
+            android:name="com.jhworks.library.ui.ImageActivity"
             android:configChanges="orientation|screenSize"/>
 
     </application>
