@@ -3,7 +3,6 @@ package app.privatefund.investor.health.mvp.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -105,6 +104,7 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
         hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthListModel.getUrl()).concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
                 .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()));
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+        DataStatistApiParam.operateHealthIntroduceClick(healthListModel.getTitle());
     }
 
     @Override

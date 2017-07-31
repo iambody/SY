@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <FrameLayout
         android:layout_width="100dp"
