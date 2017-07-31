@@ -553,7 +553,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         setData();
         play(true);
         if (videoInfoModel != null) {
-            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, "全部");
+            DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, videoInfoModel.);
         }
     }
 
