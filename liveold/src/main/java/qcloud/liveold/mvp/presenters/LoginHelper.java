@@ -266,7 +266,7 @@ public class LoginHelper extends Presenter {
      */
     public void stopAVSDK() {
         QavsdkControl.getInstance().stopContext();
-        mLogoutView.logoutSucc();
+//        mLogoutView.logoutSucc();
     }
 
 

@@ -7,4 +7,4 @@
     android:paddingTop="5dip"
     android:text="lable"
     android:textColor="@color/tv_gray"
-    android:textSize="14sp" />
+    android:textSize="13sp" />

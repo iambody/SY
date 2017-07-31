@@ -7,13 +7,15 @@
 
     <ImageView
         android:id="@+id/title_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/ui_44_dip"
+        android:layout_height="@dimen/ui_44_dip"
         android:layout_centerVertical="true"
-        android:scaleType="center"
+        android:clickable="true"
+        android:padding="@dimen/ui_11_dip"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_back_black_24dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 
     <ImageView
         android:id="@+id/iv_title_left"
