@@ -190,4 +190,5 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     protected void viewBeShow() {
         DataStatistApiParam.intoElegantLiving();
     }
+
 }
