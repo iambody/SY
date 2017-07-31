@@ -659,7 +659,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             Imageload.display(getActivity(), mineUserInfo.getHeadImageUrl(), roundImageView, R.drawable.logo, null);
             userLeaguarLevel.setText(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? "无" : mineUserInfo.getMemberLevel());
             userLeaguarUpdateDesc.setText(mineUserInfo.getMemberBalance());
-            userLeaguarUpdateDesc.setVisibility(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? View.GONE : View.VISIBLE);
+            userLeaguarUpdateDesc.setVisibility(TextUtils.isEmpty(mineUserInfo.getMemberLevel()) ? View.INVISIBLE : View.VISIBLE);
             textViewCaifu.setText(mineUserInfo.getMemberValue());
             textViewYundou.setText(mineUserInfo.getYdTotal());
             textViewPrivateBanker.setText(TextUtils.isEmpty(mineUserInfo.getAdviserName()) ? "无" : mineUserInfo.getAdviserName());
