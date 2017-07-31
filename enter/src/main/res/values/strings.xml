@@ -6,7 +6,7 @@
     <string name="aa_register_str">注册</string>
     <string name="al_username_str">请输入手机号</string>
     <string name="al_password_str">请输入密码</string>
-    <string name="al_login_str">登录</string>
+    <string name="al_login_str">立即登录</string>
     <string name="al_register_str">注册新用户</string>
     <string name="al_forget_str">忘记密码?</string>
     <string name="al_wx_login_strs">微信登录</string>

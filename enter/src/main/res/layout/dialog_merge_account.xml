@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/ui_10_dip">
+        android:padding="@dimen/ui_10_dip"
+        android:background="@color/transparent">
 
         <ImageView
             android:id="@+id/dialog_merge_back"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="账号合并"
+            android:padding="@dimen/ui_10_dip"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_20" />
     </RelativeLayout>
@@ -45,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ui_30_dip"
                 android:layout_marginRight="@dimen/ui_30_dip"
+                android:layout_marginTop="@dimen/ui_50_dip"
                 android:lineSpacingExtra="10dp" />
 
             <LinearLayout
