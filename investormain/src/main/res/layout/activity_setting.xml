@@ -99,6 +99,7 @@
                 android:layout_marginBottom="@dimen/ui_40_dip"
                 android:text="退出登录"
                 android:textColor="@color/white"
+                style="@style/button_style"
                 android:textSize="@dimen/dimens_sp_16"
                 android:background="@drawable/shape_button_elegant"/>
         </LinearLayout>

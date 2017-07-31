@@ -17,14 +17,15 @@
             android:id="@+id/recharge_up_bt1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/shape_corner_txt"
             android:clickable="true"
             android:gravity="center"
             android:padding="@dimen/ui_10_dip"
-            android:text="10000云豆"
+            android:text="10000"
             android:textColor="@drawable/select_txtcolor_gray_red"
-            android:textSize="16sp" />
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/recharge_up_bt1_tag"
@@ -61,9 +62,9 @@
             android:clickable="true"
             android:gravity="center"
             android:padding="@dimen/ui_10_dip"
-            android:text="10000云豆"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:text="10000"
+            android:textColor="@drawable/select_txtcolor_gray_red"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/recharge_up_bt2_tag"
@@ -102,9 +103,9 @@
             android:clickable="true"
             android:gravity="center"
             android:padding="@dimen/ui_10_dip"
-            android:text="10000云豆"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:text="10000"
+            android:textColor="@drawable/select_txtcolor_gray_red"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/recharge_up_bt3_tag"

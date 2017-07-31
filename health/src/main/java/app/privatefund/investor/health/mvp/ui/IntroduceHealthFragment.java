@@ -137,7 +137,6 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            DataStatistApiParam.operateHealthIntroduceClick();
             if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
                 videoRootFrame.pause();
             }

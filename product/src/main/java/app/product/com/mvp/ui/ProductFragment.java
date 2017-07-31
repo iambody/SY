@@ -1,10 +1,12 @@
 package app.product.com.mvp.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -408,7 +410,16 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         }
 //        if (!BStrUtils.isEmpty(CurrentOderBy))
         orderbyPop = new OrderbyPop(baseActivity, productFilterBean.getOrderBy().getItems(), CurrentOderBy);
-        orderbyPop.showAsDropDown(productProductfragmentPaixu);
+        if (Build.VERSION.SDK_INT < 24) {
+            orderbyPop.showAsDropDown(productProductfragmentPaixu);
+        } else {
+
+            int[] location = new int[2];
+            productProductfragmentPaixu.getLocationOnScreen(location);
+            int x = location[0];
+            int y = location[1];
+            orderbyPop.showAtLocation(productProductfragmentPaixu, Gravity.NO_GRAVITY, 0, y + productProductfragmentPaixu.getHeight());
+        }
 
     }
 
@@ -424,7 +435,16 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
             return;
         }
 
-        filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20, CurrentFilter);
+        if (Build.VERSION.SDK_INT < 24) {
+            filterPop.showAsDropDown(productProductfragmentPaixu, 0, 20, CurrentFilter);
+        } else {
+
+            int[] location = new int[2];
+            productProductfragmentPaixu.getLocationOnScreen(location);
+            int x = location[0];
+            int y = location[1];
+            filterPop.showAtLocation(productProductfragmentPaixu, Gravity.NO_GRAVITY, 0, y + productProductfragmentPaixu.getHeight() + 2);
+        }
     }
 
 

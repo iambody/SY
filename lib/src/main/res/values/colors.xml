@@ -129,6 +129,7 @@
     <color name="line_20">#33000000</color>
     <!-- 黑色10%透明度 -->
     <color name="line_10">#19000000</color>
+    <color name="line_gary">#E2E1E6</color>
     <color name = "bottomdialog_text_blue">#007aff</color>
     <!-- 黑色30%透明度 -->
     <color name="line_30">#4c000000</color>
