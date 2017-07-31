@@ -20,11 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:orientation="horizontal"
-            android:visibility="gone"
             />
         <!-- 手动输入回显布局 -->
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#d0d0d0" />
@@ -84,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:text="支付金额："
                 android:layout_marginLeft="12dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/color_5a5a5a"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/comment_leftright_lay_right"
@@ -107,10 +107,10 @@
             android:textColor="@color/black"
             android:visibility="gone"/>
         <!--可选择的三个按钮 -->
-        <include layout="@layout/recharge_layout_up"
+        <include
+            layout="@layout/recharge_layout_up"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            />
+            android:layout_height="80dp" />
         <!--下边增加云豆的三个按钮 -->
         <include layout="@layout/recharge_layout_down"
             android:layout_width="match_parent"

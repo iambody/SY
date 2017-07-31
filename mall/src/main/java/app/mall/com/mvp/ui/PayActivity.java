@@ -329,7 +329,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         if (Clickpostion == -1) {
             for (int i = 0; i < rechargeConfigBean.getLevels().size(); i++) {
                 if (pay_yundou_edit.getText().toString().equals(String.format("%d", rechargeConfigBean.getLevels().get(i).getYdAmount()))) {
-                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.mred));
+                    up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.app_golden_click));
                     up_bt_txts.get(i).setBackgroundResource(R.drawable.shap_corner_text_red);
                 } else {
                     up_bt_txts.get(i).setTextColor(getResources().getColor(R.color.app_golden));
@@ -337,7 +337,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                 }
             }
         } else {
-            up_bt_txts.get(Clickpostion).setTextColor(getResources().getColor(R.color.mred));
+            up_bt_txts.get(Clickpostion).setTextColor(getResources().getColor(R.color.app_golden_click));
             for (int i = 0; i < up_bt_txts.size(); i++) {
                 up_bt_txts.get(i).setBackgroundResource(i == Clickpostion ? R.drawable.shap_corner_text_red : R.drawable.shape_corner_txt);
 

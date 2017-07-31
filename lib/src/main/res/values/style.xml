@@ -311,4 +311,5 @@
         <item name="android:textColorHint">@color/hintcolor</item>
     </style>
 
+    <style name="button_style" parent="@style/Widget.AppCompat.Button.Borderless" />
 </resources>
