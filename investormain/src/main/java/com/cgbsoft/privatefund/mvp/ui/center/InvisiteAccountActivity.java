@@ -99,9 +99,17 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         titleRight.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         invisiteCertifyPrompt.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         linearLayout.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
+        realName.setOnFocusChangeListener((v, hasFocus) -> {
+            ViewUtils.showInputMethod(realName);
+            linearLayout.setVisibility(View.GONE);
+        });
         certifyType.setOnFocusChangeListener((v, hasFocus) -> {
             ViewUtils.hideInputMethod(certifyType);
             linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+        });
+        certifyNumber.setOnFocusChangeListener((v, hasFocus) -> {
+            ViewUtils.showInputMethod(realName);
+            linearLayout.setVisibility(View.GONE);
         });
         wheelView.addChangingListener((wheel, oldValue, newValue) -> {
             certifyType.setText(mList.get(newValue));

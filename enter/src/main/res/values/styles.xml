@@ -15,4 +15,11 @@
         <item name="android:layout_marginRight">@dimen/ui_20_dip</item>
         <item name="android:src">@color/black</item>
     </style>
+    <style name="enter_ed_line1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_marginLeft">@dimen/ui_20_dip</item>
+        <item name="android:layout_marginRight">@dimen/ui_20_dip</item>
+        <item name="android:src">@color/black</item>
+    </style>
 </resources>

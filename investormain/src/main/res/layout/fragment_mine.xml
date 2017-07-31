@@ -18,8 +18,8 @@
             android:layout_height="44dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
-            android:paddingRight="5dp"
-            android:paddingTop="2dp">
+            android:paddingRight="2dp"
+            android:paddingTop="5dp">
 
             <ImageView
                 android:id="@+id/mine_title_set_id"

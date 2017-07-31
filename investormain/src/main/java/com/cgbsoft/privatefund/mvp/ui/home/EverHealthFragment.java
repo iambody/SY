@@ -121,9 +121,9 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
-        }
+//        if (unreadInfoNumber != null) {
+//            unreadInfoNumber.initUnreadInfo();
+//        }
     }
 
     @Override

@@ -64,8 +64,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="@dimen/ui_80_dip">
 
             <LinearLayout
@@ -122,8 +122,8 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ui_1_dip"
-                    android:src="@color/app_split_line" />
+                    android:layout_height="1px"
+                    android:src="@color/black" />
             </LinearLayout>
 
             <Button
@@ -135,7 +135,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="0dp"
                 android:text="@string/send_code_str"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="normal" />
         </RelativeLayout>
 
@@ -143,8 +143,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="@dimen/ui_10_dip">
 
             <android.support.design.widget.TextInputLayout
@@ -181,7 +181,12 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <View style="@style/normal_line3" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:src="@color/black"
+            android:layout_marginLeft="@dimen/ui_20_dip"
+            android:layout_marginRight="@dimen/ui_20_dip"/>
 
         <TextView
             android:layout_width="match_parent"
