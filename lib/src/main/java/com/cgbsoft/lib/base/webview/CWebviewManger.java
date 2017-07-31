@@ -390,7 +390,6 @@ RxBus.get().post(RxConstant.BindAdviser,1);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
