@@ -789,6 +789,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     public void hasLive(int liveState, JSONObject jsonObject) {
         Log.e("liveState", hasLive + "");
         if (jsonObject == null) {
+            LiveInfBean liveInfBean = new LiveInfBean();
+            liveInfBean.type = 2;
+            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
             return;
         }
         try {
