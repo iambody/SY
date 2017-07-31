@@ -160,7 +160,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
                     android:drawablePadding="5dp"
+                    android:textColor="#a6a6a6"
                     android:text="@string/set_normal_address"/>
             </LinearLayout>
             <LinearLayout
@@ -173,6 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
                     android:drawablePadding="5dp"
                     android:textColor="@color/red_new"
                     android:text="@string/set_normal_address_edit"/>
@@ -181,6 +184,7 @@
     </LinearLayout>
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/mall_address_save_msg"
         style="@style/golden_btn"
         android:layout_width="match_parent"
