@@ -220,6 +220,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 CurLiveInfo.setChatId(liveJson.getString("chat"));
                 CurLiveInfo.setSlogan(liveJson.getString("slogan"));
                 CurLiveInfo.setAllowChat(liveJson.getInt("allowChat"));
+                CurLiveInfo.setEquipment(liveJson.getInt("equipment"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1390,8 +1391,8 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             if (CurLiveInfo.getHostID().equals(id)) {
                 if (MySelfInfo.getInstance().getIdStatus() == Constants.MEMBER)
                     quiteLivePassively();
-            }else {
-                memberQuit(id,"");
+            } else {
+                memberQuit(id, "");
             }
         }
     }
@@ -2499,17 +2500,32 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             }
 
             //只检测是否有四个角度的改变
-            if (QavsdkControl.getInstance() != null) {
-                if (orientation > 350 || orientation < 10) { //0度
-                    QavsdkControl.getInstance().setRotation(0);
-                } else if (orientation > 80 && orientation < 100) { //90度
-                    QavsdkControl.getInstance().setRotation(90);
-                } else if (orientation > 170 && orientation < 190) { //180度
-                    QavsdkControl.getInstance().setRotation(180);
-                } else if (orientation > 260 && orientation < 280) { //270度
-                    QavsdkControl.getInstance().setRotation(270);
+            if (2 == CurLiveInfo.getEquipment()) {
+                if (QavsdkControl.getInstance() != null) {
+                    if (orientation > 350 || orientation < 10) { //0度
+                        QavsdkControl.getInstance().setRotation(-90);
+                    } else if (orientation > 80 && orientation < 100) { //90度
+                        QavsdkControl.getInstance().setRotation(0);
+                    } else if (orientation > 170 && orientation < 190) { //180度
+                        QavsdkControl.getInstance().setRotation(90);
+                    } else if (orientation > 260 && orientation < 280) { //270度
+                        QavsdkControl.getInstance().setRotation(180);
+                    }
+                    return;
                 }
-                return;
+            } else {
+                if (QavsdkControl.getInstance() != null) {
+                    if (orientation > 350 || orientation < 10) { //0度
+                        QavsdkControl.getInstance().setRotation(0);
+                    } else if (orientation > 80 && orientation < 100) { //90度
+                        QavsdkControl.getInstance().setRotation(90);
+                    } else if (orientation > 170 && orientation < 190) { //180度
+                        QavsdkControl.getInstance().setRotation(180);
+                    } else if (orientation > 260 && orientation < 280) { //270度
+                        QavsdkControl.getInstance().setRotation(270);
+                    }
+                    return;
+                }
             }
         }
     }

@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.Window;
 
+import com.cgbsoft.lib.utils.tools.LogUtils;
+
 
 /**
  * 动态权限管理，Android 6.0 以上用到
@@ -52,6 +54,7 @@ public class MyPermissionsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        LogUtils.Log("aaa","onresume");
         if (isRequireCheck) {
             String[] permissions = getPermissions();
             if (mChecker.lacksPermissions(permissions)) {

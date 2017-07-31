@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,9 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
     @BindView(R2.id.iv_mvv_cover)
     ImageView iv_mvv_cover;
+
+    @BindView(R2.id.play_contral)
+    LinearLayout play_contral;
 
     private boolean isSetFullscreenHandler;
     private Observable<Boolean> videoStateObservable;
@@ -206,6 +210,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         switch (i) {
             case 5://播放中
                 iv_mvv_cover.setVisibility(View.GONE);
+                play_contral.setVisibility(View.GONE);
                 videoRootFrame.pause();
                 break;
             case 4:
