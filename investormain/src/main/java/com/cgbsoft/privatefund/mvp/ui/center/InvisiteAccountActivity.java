@@ -12,6 +12,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.ClearEditText;
 import com.cgbsoft.lib.widget.OnWheelChangedListener;
@@ -63,9 +64,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     @BindView(R.id.gunlun_ll)
     LinearLayout linearLayout;
 
-    private String Identy = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
-
-//    private boolean isBindAdviser;
     private String accountType;
     private boolean loading;
 
@@ -172,7 +170,6 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         Toast.makeText(this,"投资账号提交失败！", Toast.LENGTH_SHORT).show();
     }
 
-
     @OnClick(R.id.title_left)
     public void clickBack(){
         this.finish();
@@ -194,7 +191,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
 
         if ("身份证".equals(certifyType.getText().toString())) {
             String value = certifyNumber.getText().toString();
-            if (!value.matches(Identy)) {
+            if (!Utils.checkIdentityCode(value)) {
                 Toast.makeText(this, String.format(getString(R.string.invisit_account_input_right_prompt), getString(R.string.certify_number)), Toast.LENGTH_SHORT).show();
                 return false;
             }

@@ -38,6 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -529,16 +530,19 @@ public class Utils {
             }
         }
     }
+
     /**
      * 过滤掉特色字符
+     *
      * @return
      */
     public static String replaceSpeialStr(String resouceStr) {
-        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(resouceStr);
         return m.replaceAll("").trim();
     }
+
     /**
      * 是否微信安装了
      *
@@ -605,15 +609,17 @@ public class Utils {
         System.out.println(m.matches() + "---");
         return m.matches();
     }
+
     /**
      * 香港手机号码8位数，5|6|8|9开头+7位任意数
      */
-    public static boolean isHKPhoneLegal(String str)throws PatternSyntaxException {
+    public static boolean isHKPhoneLegal(String str) throws PatternSyntaxException {
         String regExp = "^(5|6|8|9)\\d{7}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(str);
         return m.matches();
     }
+
     /**
      * 调用系统界面，给指定的号码发送短信
      *
@@ -639,15 +645,67 @@ public class Utils {
 
     /**
      * 追加http前缀
+     *
      * @param url
      * @return
      */
     public static String appendWebViewUrl(String url) {
         if (!TextUtils.isEmpty(url)) {
             if (!url.startsWith("http")) {
-                url = url.startsWith("/") ?  CwebNetConfig.baseParentUrl.concat(url.substring(1)) : CwebNetConfig.baseParentUrl.concat(url);
-           }
+                url = url.startsWith("/") ? CwebNetConfig.baseParentUrl.concat(url.substring(1)) : CwebNetConfig.baseParentUrl.concat(url);
+            }
         }
         return url;
+    }
+
+    /**
+     * 校验18位身份证号
+     *
+     * @param identityCode 返回true则表示校验通过
+     */
+    public static boolean checkIdentityCode(String identityCode) {
+        // 校验身份证位数为18位
+        if (!identityCode.matches("\\d{17}(\\d|x|X)$")) {
+            return false;
+        }
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        if (Integer.parseInt(identityCode.substring(6, 10)) < 1900
+                || Integer.parseInt(identityCode.substring(6, 10)) > year) {// 7-10位是出生年份，范围应该在1900-当前年份之间
+            return false;
+        }
+        if (Integer.parseInt(identityCode.substring(10, 12)) < 1
+                || Integer.parseInt(identityCode.substring(10, 12)) > 12) {// 11-12位代表出生月份，范围应该在01-12之间
+            return false;
+        }
+        if (Integer.parseInt(identityCode.substring(12, 14)) < 1
+                || Integer.parseInt(identityCode.substring(12, 14)) > 31) {// 13-14位是出生日期，范围应该在01-31之间
+            return false;
+        }
+        // 校验第18位
+        // S = Sum(Ai * Wi), i = 0, ... , 16 ，先对前17位数字的权求和
+        // Ai:表示第i位置上的身份证号码数字值
+        // Wi:表示第i位置上的加权因子
+        // Wi: 7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2
+        String[] tempA = identityCode.split("|");
+        int[] a = new int[18];
+        for (int i = 0; i < tempA.length - 2; i++) {
+            a[i] = Integer.parseInt(tempA[i + 1]);
+        }
+        int[] w = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2}; // 加权因子
+        int sum = 0;
+        for (int i = 0; i < 17; i++) {
+            sum = sum + a[i] * w[i];
+        }
+        // Y = mod(S, 11)
+        // 通过模得到对应的校验码
+        // Y: 0 1 2 3 4 5 6 7 8 9 10
+        // 校验码: 1 0 X 9 8 7 6 5 4 3 2
+        String[] v = {"1", "0", "x", "9", "8", "7", "6", "5", "4", "3", "2"}; // 校验码
+        int y = sum % 11;
+        if (!v[y].equalsIgnoreCase(identityCode.substring(17))) {// 第18位校验码错误
+            return false;
+        }
+        return true;
     }
 }
