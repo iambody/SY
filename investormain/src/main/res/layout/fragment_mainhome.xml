@@ -104,7 +104,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/ui_10_dip"
-            android:padding="10dp"
+            android:padding="11dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
     </RelativeLayout>

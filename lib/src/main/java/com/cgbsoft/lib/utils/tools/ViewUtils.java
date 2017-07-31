@@ -50,9 +50,9 @@ public class ViewUtils {
         return badge;
     }
 
-    public static BadgeView createLeftTopRedPoint(Context context, View view, String value) {
+    public static BadgeView createLeftTopRedStringPoint(Context context, View view, String value) {
         BadgeView badge = new BadgeView(context, view);
-        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6);
         badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         badge.setText(value);
         badge.setTextColor(Color.parseColor("#ffffff"));

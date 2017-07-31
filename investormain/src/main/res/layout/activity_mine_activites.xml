@@ -42,6 +42,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         android:gravity="center"
+        android:background="@color/white"
         android:id="@+id/empty_ll">
 
         <ImageView
