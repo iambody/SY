@@ -88,6 +88,7 @@
     <Button
         android:id="@+id/bt_change_psd"
         android:layout_width="match_parent"
+        style="@style/button_style"
         android:layout_height="@dimen/ui_44_dip"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="15dp"
