@@ -42,7 +42,7 @@
                 android:layout_width="@dimen/ui_z_dip"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                android:background="@color/gray_font" />
+                android:background="@color/line_gary" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -63,7 +63,7 @@
             android:id="@+id/filter_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
-            android:background="@color/gray_font" />
+            android:background="@color/line_gary" />
         <!--产品筛选里面的筛选 -->
         <LinearLayout
             android:id="@+id/series_layout"
@@ -92,6 +92,7 @@
         android:layout_below="@id/top_filter_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#f2f3f5"
         android:orientation="vertical">
 
         <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
@@ -106,12 +107,13 @@
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="5dp"
                 android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ui_5_dip"
-                android:layout_marginRight="@dimen/ui_5_dip"
-                android:layout_marginTop="@dimen/ui_5_dip" />
+                android:layout_marginLeft="@dimen/ui_12_dip"
+                android:layout_marginRight="@dimen/ui_12_dip"
+                />
 
             <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
                 android:id="@+id/swipe_load_more_footer"

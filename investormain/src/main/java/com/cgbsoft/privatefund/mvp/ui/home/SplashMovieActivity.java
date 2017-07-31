@@ -77,6 +77,7 @@ public class SplashMovieActivity extends Activity implements SurfaceHolder.Callb
 
                 Intent intent = new Intent(SplashMovieActivity.this, LoginActivity.class);
                 startActivity(intent);
+                SplashMovieActivity.this.finish();
             }
         });
         
