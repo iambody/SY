@@ -16,11 +16,14 @@
         >
 
         <ImageView
+            android:id="@+id/down_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ui_10_dip" />
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:src="@drawable/ic_back_black_24dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,6 +105,7 @@
                android:background="@color/color_d0d0d0" />-->
 
         <com.cgbsoft.lib.widget.recycler.MyScrollview
+            android:id="@+id/down_myscrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

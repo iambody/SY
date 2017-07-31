@@ -16,6 +16,8 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -219,6 +221,10 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //添加评论
     @Override
     public void addCommont(String commontStr, String vdieoId) {
+        if(!NetUtils.isNetworkAvailable(getContext())){
+
+        }
+        PromptManager.ShowCustomToast(getContext(),"sss");
         addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

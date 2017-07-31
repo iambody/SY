@@ -5,14 +5,14 @@
 
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:windowNoTitle">true</item>
-<item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="enter_ed_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/ui_1_dip</item>
-        <item name="android:layout_marginLeft">@dimen/ui_40_dip</item>
-        <item name="android:layout_marginRight">@dimen/ui_40_dip</item>
+        <item name="android:layout_marginLeft">@dimen/ui_20_dip</item>
+        <item name="android:layout_marginRight">@dimen/ui_20_dip</item>
         <item name="android:src">@color/black</item>
     </style>
 </resources>
