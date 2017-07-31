@@ -69,10 +69,10 @@
             android:id="@+id/series_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="7dp"
+            android:background="@color/white"
             android:paddingRight="7dp"
             android:paddingTop="10dp">
 
@@ -81,7 +81,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/white"
                 openXu:rowSpace="10dp" />
         </LinearLayout>
         <!-- 上边的筛选布局-->
