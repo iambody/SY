@@ -347,6 +347,9 @@ public class CWebviewManger {
             map.put("insidegotologin", true);
             map.put("backgohome", true);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
+        }else if(action.contains("bindAdviserSucc")){
+            //绑定成功
+
         }
     }
 

@@ -19,7 +19,8 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="5dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,8 +78,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp">
 
             <android.support.design.widget.TextInputLayout
@@ -86,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
+
                 app:hintTextAppearance="@style/textinput_style">
 
                 <EditText
@@ -94,15 +96,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:drawablePadding="10dp"
+
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/al_username_str"
                     android:inputType="number"
-
                     android:maxLength="11"
                     android:maxLines="1"
-                    android:scrollHorizontally="true" />
+                    android:scrollHorizontally="true"
+                    android:textColorHint="@color/hintcolor" />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
@@ -125,8 +127,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputLayout
@@ -140,7 +142,7 @@
                     style="@style/normal_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
+
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/al_password_str"
@@ -169,8 +171,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp">
 
             <TextView
@@ -196,14 +198,14 @@
             style="@style/normal_alphbtn2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
             android:clickable="true"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/al_login_str"
-            android:textColor="@color/halfblack"
+            android:textColor="@color/black40"
             android:textSize="18sp" />
 
         <TextView
@@ -211,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ui_20_dip"
+            android:layout_marginTop="@dimen/ui_10_dip"
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingBottom="@dimen/ui_10_dip"
@@ -254,7 +256,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="@dimen/ui_30_dip"
                     android:layout_toLeftOf="@id/login_weixins_text"
-                    android:background="#d0d0d0" />
+                    android:background="@color/black40" />
 
                 <View
                     android:layout_width="wrap_content"
@@ -263,7 +265,7 @@
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_marginRight="40dp"
                     android:layout_toRightOf="@id/login_weixins_text"
-                    android:background="#d0d0d0" />
+                    android:background="@color/black40" />
 
             </RelativeLayout>
 

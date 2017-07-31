@@ -37,8 +37,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSE
 /**
  * 播放历史
  */
-public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, VideoHistoryListener
-        {
+public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, VideoHistoryListener {
 //    @BindView(R2.id.coordinatorLayout)
 //    CoordinatorLayout coordinatorLayout;
 //
@@ -87,8 +86,8 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     private Observable<Integer> refItemObservable;
     private boolean isChoiceAll;
 
-//    private MenuItem deleteItem;
-
+    //    private MenuItem deleteItem;
+    ImageView history_back_iv;
 
     TextView history_del_txt;
     ImageView history_del_iv;
@@ -141,6 +140,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     }
 
     private void initFindId() {
+        history_back_iv = (ImageView) findViewById(R.id.history_back_iv);
         history_del_iv = (ImageView) findViewById(R.id.history_del_iv);
         history_del_txt = (TextView) findViewById(R.id.history_del_txt);
         video_history_todaytitle_lay = findViewById(R.id.video_history_todaytitle_lay);
@@ -179,6 +179,12 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
                 } else {
                     unVisableBottomLayout();
                 }
+            }
+        });
+        history_back_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseContext.finish();
             }
         });
     }

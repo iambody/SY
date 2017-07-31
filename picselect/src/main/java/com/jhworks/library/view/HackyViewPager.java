@@ -20,7 +20,7 @@ public class HackyViewPager extends ViewPager {
         try {
             return super.onInterceptTouchEvent(ev);
         } catch (IllegalArgumentException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return false;
         }
     }

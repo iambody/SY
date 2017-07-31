@@ -26,8 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/app_golden"
-            android:padding="@dimen/ui_5_dip">
+            android:background="@drawable/shap_home_live_down_bg"
+            android:padding="@dimen/ui_5_dip"
+            >
 
             <ImageView
                 android:layout_width="@dimen/ui_1_dip"

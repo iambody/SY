@@ -7,8 +7,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -50,6 +52,27 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
     @Override
     public void getHomeCache() {
         getView().getCacheResult(AppManager.getHomeCache(getContext()));
+    }
+
+    /**
+     * 获取用户信息
+     */
+    @Override
+    public void getUserInf(int type) {
+        addSubscription(ApiClient.getUserInfo(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<UserInfoDataEntity.UserInfo>() {
+            @Override
+            protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
+                if (userInfo != null) {
+                    AppInfStore.saveUserInfo(getContext(), userInfo);
+                    getView().getUseriInfsucc(type);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        }));
     }
 
     /**

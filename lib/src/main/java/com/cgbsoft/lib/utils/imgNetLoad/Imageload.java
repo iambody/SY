@@ -1,6 +1,12 @@
 package com.cgbsoft.lib.utils.imgNetLoad;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -13,6 +19,8 @@ import com.bumptech.glide.GifRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestListener;
 import com.cgbsoft.lib.utils.tools.Utils;
 
@@ -63,11 +71,13 @@ public class Imageload {
             drawableTypeRequest.into(imageView);
         }
     }
-    private static void baseListener(DrawableTypeRequest drawableTypeRequest, ImageView imageView,RequestListener requestListener) {
+
+    private static void baseListener(DrawableTypeRequest drawableTypeRequest, ImageView imageView, RequestListener requestListener) {
         if (drawableTypeRequest != null) {
             drawableTypeRequest.listener(requestListener).into(imageView);
         }
     }
+
     /**
      * 显示图片
      *
@@ -83,7 +93,7 @@ public class Imageload {
      * 添加监听的的方法
      */
     public static void displayListener(Context context, Object res, ImageView imageView, RequestListener requestListener) {
-        baseListener(getDrawableTypeRequest(imageWith(context), res), imageView,requestListener);
+        baseListener(getDrawableTypeRequest(imageWith(context), res), imageView, requestListener);
     }
 
     /**
@@ -114,6 +124,38 @@ public class Imageload {
                 requestCreator.placeholder((Integer) holdId);
             }
         base(requestCreator, imageView);
+    }
+
+    /**
+     * 加载圆角图片
+     */
+    public static void displayroud(Context context, Object url, int roudDp, ImageView imageView) {
+        DrawableTypeRequest requestCreator = getDrawableTypeRequest(imageWith(context), url);
+        if (requestCreator == null) {
+            return;
+        }
+
+        boolean isGif = false;
+        if (url instanceof String) {
+            if (TextUtils.equals(MimeTypeMap.getFileExtensionFromUrl(url.toString()).toLowerCase(), "gif")) {
+                isGif = true;
+            }
+        }
+        if (!isGif) {
+            int size = Utils.convertDipOrPx(context, roudDp);
+            requestCreator.bitmapTransform(new GlideRoundTransform(context, roudDp));
+
+            requestCreator.diskCacheStrategy(DiskCacheStrategy.ALL);
+
+            requestCreator.into(imageView);
+        } else {
+            GifRequestBuilder grb = requestCreator.asGif().diskCacheStrategy(DiskCacheStrategy.ALL);
+
+            int size = Utils.convertDipOrPx(context, roudDp);
+            grb.transformFrame(new RoundedCornersTransformation(context, size, 0));
+
+            grb.into(imageView);
+        }
     }
 
     /**
@@ -193,5 +235,47 @@ public class Imageload {
         }
 
 
+    }
+
+
+    public static class GlideRoundTransform extends BitmapTransformation {
+
+        private static float radius = 0f;
+
+        public GlideRoundTransform(Context context) {
+            this(context, 4);
+        }
+
+        public GlideRoundTransform(Context context, int dp) {
+            super(context);
+            this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+        }
+
+        @Override
+        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            return roundCrop(pool, toTransform);
+        }
+
+        private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
+            if (source == null) return null;
+
+            Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+            if (result == null) {
+                result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
+            }
+
+            Canvas canvas = new Canvas(result);
+            Paint paint = new Paint();
+            paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+            paint.setAntiAlias(true);
+            RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
+            canvas.drawRoundRect(rectF, radius, radius, paint);
+            return result;
+        }
+
+        @Override
+        public String getId() {
+            return getClass().getName() + Math.round(radius);
+        }
     }
 }

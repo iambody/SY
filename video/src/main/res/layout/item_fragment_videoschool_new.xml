@@ -12,7 +12,12 @@
             android:id="@+id/item_fragment_videoschool_new_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"  />
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/dialog_transparent4" />
 
         <TextView
             android:id="@+id/item_fragment_videoschool_new_title"
@@ -20,14 +25,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/ui_10_dip"
             android:layout_marginLeft="@dimen/ui_10_dip"
             android:layout_marginRight="@dimen/ui_20_dip"
+            android:layout_marginTop="@dimen/ui_10_dip"
             android:ellipsize="end"
             android:maxLines="1"
 
-            android:textSize="@dimen/dimens_sp_18"
             android:textColor="@color/white"
+            android:textSize="@dimen/dimens_sp_18"
             android:textStyle="bold" />
 
         <ImageView
@@ -43,8 +48,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/ui_10_dip"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:padding="@dimen/ui_10_dip">
 
         <TextView
             android:id="@+id/item_fragment_videoschool_new_time"
