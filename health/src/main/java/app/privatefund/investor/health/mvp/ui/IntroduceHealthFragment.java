@@ -94,7 +94,6 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
             }
         });
-
     }
 
     @Override
@@ -102,6 +101,9 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         if (healthIntroduceModel != null) {
             Imageload.display(getContext(), healthIntroduceModel.getImage(), iv_mvv_cover);
             introduce_health_text.setText(healthIntroduceModel.getText());
+            if (healthIntroduceModel != null) {
+                DataStatistApiParam.operateHealthIntroduceClick(healthIntroduceModel.getText());
+            }
             List<VideoInfo> videos = new ArrayList<>();
             VideoInfo v1 = new VideoInfo();
             v1.description = "标清";
@@ -109,12 +111,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             v1.url = healthIntroduceModel.getSdVideo();
             videos.add(v1);
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-            iv_mvv_cover.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    videoRootFrame.play(videos);
-                }
-            });
+            iv_mvv_cover.setOnClickListener(v -> videoRootFrame.play(videos));
         }
     }
 
