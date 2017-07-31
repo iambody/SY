@@ -97,7 +97,6 @@ import io.rong.push.RongPushClient;
  */
 public class RongConversationListFragment extends UriFragment implements OnItemClickListener, OnItemLongClickListener, OnPortraitItemClick {
     private static final String noticeId = "公告";
-    private static final String SystemNotifyId = "系统通知";
     private String TAG = "RongConversationListFragment";
     private List<RongConversationListFragment.ConversationConfig> mConversationsConfig;
     private RongConversationListFragment mThis;
@@ -108,7 +107,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     private TextView mNotificationBarText;
     private boolean isShowWithoutConnected = false;
     private boolean isNoticeList;
-    private boolean isSystemNotify;
     private List<UIConversation> cacheConversationList = new ArrayList<>();
 
     public RongConversationListFragment() {}
@@ -120,7 +118,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         this.mConversationsConfig = new ArrayList();
         if (getArguments() != null) {
             isNoticeList = getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false);
-            isSystemNotify = getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false);
         }
         EventBus.getDefault().register(this);
         InternalModuleManager.getInstance().onLoaded();

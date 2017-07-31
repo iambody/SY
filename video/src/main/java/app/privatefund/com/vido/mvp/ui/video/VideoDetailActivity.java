@@ -394,6 +394,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @OnClick(R2.id.ll_avd_cache)
     void cacheOpenClick() {
         toDataStatistics(1021, 10103, new String[]{"下载", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
+        if (!isCancache) return;
         openCacheView();
     }
 
@@ -491,6 +492,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         return new VideoDetailPresenter(this, this);
     }
 
+    boolean isCancache = true;
+
     @Override
     public void getLocalVideoInfoSucc(VideoInfoModel model) {
         videoInfoModel = model;
@@ -510,10 +513,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
                 tv_avd_hd.setEnabled(false);
                 tv_avd_sd.setEnabled(false);
+                tv_avd_cache.setClickable(false);//Enabled(false);
+                isCancache = false;
                 break;
             case VideoStatus.NONE:
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
+                isCancache = true;
                 break;
             case VideoStatus.FINISH:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
@@ -530,6 +536,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
                         tv_avd_hd.setEnabled(false);
                         tv_avd_sd.setEnabled(false);
+                        tv_avd_cache.setClickable(false);
+                        isCancache = false;
                         break;
                     }
                 }
@@ -544,6 +552,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
+    }
+
+    @Override
+    public void getNetVideoInfoErr(String str) {
+        PromptManager.ShowCustomToast(baseContext,"获取信息失败请重新尝试");
+        baseContext.finish();
     }
 
     @Override
@@ -901,7 +915,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && rl_avd_download.getVisibility() == View.VISIBLE) {
             rl_avd_download.setVisibility(View.GONE);
-            rl_avd_download.startAnimation(closeAnimationSet);
+//            rl_avd_download.startAnimation(closeAnimationSet);
 
         }
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {

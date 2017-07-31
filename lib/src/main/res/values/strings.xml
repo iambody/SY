@@ -73,4 +73,7 @@
     <string name="product_detail">商品详情</string>
     <string name="token_error_510_str">账号加密信息已过期，请重新登录获取，如有疑问，请致电客服：400-188-8848</string>
     <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
+    <string name="no_product_str">当前暂无产品</string>
+    <string name="reload_str">重新加载</string>
+    <string name="err_net_str">网络链接异常，请检查您的网络设置</string>
 </resources>

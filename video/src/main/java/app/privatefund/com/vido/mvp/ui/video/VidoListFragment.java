@@ -14,6 +14,8 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -111,6 +113,10 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
                     map.put("insidegotologin", true);
                     NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN, map);
                 } else {
+                    if(!NetUtils.isNetworkAvailable(fBaseActivity)){
+                        PromptManager.ShowCustomToast(fBaseActivity,"请连接网络");
+                        return;
+                    }
                     VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
                 }
             }
