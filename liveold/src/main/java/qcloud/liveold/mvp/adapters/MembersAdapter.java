@@ -42,8 +42,10 @@ public class MembersAdapter extends RecyclerView.Adapter<MemberInfoHolder> {
     public void onBindViewHolder(MemberInfoHolder holder, int position) {
         final MemberInfo memberInfo = arrayList.get(position);
 
+        holder.imageView.setTag(memberInfo.getAvatar());
+
         if (!TextUtils.isEmpty(memberInfo.getAvatar())) {
-            Glide.with(context).load(memberInfo.getAvatar()).into(holder.imageView);
+            Glide.with(context).load(holder.imageView.getTag()).into(holder.imageView);
         }
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
