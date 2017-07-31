@@ -47,7 +47,7 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
       expireDate = Calendar.getInstance();
       expireDate.add(Calendar.SECOND, EXPIRE_IN_SECOND);
       isDisplay = true;
-    Log.i("onActivityPaused", "--------isDisplay=" + isDisplay);
+    Log.i("onActivityPaused", "=========isDisplay=" + isDisplay);
   }
 
   public Calendar getExpireData() {

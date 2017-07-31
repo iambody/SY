@@ -17,12 +17,16 @@ public class MainHomeContract {
 
 
         public void getCacheResult(HomeEntity.Result cachesData);
+
+        public void getUseriInfsucc(int Type);
     }
 
     public interface Presenter extends BasePresenter {
         public void getHomeData();
 
         public void getHomeCache();
+
+        public void getUserInf(int type);
 
 
     }

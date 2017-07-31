@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
@@ -74,6 +75,7 @@ public class BaseApplication extends MultiDexApplication {
         }
 
         backgroundManager = new BackgroundManager(this);
+        AppInfStore.saveDialogTag(this,false);
     }
 
     /**

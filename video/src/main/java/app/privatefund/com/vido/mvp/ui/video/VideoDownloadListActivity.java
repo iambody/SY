@@ -22,6 +22,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.recycler.MyScrollview;
 import com.cgbsoft.lib.widget.swipefresh.FullyLinearLayoutManager;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.lzy.okserver.download.DownloadManager;
@@ -49,7 +50,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_O
  * 视频下载列表 单线程下载
  *  
  */
-public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener{
+public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener {
 //    @BindView(R2.id.coordinatorLayout)
 //    CoordinatorLayout coordinatorLayout;
 
@@ -110,12 +111,13 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     private Observable<String> nowPlayVideoIdObservable;
     private Observable<Boolean> downloadToListObservable;
     private boolean isChoiceAll, isAllDownloadStart;
-//    private MenuItem deleteItem;
+    //    private MenuItem deleteItem;
     private DefaultDialog defaultDialog;
     private String nowPlayVideoId;
     TextView down_del_txt;
     ImageView down_del_iv;
-
+    ImageView down_back_iv;
+    MyScrollview down_myscrollview;
     @Override
     protected void after() {
         super.after();
@@ -188,7 +190,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                 videoHaveDownloadListAdapter.changeCheck();
                 videoDownloadListAdapter.changeCheck();
 
-                if (videoDownloadListAdapter.getCheckStatus()&&videoHaveDownloadListAdapter.getCheckStatus()) {
+                if (videoDownloadListAdapter.getCheckStatus() && videoHaveDownloadListAdapter.getCheckStatus()) {
                     visableBottomLayout();
                 } else {
                     unVisableBottomLayout();
@@ -219,10 +221,18 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     }
 
     private void initFindview() {
+        down_myscrollview= (MyScrollview) findViewById(R.id.down_myscrollview);
+        down_back_iv = (ImageView) findViewById(R.id.down_back_iv);
         down_del_iv = (ImageView) findViewById(R.id.down_del_iv);
         down_del_txt = (TextView) findViewById(R.id.down_del_txt);
 
         donedownload_title_lay = findViewById(R.id.donedownload_title_lay);
+        down_back_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseContext.finish();
+            }
+        });
     }
 
     @Override
@@ -306,7 +316,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         videoDownloadListAdapter.notifyDataSetChanged();
         videoHaveDownloadListAdapter.notifyDataSetChanged();
         if (isChoiceAll) {
-            choiceChangeText(list.size()+donelist.size());
+            choiceChangeText(list.size() + donelist.size());
         } else {
             unChoiceChangeText();
         }
@@ -320,24 +330,24 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
-                if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
-                    defaultDialog.show();
-                } else {
+//                if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
+//                    defaultDialog.show();
+//                } else {
                     getPresenter().delete(list.get(i).videoId);
                     if (list.get(i).status == VideoStatus.FINISH) {
                         File file = new File(list.get(i).localPath);
                         if (file.isFile() && file.exists()) {
                             file.delete();
                         }
-                    }
+//                    }
                 }
             }
         }
         for (int i = 0; i < donelist.size(); i++) {
             if (donelist.get(i).isCheck) {
-                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
-                    defaultDialog.show();
-                } else {
+//                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
+//                    defaultDialog.show();
+//                } else {
                     getPresenter().delete(donelist.get(i).videoId);
                     if (donelist.get(i).status == VideoStatus.FINISH) {
                         File file = new File(donelist.get(i).localPath);
@@ -345,7 +355,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
                             file.delete();
                         }
                     }
-                }
+//                }
             }
         }
         unChoiceChangeText();
@@ -382,8 +392,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             tv_avd_allspace.setVisibility(View.VISIBLE);
             donerecyclerView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
-
+            down_myscrollview.setVisibility(View.INVISIBLE);
         } else {
+            down_myscrollview.setVisibility(View.VISIBLE);
             tvNodataLay.setVisibility(View.GONE);
 //            deleteItem.setVisible(true);
             tv_avd_allspace.setVisibility(View.INVISIBLE);
@@ -395,8 +406,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             //只在已下载的列表显示
             videoHaveDownloadListAdapter.deleteAllData();
             videoHaveDownloadListAdapter.refAllData(dataList);
-            return;
-        }else{
+            recyclerView.setVisibility(View.GONE);
+
+        } else {
             ll_avd_head.setVisibility(View.VISIBLE);
         }
 
@@ -588,7 +600,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
 
     private void setRefLayoutMarginBottom(int dp) {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ll_avd.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_avd.getLayoutParams();
         lp.height = Utils.convertDipOrPx(this, dp);
         ll_avd.setLayoutParams(lp);
     }
@@ -615,7 +627,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        deleteItem.setTitle(R.string.cancel_str);*/
 
         down_del_iv.setVisibility(View.GONE);
-                down_del_txt.setVisibility(View.VISIBLE);
+        down_del_txt.setVisibility(View.VISIBLE);
 
     }
 
@@ -671,9 +683,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (position == -1)
             return;
         onControlGetDataList(true);
-//        videoDownloadListAdapter.getList().remove(position);
+        videoDownloadListAdapter.getList().remove(position);
 //        videoDownloadListAdapter.getList().add(model);
-//        videoDownloadListAdapter.notifyDataSetChanged();
+        videoDownloadListAdapter.notifyDataSetChanged();
     }
 
     private void refItemUI(String videoId, boolean isFinish, long currentSize, long totalSize, float progress, long networkSpeed, int downloadState) {
@@ -703,7 +715,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             tv_avd_speed.setVisibility(View.GONE);
             changeStart(false, iv_avd_pause, tv_avd_pause);
 //            onControlGetDataList(true);
-            return;
+//            return;
         }
         ll_avd_pause.setVisibility(View.VISIBLE);
         pb_avd.setVisibility(View.VISIBLE);
@@ -729,9 +741,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             changeStart(false, iv_avd_pause, tv_avd_pause);
         }
 
-//        if (isFinish) {
-//            onControlGetDataList(true);
-//        }
+        if (isFinish) {
+            onControlGetDataList(true);
+        }
     }
 
 

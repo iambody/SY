@@ -293,4 +293,8 @@ public class AppManager implements AppinfConstant {
     public static VideoAllModel getVideoSchoolCache(Context spContext) {
         return AppInfStore.getVideoSchoolData(spContext);
     }
+
+    public static boolean getDialogShow(Context context) {
+        return getBasePreference(context).getBoolean("dialogshow",false);
+    }
 }
