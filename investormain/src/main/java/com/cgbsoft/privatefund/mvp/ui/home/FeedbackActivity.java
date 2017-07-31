@@ -67,7 +67,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 
     @BindView(R.id.commit)
     protected Button commit;
-    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private int REQUEST_CODE = 2000; // 请求码
 
     private ArrayList<String> imagePaths = new ArrayList<>();
@@ -141,6 +141,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         }
     }
     private void startPermissionsActivity() {
+        LogUtils.Log("aaa","111");
         MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
     @Override
@@ -163,6 +164,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             }
             // 缺少权限时, 进入权限配置页面
             if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                LogUtils.Log("aaa","000");
                 startPermissionsActivity();
                 return;
             }
@@ -215,6 +217,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 }
             }
         }else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+            LogUtils.Log("aaa","333");
             addPic();
 //            mHeadIconDialog.show();
         }
