@@ -71,6 +71,7 @@ import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.LoginHelper;
 import qcloud.liveold.mvp.presenters.ProfileInfoHelper;
 import qcloud.liveold.mvp.presenters.viewinface.LoginView;
+import qcloud.liveold.mvp.presenters.viewinface.LogoutView;
 import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
 import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
@@ -117,7 +118,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable,killObservable,killstartObservable;
+    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable, killObservable, killstartObservable;
 
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -155,8 +156,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             bottomNavigationBar.selectNavaigationPostion(0);
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
-        if(!AppManager.isVisitor(baseContext) && 4 == currentPostion&&switchID!=R.id.nav_right_second){
-            switchID =  R.id.nav_right_second;
+        if (!AppManager.isVisitor(baseContext) && 4 == currentPostion && switchID != R.id.nav_right_second) {
+            switchID = R.id.nav_right_second;
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
     }
@@ -229,7 +230,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void autoSign() {
-        if (!AppManager.isVisitor(baseContext)&&"0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
+        if (!AppManager.isVisitor(baseContext) && "0".equals(AppManager.getUserInfo(this).getIsSingIn())) {
             getPresenter().toSignIn();
         }
     }
@@ -399,7 +400,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void initRxObservable() {
-        killstartObservable=RxBus.get().register(RxConstant.MAIN_PAGE_KILL_START,Integer.class);
+        killstartObservable = RxBus.get().register(RxConstant.MAIN_PAGE_KILL_START, Integer.class);
         killstartObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -412,7 +413,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
-        killObservable=RxBus.get().register(RxConstant.MAIN_PAGE_KILL, Integer.class);
+        killObservable = RxBus.get().register(RxConstant.MAIN_PAGE_KILL, Integer.class);
         killObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -457,6 +458,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 if (RongIM.getInstance() != null) {
                     RongIM.getInstance().disconnect();
                 }
+                loginHelper.imLogout();
                 finish();
             }
 
@@ -547,9 +549,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 initDayTask();
                 initRongInterface();
 
-                if(5==integer){
+                if (5 == integer) {
                     switchID = R.id.nav_right_second;
-                    currentPostion =4;
+                    currentPostion = 4;
                     bottomNavigationBar.selectNavaigationPostion(4);
                     switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
                     return;
@@ -674,7 +676,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (null != showIndexObservable) {
             RxBus.get().unregister(RxConstant.INVERSTOR_MAIN_PAGE, showIndexObservable);
         }
-        if(null!=killObservable){
+        if (null != killObservable) {
             RxBus.get().unregister(RxConstant.MAIN_PAGE_KILL, killObservable);
 
         }
@@ -785,21 +787,21 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            bottomNavigationBar.setLive(hasLive);
         }
 //        if (hasLive) {//有直播
-            liveJsonData = jsonObject;
-            LiveInfBean liveInfBean = new LiveInfBean();//new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
+        liveJsonData = jsonObject;
+        LiveInfBean liveInfBean = new LiveInfBean();//new Gson().fromJson(liveJsonData.toString(), LiveInfBean.class);
 
-            try {
-                liveInfBean.title = jsonObject.getString("title");
-                liveInfBean.image = jsonObject.getString("image");
-                liveInfBean.content = jsonObject.getString("slogan");
-                liveInfBean.id=jsonObject.getString("id");
-                liveInfBean.jsonstr = jsonObject.toString();
-                liveInfBean.type = liveState;
-                liveInfBean.create_time=jsonObject.getString("createTime");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
+        try {
+            liveInfBean.title = jsonObject.getString("title");
+            liveInfBean.image = jsonObject.getString("image");
+            liveInfBean.content = jsonObject.getString("slogan");
+            liveInfBean.id = jsonObject.getString("id");
+            liveInfBean.jsonstr = jsonObject.toString();
+            liveInfBean.type = liveState;
+            liveInfBean.create_time = jsonObject.getString("createTime");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
 
 //            liveDialog.setVisibility(View.VISIBLE);
 //            Animation animation = AnimationUtils.loadAnimation(
