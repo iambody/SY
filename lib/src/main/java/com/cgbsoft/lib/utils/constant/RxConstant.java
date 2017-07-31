@@ -103,6 +103,8 @@ public interface RxConstant {
 
     String MAIN_PAGE_KILL_START = "mainpagekillstart";
 
+    String REFRESH_LIVE_DATA = "REFRESH_LIVE_DATA";
+
     //绑定理财师
     String BindAdviser = "bindadviser";
 }

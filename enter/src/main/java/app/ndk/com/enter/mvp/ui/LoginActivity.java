@@ -328,10 +328,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (!isFixAdjustEd()) return;
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
         String password = et_al_password.getText().toString().trim();
-        if (password.length() > 16 || password.length() < 6) {
-            MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
-            return;
-        }
         //需要判断
         LocationBean bean = AppManager.getLocation(baseContext);
         if (!BStrUtils.isEmpty(publicKey))
@@ -649,16 +645,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     /*是否符合条件*/
     boolean isFixAdjustEd() {
         String userName = et_al_username.getText().toString().trim();
-        String userPwd = et_al_password.getText().toString().trim();
+        String userPwd = et_al_password.getText().toString();
         if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
             PromptManager.ShowCustomToast(baseContext, "请输入正确手机号");
             return false;
         }
-        if (BStrUtils.isEmpty(userPwd)) {
-            PromptManager.ShowCustomToast(baseContext, "请输入密码");
-            return false;
-        }
-
         return true;
     }
 

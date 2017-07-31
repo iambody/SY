@@ -120,6 +120,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable, killObservable, killstartObservable;
 
+    private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
@@ -567,6 +568,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
+        liveRefreshObservable = RxBus.get().register(RxConstant.REFRESH_LIVE_DATA, Boolean.class);
+        liveRefreshObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                getPresenter().getProLiveList();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         showIndexObservable = RxBus.get().register(RxConstant.INVERSTOR_MAIN_PAGE, Integer.class);
         showIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -647,6 +661,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             liveTimerObservable.unsubscribe();
         }
 
+        if (null != liveRefreshObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_LIVE_DATA, liveRefreshObservable);
+        }
         if (closeMainObservable != null) {
             RxBus.get().unregister(RxConstant.CLOSE_MAIN_OBSERVABLE, closeMainObservable);
         }
@@ -740,7 +757,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
-        liveTimerObservable = Observable.interval(0, 5000, TimeUnit.MILLISECONDS)
+        liveTimerObservable = Observable.interval(0, 20000, TimeUnit.MILLISECONDS)
                 //延时0 ，每间隔5000，时间单位
                 .compose(this.<Long>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())

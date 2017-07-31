@@ -539,8 +539,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (unreadInfoNumber != null) {
             unreadInfoNumber.onDestroy();
         }
-        if(null!=bindAdviserObservable ){
-            RxBus.get().unregister(RxConstant.BindAdviser , bindAdviserObservable);
+        if (null != bindAdviserObservable) {
+            RxBus.get().unregister(RxConstant.BindAdviser, bindAdviserObservable);
         }
     }
 /* 显示直播的布局*/
@@ -716,6 +716,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //请求数据
         getPresenter().getHomeData();
 
+        RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
+
 //        RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
     }
 
@@ -799,7 +801,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             } else if ("app".equals(data.jumpType)) {
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
-            DataStatistApiParam.operateBannerClick(null==data||BStrUtils.isEmpty(data.title)?"":data.title);
+            DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
         }
     }
 
