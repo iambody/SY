@@ -400,7 +400,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    boolean islive;
+//    boolean islive;
 
     /*  注册监听事件*/
     private void initRxEvent() {
@@ -425,7 +425,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                if (islive) return;
+//                if (islive) return;
                 if (5 == integer) {//需要刷新动作
                     mainHomeSwiperefreshlayout.setRefreshing(true);
                     RxCountDown.countdown(ADVISERLOADTIME).doOnSubscribe(new Action0() {
@@ -451,6 +451,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     });
                 }
 
+                mainhomeWebview.loadUrl("javascript:refresh()");
                 //开始刷新ui
                 mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
                 //登录模式
@@ -483,7 +484,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //                        main_home_live_lay.setClickable(false);
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
 //                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 15, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 12, view_live_iv_bg);
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告:");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.content);
@@ -497,7 +498,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
 //                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 15, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 12, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
                         BStrUtils.SetTxt(view_live_title, "正在直播:");

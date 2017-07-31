@@ -11,9 +11,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/bg_my"
-        android:paddingTop="20dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingTop="22dp"
+        android:paddingLeft="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"

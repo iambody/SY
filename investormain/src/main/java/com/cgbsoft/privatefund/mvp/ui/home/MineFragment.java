@@ -440,7 +440,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_url, AppManager.isBindAdviser(baseActivity) ? CwebNetConfig.BindchiceAdiser : CwebNetConfig.choiceAdviser);
         intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? getString(R.string.mine_private_bank) : getString(R.string.private_bank_jia));
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
-
         getActivity().startActivity(intent);
     }
 

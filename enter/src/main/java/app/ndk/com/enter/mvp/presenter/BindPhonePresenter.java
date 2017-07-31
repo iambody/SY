@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
@@ -61,7 +62,7 @@ public class BindPhonePresenter extends BasePresenterImpl<BindPhoneContract.View
                     loadingDialog.dismiss();
 
                     //***********新逻辑***************
-                    MergeDialg dialg = new MergeDialg(getContext(), vas, new MergeDialg.MergeDialogListener() {
+                    MergeDialg dialg = new MergeDialg(getContext(), BStrUtils.isEmpty(un)?"":un, new MergeDialg.MergeDialogListener() {
                         @Override
                         public void left() {
                             getView().margeSucc();
