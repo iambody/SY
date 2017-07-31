@@ -96,8 +96,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @BindView(R2.id.enter_login_wx_bt_lay)
     RelativeLayout enterLoginWxBtLay;
-    @BindView(R2.id.enter_login_wxlogin_lay)
-    RelativeLayout enterLoginWxloginLay;
+//    @BindView(R2.id.enter_login_wxlogin_lay)
+//    RelativeLayout enterLoginWxloginLay;
     @BindView(R2.id.btn_stroll)
     TextView btnStroll;
     //内容登录动作的布局
@@ -174,7 +174,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isFromInside = getIntent().getBooleanExtra(TAG_GOTOLOGIN, false);
         isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
-        ialoginout=getIntent().getBooleanExtra("ialoginout", false);
+        ialoginout = getIntent().getBooleanExtra("ialoginout", false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -394,15 +394,27 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         startActivity(intent);
     }
 
-    //点击微信上边布局 显示微信登录的按钮页面
-    @OnClick(R2.id.enter_login_wxlogin_lay)
-    public void onViewClickedlayout() {
+    @OnClick(R2.id.login_weixins_text)
+    void weixinxins() {
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
-        enterLoginWxloginLay.setVisibility(View.GONE);
-        enterLoginWxBtLay.setVisibility(View.VISIBLE);
+
+//        enterLoginWxloginLay.setVisibility(View.GONE);
+//        enterLoginWxBtLay.setVisibility(View.VISIBLE);
         isShowWxBt = true;
-        getPresenter().setAnimation(enterLoginWxBtLay);
+        enterLoginWxBtLay.setVisibility(View.VISIBLE);
+        getPresenter().setAnimation(loginWeixinsText);
     }
+
+//    //点击微信上边布局 显示微信登录的按钮页面
+//    @OnClick(R2.id.enter_login_wxlogin_lay)
+//    public void onViewClickedlayout() {
+////        if (!NetUtils.isNetworkAvailable(baseContext)) return;
+////
+////        enterLoginWxloginLay.setVisibility(View.GONE);
+////        enterLoginWxBtLay.setVisibility(View.VISIBLE);
+////        isShowWxBt = true;
+////        getPresenter().setAnimation(enterLoginWxBtLay);
+//    }
 
     @Override
     public void loginSuccess() {
@@ -566,7 +578,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        openActivity(ChoiceIdentityActivity.class);
         if (isShowWxBt) {
             isShowWxBt = false;
-            enterLoginWxloginLay.setVisibility(View.VISIBLE);
+//            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return;
         }
@@ -577,7 +589,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
             isShowWxBt = false;
-            enterLoginWxloginLay.setVisibility(View.VISIBLE);
+//            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return true;
         }

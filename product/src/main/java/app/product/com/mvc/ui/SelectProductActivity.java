@@ -82,21 +82,23 @@ public class SelectProductActivity extends BaseActivity implements Toolbar.OnMen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.page_menu, menu);
-        MenuItem rightItem = menu.findItem(R.id.firstBtn);
-        MenuItem secItem = menu.findItem(R.id.secondBtn);
-        secItem.setVisible(false);
-        rightItem.setIcon(R.drawable.ic_share_search_product);
-        return true;
+//        getMenuInflater().inflate(R.menu.page_menu, menu);
+//        MenuItem rightItem = menu.findItem(R.id.firstBtn);
+//        MenuItem secItem = menu.findItem(R.id.secondBtn);
+//        secItem.setVisible(false);
+//        rightItem.setIcon(R.drawable.ic_share_search_product);
+//        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
-            Intent intent = new Intent(SelectProductActivity.this, ShareSearchActivity.class);
-            intent.putExtra("type", "share");
-            startActivity(intent);
-        }
-        return false;
+//        if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
+//            Intent intent = new Intent(SelectProductActivity.this, ShareSearchActivity.class);
+//            intent.putExtra("type", "share");
+//            startActivity(intent);
+//        }
+//        return false;
+        return onMenuItemClick(item);
     }
 }

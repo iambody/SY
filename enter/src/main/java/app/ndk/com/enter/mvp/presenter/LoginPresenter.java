@@ -300,11 +300,11 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
     public void setAnimation(View VV) {
         AnimatorSet animationSet = new AnimatorSet();
-        ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
-        ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha", 0f, 0.4f, 06f, 0.7f, 0.9f, 1f);
-        Alpha.setDuration(300);
-        animationSet.playSequentially(Translate);
-        animationSet.setDuration(300);
+//        ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
+        ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha",   1.0f,0f,0f,0f,0f,0f,0f,10f ,   1f);
+        Alpha.setDuration(1000);
+        animationSet.playSequentially(Alpha);
+        animationSet.setDuration(1000);
         animationSet.start();
     }
 
