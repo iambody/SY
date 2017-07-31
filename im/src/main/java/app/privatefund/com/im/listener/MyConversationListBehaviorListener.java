@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.cgbsoft.lib.utils.constant.Constant;
+
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.im.ui.ConversationMenuDialog;
 import app.privatefund.com.im.utils.RongCouldUtil;
@@ -45,7 +47,7 @@ public class MyConversationListBehaviorListener implements RongIM.ConversationLi
 
         if ("dd0cc61140504258ab474b8f0a38bb56".equals(uiConversation.getConversationTargetId()) ||
                 "公告".equals(uiConversation.getConversationTargetId()) ||
-                "系统通知".equals(uiConversation.getConversationTargetId())) { // 平台客服消息不让删除
+                Constant.msgSystemStatus.equals(uiConversation.getConversationTargetId())) { // 平台客服消息不让删除
             return true;
         }
         showPopUpWindow(context, uiConversation);

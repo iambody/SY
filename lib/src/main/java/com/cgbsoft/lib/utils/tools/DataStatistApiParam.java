@@ -1205,11 +1205,12 @@ public class DataStatistApiParam {
      *
      * @param
      */
-    public static void operateHealthIntroduceClick() {
+    public static void operateHealthIntroduceClick(String pageName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2060");
         data3.put("act", "20344");
         data3.put("arg1", "健康推荐");
+        data3.put("arg3", pageName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
