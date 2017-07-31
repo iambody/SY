@@ -2,7 +2,10 @@ package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -238,5 +241,25 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     }
     protected void showToast(int strId){
         Toast.makeText(baseActivity.getApplicationContext(),getResources().getString(strId),Toast.LENGTH_SHORT).show();
+    }
+
+    // 判断权限集合
+    protected boolean needPermissions(String... permissions) {
+        //判断版本是否兼容
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return false;
+        }
+        boolean isNeed;
+        for (String permission : permissions) {
+            isNeed = needsPermission(permission);
+            if (isNeed) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // 判断是否缺少权限
+    protected boolean needsPermission(String permission) {
+        return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
     }
 }

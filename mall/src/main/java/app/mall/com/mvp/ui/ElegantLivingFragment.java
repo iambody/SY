@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -14,6 +17,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -45,6 +49,14 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     RecyclerView recyclerView;
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
+    @BindView(R2.id.elegant_living_no_data_all)
+    RelativeLayout noDataDefaultAll;
+    @BindView(R2.id.elegant_living_no_data_tag)
+    ImageView noDataPic;
+    @BindView(R2.id.tv_elegant_living_no_data_tip)
+    TextView noDataStr;
+    @BindView(R2.id.tv_elegant_living_reload_tip)
+    TextView noDataReloadStr;
     private LoadingDialog mLoadingDialog;
     private ArrayList<ElegantLivingEntity.ElegantLivingBean> datas = new ArrayList<>();
     private RecyclerAdapter recyclerAdapter;
@@ -129,6 +141,12 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
         datas.addAll(data);
         if (datas.size() == 0) {
             mRefreshLayout.setLoadMoreEnabled(false);
+            noDataDefaultAll.setVisibility(View.VISIBLE);
+            Imageload.display(baseActivity,R.drawable.no_product,noDataPic);
+            noDataStr.setText(baseActivity.getResources().getString(R.string.no_product_str));
+            noDataReloadStr.setVisibility(View.GONE);
+        } else {
+            noDataDefaultAll.setVisibility(View.GONE);
         }
         recyclerAdapter.notifyDataSetChanged();
     }
@@ -137,6 +155,11 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     public void updateError() {
         showToast(R.string.load_fail);
         clodLsAnim(mRefreshLayout);
+        noDataDefaultAll.setVisibility(View.VISIBLE);
+        Imageload.display(baseActivity,R.drawable.net_err_tip,noDataPic);
+        noDataStr.setText(baseActivity.getResources().getString(R.string.err_net_str));
+        noDataReloadStr.setVisibility(View.VISIBLE);
+        noDataReloadStr.setText(baseActivity.getResources().getString(R.string.reload_str));
     }
 
     /**

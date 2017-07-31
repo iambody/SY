@@ -153,4 +153,10 @@ public class PrivateBanksFragment extends BasePageFragment {
             unreadInfoNumber.onDestroy();
         }
     }
+
+    @Override
+    protected void clickTabButton(String tabName) {
+        super.clickTabButton(tabName);
+        DataStatistApiParam.honourPBitemClick(tabName);
+    }
 }

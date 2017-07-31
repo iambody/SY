@@ -4,52 +4,51 @@
     package="com.cgbsoft.privatefund">
 
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <!--唤醒锁定-->
+    <!-- 唤醒锁定 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 读取电话状态 -->
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--使用振动-->
+    <!-- 使用振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!--挂载文件系统-->
-    <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
-    <!--获取网络状态-->
+    <!-- 挂载文件系统 -->
+    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
+    <!-- 获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--显示系统窗口-->
+    <!-- 显示系统窗口 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--读写系统设置-->
+    <!-- 读写系统设置 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--获取错略位置-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />-->
-    <!--获取WiFi状态-->
+    <!-- 获取错略位置 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" /> -->
+    <!-- 获取WiFi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--改变WiFi状态-->
+    <!-- 改变WiFi状态 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!--获取精确位置-->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <!--访问定位额外命令-->
+    <!-- 获取精确位置 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <!-- 访问定位额外命令 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!--改变网络状态-->
+    <!-- 改变网络状态 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!--访问网络-->
+    <!-- 访问网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--拍照权限-->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
+    <!-- 拍照权限 -->
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
-    <!--读取联系人-->
+    <!-- 读取联系人 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--发送短信-->
+    <!-- 发送短信 -->
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <!--改变配置-->
+    <!-- 改变配置 -->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <!--结束后台进程-->
+    <!-- 结束后台进程 -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
-
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -59,53 +58,52 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    <!--读取系统日志-->
+    <!-- 读取系统日志 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--写入联系人-->
+    <!-- 写入联系人 -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!--获取任务信息-->
+    <!-- 获取任务信息 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--管理账户-->
+    <!-- 管理账户 -->
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <!--访问账户Gmail列表-->
+    <!-- 访问账户Gmail列表 -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!--拨打电话-->
+    <!-- 拨打电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!--设置调试程序-->
+    <!-- 设置调试程序 -->
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <!--使用证书-->
+    <!-- 使用证书 -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <!--修改声音设置-->
+    <!-- 修改声音设置 -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!--处理拨出电话-->
+    <!-- 处理拨出电话 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 百度地图-->
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!-- 用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 百度地图 -->
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 访问网络，网络定位需要上网-->
+    <!-- 访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- SD卡读取权限，用户写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
-    <!-- 百度地图**-->
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 百度地图** -->
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -114,7 +112,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.cgbsoft.privatefund.InitApplication"
+        android:name=".InitApplication"
         android:allowBackup="true"
         android:icon="@drawable/sxy_logo"
         android:label="@string/app_name_customer"
@@ -129,7 +127,6 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
-
         <meta-data
             android:name="versionCode"
             android:value="${VERSION_CODE}" />
@@ -139,7 +136,8 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
-        <!--  &lt;!&ndash; glide &ndash;&gt;
+        <!--
+          &lt;!&ndash; glide &ndash;&gt;
           <meta-data
               android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
               android:value="GlideModule" />
@@ -174,8 +172,8 @@
               android:authorities="com.cgbsoft.cache.other"
               android:multiprocess="true"
               android:exported="true"/>
-  -->
-        <!--欢迎页-->
+        -->
+        <!-- 欢迎页 -->
         <activity
             android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"
             android:screenOrientation="portrait"
@@ -185,16 +183,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <!--主页-->
+        <!-- 主页 -->
         <activity
             android:name=".mvp.ui.home.MainPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <!--权限管理-->
+        <!-- 权限管理 -->
         <activity
             android:name=".mvp.ui.start.PermissionsActivity"
             android:screenOrientation="portrait"
@@ -240,92 +237,91 @@
                 <activity
                     android:name=".mvp.ui.login.BindPhoneActivity"
                     android:screenOrientation="portrait"
-                    android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
+                    android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
+        -->
 
-        <!--视频列表-->
-        <!--<activity-->
-        <!--android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity"-->
-        <!--android:screenOrientation="portrait" />-->
-        <!--视频下载列表-->
 
-        <!--关联资产activity-->
+        <!-- 视频列表 -->
+        <!-- <activity -->
+        <!-- android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- 视频下载列表 -->
+
+
+        <!-- 关联资产activity -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity"
+            android:name=".mvp.ui.home.RelativeAssetActivity"
             android:screenOrientation="portrait" />
 
-        <!--资产证明activity-->
+        <!-- 资产证明activity -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity"
+            android:name=".mvp.ui.home.AssetProveActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.SmoothImageActivity"
+            android:name=".mvp.ui.home.SmoothImageActivity"
             android:screenOrientation="portrait" />
 
         <!-- 已经反馈 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity"
+            android:name=".mvp.ui.home.FeedbackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <!-- 设置手势密码 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.GestureEditActivity"
+            android:name=".mvp.ui.home.GestureEditActivity"
             android:screenOrientation="portrait" />
 
         <!-- 验证手机密码 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.GestureVerifyActivity"
+            android:name=".mvp.ui.home.GestureVerifyActivity"
             android:screenOrientation="portrait" />
 
         <!-- 风险评测页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity"
+            android:name=".mvp.ui.home.RiskEvaluationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.center.DatumManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.home.MineActiviesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.center.InvisiteAccountActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 风险评测结果 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity"
+            android:name=".mvp.ui.home.RiskResultActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 设置页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.MineActiviesActivity"
+            android:name=".mvp.ui.center.SettingActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 个人信息页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.InvisiteAccountActivity"
+            android:name=".mvp.ui.center.PersonalInformationActivity"
             android:screenOrientation="portrait" />
-
-        <!-- 风险评测结果-->
+        <!-- 活动沙龙页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.RiskResultActivity"
+            android:name=".mvp.ui.home.SalonsActivity"
             android:screenOrientation="portrait" />
-        <!-- 设置页面-->
+        <!-- 活动沙龙页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.SettingActivity"
+            android:name=".mvp.ui.home.OldSalonsActivity"
             android:screenOrientation="portrait" />
-        <!-- 个人信息页面-->
+        <!-- 修改用户名页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.PersonalInformationActivity"
+            android:name=".mvp.ui.center.ChangeNameActivity"
             android:screenOrientation="portrait" />
-        <!-- 活动沙龙页面-->
+        <!-- 修改用户性别页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.SalonsActivity"
+            android:name=".mvp.ui.center.ChangeGenderActivity"
             android:screenOrientation="portrait" />
-        <!-- 活动沙龙页面-->
+        <!-- 修改登录密码页面 -->
         <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.home.OldSalonsActivity"
-            android:screenOrientation="portrait" />
-        <!-- 修改用户名页面-->
-        <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeNameActivity"
-            android:screenOrientation="portrait" />
-        <!-- 修改用户性别页面-->
-        <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeGenderActivity"
-            android:screenOrientation="portrait" />
-        <!-- 修改登录密码页面-->
-        <activity
-            android:name="com.cgbsoft.privatefund.mvp.ui.center.ChangeLoginPsdActivity"
+            android:name=".mvp.ui.center.ChangeLoginPsdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -333,33 +329,34 @@
             android:screenOrientation="portrait" />
         <!-- app module 通用的webview -->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.InverstorBaseWebviewActivity"
+            android:name=".widget.InverstorBaseWebviewActivity"
             android:screenOrientation="portrait" />
 
-        <!-- app module-->
+        <!-- app module -->
         <activity
-            android:name="com.cgbsoft.privatefund.widget.WebviewWithShareActivity"
+            android:name=".widget.WebviewWithShareActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.cgbsoft.privatefund.widget.SelectAddressActivity"
+            android:name=".widget.SelectAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
 
-        <!--<activity-->
-        <!--android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity"-->
-        <!--android:theme="@style/transcutestyle"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity" -->
+        <!-- android:theme="@style/transcutestyle" -->
+        <!-- android:screenOrientation="portrait" /> -->
 
         <activity
-            android:name="com.cgbsoft.privatefund.widget.RightShareWebViewActivity"
+            android:name=".widget.RightShareWebViewActivity"
             android:screenOrientation="portrait" />
 
-        <!--<receiver android:name=".utils.receiver.ExitLoginReceiver">
+        <!--
+        <receiver android:name=".utils.receiver.ExitLoginReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.privateFund.exitLogin" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
         <service android:name="app.privatefund.com.vido.service.FloatVideoService">
             <intent-filter>
@@ -368,7 +365,6 @@
                 <category android:name="android.intent.category.default" />
             </intent-filter>
         </service>
-
         <service android:name=".utils.service.ExitLoginService">
             <intent-filter>
                 <action android:name="com.cgbsoft.privatefund.service.exitLogin" />
@@ -395,8 +391,8 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-        <!--===================umeng========================-->
-        <!--微信-->
+        <!-- ===================umeng======================== -->
+        <!-- 微信 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -404,17 +400,21 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--分享编辑页-->
-        <!--  <activity
+        <!-- 分享编辑页 -->
+        <!--
+              <activity
               android:name="com.umeng.socialize.editorpage.ShareActivity"
               android:excludeFromRecents="true"
-              android:theme="@style/Theme.UMDefault" />-->
-        <!--=================================================-->
+              android:theme="@style/Theme.UMDefault" />
+        -->
+        <!-- ================================================= -->
         <!-- X5内核的key -->
-        <!-- <meta-data
+        <!--
+             <meta-data
              android:name="com.baidu.lbsapi.API_KEY"
-             android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />-->
-        <!--三方登录-->
+             android:value="5Mz1XOtf+sW/+AuUgmwgmJDu" />
+        -->
+        <!-- 三方登录 -->
         <!-- 三方登录 -->
 
         <activity
@@ -439,7 +439,7 @@
             </intent-filter>
         </activity>
         <!-- 三方登录结束 -->
-        <!--ShareSdk需要的 -->
+        <!-- ShareSdk需要的 -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -448,19 +448,21 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-            <!-- 新浪微博-->
+            <!-- 新浪微博 -->
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!--新浪微博-->
+            <!-- 新浪微博 -->
             <!-- 微信分享*************************** -->
         </activity>
 
@@ -494,12 +496,13 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
-        <!--  消息收发辅助service -->
+        <!-- 消息收发辅助service -->
         <service
             android:name="com.tencent.qalsdk.service.QalAssistService"
             android:exported="false"
-            android:process=":QALSERVICE"></service>
+            android:process=":QALSERVICE" />
 
+        <activity android:name=".mvp.ui.home.SplashMovieActivity"></activity>
     </application>
 
 </manifest>

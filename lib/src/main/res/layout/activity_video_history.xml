@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg"
-    android:fitsSystemWindows="true">
-
+    android:orientation="vertical">
+<!--
     <android.support.design.widget.AppBarLayout
         android:id="@+id/video_history_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:visibility="gone"
         app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -33,30 +34,66 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <!--<ImageView
+        &lt;!&ndash;<ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_z_dip"
             android:layout_alignParentTop="true"
             android:layout_gravity="bottom"
-            android:src="@color/gray_font" />-->
-    </android.support.design.widget.AppBarLayout>
-    <!--
+            android:src="@color/gray_font" />&ndash;&gt;
+    </android.support.design.widget.AppBarLayout>-->
 
-        <com.dinuscxj.refresh.RecyclerRefreshLayout
-            android:id="@+id/recyclerRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">】
-com.cgbsoft.lib.widget.recycler.MyScrollview
-    -->
+    <RelativeLayout
+        android:id="@+id/videohistory_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_10_dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="播放记录"
+            android:padding="@dimen/ui_10_dip"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_18" />
+
+        <TextView
+            android:id="@+id/history_del_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:text="取消"
+            android:clickable="true"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
+        <ImageView
+            android:id="@+id/history_del_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:clickable="true"
+            android:src="@drawable/ic_local_delete"
+            />
+
+    </RelativeLayout>
 
 
     <com.cgbsoft.lib.widget.recycler.MyScrollview
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ll_avh"
-        android:layout_below="@id/video_history_appbarlayout"
-        android:layout_marginTop="@dimen/ui_60_dip"
+        android:layout_height="0dp"
+       android:layout_weight="1"
         android:background="@color/app_bg"
         android:descendantFocusability="blocksDescendants"
         android:orientation="vertical"
@@ -102,7 +139,6 @@ com.cgbsoft.lib.widget.recycler.MyScrollview
         android:id="@+id/ll_avh"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_gravity="bottom"
         android:background="#f6f6f6"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -147,4 +183,4 @@ com.cgbsoft.lib.widget.recycler.MyScrollview
             android:layout_centerInParent="true"
             android:src="@drawable/bfjl_kong" />
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
