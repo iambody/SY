@@ -456,4 +456,16 @@ public class AppInfStore implements AppinfConstant {
         homeData = new Gson().fromJson(homeStr, VideoAllModel.class);
         return homeData;
     }
+
+    /**
+     * 是否显示踢出dialog
+     * @param sContext
+     * @param b true 显示  false 未显示
+     */
+    public static void saveDialogTag(Context sContext,boolean b) {
+        SharedPreferences sp = getBasePreference(sContext);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("dialogshow", b);
+        ed.commit();
+    }
 }

@@ -18,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -106,22 +108,27 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                     msg = getString(R.string.token_error_511_str);
                 }
 
-                DefaultDialog dialog = new DefaultDialog(BaseMvcActivity.this, msg, null, "确认"){
+                boolean dialogShow = AppManager.getDialogShow(BaseMvcActivity.this);
+                if (!dialogShow) {
+                    DefaultDialog dialog = new DefaultDialog(BaseMvcActivity.this, msg, null, "确认"){
 
-                    @Override
-                    public void left() {
+                        @Override
+                        public void left() {
 
-                    }
+                        }
 
-                    @Override
-                    public void right() {
-                        relogin();
-                        dismiss();
-                    }
-                };
-//                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                dialog.setCancelable(false);
-                dialog.show();
+                        @Override
+                        public void right() {
+                            relogin();
+                            dismiss();
+                            AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+                        }
+                    };
+                    //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                    AppInfStore.saveDialogTag(BaseMvcActivity.this,true);
+                }
             }
             if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
                 NavigationUtils.startActivityByRouter(BaseMvcActivity.this, RouteConfig.GOTO_LOGIN);
