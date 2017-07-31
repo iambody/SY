@@ -197,6 +197,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private BadgeView waitReceiver;
     private UnreadInfoNumber unreadInfoNumber;
 
+    public static final String LEVER_NAME = "lever_name_value";
+
 //    private Handler handler = new Handler() {
 //        @Override
 //        public void handleMessage(Message msg) {
@@ -387,22 +389,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_name)
     void gotoPersonInfoNamectivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, mineModel.getMyInfo().getMemberLevel());
     }
 
     @OnClick(R.id.account_info_image_id)
     void gotoPersonInfoHeaderctivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, mineModel.getMyInfo().getMemberLevel());
     }
 
     @OnClick(R.id.account_info_level_ll)
     void gotoPersonInfoctivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, mineModel.getMyInfo().getMemberLevel());
     }
 
     @OnClick(R.id.user_leaguar_update_desc)
     void gotoLeaguarActivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
+        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, mineModel.getMyInfo().getMemberLevel());
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)

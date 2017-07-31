@@ -454,7 +454,6 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
-
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2002");
@@ -489,7 +488,6 @@ public class DataStatistApiParam {
         data3.put("arg1", "返回");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
-
 
     /**
      * 忘记密码 点击下一步
