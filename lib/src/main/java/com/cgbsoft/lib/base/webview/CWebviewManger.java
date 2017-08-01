@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.CalendarListBean;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
+import com.cgbsoft.lib.base.mvp.ui.QrMidActivity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -62,6 +64,9 @@ public class CWebviewManger {
     private BaseWebview webview;
     private boolean headRefreshing; // 头部是否有刷新
     private boolean loadMoreing; // 加载更大
+
+    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
+    private int REQUEST_CODE = 2000; // 请求码
 
     public CWebviewManger(Activity activity) {
         super();
@@ -984,9 +989,10 @@ RxBus.get().post(RxConstant.BindAdviser,1);
     }
 
     private void toQrCode() {
-        NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
-//        Intent intent3 = new Intent(context, CaptureActivity.class);
-//        context.startActivity(intent3);
+
+//        NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
+        Intent intent3 = new Intent(context, QrMidActivity.class);
+        context.startActivity(intent3);
     }
 
     private void showComfirmDialog(String action) {

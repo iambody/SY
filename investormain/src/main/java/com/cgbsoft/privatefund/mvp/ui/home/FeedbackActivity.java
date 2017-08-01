@@ -31,7 +31,6 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
-import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
@@ -141,7 +140,6 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         }
     }
     private void startPermissionsActivity() {
-        LogUtils.Log("aaa","111");
         MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
     @Override
@@ -164,7 +162,6 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             }
             // 缺少权限时, 进入权限配置页面
             if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-                LogUtils.Log("aaa","000");
                 startPermissionsActivity();
                 return;
             }
@@ -216,7 +213,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 //                    feedbackAdapter.removeOne(picClickPosition);
                 }
             }
-        }else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+        }else if (requestCode == REQUEST_CODE&&resultCode==MyPermissionsActivity.PERMISSIONS_GRANTED) {
             LogUtils.Log("aaa","333");
             addPic();
 //            mHeadIconDialog.show();
