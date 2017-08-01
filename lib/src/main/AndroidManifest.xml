@@ -18,6 +18,11 @@
             android:name="com.cgbsoft.lib.permission.MyPermissionsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name="com.cgbsoft.lib.base.mvp.ui.QrMidActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"
+             />
 
         <!-- ****************百度定位****************-->
         <meta-data
