@@ -161,6 +161,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bt_txts.add(recharge_up_bt2);
         up_bt_txts.add(recharge_up_bt3);
         titleMid.setText(getResources().getString(R.string.ydRecharge));
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
 
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
@@ -348,6 +349,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                 }
             }
         }
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
     }
 
     @Override
@@ -371,6 +373,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         } else {
             pay_yundou_edit.setText(String.format("%d", Integer.parseInt(pay_yundou_edit.getText().toString()) + count));
         }
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
     }
 
 
