@@ -5,7 +5,10 @@ import android.support.v4.app.FragmentManager;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.chenenyu.router.annotation.Route;
 
 import app.privatefund.com.im.fragment.MainMessageFragment;
@@ -29,6 +32,7 @@ public class MessageListActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putBoolean(IS_MESSAGE_LIST, true);
         bundle.putBoolean(IS_NOTICE_MESSAGE_LIST, getIntent().getBooleanExtra(IS_NOTICE_MESSAGE_LIST, false));
+        RxBus.get().post(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, 0);
         mainMessageFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.message_list, mainMessageFragment).commit();

@@ -107,7 +107,12 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+
 
     <!-- 上边图********************** -->
     <!-- 登录模式下的布局文件 -->

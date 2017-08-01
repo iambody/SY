@@ -62,6 +62,19 @@ public class ViewUtils {
         return badge;
     }
 
+    public static BadgeView createLeftTopRedStringPointAndPosition(Context context, View view, String value) {
+        BadgeView badge = new BadgeView(context, view);
+        badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 6);
+        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        badge.setPaddingRelative(5, 0, 0, 5);
+        badge.setText(value);
+        badge.setTextColor(Color.parseColor("#ffffff"));
+        badge.setBadgeBackgroundColor(Color.parseColor("#d73a2e"));
+        badge.setVisibility(View.VISIBLE);
+        badge.show();
+        return badge;
+    }
+
     public static void textViewFormatPasswordType(TextView textView) {
         String values = textView.getText().toString();
         values = values.replace(values, PASSWROD_TYPE_START_SIX);

@@ -190,7 +190,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         //请求数据
         getPresenter().getHomeData();
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, true);
         DataStatistApiParam.gohome();
     }
 
@@ -199,7 +199,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onResume();
         LogUtils.Log("saassaa", "resume");
         if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
+            unreadInfoNumber.initUnreadInfoAndPosition();
         }
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
     }

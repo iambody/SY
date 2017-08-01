@@ -23,7 +23,9 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
@@ -374,10 +376,11 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             public void onResult(List<Conversation> data) {
                 if (!CollectionUtils.isEmpty(data)) {
                     for (Conversation conversation : data) {
-                        if (conversation.getConversationType() == ConversationType.GROUP) {
+                        if (conversation.getConversationType() == ConversationType.GROUP || Constant.msgSecretary.equals(conversation.getTargetId())) {
                             RongIM.getInstance().removeConversation(conversation.getConversationType(), conversation.getTargetId());
                             return;
                         }
+
                         if (isFilterNoticeInfo(conversation.getSenderUserId())) {
                             cacheConversationList.add(UIConversation.obtain(conversation, false));
                         }

@@ -25,6 +25,7 @@ import com.cgbsoft.privatefund.adapter.MineActivitesListAdapter;
 import com.cgbsoft.privatefund.model.MineActivitesModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineActivitesContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MineActivitesPresenter;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(this, R.color.app_bg, R.dimen.ui_10_dip));
         mineActivitesListAdapter.setOnItemClickListener((position, mineActivitesItem) -> {
-            Intent intent = new Intent(this, BaseWebViewActivity.class);
+            Intent intent = new Intent(this, RightShareWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.activitesDeatil.concat("?id=").concat(mineActivitesItem.getId()));
             intent.putExtra(WebViewConstant.push_message_title, mineActivitesItem.getTitle());
             intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, true);

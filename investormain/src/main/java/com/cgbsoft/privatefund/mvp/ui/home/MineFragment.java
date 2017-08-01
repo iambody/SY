@@ -327,7 +327,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init(View view, Bundle savedInstanceState) {
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initObserver();
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon, false);
     }
 
     @Override

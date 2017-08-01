@@ -71,7 +71,6 @@ import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.LoginHelper;
 import qcloud.liveold.mvp.presenters.ProfileInfoHelper;
 import qcloud.liveold.mvp.presenters.viewinface.LoginView;
-import qcloud.liveold.mvp.presenters.viewinface.LogoutView;
 import qcloud.liveold.mvp.presenters.viewinface.ProfileView;
 import qcloud.liveold.mvp.views.LiveActivity;
 import rx.Observable;
