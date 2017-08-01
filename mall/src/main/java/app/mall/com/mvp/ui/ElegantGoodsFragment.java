@@ -188,6 +188,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
         isOver=false;
 //        LogUtils.Log("aaa","click item is==="+category);
         prosDatas.clear();
+        proAdapter.notifyDataSetChanged();
         if (category.equals(CATEGORY_ALL)) {
             getPresenter().getElegantGoodsFirst(prosDatas.size());
         } else {
