@@ -225,7 +225,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         if(!NetUtils.isNetworkAvailable(getContext())){
 
         }
-        PromptManager.ShowCustomToast(getContext(),"sss");
+//        PromptManager.ShowCustomToast(getContext(),"sss");
         addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
