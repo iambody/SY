@@ -223,7 +223,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         try {
             ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
             String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-            if (("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(getActivity()))) {
+            if (("tdrvipksrbgn5".equals(msg))) {
                 textViewCurrentAddress.setVisibility(View.VISIBLE);
                 textViewCurrentAddress.setText("你当前的地址是：".concat(NetConfig.SERVER_ADD));
             }

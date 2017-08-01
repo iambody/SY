@@ -374,6 +374,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             public void onResult(List<Conversation> data) {
                 if (!CollectionUtils.isEmpty(data)) {
                     for (Conversation conversation : data) {
+                        if (conversation.getConversationType() == ConversationType.GROUP) {
+                            RongIM.getInstance().removeConversation(conversation.getConversationType(), conversation.getTargetId());
+                            return;
+                        }
                         if (isFilterNoticeInfo(conversation.getSenderUserId())) {
                             cacheConversationList.add(UIConversation.obtain(conversation, false));
                         }
