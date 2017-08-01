@@ -341,7 +341,6 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             up_bt_txts.get(Clickpostion).setTextColor(getResources().getColor(R.color.app_golden_click));
             for (int i = 0; i < up_bt_txts.size(); i++) {
                 up_bt_txts.get(i).setBackgroundResource(i == Clickpostion ? R.drawable.shap_corner_text_red : R.drawable.shape_corner_txt);
-
                 if (i == Clickpostion) {
                     pay_yundou_edit.setText(String.format("%d", rechargeConfigBean.getLevels().get(Clickpostion).getYdAmount()));
                 } else {
