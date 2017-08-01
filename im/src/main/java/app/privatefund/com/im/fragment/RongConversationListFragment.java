@@ -157,6 +157,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         }
 
         this.mAdapter.clear();
+
         if(RongIMClient.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.DISCONNECTED)) {
             RLog.d(this.TAG, "RongCloud haven\'t been connected yet, so the conversation list display blank !!!");
             this.isShowWithoutConnected = true;

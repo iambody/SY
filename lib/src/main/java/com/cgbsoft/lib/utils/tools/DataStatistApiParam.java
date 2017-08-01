@@ -454,7 +454,6 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
-
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2002");
@@ -489,7 +488,6 @@ public class DataStatistApiParam {
         data3.put("arg1", "返回");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
-
 
     /**
      * 忘记密码 点击下一步
@@ -643,21 +641,20 @@ public class DataStatistApiParam {
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", videoName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-
     }
 
     /**
      * C端点击视频详情中的分享按钮点击事件
      */
-    public static void onStatisToCVideoDetailShareClick(String videoName) {
+    public static void onStatisToCVideoDetailShareClick(String videoName, String videoType) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2029");
         data3.put("act", "20227");
         data3.put("arg1", "分享");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", videoName);
+        data3.put("arg5", videoType);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-
     }
 
     /**
@@ -975,6 +972,30 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     * 尚品类型点击事件
+     */
+    public static void clickCategory(String categoryName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20285");
+        data3.put("arg1", "尚品类型");
+        data3.put("arg3", categoryName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+    /**
+     * 商品点击事件
+     */
+    public static void clickProduct(String productName,String categoryName,String hotOrNew) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2042");
+        data3.put("act", "20286");
+        data3.put("arg1", "商品");
+        data3.put("arg3", productName);
+        data3.put("arg4", categoryName);
+        data3.put("arg5", hotOrNew);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
     /**
      * 尚品分类的点击事件
      */

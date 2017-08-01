@@ -4,10 +4,14 @@ import android.util.Log;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 import app.privatefund.com.im.bean.RCConnect;
 import io.rong.eventbus.EventBus;
 import io.rong.imlib.RongIMClient;
+
+import static com.cgbsoft.lib.InvestorAppli.*;
 
 /**
  * @author chenlong
@@ -34,6 +38,18 @@ public class MyConnectionStatusListener implements RongIMClient.ConnectionStatus
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
                 Log.e("Conn", "onChanged: KICKED_OFFLINE_BY_OTHER_CLIENT");
+                new DefaultDialog(getContext(), "您的账号已在其它设备上登录，如非本人操作请尽快修改密码。", "", "确定") {
+                    @Override
+                    public void left() {
+                    }
+
+                    @Override
+                    public void right() {
+                        dismiss();
+                        LogOutAccount returnLogin = new LogOutAccount();
+                        returnLogin.accounttExit(getContext());
+                    }
+                }.show();
 //                MToast.makeText(MApplication.mCurrentActivityContext,"您的账户在其他设备登录，本机将会掉线，请重新登录", Toast.LENGTH_LONG).show();
 //                JPushInterface.setAlias(MApplication.mCurrentActivityContext, "0", new TagAliasCallback() {
 //                    @Override

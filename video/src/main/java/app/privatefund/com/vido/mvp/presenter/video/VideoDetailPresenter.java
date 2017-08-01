@@ -109,6 +109,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.videoName = result.rows.videoName;
                 viModel.shortName = result.rows.shortName;
                 viModel.content = result.rows.videoSummary;
+                viModel.categoryName = result.rows.categoryName;
                 viModel.likeNum = Integer.parseInt(result.rows.likes);
                 viModel.finalPlayTime = System.currentTimeMillis();
                 viModel.hasRecord = VideoStatus.RECORD;
@@ -224,7 +225,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         if(!NetUtils.isNetworkAvailable(getContext())){
 
         }
-        PromptManager.ShowCustomToast(getContext(),"sss");
+//        PromptManager.ShowCustomToast(getContext(),"sss");
         addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

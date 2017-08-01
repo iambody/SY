@@ -51,6 +51,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
@@ -106,6 +107,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     TextView memberLevel;
     @BindView(R.id.ll_my_qr)
     LinearLayout myQrAll;
+
+    private static String levelName;
 
     /**
      * 更新头像，拍照REQUEST_CODE
@@ -210,6 +213,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         userInfo = AppManager.getUserInfo(baseContext);
         initView(savedInstanceState);
         initHeadIconDialog();
+        levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -270,7 +274,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             userDate.setText(TextUtils.isEmpty(userInfo.getBirthday())?"":userInfo.getBirthday());
 
-            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"无":userInfo.getToC().getMemberLevel());
+//            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"无":userInfo.getToC().getMemberLevel());
+            memberLevel.setText(TextUtils.isEmpty(levelName)?"无":levelName);
         }
 
 

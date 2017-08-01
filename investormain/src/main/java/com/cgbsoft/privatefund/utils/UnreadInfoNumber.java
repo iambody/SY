@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund.utils;
 import android.app.Activity;
 import android.view.View;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -24,29 +23,31 @@ public class UnreadInfoNumber {
 
     private View showView;
 
+    private static boolean hasUnreadNumber;
+
     private static Observable<Integer> unReadNumberObservable;
 
     public UnreadInfoNumber(Activity activity, View showView) {
         this.activity = activity;
         this.showView = showView;
-        initUnreadInfo(0);
         initRegeist();
+        initUnreadInfo();
     }
 
     /**
      * 初始化未读消息
      */
-    private void initUnreadInfo(int numberNum) {
+    public void initUnreadInfo() {
         if (AppManager.isVisitor(activity)) {
             return;
         }
 //        int numberNum = AppManager.getUnreadInfoNumber(activity);
         if (badgeView == null) {
-            if (numberNum > 0) {
+            if (hasUnreadNumber) {
                 badgeView = ViewUtils.createLeftTopRedStringPoint(activity, showView, "");
             }
         } else {
-            if (numberNum > 0) {
+            if (hasUnreadNumber) {
 //                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
                 badgeView.setText("");
                 badgeView.invalidate();
@@ -72,7 +73,8 @@ public class UnreadInfoNumber {
             unReadNumberObservable.subscribe(new RxSubscriber<Integer>() {
                 @Override
                 protected void onEvent(Integer integer) {
-                    initUnreadInfo(integer);
+                    hasUnreadNumber = integer != 0;
+                    initUnreadInfo();
                 }
 
                 @Override

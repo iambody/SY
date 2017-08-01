@@ -390,7 +390,6 @@ RxBus.get().post(RxConstant.BindAdviser,1);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -1365,6 +1364,9 @@ RxBus.get().post(RxConstant.BindAdviser,1);
             }
             if (url.contains("http")) {
                 url = split[2] + ":" + split[3];
+                if (split.length >= 5) {
+                    title=split[4];
+                }
             } else {
                 url = BaseWebNetConfig.SERVER_ADD + url;
             }

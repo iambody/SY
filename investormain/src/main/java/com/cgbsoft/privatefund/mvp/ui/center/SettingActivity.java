@@ -30,6 +30,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
+import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 

@@ -240,9 +240,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
      */
     private void freshData(RechargeConfigBean data) {
         //首先刷新上边三个按钮  此处 先判断size大小
-        recharge_up_bt1.setText(String.format("%d云豆", data.getLevels().get(0).getYdAmount()));
-        recharge_up_bt2.setText(String.format("%d云豆", data.getLevels().get(1).getYdAmount()));
-        recharge_up_bt3.setText(String.format("%d云豆", data.getLevels().get(2).getYdAmount()));
+        recharge_up_bt1.setText(String.format("%d", data.getLevels().get(0).getYdAmount()));
+        recharge_up_bt2.setText(String.format("%d", data.getLevels().get(1).getYdAmount()));
+        recharge_up_bt3.setText(String.format("%d", data.getLevels().get(2).getYdAmount()));
 
         recharge_up_bt1_tag.setText(String.format("%s", String.format("+%s%%", (int) (100 * data.getLevels().get(0).getDonationRatio()))));
         recharge_up_bt2_tag.setText(String.format("%s", String.format("+%s%%", (int) (100 * data.getLevels().get(1).getDonationRatio()))));
