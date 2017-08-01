@@ -75,6 +75,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @BindView(R2.id.webview)
     protected BaseWebview mWebview;
 
+    @BindView(R2.id.divide_line)
+    protected View mView;
+
     protected boolean hasEmailShare;
 
     protected boolean hasShowTitle;
@@ -252,6 +255,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private void changeTitileStyle() {
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
+            mView.setVisibility(View.GONE);
             RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
             relativeLayout.setVisibility(View.VISIBLE);
             relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
