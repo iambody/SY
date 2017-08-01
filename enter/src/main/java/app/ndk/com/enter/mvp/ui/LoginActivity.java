@@ -657,7 +657,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         try {
             ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
             String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
+            if ("tdrvipksrbgn5".equals(msg)) {
                 mShakeListener = new ShakeListener(this);
                 mShakeListener.setOnShakeListener(onShakeListener);
                 mShakeListener.register();
