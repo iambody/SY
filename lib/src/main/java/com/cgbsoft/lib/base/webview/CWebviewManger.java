@@ -1407,10 +1407,10 @@ public class CWebviewManger {
      * @return
      */
     private boolean intecepterInvister(String actionUrl, boolean rightSave, boolean initPage, boolean rightShare) {
-
         if (actionUrl.contains(WebViewConstant.IntecepterActivity.RECOMMEND_FRIEND) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_DETAIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_SPECIAL) ||
+                actionUrl.contains(WebViewConstant.IntecepterActivity.LIFE_RED_LINE) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.ACTIVITTE_DRAGON_DEATIL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL) ||

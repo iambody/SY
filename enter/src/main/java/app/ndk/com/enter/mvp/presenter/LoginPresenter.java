@@ -231,7 +231,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  5  );
                 if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
-                    SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                 }
                 if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
                     loadingDialog.dismiss();

@@ -55,6 +55,7 @@ public class WebViewConstant {
         public static final String DISCOVER_DETAILS = "/discover/details.html";
         public static final String LIFE_DETAIL = "/biz/life/detail.html";
         public static final String LIFE_SPECIAL = "/biz/life/special.html";
+        public static final String LIFE_RED_LINE = "/biz/life/redwine.html";
         public static final String HEALTH_SPECIAL = "/biz/health/special.html";
         public static final String HEALTH_DETAIL = "/biz/health/detail.html";
         public static final String PRODUCT_DETAIL = "/biz/product/index.html";
