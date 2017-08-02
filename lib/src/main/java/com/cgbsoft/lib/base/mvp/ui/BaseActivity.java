@@ -88,6 +88,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             init(savedInstanceState);
             data();
         }
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
         registerLogoutBroadcast();
     }
 
