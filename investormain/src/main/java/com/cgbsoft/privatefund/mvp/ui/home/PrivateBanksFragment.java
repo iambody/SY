@@ -67,7 +67,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right, false);
     }
 
     @Override

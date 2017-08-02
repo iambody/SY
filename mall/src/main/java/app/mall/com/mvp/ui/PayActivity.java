@@ -161,6 +161,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bt_txts.add(recharge_up_bt2);
         up_bt_txts.add(recharge_up_bt3);
         titleMid.setText(getResources().getString(R.string.ydRecharge));
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
 
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
@@ -340,7 +341,6 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             up_bt_txts.get(Clickpostion).setTextColor(getResources().getColor(R.color.app_golden_click));
             for (int i = 0; i < up_bt_txts.size(); i++) {
                 up_bt_txts.get(i).setBackgroundResource(i == Clickpostion ? R.drawable.shap_corner_text_red : R.drawable.shape_corner_txt);
-
                 if (i == Clickpostion) {
                     pay_yundou_edit.setText(String.format("%d", rechargeConfigBean.getLevels().get(Clickpostion).getYdAmount()));
                 } else {
@@ -348,6 +348,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                 }
             }
         }
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
     }
 
     @Override
@@ -371,6 +372,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         } else {
             pay_yundou_edit.setText(String.format("%d", Integer.parseInt(pay_yundou_edit.getText().toString()) + count));
         }
+        pay_yundou_edit.setSelection(pay_yundou_edit.getText().length());
     }
 
 

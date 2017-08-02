@@ -2,14 +2,23 @@ package com.cgbsoft.privatefund.utils;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.privatefund.R;
 import com.readystatesoftware.viewbadger.BadgeView;
 
+import java.util.List;
+
+import app.privatefund.com.im.utils.RongCouldUtil;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.Observable;
 
 /**
@@ -23,15 +32,36 @@ public class UnreadInfoNumber {
 
     private View showView;
 
-    private static boolean hasUnreadNumber;
+    private boolean fromFirstPage;
+
+    public static boolean hasUnreadNumber;
 
     private static Observable<Integer> unReadNumberObservable;
 
-    public UnreadInfoNumber(Activity activity, View showView) {
+    public UnreadInfoNumber(Activity activity, View showView, boolean fromFirstPage) {
         this.activity = activity;
         this.showView = showView;
+        this.fromFirstPage = fromFirstPage;
+        initUnreadNumber();
         initRegeist();
-        initUnreadInfo();
+        if (fromFirstPage) {
+            initUnreadInfoAndPosition();
+        } else {
+            initUnreadInfo();
+        }
+    }
+
+    private void initUnreadNumber() {
+        List<Conversation> list = RongIM.getInstance().getConversationList();
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Conversation conversation : list) {
+                if (RongCouldUtil.getInstance().customConversation(conversation.getTargetId()) || Constant.msgCustomerService.equals(conversation.getSenderUserId()) ||
+                        conversation.getTargetId().equals(AppManager.getUserInfo(activity).getToC().bandingAdviserId)) {
+                    hasUnreadNumber = conversation.getUnreadMessageCount() > 0;
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -41,6 +71,7 @@ public class UnreadInfoNumber {
         if (AppManager.isVisitor(activity)) {
             return;
         }
+        initUnreadNumber();
 //        int numberNum = AppManager.getUnreadInfoNumber(activity);
         if (badgeView == null) {
             if (hasUnreadNumber) {
@@ -54,6 +85,14 @@ public class UnreadInfoNumber {
             } else {
                 badgeView.hide();
             }
+        }
+    }
+
+    public void initUnreadInfoAndPosition() {
+        if (showView instanceof ImageView) {
+            initUnreadNumber();
+            ImageView imageView = (ImageView) showView;
+            imageView.setImageResource(hasUnreadNumber ? R.drawable.select_news_new_red_point : R.drawable.main_home_new_iv);
         }
     }
 
@@ -74,7 +113,11 @@ public class UnreadInfoNumber {
                 @Override
                 protected void onEvent(Integer integer) {
                     hasUnreadNumber = integer != 0;
-                    initUnreadInfo();
+                    if (fromFirstPage) {
+                        initUnreadInfoAndPosition();
+                    } else {
+                        initUnreadInfo();
+                    }
                 }
 
                 @Override

@@ -80,7 +80,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         toolbarRight.setVisibility(View.VISIBLE);
         toolbarLeft.setOnClickListener(this);
         toolbarRight.setOnClickListener(this);
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight, false);
     }
 
     @Override
