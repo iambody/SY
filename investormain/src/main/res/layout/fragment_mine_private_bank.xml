@@ -222,6 +222,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 style="@style/mine_account_info_text_image"
                 android:drawableTop="@drawable/icon_assets_order"
                 android:text="@string/account_bank_asset_zuhe"/>
@@ -237,6 +238,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 style="@style/mine_account_info_text_image"
                 android:drawableTop="@drawable/icon_investment_calendar"
                 android:text="@string/account_bank_invistor_carlendar"/>
@@ -252,6 +254,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 style="@style/mine_account_info_text_image"
                 android:drawableTop="@drawable/icon_data_folder"
                 android:text="@string/account_bank_info_manager"/>

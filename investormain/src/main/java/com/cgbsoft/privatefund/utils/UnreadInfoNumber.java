@@ -10,9 +10,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
-import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.privatefund.R;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.List;
 
@@ -28,26 +26,63 @@ public class UnreadInfoNumber {
 
     private Activity activity;
 
-    private BadgeView badgeView;
-
     private View showView;
 
-    private boolean fromFirstPage;
+//    private BadgeView badgeView;
+
+    private boolean fromBackPoint;
 
     public static boolean hasUnreadNumber;
 
     private static Observable<Integer> unReadNumberObservable;
 
-    public UnreadInfoNumber(Activity activity, View showView, boolean fromFirstPage) {
+    public UnreadInfoNumber(Activity activity, View showView, boolean fromBackPoint) {
         this.activity = activity;
         this.showView = showView;
-        this.fromFirstPage = fromFirstPage;
-        initUnreadNumber();
+        this.fromBackPoint = fromBackPoint;
         initRegeist();
-        if (fromFirstPage) {
-            initUnreadInfoAndPosition();
-        } else {
-            initUnreadInfo();
+        initUnreadInfoAndPosition();
+    }
+
+//    /**
+//     * 初始化未读消息
+//     */
+//    public void initUnreadInfo() {
+//        if (AppManager.isVisitor(activity)) {
+//            return;
+//        }
+//        initUnreadNumber();
+////        int numberNum = AppManager.getUnreadInfoNumber(activity);
+//        if (badgeView == null) {
+//            if (hasUnreadNumber) {
+//                badgeView = ViewUtils.createLeftTopRedStringPoint(activity, showView, "");
+//            }
+//        } else {
+//            if (hasUnreadNumber) {
+////                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
+//                badgeView.setText("");
+//                badgeView.invalidate();
+//            } else {
+//                badgeView.hide();
+//            }
+//        }
+//    }
+
+    public void initUnreadInfoAndPosition() {
+        if (showView instanceof ImageView) {
+            initUnreadNumber();
+            ImageView imageView = (ImageView) showView;
+            imageView.setImageResource(hasUnreadNumber ? fromBackPoint ? R.drawable.select_news_new_black_red_point : R.drawable.select_news_new_white_red_point : R.drawable.main_home_new_iv);
+        }
+    }
+
+    /**
+     * 注销注册事件
+     */
+    public void onDestroy() {
+        if (null != unReadNumberObservable) {
+            RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, unReadNumberObservable);
+            unReadNumberObservable = null;
         }
     }
 
@@ -64,48 +99,6 @@ public class UnreadInfoNumber {
         }
     }
 
-    /**
-     * 初始化未读消息
-     */
-    public void initUnreadInfo() {
-        if (AppManager.isVisitor(activity)) {
-            return;
-        }
-        initUnreadNumber();
-//        int numberNum = AppManager.getUnreadInfoNumber(activity);
-        if (badgeView == null) {
-            if (hasUnreadNumber) {
-                badgeView = ViewUtils.createLeftTopRedStringPoint(activity, showView, "");
-            }
-        } else {
-            if (hasUnreadNumber) {
-//                badgeView.setText(String.valueOf(numberNum > 99 ? 99 : numberNum));
-                badgeView.setText("");
-                badgeView.invalidate();
-            } else {
-                badgeView.hide();
-            }
-        }
-    }
-
-    public void initUnreadInfoAndPosition() {
-        if (showView instanceof ImageView) {
-            initUnreadNumber();
-            ImageView imageView = (ImageView) showView;
-            imageView.setImageResource(hasUnreadNumber ? R.drawable.select_news_new_red_point : R.drawable.main_home_new_iv);
-        }
-    }
-
-    /**
-     * 注销注册事件
-     */
-    public void onDestroy() {
-        if (null != unReadNumberObservable) {
-            RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, unReadNumberObservable);
-            unReadNumberObservable = null;
-        }
-    }
-
     private void initRegeist() {
         if (unReadNumberObservable == null) {
             unReadNumberObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, Integer.class);
@@ -113,11 +106,7 @@ public class UnreadInfoNumber {
                 @Override
                 protected void onEvent(Integer integer) {
                     hasUnreadNumber = integer != 0;
-                    if (fromFirstPage) {
-                        initUnreadInfoAndPosition();
-                    } else {
-                        initUnreadInfo();
-                    }
+                    initUnreadInfoAndPosition();
                 }
 
                 @Override
@@ -127,5 +116,4 @@ public class UnreadInfoNumber {
             });
         }
     }
-
 }
