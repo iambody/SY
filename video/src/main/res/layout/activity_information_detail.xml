@@ -45,7 +45,8 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/acitivity_divide_online" />
+        <include layout="@layout/acitivity_divide_online"
+            android:id="@+id/divide_line"/>
 
         <com.cgbsoft.lib.base.webview.BaseWebview
             android:id="@+id/webview"
