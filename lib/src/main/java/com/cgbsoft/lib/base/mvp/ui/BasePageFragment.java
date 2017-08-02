@@ -80,7 +80,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                     //Class com.test.accessible.Main
                     //can not access
                     //a member of class com.test.accessible.AccessibleTest
-                    //with modifiers "private"
+                    //with mod 党的五大ifiers "private"
                     field.setAccessible(true);
                     final View viewTab = (View) field.get(tab);
                     if (viewTab == null) return;

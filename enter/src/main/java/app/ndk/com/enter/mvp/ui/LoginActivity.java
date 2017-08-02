@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -43,9 +42,7 @@ import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
-import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
@@ -96,7 +93,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @BindView(R2.id.enter_login_wx_bt_lay)
     RelativeLayout enterLoginWxBtLay;
-//    @BindView(R2.id.enter_login_wxlogin_lay)
+    //    @BindView(R2.id.enter_login_wxlogin_lay)
 //    RelativeLayout enterLoginWxloginLay;
     @BindView(R2.id.btn_stroll)
     TextView btnStroll;
@@ -206,9 +203,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
-
-        if (!SPreference.isVisableProtocol(getApplicationContext()))
-            new ProtocolDialog(this, 0, null);
+/*产品经理需求 不要首次进来就弹出框*/
+//        if (!SPreference.isVisableProtocol(getApplicationContext()))
+//            new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
@@ -657,7 +654,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         try {
             ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
             String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
+            if ("tdrvipksrbgn5".equals(msg)) {
                 mShakeListener = new ShakeListener(this);
                 mShakeListener.setOnShakeListener(onShakeListener);
                 mShakeListener.register();
