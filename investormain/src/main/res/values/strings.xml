@@ -102,6 +102,7 @@
 
     <string name="risk_result_info">根据问卷答案分析，您的风险承受能力为</string>
     <string name="risk_evaluating_title">风险测评结果</string>
+    <string name="risk_title">风险承受能力测评</string>
 
     <!-- Gesture code starting -->
     <string name="setup_gesture_pattern">请输入手势密码</string>

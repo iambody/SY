@@ -321,7 +321,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
 
-
         if (!isFixAdjustEd()) return;
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
         String password = et_al_password.getText().toString().trim();
