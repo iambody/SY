@@ -39,6 +39,7 @@ public class RiskEvaluationActivity extends BaseActivity {
     protected void before() {
         super.before();
         url = BaseWebNetConfig.evaluation;
+
     }
 
     @Override
