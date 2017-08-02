@@ -3,7 +3,6 @@ package app.product.com.mvp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.cgbsoft.lib.TaskInfo;
@@ -34,7 +33,6 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
 import rx.Observable;
-import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
 /**
