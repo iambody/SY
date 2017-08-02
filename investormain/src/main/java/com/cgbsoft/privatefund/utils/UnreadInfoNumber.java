@@ -72,7 +72,7 @@ public class UnreadInfoNumber {
         if (showView instanceof ImageView) {
             initUnreadNumber();
             ImageView imageView = (ImageView) showView;
-            imageView.setImageResource(hasUnreadNumber ? fromBackPoint ? R.drawable.select_news_new_black_red_point : R.drawable.select_news_new_white_red_point : R.drawable.main_home_new_iv);
+            imageView.setImageResource(hasUnreadNumber ? (fromBackPoint ? R.drawable.select_news_new_black_red_point : R.drawable.select_news_new_white_red_point) : (fromBackPoint ? R.drawable.select_happy_life_toolbar_right : R.drawable.main_home_new_iv));
         }
     }
 

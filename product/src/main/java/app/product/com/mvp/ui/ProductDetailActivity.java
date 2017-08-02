@@ -71,6 +71,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         if (url.contains("apptie/detail.html")) {
             findViewById(R.id.cloud_menu_imagevew).setVisibility(View.VISIBLE);
         }
+        mView.setVisibility(View.GONE);
         findViewById(R.id.cloud_menu_imagevew).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
