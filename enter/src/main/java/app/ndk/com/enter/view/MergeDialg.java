@@ -33,7 +33,7 @@ public class MergeDialg extends BaseDialog implements View.OnClickListener {
     private ImageView dialog_merge_back;
 
     String vas;
-    String getVas="尊敬的投资人：您的手机号%s在此之前已注册过私享云APP，为了保障您的信息安全，建议您将两个账号进行合并处理。\n若要合并请您选择“我要合并“，客服人员会在工作日48小时内与您沟通相关事宜，在此期间您的APP仍可继续使用。若不需要合并请选择  继续使用 。 \n如有疑问，请拨打400-188-8848咨询";
+    String getVas="尊敬的投资人：您的手机号%s在此之前已注册过私享云APP，为了保障您的信息安全，建议您将两个账号进行合并处理。\n若要合并请您选择“我要合并“，客服人员会在工作日48小时内与您沟通相关事宜，在此期间您的APP仍可继续使用。若不需要合并请选择“继续使用“ 。 \n如有疑问，请拨打400-188-8848咨询";
 
     public MergeDialg(Context pContext, String phonenumber, MergeDialogListener dialogListener) {
         super(pContext, com.cgbsoft.lib.R.style.dialog_comment_style);
