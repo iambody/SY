@@ -3,7 +3,6 @@ package app.product.com.mvp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.cgbsoft.lib.TaskInfo;
@@ -34,7 +33,6 @@ import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
 import rx.Observable;
-import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -73,6 +71,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         if (url.contains("apptie/detail.html")) {
             findViewById(R.id.cloud_menu_imagevew).setVisibility(View.VISIBLE);
         }
+        mView.setVisibility(View.GONE);
         findViewById(R.id.cloud_menu_imagevew).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

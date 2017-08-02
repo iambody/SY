@@ -61,7 +61,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         toolbarRight.setVisibility(View.VISIBLE);
         toolbarLeft.setOnClickListener(this);
         toolbarRight.setOnClickListener(this);
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight, false);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight, true);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     public void onResume() {
         super.onResume();
         if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
+            unreadInfoNumber.initUnreadInfoAndPosition();
         }
     }
 

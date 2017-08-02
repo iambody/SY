@@ -11,7 +11,6 @@ import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -67,14 +66,14 @@ public class PrivateBanksFragment extends BasePageFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right, false);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right, true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
+            unreadInfoNumber.initUnreadInfoAndPosition();
         }
     }
 

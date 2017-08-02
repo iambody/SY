@@ -190,7 +190,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         //请求数据
         getPresenter().getHomeData();
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, true);
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
     }
 
