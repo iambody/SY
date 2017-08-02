@@ -211,9 +211,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     protected void init(Bundle savedInstanceState) {
         userInfo = AppManager.getUserInfo(baseContext);
+        levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
         initView(savedInstanceState);
         initHeadIconDialog();
-        levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
     }
 
     private void initView(Bundle savedInstanceState) {

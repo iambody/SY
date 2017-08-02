@@ -341,7 +341,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         initVideoView();
         getPresenter().getMineData();
         if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfo();
+            unreadInfoNumber.initUnreadInfoAndPosition();
         }
     }
 
@@ -367,9 +367,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else if (CHECK_PAST == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
             valuse = getString(R.string.relative_asset_past);
         } else if (CHECK_FAILURE == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus())) {
-            valuse = getString(R.string.relative_asset_failure);
+            valuse = getString(R.string.relative_asset_error);
         }
-        noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert).concat(TextUtils.isEmpty(valuse) ? "" : " (" + valuse + ")"));
+        noRelativeAssert.setVisibility(CHECK_PAST == Integer.valueOf(SPreference.getToCBean(getActivity()).getStockAssetsStatus()) ? View.INVISIBLE : View.VISIBLE);
+        if (!TextUtils.isEmpty(valuse)) {
+            noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status), valuse));
+        } else {
+            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
+        }
     }
 
     @Override
