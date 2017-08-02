@@ -69,6 +69,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
             getWindow().setStatusBarColor(Color.BLACK);
         }
         initConifg();
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
         registerLogoutBroadcast();
     }
 
