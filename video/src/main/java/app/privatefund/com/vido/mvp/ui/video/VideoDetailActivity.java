@@ -431,6 +431,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         RxBus.get().post(NOW_PLAY_VIDEOID_OBSERVABLE, videoId);//发送消息，当前正在播放的视频id
         getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());//更新当前播放视频的位置
         openActivity(VideoDownloadListActivity.class);
+
+//        ll_avd_cache_open.
+                closeCacheView ();
+
     }
 
     @Override
@@ -841,7 +845,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             return;
         }
         rl_avd_download.setVisibility(View.GONE);
-        rl_avd_download.startAnimation(closeAnimationSet);
+//        rl_avd_download.startAnimation(closeAnimationSet);
     }
 
     private void initAnim() {

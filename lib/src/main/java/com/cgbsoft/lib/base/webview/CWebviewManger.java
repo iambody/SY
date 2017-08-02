@@ -352,9 +352,9 @@ public class CWebviewManger {
             map.put("insidegotologin", true);
             map.put("backgohome", true);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_LOGIN, map);
-        }else if(action.contains("bindAdviserSucc")){
+        } else if (action.contains("bindAdviserSucc")) {
             //绑定成功
-RxBus.get().post(RxConstant.BindAdviser,1);
+            RxBus.get().post(RxConstant.BindAdviser, 1);
         }
     }
 
@@ -1371,7 +1371,7 @@ RxBus.get().post(RxConstant.BindAdviser,1);
             if (url.contains("http")) {
                 url = split[2] + ":" + split[3];
                 if (split.length >= 5) {
-                    title=split[4];
+                    title = split[4];
                 }
             } else {
                 url = BaseWebNetConfig.SERVER_ADD + url;

@@ -84,7 +84,7 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
                 }
                 model.setId(id);
                 getView().addAddressSuc(model);
-                RxBus.get().post(RxConstant.MALL_CHOICE_ADDRESS, new MallAddress(model.getPhone(),model.getId(),model.getShopping_name(),model.getAddress()));
+                RxBus.get().post(RxConstant.MALL_CHOICE_ADDRESS, new MallAddress(model.getPhone(),model.getId(),model.getShopping_name(),model.getRegionAddress()+model.getAddress()));
             }
 
             @Override
