@@ -75,7 +75,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
      */
     @Override
     public void getData() {
-        addSubscription(ApiClient.getTestAppResources().subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.getTestAppResources(getContext()).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 AppResourcesEntity.Result appResources = new Gson().fromJson(getV2String(s), AppResourcesEntity.Result.class);

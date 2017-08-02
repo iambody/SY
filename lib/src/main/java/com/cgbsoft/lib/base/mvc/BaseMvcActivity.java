@@ -69,7 +69,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
             getWindow().setStatusBarColor(Color.BLACK);
         }
         initConifg();
-        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,System.currentTimeMillis());
         registerLogoutBroadcast();
     }
 
@@ -109,8 +109,8 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                     msg = getString(R.string.token_error_511_str);
                 }
 
-                boolean dialogShow = AppManager.getDialogShow(BaseMvcActivity.this);
-                if (!dialogShow) {
+                Long showTime = AppManager.getDialogShow(BaseMvcActivity.this);
+                if (System.currentTimeMillis()-showTime>1000) {
                     DefaultDialog dialog = new DefaultDialog(BaseMvcActivity.this, msg, null, "确认"){
 
                         @Override
@@ -122,13 +122,12 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                         public void right() {
                             relogin();
                             dismiss();
-                            AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
                         }
                     };
                     //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                     dialog.setCancelable(false);
                     dialog.show();
-                    AppInfStore.saveDialogTag(BaseMvcActivity.this,true);
+                    AppInfStore.saveDialogTag(BaseMvcActivity.this,System.currentTimeMillis());
                 }
             }
             if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {

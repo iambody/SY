@@ -140,14 +140,15 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
-    public static Observable<String> getTestAppResources() {
+    public static Observable<String> getTestAppResources(Context c) {
         Map<String, String> params = new HashMap<>();
         params.put("os", "1");
         params.put("version", Utils.getVersionName(BaseApplication.getContext()));
         params.put("client", AppManager.isAdViser(BaseApplication.getContext()) ? "2" : "1");
-
+        if (null!=AppManager.getUserId(c)){
+            params.put("userId",AppManager.getUserId(c));
+        }
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**
