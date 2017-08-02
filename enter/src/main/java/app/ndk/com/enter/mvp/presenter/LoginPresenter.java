@@ -187,6 +187,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                     SPreference.putBoolean(getContext(), Constant.weixin_login, true);
+                    AppInfStore.saveIsVisitor(getContext(),false);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
