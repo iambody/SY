@@ -373,7 +373,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        } else {
 //            unVisableBottomLayout();
 //        }
-        getHandler().postDelayed(() -> onControlGetDataList(true), 100);
+         onControlGetDataList(true) ;
     }
 
     @Override

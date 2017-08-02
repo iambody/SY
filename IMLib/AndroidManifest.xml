@@ -32,13 +32,15 @@
         <service
             android:name="io.rong.imlib.ipc.RongService"
             android:exported="true"
-            android:process=":ipc"/>
+            android:process=":ipc" />
 
-        <service android:name="io.rong.imlib.ReConnectService"
-            android:exported="true"/>
+        <service
+            android:name="io.rong.imlib.ReConnectService"
+            android:exported="true" />
 
-        <receiver android:name="io.rong.imlib.ConnectChangeReceiver"
-            android:exported="true"/>
+        <receiver
+            android:name="io.rong.imlib.ConnectChangeReceiver"
+            android:exported="true" />
 
         <receiver
             android:name="io.rong.imlib.HeartbeatReceiver"
@@ -47,25 +49,22 @@
         <!--必选： SDK 核心功能-->
         <!--第三方相关,向第三方推送服务请求 token 的服务 -->
         <service
-            tools:replace="android:exported"
             android:name="io.rong.push.core.PushRegistrationService"
-            android:exported="false">
-        </service>
+            android:exported="false"
+            tools:replace="android:exported"></service>
 
         <!-- 处理 push 消息相关的服务 -->
         <service
-            tools:replace="android:exported"
             android:name="io.rong.push.core.MessageHandleService"
-            android:exported="true">
-        </service>
+            android:exported="true"
+            tools:replace="android:exported"></service>
 
         <!-- push服务 -->
         <servicel
             android:name="io.rong.push.PushService"
             android:exported="false"
-            android:process="io.rong.push">
-        </servicel>
-    <!-- push进程，可以改名 -->
+            android:process="io.rong.push"></servicel>
+        <!-- push进程，可以改名 -->
 
         <!-- push 相关事件接收器 -->
         <receiver
@@ -89,7 +88,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
-        
+
         <!--必选： SDK 核心功能-->
 
         <!-- end -->
