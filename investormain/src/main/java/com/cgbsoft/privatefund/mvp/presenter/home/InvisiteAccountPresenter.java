@@ -34,12 +34,13 @@ public class InvisiteAccountPresenter extends BasePresenterImpl<InvisiteAccountC
                     getView().commitSuccess();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getView().commitFailure(e.getMessage());
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().commitFailure();
+                getView().commitFailure(error.getMessage());
             }
         }));
     }

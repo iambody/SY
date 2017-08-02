@@ -17,6 +17,6 @@ public interface InvisiteAccountContract {
 
         void commitSuccess();
 
-        void commitFailure();
+        void commitFailure(String errorMsg);
     }
 }
