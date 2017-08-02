@@ -148,6 +148,7 @@ public class ApiClient {
         if (null!=AppManager.getUserId(c)){
             params.put("userId",AppManager.getUserId(c));
         }
+
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
