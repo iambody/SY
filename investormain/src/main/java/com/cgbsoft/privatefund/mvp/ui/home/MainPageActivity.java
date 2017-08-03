@@ -584,6 +584,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
                     return;
                 }
+
                 switchID = R.id.nav_left_first;
                 currentPostion = 0;
                 bottomNavigationBar.selectNavaigationPostion(0);
