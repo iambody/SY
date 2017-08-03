@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvp.ui;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -345,6 +346,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
         unRegisterLogoutBroadcast();
         if (mBaseHandler != null) {
             mBaseHandler.removeCallbacksAndMessages(null);
