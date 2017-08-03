@@ -2,7 +2,6 @@ package com.jhworks.library.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,18 +20,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -98,7 +94,7 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
     private File mTmpFile;
     private RequestManager mRequestManager;
     private Context mContext;
-    private ArrayList<Media> mAllMediaList = new ArrayList<>();
+    public static ArrayList<Media> mAllMediaList = new ArrayList<>();
     private boolean mIsOnlyOpenCamera;
 
     @Override
@@ -186,10 +182,10 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
                     if (position == 0) {
                         showCameraAction();
                     } else {
-                        openImageActivity(position - 1, mode, media.path);
+                        openImageActivity(position-1, mode, media.path);
                     }
                 } else {
-                    openImageActivity(position - 1, mode, media.path);
+                    openImageActivity(position , mode, media.path);
                 }
             }
 
@@ -237,11 +233,12 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
                         }
                     }
                 }
-                intent.putParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST, mAllMediaList);
+//                intent.putParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST, mAllMediaList);
             }
             intent.putExtra(Constant.KEY_EXTRA_CURRENT_POSITION, position);
             intent.putExtra(Constant.KEY_EXTRA_SELECT_COUNT, selectImageCount());
             startActivityForResult(intent, REQUEST_IMAGE_VIEW);
+
         } else if (mode == MODE_SINGLE) {
             if (mCallback != null) {
                 mCallback.onSingleImageSelected(path);

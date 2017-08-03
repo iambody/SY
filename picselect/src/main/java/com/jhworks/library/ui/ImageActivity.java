@@ -2,17 +2,11 @@ package com.jhworks.library.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -55,7 +49,7 @@ public class ImageActivity extends ImageBaseActivity implements ViewPager.OnPage
 
         Intent intent = getIntent();
         if (intent != null) {
-            mAllMediaList = intent.getParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST);
+            mAllMediaList = ImageSelectorFragment.mAllMediaList;//intent.getParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST);
             mCurrentPosition = intent.getIntExtra(Constant.KEY_EXTRA_CURRENT_POSITION, 0);
             maxImageCount = intent.getIntExtra(Constant.KEY_EXTRA_SELECT_COUNT, Constant.DEFAULT_IMAGE_SIZE);
         }

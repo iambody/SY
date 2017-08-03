@@ -80,6 +80,7 @@ public class NavigationUtils {
     }
     public static void startSystemImageForResult(Activity activity, int reqeustCode,ArrayList<String> origins) {
         ImageSelector selectSec = ImageSelector.create();
+
         selectSec.multi();
         selectSec.count(12);
         selectSec.origin(origins);
