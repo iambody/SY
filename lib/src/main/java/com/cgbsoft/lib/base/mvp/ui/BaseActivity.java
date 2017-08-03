@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvp.ui;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -72,6 +73,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
+        registerLogoutBroadcast();
 //        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
             if (AppManager.isAdViser(this)) {
@@ -88,8 +91,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             init(savedInstanceState);
             data();
         }
-        AppInfStore.saveDialogTag(BaseActivity.this, System.currentTimeMillis());
-        registerLogoutBroadcast();
     }
 
     /**
@@ -106,14 +107,12 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     /**
      * 取消监听用户被踢出的广播
      */
-    private void unRegisterLogoutBroadcast() {
+    private void unRegisterLogoutBroadcast(){
         if (null != manager && null != receiver) {
             manager.unregisterReceiver(receiver);
         }
     }
-
     private DefaultDialog dialog;
-
     class LogoutReceiver extends BroadcastReceiver {
 
         @Override
@@ -129,10 +128,9 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                 } else if (mCode == 511) {
                     msg = getString(R.string.token_error_511_str);
                 }
-
-                Long showTime = AppManager.getDialogShow(BaseActivity.this);
-                if (System.currentTimeMillis() - showTime > 1000) {
-                    DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认") {
+                boolean dialogShow = AppManager.getDialogShow(BaseActivity.this);
+                if (!dialogShow) {
+                    DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认"){
 
                         @Override
                         public void left() {
@@ -143,12 +141,19 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                         public void right() {
                             relogin();
                             dismiss();
+                            AppInfStore.saveDialogTag(BaseActivity.this,false);
                         }
                     };
-                    //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+    //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            AppInfStore.saveDialogTag(BaseActivity.this,false);
+                        }
+                    });
                     dialog.setCancelable(false);
                     dialog.show();
-                    AppInfStore.saveDialogTag(BaseActivity.this, System.currentTimeMillis());
+                    AppInfStore.saveDialogTag(BaseActivity.this,true);
                 }
 
             }
@@ -157,11 +162,10 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             }
         }
     }
-
     private void relogin() {
 //        floatView.removeFromWindow();
         NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_LOGIN);
-        RxBus.get().post(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE, 0);
+        RxBus.get().post(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE,0);
 //        Intent intent = new Intent();
 //        intent.setClass(this, LoginActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -170,7 +174,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
 //        stopService();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -343,6 +346,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
         unRegisterLogoutBroadcast();
         if (mBaseHandler != null) {
             mBaseHandler.removeCallbacksAndMessages(null);
@@ -480,7 +484,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             return "";
         }
     }
-
     protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive() && this.getCurrentFocus() != null) {

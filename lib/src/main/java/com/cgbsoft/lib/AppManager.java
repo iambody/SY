@@ -294,7 +294,11 @@ public class AppManager implements AppinfConstant {
         return AppInfStore.getVideoSchoolData(spContext);
     }
 
-    public static Long getDialogShow(Context context) {
-        return getBasePreference(context).getLong("dialogshow",0L);
+    public static boolean getDialogShow(Context context) {
+        return getBasePreference(context).getBoolean("dialogshow",false);
+    }
+
+    public static boolean getGuideShowTag(Context context) {
+        return getBasePreference(context).getBoolean("guideshow",false);
     }
 }

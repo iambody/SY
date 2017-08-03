@@ -1,6 +1,5 @@
 package app.privatefund.com.vido.mvp.ui.video;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -201,13 +200,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
                 }
             });
-            commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    videoVideolistPager.setCurrentItem(i);
-                }
-            });
-
+            commonPagerTitleView.setOnClickListener(v -> videoVideolistPager.setCurrentItem(i));
             return commonPagerTitleView;
         }
 

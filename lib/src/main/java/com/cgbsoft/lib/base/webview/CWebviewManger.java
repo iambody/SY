@@ -334,8 +334,9 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.MALL_PAY);
         } else if (action.contains("rootPage")) {
             //通知刷新用户xinxi数据
-            RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, false);
-            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            HashMap hashMap = new HashMap();
+            hashMap.put("gotoMainPage", true);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, hashMap);
         } else if (action.contains("jumpNativeCode")) {
             jumpNativeCode(action);
         } else if (action.contains("callPhone")) {

@@ -460,12 +460,19 @@ public class AppInfStore implements AppinfConstant {
     /**
      * 是否显示踢出dialog
      * @param sContext
-     * @param time 时间
+     * @param b 时间
      */
-    public static void saveDialogTag(Context sContext,long time) {
+    public static void saveDialogTag(Context sContext,boolean b) {
         SharedPreferences sp = getBasePreference(sContext);
         SharedPreferences.Editor ed = sp.edit();
-        ed.putLong("dialogshow", time);
+        ed.putBoolean("dialogshow", b);
+        ed.commit();
+    }
+
+    public static void saveGuideTag(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("guideshow", true);
         ed.commit();
     }
 }

@@ -373,7 +373,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        } else {
 //            unVisableBottomLayout();
 //        }
-         onControlGetDataList(true) ;
+        getHandler().postDelayed(() -> onControlGetDataList(true), 100);
     }
 
     @Override
@@ -672,6 +672,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         refItemUI(videoId, true, 0, 0, 0, 0, 0);
         int position = -1;
         int adapterSize = videoDownloadListAdapter.getList().size();
+
         for (int i = 0; i < adapterSize; i++) {
             VideoDownloadListModel vdlm = videoDownloadListAdapter.getList().get(i);
             if (TextUtils.equals(vdlm.videoId, videoId)) {
@@ -683,9 +684,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (position == -1)
             return;
         onControlGetDataList(true);
-        videoDownloadListAdapter.getList().remove(position);
-//        videoDownloadListAdapter.getList().add(model);
-        videoDownloadListAdapter.notifyDataSetChanged();
+//        videoDownloadListAdapter.getList().remove(position);
+////        videoDownloadListAdapter.getList().add(model);
+//        videoDownloadListAdapter.notifyDataSetChanged();
     }
 
     private void refItemUI(String videoId, boolean isFinish, long currentSize, long totalSize, float progress, long networkSpeed, int downloadState) {
@@ -715,7 +716,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             tv_avd_speed.setVisibility(View.GONE);
             changeStart(false, iv_avd_pause, tv_avd_pause);
 //            onControlGetDataList(true);
-//            return;
+            return;
         }
         ll_avd_pause.setVisibility(View.VISIBLE);
         pb_avd.setVisibility(View.VISIBLE);

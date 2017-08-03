@@ -9,7 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -26,11 +30,13 @@ import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -65,6 +71,7 @@ import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -88,7 +95,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @BindView(R.id.webView)
     BaseWebview baseWebview;
-//
+
 //    @BindView(R.id.cmain_live_dialog)
 //    LinearLayout liveDialog;
 
@@ -105,7 +112,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //    TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
-    //    private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
@@ -117,16 +123,29 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable, killObservable, killstartObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
 
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
     private int code;
-
     private InvestorAppli initApplication;
-
+    @BindView(R.id.iv_guide)
+    ImageView guide;
+    private int[] guideIds=new int[]{R.drawable.guide_one,R.drawable.guide_two,R.drawable.guide_three,R.drawable.guide_four,R.drawable.guide_five,R.drawable.guide_four};
+    private int guideindex=0;
+    @OnClick(R.id.iv_guide)
+    public void guideClick(){
+        guideindex++;
+        guideindex=guideindex%guideIds.length;
+        if (guideindex == 5) {
+            guide.setVisibility(View.GONE);
+            AppInfStore.saveGuideTag(MainPageActivity.this);
+            return;
+        }
+        guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+    }
     /**
      * 定位管理器
      */
@@ -150,7 +169,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onResume() {
         super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
-        if (AppManager.isVisitor(baseContext) && 4 == currentPostion) {//是游客模式
+        if (AppManager.isVisitor(baseContext) && 4 == currentPostion) { // 是游客模式
             switchID = R.id.nav_left_first;
             currentPostion = 0;
             bottomNavigationBar.selectNavaigationPostion(0);
@@ -164,6 +183,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        boolean guideShowTag = AppManager.getGuideShowTag(MainPageActivity.this);
+        if (!guideShowTag) {
+            guide.setVisibility(View.VISIBLE);
+        } else {
+            guide.setVisibility(View.GONE);
+        }
         Log.i("MainPageActivity", "----init");
         StatusBarUtil.translucentStatusBar(this);
         initApplication = (InitApplication) getApplication();
@@ -208,6 +233,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onNewIntent(intent);
         setIntent(intent);
         code = getIntent().getIntExtra("code", 0);
+        if (getIntent().getBooleanExtra("gotoMainPage", false)) {
+            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 0);
+        }
+        Log.i("MainPageActivity", "----code=" + code);
         initIndex(code);
     }
 
@@ -331,7 +360,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RxBus.get().post(RxConstant.RefreshRiskState, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
-
     }
 
     int switchID = -1;

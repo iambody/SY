@@ -18,6 +18,7 @@ import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import rx.Observable;
+import rx.Observer;
 
 /**
  * @author chenlong
@@ -35,6 +36,9 @@ public class UnreadInfoNumber {
     public static boolean hasUnreadNumber;
 
     private static Observable<Integer> unReadNumberObservable;
+
+    private static Observable<Boolean> hasReadResultObservable;
+
 
     public UnreadInfoNumber(Activity activity, View showView, boolean fromBackPoint) {
         this.activity = activity;
@@ -84,6 +88,11 @@ public class UnreadInfoNumber {
             RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, unReadNumberObservable);
             unReadNumberObservable = null;
         }
+
+        if (null != hasReadResultObservable) {
+            RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, hasReadResultObservable);
+            hasReadResultObservable = null;
+        }
     }
 
     private void initUnreadNumber() {
@@ -107,6 +116,23 @@ public class UnreadInfoNumber {
                 protected void onEvent(Integer integer) {
                     hasUnreadNumber = integer != 0;
                     initUnreadInfoAndPosition();
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+
+        if (hasReadResultObservable == null) {
+            hasReadResultObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, Boolean.class);
+            hasReadResultObservable.subscribe(new RxSubscriber<Boolean>() {
+                @Override
+                protected void onEvent(Boolean booleanValue) {
+                    if (booleanValue) {
+                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
+                    }
                 }
 
                 @Override

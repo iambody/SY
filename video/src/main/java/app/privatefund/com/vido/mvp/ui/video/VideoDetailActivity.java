@@ -60,6 +60,7 @@ import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -268,7 +269,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             isDisplayCover = true;
         }
         if (isPlayAnim)
-            exitTransition = ActivityTransition.with(getIntent()).duration(200).to(rl_avd_head).start(savedInstanceState);
+            exitTransition = ActivityTransition.with(getIntent()).duration(20).to(rl_avd_head).start(savedInstanceState);
         else
             sv_avd.setVisibility(View.VISIBLE);
 
@@ -365,10 +366,21 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        isOnPause = false;
+        onPausePlayStauts = 1;
+        //判断书否缓存
+        isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         isOnPause = false;
         onPausePlayStauts = -1;
+
+
     }
 
     @OnClick(R2.id.iv_avd_back)
@@ -408,7 +420,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_sd.startAnimation(sdAnimationSet);
-
+        isCancache=false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.SD);
         getPresenter().toDownload(videoId);
@@ -419,7 +431,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_hd.startAnimation(hdAnimationSet);
-
+        isCancache=false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.HD);
         getPresenter().toDownload(videoId);
@@ -433,7 +445,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         openActivity(VideoDownloadListActivity.class);
 
 //        ll_avd_cache_open.
-                closeCacheView ();
+        closeCacheView();
 
     }
 
@@ -449,19 +461,19 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             iv_avd_back.setVisibility(View.VISIBLE);
         } else {
             if (isPlayAnim) {
-                sv_avd.setVisibility(View.GONE);
-                delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new RxSubscriber<Integer>() {
-                            @Override
-                            protected void onEvent(Integer integer) {
-                                exitTransition.exit(VideoDetailActivity.this);
-                            }
-
-                            @Override
-                            protected void onRxError(Throwable error) {
-
-                            }
-                        });
+//                sv_avd.setVisibility(View.GONE);
+//                delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new RxSubscriber<Integer>() {
+//                            @Override
+//                            protected void onEvent(Integer integer) {
+                exitTransition.exit(VideoDetailActivity.this);
+//                            }
+//
+//                            @Override
+//                            protected void onRxError(Throwable error) {
+//
+//                            }
+//                        });
             } else {
                 finish();
             }
@@ -473,7 +485,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             if (delaySub != null && !delaySub.isUnsubscribed()) {
                 return;
             }
-            delaySub = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+            delaySub = Observable.just(1).delay(50, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RxSubscriber<Integer>() {
                         @Override
                         protected void onEvent(Integer integer) {
@@ -563,7 +575,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getNetVideoInfoErr(String str) {
-        PromptManager.ShowCustomToast(baseContext,"获取信息失败请重新尝试");
+        PromptManager.ShowCustomToast(baseContext, "获取信息失败请重新尝试");
         baseContext.finish();
     }
 
@@ -825,11 +837,31 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             lp.width = Utils.getRealScreenWidth(this);
+//            lp.height=   (lp.width-getStatusBarHeight()) * 9 / 16;//-getStatusBarHeight();
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             lp.width = Utils.getScreenWidth(this);
+
         }
         lp.height = lp.width * 9 / 16;
         rl_avd_head.setLayoutParams(lp);
+    }
+
+    private int getStatusBarHeight() {
+        int statusBarHeight = 0;
+        if (statusBarHeight == 0) {
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object o = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer) field.get(o);
+                statusBarHeight = getResources().getDimensionPixelSize(x);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return statusBarHeight;
     }
 
     private void openCacheView() {
@@ -1104,11 +1136,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     //点击视频详情页的分享按钮
     @OnClick(R2.id.view_title_right_txt)
     public void onViewTitleRightTxtClicked() {
-        if(!NetUtils.isNetworkAvailable(baseContext)){
-            PromptManager.ShowCustomToast(baseContext,"请链接网络");
+        if (!NetUtils.isNetworkAvailable(baseContext)) {
+            PromptManager.ShowCustomToast(baseContext, "请链接网络");
             return;
         }
-        if (null==videoAllInf||null == videoAllInf.rows) return;
+        if (null == videoAllInf || null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);

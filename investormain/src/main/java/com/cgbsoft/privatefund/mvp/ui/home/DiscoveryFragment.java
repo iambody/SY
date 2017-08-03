@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -37,11 +39,17 @@ import butterknife.BindView;
  */
 public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implements DiscoverContract.View {
 
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+
     @BindView(R.id.discover_bannerview)
     BannerView discoveryBannerView;
 
     @BindView(R.id.discover_list_indicator)
     MagicIndicator magicIndicator;
+
+    @BindView(R.id.appbar)
+    AppBarLayout appBarLayout;
 
     @BindView(R.id.discover_list_pager)
     ViewPager viewPager;
@@ -86,6 +94,12 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
+        AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
+        if (CollectionUtils.isEmpty(discoverModel.banner)) {
+            mParams.setScrollFlags(0);
+        } else {
+            mParams.setScrollFlags(5);
+        }
         discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
         initBanner(DiscoverModel.formatBanner(discoverModel.banner));
         if (CollectionUtils.isEmpty(lazyFragments)) {
