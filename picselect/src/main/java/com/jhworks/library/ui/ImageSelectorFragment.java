@@ -323,6 +323,12 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAllMediaList=null;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // load image data

@@ -212,7 +212,7 @@ public void clearnHistoryByID(String Type, String userId){
         String localPath = null;
         if (videoInfo != null) {
             localPath = videoInfo.getLocalVideoPath();
-            videoInfo.setIsDelete(VideoStatus.DELETE);
+            videoInfo.setIsDelete(VideoStatus.UNDELETE);
             videoInfo.setStatus(VideoStatus.NONE);
             videoInfo.setFinalPlayTime(0);
             videoInfo.setSize(0);
