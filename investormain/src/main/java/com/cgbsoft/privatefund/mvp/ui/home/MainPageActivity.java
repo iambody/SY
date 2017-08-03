@@ -88,7 +88,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @BindView(R.id.webView)
     BaseWebview baseWebview;
-//
+
 //    @BindView(R.id.cmain_live_dialog)
 //    LinearLayout liveDialog;
 
@@ -105,7 +105,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //    TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
-    //    private Observable<Boolean> gestruePwdObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
     private Observable<Boolean> openMessageListObservable;
@@ -117,14 +116,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, freshWebObservable, userLayObservable, killObservable, killstartObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
 
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
     private int code;
-
     private InvestorAppli initApplication;
 
     /**
@@ -150,7 +148,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onResume() {
         super.onResume();
         baseWebview.loadUrls(CwebNetConfig.pageInit);
-        if (AppManager.isVisitor(baseContext) && 4 == currentPostion) {//是游客模式
+        if (AppManager.isVisitor(baseContext) && 4 == currentPostion) { // 是游客模式
             switchID = R.id.nav_left_first;
             currentPostion = 0;
             bottomNavigationBar.selectNavaigationPostion(0);
@@ -208,6 +206,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onNewIntent(intent);
         setIntent(intent);
         code = getIntent().getIntExtra("code", 0);
+        if (getIntent().getBooleanExtra("gotoMainPage", false)) {
+            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 0);
+        }
+        Log.i("MainPageActivity", "----code=" + code);
         initIndex(code);
     }
 
@@ -331,7 +333,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RxBus.get().post(RxConstant.RefreshRiskState, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
-
     }
 
     int switchID = -1;

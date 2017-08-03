@@ -51,6 +51,8 @@ public interface RxConstant {
 
     String REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE = "refrush_unread_number_observable";
 
+    String REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE = "refrush_unread_result_observable";
+
     String ON_ACTIVITY_RESUME_OBSERVABLE = "on_activity_resume_observable";
 
     String RC_CONNECT_STATUS_OBSERVABLE = "rc_connect_status_observable";
@@ -91,6 +93,8 @@ public interface RxConstant {
     String JUMP_INDEX = "junp_index";
 
     String PAUSR_HEALTH_VIDEO = "pause_health_video";
+
+    String UNREAD_MESSAGE_OBSERVABLE = "unread_message_observable";
 
     //商城删除地址
     String DELETE_ADDRESS = "delete_address";

@@ -30,7 +30,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         super.before();
         //游客模式下禁止的Api 添加限制条件
 //        if (!AppManager.isVisitor(baseContext)) {
-        if(!AppManager.isVisitor(baseContext)&&url.contains("information/details.html")){//是资讯页面
+        if(!AppManager.isVisitor(baseContext) && url.contains("information/details.html")){//是资讯页面
             TaskInfo.complentTask("查看资讯");
         }
     }

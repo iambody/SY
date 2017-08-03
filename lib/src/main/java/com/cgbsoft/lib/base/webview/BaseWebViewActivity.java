@@ -100,6 +100,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     protected String pushMessageValue;
 
+    protected boolean hasUnreadInfom;
+
     protected MenuItem rightItem;
 
     protected boolean isLive;
@@ -111,6 +113,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<Object> executeObservable;
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> mallDeleteObservable;
+    private Observable<Boolean> unReadMessageObservable;
 
     @Override
     protected int layoutID() {
@@ -135,6 +138,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
+        if (rightMessageIcon) {
+            RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
+        }
     }
 
     /**
@@ -190,6 +196,24 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
+
+        unReadMessageObservable = RxBus.get().register(RxConstant.UNREAD_MESSAGE_OBSERVABLE, Boolean.class);
+        unReadMessageObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean booleans) {
+                hasUnreadInfom = booleans;
+                if (rightMessageIcon) {
+                    rightItem.setIcon(ContextCompat.getDrawable(BaseWebViewActivity.this, hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index));
+                    rightItem.setVisible(rightMessageIcon);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
+
     }
 
     /**
@@ -380,7 +404,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
         LogUtils.Log("JavaScriptObjectToc", "ss");
         mWebview.loadUrl("javascript:refresh()");
-
     }
 
     private void initShakeInSetPage() {
@@ -443,6 +466,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (mallChoiceObservable != null && !TextUtils.isEmpty(getRegeistRxBusId())) {
             RxBus.get().unregister(getRegeistRxBusId(), mallChoiceObservable);
         }
+
+        if (unReadMessageObservable != null) {
+            RxBus.get().unregister(RxConstant.UNREAD_MESSAGE_OBSERVABLE, unReadMessageObservable);
+        }
+
         if (mShakeListener != null) {
             mShakeListener.unregister();
         }
@@ -469,7 +497,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
         }else {
-            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (R.drawable.select_webview_message_index) : R.drawable.select_share_navigation));
+            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_happy_life_toolbar_right) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
         return super.onCreateOptionsMenu(menu);
