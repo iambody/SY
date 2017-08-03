@@ -326,7 +326,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initObserver();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon, false);
-
     }
 
     @Override
@@ -403,16 +402,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_level_ll)
     void gotoPersonInfoctivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, (mineModel != null && mineModel.getMyInfo() != null) ? mineModel.getMyInfo().getMemberLevel() : "");
+        gotoMemberArea();
     }
 
     @OnClick(R.id.user_leaguar_update_desc)
     void gotoLeaguarActivity() {
-        NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, (mineModel != null && mineModel.getMyInfo() != null) ? mineModel.getMyInfo().getMemberLevel() : "");
+        gotoMemberArea();
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
+        gotoMemberArea();
+    }
+
+    private void gotoMemberArea() {
         String url = CwebNetConfig.memeberArea;
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
