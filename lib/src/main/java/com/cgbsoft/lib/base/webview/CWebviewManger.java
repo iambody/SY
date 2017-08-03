@@ -336,6 +336,7 @@ public class CWebviewManger {
             //通知刷新用户xinxi数据
             RxBus.get().post(RxConstant.REFRUSH_USER_INFO_OBSERVABLE, false);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE, Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 0);
         } else if (action.contains("jumpNativeCode")) {
             jumpNativeCode(action);
         } else if (action.contains("callPhone")) {
