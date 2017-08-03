@@ -182,10 +182,10 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
                     if (position == 0) {
                         showCameraAction();
                     } else {
-                        openImageActivity(position-1, mode, media.path);
+                        openImageActivity(position - 1, mode, media.path);
                     }
                 } else {
-                    openImageActivity(position , mode, media.path);
+                    openImageActivity(position, mode, media.path);
                 }
             }
 

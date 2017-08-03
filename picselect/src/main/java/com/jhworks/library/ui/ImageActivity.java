@@ -49,7 +49,7 @@ public class ImageActivity extends ImageBaseActivity implements ViewPager.OnPage
 
         Intent intent = getIntent();
         if (intent != null) {
-            mAllMediaList = ImageSelectorFragment.mAllMediaList;//intent.getParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST);
+            mAllMediaList = ImageSelectorFragment.mAllMediaList;    //ssintent.getParcelableArrayListExtra(Constant.KEY_EXTRA_IMAGE_LIST);
             mCurrentPosition = intent.getIntExtra(Constant.KEY_EXTRA_CURRENT_POSITION, 0);
             maxImageCount = intent.getIntExtra(Constant.KEY_EXTRA_SELECT_COUNT, Constant.DEFAULT_IMAGE_SIZE);
         }
