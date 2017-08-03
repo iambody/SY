@@ -468,4 +468,11 @@ public class AppInfStore implements AppinfConstant {
         ed.putBoolean("dialogshow", b);
         ed.commit();
     }
+
+    public static void saveGuideTag(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("guideshow", true);
+        ed.commit();
+    }
 }
