@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvc;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -65,12 +66,12 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+        registerLogoutBroadcast();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.BLACK);
         }
         initConifg();
-        AppInfStore.saveDialogTag(BaseMvcActivity.this,System.currentTimeMillis());
-        registerLogoutBroadcast();
     }
 
     /**
@@ -109,8 +110,8 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                     msg = getString(R.string.token_error_511_str);
                 }
 
-                Long showTime = AppManager.getDialogShow(BaseMvcActivity.this);
-                if (System.currentTimeMillis()-showTime>1000) {
+                boolean dialogShow = AppManager.getDialogShow(BaseMvcActivity.this);
+                if (!dialogShow) {
                     DefaultDialog dialog = new DefaultDialog(BaseMvcActivity.this, msg, null, "确认"){
 
                         @Override
@@ -122,12 +123,19 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                         public void right() {
                             relogin();
                             dismiss();
+                            AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
                         }
                     };
                     //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+                        }
+                    });
                     dialog.setCancelable(false);
                     dialog.show();
-                    AppInfStore.saveDialogTag(BaseMvcActivity.this,System.currentTimeMillis());
+                    AppInfStore.saveDialogTag(BaseMvcActivity.this,true);
                 }
             }
             if (TextUtils.equals(action, Constant.VISITER_ERRORCODE)) {
@@ -168,6 +176,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     protected void onDestroy() {
         super.onDestroy();
         onUnsubscribe();
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
         unRegisterLogoutBroadcast();
     }
 

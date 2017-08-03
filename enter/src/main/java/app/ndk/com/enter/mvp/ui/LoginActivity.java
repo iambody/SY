@@ -24,6 +24,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
+import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
@@ -361,6 +362,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
+        AppInfStore.saveDialogTag(LoginActivity.this,false);
 //        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
 //        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
     }
