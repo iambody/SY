@@ -94,9 +94,11 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
+        AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         if (CollectionUtils.isEmpty(discoverModel.banner)) {
-            AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
             mParams.setScrollFlags(0);
+        } else {
+            mParams.setScrollFlags(5);
         }
         discoveryBannerView.setVisibility(CollectionUtils.isEmpty(discoverModel.banner) ? View.GONE : View.VISIBLE);
         initBanner(DiscoverModel.formatBanner(discoverModel.banner));
