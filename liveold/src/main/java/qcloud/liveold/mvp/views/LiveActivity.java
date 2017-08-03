@@ -221,6 +221,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                 CurLiveInfo.setSlogan(liveJson.getString("slogan"));
                 CurLiveInfo.setAllowChat(liveJson.getInt("allowChat"));
                 CurLiveInfo.setEquipment(liveJson.getInt("equipment"));
+                CurLiveInfo.setShareUrl(liveJson.getString("shareUrl"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
