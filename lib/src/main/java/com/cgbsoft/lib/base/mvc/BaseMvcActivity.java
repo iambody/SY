@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvc;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -65,11 +66,12 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+        registerLogoutBroadcast();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.BLACK);
         }
         initConifg();
-        registerLogoutBroadcast();
     }
 
     /**
@@ -125,6 +127,12 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
                         }
                     };
                     //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
+                        }
+                    });
                     dialog.setCancelable(false);
                     dialog.show();
                     AppInfStore.saveDialogTag(BaseMvcActivity.this,true);
@@ -168,6 +176,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     protected void onDestroy() {
         super.onDestroy();
         onUnsubscribe();
+        AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
         unRegisterLogoutBroadcast();
     }
 

@@ -187,6 +187,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                     SPreference.putBoolean(getContext(), Constant.weixin_login, true);
+                    AppInfStore.saveIsVisitor(getContext(),false);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
@@ -229,7 +230,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveIsVisitor(getContext(),false);
                 RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  5  );
                 if (result.userInfo != null) {
-                    SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                 }
                 if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中

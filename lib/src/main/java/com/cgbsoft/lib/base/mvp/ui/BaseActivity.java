@@ -3,6 +3,7 @@ package com.cgbsoft.lib.base.mvp.ui;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -72,6 +73,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
+        registerLogoutBroadcast();
 //        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
             if (AppManager.isAdViser(this)) {
@@ -88,7 +91,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             init(savedInstanceState);
             data();
         }
-        registerLogoutBroadcast();
     }
 
     /**
@@ -126,7 +128,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                 } else if (mCode == 511) {
                     msg = getString(R.string.token_error_511_str);
                 }
-
                 boolean dialogShow = AppManager.getDialogShow(BaseActivity.this);
                 if (!dialogShow) {
                     DefaultDialog dialog = new DefaultDialog(BaseActivity.this, msg, null, "确认"){
@@ -144,6 +145,12 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
                         }
                     };
     //                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            AppInfStore.saveDialogTag(BaseActivity.this,false);
+                        }
+                    });
                     dialog.setCancelable(false);
                     dialog.show();
                     AppInfStore.saveDialogTag(BaseActivity.this,true);
@@ -339,6 +346,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppInfStore.saveDialogTag(BaseActivity.this,false);
         unRegisterLogoutBroadcast();
         if (mBaseHandler != null) {
             mBaseHandler.removeCallbacksAndMessages(null);

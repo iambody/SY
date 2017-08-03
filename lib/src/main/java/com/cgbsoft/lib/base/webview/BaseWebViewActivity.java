@@ -469,7 +469,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
         }else {
-            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? R.drawable.select_webview_message_index : R.drawable.select_share_navigation));
+            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (R.drawable.select_webview_message_index) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
         return super.onCreateOptionsMenu(menu);

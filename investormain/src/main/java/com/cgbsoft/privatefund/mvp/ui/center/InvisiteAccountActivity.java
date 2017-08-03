@@ -98,16 +98,22 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         invisiteCertifyPrompt.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         linearLayout.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         realName.setOnFocusChangeListener((v, hasFocus) -> {
-            ViewUtils.showInputMethod(realName);
-            linearLayout.setVisibility(View.GONE);
+            if (hasFocus) {
+                ViewUtils.showInputMethod(realName);
+                linearLayout.setVisibility(View.GONE);
+            }
         });
         certifyType.setOnFocusChangeListener((v, hasFocus) -> {
-            ViewUtils.hideInputMethod(certifyType);
+            if (hasFocus) {
+                ViewUtils.hideInputMethod(certifyType);
+            }
             linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
         certifyNumber.setOnFocusChangeListener((v, hasFocus) -> {
-            ViewUtils.showInputMethod(realName);
-            linearLayout.setVisibility(View.GONE);
+            if (hasFocus) {
+                ViewUtils.showInputMethod(realName);
+                linearLayout.setVisibility(View.GONE);
+            }
         });
         wheelView.addChangingListener((wheel, oldValue, newValue) -> {
             certifyType.setText(mList.get(newValue));
@@ -165,9 +171,9 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     }
 
     @Override
-    public void commitFailure() {
+    public void commitFailure(String errorMsg) {
         loading = false;
-        Toast.makeText(this,"投资账号提交失败！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.title_left)

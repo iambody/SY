@@ -131,6 +131,12 @@ public class DownloadDialog implements View.OnClickListener, Constant {
                 if (TextUtils.isEmpty(result.adverts) || _verName.equals(result.version)) {
                     return;
                 }
+                if (TextUtils.isEmpty(result.version)) {
+                    return;
+                }
+                if (result.upgradeType == 0) {
+                    return;
+                }
                 if ((!formSetting) && result.upgradeType == 2) {
                     return;
                 }

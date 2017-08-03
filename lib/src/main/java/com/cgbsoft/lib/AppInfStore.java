@@ -460,7 +460,7 @@ public class AppInfStore implements AppinfConstant {
     /**
      * 是否显示踢出dialog
      * @param sContext
-     * @param b true 显示  false 未显示
+     * @param b 时间
      */
     public static void saveDialogTag(Context sContext,boolean b) {
         SharedPreferences sp = getBasePreference(sContext);
