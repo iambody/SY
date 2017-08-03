@@ -60,6 +60,7 @@ import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -268,7 +269,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             isDisplayCover = true;
         }
         if (isPlayAnim)
-            exitTransition = ActivityTransition.with(getIntent()).duration(200).to(rl_avd_head).start(savedInstanceState);
+            exitTransition = ActivityTransition.with(getIntent()).duration(20).to(rl_avd_head).start(savedInstanceState);
         else
             sv_avd.setVisibility(View.VISIBLE);
 
@@ -365,6 +366,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        isOnPause = false;
+        onPausePlayStauts = 1;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         isOnPause = false;
@@ -449,19 +457,19 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             iv_avd_back.setVisibility(View.VISIBLE);
         } else {
             if (isPlayAnim) {
-                sv_avd.setVisibility(View.GONE);
-                delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new RxSubscriber<Integer>() {
-                            @Override
-                            protected void onEvent(Integer integer) {
+//                sv_avd.setVisibility(View.GONE);
+//                delaySub2 = Observable.just(1).delay(100, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new RxSubscriber<Integer>() {
+//                            @Override
+//                            protected void onEvent(Integer integer) {
                                 exitTransition.exit(VideoDetailActivity.this);
-                            }
-
-                            @Override
-                            protected void onRxError(Throwable error) {
-
-                            }
-                        });
+//                            }
+//
+//                            @Override
+//                            protected void onRxError(Throwable error) {
+//
+//                            }
+//                        });
             } else {
                 finish();
             }
@@ -473,7 +481,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             if (delaySub != null && !delaySub.isUnsubscribed()) {
                 return;
             }
-            delaySub = Observable.just(1).delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+            delaySub = Observable.just(1).delay(50, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RxSubscriber<Integer>() {
                         @Override
                         protected void onEvent(Integer integer) {
@@ -825,13 +833,31 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             lp.width = Utils.getRealScreenWidth(this);
+//            lp.height=   (lp.width-getStatusBarHeight()) * 9 / 16;//-getStatusBarHeight();
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             lp.width = Utils.getScreenWidth(this);
+
         }
         lp.height = lp.width * 9 / 16;
         rl_avd_head.setLayoutParams(lp);
     }
-
+    private int getStatusBarHeight() {
+        int statusBarHeight=0;
+        if (statusBarHeight == 0) {
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object o = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer) field.get(o);
+                statusBarHeight = getResources().getDimensionPixelSize(x);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return statusBarHeight;
+    }
     private void openCacheView() {
         if (rl_avd_download.getVisibility() == View.VISIBLE) {
             return;

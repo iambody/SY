@@ -30,7 +30,9 @@
                 android:id="@+id/rl_avd_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipChildren="false">
+                android:clipChildren="false"
+                android:fitsSystemWindows="true"
+                >
 
                 <com.tencent.qcload.playersdk.ui.VideoRootFrame
                     android:id="@+id/vrf_avd"
@@ -45,9 +47,9 @@
                 <com.cgbsoft.lib.widget.ProgressWheel
                     android:id="@+id/pw_mvv_wait"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="70dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentBottom="true"
                     pro:matProg_barColor="#a3a3a3"
                     pro:matProg_progressIndeterminate="true" />
 
