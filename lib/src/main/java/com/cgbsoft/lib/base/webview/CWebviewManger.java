@@ -941,7 +941,7 @@ public class CWebviewManger {
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
         Intent intent = new Intent();
-        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index);
+        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index-1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();
     }

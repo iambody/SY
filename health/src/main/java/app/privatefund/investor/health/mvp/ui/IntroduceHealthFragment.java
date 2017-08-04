@@ -18,6 +18,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.FloatView;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
@@ -209,6 +210,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
                 iv_mvv_cover.setVisibility(View.GONE);
                 play_contral.setVisibility(View.GONE);
                 videoRootFrame.pause();
+                RxBus.get().post(RxConstant.SCHOOL_VIDEO_PAUSE,true);
                 break;
             case 4:
 //                iv_mvv_cover.setVisibility(View.GONE);

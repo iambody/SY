@@ -137,7 +137,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineCardCoupons = baseSxyParentUrl + "/biz/card/mine_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
-        discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
+        discoveryDetail = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
         //没绑定过的

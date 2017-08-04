@@ -44,7 +44,6 @@ public class DataStatisticsUtils {
     private static DaoUtils daoUtils;
 
     /**
-     *
      * @param context
      * @param param
      * @param isRealTime true 实时  false 不实时
@@ -52,12 +51,12 @@ public class DataStatisticsUtils {
     public static void push(Context context, final HashMap<String, String> param, boolean isRealTime) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
-        LocationBean locationBean= AppManager.getLocation(context);
+        LocationBean locationBean = AppManager.getLocation(context);
 
         try {
-            if (locationBean!=null){
-                js.put("lat",locationBean.getLocationlatitude());
-                js.put("lng",locationBean.getLocationlontitude());
+            if (locationBean != null) {
+                js.put("lat", locationBean.getLocationlatitude());
+                js.put("lng", locationBean.getLocationlontitude());
             }
             js.put("clicktime", TimeUtils.format(System.currentTimeMillis()));
             js.put("uid", AppManager.getUserId(context.getApplicationContext()));
@@ -65,7 +64,11 @@ public class DataStatisticsUtils {
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
             js.put("mos", "A");
             js.put("mv", android.os.Build.VERSION.RELEASE);//手机系统版本
-            js.put("v", "smy");//应用系统(smy)
+            if (AppManager.isInvestor(context)) {
+                js.put("v", "sxy");//应用系统(smy)
+            } else {
+                js.put("v", "smy");
+            }
             js.put("vtp", Utils.getVersionCode(context.getApplicationContext()) + "");
             js.put("area", OtherDataProvider.getCity(context.getApplicationContext()));
             js.put("mid", getUniqueCode());//机器码
@@ -95,6 +98,7 @@ public class DataStatisticsUtils {
                 protected void onEvent(String string) {
                     subscription.unsubscribe();
                 }
+
                 @Override
                 protected void onRxError(Throwable error) {
                     subscription.unsubscribe();
@@ -124,8 +128,8 @@ public class DataStatisticsUtils {
                     }
                 });
                 daoUtils.deleteDataStatitic();
-            }else {
-                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()),js.toString());
+            } else {
+                DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()), js.toString());
                 daoUtils.saveDataStatistic(dataStatisticsBean);
             }
         }

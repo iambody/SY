@@ -184,7 +184,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);   // 不锁屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
-
+        RxBus.get().post(RxConstant.SCHOOL_VIDEO_PAUSE, true);
         initCurInfo();
     }
 

@@ -96,7 +96,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="请输入手机号"
@@ -204,7 +203,7 @@
             android:clickable="true"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/al_login_str"
+            android:text="立即登录"
             android:textColor="@color/black50"
             android:textSize="18sp" />
 

@@ -418,11 +418,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
             int index = data.getIntExtra(BACK_PARAM, -1);
-            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) {
+            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) { //
+                return;
+            }
+            if (index == 0) {
                 return;
             }
             Intent intent = new Intent();
-            intent.putExtra(BACK_PARAM, index);
+            intent.putExtra(BACK_PARAM, index - 1);
             setResult(BACK_RESULT_CODE, intent);
             finish();
         } else if (requestCode == SAVE_REQUST) {
@@ -520,7 +523,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
                 intent.putExtra(WebViewConstant.push_message_title, "会员规则");
                 startActivity(intent);
-            } else{
+            } else {
                 pageShare();
             }
         }

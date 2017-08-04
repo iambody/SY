@@ -111,4 +111,6 @@ public interface RxConstant {
 
     //绑定理财师
     String BindAdviser = "bindadviser";
+
+    String SCHOOL_VIDEO_PAUSE = "SCHOOL_VIDEO_PAUSE";
 }

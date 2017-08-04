@@ -2,6 +2,7 @@ package app.mall.com.mvp.presenter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.MallAddress;
@@ -12,6 +13,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.MToast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -57,6 +59,8 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
             @Override
             protected void onRxError(Throwable error) {
+                String message = error.getMessage();
+                MToast.makeText(getContext(),message, Toast.LENGTH_LONG).show();
                 getView().saveAddressErr(error.toString());
             }
         }));
@@ -89,7 +93,8 @@ public class MallPresenter extends BasePresenterImpl<MallContract.View> implemen
 
             @Override
             protected void onRxError(Throwable error) {
-                error.toString();
+                String message = error.getMessage();
+                MToast.makeText(getContext(),message, Toast.LENGTH_LONG).show();
             }
         }));
     }
