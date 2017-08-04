@@ -91,7 +91,7 @@ public class NavigationUtils {
         ImageSelector selectSec = ImageSelector.create();
         selectSec.openCameraOnly(false);
         selectSec.multi();
-        selectSec.count(12);
+//        selectSec.origin(origins);
         selectSec.start(activity, reqeustCode);
     }
 

@@ -73,6 +73,9 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     @BindView(R.id.check_result)
     protected TextView checkResult;
 
+    @BindView(R.id.check_result_ll)
+    protected LinearLayout linearLayout;
+
     @BindView(R.id.choose_identify)
     protected TextView identView;
 
@@ -148,7 +151,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -178,30 +180,34 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         String vas = userInfoC.getAssetsCertificationImage();
         int status = Integer.valueOf(userInfoC.getAssetsCertificationStatus());
 
+        if (TextUtils.isEmpty(userInfoC.getInvestmentType())) {
+            ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
+        }
+
         boolean hasStatus = false;
         switch (status) {
             case 1:
-                checkResult.setVisibility(View.VISIBLE);
-                checkResult.setText("审核状态：待审核");
+                linearLayout.setVisibility(View.VISIBLE);
+                checkResult.setText("待审核");
                 commit.setVisibility(View.GONE);
                 hasStatus = true;
                 break;
             case 2:
-                checkResult.setVisibility(View.VISIBLE);
-                checkResult.setText("审核状态：已通过");
+                linearLayout.setVisibility(View.VISIBLE);
+                checkResult.setText("已通过");
                 commit.setVisibility(View.GONE);
                 hasStatus = true;
                 break;
             case 3:
-                checkResult.setVisibility(View.VISIBLE);
-                checkResult.setText("审核状态：被驳回");
+                linearLayout.setVisibility(View.VISIBLE);
+                checkResult.setText("被驳回");
                 if (TextUtils.isEmpty(vas)) {
                     frameLayout.addView(addImg());
                 }
                 hasStatus = true;
                 break;
             default:
-                checkResult.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.GONE);
                 frameLayout.addView(addImg());
                 identView.setText("选择投资者身份");
                 break;

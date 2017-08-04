@@ -64,8 +64,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/ui_15_dip"
-        android:visibility="gone">
+        android:paddingLeft="@dimen/ui_15_dip">
 
         <TextView
             android:layout_width="wrap_content"
