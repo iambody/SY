@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/iv_ar_back"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/ui_15_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
                 android:src="@drawable/ic_toolbar_back" />
 
             <TextView
