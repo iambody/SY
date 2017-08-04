@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:scrollbars="none"
-        android:theme="@style/AppTheme.AppBarLayout">
+        android:theme="@style/AppTheme.AppBarLayout"
+        app:elevation="0dp">
 
         <com.cgbsoft.lib.widget.BannerView
             android:id="@+id/discover_bannerview"

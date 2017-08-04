@@ -197,6 +197,19 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存验证密码错误
+     * @param context
+     * @param errorNumber
+     */
+    public static void saveValidateErrorNumber(Context context, int errorNumber) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        String userID = AppManager.getUserId(context);
+        ed.putInt(GetsureValidateError.concat(userID), errorNumber);
+        ed.commit();
+    }
+
+
+    /**
      * 保存未读消息数
      *
      * @param context

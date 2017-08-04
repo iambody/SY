@@ -50,7 +50,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
     public static final String PARAM_FROM_SHOW_ASSERT = "PARAM_FROM_SHWO_ASSERT";
     public static final String FROM_MODIFY_GESTURE = "PARAM_FROM_MODIFY";
 
-    private int count = 5;
+    private int count;
     private boolean isFromShowAssert;
     private boolean isFromCloseGesturePassword;
     private boolean modifyGesturePassword;
@@ -79,6 +79,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         isFromCloseGesturePassword = getIntent().getBooleanExtra(PARAM_CLOSE_PASSWORD, false);
         modifyGesturePassword = getIntent().getBooleanExtra(FROM_MODIFY_GESTURE, false);
         isFromAsertGroup = getIntent().getStringExtra(GestureManager.PARAM_FROM_GROUP_ASSERT);
+        count = AppManager.getValidateErrorNumber(this);
     }
 
     @Override
@@ -133,9 +134,11 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
                                 closeGesturePassword(true);
                             }
                         });
+                        AppInfStore.saveValidateErrorNumber(GestureVerifyActivity.this, 5);
                         return;
                     }
                     count -= 1;
+                    AppInfStore.saveValidateErrorNumber(GestureVerifyActivity.this, count);
 //                        mGestureContentView.clearDrawlineState(1300L);
                     mTextTip.setVisibility(View.VISIBLE);
                     mTextTip.setText(Html.fromHtml("<font color='#c70c1e'>密码输入错误，你还可以输入" + count + "次</font>"));

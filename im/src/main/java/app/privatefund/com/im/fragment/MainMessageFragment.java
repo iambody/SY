@@ -17,14 +17,18 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import app.privatefund.com.im.ConversationActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.im.MessageSearchActivity;
 import app.privatefund.com.im.R;
@@ -275,6 +279,8 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         MenuItem firstItem = menu.findItem(com.cgbsoft.lib.R.id.firstBtn);
         MenuItem secItem = menu.findItem(com.cgbsoft.lib.R.id.secondBtn);
         firstItem.setTitle("常见问题");
+        firstItem.setVisible(true);
+        firstItem.setEnabled(true);
         secItem.setVisible(false);
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -283,7 +289,10 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
-            //TODO 常见问题
+            HashMap<String, Object> hashMap1 = new HashMap<>();
+            hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.common_problem);
+            hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.commment_question));
+            NavigationUtils.startActivityByRouter(getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
         }
         return false;
     }

@@ -138,9 +138,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
-        if (rightMessageIcon) {
-            RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
-        }
     }
 
     /**
@@ -201,6 +198,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         unReadMessageObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean booleans) {
+                System.out.println("--------booleans=" + booleans);
                 hasUnreadInfom = booleans;
                 if (rightMessageIcon) {
                     rightItem.setIcon(ContextCompat.getDrawable(BaseWebViewActivity.this, hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index));
@@ -212,8 +210,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
-
-
+        if (rightMessageIcon) {
+            System.out.println("----------webview=---rightMessageIcon" + rightMessageIcon);
+            RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
+        }
     }
 
     /**
@@ -418,7 +418,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == BACK_RESULT_CODE) { // 处理h5返回问题
             int index = data.getIntExtra(BACK_PARAM, -1);
-            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) { //
+            if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) {
                 return;
             }
             Intent intent = new Intent();
@@ -497,7 +497,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
         }else {
-            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_happy_life_toolbar_right) : R.drawable.select_share_navigation));
+            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
         return super.onCreateOptionsMenu(menu);

@@ -72,6 +72,17 @@ public class AppManager implements AppinfConstant {
         return getBasePreference(context).getString(USERTOKENSP, "");
     }
 
+
+    /**
+     * 验证错误次数
+     */
+    public static int getValidateErrorNumber(Context context) {
+        String userID = getUserId(context);
+        return getBasePreference(context).getInt(GetsureValidateError.concat(userID), 5);
+    }
+
+
+
     /**
      * 获取聊天页面名称－－产品分享需要用到
      *
