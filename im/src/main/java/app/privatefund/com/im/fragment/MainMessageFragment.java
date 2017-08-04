@@ -303,7 +303,6 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         super.onDestroy();
 //        EventBus.getDefault().unregister(this);
     }
-
     /////////////////////////////////////////////////////
 
     @Override
