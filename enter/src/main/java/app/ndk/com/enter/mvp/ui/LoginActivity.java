@@ -396,7 +396,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 //        enterLoginWxBtLay.setVisibility(View.VISIBLE);
         isShowWxBt = true;
         enterLoginWxBtLay.setVisibility(View.VISIBLE);
-        getPresenter().setAnimation(loginWeixinsText);
+//        getPresenter().setAnimation(loginWeixinsText);
     }
 
 //    //点击微信上边布局 显示微信登录的按钮页面

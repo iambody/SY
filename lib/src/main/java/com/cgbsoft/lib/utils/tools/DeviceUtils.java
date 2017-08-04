@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 /**
@@ -30,15 +31,22 @@ public class DeviceUtils {
         }
         return null;
     }
+
     /**
      * 获取设备唯一号
      */
     public static String getPhoneId(Context context) {
-        TelephonyManager TelephonyMgr = (TelephonyManager) context
-                .getSystemService(context.TELEPHONY_SERVICE);
-        String szImei = TelephonyMgr.getDeviceId();
-        szImei="A-"+szImei;
-        return szImei;
+        try {
+            TelephonyManager TelephonyMgr = (TelephonyManager) context
+                    .getSystemService(context.TELEPHONY_SERVICE);
+            String szImei = TelephonyMgr.getDeviceId();
+            szImei = "A-" + szImei;
+            return szImei;
+        } catch (Exception e) {
+            String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            return "A-" + androidID;
+        }
+
     }
 
     // 版本名

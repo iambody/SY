@@ -203,7 +203,7 @@
             android:clickable="true"
             android:gravity="center"
             android:padding="10dp"
-            android:text="立即登录"
+            android:text="@string/newc_login_now"
             android:textColor="@color/black50"
             android:textSize="18sp" />
 

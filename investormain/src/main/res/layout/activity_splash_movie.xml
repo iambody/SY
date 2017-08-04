@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_height="40dp"
+        android:layout_height="44dp"
         android:text="立即启动"
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@color/app_golden"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="44dp"
         android:visibility="visible"/>
 
 </RelativeLayout>

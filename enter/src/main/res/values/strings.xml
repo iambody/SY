@@ -105,4 +105,5 @@
     <!-- 私享云新增****************** -->
     <string name="phone_regist">手机注册</string>
     <string name="code_shixiao1">请在2分钟内完成验证</string>
+    <string name="newc_login_now">立即登录</string>
 </resources>

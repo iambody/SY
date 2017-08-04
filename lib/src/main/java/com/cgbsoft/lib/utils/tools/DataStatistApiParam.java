@@ -1154,7 +1154,19 @@ public class DataStatistApiParam {
         data3.put("arg3", s);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
-
+    /**
+     * 首页banner点击
+     *
+     * @param
+     */
+    public static void  HomeBannerClick(String bannerTitle) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2075");
+        data3.put("act", "20390");
+        data3.put("arg1", "banner");
+        data3.put("arg4",BStrUtils.isEmpty(bannerTitle)?"首页banner":bannerTitle);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
     /**
      * 手势密码开关
      *
