@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.recycler.BaseAdapter;
 
 import app.privatefund.com.vido.R;
@@ -63,9 +64,13 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.pb_avd.setVisibility(View.VISIBLE);
             vdlh.ll_avd_pause.setVisibility(View.VISIBLE);
 
-            if (model.status == VideoStatus.DOWNLOADING || model.status == VideoStatus.WAIT) {//正在下载
+            if (model.status == VideoStatus.DOWNLOADING  ) {
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_cache_d);
                 vdlh.tv_avd_pause.setText(R.string.caching_str);
+                vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
+            } else if (model.status == VideoStatus.WAIT) {
+                vdlh.iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
+                vdlh.tv_avd_pause.setText("等待中");
                 vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
             } else if (model.status == VideoStatus.NONE) {//未下载
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
@@ -75,6 +80,13 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
                 vdlh.ll_avd_pause.setVisibility(View.GONE);
                 vdlh.pb_avd.setVisibility(View.GONE);
                 vdlh.tv_avd_speed.setVisibility(View.GONE);
+                String done="";
+
+                if(!BStrUtils.isEmpty(model.progressStr)&&model.progressStr.contains("/")){
+                    int postion=  model.progressStr.indexOf("/");
+                    done= model.progressStr.substring(0,postion);
+                    BStrUtils.SetTxt( vdlh.tv_avd_progress,done);
+                }
 
             }
 

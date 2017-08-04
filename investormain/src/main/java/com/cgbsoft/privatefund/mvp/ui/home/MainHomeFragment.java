@@ -25,6 +25,7 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -324,6 +325,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 登录模式点击电话*/
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
+
+        //判断是否有拨打电话权限
+       if(needPermissions(Constant.PERMISSION_CALL_PHONE)){
+           PromptManager.ShowCustomToast(baseActivity,"请到设置允许拨打电话权限");
+
+           return;
+       }
 
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
@@ -654,20 +662,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
         animationSet.setDuration(1 * 1000);
 
-//
-//
-//        //头像
-//        ObjectAnimator ivXAnimator = ObjectAnimator.ofFloat(isVisiter?mainHomeVisterAdviserInfIv:mainHomeAdviserInfIv, "scaleX",1f,1.5f);
-//        ObjectAnimator ivYAnimator = ObjectAnimator.ofFloat(isVisiter?mainHomeVisterAdviserInfIv:mainHomeAdviserInfIv, "scaleY",1f,1.5f);
-//        ObjectAnimator ivlayXAnimator = ObjectAnimator.ofFloat(isVisiter?mainHomeVisterAdviserLayyy:mainHomeAdviserLayyy, "scaleX",1f,1.5f);
-//        ObjectAnimator ivlayYAnimator = ObjectAnimator.ofFloat(isVisiter?mainHomeVisterAdviserLayyy:mainHomeAdviserLayyy, "scaleY",1f,1.5f);
-//
-//
-//
-//        AnimatorSet ivanimationSet = new AnimatorSet();
-//        ivanimationSet.play(ivXAnimator).with(ivYAnimator).with(ivlayXAnimator).with(ivlayYAnimator);
-//        ivanimationSet.setDuration(800);
-//        ivanimationSet.start();
 
         animationSet.addListener(new Animator.AnimatorListener() {
             @Override
@@ -688,6 +682,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     getPresenter().showCardLayAnimation(mainHomeAdviserRelationLay);
 
                 }
+                timeCountDown();
             }
 
             @Override

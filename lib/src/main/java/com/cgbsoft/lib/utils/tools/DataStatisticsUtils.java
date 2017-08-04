@@ -68,7 +68,10 @@ public class DataStatisticsUtils {
             js.put("v", "smy");//应用系统(smy)
             js.put("vtp", Utils.getVersionCode(context.getApplicationContext()) + "");
             js.put("area", OtherDataProvider.getCity(context.getApplicationContext()));
-            js.put("mid", getUniqueCode());//机器码
+//            js.put("mid", getUniqueCode());//机器码
+            js.put("mid", DeviceUtils.getPhoneId(context));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
