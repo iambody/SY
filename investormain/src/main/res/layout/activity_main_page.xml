@@ -56,4 +56,14 @@
             android:src="@drawable/guide_one"
             android:visibility="gone"
             />
+        <ImageView
+            android:id="@+id/iv_guide_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/black80"
+            android:src="@drawable/guide_five"
+            android:visibility="gone"
+            />
 </android.support.design.widget.CoordinatorLayout>

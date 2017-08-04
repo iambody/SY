@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,8 +45,8 @@ import rx.Observable;
  */
 @Route(RouteConfig.GOTOCSETTINGACTIVITY)
 public class SettingActivity extends BaseActivity<SettingPresenterImpl> implements SettingContract.SettingView {
-    @BindView(R.id.title_left)
-    protected ImageView back;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.sit_gesture_switch)
@@ -89,6 +90,10 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     }
 
     private void initView(Bundle savedInstanceState) {
+        titleTV.setText(getResources().getString(R.string.setting_title));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
 //        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
 //            boolean gestureFlag = AppManager.getGestureFlag(baseContext);
 //            if (isChecked) {
@@ -124,8 +129,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         } else {
             changeGesturePsdLayout.setVisibility(View.GONE);
         }
-        back.setVisibility(View.VISIBLE);
-        titleTV.setText(getResources().getString(R.string.setting_title));
     }
 
     @Override
@@ -149,12 +152,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 //        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
 //        DataStatistApiParam.onSwitchGesturePassword(valuse);
     }
-
-    @OnClick(R.id.title_left)
-    public void clickBack() {
-        this.finish();
-    }
-
     @Override
     protected SettingPresenterImpl createPresenter() {
         return new SettingPresenterImpl(getBaseContext(), this);

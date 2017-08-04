@@ -18,6 +18,7 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -83,8 +84,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         .PersonalInformationView {
     private static final int REQUEST_CODE_TO_CHANGE_ANME = 1002;
     private static final int REQUEST_CODE_TO_CHANGE_GENDER = 1003;
-    @BindView(R.id.title_left)
-    ImageView back;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.civ_personal_information_icon)
@@ -174,6 +175,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){
         Intent intent = new Intent(this, ChangeNameActivity.class);
+        String nickName = userName.getText().toString();
+        if (!TextUtils.isEmpty(nickName)) {
+            intent.putExtra("name", nickName);
+        }
         startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }
@@ -182,10 +187,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         Intent intent = new Intent(this, ChangeGenderActivity.class);
         startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_GENDER);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
-    }
-    @OnClick(R.id.title_left)
-    public void clickBack() {
-        this.finish();
     }
 
     @OnClick(R.id.rl_personal_information_icon_all)
@@ -248,8 +249,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         userInfo = AppManager.getUserInfo(baseContext);
         if (null != userInfo) {
             String bandingAdviserId = userInfo.getToC().getBandingAdviserId();

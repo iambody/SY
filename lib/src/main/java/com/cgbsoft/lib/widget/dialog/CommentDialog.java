@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 
 /**
@@ -25,8 +24,10 @@ public abstract class CommentDialog  extends BaseDialog{
     private TextView send;
     private TextView editListenerHint;
 
+
     public CommentDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+
     }
 
     public CommentDialog(Context context, int theme) {
@@ -56,7 +57,7 @@ public abstract class CommentDialog  extends BaseDialog{
 
 //        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//SOFT_INPUT_ADJUST_PAN
         send.setEnabled(false);
-        send.setTextColor(0x99999999);
+//        send.setTextColor(0xbf9b69);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,15 +83,16 @@ public abstract class CommentDialog  extends BaseDialog{
                 String result = s.toString();
                 if (result.length() >= 10) {
                     send.setEnabled(true);
-                    if (AppManager.isAdViser(getContext())) {
-                        send.setTextColor(0xffea1202);
-                    } else  {
-                        send.setTextColor(0xfff47900);
-                    }
+//                    if (AppManager.isAdViser(getContext())) {
+//                        send.setTextColor(get);
+//                    } else  {
+//                        send.setTextColor(Color.parseColor("bf9b69"));
+//                    send.setTextColor(0xbf9b69);
+//                    }
                     editListenerHint.setText(new StringBuilder().append(result.length()).append("/1000").toString());
                 } else {
                     send.setEnabled(false);
-                    send.setTextColor(0x99999999);
+//                    send.setTextColor(0x99999999);
                     editListenerHint.setText("加油！还差" + (10 - result.length()) + "个字就能发表评论啦！");
                 }
 

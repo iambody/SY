@@ -19,6 +19,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -118,6 +119,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     ImageView down_del_iv;
     ImageView down_back_iv;
     MyScrollview down_myscrollview;
+
     @Override
     protected void after() {
         super.after();
@@ -221,7 +223,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     }
 
     private void initFindview() {
-        down_myscrollview= (MyScrollview) findViewById(R.id.down_myscrollview);
+        down_myscrollview = (MyScrollview) findViewById(R.id.down_myscrollview);
         down_back_iv = (ImageView) findViewById(R.id.down_back_iv);
         down_del_iv = (ImageView) findViewById(R.id.down_del_iv);
         down_del_txt = (TextView) findViewById(R.id.down_del_txt);
@@ -333,12 +335,12 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //                if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
 //                    defaultDialog.show();
 //                } else {
-                    getPresenter().delete(list.get(i).videoId);
-                    if (list.get(i).status == VideoStatus.FINISH) {
-                        File file = new File(list.get(i).localPath);
-                        if (file.isFile() && file.exists()) {
-                            file.delete();
-                        }
+                getPresenter().delete(list.get(i).videoId);
+                if (list.get(i).status == VideoStatus.FINISH) {
+                    File file = new File(list.get(i).localPath);
+                    if (file.isFile() && file.exists()) {
+                        file.delete();
+                    }
 //                    }
                 }
             }
@@ -348,13 +350,16 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
 //                    defaultDialog.show();
 //                } else {
-                    getPresenter().delete(donelist.get(i).videoId);
-                    if (donelist.get(i).status == VideoStatus.FINISH) {
-                        File file = new File(donelist.get(i).localPath);
-                        if (file.isFile() && file.exists()) {
-                            file.delete();
-                        }
+                getPresenter().delete(donelist.get(i).videoId);
+                if (donelist.get(i).status == VideoStatus.FINISH) {
+
+                    if (null == donelist.get(i).localPath || BStrUtils.isEmpty(donelist.get(i).localPath))
+                        break;
+                    File file = new File(donelist.get(i).localPath);
+                    if (file.isFile() && file.exists()) {
+                        file.delete();
                     }
+                }
 //                }
             }
         }
@@ -502,7 +507,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         VideoDownloadListModel model = videoDownloadListAdapter.getList().get(position);
         String downloadingVideoId = getPresenter().isHasDownloading();
         boolean changeStatus;
-
+        if (videoDownloadListAdapter.getCheckStatus() && videoHaveDownloadListAdapter.getCheckStatus())
+            return;
         if (!TextUtils.isEmpty(downloadingVideoId)) {//如果当前有视频正在下载
             if (TextUtils.equals(downloadingVideoId, model.videoId)) {//如果正在下载的视频id和点击的视频id相同
                 getPresenter().stopDownload(downloadingVideoId);//停止下载
@@ -660,12 +666,22 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
      */
     private void changeStart(boolean b, ImageView iv_avd_pause, TextView tv_avd_pause) {
         if (b) {
-            iv_avd_pause.setImageResource(R.drawable.ic_video_download_start);
+//            iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
+            iv_avd_pause.setImageResource(R.drawable.ic_cache_d);
+
             tv_avd_pause.setText(R.string.caching_str);
+
+//            tv_avd_pause.setText("等待中");
         } else {
             iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
             tv_avd_pause.setText(R.string.paused_str);
         }
+    }
+
+    private void waiting(ImageView iv_avd_pause, TextView tv_avd_pause) {
+        iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
+
+        tv_avd_pause.setText("等待中");
     }
 
     private void refItemUI(String videoId) {
@@ -716,14 +732,17 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             tv_avd_speed.setVisibility(View.GONE);
             changeStart(false, iv_avd_pause, tv_avd_pause);
 //            onControlGetDataList(true);
+            tv_avd_progress.setText(Formatter.formatFileSize(this, totalSize));
             return;
         }
         ll_avd_pause.setVisibility(View.VISIBLE);
         pb_avd.setVisibility(View.VISIBLE);
         tv_avd_speed.setVisibility(View.VISIBLE);
 
-        if (downloadState == DownloadManager.DOWNLOADING || downloadState == DownloadManager.WAITING) {
+        if (downloadState == DownloadManager.DOWNLOADING ) {
             changeStart(true, iv_avd_pause, tv_avd_pause);
+        } else if ( downloadState == DownloadManager.WAITING) {
+            waiting(iv_avd_pause, tv_avd_pause);
         } else if (downloadState == DownloadManager.PAUSE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);
         }

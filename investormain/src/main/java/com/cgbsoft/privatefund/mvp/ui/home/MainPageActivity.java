@@ -133,18 +133,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private InvestorAppli initApplication;
     @BindView(R.id.iv_guide)
     ImageView guide;
-    private int[] guideIds=new int[]{R.drawable.guide_one,R.drawable.guide_two,R.drawable.guide_three,R.drawable.guide_four,R.drawable.guide_five,R.drawable.guide_four};
+    @BindView(R.id.iv_guide_mine)
+    ImageView guideMine;
+    private int[] guideIds=new int[]{R.drawable.guide_one,R.drawable.guide_two,R.drawable.guide_three,R.drawable.guide_four,R.drawable.guide_five};
     private int guideindex=0;
     @OnClick(R.id.iv_guide)
     public void guideClick(){
         guideindex++;
         guideindex=guideindex%guideIds.length;
-        if (guideindex == 5) {
+        if (guideindex == 4) {
             guide.setVisibility(View.GONE);
             AppInfStore.saveGuideTag(MainPageActivity.this);
             return;
         }
         guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+    }
+    @OnClick(R.id.iv_guide_mine)
+    public void guideMine(){
+        guideMine.setVisibility(View.GONE);
+        AppInfStore.saveGuideTagOfMine(MainPageActivity.this);
     }
     /**
      * 定位管理器
@@ -178,6 +185,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (!AppManager.isVisitor(baseContext) && 4 == currentPostion && switchID != R.id.nav_right_second) {
             switchID = R.id.nav_right_second;
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+        }
+        if (switchID == R.id.nav_right_second) {
+            boolean mineGuideShowTag = AppManager.getGuideShowTagOfMine(MainPageActivity.this);
+            if (!mineGuideShowTag) {
+                guideMine.setVisibility(View.VISIBLE);
+            } else {
+                guideMine.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -392,6 +407,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     intent.putExtra(LoginActivity.TAG_GOTOLOGIN_FROMCENTER, true);
                     UiSkipUtils.toNextActivityWithIntent(this, intent);
                     return;
+                }
+                boolean mineGuideShowTag = AppManager.getGuideShowTagOfMine(MainPageActivity.this);
+                if (!mineGuideShowTag) {
+                    guideMine.setVisibility(View.VISIBLE);
+                } else {
+                    guideMine.setVisibility(View.GONE);
                 }
                 switchID = R.id.nav_right_second;
                 break;

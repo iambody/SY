@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -31,8 +32,8 @@ import static android.R.attr.password;
  */
 @Route(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY)
 public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl> implements ChangePsdContract.ChangePsdView {
-    @BindView(R.id.title_left)
-    protected ImageView back;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.et_psd_old)
@@ -52,8 +53,10 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.setting_item_change_pwd));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
         DataStatistApiParam.changePsdPage();
     }
@@ -66,10 +69,6 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     @Override
     protected ChangePsdPresenterImpl createPresenter() {
         return new ChangePsdPresenterImpl(baseContext,this);
-    }
-    @OnClick(R.id.title_left)
-    public void clickBack(){
-        this.finish();
     }
 
     /**

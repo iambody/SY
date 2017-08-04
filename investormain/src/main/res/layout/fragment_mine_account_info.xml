@@ -20,7 +20,7 @@
         android:id="@+id/account_info_image_id"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/logoshare"/>
+        android:src="@drawable/logo"/>
     
     <TextView
         android:layout_width="wrap_content"
