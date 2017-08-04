@@ -469,10 +469,24 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
+    /**
+     * 是否显示除个人中心外的新手引导
+     * @param context
+     */
     public static void saveGuideTag(Context context) {
         SharedPreferences sp = getBasePreference(context);
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean("guideshow", true);
+        ed.commit();
+    }
+    /**
+     * 是否显示个人中心的新手引导
+     * @param context
+     */
+    public static void saveGuideTagOfMine(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("guideshowofmine", true);
         ed.commit();
     }
 }

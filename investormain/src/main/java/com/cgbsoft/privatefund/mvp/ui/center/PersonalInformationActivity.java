@@ -174,6 +174,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){
         Intent intent = new Intent(this, ChangeNameActivity.class);
+        String nickName = userName.getText().toString();
+        if (!TextUtils.isEmpty(nickName)) {
+            intent.putExtra("name", nickName);
+        }
         startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }

@@ -297,8 +297,18 @@ public class AppManager implements AppinfConstant {
     public static boolean getDialogShow(Context context) {
         return getBasePreference(context).getBoolean("dialogshow",false);
     }
-
+    /**
+     * 是否显示除个人中心外的新手引导
+     * @param context
+     */
     public static boolean getGuideShowTag(Context context) {
         return getBasePreference(context).getBoolean("guideshow",false);
+    }
+    /**
+     * 是否显示个人中心的新手引导
+     * @param context
+     */
+    public static boolean getGuideShowTagOfMine(Context context) {
+        return getBasePreference(context).getBoolean("guideshowofmine",false);
     }
 }

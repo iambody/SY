@@ -140,9 +140,9 @@
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
         <!--umeng key-->
-        <meta-data
+        <!--<meta-data
             android:name="UMENG_APPKEY"
-            android:value="54583d07fd98c52c6e000a1c" />
+            android:value="54583d07fd98c52c6e000a1c" />-->
 
         <provider
             android:name="com.cgbsoft.lib.utils.cache.UserDataProvider"
