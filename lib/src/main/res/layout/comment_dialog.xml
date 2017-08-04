@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="发送"
-                android:textColor="#333"
+                android:textColor="@color/app_golden"
                 android:textSize="15sp" />
         </LinearLayout>
 

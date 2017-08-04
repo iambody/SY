@@ -64,14 +64,18 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.ll_avd_pause.setVisibility(View.VISIBLE);
 
             if (model.status == VideoStatus.DOWNLOADING || model.status == VideoStatus.WAIT) {//正在下载
-                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_cache);
+                vdlh.iv_avd_pause.setImageResource(R.drawable.ic_cache_d);
                 vdlh.tv_avd_pause.setText(R.string.caching_str);
+                vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
             } else if (model.status == VideoStatus.NONE) {//未下载
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
                 vdlh.tv_avd_pause.setText(R.string.paused_str);
+                vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
             } else if (model.status == VideoStatus.FINISH) {
                 vdlh.ll_avd_pause.setVisibility(View.GONE);
                 vdlh.pb_avd.setVisibility(View.GONE);
+                vdlh.tv_avd_speed.setVisibility(View.GONE);
+
             }
 
             vdlh.cb_avd.setChecked(model.isCheck);
