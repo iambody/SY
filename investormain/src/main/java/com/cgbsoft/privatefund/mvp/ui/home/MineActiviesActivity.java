@@ -16,6 +16,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
@@ -27,6 +28,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineActivitesContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MineActivitesPresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ import butterknife.OnClick;
 /**
  * @author chenlong
  */
+@Route(RouteConfig.GOTO_MINE_ACTIVITY)
 public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> implements MineActivitesContract.View, OnLoadMoreListener, OnRefreshListener {
 
     @BindView(R.id.swipe_refresh_header)
@@ -61,7 +64,6 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     LinearLayout emptyLinearLayout;
 
     private UnreadInfoNumber unreadInfoNumber;
-
 
     private static final int PAGE_LIMIT = 20;
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
@@ -102,7 +104,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     private void initTitleView() {
         imageViewLeft.setVisibility(View.VISIBLE);
         imageViewRight.setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.title_mid)).setText("我的活动");
+        ((TextView) findViewById(R.id.title_mid)).setText(R.string.account_info_mine_activity);
     }
 
     @Override

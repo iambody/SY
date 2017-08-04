@@ -108,6 +108,8 @@ public interface AppinfConstant {
     //游客模式存储的key
     String VISITOR_KEY = "isvisitor";
 
+    // 密码校验错误
+    String GetsureValidateError = "gesurePasswordvalidateError";
 
     //首页游客数据
     String VISITERHOME = "homevisiter";

@@ -414,7 +414,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess() {
         if (AppManager.isVisitor(baseContext) && initApplication.isMainpage()) {
             AppInfStore.saveIsVisitor(baseContext, false);
-            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy ? 5 : 1);
+            RxBus.get().post(RxConstant.MAIN_FRESH_LAY, isFromInsidemy ? 5 : 1);//刷新用户数据
             if (isVisitorBackHome) Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);
         } else {
             Router.build(RouteConfig.GOTOCMAINHONE).go(LoginActivity.this);

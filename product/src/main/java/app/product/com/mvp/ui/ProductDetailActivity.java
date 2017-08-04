@@ -210,7 +210,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link : BaseWebNetConfig.baseParentUrl + "/" + link;
 
             shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
-            commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+            commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, new CommonShareDialog.CommentShareListener() {
 
                 @Override
                 public void completShare(int shareType) {

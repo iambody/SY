@@ -12,4 +12,6 @@
 
     <string name="message_relative">%s条相关记录消息</string>
 
+    <string name="commment_question">常见问题</string>
+
 </resources>

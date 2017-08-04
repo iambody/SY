@@ -184,7 +184,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);   // 不锁屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
-
+        RxBus.get().post(RxConstant.SCHOOL_VIDEO_PAUSE, true);
         initCurInfo();
     }
 
@@ -2506,16 +2506,17 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             if (2 == CurLiveInfo.getEquipment()) {
                 if (QavsdkControl.getInstance() != null) {
                     if (orientation > 350 || orientation < 10) { //0度
-                        QavsdkControl.getInstance().setRotation(-90);
-                    } else if (orientation > 80 && orientation < 100) { //90度
                         QavsdkControl.getInstance().setRotation(0);
-                    } else if (orientation > 170 && orientation < 190) { //180度
+                    } else if (orientation > 80 && orientation < 100) { //90度
                         QavsdkControl.getInstance().setRotation(90);
-                    } else if (orientation > 260 && orientation < 280) { //270度
+                    } else if (orientation > 170 && orientation < 190) { //180度
                         QavsdkControl.getInstance().setRotation(180);
+                    } else if (orientation > 260 && orientation < 280) { //270度
+                        QavsdkControl.getInstance().setRotation(270);
                     }
                     return;
                 }
+                return;
             } else {
                 if (QavsdkControl.getInstance() != null) {
                     if (orientation > 350 || orientation < 10) { //0度

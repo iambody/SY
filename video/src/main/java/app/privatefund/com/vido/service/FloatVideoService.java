@@ -15,7 +15,10 @@ import android.widget.ImageView;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
 
@@ -23,6 +26,7 @@ import java.io.IOException;
 
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.mvp.ui.video.VideoDetailActivity;
+import rx.Observable;
 
 
 public class FloatVideoService extends Service implements MediaPlayer.OnPreparedListener {
@@ -37,6 +41,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
     private TelephonyManager telephonyManager;
 
     private ToPhoneStateListener toPhoneStateListener;
+    private Observable<Boolean> stopObservable;
 
     @Nullable
     @Override
@@ -62,6 +67,18 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         if (TextUtils.isEmpty(playUrl)) {
             playUrl = videoInfoModel.sdUrl;
         }
+        stopObservable = RxBus.get().register(RxConstant.SCHOOL_VIDEO_PAUSE, Boolean.class);
+        stopObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean b) {
+                stopService();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
 
         initMediaPlayer();
 

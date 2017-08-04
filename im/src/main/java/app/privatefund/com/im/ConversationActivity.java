@@ -13,22 +13,17 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.RongUserEntity;
 import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Locale;
 
@@ -78,7 +73,7 @@ public class ConversationActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        right.setVisibility(View.INVISIBLE);
+        right.setVisibility(View.VISIBLE);
         Drawable drawable = getResources().getDrawable(R.drawable.ic_im_phone);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         right.setCompoundDrawables(drawable, null, null, null);

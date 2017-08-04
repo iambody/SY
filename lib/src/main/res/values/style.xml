@@ -50,7 +50,7 @@
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
-    <style name="normal_alphbtn2">
+    <style name="normal_alphbtn2" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:background">@drawable/select_btn_apphnormal</item>
