@@ -666,12 +666,22 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
      */
     private void changeStart(boolean b, ImageView iv_avd_pause, TextView tv_avd_pause) {
         if (b) {
-            iv_avd_pause.setImageResource(R.drawable.ic_video_download_start);
+//            iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
+            iv_avd_pause.setImageResource(R.drawable.ic_cache_d);
+
             tv_avd_pause.setText(R.string.caching_str);
+
+//            tv_avd_pause.setText("等待中");
         } else {
             iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
             tv_avd_pause.setText(R.string.paused_str);
         }
+    }
+
+    private void waiting(ImageView iv_avd_pause, TextView tv_avd_pause) {
+        iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
+
+        tv_avd_pause.setText("等待中");
     }
 
     private void refItemUI(String videoId) {
@@ -722,15 +732,17 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
             tv_avd_speed.setVisibility(View.GONE);
             changeStart(false, iv_avd_pause, tv_avd_pause);
 //            onControlGetDataList(true);
-//            tv_avd_progress.setText(Formatter.formatFileSize(this, totalSize));
+            tv_avd_progress.setText(Formatter.formatFileSize(this, totalSize));
             return;
         }
         ll_avd_pause.setVisibility(View.VISIBLE);
         pb_avd.setVisibility(View.VISIBLE);
         tv_avd_speed.setVisibility(View.VISIBLE);
 
-        if (downloadState == DownloadManager.DOWNLOADING || downloadState == DownloadManager.WAITING) {
+        if (downloadState == DownloadManager.DOWNLOADING ) {
             changeStart(true, iv_avd_pause, tv_avd_pause);
+        } else if ( downloadState == DownloadManager.WAITING) {
+            waiting(iv_avd_pause, tv_avd_pause);
         } else if (downloadState == DownloadManager.PAUSE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);
         }
