@@ -16,6 +16,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
@@ -27,6 +28,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MineActivitesContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MineActivitesPresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ import butterknife.OnClick;
 /**
  * @author chenlong
  */
+@Route(RouteConfig.GOTO_MINE_ACTIVITY)
 public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> implements MineActivitesContract.View, OnLoadMoreListener, OnRefreshListener {
 
     @BindView(R.id.swipe_refresh_header)

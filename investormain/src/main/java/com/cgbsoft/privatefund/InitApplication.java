@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
+import android.webkit.PermissionRequest;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;

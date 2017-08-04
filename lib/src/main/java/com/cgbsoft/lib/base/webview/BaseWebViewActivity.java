@@ -138,9 +138,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
         url = fullUrlPath(getIntent().getStringExtra(WebViewConstant.push_message_url));
         title = getIntent().getStringExtra(WebViewConstant.push_message_title);
-        if (rightMessageIcon) {
-            RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
-        }
     }
 
     /**
@@ -201,6 +198,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         unReadMessageObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean booleans) {
+                System.out.println("--------booleans=" + booleans);
                 hasUnreadInfom = booleans;
                 if (rightMessageIcon) {
                     rightItem.setIcon(ContextCompat.getDrawable(BaseWebViewActivity.this, hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index));
@@ -212,8 +210,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
-
-
+        if (rightMessageIcon) {
+            System.out.println("----------webview=---rightMessageIcon" + rightMessageIcon);
+            RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
+        }
     }
 
     /**
@@ -280,16 +280,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
             relativeLayout.setVisibility(View.VISIBLE);
             relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setImageResource(R.drawable.ic_back_white_24dp);
             imageView.setOnClickListener(v -> finish());
-            TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
+            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
             titleTextView.setText("会员专区");
             titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-            TextView rightText = (TextView) findViewById(R.id.title_right);
+            TextView rightText =(TextView)findViewById(R.id.title_right);
             rightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
             rightText.setText("会员规则");
             rightText.setOnClickListener(v -> {
@@ -312,7 +312,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     };
 
-    public void showPayItem() {
+    public void showPayItem(){
         rightRechargeShow = true;
         rightItem.setTitle("充值");
         rightItem.setVisible(true);
@@ -499,8 +499,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if (rightMemberRule) {
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
-        } else {
-            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_happy_life_toolbar_right) : R.drawable.select_share_navigation));
+        }else {
+            rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
         return super.onCreateOptionsMenu(menu);

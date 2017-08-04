@@ -40,6 +40,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -177,7 +178,14 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     protected void before() {

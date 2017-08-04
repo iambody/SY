@@ -35,6 +35,7 @@ import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
+import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -291,8 +292,16 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         this.registerReceiver(connectionChangeReceiver, filter);
 
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
-        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+//        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+
+        tv_avd_cache_num.setText(String.valueOf(getsize()));
+
         FloatVideoService.stopService();
+    }
+
+    public int getsize() {
+        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
+       return downsize.getAllVideoInfo().size();
     }
 
     private void findview() {
@@ -420,7 +429,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_sd.startAnimation(sdAnimationSet);
-        isCancache=false;
+        isCancache = false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.SD);
         getPresenter().toDownload(videoId);
@@ -431,7 +440,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_hd.startAnimation(hdAnimationSet);
-        isCancache=false;
+        isCancache = false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.HD);
         getPresenter().toDownload(videoId);
@@ -609,7 +618,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void onDownloadVideoAdd() {
-        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+//        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
+
+
+        tv_avd_cache_num.setText(String.valueOf(getsize()));
         tv_avd_cache.setText(R.string.caching_str);
         iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
@@ -870,6 +882,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         rl_avd_download.setVisibility(View.VISIBLE);
         rl_avd_download.startAnimation(openAnimationSet);
+
     }
 
     private void closeCacheView() {

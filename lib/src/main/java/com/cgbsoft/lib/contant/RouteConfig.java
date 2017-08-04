@@ -51,6 +51,9 @@ public class RouteConfig {
     // 选择地址
     public static final String SELECT_ADDRESS = "select_address_activity";
 
+    // 我的活动
+    public static final String GOTO_MINE_ACTIVITY = "goto_mine_activity";
+
     // 邀请
     public static final String INVESTORMAIN_BASEWEBACTIVITY = "investornmain_invisterbasewebviewctivity";
 

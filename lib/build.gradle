@@ -110,7 +110,7 @@ dependencies {
     //小红点
     //
     //umeng统计
-    //    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.umeng.analytics:analytics:latest.integration'
     //LeakCanary
     debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanary_version}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanary_version}"

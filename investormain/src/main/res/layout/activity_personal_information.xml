@@ -5,13 +5,11 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/title_normal_new"/>
-
     <include
-        layout="@layout/acitivity_divide_online"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        />
+        android:id="@+id/title_bar_id"
+        layout="@layout/layout_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -59,7 +57,7 @@
                     android:layout_marginRight="@dimen/ui_10_dip"
                     app:civ_border_width="1dp"
                     app:civ_border_color="@color/transparent"
-                    android:src="@drawable/logoshare"
+                    android:src="@drawable/logo"
                     >
                 </com.cgbsoft.lib.widget.RoundImageView>
                 <ImageView

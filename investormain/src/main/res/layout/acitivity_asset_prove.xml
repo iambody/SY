@@ -64,8 +64,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/ui_15_dip"
-        android:visibility="gone">
+        android:paddingLeft="@dimen/ui_15_dip">
 
         <TextView
             android:layout_width="wrap_content"
@@ -145,9 +144,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="温馨提示:"
-                        android:textColor="@color/color_595959"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/asset_prove_des"
@@ -172,7 +170,7 @@
         android:layout_marginBottom="@dimen/ui_20_dip"
         android:background="@drawable/shape_common_bg_btn"
         android:gravity="center"
-        android:text="确认"
+        android:text="@string/commit"
         android:textColor="@color/white"
         android:textSize="16sp" />
 </LinearLayout>

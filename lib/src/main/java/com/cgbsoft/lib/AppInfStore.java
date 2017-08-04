@@ -197,6 +197,19 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
+     * 保存验证密码错误
+     * @param context
+     * @param errorNumber
+     */
+    public static void saveValidateErrorNumber(Context context, int errorNumber) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        String userID = AppManager.getUserId(context);
+        ed.putInt(GetsureValidateError.concat(userID), errorNumber);
+        ed.commit();
+    }
+
+
+    /**
      * 保存未读消息数
      *
      * @param context
@@ -469,10 +482,24 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
+    /**
+     * 是否显示除个人中心外的新手引导
+     * @param context
+     */
     public static void saveGuideTag(Context context) {
         SharedPreferences sp = getBasePreference(context);
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean("guideshow", true);
+        ed.commit();
+    }
+    /**
+     * 是否显示个人中心的新手引导
+     * @param context
+     */
+    public static void saveGuideTagOfMine(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("guideshowofmine", true);
         ed.commit();
     }
 }

@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,8 +24,8 @@ import butterknife.OnClick;
  */
 @Route(RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY)
 public class ChangeGenderActivity extends BaseActivity{
-    @BindView(R.id.title_left)
-    ImageView back;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.iv_male_flag)
@@ -33,10 +34,7 @@ public class ChangeGenderActivity extends BaseActivity{
     ImageView femaleFlag;
     private UserInfoDataEntity.UserInfo userInfo;
 
-    @OnClick(R.id.title_left)
-    public void clickBack() {
-        this.finish();
-    }@OnClick(R.id.ll_male_all)
+    @OnClick(R.id.ll_male_all)
     public void maleAllClick(){
         maleFlag.setVisibility(View.VISIBLE);
         femaleFlag.setVisibility(View.INVISIBLE);
@@ -66,8 +64,10 @@ public class ChangeGenderActivity extends BaseActivity{
 
     private void initView(Bundle savedInstanceState) {
         userInfo = AppManager.getUserInfo(baseContext);
-        back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.personal_information_title_changegender));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         if (null != userInfo) {
             String gender = userInfo.getSex();
             if (!TextUtils.isEmpty(gender)) {

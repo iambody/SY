@@ -184,7 +184,7 @@
     <string name="account_info_mine_card_quan">我的卡券</string>
     <string name="account_info_mine_wish_card">我的贺卡</string>
     <string name="account_info_user_level">会员等级</string>
-    <string name="account_bank_asset_zuhe">投资组合(订单)</string>
+    <string name="account_bank_asset_zuhe">投资组合</string>
     <string name="account_bank_hide_assert">隐藏</string>
     <string name="account_bank_show_assert">显示</string>
     <string name="account_bank_invistor_carlendar">投资日历</string>

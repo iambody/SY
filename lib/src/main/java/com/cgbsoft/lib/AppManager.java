@@ -72,6 +72,17 @@ public class AppManager implements AppinfConstant {
         return getBasePreference(context).getString(USERTOKENSP, "");
     }
 
+
+    /**
+     * 验证错误次数
+     */
+    public static int getValidateErrorNumber(Context context) {
+        String userID = getUserId(context);
+        return getBasePreference(context).getInt(GetsureValidateError.concat(userID), 5);
+    }
+
+
+
     /**
      * 获取聊天页面名称－－产品分享需要用到
      *
@@ -297,8 +308,18 @@ public class AppManager implements AppinfConstant {
     public static boolean getDialogShow(Context context) {
         return getBasePreference(context).getBoolean("dialogshow",false);
     }
-
+    /**
+     * 是否显示除个人中心外的新手引导
+     * @param context
+     */
     public static boolean getGuideShowTag(Context context) {
         return getBasePreference(context).getBoolean("guideshow",false);
+    }
+    /**
+     * 是否显示个人中心的新手引导
+     * @param context
+     */
+    public static boolean getGuideShowTagOfMine(Context context) {
+        return getBasePreference(context).getBoolean("guideshowofmine",false);
     }
 }
