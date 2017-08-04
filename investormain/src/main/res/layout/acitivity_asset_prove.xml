@@ -64,8 +64,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/ui_15_dip"
-        android:visibility="gone">
+        android:paddingLeft="@dimen/ui_15_dip">
 
         <TextView
             android:layout_width="wrap_content"
@@ -172,7 +171,7 @@
         android:layout_marginBottom="@dimen/ui_20_dip"
         android:background="@drawable/shape_common_bg_btn"
         android:gravity="center"
-        android:text="确认"
+        android:text="@string/commit"
         android:textColor="@color/white"
         android:textSize="16sp" />
 </LinearLayout>

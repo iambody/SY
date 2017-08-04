@@ -68,12 +68,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                 String shareType = smMessage.getShareType();
                 boolean hasPush = SPreference.getBoolean(InvestorAppli.getContext(), Constant.HAS_PUSH_MESSAGE);
                 if (hasPush) {
-                    ThreadUtils.runOnMainThreadDelay(new Runnable() {
-                        @Override
-                        public void run() {
-                            SPreference.putBoolean(InvestorAppli.getContext(), Constant.HAS_PUSH_MESSAGE, false);
-                        }
-                    }, 500);
+                    ThreadUtils.runOnMainThreadDelay(() -> SPreference.putBoolean(InvestorAppli.getContext(), Constant.HAS_PUSH_MESSAGE, false), 500);
                     return !hasPush;
                 }
 
