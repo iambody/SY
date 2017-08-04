@@ -280,16 +280,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
-            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
             relativeLayout.setVisibility(View.VISIBLE);
             relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setImageResource(R.drawable.ic_back_white_24dp);
             imageView.setOnClickListener(v -> finish());
-            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
+            TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
             titleTextView.setText("会员专区");
             titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-            TextView rightText =(TextView)findViewById(R.id.title_right);
+            TextView rightText = (TextView) findViewById(R.id.title_right);
             rightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
             rightText.setText("会员规则");
             rightText.setOnClickListener(v -> {
@@ -312,7 +312,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     };
 
-    public void showPayItem(){
+    public void showPayItem() {
         rightRechargeShow = true;
         rightItem.setTitle("充值");
         rightItem.setVisible(true);
@@ -421,8 +421,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             if (index != 0 && (url.contains("/apptie/detail.html") || url.contains("/calendar/index.html"))) { //
                 return;
             }
+            if (index == 0) {
+                return;
+            }
             Intent intent = new Intent();
-            intent.putExtra(BACK_PARAM, index);
+            intent.putExtra(BACK_PARAM, index - 1);
             setResult(BACK_RESULT_CODE, intent);
             finish();
         } else if (requestCode == SAVE_REQUST) {
@@ -496,7 +499,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if (rightMemberRule) {
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
-        }else {
+        } else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_happy_life_toolbar_right) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
@@ -520,7 +523,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
                 intent.putExtra(WebViewConstant.push_message_title, "会员规则");
                 startActivity(intent);
-            } else{
+            } else {
                 pageShare();
             }
         }
