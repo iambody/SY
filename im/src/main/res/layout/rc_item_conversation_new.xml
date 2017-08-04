@@ -11,10 +11,10 @@
         android:layout_height="100dp"
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <FrameLayout
             android:id="@id/rc_item1"
@@ -106,7 +106,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:orientation="horizontal"
         android:visibility="gone"
         android:layout_below="@id/rc_item_conversation"

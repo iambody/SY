@@ -130,6 +130,7 @@ public class UnreadInfoNumber {
             hasReadResultObservable.subscribe(new RxSubscriber<Boolean>() {
                 @Override
                 protected void onEvent(Boolean booleanValue) {
+                    System.out.println("----------unreadiNfo=---booleanValue" + booleanValue);
                     if (booleanValue) {
                         RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
                     }

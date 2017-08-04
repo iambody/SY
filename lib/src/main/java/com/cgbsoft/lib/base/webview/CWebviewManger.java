@@ -356,6 +356,8 @@ public class CWebviewManger {
         } else if (action.contains("bindAdviserSucc")) {
             //绑定成功
             RxBus.get().post(RxConstant.BindAdviser, 1);
+        } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
         }
     }
 
@@ -939,7 +941,7 @@ public class CWebviewManger {
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
         Intent intent = new Intent();
-        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index);
+        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index-1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();
     }

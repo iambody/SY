@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.DiscoverModel;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -54,7 +55,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     public IPagerTitleView getTitleView(Context context, int i) {
         DiscoverModel.DiscoverCategory discoverCategory = categoryList.get(i);
         CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
-        View view = layoutInflater.inflate(app.privatefund.com.vido.R.layout.view_item_navigation, null);
+        View view = layoutInflater.inflate(R.layout.view_discovery_item_navigation, null);
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
@@ -95,7 +96,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
         indicator.setYOffset(UIUtil.dip2px(context, 3));
         indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-        indicator.setXOffset(UIUtil.dip2px(context, 10));
+        indicator.setXOffset(UIUtil.dip2px(context, 25));
         return indicator;
     }
 }
