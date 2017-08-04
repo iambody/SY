@@ -24,12 +24,7 @@ import java.io.IOException;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.mvp.ui.video.VideoDetailActivity;
 
-/**
- * 后台播放视频
- * Created by xiaoyu.zhang on 2016/12/15 17:45
- * Email:zhangxyfs@126.com
- *  
- */
+
 public class FloatVideoService extends Service implements MediaPlayer.OnPreparedListener {
     private FloatView floatView;
     private ImageView imageView;
@@ -40,6 +35,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
     private String playUrl;
     private boolean ringingFlag;
     private TelephonyManager telephonyManager;
+
     private ToPhoneStateListener toPhoneStateListener;
 
     @Nullable
@@ -86,7 +82,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         super.onDestroy();
         if (mediaPlayer != null) {
             if (videoInfoModel != null) {
-                videoInfoModel.currentTime = videoInfoModel.currentTime+mediaPlayer.getCurrentPosition();
+                videoInfoModel.currentTime = videoInfoModel.currentTime + mediaPlayer.getCurrentPosition();
                 daoUtils.saveOrUpdateVideoInfo(videoInfoModel);
             }
 

@@ -48,7 +48,7 @@
                     android:id="@+id/pw_mvv_wait"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-
+                    android:layout_centerInParent="true"
                     android:layout_alignParentBottom="true"
                     pro:matProg_barColor="#a3a3a3"
                     pro:matProg_progressIndeterminate="true" />
