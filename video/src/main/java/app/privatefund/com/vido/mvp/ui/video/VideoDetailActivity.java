@@ -370,6 +370,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onRestart();
         isOnPause = false;
         onPausePlayStauts = 1;
+        //判断书否缓存
+        isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
     }
 
     @Override
@@ -377,6 +379,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onResume();
         isOnPause = false;
         onPausePlayStauts = -1;
+
+
     }
 
     @OnClick(R2.id.iv_avd_back)
@@ -416,7 +420,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_sd.startAnimation(sdAnimationSet);
-
+        isCancache=false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.SD);
         getPresenter().toDownload(videoId);
@@ -427,7 +431,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_hd.setEnabled(false);
         tv_avd_sd.setEnabled(false);
         tv_avd_hd.startAnimation(hdAnimationSet);
-
+        isCancache=false;
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.HD);
         getPresenter().toDownload(videoId);
@@ -441,7 +445,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         openActivity(VideoDownloadListActivity.class);
 
 //        ll_avd_cache_open.
-                closeCacheView ();
+        closeCacheView();
 
     }
 
@@ -462,7 +466,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 //                        .subscribe(new RxSubscriber<Integer>() {
 //                            @Override
 //                            protected void onEvent(Integer integer) {
-                                exitTransition.exit(VideoDetailActivity.this);
+                exitTransition.exit(VideoDetailActivity.this);
 //                            }
 //
 //                            @Override
@@ -571,7 +575,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getNetVideoInfoErr(String str) {
-        PromptManager.ShowCustomToast(baseContext,"获取信息失败请重新尝试");
+        PromptManager.ShowCustomToast(baseContext, "获取信息失败请重新尝试");
         baseContext.finish();
     }
 
@@ -843,8 +847,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         lp.height = lp.width * 9 / 16;
         rl_avd_head.setLayoutParams(lp);
     }
+
     private int getStatusBarHeight() {
-        int statusBarHeight=0;
+        int statusBarHeight = 0;
         if (statusBarHeight == 0) {
             try {
                 Class<?> c = Class.forName("com.android.internal.R$dimen");
@@ -858,6 +863,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         return statusBarHeight;
     }
+
     private void openCacheView() {
         if (rl_avd_download.getVisibility() == View.VISIBLE) {
             return;
@@ -1130,11 +1136,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     //点击视频详情页的分享按钮
     @OnClick(R2.id.view_title_right_txt)
     public void onViewTitleRightTxtClicked() {
-        if(!NetUtils.isNetworkAvailable(baseContext)){
-            PromptManager.ShowCustomToast(baseContext,"请链接网络");
+        if (!NetUtils.isNetworkAvailable(baseContext)) {
+            PromptManager.ShowCustomToast(baseContext, "请链接网络");
             return;
         }
-        if (null==videoAllInf||null == videoAllInf.rows) return;
+        if (null == videoAllInf || null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);

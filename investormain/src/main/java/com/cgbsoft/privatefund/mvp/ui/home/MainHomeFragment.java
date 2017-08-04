@@ -396,7 +396,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     return false;
                 }
             });
-            BStrUtils.SetTxt(mainHomeCardnumberTxt, AppManager.getUserInfo(baseActivity).bandingAdviserUniqueCode);
+            BStrUtils.SetTxt1(mainHomeCardnumberTxt, AppManager.getUserInfo(baseActivity).bandingAdviserUniqueCode);
         }
     }
 
@@ -588,7 +588,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /* 用户等级的数据填充*/
-
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.SetTxt1(viewHomeLevelStr, level.memberLevel);
     }

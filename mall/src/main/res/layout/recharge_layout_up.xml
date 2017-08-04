@@ -39,6 +39,7 @@
             android:gravity="center|top"
             android:paddingTop="@dimen/ui_2_dip"
             android:text="+10%"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:textSize="@dimen/ui_10_dip" />
     </RelativeLayout>
@@ -78,6 +79,7 @@
             android:gravity="center|top"
             android:paddingTop="2dp"
             android:text="+15%"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:textSize="@dimen/ui_10_dip" />
     </RelativeLayout>
@@ -119,6 +121,7 @@
             android:gravity="center|top"
             android:paddingTop="@dimen/ui_2_dip"
             android:text="+20%"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:textSize="@dimen/ui_10_dip" />
     </RelativeLayout>

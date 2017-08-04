@@ -297,4 +297,8 @@ public class AppManager implements AppinfConstant {
     public static boolean getDialogShow(Context context) {
         return getBasePreference(context).getBoolean("dialogshow",false);
     }
+
+    public static boolean getGuideShowTag(Context context) {
+        return getBasePreference(context).getBoolean("guideshow",false);
+    }
 }

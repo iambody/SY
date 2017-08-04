@@ -258,12 +258,18 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         pay_method_iv.setImageResource(403 == payMethod.getTypeCode() ? R.drawable.pay_weixin_icon : 401 == payMethod.getTypeCode() ? R.drawable.pay_zhifubao_icon : R.drawable.pay_yinlian_icon);
         if (data.getLevels().get(0).getDonationRatio() == 0.0) {
             recharge_up_bt1_tag.setVisibility(View.INVISIBLE);
+        }else {
+            recharge_up_bt1_tag.setVisibility(View.VISIBLE);
         }
         if (data.getLevels().get(1).getDonationRatio() == 0.0) {
             recharge_up_bt2_tag.setVisibility(View.INVISIBLE);
+        }else {
+            recharge_up_bt2_tag.setVisibility(View.VISIBLE);
         }
         if (data.getLevels().get(2).getDonationRatio() == 0.0) {
             recharge_up_bt3_tag.setVisibility(View.INVISIBLE);
+        }else{
+            recharge_up_bt3_tag.setVisibility(View.VISIBLE);
         }
     }
 

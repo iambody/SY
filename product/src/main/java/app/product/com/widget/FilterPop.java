@@ -157,6 +157,12 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                         filter.setMaxNumber(minNumber);
                         filter.setMinNumber(maxNumber);
                     }
+                    if (filter.getMaxNumber().equals("0")) {
+                        filter.setMaxNumber("");
+                    }
+                    if (filter.getMinNumber().equals("0")) {
+                        filter.setMinNumber("");
+                    }
                 }
                 getData.add(filter);
 
