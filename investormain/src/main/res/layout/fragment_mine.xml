@@ -11,15 +11,14 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_my"
         android:orientation="vertical"
-        android:paddingTop="22dp">
+        android:paddingTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="50dp"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="2dp"
-            android:paddingTop="5dp">
+            android:gravity="center_vertical"
+            >
 
             <ImageView
                 android:id="@+id/mine_title_set_id"
@@ -27,6 +26,8 @@
                 android:layout_height="44dp"
                 android:layout_gravity="center_vertical"
                 android:padding="11dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/select_icon_setting" />
 
             <TextView
@@ -42,6 +43,8 @@
                 android:layout_height="44dp"
                 android:layout_gravity="center_vertical"
                 android:padding="11dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/main_home_new_iv" />
         </LinearLayout>
 
