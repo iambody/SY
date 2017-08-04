@@ -18,14 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.NetConfig;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
@@ -36,7 +35,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import app.privatefund.com.im.MessageListActivity;
-import app.privatefund.com.im.R;
 import app.privatefund.com.im.adapter.RongConversationListAdapter;
 import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.common.RLog;
@@ -291,6 +289,14 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     }
 
     public void addPlamtformServer() {
+        List<Conversation> list = RongIM.getInstance().getConversationList();
+        if(list != null) {
+            for (Conversation conversation : list) {
+                if (Constant.msgCustomerService.equals(conversation.getTargetId())){
+                    System.out.println("-------lsit=" + conversation.getUnreadMessageCount());
+                }
+            }
+        }
         Conversation conversation = Conversation.obtain(ConversationType.PRIVATE, Constant.msgCustomerService, "");
         int position;
         if(RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE)) {
@@ -311,6 +317,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
         } else {
             uiConversation = (UIConversation)RongConversationListFragment.this.mAdapter.getItem(position);
+            uiConversation.setUnReadMessageCount(uiConversation.getUnReadMessageCount());
             uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
             RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
         }
@@ -408,8 +415,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         });
     }
 
-
-
     public void getConversationList(ConversationType[] conversationTypes, final IHistoryDataResultCallback<List<Conversation>> callback) {
         RongIMClient.getInstance().getConversationList(new ResultCallback<List<Conversation>>() {
             public void onSuccess(List<Conversation> conversations) {
@@ -499,7 +504,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                 this.selectNextUnReadItem(0, count);
             }
         }
-
     }
 
     private boolean selectNextUnReadItem(int startIndex, int totalCount) {
@@ -652,13 +656,25 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         }
     }
 
+    private int getUnreadNoticeInfoCount() {
+        List<Conversation> list = RongIM.getInstance().getConversationList();
+        int result = 0;
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Conversation conversation : list) {
+                if (RongCouldUtil.getInstance().customConversation(conversation.getTargetId())) {
+                    result += conversation.getUnreadMessageCount();
+                }
+            }
+        }
+        return result;
+    }
+
     private void refreshUnreadMessage(Message message, int position) {
         if (!isNoticeList && RongCouldUtil.getInstance().customConversation(message.getSenderUserId())) {
             System.out.println("-------conversation-----unReadMessage");
             UIConversation conversation = null;
             int originalIndex = this.mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
             if (originalIndex < 0) {
-                addNoticeItem();
                 originalIndex = mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
                 conversation = this.mAdapter.getItem(originalIndex);
             } else {
@@ -685,7 +701,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             }
 
             if (conversation != null) {
-                conversation.setUnReadMessageCount(conversation.getUnReadMessageCount() + 1);
+                conversation.setUnReadMessageCount(getUnreadNoticeInfoCount());
                 int newPosition = this.mAdapter.findPosition(conversation);
 
                 long showTime = conversation.getSentStatus() == Message.SentStatus.SENT ? message.getSentTime() : message.getReceivedTime();
@@ -693,13 +709,13 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     conversation.setUIConversationTime(showTime);
                 }
 
-                int unread = 0;
-                for (UIConversation uiConversation : cacheConversationList) {
-                    unread += uiConversation.getUnReadMessageCount();
-                }
-                if (unread > 0) {
-                    conversation.setUnReadMessageCount(unread);
-                }
+//                int unread = 0;
+//                for (UIConversation uiConversation : cacheConversationList) {
+//                    unread += uiConversation.getUnReadMessageCount();
+//                }
+//                if (unread > 0) {
+//                    conversation.setUnReadMessageCount(unread);
+//                }
 
                 try {
                     Field field = message.getContent().getClass().getDeclaredField("content");/////这个对应的是属性

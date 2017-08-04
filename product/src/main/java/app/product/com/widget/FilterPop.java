@@ -47,8 +47,8 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
     //多选
     private final String CHECKBOX = "checkbox";
 
-    private Button product_filtepop_reset_filter;
-    private Button product_filtepop_enter_filter;
+    private TextView product_filtepop_reset_filter;
+    private TextView product_filtepop_enter_filter;
     private ImageView filter_pop_down_view;
 
     LinearLayout product_filte_linear_layout;
@@ -96,8 +96,8 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 //        setAnimationStyle(R.style.style_product_oderby_dialog_anim);
         setOutsideTouchable(true);
         product_filte_linear_layout = (LinearLayout) baseView.findViewById(R.id.product_filte_linear_layout);
-        product_filtepop_reset_filter = (Button) baseView.findViewById(R.id.product_filtepop_reset_filter);
-        product_filtepop_enter_filter = (Button) baseView.findViewById(R.id.product_filtepop_enter_filter);
+        product_filtepop_reset_filter = (TextView) baseView.findViewById(R.id.product_filtepop_reset_filter);
+        product_filtepop_enter_filter = (TextView) baseView.findViewById(R.id.product_filtepop_enter_filter);
         filter_pop_down_view = (ImageView) baseView.findViewById(R.id.filter_pop_down_view);
         product_filtepop_reset_filter.setOnClickListener(this);
         product_filtepop_enter_filter.setOnClickListener(this);

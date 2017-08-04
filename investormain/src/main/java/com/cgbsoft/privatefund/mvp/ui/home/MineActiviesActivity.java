@@ -65,7 +65,6 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
 
     private UnreadInfoNumber unreadInfoNumber;
 
-
     private static final int PAGE_LIMIT = 20;
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
     private LinearLayoutManager linearLayoutManager;
@@ -105,7 +104,7 @@ public class MineActiviesActivity extends BaseActivity<MineActivitesPresenter> i
     private void initTitleView() {
         imageViewLeft.setVisibility(View.VISIBLE);
         imageViewRight.setVisibility(View.VISIBLE);
-        ((TextView) findViewById(R.id.title_mid)).setText("我的活动");
+        ((TextView) findViewById(R.id.title_mid)).setText(R.string.account_info_mine_activity);
     }
 
     @Override

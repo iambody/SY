@@ -33,7 +33,7 @@
         android:orientation="horizontal"
         android:paddingTop="15dp">
 
-        <Button
+        <TextView
             android:id="@+id/product_filtepop_reset_filter"
             android:layout_width="0dp"
             android:layout_height="33dp"
@@ -45,7 +45,7 @@
             android:textColor="#222"
             android:textSize="15sp" />
 
-        <Button
+        <TextView
             android:id="@+id/product_filtepop_enter_filter"
             android:layout_width="0dp"
             android:layout_height="33dp"
