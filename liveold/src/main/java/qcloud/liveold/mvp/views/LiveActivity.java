@@ -2506,16 +2506,17 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
             if (2 == CurLiveInfo.getEquipment()) {
                 if (QavsdkControl.getInstance() != null) {
                     if (orientation > 350 || orientation < 10) { //0度
-                        QavsdkControl.getInstance().setRotation(-90);
-                    } else if (orientation > 80 && orientation < 100) { //90度
                         QavsdkControl.getInstance().setRotation(0);
-                    } else if (orientation > 170 && orientation < 190) { //180度
+                    } else if (orientation > 80 && orientation < 100) { //90度
                         QavsdkControl.getInstance().setRotation(90);
-                    } else if (orientation > 260 && orientation < 280) { //270度
+                    } else if (orientation > 170 && orientation < 190) { //180度
                         QavsdkControl.getInstance().setRotation(180);
+                    } else if (orientation > 260 && orientation < 280) { //270度
+                        QavsdkControl.getInstance().setRotation(270);
                     }
                     return;
                 }
+                return;
             } else {
                 if (QavsdkControl.getInstance() != null) {
                     if (orientation > 350 || orientation < 10) { //0度
