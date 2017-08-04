@@ -838,6 +838,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 public void onClick(View v) {
                     NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
 //                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
+                    DataStatistApiParam.HomeBannerClick(banner.title);
                 }
             });
             return view;
