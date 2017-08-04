@@ -84,6 +84,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 
     private static final int SMOTH_CODE = 2;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHOTO = 2;
+
     private int width;
     private List<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
@@ -103,7 +105,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("资产证明");
 
-//        ViewUtils.setTextColorAndLink(this, description, R.string.hotline, getResources().getColor(R.color.orange), (v, linkText) -> NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848"));
         ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
@@ -111,7 +112,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 NavigationUtils.startDialgTelephone(AssetProveActivity.this, "4001888848");
             }
         });
-
 
         frameLayout.setmCellWidth(width / 4);
         frameLayout.setmCellHeight(width / 4);
@@ -133,10 +133,21 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();
                 return;
             }
-            NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+            takePhoto();
         });
         return addImage;
     }
+
+    public void takePhoto(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
+
+        }else {
+            NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -147,6 +158,14 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 } else {
                     // Permission Denied
                     Toast.makeText(AssetProveActivity.this, "请开启用户拨打电话权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_CALL_PHOTO:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+                } else {
+                    // Permission Denied
+                    Toast.makeText(AssetProveActivity.this, "请开启系统存储权限", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -253,7 +272,9 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }
         if (0 == Integer.valueOf(SPreference.getToCBean(this).getAssetsCertificationStatus()) ||
                 3 == Integer.valueOf(SPreference.getToCBean(this).getAssetsCertificationStatus())) {
-            frameLayout.addView(addImg());
+            if (imagePaths.size() < 10) {
+                frameLayout.addView(addImg());
+            }
         }
     }
 
@@ -389,7 +410,11 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             if (resultCode == RESULT_OK) {
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
-                    imagePaths.add( mSelectPath.get(0));
+                    if ((imagePaths.size() + mSelectPath.size()) >= 10) {
+                        Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    imagePaths.addAll(mSelectPath);
                     updateImageViewLayout();
                 }
             }

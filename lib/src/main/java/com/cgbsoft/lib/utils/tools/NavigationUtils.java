@@ -86,6 +86,14 @@ public class NavigationUtils {
         selectSec.start(activity, reqeustCode);
     }
 
+    public static void startSystemImageMultiForResult(Activity activity, int reqeustCode) {
+        ImageSelector selectSec = ImageSelector.create();
+        selectSec.openCameraOnly(false);
+        selectSec.multi();
+        selectSec.count(12);
+        selectSec.start(activity, reqeustCode);
+    }
+
     public static void toMainActivity(Context context) {
         Router.build(RouteConfig.GOTOCMAINHONE).go(context);
     }

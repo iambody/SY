@@ -79,7 +79,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
 //        isBindAdviser = !TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().bandingAdviserId);
         accountType = AppManager.getUserInfo(this).getToC().getCustomerIdType();
         titleMid.setText(getResources().getString(R.string.datum_manage_account));
-        titleRight.setText(R.string.rc_confirm);
+        titleRight.setText(R.string.commit);
         backImage.setVisibility(View.VISIBLE);
         mList =  Arrays.asList(getResources().getStringArray(R.array.select_identify));
         initView();
