@@ -168,7 +168,7 @@
             android:paddingBottom="@dimen/ui_5_dip"
             android:paddingTop="@dimen/ui_5_dip"
             android:text="@string/code_shixiao1"
-            android:textColor="@color/tv_gray"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_10" />
 
         <Button
