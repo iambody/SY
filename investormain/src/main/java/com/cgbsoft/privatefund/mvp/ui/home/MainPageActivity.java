@@ -29,11 +29,13 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -69,6 +71,7 @@ import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
 import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.im.utils.RongCouldUtil;
 import app.privatefund.com.vido.service.FloatVideoService;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -118,6 +121,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<QrCodeBean> twoCodeObservable;
     private Observable<Integer> jumpIndexObservable;
     private Observable<ConversationBean> startConverstationObservable;
+    private Observable<Boolean> hasReadResultObservable;
     private boolean isOnlyClose;
     private int currentResId;
     private JSONObject liveJsonData;
@@ -643,6 +647,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
             }
         });
+
+        if (hasReadResultObservable == null) {
+            hasReadResultObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, Boolean.class);
+            hasReadResultObservable.subscribe(new RxSubscriber<Boolean>() {
+                @Override
+                protected void onEvent(Boolean booleanValue) {
+                    System.out.println("----------unreadiNfo=---booleanValue" + booleanValue + "----getUnreadNoticeInfoCount=" + getUnreadNoticeInfoCount());
+                    if (booleanValue) {
+//                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
+                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, getUnreadNoticeInfoCount() > 0);
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -659,6 +682,20 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //
 //            }
 //        });
+    }
+
+    private int getUnreadNoticeInfoCount() {
+        List<Conversation> list = RongIM.getInstance().getConversationList();
+        int result = 0;
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Conversation conversation : list) {
+                if (RongCouldUtil.getInstance().customConversation(conversation.getTargetId()) || Constant.msgSystemStatus.equals(conversation.getSenderUserId()) ||
+                        AppManager.getUserInfo(this).getToC().getBandingAdviserId().equals(conversation.getSenderUserId())) {
+                    result += conversation.getUnreadMessageCount();
+                }
+            }
+        }
+        return result;
     }
 
     private void toJumpTouziren(QrCodeBean qrCodeBean) {
@@ -744,8 +781,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         if (null != killObservable) {
             RxBus.get().unregister(RxConstant.MAIN_PAGE_KILL, killObservable);
-
         }
+        if (null != hasReadResultObservable) {
+            RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, hasReadResultObservable);
+            hasReadResultObservable = null;
+        }
+
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         if (isOnlyClose) {

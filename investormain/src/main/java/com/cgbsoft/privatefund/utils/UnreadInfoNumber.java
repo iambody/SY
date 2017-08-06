@@ -37,9 +37,6 @@ public class UnreadInfoNumber {
 
     private static Observable<Integer> unReadNumberObservable;
 
-    private static Observable<Boolean> hasReadResultObservable;
-
-
     public UnreadInfoNumber(Activity activity, View showView, boolean fromBackPoint) {
         this.activity = activity;
         this.showView = showView;
@@ -103,11 +100,6 @@ public class UnreadInfoNumber {
             RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, unReadNumberObservable);
             unReadNumberObservable = null;
         }
-
-        if (null != hasReadResultObservable) {
-            RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, hasReadResultObservable);
-            hasReadResultObservable = null;
-        }
     }
 
     private void initUnreadNumber() {
@@ -123,20 +115,6 @@ public class UnreadInfoNumber {
         }
     }
 
-    private int getUnreadNoticeInfoCount() {
-        List<Conversation> list = RongIM.getInstance().getConversationList();
-        int result = 0;
-        if (!CollectionUtils.isEmpty(list)) {
-            for (Conversation conversation : list) {
-                if (RongCouldUtil.getInstance().customConversation(conversation.getTargetId()) || Constant.msgSystemStatus.equals(conversation.getSenderUserId()) ||
-                        AppManager.getUserInfo(activity).getToC().getBandingAdviserId().equals(conversation.getSenderUserId())) {
-                    result += conversation.getUnreadMessageCount();
-                }
-            }
-        }
-        return result;
-    }
-
     private void initRegeist() {
         if (unReadNumberObservable == null) {
             unReadNumberObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, Integer.class);
@@ -145,25 +123,6 @@ public class UnreadInfoNumber {
                 protected void onEvent(Integer integer) {
                     hasUnreadNumber = integer != 0;
                     initUnreadInfoAndPosition();
-                }
-
-                @Override
-                protected void onRxError(Throwable error) {
-
-                }
-            });
-        }
-
-        if (hasReadResultObservable == null) {
-            hasReadResultObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, Boolean.class);
-            hasReadResultObservable.subscribe(new RxSubscriber<Boolean>() {
-                @Override
-                protected void onEvent(Boolean booleanValue) {
-                    System.out.println("----------unreadiNfo=---booleanValue" + booleanValue + "----getUnreadNoticeInfoCount=" + getUnreadNoticeInfoCount());
-                    if (booleanValue) {
-//                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
-                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, getUnreadNoticeInfoCount() > 0);
-                    }
                 }
 
                 @Override
