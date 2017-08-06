@@ -1497,10 +1497,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         UIConversation uiconversation = (UIConversation) parent.getAdapter().getItem(position);
         Conversation.ConversationType type = uiconversation.getConversationType();
-        if (!uiconversation.getConversationTargetId().equals(noticeId)) {
-            uiconversation.setUnReadMessageCount(0);
-            this.mAdapter.notifyDataSetChanged();
-        }
+//        if (!uiconversation.getConversationTargetId().equals(noticeId)) {
+////            uiconversation.setUnReadMessageCount(0);
+//            this.mAdapter.notifyDataSetChanged();
+//        }
 
         String targetId = uiconversation.getConversationTargetId();
         SPreference.putBoolean(getContext(), "isTop", uiconversation.isTop());
