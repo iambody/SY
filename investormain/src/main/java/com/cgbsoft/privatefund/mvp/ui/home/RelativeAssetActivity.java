@@ -82,7 +82,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     protected TextView checkFailureReason;
 
     @BindView(R.id.commit)
-    protected TextView commitBtn;
+    protected Button commitBtn;
 
     @BindView(R.id.check_result_flag)
     protected TextView resultImage;

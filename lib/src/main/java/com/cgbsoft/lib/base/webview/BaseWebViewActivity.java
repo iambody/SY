@@ -259,7 +259,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         titleMid.setText(title);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_back_black_new);
         toolbar.setNavigationOnClickListener(v -> finish());
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 

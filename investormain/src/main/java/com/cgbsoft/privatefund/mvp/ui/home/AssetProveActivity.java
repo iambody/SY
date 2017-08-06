@@ -200,7 +200,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 break;
             case 3:
                 linearLayout.setVisibility(View.VISIBLE);
-                checkResult.setText("被驳回");
+                checkResult.setText("已驳回");
                 if (TextUtils.isEmpty(vas)) {
                     frameLayout.addView(addImg());
                 }
