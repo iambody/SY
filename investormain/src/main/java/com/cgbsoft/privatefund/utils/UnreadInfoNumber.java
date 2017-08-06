@@ -12,13 +12,13 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.privatefund.R;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import app.privatefund.com.im.utils.RongCouldUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import rx.Observable;
-import rx.Observer;
 
 /**
  * @author chenlong
@@ -80,6 +80,21 @@ public class UnreadInfoNumber {
         }
     }
 
+    public boolean hasShowRedPoint() {
+        ImageView resourceId = (ImageView)showView;
+        Class imageClass = resourceId.getClass();
+        try {
+            Field field = imageClass.getDeclaredField("mResource");
+            int resoutId = (int)field.get(resourceId);
+            return resoutId == R.drawable.select_news_new_black_red_point || resoutId == R.drawable.select_news_new_white_red_point;
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * 注销注册事件
      */
@@ -108,6 +123,20 @@ public class UnreadInfoNumber {
         }
     }
 
+    private int getUnreadNoticeInfoCount() {
+        List<Conversation> list = RongIM.getInstance().getConversationList();
+        int result = 0;
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Conversation conversation : list) {
+                if (RongCouldUtil.getInstance().customConversation(conversation.getTargetId()) || Constant.msgSystemStatus.equals(conversation.getSenderUserId()) ||
+                        AppManager.getUserInfo(activity).getToC().getBandingAdviserId().equals(conversation.getSenderUserId())) {
+                    result += conversation.getUnreadMessageCount();
+                }
+            }
+        }
+        return result;
+    }
+
     private void initRegeist() {
         if (unReadNumberObservable == null) {
             unReadNumberObservable = RxBus.get().register(RxConstant.REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE, Integer.class);
@@ -130,9 +159,10 @@ public class UnreadInfoNumber {
             hasReadResultObservable.subscribe(new RxSubscriber<Boolean>() {
                 @Override
                 protected void onEvent(Boolean booleanValue) {
-                    System.out.println("----------unreadiNfo=---booleanValue" + booleanValue);
+                    System.out.println("----------unreadiNfo=---booleanValue" + booleanValue + "----getUnreadNoticeInfoCount=" + getUnreadNoticeInfoCount());
                     if (booleanValue) {
-                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
+//                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, hasUnreadNumber);
+                        RxBus.get().post(RxConstant.UNREAD_MESSAGE_OBSERVABLE, getUnreadNoticeInfoCount() > 0);
                     }
                 }
 

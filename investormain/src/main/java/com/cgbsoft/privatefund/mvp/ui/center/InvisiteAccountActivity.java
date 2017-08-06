@@ -50,7 +50,7 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
     ClearEditText realName;
 
     @BindView(R.id.invisite_certifiy_type)
-    ClearEditText certifyType;
+    TextView certifyType;
 
     @BindView(R.id.invisite_certifiy_number)
     ClearEditText certifyNumber;
@@ -99,18 +99,32 @@ public class InvisiteAccountActivity extends BaseActivity<InvisiteAccountPresent
         linearLayout.setVisibility(!TextUtils.isEmpty(accountType) ? View.GONE : View.VISIBLE);
         realName.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
+                realName.setCursorVisible(true);
                 ViewUtils.showInputMethod(realName);
                 linearLayout.setVisibility(View.GONE);
             }
         });
-        certifyType.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                ViewUtils.hideInputMethod(certifyType);
+//        certifyType.setOnFocusChangeListener((v, hasFocus) -> {
+//            if (hasFocus) {
+//                certifyType.setEnabled(false);
+//                ViewUtils.hideInputMethod(certifyType);
+//            } else {
+//                certifyType.setEnabled(true);
+//            }
+//            linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+//        });
+        certifyType.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(accountType)) {
+                return;
             }
-            linearLayout.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+            realName.setCursorVisible(false);
+            certifyNumber.setCursorVisible(false);
+            ViewUtils.hideInputMethod(certifyType);
+            linearLayout.setVisibility(View.VISIBLE);
         });
         certifyNumber.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
+                certifyNumber.setCursorVisible(true);
                 ViewUtils.showInputMethod(realName);
                 linearLayout.setVisibility(View.GONE);
             }

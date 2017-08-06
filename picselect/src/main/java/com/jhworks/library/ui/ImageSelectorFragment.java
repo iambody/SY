@@ -510,7 +510,7 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
             }
         }
 
-        if (data == null)
+        if (data == null || mAllMediaList == null)
             return;
         if (mAllMediaList.size() > 0)
             mAllMediaList.clear();
