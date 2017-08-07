@@ -2,6 +2,9 @@
 <resources>
     <string name="rc_name">融云</string>
 
+    <string name="rc_voice_dialog_swipe">手指上滑，取消发送</string>
+    <string name="rc_voice_dialog_cancel_send">松开手指，取消发送</string>
+    <string name="rc_voice_dialog_time_short">录音时间太短</string>
     <!-- discussion_notification_msg -->
     <string name="rc_discussion_nt_msg_for_rename">"%1$s 修改讨论组名称为 %2$s"</string>
     <string name="rc_discussion_nt_msg_for_added">"%1$s 邀请 %2$s 加入了讨论组"</string>
@@ -65,6 +68,7 @@
     <string name="rc_input_send">发送</string>
 
     <string name="rc_plugins_location">位置</string>
+    <string name="rc_plugins_image">图片</string>
 
     <string name="rc_plugins_camera">相机</string>
     <string name="rc_plugins_files">文件</string>

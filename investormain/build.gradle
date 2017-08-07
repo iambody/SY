@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
+
+// 打包时间
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+//打包描述
+def releaseDesc() {
+    return "sixiangyun"
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -58,19 +67,41 @@ android {
 
     signingConfigs {
         debug {
-//            storeFile file("/workspace/signe/privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
+            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+            keyAlias "beijing"
+            keyPassword "privatefund"
+            storePassword "privatefund"
         }
         release {
-//            storeFile file("/workspace/signe/privatefund.keystore")
-//            storePassword "privatefund"
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
+            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+            keyAlias "beijing"
+            keyPassword "privatefund"
+            storePassword "privatefund"
         }
     }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace(".apk", "-${releaseDesc()}-${releaseTime()}-${defaultConfig.versionCode}-${defaultConfig.versionName}.apk")
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+    productFlavors{
+        wandoujia{}
+        baidu{}
+        yingyonghui{}
+        mumayi{}
+        sxy360{}
+        xiaomi{}
+        tengxun{}
+        huawei{}
 
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
+    }
     buildTypes {
         debug {
             // 显示Log
@@ -78,6 +109,9 @@ android {
             versionNameSuffix "-debug"
             // 是否进行混淆
             minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.debug
         }
@@ -96,15 +130,6 @@ android {
             //签名配置
             signingConfig signingConfigs.release
 
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "simuyun_release_${defaultConfig.versionName}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
         }
     }
 
