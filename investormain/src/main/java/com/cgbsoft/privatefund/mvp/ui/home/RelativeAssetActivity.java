@@ -116,7 +116,6 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         });
     }
 
-
     @Override
     protected void data() {
         if (WAIT_CHECK == Integer.valueOf(SPreference.getToCBean(this).getStockAssetsStatus())) {
@@ -146,6 +145,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         } else {
             resultImage.setVisibility(View.GONE);
             addImage.setVisibility(View.VISIBLE);
+            commitBtn.setEnabled(false);
         }
     }
 
@@ -270,6 +270,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
                 resultImage.setVisibility(View.GONE);
                 checkFailure.setVisibility(View.GONE);
                 relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
+                commitBtn.setEnabled(true);
             } else {
                 imagePath = "";
             }
@@ -279,6 +280,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
                 showImage.setImageResource(R.drawable.ic_guanlian_bg);
                 imagePath = null;
                 relative_asset_up_shouchizhaopian_txt.setVisibility(View.VISIBLE);
+                commitBtn.setEnabled(false);
             }
         }
     }

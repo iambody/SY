@@ -34,14 +34,6 @@
                 android:textSize="@dimen/dimens_sp_16" />
         </RelativeLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/tv_vcd_message"
@@ -49,8 +41,6 @@
                     android:layout_height="120dp"
                     android:layout_margin="5dp"
                     android:textSize="@dimen/dimens_sp_15" />
-            </RelativeLayout>
-        </ScrollView>
 
         <TextView
             android:layout_width="wrap_content"
