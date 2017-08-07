@@ -19,6 +19,7 @@
             android:id="@+id/view_live_iv_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/ui_5_dip"
             android:scaleType="fitXY"
             android:src="@drawable/bg_choice_ids" />
 
