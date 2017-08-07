@@ -1132,17 +1132,20 @@ public class CWebviewManger {
         if (!url.contains("http")) {
             url = BaseWebNetConfig.baseParentUrl + url;
         }
-        Intent i = new Intent(context, BaseWebViewActivity.class);
 
-        i.putExtra(WebViewConstant.push_message_url, url);
-        i.putExtra(WebViewConstant.push_message_title, title);
-        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
-        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
-        i.putExtra(WebViewConstant.PAGE_INIT, false);
-        if (split.length >= 5) {
-            i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
-        }
-        ((Activity) context).startActivityForResult(i, 300);
+        Utils.OpenSharePage(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, title, url, false, false, true);
+
+//        Intent i = new Intent(context, BaseWebViewActivity.class);
+//
+//        i.putExtra(WebViewConstant.push_message_url, url);
+//        i.putExtra(WebViewConstant.push_message_title, title);
+//        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+//        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+//        i.putExtra(WebViewConstant.PAGE_INIT, false);
+//        if (split.length >= 5) {
+//            i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+//        }
+//        ((Activity) context).startActivityForResult(i, 300);
     }
 
     public void toviewpdf(String action) {
