@@ -495,7 +495,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.displayroud(baseActivity, liveInfBean.image, 12, view_live_iv_bg);
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告:");
-                        BStrUtils.SetTxt(view_live_content, liveInfBean.content);
+                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
                         BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
 
                         view_live_title_tag_iv.setVisibility(View.INVISIBLE);
@@ -818,7 +818,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         public void frash(List<HomeEntity.Banner> datas) {
             this.banners = datas;
-            this.notifyDataSetChanged();
+            BannerAdapter.this.notifyDataSetChanged();
         }
 
         @Override
@@ -831,8 +831,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
+                    NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title );;//RightShareWebViewActivity
 //                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
+
                     DataStatistApiParam.HomeBannerClick(banner.title);
                 }
             });

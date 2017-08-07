@@ -140,6 +140,12 @@ public class ImageSelectActivity extends ImageBaseActivity
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       ImageSelectorFragment.resultList= new ArrayList<>();
+        ImageSelectorFragment.mAllMediaList=new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
