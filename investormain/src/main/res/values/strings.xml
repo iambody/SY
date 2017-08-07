@@ -238,7 +238,7 @@
 
     <string name="relative_asset_past">已过审</string>
     <string name="relative_asset_doing">审核中</string>
-    <string name="relative_asset_error">被驳回</string>
+    <string name="relative_asset_error">已驳回</string>
     <string name="relative_asset_success">审核成功</string>
     <string name="relative_asset_failure">审核失败</string>
     <string name="relative_asset_status">审核状态</string>
