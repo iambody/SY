@@ -374,7 +374,7 @@ public class SearchAdatper extends RecyclerView.Adapter {
                                 if (TextUtils.equals("1", resultBean.getIsMore())) {
                                     String values = CwebNetConfig.baseParentUrl + "/apptie/notice_toB.html?id=";
                                     // CwebNetConfig.msgDetal
-                                    url = values + resultBean.getCategoryId().concat("keywords=").concat(keyName);
+                                    url = values + resultBean.getCategoryId().concat("&keywords=").concat(keyName);
                                 } else {
                                     url = CwebNetConfig.msgMoreDetail + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }
