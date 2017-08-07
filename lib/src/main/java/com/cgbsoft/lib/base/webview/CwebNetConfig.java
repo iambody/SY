@@ -130,8 +130,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
-        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
-//        msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
+//        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
+        msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
         msgMoreDetail = baseSxyParentUrl + "/biz/product/notice_detail.html?id=";
         signInPage = baseSxyParentUrl + "/biz/mine/mine-sign.html";
         mineCardCoupons = baseSxyParentUrl + "/biz/card/mine_card.html";
