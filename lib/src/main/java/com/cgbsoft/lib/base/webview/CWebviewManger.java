@@ -163,6 +163,14 @@ public class CWebviewManger {
         } else if (action.contains("choiceAddress")) {
             NavigationUtils.startActivityByRouter(context, "mall_choice_address");
         } else if (action.contains("telephone")) {
+
+            //判断是否有拨打电话权限
+            if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+                PromptManager.ShowCustomToast(context, "请到设置允许拨打电话权限");
+
+                return;
+            }
+
             Utils.telHotline(context);
         } else if (action.contains("openMallMain")) {
         } else if (action.contains("submitQuestionnaire")) {
