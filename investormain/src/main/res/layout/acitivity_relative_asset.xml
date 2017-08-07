@@ -67,44 +67,42 @@
                     android:text="@string/shouchishenfenzheng"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16" />
-
             </FrameLayout>
 
             <include layout="@layout/acitivity_divide_online" />
 
-            <include layout="@layout/activity_relativeasset_paizhao_zishi" />
+            <LinearLayout
+                android:id="@+id/check_failure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingLeft="10dp"
+                android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/check_failure_reason_text"
+                    android:textColor="@color/color_c33633"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/check_failure_reason_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_c33633"
+                    android:textSize="@dimen/text_size_medium" />
+            </LinearLayout>
+
+            <include layout="@layout/activity_relativeasset_paizhao_zishi" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="12dp">
-
-                <LinearLayout
-                    android:id="@+id/check_failure"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="10dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/check_failure_reason_text"
-                        android:textColor="@color/color_c33633"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/check_failure_reason_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_c33633"
-                        android:textSize="@dimen/text_size_medium" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
