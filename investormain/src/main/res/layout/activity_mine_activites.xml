@@ -9,6 +9,10 @@
         layout="@layout/title_normal_new"
         />
 
+    <include
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipeToLoadLayout"
@@ -43,20 +47,5 @@
         android:visibility="gone"
         android:gravity="center"
         android:background="@color/white"
-        android:id="@+id/empty_ll">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_empty_list"
-            android:layout_marginBottom="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当前暂无活动"
-            android:textSize="@dimen/dimens_sp_14"
-            android:gravity="center"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+        android:id="@+id/empty_ll">M</LinearLayout>
 </LinearLayout>

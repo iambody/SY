@@ -21,15 +21,16 @@
 
         <TextView
             android:id="@+id/item_name"
-            android:textColor="#666"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"/>
+            android:layout_marginTop="13dp"
+            android:text="私享云用户"/>
 
         <TextView
             android:id="@+id/item_comment"
-            android:textColor="#333"
+            android:textColor="#666"
             android:textSize="16sp"
             android:layout_marginTop="11dp"
             android:layout_width="wrap_content"

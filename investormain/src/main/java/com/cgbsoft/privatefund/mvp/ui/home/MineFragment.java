@@ -794,7 +794,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
         }
-
         xTabLayout.setupWithViewPager(viewPager);
         for (int i = 0; i < xTabLayout.getTabCount(); i++) {
             xTabLayout.getTabAt(i).setText(videos[i]);

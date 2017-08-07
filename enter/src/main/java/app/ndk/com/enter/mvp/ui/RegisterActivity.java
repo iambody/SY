@@ -139,7 +139,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         });
 
 
-
     }
 
     @OnClick(R2.id.iv_ar_back)
