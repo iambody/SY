@@ -12,6 +12,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -68,6 +69,7 @@ public class ProductDetailActivity extends BaseWebViewActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
+        StatusBarUtil.translucentStatusBar(this);
         if (url.contains("apptie/detail.html")) {
             findViewById(R.id.cloud_menu_imagevew).setVisibility(View.VISIBLE);
         }
