@@ -11,6 +11,7 @@ def releaseTime() {
 def releaseDesc() {
     return "sixiangyun"
 }
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -67,16 +68,16 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
-            storePassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//            storePassword "privatefund"
         }
         release {
-            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
-            storePassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//            storePassword "privatefund"
         }
     }
     applicationVariants.all { variant ->
@@ -88,19 +89,19 @@ android {
             }
         }
     }
-    productFlavors{
-        wandoujia{}
-        baidu{}
-        yingyonghui{}
-        mumayi{}
-        qihu360{}
-        xiaomi{}
-        tengxun{}
-        huawei{}
+    productFlavors {
+        wandoujia {}
+        baidu {}
+        yingyonghui {}
+        mumayi {}
+        qihu360 {}
+        xiaomi {}
+        tengxun {}
+        huawei {}
 
     }
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
     buildTypes {
         debug {
