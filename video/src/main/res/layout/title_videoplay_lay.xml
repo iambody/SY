@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
 
     android:background="@color/white"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/view_title_back_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_centerVertical="true"
-
+        android:clickable="true"
+        android:padding="@dimen/ui_6_dip"
+        android:layout_marginLeft="@dimen/ui_6_dip"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_back_black_24dp" />
 
     <TextView
