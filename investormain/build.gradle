@@ -89,14 +89,14 @@ android {
         }
     }
     productFlavors{
-        wandoujia{}
+        huawei{}
+       /*qihu360{}
+        tengxun{}
+        xiaomi{}
         baidu{}
         yingyonghui{}
-        mumayi{}
-        qihu360{}
-        xiaomi{}
-        tengxun{}
-        huawei{}
+        wandoujia{}
+        mumayi{}*/
 
     }
     productFlavors.all {
