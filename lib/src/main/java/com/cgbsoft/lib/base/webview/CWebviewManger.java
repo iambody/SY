@@ -163,6 +163,14 @@ public class CWebviewManger {
         } else if (action.contains("choiceAddress")) {
             NavigationUtils.startActivityByRouter(context, "mall_choice_address");
         } else if (action.contains("telephone")) {
+
+            //判断是否有拨打电话权限
+            if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+                PromptManager.ShowCustomToast(context, "请到设置允许拨打电话权限");
+
+                return;
+            }
+
             Utils.telHotline(context);
         } else if (action.contains("openMallMain")) {
         } else if (action.contains("submitQuestionnaire")) {
@@ -1409,15 +1417,34 @@ public class CWebviewManger {
             i.putExtra(WebViewConstant.RIGHT_SAVE, rightSave);
             i.putExtra(WebViewConstant.RIGHT_SHARE, rightShare);
             i.putExtra(WebViewConstant.PAGE_INIT, initPage);
+
             if (split.length >= 5) {
                 i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
+            //解决产品详情的产品公告进入不能分享
+
+            //解决产
+
+
             ((Activity) context).startActivityForResult(i, 300);
+
             if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");
-            } else if (!TextUtils.isEmpty(url) && url.contains("discover/details.html")) {
-//            new RundouTaskManager(context).executeRundouTask("查看资讯");
+            } else if ("产品公告详情".equals(title)) {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+                hashMap.put(WebViewConstant.push_message_title, title);
+                hashMap.put(WebViewConstant.push_message_url, url);
+
+                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+
+            } else {
+                ((Activity) context).startActivityForResult(i, 300);
             }
+//
+//                if (!TextUtils.isEmpty(url) && url.contains("discover/details.html")) {
+////            new RundouTaskManager(context).executeRundouTask("查看资讯");
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -75,7 +75,10 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
         commonNavigator.setAdapter(videoNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
+
         commonNavigator.setAdjustMode(true);
+//        commonNavigator.setLeftPadding(DimensionPixelUtil.dip2px(baseActivity,100));
+//        commonNavigator.setRightPadding(DimensionPixelUtil.dip2px(baseActivity,100));
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
@@ -169,7 +172,13 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             VideoAllModel.VideoCategory videoCategory = categoryList.get(i);
 
             CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
+
+//
             View view = layoutInflater.inflate(R.layout.view_item_navigation, null);
+//            LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity,100),LinearLayout.LayoutParams.WRAP_CONTENT);
+//            params.setMargins(DimensionPixelUtil.dip2px(baseActivity,60),0,DimensionPixelUtil.dip2px(baseActivity,60),0);
+//            commonPagerTitleView.setLayoutParams(params);
+
             ImageView imageView = (ImageView) view.findViewById(R.id.view_item_navigation_iv);
 
             TextView textViewdd = (TextView) view.findViewById(R.id.view_item_navigation_txt);

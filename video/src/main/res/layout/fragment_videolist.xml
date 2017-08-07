@@ -13,6 +13,7 @@
         android:id="@+id/video_videolist_indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_60_dip"
+
         android:layout_marginTop="@dimen/ui_10_dip"/>
 
     <android.support.v4.view.ViewPager

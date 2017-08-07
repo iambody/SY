@@ -24,7 +24,6 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
@@ -44,6 +43,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
@@ -111,6 +111,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isShowWxBt;
     //是否点击了游客模式的按钮
     boolean isVisitorLoginClick, isVisitorBackHome;
+    boolean fromValidatePassword;
 
     private LoadingDialog mLoadingDialog;
     private int identity;
@@ -173,6 +174,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
         ialoginout = getIntent().getBooleanExtra("ialoginout", false);
+        fromValidatePassword = getIntent().getBooleanExtra("fromValidatePassword", false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -206,7 +208,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
 /*产品经理需求 不要首次进来就弹出框*/
 //        if (!SPreference.isVisableProtocol(getApplicationContext()))
-//            new ProtocolDialog(this, 0, null);
+            new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
@@ -569,6 +571,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressed() {
+        if (fromValidatePassword) {
+            System.exit(0);
+            return;
+        }
+
 //        openActivity(ChoiceIdentityActivity.class);
         if (isShowWxBt) {
             isShowWxBt = false;
@@ -585,6 +592,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             isShowWxBt = false;
 //            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
+            return true;
+        }
+
+        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+            System.exit(0);
             return true;
         }
         return super.onKeyDown(keyCode, event);

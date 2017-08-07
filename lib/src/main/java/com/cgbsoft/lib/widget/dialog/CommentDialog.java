@@ -24,7 +24,7 @@ public abstract class CommentDialog  extends BaseDialog{
     private TextView send;
     private TextView editListenerHint;
 
-
+private Context dContext;
     public CommentDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
 
@@ -36,6 +36,7 @@ public abstract class CommentDialog  extends BaseDialog{
 
     public CommentDialog(Context context) {
         super(context, R.style.dialog_comment);
+        this.dContext=context;
     }
 
     @Override
@@ -57,7 +58,7 @@ public abstract class CommentDialog  extends BaseDialog{
 
 //        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);//SOFT_INPUT_ADJUST_PAN
         send.setEnabled(false);
-//        send.setTextColor(0xbf9b69);
+        send.setTextColor(0x99999999);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +89,7 @@ public abstract class CommentDialog  extends BaseDialog{
 //                    } else  {
 //                        send.setTextColor(Color.parseColor("bf9b69"));
 //                    send.setTextColor(0xbf9b69);
+                    send.setTextColor(dContext.getResources().getColor(R.color.app_golden));
 //                    }
                     editListenerHint.setText(new StringBuilder().append(result.length()).append("/1000").toString());
                 } else {
