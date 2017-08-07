@@ -218,7 +218,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
         RxBus.get().post(RxConstant.SET_PAGE_SWITCH_BUTTON, false);
         if (!isFiveTimesError) {
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
-        } else if (isFromShowAssert){
+        } else {
             Toast.makeText(GestureVerifyActivity.this, "手势密码验证超过次数，请重新登录", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
