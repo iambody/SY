@@ -367,13 +367,14 @@ public class SearchAdatper extends RecyclerView.Adapter {
                                 String url;
 //                                if (TextUtils.equals("1", resultBean.getIsMore())) {
 //                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_toB.html?id=" + resultBean.getCategoryId();
-//
 //                                } else {
 //                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
 //                                }
 //                                app5.0/apptie/notice_toB.html?id=%@&keywords=%@
                                 if (TextUtils.equals("1", resultBean.getIsMore())) {
-                                    url = CwebNetConfig.msgDetal + resultBean.getCategoryId().concat("keywords=").concat(keyName);
+                                    String values = CwebNetConfig.baseParentUrl + "app5.0/apptie/notice_toB.html?id=";
+                                    // CwebNetConfig.msgDetal
+                                    url = values + resultBean.getCategoryId().concat("&keywords=").concat(keyName);
                                 } else {
                                     url = CwebNetConfig.msgMoreDetail + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }
