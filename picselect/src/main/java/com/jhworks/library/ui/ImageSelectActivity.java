@@ -45,7 +45,10 @@ public class ImageSelectActivity extends ImageBaseActivity
         intent.putExtra(Constant.KEY_EXTRA_SHOW_CAMERA, showCamera);
         intent.putExtra(Constant.KEY_EXTRA_SELECT_COUNT, maxCount);
         if (originData != null) {
-            intent.putStringArrayListExtra(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST, originData);
+//            intent.putStringArrayListExtra(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST, originData);
+
+            ImageSelectorFragment.resultList=originData;
+
         }
         intent.putExtra(Constant.KEY_EXTRA_SELECT_MODE, mode);
         intent.putExtra(Constant.KEY_EXTRA_IMAGE_SPAN_COUNT, imageSpanCount);
