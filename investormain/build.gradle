@@ -51,6 +51,7 @@ android {
             exclude 'META-INF/DEPENDENCIES.txt'
             exclude 'META-INF/NOTICE'
             exclude 'META-INF/NOTICE.txt'
+
         }
 
         //忽略方法数限制的检查
@@ -99,7 +100,7 @@ android {
 
     }
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
     buildTypes {
         debug {

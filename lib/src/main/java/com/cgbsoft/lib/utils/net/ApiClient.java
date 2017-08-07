@@ -298,6 +298,7 @@ public class ApiClient {
             obj.put("openId", openId);
             obj.put("recommendId", "");
             obj.put("client", AppManager.isInvestor(context) ? "C" : "B");
+            obj.put("regChannel","私享云");
 
         } catch (Exception e) {
         }
@@ -348,6 +349,7 @@ public class ApiClient {
             object.put("captcha", code);
             object.put("userType", "1");//1是投资人 2是理财师
             object.put("uniqueCode", uniqueCode);
+            object.put("regChannel","私享云");
         } catch (Exception e) {
 
         }

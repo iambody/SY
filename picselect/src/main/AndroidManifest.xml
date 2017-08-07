@@ -12,10 +12,12 @@
 
         <activity
             android:name="com.jhworks.library.ui.ImageSelectActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize"/>
 
         <activity
             android:name="com.jhworks.library.ui.ImageActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize"/>
 
     </application>
