@@ -169,6 +169,7 @@
         android:layout_margin="@dimen/ui_10_dip"
         android:layout_marginBottom="@dimen/ui_20_dip"
         android:background="@drawable/shape_common_bg_btn"
+        style="@style/button_style"
         android:gravity="center"
         android:text="@string/commit"
         android:textColor="@color/white"
