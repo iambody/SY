@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import app.privatefund.com.im.ConversationActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.im.MessageSearchActivity;
 import app.privatefund.com.im.R;
@@ -79,6 +78,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             midTitleView.setText(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? "公告" : "我的消息");
             divideLineView.setVisibility(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? View.VISIBLE : View.GONE);
             pager.setBackgroundResource(R.color.c_background);
+            ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
             toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
             toolbar.setOnMenuItemClickListener(this);
             toolbar.setNavigationOnClickListener(v -> {
@@ -107,7 +107,6 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
         view.findViewById(R.id.search).setOnClickListener(v -> {
             if (getArguments() != null && getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false)) {
                 Bundle bundle1 = new Bundle();
-                bundle1.putString("SEARCH_TYPE_PARAMS", "4");
                 bundle1.putString("SEARCH_TYPE_PARAMS", "4");
                 NavigationUtils.startActivityByRouter(getContext(), RouteConfig.SEARCH_RESULT_ACTIVITY, bundle1);
 //                Intent intent = new Intent(getActivity(), SearchResultListActivity.class);

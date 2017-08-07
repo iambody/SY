@@ -64,29 +64,35 @@ public class VideoDownloadListAdapter extends BaseAdapter<VideoDownloadListModel
             vdlh.pb_avd.setVisibility(View.VISIBLE);
             vdlh.ll_avd_pause.setVisibility(View.VISIBLE);
 
-            if (model.status == VideoStatus.DOWNLOADING  ) {
+            if (model.status == VideoStatus.DOWNLOADING) {
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_cache_d);
                 vdlh.tv_avd_pause.setText(R.string.caching_str);
                 vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
-            } else if (model.status == VideoStatus.WAIT) {
+            } else if (model.status == VideoStatus.WAIT) {//等待中
                 vdlh.iv_avd_pause.setImageResource(R.drawable.i_cache_wait);
                 vdlh.tv_avd_pause.setText("等待中");
                 vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
+                BStrUtils.SetTxt(vdlh.tv_avd_progress, "等待中");
             } else if (model.status == VideoStatus.NONE) {//未下载
                 vdlh.iv_avd_pause.setImageResource(R.drawable.ic_video_download_pause);
                 vdlh.tv_avd_pause.setText(R.string.paused_str);
                 vdlh.tv_avd_speed.setVisibility(View.VISIBLE);
+                BStrUtils.SetTxt(vdlh.tv_avd_progress, "已暂停");
             } else if (model.status == VideoStatus.FINISH) {
                 vdlh.ll_avd_pause.setVisibility(View.GONE);
                 vdlh.pb_avd.setVisibility(View.GONE);
                 vdlh.tv_avd_speed.setVisibility(View.GONE);
-                String done="";
-
-                if(!BStrUtils.isEmpty(model.progressStr)&&model.progressStr.contains("/")){
-                    int postion=  model.progressStr.indexOf("/");
-                    done= model.progressStr.substring(0,postion);
-                    BStrUtils.SetTxt( vdlh.tv_avd_progress,done);
-                }
+                String done = "";
+                BStrUtils.SetTxt(vdlh.tv_avd_progress, "已下载");
+//                if (!BStrUtils.isEmpty(model.progressStr) && model.progressStr.contains("/")) {
+//                    int postion = model.progressStr.indexOf("/");
+//                    done = model.progressStr.substring(0, postion);
+//                    if ("0.0M".equals(done) || "0M".equals(done)) {
+//                        BStrUtils.SetTxt(vdlh.tv_avd_progress, done);
+//                    } else {
+//                        BStrUtils.SetTxt(vdlh.tv_avd_progress, done);
+//                    }
+//                }
 
             }
 

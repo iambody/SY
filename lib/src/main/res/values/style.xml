@@ -83,11 +83,20 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColorHint">@color/hintcolor</item>
-        <item name="android:textColor">@color/hintcolor</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+    <style name="normal_edit2">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">16sp</item>
 
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
     <style name="normal_edit1">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -319,6 +328,11 @@
         <item name="android:textColor">@color/hintcolor</item>
         <item name="android:textColorHint">@color/hintcolor</item>
     </style>
+    <style name="textinput_style1">
+        <item name="android:textSize">12sp</item>
 
+        <item name="android:textColor">@color/hintcolor</item>
+        <item name="android:textColorHint">@color/hintcolor</item>
+    </style>
     <style name="button_style" parent="@style/Widget.AppCompat.Button.Borderless" />
 </resources>

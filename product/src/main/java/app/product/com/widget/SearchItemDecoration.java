@@ -21,18 +21,16 @@ import app.product.com.mvc.adapter.SearchAdatper;
 public class SearchItemDecoration extends RecyclerView.ItemDecoration {
 
     protected Drawable divider;
-    protected Drawable headerDrawble;
     protected int margin;
     private Context context;
     private static int MARGIN_TOP = 15;
-//    private boolean head;
+    private boolean head;
     private RecyclerView.ViewHolder preViewHolder;
 
     public SearchItemDecoration(Context context, int ColorId, int HeightId) {
         this.context = context;
         this.margin = context.getResources().getDimensionPixelOffset(HeightId);
         this.divider = ContextCompat.getDrawable(context, ColorId);
-        this.headerDrawble = ContextCompat.getDrawable(context, R.drawable.bg_white);
     }
 
     @Override
@@ -40,9 +38,11 @@ public class SearchItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
         RecyclerView.ViewHolder viewHolder = parent.getChildViewHolder(view);
         SearchAdatper.BaseViewHolder baseViewHolder = null;
-//        head = preViewHolder != null && preViewHolder instanceof SearchAdatper.HeaderViewHolder;
-//        preViewHolder = viewHolder;
+        head = preViewHolder != null && preViewHolder instanceof SearchAdatper.HeaderViewHolder;
+        System.out.println("--------head---=" + head);
+        preViewHolder = viewHolder;
 //        outRect.bottom = head ? 1 : margin;
+//        divider = head ? ContextCompat.getDrawable(context, R.drawable.bg_white) : ContextCompat.getDrawable(context, ColorId);
         outRect.bottom = margin;
         if (viewHolder instanceof SearchAdatper.BaseViewHolder) {
             baseViewHolder = (SearchAdatper.BaseViewHolder) viewHolder;
@@ -51,15 +51,14 @@ public class SearchItemDecoration extends RecyclerView.ItemDecoration {
         if (viewHolder instanceof SearchAdatper.FooterViewHolder ||
                 (baseViewHolder != null && baseViewHolder.displayFinished)) {
             outRect.bottom = DimensionPixelUtil.dip2px(context, MARGIN_TOP);
-//            outRect.left = 15;
-//            outRect.right = 15;
         }
-
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        drawVertical(c, parent);
+        if (!head) {
+            drawVertical(c, parent);
+        }
     }
 
     private void drawVertical(Canvas c, RecyclerView parent) {
@@ -79,25 +78,15 @@ public class SearchItemDecoration extends RecyclerView.ItemDecoration {
                          RecyclerView.LayoutManager layoutManager, RecyclerView.LayoutParams params) {
         final int bottom = child.getTop() + params.topMargin;
         final int top = bottom - layoutManager.getTopDecorationHeight(child);
-//        if (head) {
-//            headerDrawble.setBounds(left, top, right, bottom);
-//            headerDrawble.draw(c);
-//        } else {
-            divider.setBounds(left, top, right, bottom);
-            divider.draw(c);
-//        }
+        divider.setBounds(left, top, right, bottom);
+        divider.draw(c);
     }
 
     private void drawBottom(View child, int left, int right, Canvas c,
                             RecyclerView.LayoutManager layoutManager, RecyclerView.LayoutParams params) {
         final int top = child.getBottom() + params.bottomMargin;
         final int bottom = top + layoutManager.getBottomDecorationHeight(child);
-//        if (head) {
-//            headerDrawble.setBounds(left, top, right, bottom);
-//            headerDrawble.draw(c);
-//        } else {
-            divider.setBounds(left, top, right, bottom);
-            divider.draw(c);
-//        }
+        divider.setBounds(left, top, right, bottom);
+        divider.draw(c);
     }
 }

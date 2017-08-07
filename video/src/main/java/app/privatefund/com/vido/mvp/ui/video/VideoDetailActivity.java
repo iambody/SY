@@ -235,7 +235,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private boolean isFullscreen, isDisplayCover;
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
     private Observable<Boolean> isPlayVideoLocalDeleteObservable;
-    //监听播放五分钟
+    //监听播放五分钟o
     private Observable<Long> isPlayFiveMinteObservable;
 
     private boolean isOnPause;
@@ -264,7 +264,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         comeFrom = getIntent().getIntExtra("comeFrom", -1);
         loadingDialog = LoadingDialog.getLoadingDialog(this, false, false);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+        changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);//this.getResources().getConfiguration().orientation
+        changeVideoViewSize(getResources().getConfiguration().orientation);
         if (iv_mvv_cover.getVisibility() == View.VISIBLE && videoCoverUrl != null && !TextUtils.isEmpty(videoCoverUrl)) {
             Imageload.display(this, videoCoverUrl, 0, 0, 0, iv_mvv_cover, R.drawable.bg_default, R.drawable.bg_default);
             isDisplayCover = true;

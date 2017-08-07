@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.DiscoverModel;
 
@@ -31,12 +32,14 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     List<DiscoverModel.DiscoverCategory> categoryList;
     LayoutInflater layoutInflater;
     private ViewPager viewPager;
+    private int screenWidth;
 
     public DiscoverIndicatorAdapter(Context adaptercontext, ViewPager viewPager) {
         super();
         this.adapterContext = adaptercontext;
         this.layoutInflater = LayoutInflater.from(adaptercontext);
         this.viewPager = viewPager;
+        this.screenWidth = Utils.getWidthHeight(adapterContext)[0];
     }
 
     public void setData(List<DiscoverModel.DiscoverCategory> list) {
@@ -59,9 +62,16 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
+//        LinearLayout.LayoutParams layoutParamsView = new LinearLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
+//        view.setLayoutParams(layoutParamsView);
+
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
+//
+//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
+//        commonPagerTitleView.setLayoutParams(layoutParams);
+
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
             @Override
             public void onSelected(int i, int i1) {//被选中

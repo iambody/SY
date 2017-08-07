@@ -26,9 +26,11 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.ui.RecycleViewDivider;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
@@ -270,6 +272,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         productlsAdapter = new ProductlsAdapter(baseActivity, null);
         fragmentProductrecyclerView.addItemDecoration(new SimpleItemDecoration(baseActivity, R.color.transparent, R.dimen.ui_10_dip));
         fragmentProductrecyclerView.setAdapter(productlsAdapter);
+        fragmentProductrecyclerView.addItemDecoration(new RecycleViewDivider(
+                getContext(),
+                LinearLayoutManager.VERTICAL,
+                DimensionPixelUtil.dip2px(getContext(), 5),
+                getResources().getColor(R.color.gray_font)
+        ));
         productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

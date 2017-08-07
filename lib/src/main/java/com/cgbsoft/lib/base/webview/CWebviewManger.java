@@ -4,13 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
@@ -673,6 +677,14 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
+
+            //判断是否有拨打电话权限
+            if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+                PromptManager.ShowCustomToast(context, "请到设置允许拨打电话权限");
+
+                return;
+            }
+
             DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
                 @Override
                 public void left() {
@@ -701,6 +713,13 @@ public class CWebviewManger {
                 MToast.makeText(context, context.getResources().getString(R.string.no_phone_number), Toast.LENGTH_LONG).show();
                 return;
             }
+            //判断是否有拨打电话权限
+            if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+                PromptManager.ShowCustomToast(context, "请到设置允许拨打电话权限");
+
+                return;
+            }
+
             DefaultDialog dialog = new DefaultDialog(context, text, "取消", "呼叫") {
                 @Override
                 public void left() {
@@ -941,7 +960,7 @@ public class CWebviewManger {
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
         Intent intent = new Intent();
-        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index-1);
+        intent.putExtra(BaseWebViewActivity.BACK_PARAM, index - 1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();
     }
@@ -1683,5 +1702,26 @@ public class CWebviewManger {
      */
     private void goMyTask() {
         NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
+    }
+
+    // 判断是否缺少权限
+    protected boolean needsPermission(String permission) {
+        return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
+    }
+
+    // 判断权限集合
+    protected boolean needPermissions(String... permissions) {
+        //判断版本是否兼容
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return false;
+        }
+        boolean isNeed;
+        for (String permission : permissions) {
+            isNeed = needsPermission(permission);
+            if (isNeed) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/iv_ar_back"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/ui_15_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
                 android:src="@drawable/ic_toolbar_back" />
 
             <TextView
@@ -59,11 +59,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:hintEnabled="false"
+                    android:textColorHint="@color/hintcolor"
                     app:hintTextAppearance="@style/textinput_style">
 
                     <EditText
                         android:id="@+id/et_ar_username"
-                        style="@style/normal_edit"
+                        style="@style/normal_edit2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -73,6 +74,8 @@
                         android:maxLength="11"
                         android:maxLines="1"
                         android:saveEnabled="false"
+                        android:textColorHighlight="@color/hintcolor"
+                        android:textColorHint="@color/hintcolor"
                         android:scrollHorizontally="true"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -83,7 +86,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/regist_name_input"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                   android:layout_alignBottom="@id/regist_name_input"
+                     android:layout_marginBottom="@dimen/ui_8_dip"
                     android:layout_marginRight="@dimen/ui_6_dip"
                     android:background="@drawable/ic_et_del"
                     android:visibility="invisible" />
@@ -122,11 +126,12 @@
                 android:id="@+id/regist_edi_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/hintcolor"
                 app:hintTextAppearance="@style/textinput_style">
 
                 <EditText
                     android:id="@+id/et_ar_check"
-                    style="@style/normal_edit"
+                    style="@style/normal_edit2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -171,11 +176,12 @@
                 android:id="@+id/regist_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/hintcolor"
                 app:hintTextAppearance="@style/textinput_style">
 
                 <EditText
                     android:id="@+id/et_ar_password"
-                    style="@style/normal_edit"
+                    style="@style/normal_edit2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -215,12 +221,13 @@
                 android:id="@+id/regist_bankcode_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/hintcolor"
                 app:hintTextAppearance="@style/textinput_style">
 
 
                 <EditText
                     android:id="@+id/private_bank_code"
-                    style="@style/normal_edit"
+                    style="@style/normal_edit2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

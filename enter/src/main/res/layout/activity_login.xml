@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <com.cgbsoft.lib.widget.ScrollingImageView
         android:id="@+id/siv_al_bg"
@@ -87,22 +86,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
-
+                android:textColorHint="@color/hintcolor"
                 app:hintTextAppearance="@style/textinput_style">
 
                 <EditText
                     android:id="@+id/et_al_username"
-                    style="@style/normal_edit"
+                    style="@style/normal_edit2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="请输入手机号"
+
                     android:inputType="number"
                     android:maxLength="11"
                     android:maxLines="1"
                     android:scrollHorizontally="true"
+                    android:textColorHighlight="@color/hintcolor"
                     android:textColorHint="@color/hintcolor" />
             </android.support.design.widget.TextInputLayout>
 
@@ -134,24 +135,26 @@
                 android:id="@+id/home_name_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/textinput_style">
+                android:textColorHint="@color/hintcolor"
+                app:hintTextAppearance="@style/textinput_style"
+                >
 
                 <EditText
                     android:id="@+id/et_al_password"
-                    style="@style/normal_edit"
+                    style="@style/normal_edit2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/al_password_str"
                     android:inputType="textPassword"
-
                     android:maxLines="1"
+
                     android:saveEnabled="false"
                     android:scrollHorizontally="true"
 
-                    android:textStyle="bold" />
+
+                  />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
