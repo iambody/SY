@@ -99,7 +99,7 @@
         android:layout_height="@dimen/ui_40_dip"
         android:layout_below="@id/dialog_sign_uplay"
         android:layout_centerHorizontal="true"
-        android:src="@color/white_light" />
+        android:src="@color/white" />
 
     <ImageView
         android:id="@+id/homesign_cancle_iv"
