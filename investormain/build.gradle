@@ -67,10 +67,10 @@ android {
 
     signingConfigs {
         debug {
-//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//            storePassword "privatefund"
+            storeFile file('D:/privatefund.keystore')
+            keyAlias "beijing"
+            keyPassword "privatefund"
+            storePassword "privatefund"
         }
         release {
 //            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
@@ -100,7 +100,7 @@ android {
 
     }
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
     }
     buildTypes {
         debug {

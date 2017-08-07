@@ -832,8 +832,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 @Override
                 public void onClick(View v) {
                     NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title );;//RightShareWebViewActivity
-
-
 //                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
 
                     DataStatistApiParam.HomeBannerClick(banner.title);

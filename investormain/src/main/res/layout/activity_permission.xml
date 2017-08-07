@@ -15,6 +15,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:src="@drawable/ic_bg_bottom_welcome" />
+        android:src="@drawable/bg_bottom_welcomenew" />
 
 </RelativeLayout>
