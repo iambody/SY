@@ -221,7 +221,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(GestureVerifyActivity.this, "手势密码验证超过次数，请重新登录", Toast.LENGTH_SHORT).show();
-            LogOutAccount returnLogin = new LogOutAccount();
+            LogOutAccount returnLogin = new LogOutAccount(true);
             returnLogin.accounttExit(this);
         }
         finish();

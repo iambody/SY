@@ -16,6 +16,14 @@ import java.util.HashMap;
  */
 public class LogOutAccount {
 
+    private boolean needExitApp;
+
+    public LogOutAccount() {}
+
+    public LogOutAccount(boolean needExitApp) {
+        this.needExitApp = needExitApp;
+    }
+
     public void accounttExit(Context context) {
         try {
             AppInfStore.saveIsLogin(context, false);
@@ -27,6 +35,7 @@ public class LogOutAccount {
             AppInfStore.saveUserAccount(context, null);
             HashMap<String,Object>map=new HashMap<>();
             map.put("ialoginout",true);
+            map.put("fromValidatePassword",needExitApp);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map);
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity) context).finish();
