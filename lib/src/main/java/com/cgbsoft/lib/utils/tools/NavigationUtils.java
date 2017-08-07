@@ -80,19 +80,19 @@ public class NavigationUtils {
     }
     public static void startSystemImageForResult(Activity activity, int reqeustCode,ArrayList<String> origins) {
         ImageSelector selectSec = ImageSelector.create();
-
         selectSec.multi();
         selectSec.count(12);
         selectSec.origin(origins);
         selectSec.start(activity, reqeustCode);
     }
 
-    public static void startSystemImageMultiForResult(Activity activity, int reqeustCode) {
+    public static ImageSelector startSystemImageMultiForResult(Activity activity, int reqeustCode) {
         ImageSelector selectSec = ImageSelector.create();
         selectSec.openCameraOnly(false);
         selectSec.multi();
-//        selectSec.origin(origins);
+        selectSec.count(10);
         selectSec.start(activity, reqeustCode);
+        return selectSec;
     }
 
     public static void toMainActivity(Context context) {

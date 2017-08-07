@@ -48,20 +48,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 style="@style/invisite_account"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="@string/centify_type" />
 
-            <com.cgbsoft.lib.widget.ClearEditText
+            <TextView
                 android:id="@+id/invisite_certifiy_type"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:background="@null"
                 android:textSize="@dimen/dimens_sp_16"
                 android:layout_weight="3" />

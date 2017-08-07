@@ -15,9 +15,10 @@
         android:textSize="@dimen/text_size_small"
         android:textColor="@color/c_low_black"/>
 
-    <android.support.v4.widget.Space
-        android:layout_width="@dimen/ui_60_dip"
-        android:layout_height="5dp"
+    <View
+        android:layout_width="@dimen/ui_40_dip"
+        android:layout_marginTop="5dp"
+        android:layout_height="3dp"
         android:background="@color/app_golden"/>
 
 </LinearLayout>

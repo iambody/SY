@@ -235,7 +235,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     private boolean isFullscreen, isDisplayCover;
     private AnimationSet hdAnimationSet, sdAnimationSet, openAnimationSet, closeAnimationSet;
     private Observable<Boolean> isPlayVideoLocalDeleteObservable;
-    //监听播放五分钟
+    //监听播放五分钟o
     private Observable<Long> isPlayFiveMinteObservable;
 
     private boolean isOnPause;

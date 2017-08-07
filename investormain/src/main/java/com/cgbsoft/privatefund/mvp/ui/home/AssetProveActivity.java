@@ -93,6 +93,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private List<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
     private LoadingDialog loading;
+    private ImageSelector imageSelector;
     private static int state;
 
     @Override
@@ -143,11 +144,15 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 
     public void takePhoto(){
         if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
-
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
         }else {
-            NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+            if (imageSelector == null) {
+                imageSelector = NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+            } else {
+                imageSelector.start(this, BaseWebViewActivity.REQUEST_IMAGE);
+            }
         }
     }
 
@@ -164,7 +169,11 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 break;
             case MY_PERMISSIONS_REQUEST_CALL_PHOTO:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+                    if (imageSelector == null) {
+                        NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
+                    } else {
+                        imageSelector.start(this, BaseWebViewActivity.REQUEST_IMAGE);
+                    }
                 } else {
                     // Permission Denied
                     Toast.makeText(AssetProveActivity.this, "请开启系统存储权限", Toast.LENGTH_SHORT).show();
@@ -179,10 +188,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         UserInfoDataEntity.ToCBean userInfoC = AppManager.getUserInfo(this).getToC();
         String vas = userInfoC.getAssetsCertificationImage();
         int status = Integer.valueOf(userInfoC.getAssetsCertificationStatus());
-
-        if (TextUtils.isEmpty(userInfoC.getInvestmentType())) {
-            ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
-        }
 
         boolean hasStatus = false;
         switch (status) {
@@ -200,7 +205,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 break;
             case 3:
                 linearLayout.setVisibility(View.VISIBLE);
-                checkResult.setText("被驳回");
+                checkResult.setText("已驳回");
                 if (TextUtils.isEmpty(vas)) {
                     frameLayout.addView(addImg());
                 }
@@ -236,6 +241,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                     viewGroup.getChildAt(0).setVisibility(View.GONE);
                 }
             }
+        } else {
+            ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
         }
     }
 
