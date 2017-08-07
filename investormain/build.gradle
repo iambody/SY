@@ -51,7 +51,6 @@ android {
             exclude 'META-INF/DEPENDENCIES.txt'
             exclude 'META-INF/NOTICE'
             exclude 'META-INF/NOTICE.txt'
-
         }
 
         //忽略方法数限制的检查
@@ -67,15 +66,15 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
-            storePassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//            storePassword "privatefund"
         }
         release {
-            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
             storePassword "privatefund"
         }
     }

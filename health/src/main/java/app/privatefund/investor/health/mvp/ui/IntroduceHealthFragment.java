@@ -18,7 +18,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.FloatView;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
@@ -95,6 +94,11 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
             }
         });
+
+        play_contral.setOnClickListener(v -> {
+            System.out.println("--------play_contral");
+            videoRootFrame.play();
+        });
     }
 
     @Override
@@ -112,7 +116,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             v1.url = healthIntroduceModel.getSdVideo();
             videos.add(v1);
             changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-            iv_mvv_cover.setOnClickListener(v -> videoRootFrame.play(videos));
+            iv_mvv_cover.setOnClickListener(v -> {
+                System.out.println("--------iv_mvv_cover");
+                videoRootFrame.play(videos);
+            });
         }
     }
 
