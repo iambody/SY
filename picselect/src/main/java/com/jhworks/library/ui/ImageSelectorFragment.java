@@ -74,7 +74,7 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
     private int mImageSpanCount = Constant.DEFAULT_IMAGE_SPAN_COUNT;
 
     // image result data set
-    private ArrayList<String> resultList = new ArrayList<>();
+    public static ArrayList<String> resultList = new ArrayList<>();
     // folder result data set
     private ArrayList<Folder> mResultFolder = new ArrayList<>();
 
@@ -118,10 +118,12 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
         int mode = selectMode();
 
         if (mode == MODE_MULTI && arguments != null) {
-            ArrayList<String> tmp = arguments.getStringArrayList(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST);
-            if (tmp != null && tmp.size() > 0) {
-                resultList = tmp;
-            }
+
+//            ArrayList<String> tmp = arguments.getStringArrayList(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST);
+
+//            if (tmp != null && tmp.size() > 0) {
+//                resultList = tmp;
+//            }
         }
     }
 
@@ -326,6 +328,7 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
     public void onDestroy() {
         super.onDestroy();
         mAllMediaList=null;
+        resultList=null;
     }
 
     @Override
