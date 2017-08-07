@@ -299,13 +299,13 @@
         <LinearLayout
             android:id="@+id/video_videplay_edit_comment_lay"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="55dp"
             android:layout_gravity="bottom"
             android:background="#d6d6d6"
             android:clickable="true"
             android:focusable="true"
             android:paddingLeft="@dimen/ui_3_dip"
-            android:paddingTop="@dimen/ui_4_dip"
+            android:paddingTop="@dimen/ui_2_dip"
             android:paddingBottom="@dimen/ui_4_dip"
             android:orientation="horizontal">
 
@@ -313,7 +313,7 @@
                 android:id="@+id/video_videplay_edit_comment_c"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/searchkuang"
                 android:gravity="center_vertical"
