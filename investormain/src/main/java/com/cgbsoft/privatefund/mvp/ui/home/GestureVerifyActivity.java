@@ -27,6 +27,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
@@ -220,8 +221,8 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             Toast.makeText(GestureVerifyActivity.this, "关闭手势密码成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(GestureVerifyActivity.this, "手势密码验证超过次数，请重新登录", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            LogOutAccount returnLogin = new LogOutAccount();
+            returnLogin.accounttExit(this);
         }
         finish();
     }
