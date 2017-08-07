@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.StrictMode;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,8 @@ public class DownloadDialog implements View.OnClickListener, Constant {
 
         pb_vcd = (ProgressBar) dialog.findViewById(R.id.pb_vcd);
         tv_vcd_message = (TextView) dialog.findViewById(R.id.tv_vcd_message);
+        tv_vcd_message.setMovementMethod(ScrollingMovementMethod.getInstance());
+
         btn_vcd_sure = (TextView) dialog.findViewById(R.id.btn_vcd_sure);
         iv_vcd_cancel = (ImageView) dialog.findViewById(R.id.iv_vcd_cancel);
         new_version_code = (TextView) dialog.findViewById(R.id.new_version_code);
