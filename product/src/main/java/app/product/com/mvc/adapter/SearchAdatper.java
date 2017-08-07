@@ -347,17 +347,19 @@ public class SearchAdatper extends RecyclerView.Adapter {
                         SearchResultBean.ResultBean resultBean = (SearchResultBean.ResultBean) v.getTag();
                         switch (resultBean.getIsPart()) {
                             case PRODUCT_ITEM:
-                                ProductNavigationUtils.startProductDetailActivity(context, resultBean.getTargetId(), resultBean.getTitle(), 200 );
+                                ProductNavigationUtils.startProductDetailActivity(context, resultBean.getTargetId(), resultBean.getTitle(), 200);
 //                                ProductNavigationUtils.startProductDetailActivity(context,resultBean.get);
 //                                NavigationUtils.startProductActivity(context, resultBean.getTargetId());
 //                                BUtils.hotLookWrite(context, SearchBaseActivity.PRODUCT, resultBean);
                                 break;
                             case XUN_ITEM:
-                                String informationUrl = BaseWebNetConfig.baseParentUrl+"discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
-                                NavigationUtils.startVideoInformationActivityu(context, informationUrl, resultBean.getTitle());
-//                                NavigationUtils.startZiXunActivity(context, resultBean);
-//                                BUtils.hotLookWrite(context, SearchBaseActivity.ZIXUN, resultBean);
-//                                NavigationUtils.startVideoInformationActivityu()
+//                                String informationUrl = BaseWebNetConfig.baseParentUrl+"discover/details.html?id=" + resultBean.getTargetId() + "&category=" + resultBean.getCategoryId();
+//                                NavigationUtils.startVideoInformationActivityu(context, informationUrl, resultBean.getTitle());
+                                HashMap hashMap1 = new HashMap();
+                                hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(resultBean.getTargetId()).concat("&category=").concat(resultBean.getInfoCategory()));
+                                hashMap1.put(WebViewConstant.push_message_title, resultBean.getTitle());
+                                hashMap1.put(WebViewConstant.RIGHT_SHARE, true);
+                                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap1);
                                 break;
                             case INFO_ITEM:
 //                                NavigationUtils.startMessageActivity(context, resultBean, keyName);
@@ -369,8 +371,9 @@ public class SearchAdatper extends RecyclerView.Adapter {
 //                                } else {
 //                                    url = BaseWebNetConfig.baseParentUrl+"apptie/notice_detail.html?id=" + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
 //                                }
+//                                app5.0/apptie/notice_toB.html?id=%@&keywords=%@
                                 if (TextUtils.equals("1", resultBean.getIsMore())) {
-                                    url = CwebNetConfig.msgDetal + resultBean.getCategoryId();
+                                    url = CwebNetConfig.msgDetal + resultBean.getCategoryId().concat("keywords=").concat(keyName);
                                 } else {
                                     url = CwebNetConfig.msgMoreDetail + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }

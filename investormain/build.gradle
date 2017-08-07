@@ -76,7 +76,7 @@ android {
 //            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
 //            keyAlias "beijing"
 //            keyPassword "privatefund"
-//            storePassword "privatefund"
+            storePassword "privatefund"
         }
     }
     applicationVariants.all { variant ->

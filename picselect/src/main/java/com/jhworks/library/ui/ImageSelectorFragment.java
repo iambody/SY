@@ -327,8 +327,8 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        mAllMediaList=null;
-//        resultList=null;
+        mAllMediaList=null;
+        resultList=null;
     }
 
     @Override
