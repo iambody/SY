@@ -831,8 +831,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavigationUtils.gotoWebActivity(baseActivity, banner.url, banner.title, false);
+                    NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title );;//RightShareWebViewActivity
+
+
 //                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
+
                     DataStatistApiParam.HomeBannerClick(banner.title);
                 }
             });

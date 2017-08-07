@@ -78,7 +78,8 @@ public class NavigationUtils {
         selectSec.single();  // 选择一张图片
         selectSec.start(activity, reqeustCode);
     }
-    public static void startSystemImageForResult(Activity activity, int reqeustCode,ArrayList<String> origins) {
+
+    public static void startSystemImageForResult(Activity activity, int reqeustCode, ArrayList<String> origins) {
         ImageSelector selectSec = ImageSelector.create();
         selectSec.multi();
         selectSec.count(12);
@@ -143,6 +144,19 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowRightShare);
         activity.startActivity(intent);
     }
+
+    /**
+     * 跳转到统一的webactivity页面
+     */
+    public static void gotoRightShareWebActivity(Activity activity, String url, String title ) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+        hashMap.put(WebViewConstant.push_message_title, title);
+        hashMap.put(WebViewConstant.push_message_url, url);
+
+        NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+    }
+
     /**
      * 跳转到统一的webactivity页面
      */
@@ -150,9 +164,10 @@ public class NavigationUtils {
         Intent intent = new Intent(activity, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
         intent.putExtra(WebViewConstant.push_message_title, title);
-        intent.putExtra(WebViewConstant.RIGHT_RECHARGE_HAS,  false);
+        intent.putExtra(WebViewConstant.RIGHT_RECHARGE_HAS, false);
         activity.startActivity(intent);
     }
+
     /**
      * 跳转到产品详情的操作
      *
