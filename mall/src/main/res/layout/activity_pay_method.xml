@@ -33,17 +33,9 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <View android:layout_height="1px"
-        android:layout_width="match_parent"
-        android:background="@color/c_divide"/>
-
     <ListView
         android:id="@+id/pay_method_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
-    <View android:layout_height="1px"
-        android:layout_width="match_parent"
-        android:background="@color/c_divide"/>
 </LinearLayout>

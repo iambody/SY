@@ -37,11 +37,5 @@
             style="@style/style_paymethod_in_ig"
             android:src="@drawable/paymethod_select_pre" />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#d0d0d0"/>
 
 </LinearLayout>
