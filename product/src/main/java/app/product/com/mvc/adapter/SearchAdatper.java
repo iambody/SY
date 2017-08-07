@@ -376,7 +376,9 @@ public class SearchAdatper extends RecyclerView.Adapter {
                                     // CwebNetConfig.msgDetal
                                     url = values + resultBean.getCategoryId().concat("&keywords=").concat(keyName);
                                 } else {
-                                    url = CwebNetConfig.msgMoreDetail + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
+//                                    CwebNetConfig.msgMoreDetail  app5.0/apptie/notice_detail.html
+                                    String values = CwebNetConfig.baseParentUrl + "app5.0/apptie/notice_detail.html?id=";
+                                    url = values + resultBean.getTargetId() + "&category=" + (TextUtils.isEmpty(resultBean.getInfoCategory()) ? resultBean.getCategory() : resultBean.getInfoCategory());
                                 }
                                 HashMap hashMap = new HashMap();
                                 hashMap.put(WebViewConstant.push_message_url, url);

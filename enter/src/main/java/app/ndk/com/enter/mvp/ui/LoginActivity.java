@@ -24,7 +24,6 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
@@ -44,6 +43,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
@@ -206,7 +206,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
 /*产品经理需求 不要首次进来就弹出框*/
 //        if (!SPreference.isVisableProtocol(getApplicationContext()))
-//            new ProtocolDialog(this, 0, null);
+            new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();

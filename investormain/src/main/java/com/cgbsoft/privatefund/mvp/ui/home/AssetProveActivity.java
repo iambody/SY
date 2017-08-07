@@ -423,7 +423,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             if (resultCode == RESULT_OK) {
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
-                    if ((imagePaths.size() + mSelectPath.size()) >= 10) {
+                    if ((imagePaths.size() + mSelectPath.size()) > 10) {
                         Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();
                         return;
                     }

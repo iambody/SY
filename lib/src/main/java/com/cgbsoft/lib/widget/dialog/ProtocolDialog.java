@@ -132,6 +132,7 @@ public class ProtocolDialog implements DBConstant {
             protected void onEvent(String s) {
                 ProtocolEntity.Result result = new Gson().fromJson(s, ProtocolEntity.Result.class);
                 if (TextUtils.isEmpty(result.result)) {
+                    getLocalTxtProtocol(context);
                     return;
                 }
                 mContentTv.setText(result.result);
