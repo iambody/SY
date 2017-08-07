@@ -73,7 +73,7 @@ public class CommentAdapter extends BaseAdapter {
         }
 
         holder.comment.setText(comments.get(position).commentContent);
-        holder.name.setText(comments.get(position).sendName);
+//        holder.name.setText(comments.get(position).sendName);
         holder.time.setText(comments.get(position).commentTime);
 //        BitmapUtils bu = new BitmapUtils(context);
 //        bu.display(holder.avatar,comments.get(position).getSendAvatar());

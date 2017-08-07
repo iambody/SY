@@ -10,21 +10,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_10_dip"
         android:background="@color/white"
-        android:drawableLeft="@drawable/video_product_icon"
         android:drawablePadding="@dimen/ui_5_dip"
-        android:padding="@dimen/ui_10_dip"
+        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingTop="@dimen/ui_10_dip"
+        android:paddingBottom="@dimen/ui_3_dip"
         android:text="@string/pinglun"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_sp_16"
         android:textStyle="bold" />
 
-
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#d0d0d0" />
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/ui_40_dip"
+            android:layout_height="3dp"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:src="@color/app_golden" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/video_view_comment_null_layout"
