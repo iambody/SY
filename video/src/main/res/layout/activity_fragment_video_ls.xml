@@ -8,7 +8,8 @@
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent">
+        android:background="@color/app_bg"
+        >
 
         <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
             android:id="@+id/swipe_refresh_header"
@@ -20,6 +21,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent" />
 
         <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView

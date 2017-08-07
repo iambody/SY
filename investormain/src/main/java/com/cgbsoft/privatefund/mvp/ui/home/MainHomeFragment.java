@@ -492,7 +492,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //                        main_home_live_lay.setClickable(false);
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
 //                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 12, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告:");
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
@@ -506,7 +506,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
 //                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 12, view_live_iv_bg);
+                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
                         BStrUtils.SetTxt(view_live_title, "正在直播:");
