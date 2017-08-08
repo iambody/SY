@@ -139,6 +139,9 @@
         <meta-data android:value="574e9a6367e58e24960027b0" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <!--
+        umeng
+            正式Key:5983d8c365b6d632a2000c06
+            测试：574e9a6367e58e24960027b0
           &lt;!&ndash; glide &ndash;&gt;
           <meta-data
               android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
