@@ -1426,7 +1426,7 @@ public class CWebviewManger {
             //解决产
 
 
-            ((Activity) context).startActivityForResult(i, 300);
+//            ((Activity) context).startActivityForResult(i, 300);
 
             if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");
