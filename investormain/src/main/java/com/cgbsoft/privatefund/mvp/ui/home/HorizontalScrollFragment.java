@@ -78,7 +78,7 @@ public class HorizontalScrollFragment extends BaseFragment {
     }
 
     private void measureHeight() {
-        heaight = CollectionUtils.isEmpty(list) ? DimensionPixelUtil.dip2px(getActivity(), 150) : DimensionPixelUtil.dip2px(getActivity(), 240);
+        heaight = CollectionUtils.isEmpty(list) ? DimensionPixelUtil.dip2px(getActivity(), 140) : DimensionPixelUtil.dip2px(getActivity(), 222);
         if (listener != null) {
             listener.changeData(isPlay ? 0 : 1 ,heaight);
         }
@@ -87,7 +87,6 @@ public class HorizontalScrollFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        System.out.println("---values="  +context.getClass().getSimpleName());
         if(context instanceof MainPageActivity){
             listener =  (MineFragment)MainTabManager.getInstance().getFragmentByIndex(R.id.nav_right_second, 0);
         }
