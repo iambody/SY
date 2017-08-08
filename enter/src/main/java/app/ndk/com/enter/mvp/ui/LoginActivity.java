@@ -43,7 +43,6 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
@@ -208,7 +207,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
 /*产品经理需求 不要首次进来就弹出框*/
 //        if (!SPreference.isVisableProtocol(getApplicationContext()))
-            new ProtocolDialog(this, 0, null);
+//            new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
@@ -364,7 +363,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
-        AppInfStore.saveDialogTag(LoginActivity.this,false);
+        AppInfStore.saveDialogTag(LoginActivity.this, false);
 //        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
 //        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
     }
@@ -667,7 +666,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         try {
             ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
             String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this) ) {
+            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
                 mShakeListener = new ShakeListener(this);
                 mShakeListener.setOnShakeListener(onShakeListener);
                 mShakeListener.register();

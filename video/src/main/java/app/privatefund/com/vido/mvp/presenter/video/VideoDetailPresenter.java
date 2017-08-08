@@ -17,7 +17,6 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -50,6 +49,9 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
     }
 
+    public VideoInfoModel getLocalvideos(String videoID) {
+       return daoUtils.getVideoInfoModel(videoID);
+    }
 
     public void getLocalVideoDetailInfo(LoadingDialog loadingDialog, String videoId) {
         getVideoDetailInfo(loadingDialog, videoId);
@@ -94,11 +96,13 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             viModel = new VideoInfoModel();
             isInitData = true;
         }
-        loadingDialog.show();
+        if (null != loadingDialog)
+            loadingDialog.show();
         addSubscription(ApiClient.getTestVideoInfo(videoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                loadingDialog.dismiss();
+                if (null != loadingDialog)
+                    loadingDialog.dismiss();
                 VideoInfoEntity.Result result = new Gson().fromJson(getV2String(s), VideoInfoEntity.Result.class);
 
                 viModel.videoId = result.videoId;
@@ -115,7 +119,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.hasRecord = VideoStatus.RECORD;
                 viModel.encrypt = 1;
                 viModel.isDelete = VideoStatus.UNDELETE;
-                viModel.lecturerRemark=result.rows.lecturerRemark;
+                viModel.lecturerRemark = result.rows.lecturerRemark;
                 if (isInitData) {
                     viModel.status = VideoStatus.NONE;
                 }
@@ -128,8 +132,9 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
             @Override
             protected void onRxError(Throwable error) {
-                loadingDialog.dismiss();
-               getView().getNetVideoInfoErr(error.getMessage());
+                if (null != loadingDialog)
+                    loadingDialog.dismiss();
+                getView().getNetVideoInfoErr(error.getMessage());
                 LogUtils.Log("s", error.toString());
             }
         }));
@@ -222,7 +227,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //添加评论
     @Override
     public void addCommont(String commontStr, String vdieoId) {
-        if(!NetUtils.isNetworkAvailable(getContext())){
+        if (!NetUtils.isNetworkAvailable(getContext())) {
 
         }
 //        PromptManager.ShowCustomToast(getContext(),"sss");
