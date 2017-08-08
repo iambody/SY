@@ -385,31 +385,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isOnPause = false;
         onPausePlayStauts = 1;
         vrf_avd.play();
-//        tv_avd_cache_num.setText(String.valueOf(getsize()));
-//        //判断书否缓存
-//        if (null == getPresenter().getVideoInfo(videoId)) {
-//            isCancache = true;
-//            tv_avd_cache.setText(R.string.cache_str);
-//            iv_avd_cache.setImageResource(R.drawable.ic_cache);
-//            isCancache = true;
-//
-//
-//        } else {
-//            isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
-//            switch (getPresenter().getVideoInfo(videoId).status) {
-//                case VideoStatus.DOWNLOADING:
-//                    break;
-//                case VideoStatus.NONE:
-//                    tv_avd_cache.setText(R.string.cache_str);
-//                    iv_avd_cache.setImageResource(R.drawable.ic_cache);
-//                    isCancache = true;
-//                    break;
-//                case VideoStatus.FINISH:
-//                    tv_avd_cache.setText(R.string.cached_str);
-//                    iv_avd_cache.setImageResource(R.drawable.ic_cached);
-//                    break;
-//            }
-//        }
+        sv_avd.smoothScrollTo(0,20);
         getLocalVideoInfoSucc(getPresenter().getLocalvideos(videoId));
     }
 
