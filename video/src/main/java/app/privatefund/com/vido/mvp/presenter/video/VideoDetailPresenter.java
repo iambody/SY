@@ -345,7 +345,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             viModel.status = VideoStatus.FINISH;
             viModel.localVideoPath = downloadInfo.getTargetPath();
 
-
             updataLocalVideoInfo();
 
             getView().onDownloadFinish(viModel);

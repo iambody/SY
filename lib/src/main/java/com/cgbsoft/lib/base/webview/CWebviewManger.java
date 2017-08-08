@@ -370,6 +370,7 @@ public class CWebviewManger {
             RxBus.get().post(RxConstant.BindAdviser, 1);
         } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
+            context.finish();
         }
     }
 
