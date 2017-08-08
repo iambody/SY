@@ -776,7 +776,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        List<VideoInfoModel> downlList = daoUtils.getDownLoadVideoInfo();
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
         if (videoList == null) {
             for (String name : videos) {
