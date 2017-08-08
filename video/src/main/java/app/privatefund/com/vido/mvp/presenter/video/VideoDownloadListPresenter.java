@@ -57,7 +57,8 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                     model.status = VideoStatus.FINISH;
                     saveOrUpdateVideoInfo(model);
                 }
-                dataList.add(createModel(model));
+                if (model.status != VideoStatus.NONE)
+                    dataList.add(createModel(model));
             }
             getView().getLocalListSucc(dataList, isRef);
         } else

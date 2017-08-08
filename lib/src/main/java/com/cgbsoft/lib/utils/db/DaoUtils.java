@@ -209,6 +209,7 @@ public void clearnHistoryByID(String Type, String userId){
      */
     public void deleteVideoInfo(String videoId) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+
         String localPath = null;
         if (videoInfo != null) {
             localPath = videoInfo.getLocalVideoPath();
