@@ -110,6 +110,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isShowWxBt;
     //是否点击了游客模式的按钮
     boolean isVisitorLoginClick, isVisitorBackHome;
+    boolean fromValidatePassword;
 
     private LoadingDialog mLoadingDialog;
     private int identity;
@@ -172,6 +173,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isFromInsidemy = getIntent().getBooleanExtra(TAG_GOTOLOGIN_FROMCENTER, false);
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
         ialoginout = getIntent().getBooleanExtra("ialoginout", false);
+        fromValidatePassword = getIntent().getBooleanExtra("fromValidatePassword", false);
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
@@ -568,6 +570,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressed() {
+        if (fromValidatePassword) {
+            System.exit(0);
+            return;
+        }
+
 //        openActivity(ChoiceIdentityActivity.class);
         if (isShowWxBt) {
             isShowWxBt = false;
@@ -584,6 +591,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             isShowWxBt = false;
 //            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
+            return true;
+        }
+
+        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+            System.exit(0);
             return true;
         }
         return super.onKeyDown(keyCode, event);

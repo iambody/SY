@@ -416,6 +416,20 @@ public class Utils {
         }
     }
 
+    public static void OpenSharePage(Context context, String routeConfig, String title, String url, boolean rightSave, boolean initPage, boolean rightShare) {
+        try {
+            HashMap hashMap = new HashMap();
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+            NavigationUtils.startActivityByRouter(context, routeConfig, hashMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 获取数据库名字
      *
