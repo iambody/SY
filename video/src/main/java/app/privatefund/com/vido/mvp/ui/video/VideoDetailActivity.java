@@ -35,7 +35,6 @@ import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
-import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -301,12 +300,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     public int getsize() {
-        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
-        int size = 0;
-        for (int i = 0; i < downsize.getAllVideoInfo().size(); i++) {
-            if (VideoStatus.NONE != downsize.getAllVideoInfo().get(i).status) size = size + 1;
-        }
-        return downsize.getAllVideoInfo().size();
+//        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
+//        int size = 0;
+//        for (int i = 0; i < downsize.getAllVideoInfo().size(); i++) {
+//            if (VideoStatus.NONE != downsize.getAllVideoInfo().get(i).status&&downsize.getAllVideoInfo().get(i).isDelete!=VideoStatus.UNDELETE) size = size + 1;
+//        }
+//        return downsize.getAllVideoInfo().size();
+       return getPresenter().daoUtils.getDownLoadVideoInfo().size();
     }
 
     private void findview() {
@@ -385,7 +385,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isOnPause = false;
         onPausePlayStauts = 1;
         vrf_avd.play();
-        sv_avd.smoothScrollTo(0,20);
+//        sv_avd.smoothScrollTo(0,20);
+        tv_avd_hd.setEnabled(true);
+        tv_avd_sd.setEnabled(true);
+        tv_avd_hd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_sd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_cache_num.setText(String.valueOf(getsize()));
         getLocalVideoInfoSucc(getPresenter().getLocalvideos(videoId));
     }
 

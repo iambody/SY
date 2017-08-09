@@ -74,4 +74,17 @@ public class VideoHistoryListPresenter extends BasePresenterImpl<VideoHistoryLis
         }
         return historyModels;
     }
+    /**
+     * 判断列表中是否有任何的选择
+     */
+    public boolean isAnyChoice(List<VideoHistoryModel> datas) {
+        if (null == datas || 0 == datas.size()) return false;
+        boolean anyChoice = false;
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).isCheck) anyChoice = true;
+        }
+        return anyChoice;
+
+
+    }
 }
