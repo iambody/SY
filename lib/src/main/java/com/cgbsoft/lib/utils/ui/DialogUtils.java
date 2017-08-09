@@ -78,12 +78,9 @@ public class DialogUtils {
         TextView textView = (TextView) layout.findViewById(R.id.content);
         textView.setText(res);
         Button button = (Button) layout.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                dialogListener.OnClickPositive();
-            }
+        button.setOnClickListener(v -> {
+            dialog.dismiss();
+            dialogListener.OnClickPositive();
         });
         dialog.setCancelable(false);
         dialog.show();

@@ -13,6 +13,7 @@ public class SMMessage implements Serializable {
     String dialogSummary;
     String content;
     String shareType;
+    String senderId;
 
     private boolean displayH5;
     private String buttonText;
@@ -123,5 +124,13 @@ public class SMMessage implements Serializable {
 
     public void setButtonTitle(String buttonTitle) {
         this.buttonTitle = buttonTitle;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 }
