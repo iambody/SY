@@ -370,6 +370,7 @@ public class CWebviewManger {
             RxBus.get().post(RxConstant.BindAdviser, 1);
         } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
+            context.finish();
         }
     }
 
@@ -1429,7 +1430,7 @@ public class CWebviewManger {
             //解决产
 
 
-            ((Activity) context).startActivityForResult(i, 300);
+//            ((Activity) context).startActivityForResult(i, 300);
 
             if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");

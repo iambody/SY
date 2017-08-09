@@ -297,12 +297,16 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
-        FloatVideoService.stopService();
+//        FloatVideoService.stopService();
     }
 
     public int getsize() {
         DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
-       return downsize.getAllVideoInfo().size();
+        int size = 0;
+        for (int i = 0; i < downsize.getAllVideoInfo().size(); i++) {
+            if (VideoStatus.NONE != downsize.getAllVideoInfo().get(i).status) size = size + 1;
+        }
+        return downsize.getAllVideoInfo().size();
     }
 
     private void findview() {
@@ -380,8 +384,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onRestart();
         isOnPause = false;
         onPausePlayStauts = 1;
-        //判断书否缓存
-        isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
+        vrf_avd.play();
+        sv_avd.smoothScrollTo(0,20);
+        getLocalVideoInfoSucc(getPresenter().getLocalvideos(videoId));
     }
 
     @Override
@@ -546,6 +551,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 isCancache = true;
+
+
                 break;
             case VideoStatus.FINISH:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
