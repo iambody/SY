@@ -76,7 +76,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         disCoveryNavigationAdapter = new DiscoverIndicatorAdapter(getActivity(), viewPager);
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
-//        commonNavigator.setAdjustMode(true);
         magicIndicator.setNavigator(commonNavigator);
     }
 
