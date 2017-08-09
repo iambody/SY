@@ -36,9 +36,9 @@ import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
  *  
  */
 public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.View> implements VideoDetailContract.Presenter {
-    private DaoUtils daoUtils;
+    public DaoUtils daoUtils;
     private VideoInfoModel viModel;
-    private boolean isInitData;
+    //    private boolean isInitData;
     private DownloadManager downloadManager;
 
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
@@ -50,7 +50,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     public VideoInfoModel getLocalvideos(String videoID) {
-       return daoUtils.getVideoInfoModel(videoID);
+        return daoUtils.getVideoInfoModel(videoID);
     }
 
     public void getLocalVideoDetailInfo(LoadingDialog loadingDialog, String videoId) {
@@ -91,10 +91,12 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         getLocalVideoInfo(videoId);
 
         if (viModel != null) {
+            if (viModel.isDelete == VideoStatus.UNDELETE)
+                viModel.status = VideoStatus.NONE;
             getView().getLocalVideoInfoSucc(viModel);
         } else {
             viModel = new VideoInfoModel();
-            isInitData = true;
+//            isInitData = true;
         }
         if (null != loadingDialog)
             loadingDialog.show();
@@ -120,10 +122,17 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.encrypt = 1;
                 viModel.isDelete = VideoStatus.UNDELETE;
                 viModel.lecturerRemark = result.rows.lecturerRemark;
-                if (isInitData) {
+//                if (isInitData) {
+//                    viModel
+//                    viModel.status = VideoStatus.NONE;
+//                }
+                if (null == viModel) {
+
                     viModel.status = VideoStatus.NONE;
                 }
-
+                if (null != viModel && viModel.isDelete == VideoStatus.DELETE) {
+                    viModel.status = VideoStatus.NONE;
+                }
                 updataLocalVideoInfo();
 
                 getView().getNetVideoInfoSucc(viModel, result);

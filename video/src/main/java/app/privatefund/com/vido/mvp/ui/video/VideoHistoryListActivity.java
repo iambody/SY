@@ -230,8 +230,16 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
 
     @OnClick(R2.id.tv_avh_delete)
     void deleteClick() {
+
+
         List<VideoHistoryModel> list = videoHistoryAdapter.getList();
         List<VideoHistoryModel> morelist = morevideoHistoryAdapter.getList();
+
+        if (!getPresenter().isAnyChoice(list) && !getPresenter().isAnyChoice(morelist)) {
+            return;
+        }
+
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
                 getPresenter().delete(list.get(i).videoId);

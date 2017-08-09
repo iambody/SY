@@ -170,7 +170,7 @@ public void clearnHistoryByID(String Type, String userId){
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if(0!=list.get(i).getDownloadTime())
+                if(0!=list.get(i).getDownloadTime()&&list.get(i).getStatus()!=VideoStatus.NONE)
                     results.add(getVideoInfoModel(list.get(i)));
             }
             return results;
@@ -235,6 +235,7 @@ public void clearnHistoryByID(String Type, String userId){
         String localPath = null;
         if (videoInfo != null) {
             localPath = videoInfo.getLocalVideoPath();
+//            videoInfo.setIsDelete(VideoStatus.DELETE);
             videoInfo.setIsDelete(VideoStatus.UNDELETE);
             videoInfo.setStatus(VideoStatus.NONE);
             videoInfo.setFinalPlayTime(0);
