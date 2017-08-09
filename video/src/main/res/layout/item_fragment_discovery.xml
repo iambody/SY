@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
                 android:text="aksnaksasnsannsnas"
                 android:textColor="@color/color_a6a6a6"
                 android:textSize="14sp" />

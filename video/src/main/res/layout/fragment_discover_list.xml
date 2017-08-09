@@ -24,11 +24,11 @@
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/discover_list_indicator"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="@dimen/ui_60_dip"
+            android:layout_marginTop="@dimen/ui_10_dip"
             android:layout_gravity="center_vertical"/>
 
     </android.support.design.widget.AppBarLayout>
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/discover_list_pager"

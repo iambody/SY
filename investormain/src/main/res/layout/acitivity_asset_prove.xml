@@ -3,7 +3,7 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_bg_color"
+    android:background="@color/app_bg"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title_bar" />
@@ -145,18 +145,17 @@
                         android:layout_height="wrap_content"
                         android:text="温馨提示:"
                         android:textColor="@color/color_595959"
-                        android:textSize="14sp"/>
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/asset_prove_des"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:lineSpacingExtra="10dp"
                         android:text="@string/asset_prove_description"
                         android:textColor="@color/color_595959"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="15sp"/>
                 </LinearLayout>
             </LinearLayout>
     </ScrollView>
