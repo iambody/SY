@@ -20,8 +20,8 @@
             android:id="@+id/swipe_target"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:background="#ffffff"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent" />
 
         <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView

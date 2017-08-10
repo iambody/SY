@@ -1,15 +1,20 @@
 package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.DiscoverModel;
@@ -59,19 +64,18 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         DiscoverModel.DiscoverCategory discoverCategory = categoryList.get(i);
         CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
         View view = layoutInflater.inflate(R.layout.view_discovery_item_navigation, null);
+
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
-//        LinearLayout.LayoutParams layoutParamsView = new LinearLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
-//        view.setLayoutParams(layoutParamsView);
+        LinearLayout.LayoutParams layoutParamsView = new LinearLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParamsView.leftMargin = DimensionPixelUtil.dip2px(context, 80);
+        layoutParamsView.rightMargin = DimensionPixelUtil.dip2px(context, 80);
+        view.setLayoutParams(layoutParamsView);
 
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
-//
-//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
-//        commonPagerTitleView.setLayoutParams(layoutParams);
-
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
             @Override
             public void onSelected(int i, int i1) {//被选中
@@ -96,17 +100,18 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
             }
         });
         commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(i));
-
         return commonPagerTitleView;
     }
 
     @Override
     public IPagerIndicator getIndicator(Context context) {
         LinePagerIndicator indicator = new LinePagerIndicator(context);
-        indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+        indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(DimensionPixelUtil.dip2px(context, 30), DimensionPixelUtil.dip2px(context, 5));
+        indicator.setLayoutParams(layoutParams);
         indicator.setYOffset(UIUtil.dip2px(context, 3));
         indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-        indicator.setXOffset(UIUtil.dip2px(context, 15));
+        indicator.setXOffset(UIUtil.dip2px(context, 10));
         return indicator;
     }
 }
