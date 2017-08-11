@@ -23,6 +23,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataUtils;
 import com.cgbsoft.lib.utils.tools.Des3;
@@ -409,7 +410,8 @@ public final class CaptureActivity extends Activity implements
         } else if (result.contains(CwebNetConfig.baseParentUrl)) {
             String isCallBack = getIntent().getStringExtra("isCallBack");
             if ((!TextUtils.isEmpty(isCallBack)) && isCallBack.equals("Y")) {
-//                EventBus.getDefault().post(new WebViewCallBack(result));
+                RxBus.get().post(RxConstant.SWIPT_CODE_RESULT,result);
+
                 this.finish();
             } else {
                 HashMap<String, Object> hashMap = new HashMap<>();
