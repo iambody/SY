@@ -337,9 +337,9 @@ public class CWebviewManger {
 //            PromptManager.ShowCustomToast(context,"我需要分享名片");
             shareAdviserCardShow(action);
         } else if (action.contains("QRCallBack")) {
-//            Intent intent = new Intent(context, CaptureActivity.class);
-//            intent.putExtra("isCallBack", "Y");
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, CaptureActivity.class);
+            intent.putExtra("isCallBack", "Y");
+            context.startActivity(intent);
         } else if (action.contains("sharePoster")) {
 //            sharePoster();
         } else if (action.contains("ydPay")) {
@@ -1344,6 +1344,7 @@ public class CWebviewManger {
      * @param action
      */
     private void closepage(String action) {
+
         ((Activity) context).finish();
     }
 

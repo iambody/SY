@@ -508,6 +508,9 @@
             android:process=":QALSERVICE" />
 
         <activity android:name=".mvp.ui.home.SplashMovieActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="97154212d752b81e66a61062775295279a167d05" />
     </application>
 
 </manifest>

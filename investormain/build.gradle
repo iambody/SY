@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
+apply plugin: 'io.fabric'
 
 // 打包时间
 def releaseTime() {
@@ -186,4 +187,7 @@ dependencies {
     compile 'com.takwolf.android:lock9view:0.0.11'
     compile 'com.android.support:support-v4:24.2.1'
     compile project(':health')
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2') {
+        transitive = true;
+    }
 }
