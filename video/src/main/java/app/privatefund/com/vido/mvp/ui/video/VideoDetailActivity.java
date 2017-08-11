@@ -35,7 +35,6 @@ import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
-import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -297,12 +296,17 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
-        FloatVideoService.stopService();
+//        FloatVideoService.stopService();
     }
 
     public int getsize() {
-        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
-       return downsize.getAllVideoInfo().size();
+//        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
+//        int size = 0;
+//        for (int i = 0; i < downsize.getAllVideoInfo().size(); i++) {
+//            if (VideoStatus.NONE != downsize.getAllVideoInfo().get(i).status&&downsize.getAllVideoInfo().get(i).isDelete!=VideoStatus.UNDELETE) size = size + 1;
+//        }
+//        return downsize.getAllVideoInfo().size();
+       return getPresenter().daoUtils.getDownLoadVideoInfo().size();
     }
 
     private void findview() {
@@ -380,8 +384,14 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onRestart();
         isOnPause = false;
         onPausePlayStauts = 1;
-        //判断书否缓存
-        isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
+        vrf_avd.play();
+//        sv_avd.smoothScrollTo(0,20);
+        tv_avd_hd.setEnabled(true);
+        tv_avd_sd.setEnabled(true);
+        tv_avd_hd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_sd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_cache_num.setText(String.valueOf(getsize()));
+        getLocalVideoInfoSucc(getPresenter().getLocalvideos(videoId));
     }
 
     @Override
@@ -546,6 +556,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 isCancache = true;
+
+
                 break;
             case VideoStatus.FINISH:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {

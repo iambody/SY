@@ -264,7 +264,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     hideAssert();
                 }
             }
-
             @Override
             protected void onRxError(Throwable error) {
             }
@@ -776,27 +775,27 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        List<VideoInfoModel> downlList = daoUtils.getDownLoadVideoInfo();
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
-        for (String name : videos) {
-            XTabLayout.Tab tab = xTabLayout.newTab();
-            tab.setText(name);
-            xTabLayout.addTab(tab);
-        }
-        viewPager.setOffscreenPageLimit(2);
         if (videoList == null) {
+            for (String name : videos) {
+                XTabLayout.Tab tab = xTabLayout.newTab();
+                tab.setText(name);
+                xTabLayout.addTab(tab);
+            }
+            viewPager.setOffscreenPageLimit(2);
             videoList = new ArrayList<>();
             setFragmentParams(playlList, videoList, true);
             setFragmentParams(downlList, videoList, false);
             viewPager.resetHeight(0);
             initViewPage();
+            xTabLayout.setupWithViewPager(viewPager);
+            for (int i = 0; i < xTabLayout.getTabCount(); i++) {
+                xTabLayout.getTabAt(i).setText(videos[i]);
+            }
         } else {
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
-        }
-        xTabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < xTabLayout.getTabCount(); i++) {
-            xTabLayout.getTabAt(i).setText(videos[i]);
         }
     }
 

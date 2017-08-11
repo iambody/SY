@@ -53,7 +53,6 @@ import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
-import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.chenenyu.router.annotation.Route;
@@ -71,6 +70,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -328,13 +328,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         });
 
-        tvCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mHeadIconDialog.dismiss();
-            }
-        });
+        tvCancel.setOnClickListener(v -> mHeadIconDialog.dismiss());
     }
 
     /**
@@ -419,7 +413,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 iconImg.setImageBitmap(bitmap);
                 updateLoadIcon();
             }
-        } else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+        } else if (requestCode == REQUEST_CODE&&resultCode== PermissionsActivity.PERMISSIONS_GRANTED) {
             changeIcon();
 //            mHeadIconDialog.show();
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {

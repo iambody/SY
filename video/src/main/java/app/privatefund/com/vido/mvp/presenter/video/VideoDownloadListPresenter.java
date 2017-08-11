@@ -57,7 +57,8 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                     model.status = VideoStatus.FINISH;
                     saveOrUpdateVideoInfo(model);
                 }
-                dataList.add(createModel(model));
+                if (model.status != VideoStatus.NONE)
+                    dataList.add(createModel(model));
             }
             getView().getLocalListSucc(dataList, isRef);
         } else
@@ -434,5 +435,19 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                 videoList.add(allData.get(i));
         }
         return videoList;
+    }
+
+    /**
+     * 判断列表中是否有任何的选择
+     */
+    public boolean isAnyChoice(List<VideoDownloadListModel> datas) {
+        if (null == datas || 0 == datas.size()) return false;
+        boolean anyChoice = false;
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).isCheck) anyChoice = true;
+        }
+        return anyChoice;
+
+
     }
 }

@@ -1,7 +1,7 @@
 package app.ndk.com.enter.mvp.ui.start;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,13 +9,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 
 import java.util.List;
 
@@ -68,37 +69,14 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
 
     @Override
     public void init(Bundle savedInstanceState) {
+        System.out.println("-------PermissionActivty init= PermissionsActivity");
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ap_bottom_iv.getLayoutParams();
         lp.width = Utils.getScreenWidth(this);
         lp.height = Utils.getScreenWidth(this) * 464 / 1242;
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         ap_bottom_iv.setLayoutParams(lp);
 
-
         isRequireCheck = true;
-        alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(R.string.permission_help);
-        alertBuilder.setCancelable(false);
-
-        // 拒绝, 退出应用
-        alertBuilder.setNegativeButton(R.string.permission_quit, (dialog, which) -> {
-            setResult(PERMISSIONS_DENIED);
-            isAlertDialogShow = false;
-            finish();
-        });
-
-        alertBuilder.setPositiveButton(R.string.permission_setting, (dialog, which) -> {
-            isAlertDialogShow = false;
-            dialog.dismiss();
-            startAppSettings();
-        });
-
-        alertBuilder.setOnKeyListener((dialog, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                return true;
-            }
-            return false;
-        });
     }
 
     @Override
@@ -187,14 +165,33 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
                 insertStr += getString(R.string.permission_sms_str);
             } else if (TextUtils.equals(str, PERMISSION_WRITE_STORAGE)) {
                 insertStr += getString(R.string.permission_sdcard_str);
-            } else if (TextUtils.equals(str, PERMISSION_READ_PHONE_STATE)) {
+            } else if (TextUtils.equals(str, PERMISSION_CALL_PHONE)) {
                 insertStr += getString(R.string.permission_phone_str);
             } else if (TextUtils.equals(str, PERMISSION_LOCATION)) {
                 insertStr += getString(R.string.permission_location_str);
+            } else if (TextUtils.equals(str, PERMISSION_READ_STORAGE)) {
+                insertStr += getString(R.string.permission_extenge_str);
             }
         }
-        alertBuilder.setMessage(getString(R.string.permission_help_text, insertStr));
-        alertBuilder.show();
+
+        final Dialog defaultDialog = new DefaultDialog(this, String.format(getString(R.string.permission_help_text), insertStr), "取消", "确定") {
+
+            @Override
+            public void left() {
+                setResult(PERMISSIONS_DENIED);
+                isAlertDialogShow = false;
+                finish();
+            }
+
+            @Override
+            public void right() {
+                isAlertDialogShow = false;
+                dismiss();
+                startAppSettings();
+            }
+        };
+        defaultDialog.setCancelable(false);
+        defaultDialog.show();
         isAlertDialogShow = true;
     }
 

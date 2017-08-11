@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
@@ -76,7 +78,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         commonNavigator.setAdapter(videoNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
 
-        commonNavigator.setAdjustMode(true);
 //        commonNavigator.setLeftPadding(DimensionPixelUtil.dip2px(baseActivity,100));
 //        commonNavigator.setRightPadding(DimensionPixelUtil.dip2px(baseActivity,100));
         videoVideolistIndicator.setNavigator(commonNavigator);
@@ -130,9 +131,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     public void getSchoolAllDataError(String message) {
         PromptManager.ShowCustomToast(baseActivity, message);
-
     }
-
 
     /**
      * Navigations的Ap
@@ -216,11 +215,12 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         @Override
         public IPagerIndicator getIndicator(Context context) {
             LinePagerIndicator indicator = new LinePagerIndicator(context);
-            indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-
+            indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+            indicator.setLineWidth(DimensionPixelUtil.dip2px(context, 30));
+            indicator.setLineHeight(DimensionPixelUtil.dip2px(context, 3));
             indicator.setYOffset(UIUtil.dip2px(context, 3));
-            indicator.setColors(getResources().getColor(R.color.app_golden));
-            indicator.setXOffset(UIUtil.dip2px(context, 10));
+            indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
+            indicator.setXOffset(UIUtil.dip2px(context, 30));
             return indicator;
         }
     }
