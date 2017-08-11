@@ -1,13 +1,18 @@
 package com.cn.hugo.android.scanner;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -39,6 +45,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
+import com.jhworks.library.ImageSelector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +77,7 @@ public final class CaptureActivity extends Activity implements
 
     private static final int PARSE_BARCODE_FAIL = 300;
     private static final int PARSE_BARCODE_SUC = 200;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
     private static String nickname;
     private static String phoneNum;
 
@@ -161,8 +169,6 @@ public final class CaptureActivity extends Activity implements
 //                    new MToast(activityReference.get(),
 //                            "解析成功，结果为：" + msg.obj, Toast.LENGTH_SHORT).show();result
                     String result = msg.obj.toString();
- ;
-
                 case PARSE_BARCODE_FAIL:// 解析图片失败
                     Toast.makeText(activityReference.get(), "解析图片失败", Toast.LENGTH_SHORT).show();
                     restartPreviewAfterDelay(0L);
@@ -171,10 +177,8 @@ public final class CaptureActivity extends Activity implements
                 default:
                     break;
             }
-
             super.handleMessage(msg);
         }
-
     }
 
     @Override
@@ -207,8 +211,12 @@ public final class CaptureActivity extends Activity implements
         light.setOnClickListener(this);
 
 //        EventBus.getDefault().register(this);
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CAMERA);
+        }
     }
+
+
 
     @Override
     protected void onResume() {
@@ -243,7 +251,6 @@ public final class CaptureActivity extends Activity implements
             // exists. Therefore
             // surfaceCreated() won't be called, so init the camera here.
             initCamera(surfaceHolder);
-
         } else {
             // 防止sdk8的设备初始化预览异常
             surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -265,6 +272,22 @@ public final class CaptureActivity extends Activity implements
         source = IntentSource.NONE;
         decodeFormats = null;
         characterSet = null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    finish();
+                    NavigationUtils.startActivityForResult(this, CaptureActivity.class, requestCode);
+                } else {
+                    Toast.makeText(CaptureActivity.this, "请开启用户照相权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override

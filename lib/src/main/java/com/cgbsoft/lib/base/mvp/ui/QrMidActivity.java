@@ -5,21 +5,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 
 /**
  * Created by fei on 2017/8/1.
  */
-
 public class QrMidActivity extends Activity {
     private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private int REQUEST_CODE_PERMISSION = 2000; // 请求码
