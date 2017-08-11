@@ -72,8 +72,8 @@ public abstract class DefaultDialog extends BaseDialog {
         //开始初始化
 
         getWindow().setWindowAnimations(R.style.dialog_commont_anims_style);
-
     }
+
     private void init() {
         if (TextUtils.isEmpty(left)) {
             setSingleBtn();

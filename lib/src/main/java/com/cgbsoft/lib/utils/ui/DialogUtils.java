@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,8 +15,6 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.lib.widget.dialog.DownloadAdviserDialog;
-import com.lzy.okserver.download.DownloadInfo;
 
 /**
  * @author chenlong
@@ -40,14 +37,14 @@ public class DialogUtils {
         }
     }
 
-
     /**
      * 确认提示单个对话框
      */
-    public static Dialog DialogConfirmSingle(Context context, String titleRes, String butText, String canText,
+    public static Dialog DialogConfirmSingle(Context context, String titleRes, String content, String butText, String canText,
                                              final SimpleDialogListener dialogListener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(titleRes);
+        builder.setMessage(content);
         builder.setPositiveButton(butText, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

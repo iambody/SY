@@ -131,7 +131,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     public void getSchoolAllDataError(String message) {
         PromptManager.ShowCustomToast(baseActivity, message);
-
     }
 
     /**
@@ -216,11 +215,12 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         @Override
         public IPagerIndicator getIndicator(Context context) {
             LinePagerIndicator indicator = new LinePagerIndicator(context);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(DimensionPixelUtil.dip2px(context, 30), DimensionPixelUtil.dip2px(context, 5));
-            indicator.setLayoutParams(layoutParams);
+            indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+            indicator.setLineWidth(DimensionPixelUtil.dip2px(context, 30));
+            indicator.setLineHeight(DimensionPixelUtil.dip2px(context, 3));
             indicator.setYOffset(UIUtil.dip2px(context, 3));
             indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-            indicator.setXOffset(UIUtil.dip2px(context, 10));
+            indicator.setXOffset(UIUtil.dip2px(context, 30));
             return indicator;
         }
     }

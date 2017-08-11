@@ -64,7 +64,7 @@
     <string name="ra_send_code_str">您将会接收到来自%1$s的电话，验证码将会以语音的方式播放，如有疑问，拨打客服电话：400-188-8848。</string>
 
     <string name="permission_help">帮助</string>
-    <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>
+    <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。</string>
     <string name="permission_quit">退出</string>
     <string name="permission_setting">设置</string>
     <string name="permission_audio_str">音频录制权限\n</string>
@@ -72,8 +72,9 @@
     <string name="permission_camera_str">相机权限\n</string>
     <string name="permission_sms_str">发送短信权限\n</string>
     <string name="permission_contancts_str">读取联系人权限\n</string>
-    <string name="permission_phone_str">读取电话的状态权限\n</string>
+    <string name="permission_phone_str">拨打电话管理权限\n</string>
     <string name="permission_location_str">访问范围性的定位权限\n</string>
+    <string name="permission_extenge_str">照片、媒体内容和文件权限\n</string>
     <string name="wel_cancelbtn_str">跳过</string>
     <string name="aci_choice_ids_str">选择您的身份</string>
     <string name="aci_right_inverstor_str">我是合格投资人</string>

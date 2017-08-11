@@ -48,7 +48,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_READ_STORAGE,PERMISSION_WRITE_STORAGE};
+    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE,PERMISSION_WRITE_STORAGE};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
@@ -81,6 +81,11 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void before() {
         super.before();
         setIsNeedGoneNavigationBar(true);//不显示导航条
@@ -89,7 +94,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
         if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
             //TODO 不是第一次打开做一些事
-
         } else {
         }
 
