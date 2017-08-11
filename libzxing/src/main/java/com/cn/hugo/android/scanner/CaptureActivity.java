@@ -66,7 +66,7 @@ import java.util.Map;
  * 此Activity所做的事： 1.开启camera，在后台独立线程中完成扫描任务；
  * 2.绘制了一个扫描区（viewfinder）来帮助用户将条码置于其中以准确扫描； 3.扫描成功后会将扫描结果展示在界面上。
  */
-@Route(RouteConfig.GOTO_TWO_CODE_ACTIVITY)
+@Route(RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY)
 public final class CaptureActivity extends Activity implements
         SurfaceHolder.Callback, View.OnClickListener {
 
@@ -210,10 +210,9 @@ public final class CaptureActivity extends Activity implements
         light = (ImageView) findViewById(R.id.capture_flashlight);
         light.setOnClickListener(this);
 
-//        EventBus.getDefault().register(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CAMERA);
-        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CAMERA);
+//        }
     }
 
 
@@ -274,21 +273,22 @@ public final class CaptureActivity extends Activity implements
         characterSet = null;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    finish();
-                    NavigationUtils.startActivityForResult(this, CaptureActivity.class, requestCode);
-                } else {
-                    Toast.makeText(CaptureActivity.this, "请开启用户照相权限", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_CAMERA:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    finish();
+//                    NavigationUtils.startActivityForResult(this, CaptureActivity.class, requestCode);
+//                } else {
+//                    Toast.makeText(CaptureActivity.this, "请开启用户照相权限", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+//                break;
+//            default:
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     @Override
     protected void onPause() {

@@ -11,10 +11,12 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.chenenyu.router.annotation.Route;
 
 /**
  * Created by fei on 2017/8/1.
  */
+@Route(RouteConfig.GOTO_TWO_CODE_ACTIVITY)
 public class QrMidActivity extends Activity {
     private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private int REQUEST_CODE_PERMISSION = 2000; // 请求码
@@ -32,11 +34,11 @@ public class QrMidActivity extends Activity {
                 startPermissionsActivity();
 //                return;
             } else {
-                NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
+                NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
                 this.finish();
             }
         } else {
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
             this.finish();
         }
     }
@@ -48,7 +50,7 @@ public class QrMidActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PERMISSION&&resultCode==MyPermissionsActivity.PERMISSIONS_GRANTED) {
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_ACTIVITY);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
             this.finish();
         } else if (requestCode == REQUEST_CODE_PERMISSION && resultCode == MyPermissionsActivity.PERMISSIONS_DENIED) {
             this.finish();
