@@ -113,4 +113,6 @@ public interface RxConstant {
     String BindAdviser = "bindadviser";
 
     String SCHOOL_VIDEO_PAUSE = "SCHOOL_VIDEO_PAUSE";
+
+    String SWIPT_CODE_RESULT = "SWIPT_CODE_RESULT";
 }
