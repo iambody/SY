@@ -400,6 +400,8 @@ public final class CaptureActivity extends Activity implements
     }
 
     public void parser(String result) {
+        Log.e("parserResult1",result);
+        Log.e("parserResult2",CwebNetConfig.baseParentUrl);
         if (result.contains(Config.qr_codeUrl)) {
             try {
                 String aa = result.substring(result.indexOf("?") + 1);
@@ -417,7 +419,6 @@ public final class CaptureActivity extends Activity implements
                     if (!AppManager.isInvestor(this)) {
                         //upload(party_id, party_name, father_id, father_name);
                     } else {
-
                         RxBus.get().post("twocode_look_observable", new QrCodeBean(party_id, party_name, father_id, deadline, father_name));
                     }
                 } else {
@@ -434,7 +435,6 @@ public final class CaptureActivity extends Activity implements
             String isCallBack = getIntent().getStringExtra("isCallBack");
             if ((!TextUtils.isEmpty(isCallBack)) && isCallBack.equals("Y")) {
                 RxBus.get().post(RxConstant.SWIPT_CODE_RESULT,result);
-
                 this.finish();
             } else {
                 HashMap<String, Object> hashMap = new HashMap<>();
