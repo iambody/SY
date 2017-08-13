@@ -13,6 +13,8 @@ import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.chenenyu.router.annotation.Route;
 
+import java.util.HashMap;
+
 /**
  * Created by fei on 2017/8/1.
  */
@@ -25,6 +27,10 @@ public class QrMidActivity extends Activity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.qrmidactivity);
+        String isCallBack = getIntent().getStringExtra("isCallBack");
+        HashMap hashMap = new HashMap();
+        hashMap.put("isCallBack",isCallBack);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (null == mPermissionsChecker) {
                 mPermissionsChecker = new MyPermissionsChecker(this);
@@ -34,11 +40,11 @@ public class QrMidActivity extends Activity {
                 startPermissionsActivity();
 //                return;
             } else {
-                NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
+                NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY,hashMap);
                 this.finish();
             }
         } else {
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY,hashMap);
             this.finish();
         }
     }
@@ -49,8 +55,12 @@ public class QrMidActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        String isCallBack = getIntent().getStringExtra("isCallBack");
+        HashMap hashMap = new HashMap();
+        hashMap.put("isCallBack",isCallBack);
+
         if (requestCode == REQUEST_CODE_PERMISSION&&resultCode==MyPermissionsActivity.PERMISSIONS_GRANTED) {
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_TWO_CODE_READ_ACTIVITY,hashMap);
             this.finish();
         } else if (requestCode == REQUEST_CODE_PERMISSION && resultCode == MyPermissionsActivity.PERMISSIONS_DENIED) {
             this.finish();

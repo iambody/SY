@@ -337,9 +337,9 @@ public class CWebviewManger {
 //            PromptManager.ShowCustomToast(context,"我需要分享名片");
             shareAdviserCardShow(action);
         } else if (action.contains("QRCallBack")) {
-            HashMap hashMap = new HashMap();
-            hashMap.put("isCallBack","Y");
-            NavigationUtils.startActivityByRouter(context,RouteConfig.GOTO_TWO_CODE_ACTIVITY,hashMap);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("isCallBack", "Y");
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_TWO_CODE_ACTIVITY, hashMap);
 //            Intent intent = new Intent(context, CaptureActivity.class);
 //            intent.putExtra("isCallBack", "Y");
 //            context.startActivity(intent);
