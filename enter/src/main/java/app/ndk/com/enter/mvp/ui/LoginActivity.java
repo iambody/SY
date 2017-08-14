@@ -573,6 +573,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void onBackPressed() {
         if (fromValidatePassword) {
             Process.killProcess(Process.myPid());
+            System.exit(0);
             return;
         }
 
@@ -588,15 +589,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
             isShowWxBt = false;
 //            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return true;
         }
 
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
             Process.killProcess(Process.myPid());
+            System.exit(0);
             return true;
         }
         return super.onKeyDown(keyCode, event);

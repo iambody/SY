@@ -89,6 +89,8 @@ public interface RxConstant {
     //个人信息页面用到
     String GOTO_PERSONAL_INFORMATION = "personal_information";
 
+    String GOTO_SWITCH_CENTIFY_DIR= "switch_cendify_dir";
+
     //全局跳转
     String JUMP_INDEX = "junp_index";
 

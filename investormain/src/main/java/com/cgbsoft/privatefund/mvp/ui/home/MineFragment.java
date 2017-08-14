@@ -284,6 +284,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.DATUM_MANAGER:
                         NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
                         break;
+                    case GestureManager.CENTIFY_DIR:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
+                        break;
                 }
             }
 
