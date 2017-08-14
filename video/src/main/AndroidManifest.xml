@@ -8,7 +8,7 @@
         android:supportsRtl="true">
         <activity android:name=".mvp.ui.video.VideoDownloadListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".mvp.ui.video.VideoHistoryListActivity" android:screenOrientation="portrait" />
-        <activity android:name=".mvp.ui.video.VideoDetailActivity"  />
+        <activity android:name=".mvp.ui.video.VideoDetailActivity" android:launchMode="singleTask"  />
 
         <activity android:name=".mvp.ui.video.InformationDetailActivity" android:screenOrientation="portrait" />
 

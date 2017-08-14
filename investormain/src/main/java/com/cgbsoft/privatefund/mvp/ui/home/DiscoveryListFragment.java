@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -46,6 +49,11 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     SwipeToLoadLayout swipeToLoadLayout;
 
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
+    @BindView(R.id.fragment_videoschool_noresult)
+    ImageView fragmentVideoschoolNoresult;
+    @BindView(R.id.fragment_videoschool_noresult_lay)
+    RelativeLayout fragmentVideoschoolNoresultLay;
+
     private LinearLayoutManager linearLayoutManager;
     private DiscoveryFragment discoveryFragment;
 
@@ -60,6 +68,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     private boolean isLoadMore;
 
     public DiscoveryListFragment() {
+
     }
 
     @SuppressLint("ValidFragment")
@@ -80,6 +89,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     protected void initViewsAndEvents(View view) {
+
     }
 
     @Override
@@ -102,7 +112,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {
-            getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+            getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         }
     }
 
@@ -134,7 +144,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     public void onLoadMore() {
         CurrentPostion = CurrentPostion + 1;
         isLoadMore = true;
-        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
     }
 
@@ -142,7 +152,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     public void onRefresh() {
         CurrentPostion = 0;
         isLoadMore = false;
-        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         if (discoveryFragment != null) {
             discoveryFragment.refrushListData();
         }
@@ -159,6 +169,12 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     @Override
     public void requestListDataFailure(String errMsg) {
         clodLsAnim(swipeToLoadLayout);
+
         isLoadMore = false;
+    }
+
+
+    @OnClick(R.id.fragment_videoschool_noresult)
+    public void onViewnoresultClicked() {
     }
 }
