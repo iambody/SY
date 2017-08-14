@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
@@ -571,6 +572,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void onBackPressed() {
         if (fromValidatePassword) {
+            Process.killProcess(Process.myPid());
             System.exit(0);
             return;
         }
@@ -587,14 +589,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
             isShowWxBt = false;
 //            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return true;
         }
 
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+            Process.killProcess(Process.myPid());
             System.exit(0);
             return true;
         }

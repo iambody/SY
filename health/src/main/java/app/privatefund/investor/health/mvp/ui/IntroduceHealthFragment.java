@@ -66,6 +66,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         videoRootFrame.setListener(this);
 
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+        changeVideoViewSize(getResources().getConfiguration().orientation);
         if (!isSetFullscreenHandler) {
             isSetFullscreenHandler = true;
             videoRootFrame.setToggleFullScreenHandler(() -> {
@@ -111,11 +112,31 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             }
             List<VideoInfo> videos = new ArrayList<>();
             VideoInfo v1 = new VideoInfo();
+            VideoInfo v2 = new VideoInfo();
             v1.description = "标清";
             v1.type = VideoInfo.VideoType.MP4;
+            v2.description = "高清";
             v1.url = healthIntroduceModel.getSdVideo();
+            v2.url = healthIntroduceModel.getHdVideo();
             videos.add(v1);
-            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+            videos.add(v2);
+            videoRootFrame.play(videos);
+
+//            List<VideoInfo> videos = new ArrayList<>();
+//            VideoInfo v1 = new VideoInfo();
+//            VideoInfo v2 = new VideoInfo();
+//            v1.description = "标清";
+//            v1.type = VideoInfo.VideoType.MP4;
+//            v2.description = "高清";
+//            v2.type = VideoInfo.VideoType.MP4;
+//            v1.url = videoInfoModel.sdUrl;
+//            v2.url = videoInfoModel.hdUrl;
+//            videos.add(v1);
+//            videos.add(v2);
+//
+//            vrf_avd.play(videos);
+
+//            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             iv_mvv_cover.setOnClickListener(v -> {
                 System.out.println("--------iv_mvv_cover");
                 videoRootFrame.play(videos);
