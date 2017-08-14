@@ -37,6 +37,7 @@ import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import org.json.JSONArray;
@@ -1584,8 +1585,16 @@ public class ApiClient {
                 jsonObject.put(entry.getKey().toString(), entry.getValue());
             }
             JSONArray jsonArray = new JSONArray();
-            for (String path : remoteParams) {
-                jsonArray.put(path);
+            for (int i=0;i<remoteParams.size();i++) {
+                String path = remoteParams.get(i);
+                JSONObject objImg = new JSONObject();//backImage   frontImage
+                if (i == 0) {
+                    objImg.put("name", "frontImage");
+                } else {
+                    objImg.put("name", "backImage");
+                }
+                objImg.put("url", path);
+                jsonArray.put(objImg);
             }
             jsonObject.put("imageUrl", jsonArray);
         } catch (Exception e) {

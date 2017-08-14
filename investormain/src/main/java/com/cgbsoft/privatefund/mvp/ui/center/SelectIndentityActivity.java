@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.IndentityEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -24,6 +26,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 
 /**
  * Created by fei on 2017/8/11.
@@ -59,6 +64,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     private String indentityCode;//身份code
     private String credentialCode;//证件code
     private String indentityName;//证件名字
+    private Observable<Integer> register;
 
     @OnClick(R.id.indentity_next)
     public void nextButtonClick(){
@@ -67,6 +73,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
             Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
             intent.putExtra("credentialCode",credentialCode);
             intent.putExtra("indentityCode",indentityCode);
+            intent.putExtra("isFromSelectIndentity",true);
             intent.putExtra("title", indentityName);
             startActivity(intent);
         } else {
@@ -126,6 +133,26 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
+        register = RxBus.get().register(SELECT_INDENTITY, Integer.class);
+        register.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                SelectIndentityActivity.this.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != register) {
+            RxBus.get().unregister(SELECT_INDENTITY,register);
+        }
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -151,6 +178,8 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
                 indentityCode = selectBean.getCode();
                 credentialCode = selectBean.getCredentialCode();
                 indentityName = selectBean.getName();
+//                credentialCode = "100101";
+//                indentityName = "身份证";
                 if (TextUtils.isEmpty(indentityCode)) {
                     return;
                 }

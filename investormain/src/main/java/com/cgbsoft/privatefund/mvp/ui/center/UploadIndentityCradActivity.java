@@ -25,6 +25,7 @@ import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
@@ -42,6 +43,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 
 /**
  * Created by fei on 2017/8/12.
@@ -83,6 +86,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private int REQUEST_CODE_PERMISSON_FIRST = 2000; // 请求码
     private int REQUEST_CODE_PERMISSON_SECOND = 2002; // 请求码
+    private boolean isFromSelectIndentity;
+
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
     }
@@ -145,16 +150,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 super.run();
                 remoteParams.clear();
                 for (final String localPath : paths) {
-                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")||localPath.equals("+")) {
-                        continue;
-                    }
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
                     String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_FEEDBACK_TYPE);
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
                         remoteParams.add(paths);
                     } else {
-                        ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证明文件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+                        ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                         mLoadingDialog.dismiss();
                         return;
                     }
@@ -183,6 +185,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void uploadIndentitySuccess() {
+        RxBus.get().post(SELECT_INDENTITY,0);
+        if (isFromSelectIndentity) {
+            Intent intent = new Intent(this, CardCollectActivity.class);
+            intent.putExtra("indentityCode",indentityCode);
+            startActivity(intent);
+        }
         this.finish();
     }
 
@@ -200,8 +208,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     protected void init(Bundle savedInstanceState) {
         credentialCode = getIntent().getStringExtra("credentialCode");
         indentityCode = getIntent().getStringExtra("indentityCode");
+        isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
         String title = getIntent().getStringExtra("title");
-        if (TextUtils.isEmpty(indentityCode)) {
+        if (TextUtils.isEmpty(indentityCode)||TextUtils.isEmpty(credentialCode)) {
             this.finish();
             return;
         }

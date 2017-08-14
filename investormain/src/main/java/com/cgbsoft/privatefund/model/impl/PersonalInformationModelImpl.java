@@ -70,7 +70,7 @@ public class PersonalInformationModelImpl implements PersonalInformationModel {
                     String identity = result.getString("identity");
                     String hasIdCard = result.getString("hasIdCard");//用户选择的是身份证类型，1代表已经上传了身份证，0是还未传身份证
                     String title = result.getString("title");//
-                    String credentialCode = result.getString("code");//
+                    String credentialCode = result.getString("credentialCode");//
                     listener.verifyIndentitySuccess(identity,hasIdCard,title,credentialCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
