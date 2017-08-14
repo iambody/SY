@@ -57,7 +57,7 @@ public class DaoUtils {
                 historySearchBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getHistorySearchBeanDao();
                 break;
             case W_DATASTISTICS:
-                dataStatisticsBeanDao = ((BaseApplication)context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
+                dataStatisticsBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
         }
     }
 
@@ -80,14 +80,16 @@ public class DaoUtils {
             historySearchBeanDao.deleteAll();
 
     }
-public void clearnHistoryByID(String Type, String userId){
-    List<HistorySearchBean> been = new ArrayList<>();
-    been=getHistorysByType(Type,userId);
-    if(null==been||been.size()==0)return;
-    for(int i=0;i<been.size();i++){
-        historySearchBeanDao.delete(been.get(i));
+
+    public void clearnHistoryByID(String Type, String userId) {
+        List<HistorySearchBean> been = new ArrayList<>();
+        been = getHistorysByType(Type, userId);
+        if (null == been || been.size() == 0) return;
+        for (int i = 0; i < been.size(); i++) {
+            historySearchBeanDao.delete(been.get(i));
+        }
     }
-}
+
     /**
      * 插入一条
      *
@@ -170,7 +172,7 @@ public void clearnHistoryByID(String Type, String userId){
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if(0!=list.get(i).getDownloadTime()&&list.get(i).getStatus()!=VideoStatus.NONE)
+                if (0 != list.get(i).getDownloadTime() && list.get(i).getStatus() != VideoStatus.NONE)
                     results.add(getVideoInfoModel(list.get(i)));
             }
             return results;
@@ -189,8 +191,8 @@ public void clearnHistoryByID(String Type, String userId){
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if(0!=list.get(i).getDownloadTime())
-                results.add(getVideoInfoModel(list.get(i)));
+                if (0 != list.get(i).getDownloadTime())
+                    results.add(getVideoInfoModel(list.get(i)));
             }
             return results;
         }
@@ -252,6 +254,18 @@ public void clearnHistoryByID(String Type, String userId){
                 file.delete();
             }
         }
+    }
+
+    /**
+     * 视频下载完成
+     */
+
+    public void videoDoneLoad(String videoId) {
+        VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+        videoInfo.setStatus(VideoStatus.FINISH);
+        videoInfoDao.update(videoInfo);
+
+
     }
 
     /**
@@ -354,15 +368,15 @@ public void clearnHistoryByID(String Type, String userId){
         return model;
     }
 
-    public List<DataStatisticsBean> getDatastisticList(){
+    public List<DataStatisticsBean> getDatastisticList() {
         return dataStatisticsBeanDao.queryBuilder().list();
     }
 
-    public void deleteDataStatitic(){
+    public void deleteDataStatitic() {
         dataStatisticsBeanDao.deleteAll();
     }
 
-    public void saveDataStatistic(DataStatisticsBean dataStatisticsBean){
+    public void saveDataStatistic(DataStatisticsBean dataStatisticsBean) {
         dataStatisticsBeanDao.save(dataStatisticsBean);
     }
 

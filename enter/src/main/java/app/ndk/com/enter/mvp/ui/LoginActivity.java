@@ -654,9 +654,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     /*是否符合条件*/
     boolean isFixAdjustEd() {
         String userName = et_al_username.getText().toString().trim();
-        String userPwd = et_al_password.getText().toString();
+        String userPwd = et_al_password.getText().toString().trim();
         if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
             PromptManager.ShowCustomToast(baseContext, "请输入正确手机号");
+            return false;
+        }
+        if(BStrUtils.isEmpty(userPwd)||userPwd.length()<6||userPwd.length()>16){
+            PromptManager.ShowCustomToast(baseContext, "密码长度为6-16位");
             return false;
         }
         return true;

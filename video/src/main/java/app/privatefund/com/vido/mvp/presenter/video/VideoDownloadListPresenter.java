@@ -374,6 +374,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             videoInfoModel.status = VideoStatus.FINISH;
             videoInfoModel.localVideoPath = downloadInfo.getTargetPath();
             saveOrUpdateVideoInfo(videoInfoModel);
+            daoUtils.videoDoneLoad(videoId);
             if (getView() != null)
                 getView().onDownloadFinish(videoId);
         }
@@ -382,6 +383,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         public void onError(DownloadInfo downloadInfo, String errorMsg, Exception e) {
             videoInfoModel.status = VideoStatus.NONE;
             saveOrUpdateVideoInfo(videoInfoModel);
+
             if (getView() != null)
                 getView().onDownloadError(videoId);
         }
