@@ -11,4 +11,6 @@ public interface PersonalInformationModel {
 
 
     void uploadRemotePath(CompositeSubscription compositeSubscription, PersonalInformationModelListener listener,String adviserId, String imageId);
+
+    void verifyIndentity(CompositeSubscription compositeSubscription, PersonalInformationModelListener listener);
 }

@@ -165,6 +165,18 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.myqr));
         startActivity(intent);
     }
+
+    /**
+     * 点击证件夹
+     */
+    @OnClick(R.id.rl_personal_information_card_collect)
+    public void gotoCardCollect(){
+        getPresenter().verifyIndentity();
+    }
+
+    /**
+     * 点击我的会员
+     */
     @OnClick(R.id.rl_goto_member_center)
     public void gotoMemberCenter(){
         Intent intent = new Intent(this, BaseWebViewActivity.class);
@@ -172,6 +184,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.membercenter);
         startActivity(intent);
     }
+
+    /**
+     * 点击姓名
+     */
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){
         Intent intent = new Intent(this, ChangeNameActivity.class);
@@ -182,6 +198,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }
+
+    /**
+     * 点击性别
+     */
     @OnClick(R.id.rl_usergender_all)
     public void changeUserGender(){
         Intent intent = new Intent(this, ChangeGenderActivity.class);
@@ -189,6 +209,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
     }
 
+    /**
+     * 更换头像
+     */
     @OnClick(R.id.rl_personal_information_icon_all)
     public void changeIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -703,5 +726,27 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         if (null != userInfo) {
             Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
         }
+    }
+
+    @Override
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode) {
+        if (hasIndentity) {
+            if (hasUpload) {//去证件列表
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                intent.putExtra("indentityCode",indentityCode);
+                startActivity(intent);
+            } else {//去上传证件照
+                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(this, SelectIndentityActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+        Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
     }
 }
