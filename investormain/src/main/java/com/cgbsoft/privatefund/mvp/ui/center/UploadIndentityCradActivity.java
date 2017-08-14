@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.permission.MyPermissionsActivity;
+import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
@@ -76,15 +79,42 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private boolean isIdCard;
     private List<String> remoteParams = new ArrayList<>();
     private String credentialCode;
+    private MyPermissionsChecker mPermissionsChecker;
+    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
+    private int REQUEST_CODE_PERMISSON_FIRST = 2000; // 请求码
+    private int REQUEST_CODE_PERMISSON_SECOND = 2002; // 请求码
+    private void startPermissionsActivity(int permissionCode) {
+        MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
+    }
 
     @OnClick(R.id.iv_upload_crad_first)
     public void uploadFirstClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
+            // 缺少权限时, 进入权限配置页面
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                startPermissionsActivity(REQUEST_CODE_PERMISSON_FIRST);
+                return;
+            }
+        }
         // 拍照
         takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
     }
 
     @OnClick(R.id.iv_upload_crad_second)
     public void uploadSecondClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
+            // 缺少权限时, 进入权限配置页面
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                startPermissionsActivity(REQUEST_CODE_PERMISSON_SECOND);
+                return;
+            }
+        }
         // 拍照
         takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
     }
@@ -236,7 +266,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FIRST_REQUEST_CARD_CAMERA) {
+        if (requestCode == REQUEST_CODE_PERMISSON_FIRST) {
+            uploadFirstClick();
+        }else if (requestCode == REQUEST_CODE_PERMISSON_SECOND){
+            uploadSecondClick();
+        }else if (requestCode == FIRST_REQUEST_CARD_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 handlePhotoResult(firstCropPhotoName, FIRST_REQUEST_CROP);
             }
