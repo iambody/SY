@@ -16,6 +16,8 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.PushDialog;
+import com.cgbsoft.lib.widget.dialog.BaseDialog;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,7 +41,7 @@ import io.rong.imlib.model.Conversation;
  */
 public class ReceiveInfoManager {
     private static ReceiveInfoManager receiveInfoManager;
-    private PushDialog infoDialog;
+    private BaseDialog infoDialog;
 
     private ReceiveInfoManager() {
     }
@@ -70,13 +72,15 @@ public class ReceiveInfoManager {
             // 进行相应操作
             try {
                 Bundle bundle = msg.getData();
+                BackgroundManager backgroundManager = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager();
                 switch (msg.what) {
                     case Constant.RECEIVER_SEND_CODE:
-                        String title = bundle.getString("title");
-                        String type = bundle.getString("type");
-                        String detail = bundle.getString("detail");
-                        String jumpUrl = bundle.getString("jumpUrl");
-                        String shareType = bundle.getString("shareType");
+                        final String title = bundle.getString("title");
+                        final String type = bundle.getString("type");
+                        final String detail = bundle.getString("detail");
+                        final String jumpUrl = bundle.getString("jumpUrl");
+                        final String SenderId = bundle.getString("senderId");
+                        final String shareType = bundle.getString("shareType");
                         if (detail == null || detail.equals("") || "".equals(title)) {
                             return;
                         }
@@ -84,34 +88,23 @@ public class ReceiveInfoManager {
                             infoDialog.dismiss();
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        BackgroundManager backgroundManager = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager();
-                        infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, rightText, "返回", jumpUrl) {
-                            @Override
-                            public void left() {
-                                dismiss();
-                            }
-
-                            @Override
-                            public void right() {
-                                dismiss();
-                                if ("1".equals(type)) {
-                                    onClickConfirm(jumpUrl, title, shareType);
+                        if (Constant.msgSystemStatus.equals(SenderId)) {
+                            infoDialog = new DefaultDialog(backgroundManager.getCurrentActivity(), detail, "返回", rightText) {
+                                @Override
+                                public void left() {
+                                    this.dismiss();
                                 }
-                            }
-                        };
 
-                        if (!infoDialog.isShowing()) {
-                            infoDialog.show();
-                        }
-                        break;
-                    case Constant.RECEIVER_SEND_CODE_NEW_INFO:
-                        SMMessage smMessage = (SMMessage) bundle.getSerializable("smMessage");
-                        Activity mCurrentActivity = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
-                        if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
-                            if (infoDialog != null && infoDialog.isShowing()) {
-                                infoDialog.dismiss();
-                            }
-                            infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), smMessage.getButtonText(), "返回", smMessage.getJumpUrl()) {
+                                @Override
+                                public void right() {
+                                    this.dismiss();
+                                    if ("1".equals(type)) {
+                                        onClickConfirm(jumpUrl, title, shareType);
+                                    }
+                                }
+                            };
+                        } else {
+                            infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, rightText, "返回", jumpUrl) {
                                 @Override
                                 public void left() {
                                     dismiss();
@@ -120,9 +113,50 @@ public class ReceiveInfoManager {
                                 @Override
                                 public void right() {
                                     dismiss();
-                                    onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
+                                    if ("1".equals(type)) {
+                                        onClickConfirm(jumpUrl, title, shareType);
+                                    }
                                 }
                             };
+                        }
+                        if (!infoDialog.isShowing()) {
+                            infoDialog.show();
+                        }
+                        break;
+                    case Constant.RECEIVER_SEND_CODE_NEW_INFO:
+                        final SMMessage smMessage = (SMMessage) bundle.getSerializable("smMessage");
+                        Activity mCurrentActivity = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+                        if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
+                            if (infoDialog != null && infoDialog.isShowing()) {
+                                infoDialog.dismiss();
+                            }
+                            if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
+                                infoDialog = new DefaultDialog(backgroundManager.getCurrentActivity(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
+                                    @Override
+                                    public void left() {
+                                        this.dismiss();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        this.dismiss();
+                                        onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
+                                    }
+                                };
+                            } else {
+                                infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), smMessage.getButtonText(), "返回", smMessage.getJumpUrl()) {
+                                    @Override
+                                    public void left() {
+                                        dismiss();
+                                    }
+
+                                    @Override
+                                    public void right() {
+                                        dismiss();
+                                        onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
+                                    }
+                                };
+                            }
                             if (!infoDialog.isShowing()) {
                                 infoDialog.show();
                             }

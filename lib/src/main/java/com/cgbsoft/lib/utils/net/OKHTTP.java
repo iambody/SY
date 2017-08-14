@@ -61,6 +61,7 @@ public class OKHTTP {
         return mInstance;
     }
 
+
     public static void updateRequestUrl() {
         mInstance = null;
     }

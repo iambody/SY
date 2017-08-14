@@ -81,6 +81,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                         case "1": //有弹窗、有跳转
                             sendMessage.what = Constant.RECEIVER_SEND_CODE;
                             bundle2.putString("type", "1");
+                            bundle2.putString("senderId", message.getSenderUserId());
                             bundle2.putString("jumpUrl", smMessage.getJumpUrl());
                             bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
                             bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
@@ -92,6 +93,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                             sendMessage.what = Constant.RECEIVER_SEND_CODE;
                             bundle2.putString("type", "2");
                             bundle2.putString("jumpUrl", smMessage.getJumpUrl());
+                            bundle2.putString("senderId", message.getSenderUserId());
                             bundle2.putString("detail", TextUtils.isEmpty(smMessage.getDialogSummary()) ? " " : smMessage.getDialogSummary());
                             bundle2.putString("title", TextUtils.isEmpty(smMessage.getDialogTitle()) ? " " : smMessage.getDialogTitle());
                             bundle2.putString("shareType", shareType);
@@ -102,6 +104,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                             break;
                         case "4": // 新的消息弹窗
                             sendMessage.what = Constant.RECEIVER_SEND_CODE_NEW_INFO;
+                            smMessage.setSenderId(message.getSenderUserId());
                             bundle2.putSerializable("smMessage", smMessage);
                             sendMessage.setData(bundle2);
                             ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);

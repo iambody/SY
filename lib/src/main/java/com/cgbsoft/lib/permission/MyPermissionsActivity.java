@@ -15,7 +15,6 @@ import android.view.Window;
 
 import com.cgbsoft.lib.utils.tools.LogUtils;
 
-
 /**
  * 动态权限管理，Android 6.0 以上用到
  */
