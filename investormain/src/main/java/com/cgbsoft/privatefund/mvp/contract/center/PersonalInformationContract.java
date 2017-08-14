@@ -21,9 +21,13 @@ public interface PersonalInformationContract {
         void updateError(Throwable error);
         void uploadImgSuccess(String imgRemotePath);
         void uploadImgError(Throwable error);
+        void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode);
+
+        void verifyIndentityError(Throwable error);
     }
     interface PersonalInformationPresenter extends BasePresenter{
         void updateUserInfoToServer(String userName, String gender, String birthday);
         void uploadRemotePath(String adviserId);
+        void verifyIndentity();
     }
 }

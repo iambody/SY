@@ -363,4 +363,9 @@ public class NetConfig {
         static final String UPDATE_SALON_AND_CITY = API_URL + "/salons/main";
         static final String UPDATE_SALON = API_URL + "/salons";
     }
+    static class Indentity {
+        static final String GET_INDENTITY_TYPE_LIST = AUTH_URL_V2 + "/credential/config";
+        static final String VERIFY_INDENTITY=AUTH_URL_V2 + "/credential/info";
+        public static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
+    }
 }

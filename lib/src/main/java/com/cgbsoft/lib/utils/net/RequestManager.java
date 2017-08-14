@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.net;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
@@ -10,6 +11,7 @@ import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.IndentityEntity;
 import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -24,6 +26,7 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -802,4 +805,25 @@ interface RequestManager {
     Observable<BaseResult<SalonsEntity.Result>> getSalonsAndCitys(@QueryMap Map<String, String> params);
     @GET(NetConfig.Salon.UPDATE_SALON)
     Observable<BaseResult<OldSalonsEntity.SalonBean>> getOldSalons(@QueryMap Map<String, String> params);
+
+    /**
+     * 获取身份列表
+     * @return
+     */
+    @GET(NetConfig.Indentity.GET_INDENTITY_TYPE_LIST)
+    Observable<BaseResult<List<IndentityEntity.IndentityBean>>> getIndentity();
+
+    /**
+     * 验证身份
+     */
+    @GET(NetConfig.Indentity.VERIFY_INDENTITY)
+    Observable<ResponseBody> verifyIndentityInOkhttp();
+
+    /**
+     * 获取证件列表
+     * @param params
+     * @return
+     */
+    @GET(NetConfig.Indentity.GET_INDENTITY_LIST)
+    Observable<BaseResult<CardListEntity.Result>> getCardList(@QueryMap Map<String, String> params);
 }

@@ -232,6 +232,8 @@
     <string name="select_adviser">私人银行家</string>
     <string name="my_adviser">我的私人银行家</string>
     <string name="myqr">我的二维码</string>
+    <string name="card_collect">证件夹</string>
+    <string name="indentity_select_str">身份选择</string>
     <string name="mymember">我的会员</string>
     <string name="upload_icon_fail">上传头像失败</string>
     <string name="private_bank_personal">私行家-</string>

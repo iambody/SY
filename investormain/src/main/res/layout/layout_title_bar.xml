@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -12,26 +12,29 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
+            app:contentInsetStart="0dp"
+            android:theme="@style/AppTheme.ActionBar"
             app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
             <TextView
                 android:id="@+id/title_mid"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/fc_college_title_str"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/dimens_sp_18" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/acitivity_divide_online"
-        android:layout_height="0.5dp"
-        android:layout_width="match_parent"/>
+    <include
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
 
 </LinearLayout>
