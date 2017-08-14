@@ -465,6 +465,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public void onDownloadFinish(String videoId) {
+
         refItemUI(videoId);
     }
 

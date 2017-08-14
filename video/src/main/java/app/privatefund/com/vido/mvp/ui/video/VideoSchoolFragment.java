@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,9 +47,6 @@ import butterknife.BindView;
 public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter> implements VideoSchoolAllInfContract.View {
     @BindView(R2.id.video_videolist_indicator)
     MagicIndicator videoVideolistIndicator;
-//    @BindView(R2.id.video_videolist_bannerview)
-//    RollPagerView videoVideolistBannerview;
-
     //导航器
     CommonNavigator commonNavigator;
     @BindView(R2.id.video_videolist_pager)
@@ -63,7 +59,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     //所有需要的fragment的集合
 
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
-//    BannerAdapter bannerAdapter;
 
     @Override
     protected int layoutID() {
@@ -78,8 +73,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         commonNavigator.setAdapter(videoNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
 
-//        commonNavigator.setLeftPadding(DimensionPixelUtil.dip2px(baseActivity,100));
-//        commonNavigator.setRightPadding(DimensionPixelUtil.dip2px(baseActivity,100));
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
@@ -104,8 +97,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
-//        initBanner(videoAllModel.banner);
-        //Navagation的数据填充
+
         lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
             VidoListFragment baseLazyFragment = new VidoListFragment();
@@ -172,12 +164,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
             CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
 
-//
             View view = layoutInflater.inflate(R.layout.view_item_navigation, null);
-//            LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity,100),LinearLayout.LayoutParams.WRAP_CONTENT);
-//            params.setMargins(DimensionPixelUtil.dip2px(baseActivity,60),0,DimensionPixelUtil.dip2px(baseActivity,60),0);
-//            commonPagerTitleView.setLayoutParams(params);
-
             ImageView imageView = (ImageView) view.findViewById(R.id.view_item_navigation_iv);
 
             TextView textViewdd = (TextView) view.findViewById(R.id.view_item_navigation_txt);
