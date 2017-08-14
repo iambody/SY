@@ -243,13 +243,7 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
         titleRight = (TextView) findViewById(R.id.title_right);
 
         if (null != titleLeft) {
-            titleLeft.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            titleLeft.setOnClickListener(v -> finish());
         }
     }
 

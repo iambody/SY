@@ -114,6 +114,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> mallDeleteObservable;
     private Observable<Boolean> unReadMessageObservable;
+    private Observable<String> callBackObservable;
 
     @Override
     protected int layoutID() {
@@ -204,6 +205,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                     rightItem.setIcon(ContextCompat.getDrawable(BaseWebViewActivity.this, hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index));
                     rightItem.setVisible(rightMessageIcon);
                 }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
+        callBackObservable = RxBus.get().register(RxConstant.SWIPT_CODE_RESULT, String.class);
+        callBackObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String url) {
+                mWebview.loadUrl("javascript:setCallBack('" + url + "')");
             }
 
             @Override
@@ -473,6 +486,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
         if (unReadMessageObservable != null) {
             RxBus.get().unregister(RxConstant.UNREAD_MESSAGE_OBSERVABLE, unReadMessageObservable);
+        }
+
+        if (callBackObservable!=null){
+            RxBus.get().unregister(RxConstant.SWIPT_CODE_RESULT,callBackObservable);
         }
 
         if (mShakeListener != null) {

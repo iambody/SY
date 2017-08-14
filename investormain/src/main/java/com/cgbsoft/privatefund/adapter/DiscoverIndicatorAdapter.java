@@ -1,14 +1,11 @@
 package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -25,14 +22,12 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
-
 import java.util.List;
 
 /**
  * @author chenlong
  */
 public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
-
     Context adapterContext;
     List<DiscoverModel.DiscoverCategory> categoryList;
     LayoutInflater layoutInflater;
@@ -68,11 +63,6 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
-        LinearLayout.LayoutParams layoutParamsView = new LinearLayout.LayoutParams(screenWidth/4, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParamsView.leftMargin = DimensionPixelUtil.dip2px(context, 80);
-        layoutParamsView.rightMargin = DimensionPixelUtil.dip2px(context, 80);
-        view.setLayoutParams(layoutParamsView);
-
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
@@ -99,6 +89,27 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
 
             }
         });
+        commonPagerTitleView.setContentPositionDataProvider(new CommonPagerTitleView.ContentPositionDataProvider() {
+            @Override
+            public int getContentLeft() {
+                return UIUtil.dip2px(context, 50);
+            }
+
+            @Override
+            public int getContentTop() {
+                return 0;
+            }
+
+            @Override
+            public int getContentRight() {
+                return UIUtil.dip2px(context, 50);
+            }
+
+            @Override
+            public int getContentBottom() {
+                return 0;
+            }
+        });
         commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(i));
         return commonPagerTitleView;
     }
@@ -107,11 +118,11 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     public IPagerIndicator getIndicator(Context context) {
         LinePagerIndicator indicator = new LinePagerIndicator(context);
         indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(DimensionPixelUtil.dip2px(context, 30), DimensionPixelUtil.dip2px(context, 5));
-        indicator.setLayoutParams(layoutParams);
+        indicator.setLineWidth(DimensionPixelUtil.dip2px(context, 30));
+        indicator.setLineHeight(DimensionPixelUtil.dip2px(context, 3));
         indicator.setYOffset(UIUtil.dip2px(context, 3));
         indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-        indicator.setXOffset(UIUtil.dip2px(context, 10));
+        indicator.setXOffset(UIUtil.dip2px(context, 30));
         return indicator;
     }
 }

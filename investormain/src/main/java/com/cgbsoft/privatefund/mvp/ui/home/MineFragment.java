@@ -264,7 +264,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     hideAssert();
                 }
             }
-
             @Override
             protected void onRxError(Throwable error) {
             }
