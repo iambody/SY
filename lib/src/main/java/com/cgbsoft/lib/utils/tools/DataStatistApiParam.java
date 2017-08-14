@@ -571,6 +571,10 @@ public class DataStatistApiParam {
         data3.put("grp", "2002");
         data3.put("act", "20002");
         data3.put("arg1", "登录");
+
+//        data3.put("arg3", "登录");
+//        data3.put("arg4", "登录");
+//        data3.put("arg5", "登录");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
