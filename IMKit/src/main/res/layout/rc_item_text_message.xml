@@ -9,6 +9,7 @@
     android:gravity="center_vertical|left"
     android:textColorLink="#2972ab"
     android:maxWidth="242dp"
+    android:autoLink="phone"
     android:paddingLeft="9dp" />
 
-    <!--android:autoLink="phone"-->
+    <!---->

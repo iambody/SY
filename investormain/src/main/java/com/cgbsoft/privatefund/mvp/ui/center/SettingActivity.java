@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -23,7 +22,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -31,7 +29,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
-import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
@@ -116,18 +113,20 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
                 }
             }
         }
-        String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
-        if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
-            changeLoginPsd.setVisibility(View.GONE);
-        } else {
-            changeLoginPsd.setVisibility(View.VISIBLE);
-        }
-        boolean gestureFlag = AppManager.getGestureFlag(baseContext);
-        gestureSwitch.setSwitchCheck(gestureFlag);
-        if (gestureFlag) {//开
-            changeGesturePsdLayout.setVisibility(View.VISIBLE);
-        } else {
-            changeGesturePsdLayout.setVisibility(View.GONE);
+        if (AppManager.getUserInfo(baseContext) != null) {
+            String phoneNum = AppManager.getUserInfo(baseContext).getPhoneNum();
+            if (TextUtils.isEmpty(phoneNum)) {//无电话号码说明是微信登录用户，隐藏修改密码功能
+                changeLoginPsd.setVisibility(View.GONE);
+            } else {
+                changeLoginPsd.setVisibility(View.VISIBLE);
+            }
+            boolean gestureFlag = AppManager.getGestureFlag(baseContext);
+            gestureSwitch.setSwitchCheck(gestureFlag);
+            if (gestureFlag) {//开
+                changeGesturePsdLayout.setVisibility(View.VISIBLE);
+            } else {
+                changeGesturePsdLayout.setVisibility(View.GONE);
+            }
         }
     }
 
