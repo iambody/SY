@@ -9,4 +9,6 @@ public interface PersonalInformationModelListener {
     void updateError(Throwable error);
     void uploadImgSuccess();
     void uploadImgError(Throwable error);
+    void verifyIndentitySuccess(String result, String hasIdCard);
+    void verifyIndentityError(Throwable error);
 }

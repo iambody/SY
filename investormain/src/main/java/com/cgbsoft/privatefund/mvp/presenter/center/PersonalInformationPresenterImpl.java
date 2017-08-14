@@ -66,6 +66,27 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
         personalInformationView.hideLoadDialog();
         personalInformationView.uploadImgError(error);
     }
+
+    @Override
+    public void verifyIndentitySuccess(String result, String hasIdCard) {
+        personalInformationView.hideLoadDialog();
+        if (TextUtils.isEmpty(result)) {//无身份
+            personalInformationView.verifyIndentitySuccess(false,false,null);
+        } else {//有身份
+            if ("100101".equals(result) && "0".equals(hasIdCard)) {
+                personalInformationView.verifyIndentitySuccess(true, false,result);
+            } else {
+                personalInformationView.verifyIndentitySuccess(true,true,result);
+            }
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+        personalInformationView.hideLoadDialog();
+        personalInformationView.verifyIndentityError(error);
+    }
+
     /**
      * 上传头像的远程路径给服务端
      */
@@ -96,5 +117,13 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
 //                });
             }
         }).start();
+    }
+
+    /**
+     * 验证身份
+     */
+    public void verifyIndentity(){
+        personalInformationView.showLoadDialog();
+        personalInformationModel.verifyIndentity(getCompositeSubscription(),this);
     }
 }

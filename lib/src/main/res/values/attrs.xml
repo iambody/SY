@@ -18,6 +18,10 @@
         <attr name="setting_item_tip" format="string"/>
         <attr name="setting_item_show_switchbutton" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="select_indentity_item">
+        <attr name="indentity_title" format="string"/>
+        <attr name="indentity_checked" format="boolean"/>
+    </declare-styleable>
     <declare-styleable name="SwitchButton">
         <attr name="kswThumbDrawable" format="reference"/>
         <attr name="kswThumbColor" format="color|reference"/>

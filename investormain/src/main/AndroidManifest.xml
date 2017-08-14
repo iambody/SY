@@ -119,7 +119,7 @@
         android:largeHeap="true"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight"
+        android:theme="@style/appInvTheme"
         tools:replace="android:label,android:icon, android:theme">
         <meta-data
             android:name="dbName"
@@ -323,6 +323,18 @@
         <!-- 修改用户性别页面 -->
         <activity
             android:name=".mvp.ui.center.ChangeGenderActivity"
+            android:screenOrientation="portrait" />
+        <!-- 证件列表页面 -->
+        <activity
+            android:name=".mvp.ui.center.CardCollectActivity"
+            android:screenOrientation="portrait" />
+        <!-- 身份选择页面 -->
+        <activity
+            android:name=".mvp.ui.center.SelectIndentityActivity"
+            android:screenOrientation="portrait" />
+        <!-- 上传证件图片页面 -->
+        <activity
+            android:name=".mvp.ui.center.UploadIndentityCradActivity"
             android:screenOrientation="portrait" />
         <!-- 修改登录密码页面 -->
         <activity

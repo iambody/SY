@@ -29,7 +29,7 @@ public class StorageKit {
 	private static final String TEMP_FILE_PATH = APP_ROOT_PATH + "temp/";
 	private static final String IMAGE_FILE_PATH = APP_ROOT_PATH + "images/";
 	private static final String UPDATE_APK_FILE_PATH = APP_ROOT_PATH + "update/";
-	private static final String DPQ_IMAGE_FILE_PATH = APP_ROOT_PATH + "dpqimage/";//点评圈存放路径
+	private static final String DPQ_IMAGE_FILE_PATH = APP_ROOT_PATH + "dpqimage/";
 	
 	static {
 		initPaths();

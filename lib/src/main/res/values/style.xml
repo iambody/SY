@@ -335,4 +335,7 @@
         <item name="android:textColorHint">@color/hintcolor</item>
     </style>
     <style name="button_style" parent="@style/Widget.AppCompat.Button.Borderless" />
+    <style name="IndentityCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/indentity_select</item>
+    </style>
 </resources>

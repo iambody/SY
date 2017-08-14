@@ -146,4 +146,15 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
     public void uploadImgError(Throwable error) {
 
     }
+
+    @Override
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode) {
+
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+
+    }
+
 }
