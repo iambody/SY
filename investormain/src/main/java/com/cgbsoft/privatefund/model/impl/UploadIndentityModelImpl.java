@@ -19,12 +19,12 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
         subscription.add(ApiClient.uploadIndentityRemotePath(remoteParams,customerCode,credentialCode).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
+                listener.uploadIndentitySuccess();
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                listener.uploadIndentityError(error);
             }
         }));
     }

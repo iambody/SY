@@ -58,14 +58,16 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     private boolean isInLand;
     private String indentityCode;//身份code
     private String credentialCode;//证件code
+    private String indentityName;//证件名字
 
     @OnClick(R.id.indentity_next)
     public void nextButtonClick(){
         if (isInLand) {
             //去上传证件照
             Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
-            intent.putExtra("indentityCode",credentialCode);
-            intent.putExtra("title", "身份证");
+            intent.putExtra("credentialCode",credentialCode);
+            intent.putExtra("indentityCode",indentityCode);
+            intent.putExtra("title", indentityName);
             startActivity(intent);
         } else {
             //去证件列表
@@ -148,6 +150,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
                 IndentityEntity.IndentityItem selectBean = datas.get(currentPos);
                 indentityCode = selectBean.getCode();
                 credentialCode = selectBean.getCredentialCode();
+                indentityName = selectBean.getName();
                 if (TextUtils.isEmpty(indentityCode)) {
                     return;
                 }

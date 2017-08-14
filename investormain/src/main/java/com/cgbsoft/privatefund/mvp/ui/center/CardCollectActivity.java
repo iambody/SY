@@ -79,6 +79,11 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                 goToUploadPage(cardBean);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getPresenter().getCardList(indentityCode);
     }
 
@@ -88,7 +93,8 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
      */
     private void goToUploadPage(CardListEntity.CardBean cardBean) {
         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-        intent.putExtra("indentityCode", cardBean.getCode());
+        intent.putExtra("credentialCode", cardBean.getCode());
+        intent.putExtra("indentityCode", indentityCode);
         intent.putExtra("title", cardBean.getName());
         startActivity(intent);
     }

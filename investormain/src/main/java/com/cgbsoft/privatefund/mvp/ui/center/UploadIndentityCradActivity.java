@@ -75,6 +75,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private String indentityCode;
     private boolean isIdCard;
     private List<String> remoteParams = new ArrayList<>();
+    private String credentialCode;
 
     @OnClick(R.id.iv_upload_crad_first)
     public void uploadFirstClick() {
@@ -134,7 +135,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     private void uploadRemotePaths() {
-//        getPresenter().uploadIndentity(remoteParams);
+        getPresenter().uploadIndentity(remoteParams,indentityCode,credentialCode);
     }
 
     @Override
@@ -152,12 +153,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void uploadIndentitySuccess() {
-
+        this.finish();
     }
 
     @Override
     public void uploadIndentityError(Throwable error) {
-
+        Toast.makeText(getApplicationContext(),"上传失败,请稍后重试!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -167,13 +168,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        credentialCode = getIntent().getStringExtra("credentialCode");
         indentityCode = getIntent().getStringExtra("indentityCode");
         String title = getIntent().getStringExtra("title");
         if (TextUtils.isEmpty(indentityCode)) {
             this.finish();
             return;
         }
-        switch (indentityCode) {
+        switch (credentialCode) {
             case "100101"://身份证
                 isIdCard=true;
                 uploadSecond.setVisibility(View.VISIBLE);

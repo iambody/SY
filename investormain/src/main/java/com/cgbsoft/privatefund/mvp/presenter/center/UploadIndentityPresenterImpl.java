@@ -33,10 +33,12 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     @Override
     public void uploadIndentitySuccess() {
         uploadIndentityView.hideLoadDialog();
+        uploadIndentityView.uploadIndentitySuccess();
     }
 
     @Override
     public void uploadIndentityError(Throwable error) {
         uploadIndentityView.hideLoadDialog();
+        uploadIndentityView.uploadIndentityError(error);
     }
 }
