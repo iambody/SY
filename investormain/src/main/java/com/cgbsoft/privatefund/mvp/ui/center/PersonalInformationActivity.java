@@ -737,6 +737,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 startActivity(intent);
             } else {//去上传证件照
                 Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                intent.putExtra("indentityCode",indentityCode);
+                intent.putExtra("title", "身份证");
                 startActivity(intent);
             }
         } else {//无身份

@@ -1563,4 +1563,35 @@ public class ApiClient {
         params.put("customerCode", indentityCode);
         return OKHTTP.getInstance().getRequestManager().getCardList(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
+
+    /**
+     * 上传证件的远程地址，方式同报备
+     * @param remoteParams
+     * @return
+     */
+    public static Observable<String> uploadIndentityRemotePath(List<String> remoteParams,String customerCode,String credentialCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("customerCode", customerCode);
+        params.put("credentialCode", credentialCode);
+        return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    private static RequestBody uploadRemotePathUse(List<String> remoteParams,Map params){
+        JSONObject jsonObject = new JSONObject();
+        Iterator<Map.Entry> iterator = params.entrySet().iterator();
+        try {
+            while (iterator.hasNext()) {
+                Map.Entry entry = iterator.next();
+                jsonObject.put(entry.getKey().toString(), entry.getValue());
+            }
+            JSONArray jsonArray = new JSONArray();
+            for (String path : remoteParams) {
+                jsonArray.put(path);
+            }
+            jsonObject.put("imageUrl", jsonArray);
+        } catch (Exception e) {
+
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+        return body;
+    }
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.model.CardListEntity;
@@ -21,6 +22,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardLi
 
     private List<CardListEntity.CardBean> datas;
     private  Context context;
+    private CardListItemClick listener;
 
     public CardListAdapter(List<CardListEntity.CardBean> datas, Context context) {
         this.datas = datas;
@@ -42,6 +44,14 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardLi
         } else if (!TextUtils.isEmpty(credentialsState)) {
             holder.titleValueTv.setText(credentialsState);
         }
+        if (null != listener) {
+            holder.all.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.itemClick(position,cardBean);
+                }
+            });
+        }
     }
 
     @Override
@@ -53,10 +63,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardLi
 
         TextView titleTv;
         TextView titleValueTv;
+        RelativeLayout all;
+
         public CardListViewHolder(View itemView) {
             super(itemView);
             titleTv = (TextView) itemView.findViewById(R.id.tv_card_item_title);
             titleValueTv = (TextView) itemView.findViewById(R.id.tv_card_item_value);
+            all = (RelativeLayout) itemView.findViewById(R.id.rl_card_list_all);
         }
+    }
+    public void setItemClickListener(CardListItemClick listener){
+        this.listener=listener;
+    }
+    public interface CardListItemClick{
+        void itemClick(int position, CardListEntity.CardBean cardBean);
     }
 }

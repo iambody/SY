@@ -8,6 +8,8 @@ import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 import com.cgbsoft.privatefund.model.impl.UploadIndentityModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
 
+import java.util.List;
+
 /**
  * Created by fei on 2017/8/12.
  */
@@ -23,17 +25,18 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     }
 
     @Override
-    public void uploadIndentity() {
-
+    public void uploadIndentity(List<String> remoteParams,String customerCode,String credentialCode) {
+        uploadIndentityView.showLoadDialog();
+        uploadModel.uploadIndentity(getCompositeSubscription(),this,remoteParams,customerCode,credentialCode);
     }
 
     @Override
     public void uploadIndentitySuccess() {
-
+        uploadIndentityView.hideLoadDialog();
     }
 
     @Override
     public void uploadIndentityError(Throwable error) {
-
+        uploadIndentityView.hideLoadDialog();
     }
 }

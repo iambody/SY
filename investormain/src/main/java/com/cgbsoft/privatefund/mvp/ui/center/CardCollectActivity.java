@@ -73,7 +73,24 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         recyclerView.setHasFixedSize(true);
         adapter = new CardListAdapter(datas, this);
         recyclerView.setAdapter(adapter);
+        adapter.setItemClickListener(new CardListAdapter.CardListItemClick() {
+            @Override
+            public void itemClick(int position, CardListEntity.CardBean cardBean) {
+                goToUploadPage(cardBean);
+            }
+        });
         getPresenter().getCardList(indentityCode);
+    }
+
+    /**
+     * 点击条目跳转到上传照片页面
+     * @param cardBean
+     */
+    private void goToUploadPage(CardListEntity.CardBean cardBean) {
+        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+        intent.putExtra("indentityCode", cardBean.getCode());
+        intent.putExtra("title", cardBean.getName());
+        startActivity(intent);
     }
 
     @Override
@@ -115,6 +132,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 
     @Override
     public void getCardListSuccess(List<CardListEntity.CardBean> cardBeans) {
+        clodLsAnim(mRefreshLayout);
         if (null == cardBeans || cardBeans.size() == 0) {
             return;
         }

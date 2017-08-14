@@ -13,19 +13,28 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
+import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +54,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     ImageView uploadFirst;
     @BindView(R.id.iv_upload_crad_second)
     ImageView uploadSecond;
+    @BindView(R.id.tv_upload_indentity_tip)
+    TextView tagTv;
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
     private String secondPhotoPath;
@@ -61,6 +72,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private final String secondPhotoName = "second.jpg";
     private final String firstCropPhotoName = "firstCrop.jpg";
     private final String secondCropPhotoName = "secondCrop.jpg";
+    private String indentityCode;
+    private boolean isIdCard;
+    private List<String> remoteParams = new ArrayList<>();
 
     @OnClick(R.id.iv_upload_crad_first)
     public void uploadFirstClick() {
@@ -72,6 +86,55 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     public void uploadSecondClick() {
         // 拍照
         takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
+    }
+    @OnClick(R.id.upload_submit)
+    public void photoSubmit(){
+        LogUtils.Log("aaa","firstPhotoPath==="+firstPhotoPath+"---secondPhotoPath==="+secondPhotoPath);
+        List<String> paths = new ArrayList<>();
+        if (isIdCard && (TextUtils.isEmpty(firstPhotoPath) || TextUtils.isEmpty(secondPhotoPath))) {
+            Toast.makeText(getApplicationContext(), "请正确拍摄图片", Toast.LENGTH_SHORT).show();
+            return;
+        } else if(TextUtils.isEmpty(firstPhotoPath)){
+            Toast.makeText(getApplicationContext(), "请正确拍摄图片", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isIdCard) {
+            paths.add(firstPhotoPath);
+            paths.add(secondPhotoPath);
+        } else {
+            paths.add(firstPhotoPath);
+        }
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(this);
+        }
+        mLoadingDialog.show();
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                remoteParams.clear();
+                for (final String localPath : paths) {
+                    if (localPath.contains(Constant.UPLOAD_FEEDBACK_TYPE) || localPath.startsWith("http")||localPath.equals("+")) {
+                        continue;
+                    }
+                    String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
+                    String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_FEEDBACK_TYPE);
+                    FileUtils.deleteFile(newTargetFile);
+                    if (!TextUtils.isEmpty(paths)) {
+                        remoteParams.add(paths);
+                    } else {
+                        ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证明文件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+                        mLoadingDialog.dismiss();
+                        return;
+                    }
+                }
+                uploadRemotePaths();
+            }
+        }.start();
+    }
+
+    private void uploadRemotePaths() {
+//        getPresenter().uploadIndentity(remoteParams);
     }
 
     @Override
@@ -104,7 +167,54 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        titleTV.setText("身份证");
+        indentityCode = getIntent().getStringExtra("indentityCode");
+        String title = getIntent().getStringExtra("title");
+        if (TextUtils.isEmpty(indentityCode)) {
+            this.finish();
+            return;
+        }
+        switch (indentityCode) {
+            case "100101"://身份证
+                isIdCard=true;
+                uploadSecond.setVisibility(View.VISIBLE);
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
+                uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
+                tagTv.setText("请拍摄实体身份证");
+                break;
+            case "100102"://中国护照
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
+                tagTv.setText("请拍摄实体护照");
+                break;
+            case "100401"://外籍护照
+                tagTv.setText("请拍摄实体护照");
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
+                break;
+            case "100201"://港澳来往内地通行证
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
+                tagTv.setText("请拍摄实体通行证");
+                break;
+            case "100301"://台湾来往内地通行证
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
+                tagTv.setText("请拍摄实体通行证");
+                break;
+            case "100103"://军官证
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
+                tagTv.setText("请拍摄实体军官证");
+                break;
+            case "100104"://士兵证
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_soldier_card));
+                tagTv.setText("请拍摄实体士兵证");
+                break;
+            case "200101"://营业执照
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_business_license));
+                tagTv.setText("请拍摄实体营业执照");
+                break;
+            case "200102"://组织机构代码证
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
+                tagTv.setText("请拍摄实体组织机构代码证");
+                break;
+        }
+        titleTV.setText(title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());

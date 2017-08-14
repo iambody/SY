@@ -63,6 +63,8 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         if (isInLand) {
             //去上传证件照
             Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
+            intent.putExtra("indentityCode",indentityCode);
+            intent.putExtra("title", "身份证");
             startActivity(intent);
         } else {
             //去证件列表
