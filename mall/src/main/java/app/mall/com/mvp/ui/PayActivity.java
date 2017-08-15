@@ -492,6 +492,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                 Toast.makeText(this, "充值金额不能小于500云豆", Toast.LENGTH_SHORT).show();
                 return;
             }
+        }else if (ydCount<=0){
+            Toast.makeText(this, "充值金额不能小于1云豆", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         float iprice = 0;

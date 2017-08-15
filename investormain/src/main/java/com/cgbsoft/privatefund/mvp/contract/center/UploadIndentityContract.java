@@ -3,6 +3,8 @@ package com.cgbsoft.privatefund.mvp.contract.center;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
+import java.util.List;
+
 /**
  * Created by fei on 2017/8/12.
  */
@@ -17,10 +19,17 @@ public interface UploadIndentityContract {
          * 隐藏loading弹窗
          */
         void hideLoadDialog();
-        void uploadIndentitySuccess();
+        void uploadIndentitySuccess(String s);
         void uploadIndentityError(Throwable error);
     }
     interface UploadIndentityPresenter extends BasePresenter {
-        void uploadIndentity();
+        /**
+         *
+         * @param remoteParams 远程地址集合
+         * @param customerCode 父级身份code
+         * @param credentialCode 子级身份code
+         */
+        void uploadIndentity(List<String> remoteParams,String customerCode,String credentialCode);
+
     }
 }

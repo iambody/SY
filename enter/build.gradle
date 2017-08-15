@@ -55,6 +55,5 @@ dependencies {
     testCompile "junit:junit:${testC}"
     compile project(':picselect')
     compile project(':libzxing')
-    compile project(':share')
     compile project(':im')
 }

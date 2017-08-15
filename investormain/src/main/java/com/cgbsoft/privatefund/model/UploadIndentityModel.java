@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.model;
 
+import java.util.List;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -7,5 +9,13 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public interface UploadIndentityModel {
-    void uploadIndentity(CompositeSubscription subscription, UploadIndentityModelListener listener);
+    /**
+     *
+     * @param subscription
+     * @param listener
+     * @param remoteParams
+     * @param customerCode 父级code
+     * @param credentialCode 子级code
+     */
+    void uploadIndentity(CompositeSubscription subscription, UploadIndentityModelListener listener,List<String> remoteParams,String customerCode,String credentialCode);
 }

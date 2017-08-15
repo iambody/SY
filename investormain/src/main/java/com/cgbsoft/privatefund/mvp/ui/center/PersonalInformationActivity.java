@@ -39,6 +39,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -109,6 +110,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @BindView(R.id.ll_my_qr)
     LinearLayout myQrAll;
 
+    private boolean showAssert;
+
     private static String levelName;
 
     /**
@@ -136,6 +139,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private UserInfoDataEntity.UserInfo userInfo;
     private LoadingDialog mLoadingDialog;
     private Observable<Integer> uploadIcon;
+    private Observable<Boolean> swtichCentifyObservable;
     private android.os.Handler handler = new android.os.Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -153,7 +157,14 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         }
     };
+
     private MyPermissionsChecker mPermissionsChecker;
+
+    @Override
+    protected void before() {
+        super.before();
+        showAssert = AppManager.isShowAssert(this);
+    }
 
     private void startPermissionsActivity() {
         MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
@@ -171,7 +182,11 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      */
     @OnClick(R.id.rl_personal_information_card_collect)
     public void gotoCardCollect(){
-        getPresenter().verifyIndentity();
+        if (showAssert) {
+            getPresenter().verifyIndentity();
+        } else {
+            GestureManager.showGroupGestureManage(this, GestureManager.CENTIFY_DIR);
+        }
     }
 
     /**
@@ -264,6 +279,20 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             }
         });
+
+        swtichCentifyObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_CENTIFY_DIR, Boolean.class);
+        swtichCentifyObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean boovalue) {
+                getPresenter().verifyIndentity();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         calendar = Calendar.getInstance();
@@ -729,14 +758,17 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode) {
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode) {
         if (hasIndentity) {
             if (hasUpload) {//去证件列表
-                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode",indentityCode);
                 startActivity(intent);
             } else {//去上传证件照
                 Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                intent.putExtra("credentialCode",credentialCode);
+                intent.putExtra("indentityCode",indentityCode);
+                intent.putExtra("title", title);
                 startActivity(intent);
             }
         } else {//无身份
@@ -748,5 +780,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     public void verifyIndentityError(Throwable error) {
         Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (swtichCentifyObservable != null) {
+            RxBus.get().unregister(RxConstant.GOTO_SWITCH_CENTIFY_DIR, swtichCentifyObservable);
+        }
     }
 }

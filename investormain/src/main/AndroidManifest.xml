@@ -336,6 +336,10 @@
         <activity
             android:name=".mvp.ui.center.UploadIndentityCradActivity"
             android:screenOrientation="portrait" />
+        <!-- 大陆居民添加证件页面 -->
+        <activity
+            android:name=".mvp.ui.center.CardCollectAddActivity"
+            android:screenOrientation="portrait" />
         <!-- 修改登录密码页面 -->
         <activity
             android:name=".mvp.ui.center.ChangeLoginPsdActivity"

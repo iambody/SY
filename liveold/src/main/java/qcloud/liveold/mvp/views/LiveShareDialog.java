@@ -2,18 +2,17 @@ package qcloud.liveold.mvp.views;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.utils.ShareManger;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.utils.ShareManger;
 import qcloud.liveold.R;
+
 
 /**
  * desc

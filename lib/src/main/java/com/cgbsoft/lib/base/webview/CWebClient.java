@@ -75,10 +75,7 @@ public class CWebClient extends WebViewClient {
                             url.startsWith(WebViewConstant.AppCallBack.LIVE_VIDEO) ||
                             url.startsWith(WebViewConstant.AppCallBack.JUMP_PRODUCT_DETAIL) ||
                             url.startsWith(WebViewConstant.AppCallBack.INVITE_CUSTOM) ||
-                            url.startsWith(WebViewConstant.AppCallBack.TOC_SHARE) ||
-                            url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
                             url.startsWith(WebViewConstant.AppCallBack.TOC_PRODUCT_TOUTIAO) ||
-                            url.startsWith(WebViewConstant.AppCallBack.INVITE_SHARE) ||
                             url.startsWith(WebViewConstant.AppCallBack.TOC_GO_PRODUCTLS) )) {
                 CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
                 cWebClient.setWeb((BaseWebview) webView);
@@ -92,6 +89,7 @@ public class CWebClient extends WebViewClient {
                 cWebClient.setAction(url);
             }
             // view.loadUrl(loadUrl);
+
             loadUrl = loadUrl;
         } else if (url.startsWith("tel:")) {
             String[] vals = url.split(":");

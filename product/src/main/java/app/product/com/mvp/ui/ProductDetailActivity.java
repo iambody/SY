@@ -12,6 +12,8 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -29,8 +31,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
 import rx.Observable;
@@ -157,9 +157,9 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 
     @Override
     protected void executeOverideUrlCallBack(String actionUrl) {
-        if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_SHARE)) {
-            shareToC(actionUrl);
-        }
+//        if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_SHARE)) {
+//            shareToC(actionUrl);
+//        }
         if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_PDF)) {
             showPdf(actionUrl);
         }
@@ -194,40 +194,40 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 //        Domain.foundNews + newsBean.getInfoId() + "&category=" + newsBean.getCategory();
     }
 
-    /**
-     * 分享产品
-     *
-     * @param action
-     */
-    private void shareToC(String action) {
-        String actionDecode = URLDecoder.decode(action);
-        String[] split = actionDecode.split(":");
-        String sharePYQtitle = "";
-        try {
-            String title = split[2];
-            String subTitle = split[3];
-            String imageTitle = split[4];
-            String link = split[5];
-
-            link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link : BaseWebNetConfig.baseParentUrl + "/" + link;
-
-            shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
-            commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, new CommonShareDialog.CommentShareListener() {
-
-                @Override
-                public void completShare(int shareType) {
-                    TaskInfo.complentTask("分享产品");
-
-                }
-            });
-            commonShareDialog.show();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    /**
+//     * 分享产品
+//     *
+//     * @param action
+//     */
+//    private void shareToC(String action) {
+//        String actionDecode = URLDecoder.decode(action);
+//        String[] split = actionDecode.split(":");
+//        String sharePYQtitle = "";
+//        try {
+//            String title = split[2];
+//            String subTitle = split[3];
+//            String imageTitle = split[4];
+//            String link = split[5];
+//
+//            link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link : BaseWebNetConfig.baseParentUrl + "/" + link;
+//
+//            shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
+//            commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+//
+//                @Override
+//                public void completShare(int shareType) {
+//                    TaskInfo.complentTask("分享产品");
+//
+//                }
+//            });
+//            commonShareDialog.show();
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     /**
      * 在webview里面展示pdf

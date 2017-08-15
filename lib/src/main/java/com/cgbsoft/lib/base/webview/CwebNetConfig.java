@@ -63,6 +63,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String discoveryDetail;
     // 会员专区
     public static String memeberArea;
+    // 财富值
+    public static String healthValue;
     // 会员规则
     public static String memberRule;
     // 签到页面
@@ -139,6 +141,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
         discoveryDetail = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
+        healthValue = baseSxyParentUrl + "/biz/members/wealth.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
         //没绑定过的
         choiceAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html?bindChannel=5";

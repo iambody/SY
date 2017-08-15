@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -13,11 +14,18 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.listener.listener.GestureManager;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
+import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
@@ -27,11 +35,12 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * @author chenlong
  */
-public class DatumManageActivity extends BaseActivity {
+public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> implements DatumManageContract.DatumManageView{
     @BindView(R.id.title_left)
     protected ImageView back;
     @BindView(R.id.title_mid)
@@ -44,6 +53,9 @@ public class DatumManageActivity extends BaseActivity {
     SettingItemNormal assetRelative;
     private String[] riskResult;
     private String[] assetStatus;
+    private boolean showAssert;
+    private LoadingDialog mLoadingDialog;
+    private Observable<Boolean> swtichRelativeAssetObservable;
 
     @Override
     protected int layoutID() {
@@ -58,8 +70,8 @@ public class DatumManageActivity extends BaseActivity {
     }
 
     @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
+    protected DatumManagePresenterImpl createPresenter() {
+        return new DatumManagePresenterImpl(this,this);
     }
 
     @Override
@@ -80,8 +92,21 @@ public class DatumManageActivity extends BaseActivity {
     }
 
     private void initView(Bundle savedInstanceState) {
+        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
+        swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
+        swtichRelativeAssetObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean boovalue) {
+                getPresenter().verifyIndentity();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
     @OnClick(R.id.title_left)
     public void clickBack(){
@@ -115,6 +140,65 @@ public class DatumManageActivity extends BaseActivity {
     }
     @OnClick(R.id.datum_manage_relative_asset)
     public void gotoRelativeAsset(){
-        NavigationUtils.startActivity(this, RelativeAssetActivity.class);
+        if (showAssert) {
+            getPresenter().verifyIndentity();
+        } else {
+            GestureManager.showGroupGestureManage(this, GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE);
+        }
+    }
+
+    @Override
+    protected void before() {
+        super.before();
+        showAssert = AppManager.isShowAssert(this);
+    }
+
+    @Override
+    public void showLoadDialog() {
+        try {
+            if (mLoadingDialog.isShowing()) {
+                return;
+            }
+            mLoadingDialog.show();
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
+    }
+
+    @Override
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode) {
+        if (hasIndentity) {
+            if (hasUpload) {//去证件列表
+                Intent intent = new Intent(this, CardCollectActivity.class);
+                intent.putExtra("indentityCode",indentityCode);
+                startActivity(intent);
+            } else {//去上传证件照
+                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                intent.putExtra("credentialCode",credentialCode);
+                intent.putExtra("indentityCode",indentityCode);
+                intent.putExtra("title", title);
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(this, SelectIndentityActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+        Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (swtichRelativeAssetObservable != null) {
+            RxBus.get().unregister(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, swtichRelativeAssetObservable);
+        }
     }
 }

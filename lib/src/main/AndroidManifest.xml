@@ -8,6 +8,8 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <activity android:name=".ui.Share_InitActivity"></activity>
+
         <activity
             android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
             android:screenOrientation="portrait"
@@ -37,6 +39,7 @@
             </intent-filter>
         </service>
         <!-- ****************百度****************-->
+
     </application>
 
 </manifest>

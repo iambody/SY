@@ -53,8 +53,11 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
+import com.cgbsoft.privatefund.mvp.ui.center.CardCollectActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
+import com.cgbsoft.privatefund.mvp.ui.center.SelectIndentityActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
+import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -251,6 +254,32 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = false;
     }
 
+    @Override
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode) {
+
+        if (!TextUtils.isEmpty(identity)) {
+            if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+                Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+                intent.putExtra("credentialCode",credentialCode);
+                intent.putExtra("indentityCode",identity);
+                intent.putExtra("title", title);
+                startActivity(intent);
+            } else {//去证件列表
+                Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                intent.putExtra("indentityCode",identity);
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable e) {
+        Toast.makeText(getActivity().getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+    }
+
     private void initObserver() {
         swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
         swtichAssetObservable.subscribe(new RxSubscriber<Boolean>() {
@@ -283,6 +312,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         break;
                     case GestureManager.DATUM_MANAGER:
                         NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+                        break;
+                    case GestureManager.CENTIFY_DIR:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
+                        break;
+                    case GestureManager.RELATIVE_ASSERT:
+                        getPresenter().verifyIndentity();
+                        break;
+                    case GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, true);
                         break;
                 }
             }
@@ -411,7 +449,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        gotoMemberArea();
+        String url = CwebNetConfig.healthValue;
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_info_caifu_value));
+        startActivity(intent);
     }
 
     private void gotoMemberArea() {
@@ -512,7 +554,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
-        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
+        if (showAssert) {
+            getPresenter().verifyIndentity();
+        } else {
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
+        }
+//        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
     @OnClick(R.id.mine_bank_asset_match_ll)

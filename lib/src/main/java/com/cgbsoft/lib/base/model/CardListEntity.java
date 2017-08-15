@@ -21,7 +21,7 @@ public class CardListEntity extends BaseResult<CardListEntity.Result>{
         }
     }
     public static class CardBean{
-        private List<ImageBean> images;
+        private List<ImageBean> imageUrl;
         private String stateName;
         private String name;
         private String stateCode;
@@ -29,12 +29,12 @@ public class CardListEntity extends BaseResult<CardListEntity.Result>{
         private String code;
         private String comment;
 
-        public List<ImageBean> getImages() {
-            return images;
+        public List<ImageBean> getImageUrl() {
+            return imageUrl;
         }
 
-        public void setImages(List<ImageBean> images) {
-            this.images = images;
+        public void setImageUrl(List<ImageBean> imageUrl) {
+            this.imageUrl = imageUrl;
         }
 
         public String getStateName() {

@@ -24,7 +24,7 @@
             android:textSize="@dimen/dimens_sp_16"
             android:layout_marginLeft="@dimen/ui_20_dip"
             android:textColorHint="@color/color_a6a6a6"
-            android:maxLength="10"
+            android:maxLength="16"
             android:hint="请输入您的姓名"
             />
         <ImageView

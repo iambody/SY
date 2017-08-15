@@ -21,7 +21,7 @@ public interface PersonalInformationContract {
         void updateError(Throwable error);
         void uploadImgSuccess(String imgRemotePath);
         void uploadImgError(Throwable error);
-        void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode);
+        void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode);
 
         void verifyIndentityError(Throwable error);
     }

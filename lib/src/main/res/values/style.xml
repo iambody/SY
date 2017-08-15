@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="BaseAnimation">
         <!--第一次创建新Activity是调用的动画-->
@@ -338,4 +338,30 @@
     <style name="IndentityCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/indentity_select</item>
     </style>
+
+    <!-- ========== 分享 ========= -->
+    <style name="AppBaseTheme"></style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">false</item>
+    </style>
+    <!-- 公用分享的dialog的style-->
+    <style name="share_comment_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:windowBackground">@color/share_transparent_bg</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:backgroundDimEnabled">false</item>
+
+    </style>
+    <!-- 公用分享的dialog的动画style-->
+    <style name="share_comment_anims_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/share_comment_animes_enter</item>
+        <item name="android:windowExitAnimation">@anim/share_comment_animes_exit</item>
+    </style>
+
 </resources>

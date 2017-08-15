@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
+import com.cgbsoft.lib.share.utils.WxAuthorManger;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -56,7 +58,6 @@ import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
-import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
@@ -436,34 +437,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
             return;
         }
-        WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
-            @Override
-            public void getAuthorResult(int type, Platform platform) {
-                mLoadingDialog.dismiss();
-                switch (type) {
-                    case WxAuthorManger.WxAuthorOk:
-                        String unionid = platform.getDb().get("unionid");
-                        String userIcon = platform.getDb().getUserIcon();
-                        String userGender = platform.getDb().getUserGender();
-                        String userName = platform.getDb().getUserName();
-                        String openid = platform.getDb().getUserId();
-                        String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
+        WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, (type, platform) -> {
+            mLoadingDialog.dismiss();
+            switch (type) {
+                case WxAuthorManger.WxAuthorOk:
+                    String unionid = platform.getDb().get("unionid");
+                    String userIcon = platform.getDb().getUserIcon();
+                    String userGender = platform.getDb().getUserGender();
+                    String userName = platform.getDb().getUserName();
+                    String openid = platform.getDb().getUserId();
+                    String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
 
-                        if (!mCustomBuilder.isSetPositiveListener()) {
-                            mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                                getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon, openid, publicKey);
-                                dialog.dismiss();
-                            });
-                        }
-                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
-                        break;
-                    case WxAuthorManger.WxAuthorCANCLE:
-                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-                        break;
-                    case WxAuthorManger.WxAuthorERROR:
-                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-                        break;
-                }
+                    if (!mCustomBuilder.isSetPositiveListener()) {
+                        mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+                            getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon, openid, publicKey);
+                            dialog.dismiss();
+                        });
+                    }
+                    getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
+                    break;
+                case WxAuthorManger.WxAuthorCANCLE:
+                    mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                    break;
+                case WxAuthorManger.WxAuthorERROR:
+                    mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                    break;
             }
         });
         wxAuthorManger.startAuth();
@@ -528,6 +526,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void onBackPressed() {
         if (fromValidatePassword) {
+            Process.killProcess(Process.myPid());
             System.exit(0);
             return;
         }
@@ -541,13 +540,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
             isShowWxBt = false;
             enterLoginWxBtLay.setVisibility(View.GONE);
             return true;
         }
 
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+            Process.killProcess(Process.myPid());
             System.exit(0);
             return true;
         }

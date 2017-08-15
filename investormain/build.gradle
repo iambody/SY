@@ -67,22 +67,16 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/workspace/signe/privatefund.keystore")
-            storePassword "privatefund"
+            storeFile file('../privatefund.keystore')
             keyAlias "beijing"
             keyPassword "privatefund"
-
-
-
+            storePassword "privatefund"
         }
         release {
-            storeFile file("/workspace/signe/privatefund.keystore")
-            storePassword "privatefund"
+            storeFile file('../privatefund.keystore')
             keyAlias "beijing"
             keyPassword "privatefund"
-
-
-
+            storePassword "privatefund"
         }
     }
     applicationVariants.all { variant ->
@@ -95,9 +89,9 @@ android {
         }
     }
     productFlavors{
-//        huawei{}
+        huawei{}
 //        qihu、360{}
-        tengxun{}
+//        tengxun{}
 //        xiaomi{}
 //        baidu{}
 //        yingyonghui{}
@@ -177,19 +171,18 @@ dependencies {
     compile "io.reactivex:rxandroid:${rxandroid_need_version}"
     compile "io.reactivex:rxjava:${rxjava_need_version}"
     compile 'me.grantland:autofittextview:0.2.+'
+    compile 'com.takwolf.android:lock9view:0.0.11'
+    compile 'com.android.support:support-v4:24.2.1'
 
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':order')
     compile project(':enter')
-    compile project(':share')
     compile project(':product')
     compile project(':liveold')
     compile project(':im')
     compile project(':commonui')
     compile project(':video')
     compile project(':mall')
-    compile 'com.takwolf.android:lock9view:0.0.11'
-    compile 'com.android.support:support-v4:24.2.1'
     compile project(':health')
 }

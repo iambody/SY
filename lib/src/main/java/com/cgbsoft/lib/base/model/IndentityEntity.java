@@ -56,8 +56,25 @@ public class IndentityEntity extends BaseResult<IndentityEntity.Result>{
     public static class IndentityItem{
         private String code;
         private String title;
+        private String credentialCode;
+        private String name;
         private boolean isCheck;
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCredentialCode() {
+            return credentialCode;
+        }
+
+        public void setCredentialCode(String credentialCode) {
+            this.credentialCode = credentialCode;
+        }
 
         public String getTitle() {
             return title;
