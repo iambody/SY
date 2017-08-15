@@ -17,6 +17,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -934,37 +935,7 @@ public class CWebviewManger {
 //    }
 
     private void shareToC(String action) {
-        // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-        PromptManager.ShowCustomToast(context, "shareToC分享的代码需要挪到业务module中 不要写在lib里面");
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        String sharePYQtitle = "";
-//        try {
-//            String title = split[2];
-//            String subTitle = split[3];
-//            String imageTitle = split[4];
-//            String link = split[5];
-//            if (split.length >= 7) {
-//                sharePYQtitle = split[6];
-//            }
-//            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
-//            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-//            Share commonShareBean = new CommonShareBean();
-//            commonShareBean.setTitle(title);
-//            commonShareBean.setContent(subTitle);
-//            commonShareBean.setLink(link);
-//            commonShareBean.setYoujianTitleText(title);
-////            if (imageTitle.contains("greeteng")) {
-////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-////                commonShareDialog.show();
-////            } else {
-////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-////                commonShareDialog.show();
-////            }
-////            shareDialog.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     private void backPage(String action) {
