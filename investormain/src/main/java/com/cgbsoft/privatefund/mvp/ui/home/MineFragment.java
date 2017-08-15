@@ -319,6 +319,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.RELATIVE_ASSERT:
                         getPresenter().verifyIndentity();
                         break;
+                    case GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, true);
+                        break;
                 }
             }
 

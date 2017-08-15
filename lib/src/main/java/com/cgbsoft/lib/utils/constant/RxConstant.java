@@ -91,6 +91,8 @@ public interface RxConstant {
 
     String GOTO_SWITCH_CENTIFY_DIR= "switch_cendify_dir";
 
+    String GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE = "switch_relative_asset_in_datamanage";
+
     //全局跳转
     String JUMP_INDEX = "junp_index";
 

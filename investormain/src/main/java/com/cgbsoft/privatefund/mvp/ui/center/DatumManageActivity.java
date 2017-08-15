@@ -15,6 +15,9 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.listener.listener.GestureManager;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
@@ -32,6 +35,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * @author chenlong
@@ -51,6 +55,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     private String[] assetStatus;
     private boolean showAssert;
     private LoadingDialog mLoadingDialog;
+    private Observable<Boolean> swtichRelativeAssetObservable;
 
     @Override
     protected int layoutID() {
@@ -90,6 +95,18 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
+        swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
+        swtichRelativeAssetObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean boovalue) {
+                getPresenter().verifyIndentity();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
     @OnClick(R.id.title_left)
     public void clickBack(){
@@ -126,9 +143,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         if (showAssert) {
             getPresenter().verifyIndentity();
         } else {
-            GestureManager.showGroupGestureManage(this, GestureManager.RELATIVE_ASSERT);
+            GestureManager.showGroupGestureManage(this, GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE);
         }
-//        NavigationUtils.startActivity(this, RelativeAssetActivity.class);
     }
 
     @Override
@@ -176,5 +192,13 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     @Override
     public void verifyIndentityError(Throwable error) {
         Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (swtichRelativeAssetObservable != null) {
+            RxBus.get().unregister(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, swtichRelativeAssetObservable);
+        }
     }
 }
