@@ -315,6 +315,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.CENTIFY_DIR:
                         RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
                         break;
+                    case GestureManager.RELATIVE_ASSERT:
+                        getPresenter().verifyIndentity();
+                        break;
                 }
             }
 
@@ -546,9 +549,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (showAssert) {
             getPresenter().verifyIndentity();
         } else {
-            GestureManager.showGroupGestureManage(getActivity(), GestureManager.CENTIFY_DIR);
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
         }
-
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
