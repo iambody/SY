@@ -1,9 +1,14 @@
 package com.cgbsoft.privatefund.model.impl;
 
+import android.text.TextUtils;
+
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.model.UploadIndentityModel;
 import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -19,7 +24,21 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
         subscription.add(ApiClient.uploadIndentityRemotePath(remoteParams,customerCode,credentialCode).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                listener.uploadIndentitySuccess();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (TextUtils.isEmpty(code)) {
+                        listener.uploadIndentitySuccess(null);
+                    } else {
+                        JSONObject result = (JSONObject) jsonObject.get("result");
+                        String errorMsg = result.getString("errorMsg");
+                        listener.uploadIndentitySuccess(errorMsg);
+                    }
+                } catch (JSONException e) {
+                    listener.uploadIndentitySuccess(e.getMessage());
+                    e.printStackTrace();
+                }
+
             }
 
             @Override

@@ -193,15 +193,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     @Override
-    public void uploadIndentitySuccess() {
-        Toast.makeText(getApplicationContext(),"上传成功!",Toast.LENGTH_SHORT).show();
-        RxBus.get().post(SELECT_INDENTITY,0);
-        if (isFromSelectIndentity) {
-            Intent intent = new Intent(this, CardCollectActivity.class);
-            intent.putExtra("indentityCode",indentityCode);
-            startActivity(intent);
+    public void uploadIndentitySuccess(String result) {
+        if (TextUtils.isEmpty(result)) {
+            Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
+            RxBus.get().post(SELECT_INDENTITY, 0);
+            if (isFromSelectIndentity) {
+                Intent intent = new Intent(this, CardCollectActivity.class);
+                intent.putExtra("indentityCode", indentityCode);
+                startActivity(intent);
+            }
+            this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
-        this.finish();
     }
 
     @Override

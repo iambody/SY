@@ -5,6 +5,6 @@ package com.cgbsoft.privatefund.model;
  */
 
 public interface UploadIndentityModelListener {
-    void uploadIndentitySuccess();
+    void uploadIndentitySuccess(String result);
     void uploadIndentityError(Throwable error);
 }
