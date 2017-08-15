@@ -936,6 +936,7 @@ public class CWebviewManger {
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
 
+
     private void shareToC(String actionUrl) {
         String actionDecode = URLDecoder.decode(actionUrl);
         String[] split = actionDecode.split(":");
@@ -948,13 +949,14 @@ public class CWebviewManger {
         if (split.length >= 7) {
             sharePYQtitle = split[6];
         }
+        boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
-        CommonShareDialog commonShareDialog = new CommonShareDialog(context, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+        CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
                 //分享微信朋友圈成功
-                if(actionUrl.contains("new_detail_toc.html")){
+                if(actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
                     if (!AppManager.isVisitor(context)) {
                         //自选页面分享朋友圈成功
                         TaskInfo.complentTask("分享资讯");
@@ -965,6 +967,10 @@ public class CWebviewManger {
                             DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
                         }
                     }
+                }
+
+                if (isProductShare) {  // 产品分享需要获取云豆
+                    TaskInfo.complentTask("分享产品");
                 }
             }
         });
