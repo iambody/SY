@@ -32,6 +32,8 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
@@ -67,8 +69,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.VideoUtils;

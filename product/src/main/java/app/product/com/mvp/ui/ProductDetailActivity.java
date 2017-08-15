@@ -12,6 +12,8 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -29,8 +31,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.mvc.ui.PdfActivity;
 import rx.Observable;
