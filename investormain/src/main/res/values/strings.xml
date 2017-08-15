@@ -192,7 +192,7 @@
     <string name="account_bank_no_bugy">您没有在存资产，可以</string>
     <string name="account_bank_browse_buy">看看“锦绣山河”系列产品</string>
     <string name="account_bank_upload_certify">上传证件关联已有资产</string>
-    <string name="account_bank_no_relative_assert">我是老客户，我要关联已有资产</string>
+    <string name="account_bank_no_relative_assert">我是老客户，我要查看已有资产</string>
     <string name="account_bank_no_relative_assert_with_status">关联历史订单（%s）</string>
     <string name="account_order_wait_send">待发货</string>
     <string name="account_order_wait_receive">待收货</string>
