@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -62,6 +64,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     ImageView uploadSecond;
     @BindView(R.id.tv_upload_indentity_tip)
     TextView tagTv;
+    @BindView(R.id.upload_submit)
+    Button submit;
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
     private String secondPhotoPath;
@@ -172,10 +176,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void showLoadDialog() {
-        if (mLoadingDialog.isShowing()) {
-            return;
+        try {
+            if (mLoadingDialog.isShowing()) {
+                return;
+            }
+            mLoadingDialog.show();
+        } catch (Exception e) {
         }
-        mLoadingDialog.show();
     }
 
     @Override
@@ -214,46 +221,62 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             this.finish();
             return;
         }
-        switch (credentialCode) {
-            case "100101"://身份证
-                isIdCard=true;
-                uploadSecond.setVisibility(View.VISIBLE);
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
-                uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
-                tagTv.setText("请拍摄实体身份证");
-                break;
-            case "100102"://中国护照
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
-                tagTv.setText("请拍摄实体护照");
-                break;
-            case "100401"://外籍护照
-                tagTv.setText("请拍摄实体护照");
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
-                break;
-            case "100201"://港澳来往内地通行证
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
-                tagTv.setText("请拍摄实体通行证");
-                break;
-            case "100301"://台湾来往内地通行证
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
-                tagTv.setText("请拍摄实体通行证");
-                break;
-            case "100103"://军官证
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
-                tagTv.setText("请拍摄实体军官证");
-                break;
-            case "100104"://士兵证
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_soldier_card));
-                tagTv.setText("请拍摄实体士兵证");
-                break;
-            case "200101"://营业执照
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_business_license));
-                tagTv.setText("请拍摄实体营业执照");
-                break;
-            case "200102"://组织机构代码证
-                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
-                tagTv.setText("请拍摄实体组织机构代码证");
-                break;
+        String stateCode = getIntent().getStringExtra("stateCode");//证件审核状态code码：5：未上传；10：审核中；30：已驳回；50：已通过；70：已过期
+        if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
+            uploadFirst.setEnabled(true);
+            uploadSecond.setEnabled(true);
+            submit.setVisibility(View.VISIBLE);
+            switch (credentialCode) {
+                case "100101"://身份证
+                    isIdCard = true;
+                    uploadSecond.setVisibility(View.VISIBLE);
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
+                    uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
+                    tagTv.setText("请拍摄实体身份证");
+                    break;
+                case "100102"://中国护照
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
+                    tagTv.setText("请拍摄实体护照");
+                    break;
+                case "100401"://外籍护照
+                    tagTv.setText("请拍摄实体护照");
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
+                    break;
+                case "100201"://港澳来往内地通行证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
+                    tagTv.setText("请拍摄实体通行证");
+                    break;
+                case "100301"://台湾来往内地通行证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
+                    tagTv.setText("请拍摄实体通行证");
+                    break;
+                case "100103"://军官证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
+                    tagTv.setText("请拍摄实体军官证");
+                    break;
+                case "100104"://士兵证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_soldier_card));
+                    tagTv.setText("请拍摄实体士兵证");
+                    break;
+                case "200101"://营业执照
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_business_license));
+                    tagTv.setText("请拍摄实体营业执照");
+                    break;
+                case "200102"://组织机构代码证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
+                    tagTv.setText("请拍摄实体组织机构代码证");
+                    break;
+            }
+        } else {//已上传，显示详情
+            uploadFirst.setEnabled(false);
+            uploadSecond.setEnabled(false);
+            submit.setVisibility(View.GONE);
+            String firstUrl = getIntent().getStringExtra("firstUrl");
+            String secondUrl = getIntent().getStringExtra("secondUrl");
+            Imageload.display(this,firstUrl,uploadFirst);
+            if (!TextUtils.isEmpty(secondUrl)) {
+                Imageload.display(this,secondUrl,uploadSecond);
+            }
         }
         titleTV.setText(title);
         setSupportActionBar(toolbar);

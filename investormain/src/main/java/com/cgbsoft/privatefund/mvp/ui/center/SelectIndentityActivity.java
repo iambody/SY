@@ -183,6 +183,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
                 if (TextUtils.isEmpty(indentityCode)) {
                     return;
                 }
+                indentityNext.setEnabled(true);
                 if (indentityCode.startsWith("1001")) {//大陆居民
                     isInLand=true;
                 } else {//非大陆居民

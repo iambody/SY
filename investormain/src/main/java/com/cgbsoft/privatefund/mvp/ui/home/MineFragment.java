@@ -53,6 +53,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
+import com.cgbsoft.privatefund.mvp.ui.center.CardCollectActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SelectIndentityActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
@@ -264,7 +265,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 intent.putExtra("title", title);
                 startActivity(intent);
             } else {//去证件列表
-                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+                Intent intent = new Intent(getActivity(), CardCollectActivity.class);
                 intent.putExtra("indentityCode",identity);
                 startActivity(intent);
             }

@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.PersonalInformationModel;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
 
@@ -64,6 +65,7 @@ public class PersonalInformationModelImpl implements PersonalInformationModel {
         subscription.add(ApiClient.verifyIndentityInClient().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                LogUtils.Log("aaa","s==="+s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     JSONObject result = (JSONObject) obj.get("result");

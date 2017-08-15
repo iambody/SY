@@ -761,7 +761,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode) {
         if (hasIndentity) {
             if (hasUpload) {//去证件列表
-                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode",indentityCode);
                 startActivity(intent);
             } else {//去上传证件照
