@@ -300,13 +300,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     }
 
     public int getsize() {
-//        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
-//        int size = 0;
-//        for (int i = 0; i < downsize.getAllVideoInfo().size(); i++) {
-//            if (VideoStatus.NONE != downsize.getAllVideoInfo().get(i).status&&downsize.getAllVideoInfo().get(i).isDelete!=VideoStatus.UNDELETE) size = size + 1;
-//        }
-//        return downsize.getAllVideoInfo().size();
-       return getPresenter().daoUtils.getDownLoadVideoInfo().size();
+        return getPresenter().daoUtils.getDownLoadVideoInfo().size();
     }
 
     private void findview() {
@@ -322,7 +316,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
                     String url = CwebNetConfig.productDetail.concat(productBean.schemeId);
 
-                    Router.build(RouteConfig.GOTOPRODUCTDETAIL).with(WebViewConstant.push_message_url, url).with(WebViewConstant.push_message_title, productBean.productName).go(baseContext);
+                    Router.build(RouteConfig.GOTOPRODUCTDETAIL).with(WebViewConstant.push_message_url, url).with(WebViewConstant.PAGE_SHOW_TITLE, true).with(WebViewConstant.push_message_title, productBean.productName).go(baseContext);
                 }
             }
         });
@@ -464,7 +458,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());//更新当前播放视频的位置
         openActivity(VideoDownloadListActivity.class);
 
-//        ll_avd_cache_open.
         closeCacheView();
 
     }
@@ -1052,7 +1045,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             videplay_produxt_view.setVisibility(View.VISIBLE);
             VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
             BStrUtils.SetTxt(viewVideoplayProductName, productBean.productName);
-            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", productBean.netUnit));
+            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", "2".equals(productBean.productType)?productBean.netUnit:productBean.incomeMin));
             BStrUtils.SetTxt(viewVideoplayProductDay, String.format("剩余时间：%s", VideoUtils.getDeadLine(productBean.raiseEndTime)));
             BStrUtils.SetTxt(viewVideoplayProductAllday, String.format("产品期限：%s", productBean.term));
             BStrUtils.SetTxt(viewVideoplayProductEdu, String.format("剩余额度：%s", productBean.remainingAmountStr));

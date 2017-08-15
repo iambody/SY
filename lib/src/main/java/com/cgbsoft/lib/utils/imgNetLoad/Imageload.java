@@ -28,10 +28,7 @@ import java.io.File;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-/**
- * 图片加载库（持续更新）
- * Created by user on 2016/11/4.
- */
+
 public class Imageload {
     /**
      * 开始创建图片加载
