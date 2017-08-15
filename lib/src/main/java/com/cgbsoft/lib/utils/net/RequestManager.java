@@ -834,4 +834,7 @@ interface RequestManager {
      */
     @POST(NetConfig.Indentity.UPLOAD_REMOTE_PATHS)
     Observable<ResponseBody> uploadRemotePath(@Body RequestBody requestBody);
+
+    @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
+    Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
 }
