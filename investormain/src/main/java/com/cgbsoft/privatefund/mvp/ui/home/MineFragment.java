@@ -445,7 +445,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        gotoMemberArea();
+        String url = CwebNetConfig.healthValue;
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_info_caifu_value));
+        startActivity(intent);
     }
 
     private void gotoMemberArea() {
