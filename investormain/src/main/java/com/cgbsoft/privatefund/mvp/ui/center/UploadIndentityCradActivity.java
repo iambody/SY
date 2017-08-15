@@ -193,6 +193,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void uploadIndentitySuccess() {
+        Toast.makeText(getApplicationContext(),"上传成功!",Toast.LENGTH_SHORT).show();
         RxBus.get().post(SELECT_INDENTITY,0);
         if (isFromSelectIndentity) {
             Intent intent = new Intent(this, CardCollectActivity.class);

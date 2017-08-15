@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.model.impl;
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.CardListModelListener;
 import com.cgbsoft.privatefund.model.CardModel;
 
