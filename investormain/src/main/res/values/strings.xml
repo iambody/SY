@@ -244,6 +244,7 @@
     <string name="relative_asset_success">审核成功</string>
     <string name="relative_asset_failure">审核失败</string>
     <string name="relative_asset_status">审核状态</string>
+    <string name="camera_success">拍摄成功</string>
 
     <string-array name="mine_video_tag_text">
         <item>观看视频记录</item>

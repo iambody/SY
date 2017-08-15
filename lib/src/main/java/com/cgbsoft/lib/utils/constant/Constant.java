@@ -116,6 +116,8 @@ public interface Constant {
     public static final String UPLOAD_REDEMPTION_TYPE = "redemption/";
     //意见反馈
     public static final String UPLOAD_FEEDBACK_TYPE = "feedback/";
+    //证件上传
+    public static final String UPLOAD_INDENTITY_TYPE = "indentity/";
 
     // 手势密码
     public static final int POINT_STATE_NORMAL = 0;

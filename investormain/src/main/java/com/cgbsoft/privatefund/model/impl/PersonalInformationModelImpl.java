@@ -65,7 +65,6 @@ public class PersonalInformationModelImpl implements PersonalInformationModel {
         subscription.add(ApiClient.verifyIndentityInClient().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                LogUtils.Log("aaa","s==="+s);
                 try {
                     JSONObject obj = new JSONObject(s);
                     JSONObject result = (JSONObject) obj.get("result");
