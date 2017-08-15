@@ -92,6 +92,7 @@ public class CWebClient extends WebViewClient {
                 cWebClient.setAction(url);
             }
             // view.loadUrl(loadUrl);
+
             loadUrl = loadUrl;
         } else if (url.startsWith("tel:")) {
             String[] vals = url.split(":");
