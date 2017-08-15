@@ -66,6 +66,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     TextView tagTv;
     @BindView(R.id.upload_submit)
     Button submit;
+    @BindView(R.id.iv_upload_tag)
+    ImageView tagIv;
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
     private String secondPhotoPath;
@@ -129,7 +131,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
     @OnClick(R.id.upload_submit)
     public void photoSubmit(){
-        LogUtils.Log("aaa","firstPhotoPath==="+firstPhotoPath+"---secondPhotoPath==="+secondPhotoPath);
         List<String> paths = new ArrayList<>();
         if (isIdCard && (TextUtils.isEmpty(firstPhotoPath) || TextUtils.isEmpty(secondPhotoPath))) {
             Toast.makeText(getApplicationContext(), "请正确拍摄图片", Toast.LENGTH_SHORT).show();
@@ -155,7 +156,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 remoteParams.clear();
                 for (final String localPath : paths) {
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                    String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_FEEDBACK_TYPE);
+                    String paths = DownloadUtils.postObject(newTargetFile, credentialCode);
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
                         remoteParams.add(paths);
@@ -192,6 +193,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void uploadIndentitySuccess() {
+        Toast.makeText(getApplicationContext(),"上传成功!",Toast.LENGTH_SHORT).show();
         RxBus.get().post(SELECT_INDENTITY,0);
         if (isFromSelectIndentity) {
             Intent intent = new Intent(this, CardCollectActivity.class);
@@ -226,6 +228,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             uploadFirst.setEnabled(true);
             uploadSecond.setEnabled(true);
             submit.setVisibility(View.VISIBLE);
+            tagTv.setVisibility(View.VISIBLE);
             switch (credentialCode) {
                 case "100101"://身份证
                     isIdCard = true;
@@ -268,6 +271,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     break;
             }
         } else {//已上传，显示详情
+            tagTv.setVisibility(View.INVISIBLE);
             uploadFirst.setEnabled(false);
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
@@ -316,6 +320,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 Bitmap bitmap = BitmapFactory.decodeFile(firstPhotoPath);//Bimp.revitionImageSizeHalf(filepath);
                 bitmap = Bimp.rotateBitmap(bitmap, firstPhotoPath);// 处理某些手机图片旋转问题
                 uploadFirst.setImageBitmap(bitmap);
+                tagTv.setText(getResources().getString(R.string.camera_success));
+                tagIv.setVisibility(View.VISIBLE);
+                tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_success_tag));
 //                updateLoadIcon();
             }
         }else if (requestCode == SECOND_REQUEST_CROP) {    // 裁剪图片
@@ -324,6 +331,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 Bitmap bitmap = BitmapFactory.decodeFile(secondPhotoPath);//Bimp.revitionImageSizeHalf(filepath);
                 bitmap = Bimp.rotateBitmap(bitmap, secondPhotoPath);// 处理某些手机图片旋转问题
                 uploadSecond.setImageBitmap(bitmap);
+                tagTv.setText(getResources().getString(R.string.camera_success));
+                tagIv.setVisibility(View.VISIBLE);
+                tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_success_tag));
 //                updateLoadIcon();
             }
         }

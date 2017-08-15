@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.CardListModelListener;
 import com.cgbsoft.privatefund.model.impl.CardModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
@@ -40,5 +41,6 @@ public class CardCollectPresenterImpl extends BasePresenterImpl<CardCollectContr
     @Override
     public void getDataError(Throwable error) {
         cardView.hideLoadDialog();
+        cardView.getCardListError(error);
     }
 }

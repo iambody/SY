@@ -17,6 +17,7 @@ import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -96,7 +97,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         String firstUrl="";
         String secondUrl="";
         if (!"5".equals(stateCode)) {//证件审核状态code码：5：未上传；10：审核中；30：已驳回；50：已通过；70：已过期
-            List<CardListEntity.ImageBean> images = cardBean.getImages();
+            List<CardListEntity.ImageBean> images = cardBean.getImageUrl();
             firstUrl=images.get(0).getUrl();
             if (images.size() == 2) {
                 secondUrl=images.get(1).getUrl();
