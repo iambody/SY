@@ -1,14 +1,17 @@
 package com.cgbsoft.privatefund.mvp.contract.center;
 
+import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
+import java.util.List;
+
 /**
- * Created by feigecal on 2017/7/8 0008.
+ * Created by fei on 2017/8/15.
  */
 
-public interface PersonalInformationContract {
-    interface PersonalInformationView extends BaseView{
+public interface DatumManageContract {
+    interface DatumManageView extends BaseView {
         /**
          * 显示loading弹窗
          */
@@ -17,17 +20,11 @@ public interface PersonalInformationContract {
          * 隐藏loading弹窗
          */
         void hideLoadDialog();
-        void updateSuccess();
-        void updateError(Throwable error);
-        void uploadImgSuccess(String imgRemotePath);
-        void uploadImgError(Throwable error);
         void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode);
 
         void verifyIndentityError(Throwable error);
     }
-    interface PersonalInformationPresenter extends BasePresenter{
-        void updateUserInfoToServer(String userName, String gender, String birthday);
-        void uploadRemotePath(String adviserId);
+    interface DatumManagePresenter extends BasePresenter {
         void verifyIndentity();
     }
 }

@@ -73,7 +73,44 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         recyclerView.setHasFixedSize(true);
         adapter = new CardListAdapter(datas, this);
         recyclerView.setAdapter(adapter);
+        adapter.setItemClickListener(new CardListAdapter.CardListItemClick() {
+            @Override
+            public void itemClick(int position, CardListEntity.CardBean cardBean) {
+                goToUploadPage(cardBean);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getPresenter().getCardList(indentityCode);
+    }
+
+    /**
+     * 点击条目跳转到上传照片页面
+     * @param cardBean
+     */
+    private void goToUploadPage(CardListEntity.CardBean cardBean) {
+        String stateCode = cardBean.getStateCode();
+        String firstUrl="";
+        String secondUrl="";
+        if (!"5".equals(stateCode)) {//证件审核状态code码：5：未上传；10：审核中；30：已驳回；50：已通过；70：已过期
+            List<CardListEntity.ImageBean> images = cardBean.getImages();
+            firstUrl=images.get(0).getUrl();
+            if (images.size() == 2) {
+                secondUrl=images.get(1).getUrl();
+            }
+        }
+
+        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+        intent.putExtra("credentialCode", cardBean.getCode());
+        intent.putExtra("indentityCode", indentityCode);
+        intent.putExtra("firstUrl", firstUrl);
+        intent.putExtra("secondUrl", secondUrl);
+        intent.putExtra("stateCode", stateCode);
+        intent.putExtra("title", cardBean.getName());
+        startActivity(intent);
     }
 
     @Override
@@ -115,6 +152,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 
     @Override
     public void getCardListSuccess(List<CardListEntity.CardBean> cardBeans) {
+        clodLsAnim(mRefreshLayout);
         if (null == cardBeans || cardBeans.size() == 0) {
             return;
         }

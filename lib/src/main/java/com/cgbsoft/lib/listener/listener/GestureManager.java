@@ -23,7 +23,9 @@ public class GestureManager {
     public static final String ASSERT_GROUP = "1";
     public static final String INVISTE_CARLENDAR = "2";
     public static final String DATUM_MANAGER = "3";
-    public static final String CENTIFY_DIR= "4";
+    public static final String CENTIFY_DIR = "4";
+    public static final String RELATIVE_ASSERT = "5";
+    public static final String RELATIVE_ASSERT_IN_DATDMANAGE = "6";
     public static boolean isNotFirstLook;
 
     public static void showAssertGestureManager(Context context) {

@@ -79,6 +79,7 @@
         android:layout_marginTop="@dimen/ui_5_dip"
         android:background="@drawable/shape_button_elegant"
         android:text="下一步"
+        android:enabled="false"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_16" />
 </LinearLayout>
