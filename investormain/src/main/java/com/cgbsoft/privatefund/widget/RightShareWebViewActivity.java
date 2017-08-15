@@ -8,14 +8,14 @@ import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.chenenyu.router.annotation.Route;
 
 import java.net.URLDecoder;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 
 /**
  * @author chenlong
