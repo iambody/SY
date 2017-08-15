@@ -14,7 +14,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
-    private static String START_APP = "https://d10-app";//sim
+    private static String START_APP = "https://t4-app";//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -367,6 +367,5 @@ public class NetConfig {
         static final String GET_INDENTITY_TYPE_LIST = AUTH_URL_V2 + "/credential/config";
         static final String VERIFY_INDENTITY=AUTH_URL_V2 + "/credential/info";
         public static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
-        public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
     }
 }
