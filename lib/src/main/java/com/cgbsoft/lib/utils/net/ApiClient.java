@@ -1603,4 +1603,10 @@ public class ApiClient {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
         return body;
     }
+
+    public static Observable<CardListEntity.Result> getIndentityListAdd(String indentityCode) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerCode", indentityCode);
+        return OKHTTP.getInstance().getRequestManager().getCardListAdd(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
 }

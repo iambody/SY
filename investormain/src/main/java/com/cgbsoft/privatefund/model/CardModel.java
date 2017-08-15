@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.model;
 
+import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -8,4 +10,6 @@ import rx.subscriptions.CompositeSubscription;
 
 public interface CardModel {
     void getCardList(CompositeSubscription subscription,CardListModelListener listener,String indentityCode);
+
+    void getCardListAdd(CompositeSubscription subscription, CardCollectPresenterImpl listener, String indentityCode);
 }

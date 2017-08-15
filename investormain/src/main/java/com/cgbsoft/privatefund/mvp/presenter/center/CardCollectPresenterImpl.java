@@ -31,7 +31,10 @@ public class CardCollectPresenterImpl extends BasePresenterImpl<CardCollectContr
         cardView.showLoadDialog();
         cardModel.getCardList(getCompositeSubscription(),this,indentityCode);
     }
-
+    public void getCardListAdd(String indentityCode){
+        cardView.showLoadDialog();
+        cardModel.getCardListAdd(getCompositeSubscription(),this,indentityCode);
+    }
     @Override
     public void getDataSuccess(List<CardListEntity.CardBean> cards) {
         cardView.hideLoadDialog();
