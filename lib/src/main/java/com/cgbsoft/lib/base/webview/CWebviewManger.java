@@ -949,15 +949,23 @@ public class CWebviewManger {
             sharePYQtitle = split[6];
         }
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
-        String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
         CommonShareDialog commonShareDialog = new CommonShareDialog(context, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
-                TaskInfo.complentTask("分享资讯");
                 //分享微信朋友圈成功
-                if (CommonShareDialog.SHARE_WXCIRCLE == shareType)
-                    DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, title);
+                if(actionUrl.contains("new_detail_toc.html")){
+                    if (!AppManager.isVisitor(context)) {
+                        //自选页面分享朋友圈成功
+                        TaskInfo.complentTask("分享资讯");
+                    }
+                    if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
+                        if (context instanceof BaseWebViewActivity) {
+                            BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+                            DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+                        }
+                    }
+                }
             }
         });
         commonShareDialog.show();
