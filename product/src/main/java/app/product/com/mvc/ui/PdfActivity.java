@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.chenenyu.router.annotation.Route;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -21,8 +23,6 @@ import com.lzy.okgo.callback.FileCallback;
 
 import java.io.File;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.product.com.R;
 import app.product.com.R2;
 import butterknife.BindView;

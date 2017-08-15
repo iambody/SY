@@ -68,8 +68,6 @@
     <color name="c_btn_circle_nor">#f47900</color>
     <color name="c_btn__circle_press">#ff9019</color>
 
-    <color name="transparent">#00000000</color>
-
     <color name="messge_list_item_cornor">#ececec</color>
     <color name="red_new">#ea1202</color> <!-- 5.0红 -->
     <color name="red_new_select">#be0f02</color> <!-- 5.0红 -->
@@ -139,4 +137,13 @@
     <color name = "color_a6a6a6">#a6a6a6</color>
 
     <color name="hintcolor">#595959</color>
+
+    <!--=============== 分享 ====================-->
+    <color name="transparent">#00000000</color>
+    <color name="share_transparent_bg">#80000000</color>
+    <!--文字白色-->
+    <color name="colorTextWhite">#FFFFFF</color>
+    <color name="comment_share_bt_press">#67dfdede</color>
+
+
 </resources>
