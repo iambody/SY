@@ -27,6 +27,7 @@ import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -156,10 +157,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 remoteParams.clear();
                 for (final String localPath : paths) {
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                    String paths = DownloadUtils.postObject(newTargetFile, credentialCode);
+                    String paths = DownloadUtils.postObject(newTargetFile, "credential/"+credentialCode+"/");
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
-                        remoteParams.add(paths);
+                        remoteParams.add(NetConfig.UPLOAD_FILE.concat(paths));
                     } else {
                         ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                         mLoadingDialog.dismiss();

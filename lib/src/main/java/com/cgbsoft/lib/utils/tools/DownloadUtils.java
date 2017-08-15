@@ -44,7 +44,7 @@ public class DownloadUtils {
     public static String postObject(String localFilePath, String type) {
         // 表单域
         Map<String, String> textMap = new LinkedHashMap<>();
-        String remotePath = type.concat("/").concat(UUID.randomUUID().toString().concat(".png"));
+        String remotePath = type.concat(UUID.randomUUID().toString().concat(".png"));
         textMap.put("key", remotePath);
         // Content-Disposition
         textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
@@ -57,7 +57,7 @@ public class DownloadUtils {
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", localFilePath);
         if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
-            return NetConfig.UPLOAD_FILE.concat(remotePath);
+            return remotePath;
         }
         return null;
     }
