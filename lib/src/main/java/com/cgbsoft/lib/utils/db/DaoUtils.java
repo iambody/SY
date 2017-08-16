@@ -240,7 +240,7 @@ public class DaoUtils {
 //            videoInfo.setIsDelete(VideoStatus.DELETE);
             videoInfo.setIsDelete(VideoStatus.UNDELETE);
             videoInfo.setStatus(VideoStatus.NONE);
-            videoInfo.setFinalPlayTime(0);
+//            videoInfo.setFinalPlayTime(0);
             videoInfo.setSize(0);
             videoInfo.setLocalVideoPath("");
             videoInfo.setPercent(0);
