@@ -251,6 +251,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setTitle("");
         credentialCode = getIntent().getStringExtra("credentialCode");
         indentityCode = getIntent().getStringExtra("indentityCode");
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
@@ -319,9 +323,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         titleTV.setText(title);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
     }
 

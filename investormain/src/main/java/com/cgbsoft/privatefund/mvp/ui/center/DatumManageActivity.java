@@ -90,16 +90,17 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
 //        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
 //        assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
-        if (relative <= 0)  {
-            assetRelative.showUpdateView();
-        } else {
-            assetRelative.hidepdateView();
-        }
+//        if (relative <= 0)  {
+//            assetRelative.showUpdateView();
+//        } else {
+//            assetRelative.hidepdateView();
+//        }
 //        ViewUtils.createLeftTopRedPoint(this, assetRelative, "0");
     }
 
     private void initView(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        getPresenter().verifyIndentity();
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
         swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
