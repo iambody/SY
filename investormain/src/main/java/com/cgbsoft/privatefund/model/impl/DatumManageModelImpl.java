@@ -32,7 +32,7 @@ public class DatumManageModelImpl implements DatumManageModel {
                     String hasIdCard = result.getString("hasIdCard");//用户选择的是身份证类型，1代表已经上传了身份证，0是还未传身份证
                     String title = result.getString("title");//
                     String credentialCode = result.getString("credentialCode");//
-                    String status = result.getString("status");
+                    String status = result.getString("statusName");
                     String statusCode = result.getString("statusCode");
                     listener.verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,status,statusCode);
                 } catch (JSONException e) {
