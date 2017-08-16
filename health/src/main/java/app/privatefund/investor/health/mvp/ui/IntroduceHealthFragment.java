@@ -96,7 +96,6 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             }
         });
 
-
         play_contral.setOnClickListener(v -> {
             System.out.println("--------play_contral");
             videoRootFrame.play();
@@ -134,9 +133,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 //            v2.url = videoInfoModel.hdUrl;
 //            videos.add(v1);
 //            videos.add(v2);
-//
 //            vrf_avd.play(videos);
-
 //            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             iv_mvv_cover.setOnClickListener(v -> {
                 System.out.println("--------iv_mvv_cover");
@@ -144,7 +141,6 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             });
         }
     }
-
 
     @Override
     public void requestDataFailure(String errorMsg) {

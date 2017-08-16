@@ -974,7 +974,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (keyCode == KeyEvent.KEYCODE_BACK && rl_avd_download.getVisibility() == View.VISIBLE) {
             rl_avd_download.setVisibility(View.GONE);
 //            rl_avd_download.startAnimation(closeAnimationSet);
-
         }
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -985,7 +984,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void onDestroy() {
-
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());

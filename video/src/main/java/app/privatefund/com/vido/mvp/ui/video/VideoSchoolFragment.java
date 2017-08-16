@@ -97,7 +97,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
-
         lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
             VidoListFragment baseLazyFragment = new VidoListFragment();
