@@ -20,7 +20,7 @@ public interface DatumManageContract {
          * 隐藏loading弹窗
          */
         void hideLoadDialog();
-        void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode);
+        void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode);
 
         void verifyIndentityError(Throwable error);
     }

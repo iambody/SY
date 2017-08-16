@@ -23,6 +23,7 @@
                 android:id="@+id/datum_manage_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:setting_item_title="@string/datum_manage_account"/>
 
             <com.cgbsoft.lib.widget.SettingItemNormal
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:setting_item_tip = "未关联"
+                app:setting_item_tip = ""
                 app:setting_item_title="@string/card_collect"/>
         </LinearLayout>
     </ScrollView>

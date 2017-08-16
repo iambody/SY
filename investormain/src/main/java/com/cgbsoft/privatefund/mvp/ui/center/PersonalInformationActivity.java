@@ -109,6 +109,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     TextView memberLevel;
     @BindView(R.id.ll_my_qr)
     LinearLayout myQrAll;
+    @BindView(R.id.tv_identity)
+    TextView identityStatus;
 
     private boolean showAssert;
 
@@ -159,6 +161,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     };
 
     private MyPermissionsChecker mPermissionsChecker;
+    private boolean isClickBack;
+    private boolean hasIndentity;
+    private boolean hasUpload;
+    private String indentityCode;
+    private String title;
+    private String credentialCode;
+    private String status;
 
     @Override
     protected void before() {
@@ -183,9 +192,34 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_personal_information_card_collect)
     public void gotoCardCollect(){
         if (showAssert) {
-            getPresenter().verifyIndentity();
+            goToCardCollect();
         } else {
             GestureManager.showGroupGestureManage(this, GestureManager.CENTIFY_DIR);
+        }
+    }
+
+    private void goToCardCollect() {
+        if (null == status) {
+            isClickBack=true;
+            getPresenter().verifyIndentity();
+        } else {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                startActivity(intent);
+            }
         }
     }
 
@@ -253,6 +287,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
         initView(savedInstanceState);
         initHeadIconDialog();
+        getPresenter().verifyIndentity();
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -284,7 +319,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         swtichCentifyObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean boovalue) {
-                getPresenter().verifyIndentity();
+//                getPresenter().verifyIndentity();
+                goToCardCollect();
             }
 
             @Override
@@ -758,28 +794,41 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode) {
-        if (hasIndentity) {
-            if (hasUpload) {//去证件列表
-                Intent intent = new Intent(this, CardCollectActivity.class);
-                intent.putExtra("indentityCode",indentityCode);
-                startActivity(intent);
-            } else {//去上传证件照
-                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                intent.putExtra("credentialCode",credentialCode);
-                intent.putExtra("indentityCode",indentityCode);
-                intent.putExtra("title", title);
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode) {
+        this.hasIndentity=hasIndentity;
+        this.hasUpload=hasUpload;
+        this.indentityCode=indentityCode;
+        this.title=title;
+        this.credentialCode=credentialCode;
+        this.status=status;
+        identityStatus.setText(status);
+        if (isClickBack) {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
                 startActivity(intent);
             }
-        } else {//无身份
-            Intent intent = new Intent(this, SelectIndentityActivity.class);
-            startActivity(intent);
         }
     }
 
     @Override
     public void verifyIndentityError(Throwable error) {
-        Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        if (isClickBack) {
+            isClickBack=false;
+            Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

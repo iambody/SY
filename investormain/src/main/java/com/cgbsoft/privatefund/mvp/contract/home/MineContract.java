@@ -25,7 +25,7 @@ public interface MineContract {
 
         void requestDataFailure(String errMsg);
 
-        void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode);
+        void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode);
 
         void verifyIndentityError(Throwable e);
     }
