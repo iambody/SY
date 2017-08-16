@@ -262,15 +262,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode) {
-        this.identity=identity;
-        this.hasIdCard=hasIdCard;
-        this.title=title;
-        this.credentialCode=credentialCode;
-        this.status=status;
-        this.statusCode=statusCode;
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode, String status, String statusCode) {
+        this.identity = identity;
+        this.hasIdCard = hasIdCard;
+        this.title = title;
+        this.credentialCode = credentialCode;
+        this.status = status;
+        this.statusCode = statusCode;
 
-        if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
+        if (!TextUtils.isEmpty(statusCode) && "50".equals(statusCode)) {
             noRelativeAssert.setVisibility(View.GONE);
         } else {
             noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
@@ -278,17 +278,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
 
         if (isClickBack) {
-            isClickBack=false;
+            isClickBack = false;
             if (!TextUtils.isEmpty(identity)) {
                 if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                     Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",identity);
+                    intent.putExtra("credentialCode", credentialCode);
+                    intent.putExtra("indentityCode", identity);
                     intent.putExtra("title", title);
                     startActivity(intent);
                 } else {//去证件列表
                     Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                    intent.putExtra("indentityCode",identity);
+                    intent.putExtra("indentityCode", identity);
                     startActivity(intent);
                 }
             } else {//无身份
@@ -301,8 +301,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void verifyIndentityError(Throwable e) {
         if (isClickBack) {
-            isClickBack=false;
-            Toast.makeText(getActivity().getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+            isClickBack = false;
+            Toast.makeText(getActivity().getApplicationContext(), "服务器忙,请稍后再试!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -319,6 +319,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     hideAssert();
                 }
             }
+
             @Override
             protected void onRxError(Throwable error) {
             }
@@ -345,20 +346,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.RELATIVE_ASSERT:
 //                        getPresenter().verifyIndentity();
                         if (null == status) {
-                            isClickBack=true;
+                            isClickBack = true;
                             getPresenter().verifyIndentity();
                         } else {
-                            isClickBack=false;
+                            isClickBack = false;
                             if (!TextUtils.isEmpty(identity)) {
                                 if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                                     Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                                    intent.putExtra("credentialCode",credentialCode);
-                                    intent.putExtra("indentityCode",identity);
+                                    intent.putExtra("credentialCode", credentialCode);
+                                    intent.putExtra("indentityCode", identity);
                                     intent.putExtra("title", title);
                                     startActivity(intent);
                                 } else {//去证件列表
                                     Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                                    intent.putExtra("indentityCode",identity);
+                                    intent.putExtra("indentityCode", identity);
                                     startActivity(intent);
                                 }
                             } else {//无身份
@@ -603,23 +604,23 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
         if (showAssert) {
-            isClickBack=true;
+            isClickBack = true;
 
             if (null == status) {
-                isClickBack=true;
+                isClickBack = true;
                 getPresenter().verifyIndentity();
             } else {
-                isClickBack=false;
+                isClickBack = false;
                 if (!TextUtils.isEmpty(identity)) {
                     if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                         Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                        intent.putExtra("credentialCode",credentialCode);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("credentialCode", credentialCode);
+                        intent.putExtra("indentityCode", identity);
                         intent.putExtra("title", title);
                         startActivity(intent);
                     } else {//去证件列表
                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("indentityCode", identity);
                         startActivity(intent);
                     }
                 } else {//无身份
@@ -628,7 +629,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
             }
         } else {
-            isClickBack=false;
+            isClickBack = false;
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
         }
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
@@ -844,7 +845,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         waitReceiver.hide();
                     }
                 }
-
             }
         }
     }
@@ -899,7 +899,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (videoList == null) {
             for (String name : videos) {
                 XTabLayout.Tab tab = xTabLayout.newTab();
-                tab.setText(name);
                 xTabLayout.addTab(tab);
             }
             viewPager.setOffscreenPageLimit(2);
@@ -909,9 +908,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             viewPager.resetHeight(0);
             initViewPage();
             xTabLayout.setupWithViewPager(viewPager);
-            for (int i = 0; i < xTabLayout.getTabCount(); i++) {
-                xTabLayout.getTabAt(i).setText(videos[i]);
-            }
         } else {
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
@@ -952,6 +948,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else if (object instanceof Fragment) {
                     getChildFragmentManager().beginTransaction().detach((Fragment) object);
                 }
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return videos[position];
             }
         });
     }

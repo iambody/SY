@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="255dp"
-        android:background="@color/white"
+        android:background="@drawable/bg_white_with_layer"
         android:layout_marginTop="@dimen/ui_40_dip"/>
 
     <com.cgbsoft.lib.widget.RoundImageView
@@ -89,7 +89,6 @@
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/account_info_caifu_value_ll">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
