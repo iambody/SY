@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.UploadIndentityModel;
 import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 
@@ -43,6 +44,7 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
 
             @Override
             protected void onRxError(Throwable error) {
+                LogUtils.Log("aaa","error==="+error.getMessage());
                 listener.uploadIndentityError(error);
             }
         }));

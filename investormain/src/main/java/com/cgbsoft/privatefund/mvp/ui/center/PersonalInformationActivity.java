@@ -287,6 +287,12 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
         initView(savedInstanceState);
         initHeadIconDialog();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getPresenter().verifyIndentity();
     }
 

@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,16 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     Button submit;
     @BindView(R.id.iv_upload_tag)
     ImageView tagIv;
+    @BindView(R.id.ll_defeat_all)
+    LinearLayout defeatAll;
+    @BindView(R.id.tv_defeat_title)
+    TextView defeatTitle;
+    @BindView(R.id.tv_defeat_depict)
+    TextView defeatDepict;
+    @BindView(R.id.iv_upload_card_first_cover)
+    ImageView uploadFirstCover;
+    @BindView(R.id.iv_upload_card_second_cover)
+    ImageView uploadSecondCover;
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
     private String secondPhotoPath;
@@ -94,6 +105,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private int REQUEST_CODE_PERMISSON_FIRST = 2000; // 请求码
     private int REQUEST_CODE_PERMISSON_SECOND = 2002; // 请求码
     private boolean isFromSelectIndentity;
+    private String depict;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -114,9 +126,39 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         // 拍照
         takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
     }
+    @OnClick(R.id.iv_upload_card_first_cover)
+    public void uploadFirstCoverClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
+            // 缺少权限时, 进入权限配置页面
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                startPermissionsActivity(REQUEST_CODE_PERMISSON_FIRST);
+                return;
+            }
+        }
+        // 拍照
+        takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
+    }
 
     @OnClick(R.id.iv_upload_crad_second)
     public void uploadSecondClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (null == mPermissionsChecker) {
+                mPermissionsChecker = new MyPermissionsChecker(this);
+            }
+            // 缺少权限时, 进入权限配置页面
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                startPermissionsActivity(REQUEST_CODE_PERMISSON_SECOND);
+                return;
+            }
+        }
+        // 拍照
+        takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
+    }
+    @OnClick(R.id.iv_upload_card_second_cover)
+    public void uploadSecondCoverClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (null == mPermissionsChecker) {
                 mPermissionsChecker = new MyPermissionsChecker(this);
@@ -251,9 +293,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
         credentialCode = getIntent().getStringExtra("credentialCode");
         indentityCode = getIntent().getStringExtra("indentityCode");
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
+        depict = getIntent().getStringExtra("depict");
         String title = getIntent().getStringExtra("title");
         if (TextUtils.isEmpty(indentityCode)||TextUtils.isEmpty(credentialCode)) {
             this.finish();
@@ -307,21 +354,49 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     break;
             }
         } else {//已上传，显示详情
-            tagTv.setVisibility(View.INVISIBLE);
+            tagTv.setVisibility(View.VISIBLE);
             uploadFirst.setEnabled(false);
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
+            if ("30".equals(stateCode)||"70".equals(stateCode)) {
+                uploadFirst.setEnabled(true);
+                uploadSecond.setEnabled(true);
+                submit.setVisibility(View.VISIBLE);
+                if ("30".equals(stateCode)) {//30：已驳回
+                    defeatAll.setVisibility(View.VISIBLE);
+                    tagIv.setVisibility(View.VISIBLE);
+                    tagTv.setVisibility(View.VISIBLE);
+                    tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
+                    tagTv.setText("审核失败");
+                    defeatTitle.setText("失败原因:");
+                    defeatDepict.setText(depict);
+                }
+                if ("70".equals(stateCode)) {//70：已过期
+                    tagTv.setVisibility(View.VISIBLE);
+                    tagIv.setVisibility(View.VISIBLE);
+                    tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
+                    tagTv.setText("当前证件已过期");
+                    uploadFirstCover.setVisibility(View.VISIBLE);
+                }
+            }
+            if ("10".equals(stateCode)) {
+                tagTv.setText("审核中");
+            }
+            if ("50".equals(stateCode)) {
+                tagTv.setText("已通过");
+            }
             String firstUrl = getIntent().getStringExtra("firstUrl");
             String secondUrl = getIntent().getStringExtra("secondUrl");
             Imageload.display(this,firstUrl,uploadFirst);
             if (!TextUtils.isEmpty(secondUrl)) {
+                uploadSecond.setVisibility(View.VISIBLE);
                 Imageload.display(this,secondUrl,uploadSecond);
+                if ("70".equals(stateCode)) {
+                    uploadSecondCover.setVisibility(View.VISIBLE);
+                }
             }
         }
         titleTV.setText(title);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
     }
 
@@ -359,6 +434,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 tagTv.setText(getResources().getString(R.string.camera_success));
                 tagIv.setVisibility(View.VISIBLE);
                 tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_success_tag));
+                uploadFirstCover.setVisibility(View.GONE);
 //                updateLoadIcon();
             }
         }else if (requestCode == SECOND_REQUEST_CROP) {    // 裁剪图片
@@ -370,6 +446,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 tagTv.setText(getResources().getString(R.string.camera_success));
                 tagIv.setVisibility(View.VISIBLE);
                 tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_success_tag));
+                uploadSecondCover.setVisibility(View.GONE);
 //                updateLoadIcon();
             }
         }

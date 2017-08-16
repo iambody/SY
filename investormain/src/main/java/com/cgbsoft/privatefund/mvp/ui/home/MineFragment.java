@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
+import app.product.com.mvp.ui.ProductDetailActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -269,8 +270,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         this.credentialCode=credentialCode;
         this.status=status;
         this.statusCode=statusCode;
-
-        if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
+        if (TextUtils.isEmpty(statusCode)) {
+            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
+        }else if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
             noRelativeAssert.setVisibility(View.GONE);
         } else {
             noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
@@ -319,6 +321,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     hideAssert();
                 }
             }
+
             @Override
             protected void onRxError(Throwable error) {
             }
@@ -498,10 +501,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        String url = CwebNetConfig.healthValue;
+        boolean isBind = AppManager.isBindAdviser(baseActivity);
+        String url = isBind ? CwebNetConfig.healthValue : CwebNetConfig.memeberArea;
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_info_caifu_value));
+        intent.putExtra(WebViewConstant.push_message_title, isBind ? getString(R.string.account_info_caifu_value) : getString(R.string.mine_members));
+        if (!isBind) {
+            intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+        }
         startActivity(intent);
     }
 
@@ -953,6 +960,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else if (object instanceof Fragment) {
                     getChildFragmentManager().beginTransaction().detach((Fragment) object);
                 }
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return videos[position];
             }
         });
     }
