@@ -8,4 +8,6 @@
     <dimen name="ui_150_dip">150dp</dimen>
     <dimen name="ui_200_dip">200dp</dimen>
     <dimen name="ui_7_dip">7dp</dimen>
+    <dimen name="ui_58_dip">58dp</dimen>
+    <dimen name="ui_55_dip">55dp</dimen>
 </resources>

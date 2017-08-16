@@ -47,7 +47,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:background="@drawable/shape_btn_goden_boader_bg"
+        android:background="@drawable/selector_bg_btn_white"
         android:gravity="center"
         android:text="@string/account_video_go_server"
         android:textColor="@color/app_golden"

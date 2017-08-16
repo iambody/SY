@@ -15,6 +15,8 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
@@ -25,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observable;
+
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 /**
  * Created by fei on 2017/8/15.
@@ -47,6 +53,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     private List<CardListEntity.CardBean> datas = new ArrayList<>();
     private CardListAdapter adapter;
     private String indentityCode;
+    private Observable<Integer> register;
 
     @Override
     public void showLoadDialog() {
@@ -95,8 +102,26 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
-    }
+        register = RxBus.get().register(SELECT_INDENTITY_ADD, Integer.class);
+        register.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                CardCollectAddActivity.this.finish();
+            }
 
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != register) {
+            RxBus.get().unregister(SELECT_INDENTITY_ADD,register);
+        }
+    }
     private void initView(Bundle savedInstanceState) {
         indentityCode = getIntent().getStringExtra("indentityCode");
         mRefreshLayout.setLoadMoreEnabled(false);
@@ -121,7 +146,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
         intent.putExtra("indentityCode", indentityCode);
         intent.putExtra("title", cardBean.getName());
         startActivity(intent);
-        this.finish();
+//        this.finish();
     }
 
     @Override

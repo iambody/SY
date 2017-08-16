@@ -424,7 +424,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
 
     private void choiceChangeText(int num) {
         tv_avh_choiceAll.setText(R.string.cancel_choice_all_str);
-        tv_avh_delete.setTextColor(getResources().getColor(R.color.color_f22502));
+        tv_avh_delete.setTextColor(getResources().getColor(R.color.app_golden));
         tv_avh_delete.setText(getString(R.string.delete_1_str, String.valueOf(num)));
     }
 

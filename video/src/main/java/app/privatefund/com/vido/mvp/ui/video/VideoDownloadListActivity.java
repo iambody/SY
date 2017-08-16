@@ -622,7 +622,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private void choiceChangeText(int num) {
         tv_avd_choiceAll.setText(R.string.cancel_choice_all_str);
-        tv_avd_delete.setTextColor(getResources().getColor(R.color.orange));
+        tv_avd_delete.setTextColor(getResources().getColor(R.color.app_golden));
         tv_avd_delete.setText(getString(R.string.delete_1_str, String.valueOf(num)));
     }
 

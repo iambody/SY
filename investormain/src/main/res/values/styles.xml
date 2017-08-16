@@ -124,7 +124,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">73dp</item>
-        <item name="android:background">@color/app_bg</item>
+        <item name="android:background">@drawable/selector_bg_btn_app_bg</item>
         <item name="android:gravity">center</item>
     </style>
 

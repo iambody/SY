@@ -65,7 +65,7 @@
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:layout_marginRight="@dimen/ui_10_dip"
                 android:gravity="center"
-                android:background="@drawable/shape_btn_goden_boader_bg"
+                android:background="@drawable/selector_bg_btn_white"
                 android:text="@string/account_health_go_server"
                 android:textColor="@color/app_golden"/>
         </LinearLayout>
