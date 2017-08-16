@@ -64,7 +64,7 @@
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:layout_marginRight="@dimen/ui_10_dip"
                 android:id="@+id/account_bank_go_look_product"
-                android:background="@drawable/shape_btn_goden_boader_bg"
+                android:background="@drawable/selector_bg_btn_white"
                 android:text="@string/account_bank_browse_buy"
                 android:gravity="center"
                 android:textColor="@color/app_golden"/>
@@ -77,7 +77,7 @@
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:layout_marginRight="@dimen/ui_10_dip"
                 android:id="@+id/account_bank_go_relative_assert"
-                android:background="@drawable/shape_btn_goden_boader_bg"
+                android:background="@drawable/selector_bg_btn_white"
                 android:text="@string/account_bank_no_relative_assert"
                 android:textColor="@color/app_golden"/>
         </LinearLayout>
