@@ -265,6 +265,7 @@
                         <ImageView
                             android:layout_width="@dimen/ui_40_dip"
                             android:layout_height="3dp"
+                            android:layout_marginTop="@dimen/ui_5_dip"
                             android:layout_marginLeft="@dimen/ui_10_dip"
                             android:src="@color/app_golden" />
                     </LinearLayout>
@@ -301,7 +302,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="bottom"
-            android:background="#d6d6d6"
+            android:background="@color/app_bg"
             android:clickable="true"
             android:focusable="true"
             android:paddingLeft="@dimen/ui_3_dip"
@@ -313,11 +314,14 @@
                 android:id="@+id/video_videplay_edit_comment_c"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
+                android:layout_marginTop="@dimen/ui_7_dip"
+                android:layout_marginBottom="@dimen/ui_7_dip"
+                android:layout_marginRight="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/searchkuang"
                 android:gravity="center_vertical"
-                android:padding="1dp"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+
                 android:text="我来说一说..."
                 android:textColorHint="#666"
                 android:textSize="13sp" />
@@ -326,9 +330,11 @@
                 android:id="@+id/video_videplay_send_comment"
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
-                android:layout_margin="3dp"
-                android:background="@color/app_golden"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="@dimen/ui_7_dip"
+                android:background="@drawable/toc_cornor_btn_nor"
                 android:text="评论"
+                android:layout_marginRight="@dimen/ui_10_dip"
                 android:gravity="center"
                 android:textColor="@color/white"  />
         </LinearLayout>
