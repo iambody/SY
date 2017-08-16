@@ -443,7 +443,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     //游客登录成功
     @Override
-    public void invisterloginSuccess() {
+    public void invisterloginSuccess(){
         if (isVisitorLoginClick) {//是点击游客模式登录按钮进入的
             visitorLogin();
         }
