@@ -25,7 +25,6 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取是否是理财师的标识
-     * .
      *
      * @param context
      * @return
