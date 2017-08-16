@@ -148,7 +148,7 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode) {
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode, String status, String statusCode) {
 
     }
 

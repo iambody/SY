@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -40,7 +42,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout mRefreshLayout;
     @BindView(R.id.iv_card_list_empty)
-    ImageView emptyBg;
+    RelativeLayout emptyBg;
 
     private List<CardListEntity.CardBean> datas = new ArrayList<>();
     private CardListAdapter adapter;
@@ -88,7 +90,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     @Override
     protected void init(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, "", false, false);
-        titleTV.setText(getResources().getString(R.string.card_collect));
+        titleTV.setText(getResources().getString(R.string.card_collect_add));
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());

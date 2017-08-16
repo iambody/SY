@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -190,7 +189,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     TextView videoVideplayEditCommentC;
     //发送评论
     @BindView(R2.id.video_videplay_send_comment)
-    Button videoVideplaySendComment;
+    TextView videoVideplaySendComment;
     @BindView(R2.id.video_videplay_edit_comment_lay)
     LinearLayout videoVideplayEditCommentLay;
     @BindView(R2.id.view_title_back_iv)
@@ -297,6 +296,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
 //        FloatVideoService.stopService();
+
     }
 
     public int getsize() {
