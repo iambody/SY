@@ -49,6 +49,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 /**
  * Created by fei on 2017/8/12.
@@ -270,6 +271,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         if (TextUtils.isEmpty(result)) {
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
+            RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode", indentityCode);
