@@ -9,8 +9,7 @@
 
     <FrameLayout
         android:layout_width="100dp"
-        android:layout_height="75dp"
-        android:background="@drawable/image_bg">
+        android:layout_height="75dp">
 
         <ImageView
             android:id="@+id/item_fragment_videoschool_image_bg"

@@ -501,7 +501,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        boolean isBind = !TextUtils.isEmpty(SPreference.getToCBean(getContext()).getBandingAdviserId());
+        boolean isBind = AppManager.isBindAdviser(baseActivity);
         String url = isBind ? CwebNetConfig.healthValue : CwebNetConfig.memeberArea;
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
