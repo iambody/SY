@@ -243,8 +243,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     protected int layoutID() {
-        return R.layout.
-                ;
+        return R.layout.fragment_mine;
     }
 
     @Override

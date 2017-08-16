@@ -88,7 +88,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     private void initCache() {
         if (null != AppManager.getVideoSchoolCache(baseActivity))
             freashAp(AppManager.getVideoSchoolCache(baseActivity));
-
     }
 
     @Override
@@ -109,7 +108,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         videoNavigationAdapter.FreashAp(videoAllModel.category);
         fragmentAdapter.freshAp(lazyFragments);
     }
-
 
     @Override
     public void getSchoolAllDataSucc(String data) {
