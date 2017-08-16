@@ -16,20 +16,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.tools.CollectionUtils;
 
 /**
  * @author chenlong
- *
- * 通用的轮播图
+ *         <p>
+ *         通用的轮播图
  */
 public class BannerView extends RelativeLayout implements View.OnTouchListener, ViewPager.OnPageChangeListener {
 
@@ -46,7 +46,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
     private final static int DELAY_SCROLL_TIME = 5000;
     private OnclickBannerItemView onclickBannerItemView;
     private HomeBannerAdapter bannerAdapter;
-    private  LinearLayout ly_indication;
+    private LinearLayout ly_indication;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -87,7 +87,6 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     /**
      * 初始化轮播和指示器
-     *
      */
     public void initShowImageForNet(Activity activity, List<BannerBean> list) {
         if (ly_indication != null) {
@@ -104,7 +103,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         for (int i = 0; i < list.size(); i++) {
             ImageView iv = new ImageView(activity);
             BannerBean bannerBean = list.get(i);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Imageload.display(context, bannerBean.getImageUrl(), iv);
             bannerList.add(iv);
             ImageView iv2 = new ImageView(activity);
@@ -201,16 +200,16 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
         public Object instantiateItem(View container, int position1) {
             int currentItem = position1 % views.size();
-            if (currentItem < 0){
+            if (currentItem < 0) {
                 currentItem = views.size() + position1;
             }
             View view = views.get(currentItem);
             ViewParent vp = view.getParent();
-            if (vp!=null){
-                ViewGroup parent = (ViewGroup)vp;
+            if (vp != null) {
+                ViewGroup parent = (ViewGroup) vp;
                 parent.removeView(view);
             }
-            ((ViewGroup)container).addView(view);
+            ((ViewGroup) container).addView(view);
             return view;
         }
 

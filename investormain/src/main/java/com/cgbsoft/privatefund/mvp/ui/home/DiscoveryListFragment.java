@@ -161,6 +161,14 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     public void requestListDataSuccess(List<DiscoveryListModel> discoveryListModel) {
+        if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
+            swipeToLoadLayout.setVisibility(View.VISIBLE);
+        }
+        if (View.VISIBLE == fragmentVideoschoolNoresultLay.getVisibility()) {//一直隐藏
+            fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
+        }
+
+
         clodLsAnim(swipeToLoadLayout);
         FreshAp(discoveryListModel, isLoadMore);
         isLoadMore = false;
@@ -169,7 +177,10 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     @Override
     public void requestListDataFailure(String errMsg) {
         clodLsAnim(swipeToLoadLayout);
-
+        if (!isLoadMore && 0 == discoveryListAdapter.getItemCount()) {
+            fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
+            swipeToLoadLayout.setVisibility(View.GONE);
+        }
         isLoadMore = false;
     }
 

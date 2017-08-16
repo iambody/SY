@@ -109,7 +109,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString();
-                if (TextUtils.isEmpty(content) || content.length() < 5) {
+                if (TextUtils.isEmpty(content) || content.trim().length() < 5) {
                     commit.setEnabled(false);
                 } else {
                     commit.setEnabled(true);
@@ -126,7 +126,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 
     @OnClick(R.id.commit)
     void commitButtonClick() {
-        String editStr = afb_et.getText().toString();
+        String editStr = afb_et.getText().toString().trim();
         if (editStr.length() >= 5 && editStr.length() <= 300) {
             uploadFile(editStr);
         } else {

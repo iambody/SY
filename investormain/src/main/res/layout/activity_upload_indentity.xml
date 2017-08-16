@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="拍摄成功"
+            android:text=""
             android:textColor="@color/color_595959"
             android:textSize="15sp" />
 
@@ -34,31 +34,89 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/iv_upload_crad_first"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="214dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/upload_id_card_front" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/iv_upload_crad_first_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_upload_crad_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/upload_id_card_front" />
+                <ImageView
+                    android:id="@+id/iv_upload_card_first_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:background="@color/half_truns"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/iv_upload_crad_second_all"
+                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_upload_crad_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/upload_id_card_back"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/iv_upload_card_second_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:background="@color/half_truns"
+                    />
+            </FrameLayout>
+            <LinearLayout
+                android:id="@+id/ll_defeat_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:id="@+id/tv_defeat_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp"
+                    android:text=""
+                    />
+                <TextView
+                    android:id="@+id/tv_defeat_depict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_upload_crad_second"
-            android:layout_width="match_parent"
-            android:layout_height="214dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/upload_id_card_back"
-            android:visibility="gone" />
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/upload_submit"

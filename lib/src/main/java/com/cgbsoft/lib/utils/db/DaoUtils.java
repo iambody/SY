@@ -240,7 +240,7 @@ public class DaoUtils {
 //            videoInfo.setIsDelete(VideoStatus.DELETE);
             videoInfo.setIsDelete(VideoStatus.UNDELETE);
             videoInfo.setStatus(VideoStatus.NONE);
-            videoInfo.setFinalPlayTime(0);
+//            videoInfo.setFinalPlayTime(0);
             videoInfo.setSize(0);
             videoInfo.setLocalVideoPath("");
             videoInfo.setPercent(0);
@@ -260,9 +260,10 @@ public class DaoUtils {
      * 视频下载完成
      */
 
-    public void videoDoneLoad(String videoId) {
+    public void videoDoneLoad(String videoId,String path) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
         videoInfo.setStatus(VideoStatus.FINISH);
+        videoInfo.setLocalVideoPath(path);
         videoInfoDao.update(videoInfo);
 
 

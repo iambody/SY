@@ -13,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -144,7 +147,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @OnClick(R2.id.iv_ar_back)
     void backClick() {
         DataStatistApiParam.onStaticToCRegeistBack();
-//        openActivity(LoginActivity.class);
         finish();
     }
 
@@ -178,10 +180,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     void checkClick() {
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
 //        toUmengStatistics(UMENG_KEY, "按钮", "发送验证码");
-//        if (!isUsernameInput) {
-//            MToast.makeText(getApplicationContext(), getString(R.string.un_null_str), Toast.LENGTH_SHORT);
-//            return;
-//        }
         if (!Utils.isMobileNO(et_ar_username.getText().toString().trim())) {
             PromptManager.ShowCustomToast(baseContext, getResources().getString(R.string.phone_noright_str));
             return;
@@ -234,7 +232,10 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @Override
     public void regSucc() {
-        Router.build(RouteConfig.GOTO_LOGIN).go(RegisterActivity.this);
+        AppInfStore.saveIsVisitor(baseContext, false);
+        //开始跳转
+        Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
+        RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         finish();
     }
 

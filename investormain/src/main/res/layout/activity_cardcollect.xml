@@ -7,36 +7,65 @@
         layout="@layout/layout_title_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:clipChildren="false"
-        android:clipToPadding="false">
-
-        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
-            android:id="@+id/swipe_refresh_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/swipe_target"
+        >
+        <RelativeLayout
+            android:id="@+id/iv_card_list_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/ui_10_dip"
-            android:layout_marginRight="@dimen/ui_10_dip"
-            android:layout_marginTop="@dimen/ui_10_dip"
+            android:visibility="gone"
+            >
+            <ImageView
+                android:id="@+id/iv_card_list_empty_iv"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/no_more_indentity"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="当前没有其它可以添加了"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/color_595959"
+                android:textSize="15sp"
+                android:layout_below="@+id/iv_card_list_empty_iv"
+                />
+        </RelativeLayout>
+        <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+            android:id="@+id/swipeToLoadLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:clipChildren="false"
             android:clipToPadding="false">
 
-        </android.support.v7.widget.RecyclerView>
+            <com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView
+                android:id="@+id/swipe_refresh_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
 
-        <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
-            android:id="@+id/swipe_load_more_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
+                android:id="@+id/swipe_load_more_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+    </FrameLayout>
 </LinearLayout>

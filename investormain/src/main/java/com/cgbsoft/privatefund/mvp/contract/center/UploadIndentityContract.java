@@ -19,7 +19,7 @@ public interface UploadIndentityContract {
          * 隐藏loading弹窗
          */
         void hideLoadDialog();
-        void uploadIndentitySuccess();
+        void uploadIndentitySuccess(String s);
         void uploadIndentityError(Throwable error);
     }
     interface UploadIndentityPresenter extends BasePresenter {
