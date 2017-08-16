@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -95,21 +96,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @BindView(R.id.webView)
     BaseWebview baseWebview;
 
-//    @BindView(R.id.cmain_live_dialog)
-//    LinearLayout liveDialog;
-
-//    @BindView(R.id.video_live_close)
-//    ImageView liveDialogClose;
-//
-//    @BindView(R.id.video_live_pop)
-//    RelativeLayout livePop;
-
-//    @BindView(R.id.live_head)
-//    ImageView liveIcon;
-//
-//    @BindView(R.id.live_title)
-//    TextView liveTitle;
-
     private Observable<Boolean> closeMainObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
     private Observable<Boolean> rongTokenRefushObservable;
@@ -135,12 +121,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     ImageView guide;
     @BindView(R.id.iv_guide_mine)
     ImageView guideMine;
-    private int[] guideIds=new int[]{R.drawable.guide_one,R.drawable.guide_two,R.drawable.guide_three,R.drawable.guide_four,R.drawable.guide_five};
-    private int guideindex=0;
+    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
+    private int guideindex = 0;
+
     @OnClick(R.id.iv_guide)
-    public void guideClick(){
+    public void guideClick() {
         guideindex++;
-        guideindex=guideindex%guideIds.length;
+        guideindex = guideindex % guideIds.length;
         if (guideindex == 4) {
             guide.setVisibility(View.GONE);
             AppInfStore.saveGuideTag(MainPageActivity.this);
@@ -148,11 +135,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
     }
+
     @OnClick(R.id.iv_guide_mine)
-    public void guideMine(){
+    public void guideMine() {
         guideMine.setVisibility(View.GONE);
         AppInfStore.saveGuideTagOfMine(MainPageActivity.this);
     }
+
     /**
      * 定位管理器
      */
@@ -171,6 +160,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -204,6 +194,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             guide.setVisibility(View.GONE);
         }
+        if (null != savedInstanceState) {
+
+        }
+
+
+
         Log.i("MainPageActivity", "----init");
         StatusBarUtil.translucentStatusBar(this);
         initApplication = (InitApplication) getApplication();
@@ -329,6 +325,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (mContentFragment != to) {
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
 //            setCustomAnimations(R.anim.home_fade_in, R.anim.home_fade_out);
+
+
             if (!to.isAdded()) {  // 先判断是否被add过
                 transaction.hide(mContentFragment).add(R.id.fl_main_content, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
@@ -975,5 +973,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+        /**
+         * 解决重影问题  手机内存不足时候回
+         */
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
     }
 }

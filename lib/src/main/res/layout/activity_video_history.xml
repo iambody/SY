@@ -7,63 +7,62 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg"
     android:orientation="vertical">
-<!--
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/video_history_appbarlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:visibility="gone"
-        app:elevation="0dp">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <!--
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/video_history_appbarlayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:navigationIcon="@drawable/ic_back_black_24dp"
-            app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:elevation="0dp">
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dimens_sp_18" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:navigationIcon="@drawable/ic_back_black_24dp"
+                app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">
 
-        </android.support.v7.widget.Toolbar>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/dimens_sp_18" />
 
-        &lt;!&ndash;<ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_z_dip"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="bottom"
-            android:src="@color/gray_font" />&ndash;&gt;
-    </android.support.design.widget.AppBarLayout>-->
+            </android.support.v7.widget.Toolbar>
+
+            &lt;!&ndash;<ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_z_dip"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="bottom"
+                android:src="@color/gray_font" />&ndash;&gt;
+        </android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout
         android:id="@+id/videohistory_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/history_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:clickable="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_10_dip"
-            android:src="@drawable/ic_back_black_24dp"/>
+            android:clickable="true"
+            android:src="@drawable/ic_back_black_24dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="播放记录"
             android:padding="@dimen/ui_10_dip"
+            android:text="播放记录"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_18" />
 
@@ -74,11 +73,12 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_10_dip"
-            android:text="取消"
             android:clickable="true"
-            android:visibility="gone"
+            android:text="取消"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimens_sp_16" />
+            android:textSize="@dimen/dimens_sp_16"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/history_del_iv"
             android:layout_width="wrap_content"
@@ -87,8 +87,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_10_dip"
             android:clickable="true"
-            android:src="@drawable/ic_local_delete"
-            />
+            android:src="@drawable/ic_local_delete" />
 
     </RelativeLayout>
 
@@ -96,7 +95,7 @@
     <com.cgbsoft.lib.widget.recycler.MyScrollview
         android:layout_width="match_parent"
         android:layout_height="0dp"
-       android:layout_weight="1"
+        android:layout_weight="1"
         android:background="@color/app_bg"
         android:descendantFocusability="blocksDescendants"
         android:orientation="vertical"
@@ -170,7 +169,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/delete_str"
-            android:textColor="@color/orange"
+            android:textColor="@color/app_golden"
             android:textSize="12sp" />
     </LinearLayout>
 
