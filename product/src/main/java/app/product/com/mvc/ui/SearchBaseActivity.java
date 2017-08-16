@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
@@ -159,6 +160,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String str = v.getText().toString();
                     if (TextUtils.isEmpty(str)) {
+                        Toast.makeText(SearchBaseActivity.this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                         return false;
                     }
                     //todo 保存记录
@@ -277,13 +279,15 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
 
     private void initHotSearch() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("infoType", formateType());
-        map.put("category", AppManager.isInvestor(baseContext) ? "c" : "b");
+//        map.put("infoType", formateType());
+        map.put("infoType", PRODUCT.concat(",").concat(ZIXUN).concat(",").concat(VIDEO));
+        map.put("category", "c");
         map.put("userId", AppManager.getUserId(baseContext));
         addSubscription(ApiClient.getHotSousouData(map).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
+                    System.out.println("search hot=" + s);
 //                    JSONObject response = new JSONObject(s);
 //                    Log.i("hot search task ", "-------search hot=" + response.toString());
 //                    JSONArray jsonArray = response.getJSONArray("result");
