@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cgbsoft.lib.base.model.DiscoverModel;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.model.DiscoverModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
