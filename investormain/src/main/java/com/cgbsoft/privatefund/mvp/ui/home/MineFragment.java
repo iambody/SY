@@ -269,8 +269,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         this.credentialCode=credentialCode;
         this.status=status;
         this.statusCode=statusCode;
-
-        if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
+        if (TextUtils.isEmpty(statusCode)) {
+            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
+        }else if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
             noRelativeAssert.setVisibility(View.GONE);
         } else {
             noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
