@@ -100,6 +100,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     private void initView(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        getPresenter().verifyIndentity();
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
         swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
