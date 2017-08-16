@@ -30,15 +30,15 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
     }
 
     @Override
-    public void verifyIndentitySuccess(String result, String hasIdCard, String title, String credentialCode) {
+    public void verifyIndentitySuccess(String result, String hasIdCard, String title, String credentialCode,String status,String statusCode) {
         datumManageView.hideLoadDialog();
         if (TextUtils.isEmpty(result)) {//无身份
-            datumManageView.verifyIndentitySuccess(false,false,null,null,null);
+            datumManageView.verifyIndentitySuccess(false,false,null,null,null,status,statusCode);
         } else {//有身份
             if ("1001".equals(result) && "0".equals(hasIdCard)) {
-                datumManageView.verifyIndentitySuccess(true, false,result,title,credentialCode);
+                datumManageView.verifyIndentitySuccess(true, false,result,title,credentialCode,status,statusCode);
             } else {
-                datumManageView.verifyIndentitySuccess(true,true,result,null,null);
+                datumManageView.verifyIndentitySuccess(true,true,result,null,null,status,statusCode);
             }
         }
     }

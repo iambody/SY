@@ -133,12 +133,43 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     @OnClick(R.id.upload_submit)
     public void photoSubmit(){
         List<String> paths = new ArrayList<>();
-        if (isIdCard && (TextUtils.isEmpty(firstPhotoPath) || TextUtils.isEmpty(secondPhotoPath))) {
-            Toast.makeText(getApplicationContext(), "请正确拍摄图片", Toast.LENGTH_SHORT).show();
-            return;
-        } else if(TextUtils.isEmpty(firstPhotoPath)){
-            Toast.makeText(getApplicationContext(), "请正确拍摄图片", Toast.LENGTH_SHORT).show();
-            return;
+        if (isIdCard) {
+            if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(firstPhotoPath) && !TextUtils.isEmpty(secondPhotoPath)) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            File fileFirst = new File(firstPhotoPath);
+            File fileSecond = new File(secondPhotoPath);
+            if (!fileFirst.exists()&&!fileSecond.exists()) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (fileFirst.exists() && !fileSecond.exists()) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!fileFirst.exists()&&fileSecond.exists()) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else{
+            if(TextUtils.isEmpty(firstPhotoPath)){
+                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            File fileFirst = new File(firstPhotoPath);
+            if (!fileFirst.exists()) {
+                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         if (isIdCard) {
             paths.add(firstPhotoPath);
