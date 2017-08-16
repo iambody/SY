@@ -188,7 +188,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
     }
 
     public void gotoConnectAdviser() {
-        DefaultDialog dialog = new DefaultDialog(getContext(), "是否联系投资顾问", "取消", "呼叫") {
+        DefaultDialog dialog = new DefaultDialog(getContext(), "是否联系私行家", "取消", "呼叫") {
             @Override
             public void left() {
                 dismiss();
