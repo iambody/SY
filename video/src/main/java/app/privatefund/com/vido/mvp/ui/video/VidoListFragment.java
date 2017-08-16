@@ -114,22 +114,18 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.app_bg, R.dimen.ui_15_dip));
 
-        videoListAdapter.setOnItemClickListener(new ListItemClickListener<VideoAllModel.VideoListModel>() {
-            @Override
-            public void onItemClick(int position, VideoAllModel.VideoListModel videoListModel) {
-                if (AppManager.isVisitor(fBaseActivity)) {
-                    HashMap<String, Object> map = new HashMap<String, Object>();
-                    map.put("insidegotologin", true);
-                    NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN, map);
-                } else {
-                    if (!NetUtils.isNetworkAvailable(fBaseActivity)) {
-                        PromptManager.ShowCustomToast(fBaseActivity, "请连接网络");
-                        return;
-                    }
-                    VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
+        videoListAdapter.setOnItemClickListener((position, videoListModel) -> {
+            if (AppManager.isVisitor(fBaseActivity)) {
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("insidegotologin", true);
+                NavigationUtils.startActivityByRouter(fBaseActivity, RouteConfig.GOTO_LOGIN, map);
+            } else {
+                if (!NetUtils.isNetworkAvailable(fBaseActivity)) {
+                    PromptManager.ShowCustomToast(fBaseActivity, "请连接网络");
+                    return;
                 }
+                VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
             }
-
         });
         swipeTarget.setAdapter(videoListAdapter);
 
@@ -137,7 +133,6 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         if (null == videoListModelList) {//
             getPresenter().getVideoList(CatoryValue, CurrentPostion);
         }
-
     }
 
     @Override
@@ -189,7 +184,6 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         isLoadMore = false;
     }
 
-
     public void freshData(List<VideoAllModel.VideoListModel> videoListModels) {
         videoListModelList = videoListModels;
         CurrentPostion = 1;
@@ -222,10 +216,9 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         getPresenter().getVideoList(CatoryValue, CurrentPostion);
     }
 
-
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onnoresultClicked() {
-        if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
+        if (NetUtils.isNetworkAvailable(fBaseActivity)) { //有网
             if (null == videoListModelList) {//
                 getPresenter().getVideoList(CatoryValue, CurrentPostion);
             }

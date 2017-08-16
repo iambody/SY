@@ -6,6 +6,10 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.DiscoverModel;
+import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
@@ -17,8 +21,6 @@ import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
-import com.cgbsoft.privatefund.model.DiscoverModel;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryPresenter;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -68,7 +70,14 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     protected void init(View view, Bundle savedInstanceState) {
         initIndicatorView();
         initViewPage();
+        initCache();
         getPresenter().getDiscoveryFirstData();
+    }
+
+    private void initCache() {
+        if (null != AppManager.getDiscoveryModleData(baseActivity)) {
+            refrushModule(AppManager.getDiscoveryModleData(baseActivity));
+        }
     }
 
     private void initIndicatorView() {
@@ -93,6 +102,11 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataSuccess(DiscoverModel discoverModel) {
+        AppInfStore.saveDiscoverModelData(getContext(), discoverModel);
+        refrushModule(discoverModel);
+    }
+
+    private void refrushModule(DiscoverModel discoverModel) {
         AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         if (CollectionUtils.isEmpty(discoverModel.banner)) {
             mParams.setScrollFlags(0);

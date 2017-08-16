@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.base.model.DiscoverModel;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
@@ -469,6 +470,17 @@ public class AppInfStore implements AppinfConstant {
         homeData = new Gson().fromJson(homeStr, VideoAllModel.class);
         return homeData;
     }
+
+    /**
+     * 缓存资讯数据
+     */
+    public static void saveDiscoverModelData(Context sContext, DiscoverModel discoverModel) {
+        SharedPreferences sp = getBasePreference(sContext);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(DISCOVERLISTFIRSTDATA, new Gson().toJson(discoverModel));
+        ed.commit();
+    }
+
 
     /**
      * 是否显示踢出dialog
