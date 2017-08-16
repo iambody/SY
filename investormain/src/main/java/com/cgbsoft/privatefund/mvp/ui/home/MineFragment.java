@@ -907,7 +907,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (videoList == null) {
             for (String name : videos) {
                 XTabLayout.Tab tab = xTabLayout.newTab();
-                tab.setText(name);
                 xTabLayout.addTab(tab);
             }
             viewPager.setOffscreenPageLimit(2);
@@ -917,9 +916,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             viewPager.resetHeight(0);
             initViewPage();
             xTabLayout.setupWithViewPager(viewPager);
-            for (int i = 0; i < xTabLayout.getTabCount(); i++) {
-                xTabLayout.getTabAt(i).setText(videos[i]);
-            }
         } else {
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
