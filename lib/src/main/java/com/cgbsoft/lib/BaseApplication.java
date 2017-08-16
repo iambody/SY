@@ -6,7 +6,6 @@ import android.support.multidex.MultiDexApplication;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
-import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
@@ -88,10 +87,11 @@ public class BaseApplication extends MultiDexApplication {
     }
 
     /**
-     *初始化x5的浏览器内核
+     * 初始化x5的浏览器内核
+     *
      * @return
      */
-    private void initX5Webview(){
+    private void initX5Webview() {
         //x5内核初始化接口
         try {
             QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
@@ -110,13 +110,16 @@ public class BaseApplication extends MultiDexApplication {
             e.printStackTrace();
         }
     }
+
     /**
      * 供埋点使用
+     *
      * @return
      */
-    public static String BindAdviserState(){
-        return !BStrUtils.isEmpty( AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId())?"1":"0";
+    public static String BindAdviserState() {
+        return !BStrUtils.isEmpty(AppManager.getUserInfo(getContext()).getToC().getBandingAdviserId()) ? "1" : "0";
     }
+
     public static Context getContext() {
         return context;
     }

@@ -91,7 +91,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         getLocalVideoInfo(videoId);
 
         if (viModel != null) {
-            if (viModel.isDelete == VideoStatus.UNDELETE)
+            if (viModel.isDelete == VideoStatus.DELETE)
                 viModel.status = VideoStatus.NONE;
             getView().getLocalVideoInfoSucc(viModel);
         } else {

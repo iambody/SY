@@ -133,8 +133,10 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                 adapterList.add(model.videoId);
         }
         for (DownloadInfo info : getAllDownloadTask()) {
-            if (info.getState() == DownloadManager.DOWNLOADING)
+            if (info.getState() == DownloadManager.DOWNLOADING) {
                 taskList.add(info.getTaskKey());
+//                return true;
+            }
         }
         return taskList.containsAll(adapterList);
     }
@@ -170,7 +172,8 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
     @Override
     public void stopDownload(String videoId) {
-        if (getDownloadManager() != null)
+        if (getDownloadManager() == null)
+            return;
             getDownloadManager().stopTask(videoId);
     }
 
@@ -374,7 +377,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             videoInfoModel.status = VideoStatus.FINISH;
             videoInfoModel.localVideoPath = downloadInfo.getTargetPath();
             saveOrUpdateVideoInfo(videoInfoModel);
-            daoUtils.videoDoneLoad(videoId);
+//            daoUtils.videoDoneLoad(videoId,videoInfoModel.localVideoPath);
             if (getView() != null)
                 getView().onDownloadFinish(videoId);
         }
