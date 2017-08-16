@@ -96,6 +96,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             }
         });
 
+
         play_contral.setOnClickListener(v -> {
             System.out.println("--------play_contral");
             videoRootFrame.play();
