@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
+import app.product.com.mvp.ui.ProductDetailActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -499,10 +500,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        String url = CwebNetConfig.healthValue;
+        boolean isBind = !TextUtils.isEmpty(SPreference.getToCBean(getContext()).getBandingAdviserId());
+        String url = isBind ? CwebNetConfig.healthValue : CwebNetConfig.memeberArea;
         Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.account_info_caifu_value));
+        intent.putExtra(WebViewConstant.push_message_title, isBind ? getString(R.string.account_info_caifu_value) : getString(R.string.mine_members));
+        if (!isBind) {
+            intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+        }
         startActivity(intent);
     }
 

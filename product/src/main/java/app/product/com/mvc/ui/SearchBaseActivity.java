@@ -280,7 +280,7 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
     private void initHotSearch() {
         HashMap<String, String> map = new HashMap<>();
 //        map.put("infoType", formateType());
-        map.put("infoType", PRODUCT.concat(",").concat(ZIXUN).concat(",").concat(VIDEO));
+        map.put("infoType", ZIXUN.concat(",").concat(VIDEO));
         map.put("category", "c");
         map.put("userId", AppManager.getUserId(baseContext));
         addSubscription(ApiClient.getHotSousouData(map).subscribe(new RxSubscriber<String>() {
