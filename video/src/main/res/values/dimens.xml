@@ -7,4 +7,5 @@
     <dimen name="ui_3_dip">3dp</dimen>
     <dimen name="ui_150_dip">150dp</dimen>
     <dimen name="ui_200_dip">200dp</dimen>
+    <dimen name="ui_7_dip">7dp</dimen>
 </resources>

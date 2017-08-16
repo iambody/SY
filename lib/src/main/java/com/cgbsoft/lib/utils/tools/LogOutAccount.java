@@ -2,6 +2,7 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
@@ -36,7 +37,7 @@ public class LogOutAccount {
             HashMap<String,Object>map=new HashMap<>();
             map.put("ialoginout",true);
             map.put("fromValidatePassword",needExitApp);
-            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map);
+            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
             RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             ((Activity) context).finish();
             AppInfStore.saveIsVisitor(context, true);

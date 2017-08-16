@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -301,7 +302,18 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (addressBean != null) {
-            getPresenter().deleteMallAddress(addressBean.getId());
+            new DefaultDialog(this, "确定删除？", "取消", "确认") {
+                @Override
+                public void left() {
+                    this.dismiss();
+                }
+
+                @Override
+                public void right() {
+                    getPresenter().deleteMallAddress(addressBean.getId());
+                    this.dismiss();
+                }
+            }.show();
         }
         return false;
     }
