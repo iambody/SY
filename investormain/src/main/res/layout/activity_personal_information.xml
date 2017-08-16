@@ -352,6 +352,17 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimens_sp_16" />
 
+                    <TextView
+                        android:id="@+id/tv_identity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/ui_10_dip"
+                        android:layout_toLeftOf="@+id/iv_personal_information_arrow_card"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_595959"
+                        android:textSize="@dimen/dimens_sp_14"
+                        android:text=""
+                        />
 
                     <ImageView
                         android:id="@+id/iv_personal_information_arrow_card"

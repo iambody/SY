@@ -56,6 +56,13 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     private boolean showAssert;
     private LoadingDialog mLoadingDialog;
     private Observable<Boolean> swtichRelativeAssetObservable;
+    private boolean isClickBack;
+    private boolean hasIndentity;
+    private boolean hasUpload;
+    private String indentityCode;
+    private String title;
+    private String credentialCode;
+    private String status;
 
     @Override
     protected int layoutID() {
@@ -81,8 +88,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         int certify = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
         int relative = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getStockAssetsStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
         riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
-        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
-        assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
+//        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
+//        assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
         if (relative <= 0)  {
             assetRelative.showUpdateView();
         } else {
@@ -93,13 +100,15 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     private void initView(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        getPresenter().verifyIndentity();
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
         swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
         swtichRelativeAssetObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean boovalue) {
-                getPresenter().verifyIndentity();
+//                getPresenter().verifyIndentity();
+                goToCardCollect();
             }
 
             @Override
@@ -141,9 +150,34 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     @OnClick(R.id.datum_manage_relative_asset)
     public void gotoRelativeAsset(){
         if (showAssert) {
-            getPresenter().verifyIndentity();
+            goToCardCollect();
         } else {
             GestureManager.showGroupGestureManage(this, GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE);
+        }
+    }
+
+    private void goToCardCollect() {
+        if (null == status) {
+            isClickBack=true;
+            getPresenter().verifyIndentity();
+        } else {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                startActivity(intent);
+            }
         }
     }
 
@@ -170,28 +204,41 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode) {
-        if (hasIndentity) {
-            if (hasUpload) {//去证件列表
-                Intent intent = new Intent(this, CardCollectActivity.class);
-                intent.putExtra("indentityCode",indentityCode);
-                startActivity(intent);
-            } else {//去上传证件照
-                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                intent.putExtra("credentialCode",credentialCode);
-                intent.putExtra("indentityCode",indentityCode);
-                intent.putExtra("title", title);
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode,String status,String statsCode) {
+        this.hasIndentity=hasIndentity;
+        this.hasUpload=hasUpload;
+        this.indentityCode=indentityCode;
+        this.title=title;
+        this.credentialCode=credentialCode;
+        this.status=status;
+        assetRelative.setTip(status);
+        if (isClickBack) {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
                 startActivity(intent);
             }
-        } else {//无身份
-            Intent intent = new Intent(this, SelectIndentityActivity.class);
-            startActivity(intent);
         }
     }
 
     @Override
     public void verifyIndentityError(Throwable error) {
-        Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        if (isClickBack) {
+            isClickBack=false;
+            Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
