@@ -90,7 +90,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     private void initExtras() {
         pdfurl = getIntent().getStringExtra("pdfurl");
         pdfTitleStr = getIntent().getStringExtra("pdftitle");
-        if(getIntent().getExtras().containsKey("productbean"));
+        if (getIntent().getExtras().containsKey("productbean")) ;
         productlsBean = (ProductlsBean) getIntent().getSerializableExtra("productbean");
     }
 
@@ -146,10 +146,10 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     }
 
     private void shareShow() {
-        String shareTitle = "产品简版" + pdfTitleStr;
-
+//        String shareTitle = "产品简版" + pdfTitleStr;
+        String shareTitle = pdfTitleStr;
 //        String shareContent = String.format("私募云平台浮收项目%s开始募集，%s万起投", null != productlsBean ? productlsBean.productName : pdfTitleStr, null != productlsBean ? productlsBean.buyStart : "");//"私募云平台浮收项目" + productlsBean.productName+ "开始募集，" + "" + productlsBean.buyStart + "万起投";
-        String shareContent =pdfTitleStr;
+        String shareContent = pdfTitleStr;
         String shareUrl = pdfurl;
 
         ShareCommonBean shareCommonBean = new ShareCommonBean(shareTitle, shareContent, shareUrl, null);
