@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.model;
+package com.cgbsoft.lib.base.model;
 
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;

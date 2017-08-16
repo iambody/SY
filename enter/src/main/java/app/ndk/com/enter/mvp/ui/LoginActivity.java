@@ -220,7 +220,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         });
     }
 
-
     private Observable<Integer> killSelfRxObservable;
 
     private void initRxObservable() {
@@ -252,13 +251,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-
-
             }
 
             @Override
             public void getLocationerror() {
-
             }
         });
     }
@@ -400,7 +396,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     //游客登录成功
     @Override
-    public void invisterloginSuccess() {
+    public void invisterloginSuccess(){
         if (isVisitorLoginClick) {//是点击游客模式登录按钮进入的
             visitorLogin();
         }
@@ -485,7 +481,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         LoginActivity.this.finish();
     }
 
-
     private class LoginTextWatcher implements TextWatcher {
         private int which;
 
@@ -505,7 +500,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             btn_al_login.setTextColor(getResources().getColor(isFixAdjust() ? R.color.white : R.color.black));
 
             switch (which) {
-
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
                     iv_al_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
@@ -525,8 +519,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressed() {
+        System.out.println("-------onBackPressed-----fromValidatePassword=" + fromValidatePassword);
         if (fromValidatePassword) {
-            Process.killProcess(Process.myPid());
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
             return;
         }
@@ -546,8 +541,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return true;
         }
 
+        System.out.println("-------onKeyDown-----fromValidatePassword=" + fromValidatePassword);
+
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
-            Process.killProcess(Process.myPid());
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
             return true;
         }

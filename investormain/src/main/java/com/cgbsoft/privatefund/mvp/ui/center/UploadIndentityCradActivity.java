@@ -352,6 +352,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
                     tagTv.setText("请拍摄实体组织机构代码证");
                     break;
+                case "100105"://港澳通行证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_provinde_inland_to_gangao));
+                    tagTv.setText("请拍摄实体通行证");
+                    break;
             }
         } else {//已上传，显示详情
             tagTv.setVisibility(View.VISIBLE);

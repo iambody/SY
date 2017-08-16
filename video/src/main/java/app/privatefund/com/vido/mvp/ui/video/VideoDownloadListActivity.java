@@ -443,7 +443,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         }
 
 
-        if (getPresenter().isStartAllDownloading(dataList)) {
+        if (getPresenter().isStartAllDownloading(downloadingData)) {
             isAllDownloadStart = true;
             changeAllStart();
         }

@@ -68,6 +68,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
 
     @OnClick(R.id.indentity_next)
     public void nextButtonClick(){
+        LogUtils.Log("aaa","title==="+indentityName+"----credentialCode====="+credentialCode+"---indentityCode==="+indentityCode);
         if (isInLand) {
             //去上传证件照
             Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
@@ -98,6 +99,19 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         } else {
             datas.clear();
             datas.addAll(leftItems);
+            if (currentPositionLeft == -1) {
+                currentPositionLeft = 0;
+            }
+            IndentityEntity.IndentityItem selectBean = datas.get(currentPositionLeft);
+            indentityCode = selectBean.getCode();
+            credentialCode = selectBean.getCredentialCode();
+            indentityName = selectBean.getName();
+            indentityNext.setEnabled(true);
+            if (indentityCode.startsWith("1001")) {//大陆居民
+                isInLand = true;
+            } else {//非大陆居民
+                isInLand = false;
+            }
             indentityAdapter.setCheckPosition(currentPositionLeft);
             indentityAdapter.notifyDataSetChanged();
         }
@@ -117,6 +131,19 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         } else {
             datas.clear();
             datas.addAll(rightItems);
+            if (currentpositionRight == -1) {
+                currentpositionRight = 0;
+            }
+            IndentityEntity.IndentityItem selectBean = datas.get(currentpositionRight);
+            indentityCode = selectBean.getCode();
+            credentialCode = selectBean.getCredentialCode();
+            indentityName = selectBean.getName();
+            indentityNext.setEnabled(true);
+            if (indentityCode.startsWith("1001")) {//大陆居民
+                isInLand = true;
+            } else {//非大陆居民
+                isInLand = false;
+            }
             indentityAdapter.setCheckPosition(currentpositionRight);
             indentityAdapter.notifyDataSetChanged();
         }
@@ -169,9 +196,9 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
             public void click(int position,int currentPos) {
                 if (isLeftSelect) {
                     currentPositionLeft = currentPos;
-                    currentpositionRight=-1;
+//                    currentpositionRight=-1;
                 } else {
-                    currentPositionLeft=-1;
+//                    currentPositionLeft=-1;
                     currentpositionRight=currentPos;
                 }
                 IndentityEntity.IndentityItem selectBean = datas.get(currentPos);
@@ -235,8 +262,26 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         datas.clear();
         if (isLeftSelect) {
             datas.addAll(leftItems);
+            currentPositionLeft = 0;
+            currentpositionRight=-1;
         } else {
             datas.addAll(rightItems);
+            currentPositionLeft=-1;
+            currentpositionRight=0;
+        }
+        indentityAdapter.setCheckPosition(0);
+        IndentityEntity.IndentityItem selectBean = datas.get(0);
+        indentityCode = selectBean.getCode();
+        credentialCode = selectBean.getCredentialCode();
+        indentityName = selectBean.getName();
+        if (TextUtils.isEmpty(indentityCode)) {
+            return;
+        }
+        indentityNext.setEnabled(true);
+        if (indentityCode.startsWith("1001")) {//大陆居民
+            isInLand=true;
+        } else {//非大陆居民
+            isInLand=false;
         }
         indentityAdapter.notifyDataSetChanged();
     }

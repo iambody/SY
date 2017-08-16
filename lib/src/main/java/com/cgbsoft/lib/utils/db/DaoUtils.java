@@ -260,9 +260,10 @@ public class DaoUtils {
      * 视频下载完成
      */
 
-    public void videoDoneLoad(String videoId) {
+    public void videoDoneLoad(String videoId,String path) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
         videoInfo.setStatus(VideoStatus.FINISH);
+        videoInfo.setLocalVideoPath(path);
         videoInfoDao.update(videoInfo);
 
 

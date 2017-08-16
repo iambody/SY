@@ -84,6 +84,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     @Override
     protected void onResume() {
         super.onResume();
+        getPresenter().verifyIndentity();
         int riskType = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getCustomerType()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getCustomerType());
         int certify = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
         int relative = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getStockAssetsStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
@@ -100,7 +101,6 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     private void initView(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
-        getPresenter().verifyIndentity();
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.datum_manage_title));
         swtichRelativeAssetObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, Boolean.class);
