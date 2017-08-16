@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -18,12 +19,13 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoveryListAdapter;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryListPresenter;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -68,7 +70,6 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     private boolean isLoadMore;
 
     public DiscoveryListFragment() {
-
     }
 
     @SuppressLint("ValidFragment")
@@ -84,7 +85,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_fragment_video_ls;
+        return R.layout.activity_fragment_discovery_list;
     }
 
     @Override
@@ -163,11 +164,11 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     public void requestListDataSuccess(List<DiscoveryListModel> discoveryListModel) {
         if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
             swipeToLoadLayout.setVisibility(View.VISIBLE);
+            fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         }
         if (View.VISIBLE == fragmentVideoschoolNoresultLay.getVisibility()) {//一直隐藏
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         }
-
 
         clodLsAnim(swipeToLoadLayout);
         FreshAp(discoveryListModel, isLoadMore);
@@ -184,8 +185,15 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         isLoadMore = false;
     }
 
-
     @OnClick(R.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
+        if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
+            if (discoveryListAdapter != null && discoveryListAdapter.getItemCount() == 0) {
+                getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
+            }
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(app.privatefund.com.vido.R.string.error_net));
+        }
     }
+
 }

@@ -49,6 +49,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
+import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 /**
  * Created by fei on 2017/8/12.
@@ -270,6 +271,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         if (TextUtils.isEmpty(result)) {
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
+            RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode", indentityCode);
@@ -351,6 +353,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 case "200102"://组织机构代码证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
                     tagTv.setText("请拍摄实体组织机构代码证");
+                    break;
+                case "100105"://港澳通行证
+                    uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_provinde_inland_to_gangao));
+                    tagTv.setText("请拍摄实体通行证");
                     break;
             }
         } else {//已上传，显示详情
