@@ -141,6 +141,7 @@ public class WheelView extends View {
     // Listeners
     private List<OnWheelChangedListener> changingListeners = new LinkedList<OnWheelChangedListener>();
     private List<OnWheelScrollListener> scrollingListeners = new LinkedList<OnWheelScrollListener>();
+    private int MAXCHARNUM=6;
 
     /**
      * Constructor
@@ -485,6 +486,9 @@ public class WheelView extends View {
             if (useCurrentValue || i != currentItem) {
                 String text = getTextItem(i);
                 if (text != null) {
+                    if (text.length() > MAXCHARNUM) {
+                        text = text.substring(0, MAXCHARNUM).concat("...");
+                    }
                     itemsText.append(text);
                 }
             }
@@ -622,6 +626,13 @@ public class WheelView extends View {
 
         if (!isScrollingPerformed && (valueLayout == null || valueLayout.getWidth() > widthItems)) {
             String text = getAdapter() != null ? getAdapter().getItem(currentItem) : null;
+            if (null == text) {
+                text = "";
+            } else {
+                if (text.length() > MAXCHARNUM) {
+                    text = text.substring(0, MAXCHARNUM).concat("...");
+                }
+            }
             valueLayout = new StaticLayout(text != null ? text : "",
                     valuePaint, widthItems, widthLabel > 0 ?
                     Layout.Alignment.ALIGN_OPPOSITE : Layout.Alignment.ALIGN_CENTER,
