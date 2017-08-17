@@ -133,7 +133,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             AppInfStore.saveGuideTag(MainPageActivity.this);
             return;
         }
-        guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+        guide.setBackgroundResource(guideIds[guideindex]);
     }
 
     @OnClick(R.id.iv_guide_mine)

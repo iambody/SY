@@ -39,7 +39,7 @@
                         <com.jude.rollviewpager.RollPagerView
                             android:id="@+id/main_home_bannerview"
                             android:layout_width="match_parent"
-                            android:layout_height="260dp" />
+                            android:layout_height="@dimen/activity_main_banner" />
 
                     </RelativeLayout>
                     <!-- Banner*** -->

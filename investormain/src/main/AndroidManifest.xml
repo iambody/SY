@@ -136,7 +136,7 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
-        <meta-data android:value="574e9a6367e58e24960027b0" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="5983d8c365b6d632a2000c06" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <!--
         umeng
