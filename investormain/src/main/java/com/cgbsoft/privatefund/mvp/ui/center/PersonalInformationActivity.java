@@ -67,6 +67,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -647,7 +648,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_show_datepicker)
     public void showDatePicker() {
 
-        new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(year, month, dayOfMonth);
@@ -655,7 +656,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 userDate.setText(format);
                 updateServerDate(format);
             }
-        }, mYear, mMonth, mDay).show();
+        }, mYear, mMonth, mDay);
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+        datePicker.setMaxDate(new Date().getTime());
+        datePickerDialog.show();
     }
 
     /**
