@@ -100,7 +100,8 @@ public class RongConversationBaseListAdapter extends BaseAdapter<UIConversation>
                 View view = holder.contentView.inflate(provider);
                 provider.bindView(view, position, data);
                 if (data.isTop()) {
-                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
+//                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_top_list_selector));
+                    holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_list_selector));
                 } else {
                     holder.layout.setBackgroundDrawable(this.mContext.getResources().getDrawable(R.drawable.rc_item_list_selector));
                 }
@@ -161,22 +162,17 @@ public class RongConversationBaseListAdapter extends BaseAdapter<UIConversation>
                     holder.rightImageLayout.setVisibility(8);
                 } else if (tag.portraitPosition() == 2) {
                     holder.rightImageLayout.setVisibility(0);
-                    holder.rightImageLayout.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            if (mOnPortraitItemClick != null) {
-                                mOnPortraitItemClick.onPortraitItemClick(v, data);
-                            }
-
+                    holder.rightImageLayout.setOnClickListener(v14 -> {
+                        if (mOnPortraitItemClick != null) {
+                            mOnPortraitItemClick.onPortraitItemClick(v14, data);
                         }
                     });
-                    holder.rightImageLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                        public boolean onLongClick(View v) {
-                            if (mOnPortraitItemClick != null) {
-                                mOnPortraitItemClick.onPortraitItemLongClick(v, data);
-                            }
-
-                            return true;
+                    holder.rightImageLayout.setOnLongClickListener(v13 -> {
+                        if (mOnPortraitItemClick != null) {
+                            mOnPortraitItemClick.onPortraitItemLongClick(v13, data);
                         }
+
+                        return true;
                     });
                     if (data.getConversationType().equals(Conversation.ConversationType.GROUP)) {
                         defaultId1 = io.rong.imkit.R.drawable.rc_default_group_portrait;

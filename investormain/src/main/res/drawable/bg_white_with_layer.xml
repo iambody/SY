@@ -4,9 +4,9 @@
         android:left="2dp"
         android:top="2dp">
         <shape android:shape="rectangle">
-            <gradient
-                android:endColor="#06000000"
-                android:startColor="#06000000" />
+        <gradient
+            android:endColor="#06000000"
+            android:startColor="#06000000" />
         </shape>
     </item>
 
@@ -14,9 +14,9 @@
         android:bottom="2dp"
         android:right="2dp">
         <shape android:shape="rectangle">
-            <gradient
-                android:endColor="#FFFFFF"
-                android:startColor="#FFFFFF" />
+        <gradient
+            android:endColor="#FFFFFF"
+            android:startColor="#FFFFFF" />
         </shape>
     </item>
 </layer-list>
