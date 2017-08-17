@@ -134,6 +134,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             return;
         }
         guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+
     }
 
     @OnClick(R.id.iv_guide_mine)
