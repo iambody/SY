@@ -119,7 +119,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
         indicator.setLineWidth(DimensionPixelUtil.dip2px(context, 30));
         indicator.setLineHeight(DimensionPixelUtil.dip2px(context, 3));
-        indicator.setYOffset(UIUtil.dip2px(context, 3));
+//        indicator.setYOffset(UIUtil.dip2px(context, 3));
         indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
         indicator.setXOffset(UIUtil.dip2px(context, 30));
         return indicator;

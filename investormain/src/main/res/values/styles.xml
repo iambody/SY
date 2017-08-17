@@ -2,6 +2,7 @@
 
     <style name="appInvTheme" parent="Theme.AppCompat.DayNight" >
         <!--<item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>-->
+       <!-- <item name="colorPrimary">@color/app_golden</item>-->
     </style>
     <style name="BottomBarStyle">
         <item name="android:paddingTop">3dp</item>

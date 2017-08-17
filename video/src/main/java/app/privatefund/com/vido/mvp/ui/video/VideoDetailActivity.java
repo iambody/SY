@@ -295,7 +295,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
-//        FloatVideoService.stopService();
+        FloatVideoService.stopService();
 
     }
 
