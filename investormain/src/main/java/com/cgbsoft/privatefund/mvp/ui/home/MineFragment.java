@@ -877,6 +877,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
                 textView.setSingleLine(true);
                 textView.setEllipsize(TextUtils.TruncateAt.END);
+                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
                 textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
                 textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
                 textView.setTextColor(Color.parseColor("#5a5a5a"));

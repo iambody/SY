@@ -140,7 +140,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:id="@+id/account_order_all_ll"
-            android:background="@color/app_bg"
+            android:background="@drawable/selector_bg_btn_app_bg"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
