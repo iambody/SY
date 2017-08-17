@@ -89,8 +89,9 @@ android {
         }
     }
     productFlavors{
-        huawei{}
-//        qihu、360{}
+        guanwang{}
+//        huawei{}
+//        qihu360{}
 //        tengxun{}
 //        xiaomi{}
 //        baidu{}
