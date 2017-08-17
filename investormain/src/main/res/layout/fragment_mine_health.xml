@@ -75,8 +75,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/account_health_had_bug_ll"
-            android:paddingBottom="1dp"
-            android:paddingRight="1dp"
+            android:paddingBottom="2dp"
+            android:paddingRight="2dp"
             android:gravity="center"
             android:visibility="gone">
 
