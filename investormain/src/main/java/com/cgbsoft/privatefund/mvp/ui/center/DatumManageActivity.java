@@ -9,9 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.listener.listener.GestureManager;
@@ -20,18 +18,14 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
-import com.cgbsoft.privatefund.mvp.ui.home.RelativeAssetActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +34,7 @@ import rx.Observable;
 /**
  * @author chenlong
  */
-public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> implements DatumManageContract.DatumManageView{
+public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> implements DatumManageContract.DatumManageView {
     @BindView(R.id.title_left)
     protected ImageView back;
     @BindView(R.id.title_mid)
@@ -78,7 +72,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @Override
     protected DatumManagePresenterImpl createPresenter() {
-        return new DatumManagePresenterImpl(this,this);
+        return new DatumManagePresenterImpl(this, this);
     }
 
     @Override
@@ -117,24 +111,25 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             }
         });
     }
+
     @OnClick(R.id.title_left)
-    public void clickBack(){
+    public void clickBack() {
         this.finish();
     }
 
     @OnClick(R.id.datum_manage_account)
-    public void gotoAccount(){
+    public void gotoAccount() {
         NavigationUtils.startActivity(this, InvisiteAccountActivity.class);
         DataStatistApiParam.operateInvestorAccountClick();
     }
 
     @OnClick(R.id.datum_manage_risk)
-    public void gotoRiskComment(){
+    public void gotoRiskComment() {
         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
     }
 
     @OnClick(R.id.datum_manage_asset_report)
-    public void gotoAssetReport(){
+    public void gotoAssetReport() {
         String url = CwebNetConfig.assetReport;
         Intent intent = new Intent(this, RightShareWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, url);
@@ -144,11 +139,12 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     @OnClick(R.id.datum_manage_asset_certify)
-    public void gotoAssetCertify(){
+    public void gotoAssetCertify() {
         NavigationUtils.startActivity(this, AssetProveActivity.class);
     }
+
     @OnClick(R.id.datum_manage_relative_asset)
-    public void gotoRelativeAsset(){
+    public void gotoRelativeAsset() {
         if (showAssert) {
             goToCardCollect();
         } else {
@@ -158,19 +154,19 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     private void goToCardCollect() {
         if (null == status) {
-            isClickBack=true;
+            isClickBack = true;
             getPresenter().verifyIndentity();
         } else {
-            isClickBack=false;
+            isClickBack = false;
             if (hasIndentity) {
                 if (hasUpload) {//去证件列表
                     Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     startActivity(intent);
                 } else {//去上传证件照
                     Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("credentialCode", credentialCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     intent.putExtra("title", title);
                     startActivity(intent);
                 }
@@ -204,25 +200,25 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode,String status,String statsCode) {
-        this.hasIndentity=hasIndentity;
-        this.hasUpload=hasUpload;
-        this.indentityCode=indentityCode;
-        this.title=title;
-        this.credentialCode=credentialCode;
-        this.status=status;
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode, String status, String statsCode) {
+        this.hasIndentity = hasIndentity;
+        this.hasUpload = hasUpload;
+        this.indentityCode = indentityCode;
+        this.title = title;
+        this.credentialCode = credentialCode;
+        this.status = status;
         assetRelative.setTip(status);
         if (isClickBack) {
-            isClickBack=false;
+            isClickBack = false;
             if (hasIndentity) {
                 if (hasUpload) {//去证件列表
                     Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     startActivity(intent);
                 } else {//去上传证件照
                     Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("credentialCode", credentialCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     intent.putExtra("title", title);
                     startActivity(intent);
                 }
@@ -236,8 +232,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     @Override
     public void verifyIndentityError(Throwable error) {
         if (isClickBack) {
-            isClickBack=false;
-            Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+            isClickBack = false;
+            Toast.makeText(getApplicationContext(), "服务器忙,请稍后再试!", Toast.LENGTH_SHORT).show();
         }
     }
 
