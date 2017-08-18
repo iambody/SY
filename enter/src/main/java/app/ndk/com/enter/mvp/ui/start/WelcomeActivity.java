@@ -121,6 +121,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     protected void init(Bundle savedInstanceState) {
         isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
+        SPreference.putString(this,"JavascriptInterfaceSP","");
     }
 
     @Override

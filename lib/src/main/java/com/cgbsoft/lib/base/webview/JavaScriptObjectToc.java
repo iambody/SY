@@ -6,9 +6,15 @@ import android.webkit.JavascriptInterface;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * desc  ${DESC}
@@ -33,6 +39,7 @@ public class JavaScriptObjectToc {
 
     /**
      * 暴露 给H5 用户信息的 对象接口
+     *
      * @return
      */
     @JavascriptInterface
@@ -63,6 +70,65 @@ public class JavaScriptObjectToc {
                 webView.loadUrl(url);
             }
         });
+    }
+
+    /**
+     * H5 存储 Key Value
+     */
+    @JavascriptInterface
+    public void putValue(String key, String value) {
+        Map<String, String> map = new HashMap<String, String>();
+        String javascriptInterfaceSP = SPreference.getString(context, "JavascriptInterfaceSP");
+        if (javascriptInterfaceSP != null) {
+            map = transStringToMap(javascriptInterfaceSP);
+        }
+        map.put(key, value);
+        SPreference.putString(context, "JavascriptInterfaceSP", transMapToString(map));
+    }
+
+    /**
+     * H5 取值
+     */
+    @JavascriptInterface
+    public String getStringValue(String key) {
+        String javascriptInterfaceSP = SPreference.getString(context, "JavascriptInterfaceSP");
+        if (javascriptInterfaceSP != null) {
+            Map map = transStringToMap(javascriptInterfaceSP);
+            return (String) map.get(key);
+        }
+        return "";
+    }
+
+    /**
+     * Map to String
+     *
+     * @param map
+     * @return
+     */
+    public static String transMapToString(Map map) {
+        java.util.Map.Entry entry;
+        StringBuffer sb = new StringBuffer();
+        for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
+            entry = (java.util.Map.Entry) iterator.next();
+            sb.append(entry.getKey().toString()).append("'").append(null == entry.getValue() ? "" :
+                    entry.getValue().toString()).append(iterator.hasNext() ? "^" : "");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * String To Map
+     *
+     * @param mapString
+     * @return
+     */
+    public static Map transStringToMap(String mapString) {
+        Map map = new HashMap();
+        java.util.StringTokenizer items;
+        for (StringTokenizer entrys = new StringTokenizer(mapString, "^"); entrys.hasMoreTokens();
+             map.put(items.nextToken(), items.hasMoreTokens() ? ((Object) (items.nextToken())) : null))
+            items = new StringTokenizer(entrys.nextToken(), "'");
+        return map;
     }
 
 ////  PromptManager.ShowCustomToast(context,"拉动和打火机");
