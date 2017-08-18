@@ -101,6 +101,7 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
         String name = getIntent().getStringExtra("name");
         if (!TextUtils.isEmpty(name)) {
             newName.setText(name);
+            newName.setSelection(name.length());
 //            rightTV.setEnabled(true);
         }
     }
