@@ -375,14 +375,17 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
                     tagTv.setText("审核失败");
                     defeatTitle.setText("失败原因:");
-                    defeatDepict.setText(depict);
+                    defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
                 }
                 if ("70".equals(stateCode)) {//70：已过期
+                    defeatAll.setVisibility(View.VISIBLE);
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
                     tagTv.setText("当前证件已过期");
                     uploadFirstCover.setVisibility(View.VISIBLE);
+                    defeatTitle.setText("失败原因:");
+                    defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
                 }
             }
             if ("10".equals(stateCode)) {
