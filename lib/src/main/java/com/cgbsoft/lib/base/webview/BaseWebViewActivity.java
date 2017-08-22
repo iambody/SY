@@ -114,6 +114,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<MallAddress> mallChoiceObservable;
     private Observable<String> mallDeleteObservable;
     private Observable<Boolean> unReadMessageObservable;
+    private Observable<String> callBackObservable;
 
     @Override
     protected int layoutID() {
@@ -210,6 +211,19 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
+
+        callBackObservable = RxBus.get().register(RxConstant.SWIPT_CODE_RESULT, String.class);
+        callBackObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String url) {
+                mWebview.loadUrl("javascript:setCallBack('" + url + "')");
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+
         if (rightMessageIcon) {
             System.out.println("----------webview=---rightMessageIcon" + rightMessageIcon);
             RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
@@ -473,6 +487,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
         if (unReadMessageObservable != null) {
             RxBus.get().unregister(RxConstant.UNREAD_MESSAGE_OBSERVABLE, unReadMessageObservable);
+        }
+
+        if (callBackObservable!=null){
+            RxBus.get().unregister(RxConstant.SWIPT_CODE_RESULT,callBackObservable);
         }
 
         if (mShakeListener != null) {

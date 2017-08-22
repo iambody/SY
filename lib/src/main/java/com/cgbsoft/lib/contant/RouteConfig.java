@@ -69,6 +69,7 @@ public class RouteConfig {
 
     // 二维码
     public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
+    public static final String GOTO_TWO_CODE_READ_ACTIVITY = "qrcode_read_activity";
 
     // 带分享的webview
     public static final String GOTO_BASE_WITHSHARE_WEBVIEW = "goto_base_withshare_webview";

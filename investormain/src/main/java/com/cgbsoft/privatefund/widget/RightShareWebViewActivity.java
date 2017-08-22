@@ -30,7 +30,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         super.before();
         //游客模式下禁止的Api 添加限制条件
 //        if (!AppManager.isVisitor(baseContext)) {
-        if(!AppManager.isVisitor(baseContext) && url.contains("information/details.html")){//是资讯页面
+        if(!AppManager.isVisitor(baseContext) && url.contains("new_detail_toc.html")){//是资讯页面
             TaskInfo.complentTask("查看资讯");
         }
     }
@@ -61,7 +61,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         ShareCommonBean shareCommonBean = new ShareCommonBean(titles, subTitle, link, "");
         commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, shareType -> {
             //分享微信朋友圈成功
-            if(url.contains("information/details.html")){
+            if(url.contains("new_detail_toc.html")){
                 if (!AppManager.isVisitor(baseContext)) {
                     //自选页面分享朋友圈成功
                     TaskInfo.complentTask("分享资讯");
