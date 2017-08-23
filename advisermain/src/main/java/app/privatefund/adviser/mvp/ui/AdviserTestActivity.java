@@ -5,10 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
-import com.cgbsoft.lib.utils.tools.PromptManager;
-
 import app.privatefund.adviser.R;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,7 +29,7 @@ public class AdviserTestActivity extends AppCompatActivity {
 
     @OnClick(R.id.adviser_test_share_bt)
     public void onViewClicked() {
-        CommonShareDialog dialog=new CommonShareDialog(AdviserTestActivity.this,1,null,null);
-        dialog.show();
+//        CommonShareDialog dialog=new CommonShareDialog(AdviserTestActivity.this,1,null,null);
+//        dialog.show();
     }
 }

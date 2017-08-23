@@ -5,7 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
@@ -60,7 +59,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
@@ -384,6 +382,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         //todo 测试用
 //        openActivity(MainPageActivity.class);
 //        finish();
+
+
     }
 
     @Override
@@ -396,7 +396,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     //游客登录成功
     @Override
-    public void invisterloginSuccess(){
+    public void invisterloginSuccess() {
         if (isVisitorLoginClick) {//是点击游客模式登录按钮进入的
             visitorLogin();
         }

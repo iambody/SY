@@ -15,10 +15,6 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-/**
- * 无法跨进程
- * Created by xiaoyu.zhang on 2015/8/13.
- */
 public class RxBus {
     private static final String TAG = RxBus.class.getSimpleName();
     private static volatile RxBus instance;
