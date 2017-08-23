@@ -224,7 +224,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         showInfoDialog();
 
-
         initIndex(code);
 
         initLocation();
