@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.ProtocolEntity;
-import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.db.DBConstant;
@@ -149,12 +148,16 @@ public class ProtocolDialog implements DBConstant {
 
     //协议加载失败，从本地加载一个
     private void getLocalTxtProtocol(Context context) {
-        OtherInfo info = daoUtils.getOtherInfo(PROTO_TITLE);
-        if (info != null) {
-            mContentTv.setText(info.getContent());
-        } else {
+//        OtherInfo info = daoUtils.getOtherInfo(PROTO_TITLE);
+//        if (info != null) {
+//            mContentTv.setText(info.getContent());
+//        } else {
+        try {
             displayLocalTxt(context, "protocol.txt");
+        } catch (Exception e) {
         }
+
+//        }
     }
 
     private void displayLocalTxt(Context context, String fileName) {
