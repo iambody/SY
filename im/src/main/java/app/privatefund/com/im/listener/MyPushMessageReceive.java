@@ -60,6 +60,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
             if (Build.VERSION.SDK_INT < 11) {
                 notification = new Notification(RongContext.getInstance().getApplicationInfo().icon,"", System.currentTimeMillis());
 //                notification.setLatestEventInfo(RongContext.getInstance(),"title","content"+pushNotificationMessage.getObjectName(),pendingIntent);
+
                 notification.flags = Notification.FLAG_AUTO_CANCEL;
                 notification.defaults  = Notification.DEFAULT_SOUND;
             } else {
