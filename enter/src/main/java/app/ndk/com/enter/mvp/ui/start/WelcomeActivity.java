@@ -25,6 +25,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.chenenyu.router.Router;
+import com.chenenyu.router.annotation.Route;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ import rx.schedulers.Schedulers;
  * Email:zhangxyfs@126.com
  *  
  */
+@Route("jumpmodule://app.ndk.com.enter.mvp.ui.start.welcomeactivity")
 public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements WelcomeContract.View {
     //glide
     private RequestManager requestManager;

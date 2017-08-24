@@ -50,7 +50,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
         }
 
             Uri uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName()).buildUpon().appendPath("conversationList").build();
-            Intent intent = Router.build(Uri.parse("jumpmodule://com.cgbsoft.privatefund/welcomeactivity")).getIntent(context);
+            Intent intent = Router.build(Uri.parse("jumpmodule://app.ndk.com.enter.mvp.ui.start.welcomeactivity")).getIntent(context);
             // Intent intent = new Intent(context, We.class);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushNotificationMessage);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
@@ -93,7 +93,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
         if (!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversation(pushNotificationMessage.getSenderId())) {
             // PageJumpMananger.jumpPageFromToMainActivity(context, pushNotificationMessage);
-            Intent notificationIntent = Router.build(Uri.parse("jumpmodule://com.cgbsoft.privatefund/welcomeactivity")).getIntent(context);
+            Intent notificationIntent = Router.build(Uri.parse("jumpmodule://app.ndk.com.enter.mvp.ui.start.welcomeactivity")).getIntent(context);
             notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
