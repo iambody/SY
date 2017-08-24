@@ -1,6 +1,7 @@
 package app.ndk.com.enter.mvp.ui.start;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -35,6 +37,7 @@ import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.utils.RongConnect;
+import io.rong.push.notification.PushNotificationMessage;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -122,6 +125,17 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
         SPreference.putString(this,"JavascriptInterfaceSP","");
+        pareIntent();
+    }
+
+    private void pareIntent() {
+        System.out.println("-------pareIntent");
+        Uri url  = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
+        System.out.println("-------url=" + url);
+        PushNotificationMessage pushNotificationMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
+        if (pushNotificationMessage != null) {
+            System.out.println("-------message=" + pushNotificationMessage.getExtra() + "------content=" +pushNotificationMessage.getPushContent() + "----object=" + pushNotificationMessage.toString());
+        }
     }
 
     @Override
