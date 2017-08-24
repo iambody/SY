@@ -149,12 +149,16 @@ public class ProtocolDialog implements DBConstant {
 
     //协议加载失败，从本地加载一个
     private void getLocalTxtProtocol(Context context) {
-        OtherInfo info = daoUtils.getOtherInfo(PROTO_TITLE);
-        if (info != null) {
-            mContentTv.setText(info.getContent());
-        } else {
+       //        OtherInfo info = daoUtils.getOtherInfo(PROTO_TITLE);
+//        if (info != null) {
+//            mContentTv.setText(info.getContent());
+//        } else {
+        try {
             displayLocalTxt(context, "protocol.txt");
+        } catch (Exception e) {
         }
+
+//        }
     }
 
     private void displayLocalTxt(Context context, String fileName) {
