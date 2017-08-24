@@ -4,6 +4,11 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
 apply plugin: 'io.fabric'
 
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 // 打包时间
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
