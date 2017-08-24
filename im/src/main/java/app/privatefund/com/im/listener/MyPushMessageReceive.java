@@ -50,7 +50,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
         }
 
             Uri uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName()).buildUpon().appendPath("conversationList").build();
-            Intent intent = Router.build(Uri.parse("jumpmodule://com.cgbsoft.privatefund/welcomeactivity")).getIntent(context);
+            Intent intent = Router.build(Uri.parse("jumpmodule://app/ndk/com/enter/mvp/ui/start/welcomeactivity")).getIntent(context);
             // Intent intent = new Intent(context, We.class);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushNotificationMessage);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
