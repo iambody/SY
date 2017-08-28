@@ -297,6 +297,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         FloatVideoService.stopService();
 
+
     }
 
     public int getsize() {
