@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -37,10 +39,12 @@ import qcloud.mall.R2;
 
 public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView,OnRefreshListener ,Toolbar.OnMenuItemClickListener{
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
     @BindView(R.id.swipeToLoadLayout)
@@ -59,10 +63,16 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     protected void init(Bundle savedInstanceState) {
         indentityCode = getIntent().getStringExtra("indentityCode");
         titleTV.setText(getResources().getString(R.string.card_collect));
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
     }
 
