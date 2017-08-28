@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +38,10 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 
 public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresenterImpl> implements SelectIndentityContract.SelectIndentityView{
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.swipe_target)
@@ -156,9 +160,15 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     @Override
     protected void init(Bundle savedInstanceState) {
         titleTV.setText(getResources().getString(R.string.indentity_select_str));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
         register = RxBus.get().register(SELECT_INDENTITY, Integer.class);
         register.subscribe(new RxSubscriber<Integer>() {

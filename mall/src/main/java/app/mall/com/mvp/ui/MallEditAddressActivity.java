@@ -75,8 +75,8 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
     Button btn_address_save;
     private MallAddressBean addressBean;
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
 
     @BindView(R2.id.normal_layout_edit)
     LinearLayout normal_layout_edit;
@@ -99,10 +99,21 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//        setSupportActionBar(toolbar);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//                if (null == addressBean) {
+//                    DataStatistApiParam.AddAddressBack();
+//                } else {
+//                    DataStatistApiParam.editAddressBack();
+//                }
+//            }
+//        });
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

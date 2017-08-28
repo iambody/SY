@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -33,12 +35,14 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	@BindView(R.id.show_image)
 	GestureImageView imageView;
 
-	@BindView(R.id.toolbar)
-	protected Toolbar toolbar;
+//	@BindView(R.id.toolbar)
+//	protected Toolbar toolbar;
 
 	@BindView(R.id.title_mid)
 	protected TextView titleMid;
 
+	@BindView(R.id.iv_back)
+	ImageView ivBack;
 	private String localUrl;
 	private MenuItem menuItem;
 
@@ -51,12 +55,18 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	protected void init(Bundle savedInstanceState) {
 		localUrl = getIntent().getStringExtra(IMAGE_SAVE_PATH_LOCAL);
 		imageView.setImageResource(R.drawable.bg_white);
-		toolbar.setTitle("");
+//		toolbar.setTitle("");
 		titleMid.setText("图片预览");
-		setSupportActionBar(toolbar);
-		toolbar.setOnMenuItemClickListener(this);
-		toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-		toolbar.setNavigationOnClickListener(v -> finish());
+//		setSupportActionBar(toolbar);
+//		toolbar.setOnMenuItemClickListener(this);
+//		toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//		toolbar.setNavigationOnClickListener(v -> finish());
+		ivBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		initImage();
 	}
 

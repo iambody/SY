@@ -32,8 +32,10 @@ import static android.R.attr.password;
  */
 @Route(RouteConfig.GOTO_CHANGE_PSD_ACTIVITY)
 public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl> implements ChangePsdContract.ChangePsdView {
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
+    @BindView(R.id.iv_back)
+    protected  ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.et_psd_old)
@@ -54,9 +56,15 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
     @Override
     protected void init(Bundle savedInstanceState) {
         titleTV.setText(getResources().getString(R.string.setting_item_change_pwd));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
         DataStatistApiParam.changePsdPage();
     }
