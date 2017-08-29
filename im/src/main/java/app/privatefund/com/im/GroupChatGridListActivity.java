@@ -41,8 +41,8 @@ import io.rong.imlib.model.Conversation;
  */
 public class GroupChatGridListActivity extends BaseActivity {
 
-    @BindView(R2.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    protected Toolbar toolbar;
 
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
@@ -75,8 +75,14 @@ public class GroupChatGridListActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         groupId = getIntent().getStringExtra(Contants.CHAT_GROUP_ID);
         titleMid.setText(getIntent().getStringExtra(Contants.CHAT_GROUP_NAME));
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         boolean isTop = SPreference.getBoolean(this, "isTop");
         if (isTop) {
             setChatTopTog.setToggleOn();

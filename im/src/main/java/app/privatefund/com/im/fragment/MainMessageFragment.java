@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -43,8 +44,8 @@ import io.rong.imlib.model.Conversation;
  */
 public class MainMessageFragment extends BaseFragment implements ViewPager.OnPageChangeListener, Toolbar.OnMenuItemClickListener {
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
 
     @BindView(R2.id.title_mid)
     TextView midTitleView;
@@ -54,6 +55,8 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
 
     @BindView((R2.id.top_divide_line))
     View divideLineView;
+    @BindView((R2.id.iv_back))
+    ImageView ivBack;
 
 //    private RCConversationListFragment conversationListFragment;
 //    private ConversationListFragment conversationListFragment;
@@ -78,11 +81,16 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
             midTitleView.setText(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? "公告" : "我的消息");
             divideLineView.setVisibility(getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false) ? View.VISIBLE : View.GONE);
             pager.setBackgroundResource(R.color.c_background);
-            ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
-            toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
-            toolbar.setOnMenuItemClickListener(this);
-            toolbar.setNavigationOnClickListener(v -> {
-                getActivity().finish();
+//            ((BaseActivity)getActivity()).setSupportActionBar(toolbar);
+//            toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+//            toolbar.setOnMenuItemClickListener(this);
+//            toolbar.setNavigationOnClickListener(v -> {
+//            });
+            ivBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
             });
             bundle.putBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, getArguments().getBoolean(MessageListActivity.IS_NOTICE_MESSAGE_LIST, false));
         } else {

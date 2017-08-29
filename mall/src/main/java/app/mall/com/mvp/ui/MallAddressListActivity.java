@@ -46,8 +46,8 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
     @BindView(R2.id.mall_new_address)
     Button mall_new_address;
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
 
     private MallListAdapter mallListAdapter;
     private ArrayList<MallAddressBean> mallAddressBeans;
@@ -60,9 +60,15 @@ public class MallAddressListActivity extends BaseActivity<MallPresenter> impleme
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

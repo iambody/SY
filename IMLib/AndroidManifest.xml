@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="io.rong.imlib">
 
     <uses-sdk
@@ -20,51 +19,50 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application>
-
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="tdrvipksrbgn5" />
+            android:value="tdrvipksrbgn5"/>
 
         <!-- 测试:tdrvipksrbgn5-->
-        <!-- 现网:8luwapkvuz04l-->
+         <!-- 现网:8luwapkvuz04l-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
             android:exported="true"
             android:process=":ipc" />
 
-        <service
-            android:name="io.rong.imlib.ReConnectService"
-            android:exported="true" />
+        <service android:name="io.rong.imlib.ReConnectService"
+            android:exported="true"/>
 
-        <receiver
-            android:name="io.rong.imlib.ConnectChangeReceiver"
-            android:exported="true" />
+        <receiver android:name="io.rong.imlib.ConnectChangeReceiver"
+            android:exported="true"/>
 
         <receiver
             android:name="io.rong.imlib.HeartbeatReceiver"
             android:process=":ipc" />
         <!-- imlib config end -->
+
+
         <!--必选： SDK 核心功能-->
         <!--第三方相关,向第三方推送服务请求 token 的服务 -->
         <service
             android:name="io.rong.push.core.PushRegistrationService"
-            android:exported="false"
-            tools:replace="android:exported"></service>
+            android:exported="false">
+        </service>
 
         <!-- 处理 push 消息相关的服务 -->
         <service
             android:name="io.rong.push.core.MessageHandleService"
-            android:exported="true"
-            tools:replace="android:exported"></service>
+            android:exported="true">
+        </service>
 
         <!-- push服务 -->
-        <servicel
+        <service
             android:name="io.rong.push.PushService"
-            android:exported="false"
-            android:process="io.rong.push"></servicel>
-        <!-- push进程，可以改名 -->
+            android:exported="true"
+            android:process="io.rong.push">  <!-- push进程，可以改名 -->
+        </service>
 
         <!-- push 相关事件接收器 -->
         <receiver

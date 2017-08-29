@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -18,9 +19,11 @@ import butterknife.BindView;
 @Route("investornmain_mallactivity")
 public class MallActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
 
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.title_mid)
     protected TextView titleMid;
 
@@ -40,8 +43,14 @@ public class MallActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         String url = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
         titleMid.setText(title);
-        toolbar.setNavigationOnClickListener(v -> finish());
-        toolbar.setOnMenuItemClickListener(this);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+//        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setOnMenuItemClickListener(this);
         url = CwebNetConfig.baseParentUrl+ "/" + url;
         mWebview.loadUrl(url);
     }

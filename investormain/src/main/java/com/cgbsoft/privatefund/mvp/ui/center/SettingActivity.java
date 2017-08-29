@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -42,8 +43,10 @@ import rx.Observable;
  */
 @Route(RouteConfig.GOTOCSETTINGACTIVITY)
 public class SettingActivity extends BaseActivity<SettingPresenterImpl> implements SettingContract.SettingView {
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.sit_gesture_switch)
@@ -88,9 +91,15 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     private void initView(Bundle savedInstanceState) {
         titleTV.setText(getResources().getString(R.string.setting_title));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
 //        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
 //            boolean gestureFlag = AppManager.getGestureFlag(baseContext);
 //            if (isChecked) {
