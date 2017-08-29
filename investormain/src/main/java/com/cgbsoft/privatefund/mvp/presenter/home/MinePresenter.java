@@ -67,9 +67,15 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
                     String hasIdCard = result.getString("hasIdCard");//用户选择的是身份证类型，1代表已经上传了身份证，0是还未传身份证
                     String title = result.getString("title");//
                     String credentialCode = result.getString("credentialCode");//
-                    String status = result.getString("statusName");
-                    String statusCode = result.getString("statusCode");
-                    getView().verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,status,statusCode);
+                    String stateName = result.getString("stateName");
+                    String stateCodeOut = result.getString("stateCode");
+                    JSONObject exist = (JSONObject) result.get("exist");
+                    String customerName = exist.getString("customerName");
+                    String credentialNumber = exist.getString("credentialNumber");
+                    String credentialTitle = exist.getString("credentialTitle");
+                    String stateCodeIn = exist.getString("stateCode");
+
+                    getView().verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,stateName,stateCodeOut,customerName,credentialNumber,credentialTitle,stateCodeIn);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().verifyIndentityError(e);

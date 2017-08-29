@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     ImageView uploadFirstCover;
     @BindView(R.id.iv_upload_card_second_cover)
     ImageView uploadSecondCover;
+    @BindView(R.id.rl_replenish_card_all)
+    RelativeLayout replenishAll;
+    @BindView(R.id.tv_replenish_name)
+    TextView replenishName;
+    @BindView(R.id.tv_replenish_identitynum)
+    TextView replenishNum;
+
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
     private String secondPhotoPath;
@@ -303,6 +311,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         indentityCode = getIntent().getStringExtra("indentityCode");
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
         depict = getIntent().getStringExtra("depict");
+        String customerName = getIntent().getStringExtra("customerName");
+        String customerNum = getIntent().getStringExtra("customerNum");
         String title = getIntent().getStringExtra("title");
         if (TextUtils.isEmpty(indentityCode)||TextUtils.isEmpty(credentialCode)) {
             this.finish();
@@ -393,6 +403,21 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
             if ("50".equals(stateCode)) {
                 tagTv.setText("已通过");
+            }
+            if ("45".equals(stateCode)) {
+                if ("100101".equals(credentialCode)) {
+                    isIdCard=true;
+                    tagTv.setText("请拍摄实体身份证");
+                    uploadSecond.setVisibility(View.VISIBLE);
+                }
+                replenishAll.setVisibility(View.VISIBLE);
+                replenishName.setText(customerName);
+                replenishNum.setText(customerNum);
+                uploadFirst.setEnabled(true);
+                uploadSecond.setEnabled(true);
+                submit.setVisibility(View.VISIBLE);
+            } else {
+                replenishAll.setVisibility(View.GONE);
             }
             String firstUrl = getIntent().getStringExtra("firstUrl");
             String secondUrl = getIntent().getStringExtra("secondUrl");

@@ -9,7 +9,62 @@
         layout="@layout/layout_title_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/rl_replenish_card_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/tv_replenish_name_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            android:text="姓&#160;&#160;&#160;&#8201;名"
+            />
+        <TextView
+            android:id="@+id/tv_replenish_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tv_replenish_name_str"
+            />
+        <TextView
+            android:id="@+id/tv_replenish_identitynum_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_replenish_name_str"
+            android:text="证件号"
+            />
+        <TextView
+            android:id="@+id/tv_replenish_identitynum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/tv_replenish_name_str"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tv_replenish_identitynum_str"
+            />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_below="@+id/tv_replenish_identitynum_str"
+            android:background="@color/transparent"
+            />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp">
