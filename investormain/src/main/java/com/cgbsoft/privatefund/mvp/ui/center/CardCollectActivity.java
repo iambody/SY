@@ -123,6 +123,8 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         intent.putExtra("secondUrl", secondUrl);
         intent.putExtra("stateCode", stateCode);
         intent.putExtra("title", cardBean.getName());
+        intent.putExtra("customerName", cardBean.getCustomerName());
+        intent.putExtra("customerNum", cardBean.getNumber());
         intent.putExtra("depict", cardBean.getComment());
         startActivity(intent);
     }

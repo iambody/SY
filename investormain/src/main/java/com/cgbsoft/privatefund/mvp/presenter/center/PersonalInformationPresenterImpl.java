@@ -68,7 +68,7 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
     }
 
     @Override
-    public void verifyIndentitySuccess(String result, String hasIdCard,String title,String credentialCode,String status,String statusCode) {
+    public void verifyIndentitySuccess(String result, String hasIdCard,String title,String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus) {
         personalInformationView.hideLoadDialog();
         if (TextUtils.isEmpty(result)) {//无身份
             personalInformationView.verifyIndentitySuccess(false,false,null,null,null,status,statusCode);

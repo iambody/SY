@@ -28,6 +28,15 @@ public class CardListEntity extends BaseResult<CardListEntity.Result>{
         private String number;
         private String code;
         private String comment;
+        private String customerName;
+
+        public String getCustomerName() {
+            return customerName;
+        }
+
+        public void setCustomerName(String customerName) {
+            this.customerName = customerName;
+        }
 
         public List<ImageBean> getImageUrl() {
             return imageUrl;

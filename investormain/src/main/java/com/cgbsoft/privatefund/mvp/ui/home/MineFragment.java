@@ -207,6 +207,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String status;
     private String statusCode;
     private boolean isClickBack;
+    private boolean isPieChartClick;
+    private String customerName;
+    private String credentialNumber;
+    private String credentialTitle;
+    private String existStatus;
 
 //    private Handler handler = new Handler() {
 //        @Override
@@ -263,13 +268,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode) {
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus) {
         this.identity=identity;
         this.hasIdCard=hasIdCard;
         this.title=title;
         this.credentialCode=credentialCode;
         this.status=status;
         this.statusCode=statusCode;
+        this.customerName=customerName;
+        this.credentialNumber=credentialNumber;
+        this.credentialTitle=credentialTitle;
+        this.existStatus=existStatus;
         if (TextUtils.isEmpty(statusCode)) {
             noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
         }else if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
@@ -281,21 +290,25 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
         if (isClickBack) {
             isClickBack=false;
-            if (!TextUtils.isEmpty(identity)) {
-                if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
-                    Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",identity);
-                    intent.putExtra("title", title);
-                    startActivity(intent);
-                } else {//去证件列表
-                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                    intent.putExtra("indentityCode",identity);
+            if ("45".equals(existStatus)) {
+                replenishCards();
+            } else {
+                if (!TextUtils.isEmpty(identity)) {
+                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+                        intent.putExtra("credentialCode",credentialCode);
+                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("title", title);
+                        startActivity(intent);
+                    } else {//去证件列表
+                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                        intent.putExtra("indentityCode",identity);
+                        startActivity(intent);
+                    }
+                } else {//无身份
+                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
                     startActivity(intent);
                 }
-            } else {//无身份
-                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                startActivity(intent);
             }
         }
     }
@@ -334,7 +347,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                AppInfStore.saveShowAssetStatus(getActivity(), true);
                 switch (valuse) {
                     case GestureManager.ASSERT_GROUP:
-                        toAssertMatchActivit();
+//                        toAssertMatchActivit();
+                        if (null == status) {
+                            isClickBack=true;
+                            getPresenter().verifyIndentity();
+                        } else {
+                            isClickBack=false;
+                            //90：存量已有证件号已上传证件照待审核
+                            if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
+                                replenishCards();
+                            } else {
+                                toAssertMatchActivit();
+                            }
+                        }
                         break;
                     case GestureManager.INVISTE_CARLENDAR:
                         toInvestorCarlendarActivity();
@@ -642,13 +667,51 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
-    @OnClick(R.id.mine_bank_asset_match_ll)
-    void gotoAssetMatchActivity() {
+//    @OnClick(R.id.mine_bank_asset_match_ll)
+//    void gotoAssetMatchActivity() {
+//        if (showAssert) {
+//            toAssertMatchActivit();
+//        } else {
+//            GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+//        }
+//    }
+
+    /**
+     *点击资产饼状图
+     */
+    @OnClick({R.id.account_bank_had_bug_ll,R.id.mine_bank_asset_match_ll})
+    void clickAssetPieChart() {
+        isPieChartClick=true;
         if (showAssert) {
-            toAssertMatchActivit();
+            if (null == status) {
+                isClickBack=true;
+                getPresenter().verifyIndentity();
+            } else {
+                isClickBack=false;
+                //90：存量已有证件号已上传证件照待审核
+                if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
+                    replenishCards();
+                } else {
+                    toAssertMatchActivit();
+                }
+            }
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
         }
+    }
+
+    /**
+     * 跳转到补充证件页面
+     */
+    private void replenishCards() {
+        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+        intent.putExtra("credentialCode",credentialCode);
+        intent.putExtra("indentityCode",identity);
+        intent.putExtra("title", credentialTitle);
+        intent.putExtra("stateCode", existStatus);
+        intent.putExtra("customerName", customerName);
+        intent.putExtra("customerNum", credentialNumber);
+        startActivity(intent);
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
