@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/chongzhi_down_lay_bt1"
         android:layout_width="0dip"
-        android:layout_height="@dimen/ui_50_dip"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/shape_corner_txt"
         android:clickable="true"
@@ -36,7 +36,7 @@
     <LinearLayout
         android:id="@+id/chongzhi_down_lay_bt2"
         android:layout_width="0dip"
-        android:layout_height="@dimen/ui_50_dip"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/shape_corner_txt"
         android:clickable="true"
@@ -60,7 +60,7 @@
     <LinearLayout
         android:id="@+id/chongzhi_down_lay_bt3"
         android:layout_width="0dip"
-        android:layout_height="@dimen/ui_50_dip"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/shape_corner_txt"
         android:clickable="true"

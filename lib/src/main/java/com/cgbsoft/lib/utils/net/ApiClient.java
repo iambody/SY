@@ -1601,6 +1601,8 @@ public class ApiClient {
 
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+        LogUtils.Log("aaa","---"+body.toString());
+        LogUtils.Log("aaa","==="+jsonObject.toString());
         return body;
     }
 

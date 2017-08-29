@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,9 +54,11 @@ import butterknife.OnClick;
 @Route("investornmain_feedbackctivity")
 public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implements FeedbackListener, FeedBackUserContract.View {
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
 
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.title_mid)
     protected TextView titleMid;
 
@@ -86,9 +90,15 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void init(Bundle savedInstanceState) {
         titleMid.setText("意见反馈");
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         imagePaths.add("+");
         feedbackAdapter = new FeedbackAdapter(this,imagePaths);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), 4);

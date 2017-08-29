@@ -30,11 +30,11 @@ import butterknife.OnClick;
 @Route("investornmain_riskresultactivity")
 public class RiskResultActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     @BindView(R.id.title_mid)
     TextView titleMid;
+
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
 
     @BindView(R.id.risk_result_restart)
     TextView restart;
@@ -61,9 +61,16 @@ public class RiskResultActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setVisibility(View.VISIBLE);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         titleMid.setText(R.string.risk_evaluating_title);
         initView();
     }

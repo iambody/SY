@@ -26,9 +26,9 @@ import butterknife.BindView;
  */
 @Route(RouteConfig.GOTO_SELECT_PRODUCT)
 public class SelectProductActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
-
-    @BindView(R2.id.toolbar)
-    protected Toolbar toolbar;
+//
+//    @BindView(R2.id.toolbar)
+//    protected Toolbar toolbar;
 
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
@@ -55,17 +55,23 @@ public class SelectProductActivity extends BaseActivity implements Toolbar.OnMen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        toolbar.setTitle("");
+//        toolbar.setTitle("");
         titleMid.setText("选择要分享的产品");
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+//        setSupportActionBar(toolbar);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
         contain = (FrameLayout) findViewById(R.id.contain);
          productproductragment = new ProductFragment();
         Bundle bundle = new Bundle();

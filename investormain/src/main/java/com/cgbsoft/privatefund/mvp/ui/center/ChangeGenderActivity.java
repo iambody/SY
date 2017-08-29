@@ -24,10 +24,12 @@ import butterknife.OnClick;
  */
 @Route(RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY)
 public class ChangeGenderActivity extends BaseActivity{
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.iv_male_flag)
     ImageView maleFlag;
     @BindView(R.id.iv_female_flag)
@@ -65,9 +67,15 @@ public class ChangeGenderActivity extends BaseActivity{
     private void initView(Bundle savedInstanceState) {
         userInfo = AppManager.getUserInfo(baseContext);
         titleTV.setText(getResources().getString(R.string.personal_information_title_changegender));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         if (null != userInfo) {
             String gender = userInfo.getSex();
             if (!TextUtils.isEmpty(gender)) {
