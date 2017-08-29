@@ -289,7 +289,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 各种需要初始化判断是否显示dialog的 eg:风险测评
      */
     private void initDialog() {
-
     }
 
     private void loginLive() {
