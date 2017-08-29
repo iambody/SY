@@ -86,8 +86,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         .PersonalInformationView {
     private static final int REQUEST_CODE_TO_CHANGE_ANME = 1002;
     private static final int REQUEST_CODE_TO_CHANGE_GENDER = 1003;
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.civ_personal_information_icon)
@@ -345,9 +347,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         titleTV.setText(getResources().getString(R.string.personal_information_title));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         userInfo = AppManager.getUserInfo(baseContext);
         if (null != userInfo) {
             String bandingAdviserId = userInfo.getToC().getBandingAdviserId();

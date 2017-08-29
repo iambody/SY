@@ -58,11 +58,14 @@ import butterknife.OnClick;
 @Route("investornmain_proveassetctivity")
 public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implements AssetProveContract.View {
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
 
     @BindView(R.id.title_mid)
     protected TextView titleMid;
+
+    @BindView(R.id.iv_back)
+    protected ImageView ivBack;
 
     @BindView(R.id.fix_grid_layout)
     protected FixGridLayout frameLayout;
@@ -105,8 +108,14 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     protected void init(Bundle savedInstanceState) {
         width = ViewUtils.getDisplayWidth(this);
 
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
+      ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         titleMid.setText("资产证明");
 
         ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {

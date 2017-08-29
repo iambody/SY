@@ -39,10 +39,12 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView,OnRefreshListener {
 
     private LoadingDialog mLoadingDialog;
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
     @BindView(R.id.swipeToLoadLayout)
@@ -98,9 +100,15 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     protected void init(Bundle savedInstanceState) {
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, "", false, false);
         titleTV.setText(getResources().getString(R.string.card_collect_add));
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
         register = RxBus.get().register(SELECT_INDENTITY_ADD, Integer.class);
         register.subscribe(new RxSubscriber<Integer>() {

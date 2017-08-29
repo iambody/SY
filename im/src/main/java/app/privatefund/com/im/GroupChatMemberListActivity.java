@@ -46,8 +46,8 @@ public class GroupChatMemberListActivity extends BaseActivity {
     // 加载成功的状态
     protected static final int STATE_SUCCESS = 5;
 
-    @BindView(R2.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    protected Toolbar toolbar;
 
     @BindView(R2.id.title_mid)
     protected TextView titleMid;
@@ -77,9 +77,15 @@ public class GroupChatMemberListActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         groupMemberListAdapter = new GroupChatMemberListAdapter(this, new ArrayList());
         listView.setAdapter(groupMemberListAdapter);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
         titleMid.setText("成员列表");
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         questGroupMemberList();
     }
 

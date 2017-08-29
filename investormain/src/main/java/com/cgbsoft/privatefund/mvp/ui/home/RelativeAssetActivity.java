@@ -61,9 +61,11 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     private LoadingDialog loading;
     private boolean IsShowing;
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
 
+    @BindView(R.id.iv_back)
+    protected  ImageView ivBack;
     @BindView(R.id.title_mid)
     protected TextView titleMid;
 
@@ -104,8 +106,14 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> finish());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         titleMid.setText("关联我的资产");
         ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {

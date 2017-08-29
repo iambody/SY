@@ -1,6 +1,7 @@
 package app.ndk.com.enter.mvp.ui.start;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -29,6 +32,7 @@ import com.chenenyu.router.annotation.Route;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -36,6 +40,7 @@ import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.utils.RongConnect;
+import io.rong.push.notification.PushNotificationMessage;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -45,7 +50,7 @@ import rx.schedulers.Schedulers;
  * Email:zhangxyfs@126.com
  *  
  */
-@Route("jumpmodule://app.ndk.com.enter.mvp.ui.start.welcomeactivity")
+@Route(RouteConfig.GOTO_WELCOME_ACTIVITY)
 public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements WelcomeContract.View {
     //glide
     private RequestManager requestManager;
@@ -124,6 +129,17 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
         SPreference.putString(this,"JavascriptInterfaceSP","");
+        pareIntent();
+    }
+
+    private void pareIntent() {
+        System.out.println("-------pareIntent");
+        Uri url  = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
+        System.out.println("-------url=" + url);
+        PushNotificationMessage pushNotificationMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
+        if (pushNotificationMessage != null) {
+            System.out.println("-------message=" + pushNotificationMessage.getExtra() + "------content=" +pushNotificationMessage.getPushContent() + "----object=" + pushNotificationMessage.toString());
+        }
     }
 
     @Override
@@ -257,6 +273,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
         if (isLoad) {
+            if (isNoticePush()) {
+                return;
+            }
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
             WelcomeActivity.this.finish();
             return;
@@ -281,6 +300,18 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         finish();
     }
 
+    private boolean isNoticePush() {
+        PushNotificationMessage pushMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
+        Uri uri = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
+        if (pushMessage != null && uri != null) {
+            HashMap<String,Object> hashMap = new HashMap<String, Object>();
+            hashMap.put(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushMessage);
+            hashMap.put(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
+            NavigationUtils.startActivityByRouter(WelcomeActivity.this, RouteConfig.GOTOCMAINHONE, hashMap);
+            return true;
+        }
+        return false;
+    }
 
     class WelcomeRunnable implements Runnable {
         private int which;

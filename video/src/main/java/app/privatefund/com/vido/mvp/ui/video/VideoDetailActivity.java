@@ -289,13 +289,12 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         connectionChangeReceiver = new ConnectionChangeReceiver();
         this.registerReceiver(connectionChangeReceiver, filter);
-
         SpringEffect.doEffectSticky(iv_avd_like, 1.2f, () -> getPresenter().toVideoLike());
 //        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
-
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
         FloatVideoService.stopService();
+
 
     }
 
@@ -590,8 +589,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getNetVideoInfoErr(String str) {
-        PromptManager.ShowCustomToast(baseContext, "获取信息失败请重新尝试");
-        baseContext.finish();
+
+        if ((null != videoInfoModel) && (VideoStatus.FINISH == videoInfoModel.status)) {
+
+        } else {
+            PromptManager.ShowCustomToast(baseContext, "获取信息失败请重新尝试");
+            baseContext.finish();
+        }
     }
 
     @Override
@@ -1043,7 +1047,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             videplay_produxt_view.setVisibility(View.VISIBLE);
             VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
             BStrUtils.SetTxt(viewVideoplayProductName, productBean.productName);
-            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", "2".equals(productBean.productType)?productBean.netUnit:productBean.incomeMin));
+            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", "2".equals(productBean.productType) ? productBean.netUnit : productBean.incomeMin));
             BStrUtils.SetTxt(viewVideoplayProductDay, String.format("剩余时间：%s", VideoUtils.getDeadLine(productBean.raiseEndTime)));
             BStrUtils.SetTxt(viewVideoplayProductAllday, String.format("产品期限：%s", productBean.term));
             BStrUtils.SetTxt(viewVideoplayProductEdu, String.format("剩余额度：%s", productBean.remainingAmountStr));
@@ -1106,14 +1110,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         getPresenter().getMoreCommont(videoAllInf.videoId, commentAdapter.getData().get(commentAdapter.getData().size() - 1).commentId);
     }
-
-    //发表评论
-//    @OnClick(R2.id.video_videplay_edit_comment_lay)
-//    public void onViewClickedz() {
-//
-//
-//
-//    }
 
 
     @OnClick(R2.id.video_videplay_edit_comment_lay)

@@ -154,9 +154,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
     @Override
     public void getVideoDataSucc(String data) {
-        if (View.GONE == swipeToLoadLayout.getVisibility()) {
-            swipeToLoadLayout.setVisibility(View.VISIBLE);
-        }
+        swipeToLoadLayout.setVisibility(View.VISIBLE);
         fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
 
 

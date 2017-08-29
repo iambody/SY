@@ -3,6 +3,8 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -24,8 +26,10 @@ import butterknife.BindView;
 @Route(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY)
 public class RiskEvaluationActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    protected Toolbar toolbar;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
 
     @BindView(R.id.title_mid)
     protected TextView titleMid;
@@ -49,22 +53,39 @@ public class RiskEvaluationActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> {
-            new DefaultDialog(RiskEvaluationActivity.this, "当前问卷填写内容将不会保存，确定要返回吗?", "取消", "确定") {
-                @Override
-                public void left() {
-                    this.dismiss();
-                }
-
-                @Override
-                public void right() {
-                    this.dismiss();
-                    RiskEvaluationActivity.this.finish();
-                }
-            }.show();
-        });
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(v -> {
+//            new DefaultDialog(RiskEvaluationActivity.this, "当前问卷填写内容将不会保存，确定要返回吗?", "取消", "确定") {
+//                @Override
+//                public void left() {
+//                    this.dismiss();
+//                }
+//
+//                @Override
+//                public void right() {
+//                    this.dismiss();
+//                    RiskEvaluationActivity.this.finish();
+//                }
+//            }.show();
+//        });
         titleMid.setText(getString(R.string.risk_title));
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DefaultDialog(RiskEvaluationActivity.this, "当前问卷填写内容将不会保存，确定要返回吗?", "取消", "确定") {
+                    @Override
+                    public void left() {
+                        this.dismiss();
+                    }
+
+                    @Override
+                    public void right() {
+                        this.dismiss();
+                        RiskEvaluationActivity.this.finish();
+                    }
+                }.show();
+            }
+        });
 //        mWebview.setClick(new CWebClient.WebviewOnClick() {
 //            @Override
 //            public void onClick(String result) {

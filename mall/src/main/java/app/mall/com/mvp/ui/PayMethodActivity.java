@@ -68,8 +68,8 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
     @BindView(R2.id.title_mid)
     TextView titleMid;
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R2.id.toolbar)
+//    Toolbar toolbar;
 
     @Override
     protected int layoutID() {
@@ -88,10 +88,16 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//        setSupportActionBar(toolbar);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -50,7 +50,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
 
 import java.util.List;
@@ -180,11 +180,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
-        homeBannerAdapter = new BannerAdapter();
+        homeBannerAdapter = new BannerAdapter(mainHomeBannerview);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
         mainHomeBannerview.setHintPadding(0, 0, 0, 50);
         mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
+//        mainHomeBannerview.set
         initshowlay();
         timeCountDown();
         //缓存
@@ -808,15 +809,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         LogUtils.Log("sssaa", "首页不可见");
     }
 
-    public class BannerAdapter extends StaticPagerAdapter {
+    public class BannerAdapter extends LoopPagerAdapter {
         List<HomeEntity.Banner> banners;
 
-        public BannerAdapter() {
+        public BannerAdapter(RollPagerView rollPagerView) {
+            super(rollPagerView);
         }
 
-        public BannerAdapter(List<HomeEntity.Banner> banners) {
-            this.banners = banners;
-        }
+//        public BannerAdapter(List<HomeEntity.Banner> banners) {
+//            this.banners = banners;
+//        }
 
         public void frash(List<HomeEntity.Banner> datas) {
             this.banners = datas;
@@ -843,8 +845,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return view;
         }
 
+//        @Override
+//        public int getCount() {
+//            return null == banners ? 0 : banners.size();
+//        }
+
         @Override
-        public int getCount() {
+        protected int getRealCount() {
             return null == banners ? 0 : banners.size();
         }
 
