@@ -39,6 +39,9 @@ public class RouteConfig {
     // 选择产品
     public static final String GOTO_SELECT_PRODUCT = "product_select_product_activity";
 
+    // 跳转到欢迎页面
+    public static final String GOTO_WELCOME_ACTIVITY = "jumpmodule://welcomeactivity";
+
     // 右边带分享页面
     public static final String GOTO_RIGHT_SHARE_ACTIVITY = "investornmain_right_share_activity";
 

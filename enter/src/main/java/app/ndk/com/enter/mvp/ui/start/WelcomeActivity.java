@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -27,9 +28,11 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.chenenyu.router.Router;
+import com.chenenyu.router.annotation.Route;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -47,6 +50,7 @@ import rx.schedulers.Schedulers;
  * Email:zhangxyfs@126.com
  *  
  */
+@Route(RouteConfig.GOTO_WELCOME_ACTIVITY)
 public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements WelcomeContract.View {
     //glide
     private RequestManager requestManager;
@@ -269,6 +273,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
         if (isLoad) {
+            if (isNoticePush()) {
+                return;
+            }
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
             WelcomeActivity.this.finish();
             return;
@@ -293,6 +300,18 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         finish();
     }
 
+    private boolean isNoticePush() {
+        PushNotificationMessage pushMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
+        Uri uri = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
+        if (pushMessage != null && uri != null) {
+            HashMap<String,Object> hashMap = new HashMap<String, Object>();
+            hashMap.put(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushMessage);
+            hashMap.put(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
+            NavigationUtils.startActivityByRouter(WelcomeActivity.this, RouteConfig.GOTOCMAINHONE, hashMap);
+            return true;
+        }
+        return false;
+    }
 
     class WelcomeRunnable implements Runnable {
         private int which;
