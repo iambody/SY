@@ -96,13 +96,14 @@ android {
     }
     productFlavors{
         huawei{}
-       /*qihu360{}
+        qihu360{}
         tengxun{}
         xiaomi{}
         baidu{}
         yingyonghui{}
         wandoujia{}
-        mumayi{}*/
+        mumayi{}
+        guanwang{}
 
     }
     productFlavors.all {

@@ -22,6 +22,8 @@ public class ProductContract {
     public final static int LOAD_FILTER = 1;
     //回调得到产品列表的标识
     public final static int LOAD_PRODUCT_LISTDATA = 2;
+    //网络错误
+    public final static int NET_ERROR = 3;
 
     public interface Presenter extends BasePresenter {
         /**

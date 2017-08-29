@@ -139,12 +139,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     ImageView guide;
     @BindView(R.id.iv_guide_mine)
     ImageView guideMine;
-    private int[] guideIds=new int[]{R.drawable.guide_one,R.drawable.guide_two,R.drawable.guide_three,R.drawable.guide_four,R.drawable.guide_five};
-    private int guideindex=0;
+    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
+    private int guideindex = 0;
+
     @OnClick(R.id.iv_guide)
-    public void guideClick(){
+    public void guideClick() {
         guideindex++;
-        guideindex=guideindex%guideIds.length;
+        guideindex = guideindex % guideIds.length;
         if (guideindex == 4) {
             guide.setVisibility(View.GONE);
             AppInfStore.saveGuideTag(MainPageActivity.this);
@@ -152,11 +153,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
     }
+
     @OnClick(R.id.iv_guide_mine)
-    public void guideMine(){
+    public void guideMine() {
         guideMine.setVisibility(View.GONE);
         AppInfStore.saveGuideTagOfMine(MainPageActivity.this);
     }
+
     /**
      * 定位管理器
      */
@@ -397,6 +400,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 1://左2
                 switchID = R.id.nav_left_second;
                 currentPostion = 1;
+//                RxBus.get().post(RxConstant.REFRESH_PRODUCT, true);
                 break;
             case 3://左3
                 switchID = R.id.nav_right_first;

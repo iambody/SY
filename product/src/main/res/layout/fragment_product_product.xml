@@ -139,6 +139,28 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_empty_saixuan"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/load_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/color_595959"
+            android:gravity="center_horizontal"
+            android:textSize="15sp"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/reload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="点击重新加载"
+            android:textSize="@dimen/dimens_sp_15"
+            android:gravity="center_horizontal"
+            android:textColor="@color/app_golden"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
     <include

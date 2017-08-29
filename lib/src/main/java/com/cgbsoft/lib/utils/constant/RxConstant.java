@@ -115,4 +115,6 @@ public interface RxConstant {
     String SCHOOL_VIDEO_PAUSE = "SCHOOL_VIDEO_PAUSE";
 
     String SWIPT_CODE_RESULT = "SWIPT_CODE_RESULT";
+
+    String REFRESH_PRODUCT = "REFRESH_PRODUCT";
 }
