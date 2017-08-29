@@ -4,7 +4,7 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/bg_white_with_layer"
     android:orientation="vertical">
 
     <com.androidkun.xtablayout.XTabLayout
@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:xTabTextSize="16sp"
-        app:xTabMode="fixed"
         app:xTabIndicatorColor="@color/app_golden"
         app:xTabIndicatorHeight="4dp"
         app:xTabIndicatorWidth="25dp"
         app:xTabSelectedTextColor="@color/app_golden_click"
         app:xTabSelectedTextSize="16sp"
         app:xTabTextColor="#ff000000"/>
+
+    <!--app:xTabMode="fixed"-->
 
     <ImageView style="@style/normal_diveline"
         android:layout_width="match_parent"

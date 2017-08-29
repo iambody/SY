@@ -47,8 +47,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="60dp">
 
             <EditText
@@ -80,14 +80,13 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-
-        <View style="@style/normal_line" />
+        <ImageView style="@style/enter_ed_line1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="@dimen/ui_10_dip">
 
             <EditText
@@ -119,16 +118,16 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
-        <View style="@style/normal_line" />
 
+        <ImageView style="@style/enter_ed_line1" />
 
         <Button
             android:id="@+id/btn_as_ok"
             style="@style/normal_alphbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:text="确认" />

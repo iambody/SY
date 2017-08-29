@@ -122,4 +122,7 @@ public interface AppinfConstant {
 
     //学院数据正常
     String VIDEOSCHOOLNORMAL="videoschoolNORMAL";
+
+    // 资讯数据
+    String DISCOVERLISTFIRSTDATA = "discoverlistfirstdata";
 }

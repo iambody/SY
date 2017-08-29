@@ -327,11 +327,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onMainHomeAdviserPhoneClicked() {
 
         //判断是否有拨打电话权限
-       if(needPermissions(Constant.PERMISSION_CALL_PHONE)){
-           PromptManager.ShowCustomToast(baseActivity,"请到设置允许拨打电话权限");
+        if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+            PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
 
-           return;
-       }
+            return;
+        }
 
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
@@ -622,8 +622,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getUseriInfsucc(int type) {
         switch (type) {
             case 1:
-                initshowlay();
-                hindCard();
+
+                initDataInf();
+//                initshowlay();
+//                hindCard();
 //         timeCountDown();
                 break;
         }
@@ -644,7 +646,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 6), 0, DimensionPixelUtil.dip2px(baseActivity, 6), 0);
             view.setLayoutParams(params);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Imageload.display(baseActivity, data.get(i).imageUrl, imageView);
             view.setOnClickListener(new HorizontalItemClickListener(data.get(i), i));
             mainHomeHorizontalscrollviewLay.addView(view);
@@ -826,12 +828,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             HomeEntity.Banner banner = banners.get(position);
             View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_home_banner, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.item_homeimagecycleview_iv);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Imageload.display(baseActivity, banner.imageUrl, imageView);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title );;//RightShareWebViewActivity
+                    NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title);
+                    ;//RightShareWebViewActivity
 //                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
 
                     DataStatistApiParam.HomeBannerClick(banner.title);

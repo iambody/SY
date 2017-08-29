@@ -95,10 +95,10 @@ public class ChangeLoginPsdActivity extends BaseActivity<ChangePsdPresenterImpl>
             showToast("二次新密码不一致,请确认新密码");
             return;
         }
-        if (oldPsdStr.length() > 16 || oldPsdStr.length() < 6) {
-            MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
-            return;
-        }
+//        if (oldPsdStr.length() > 16 || oldPsdStr.length() < 6) {
+//            MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
+//            return;
+//        }
         if (newConfirm.length() > 16 || newConfirm.length() < 6) {
             MToast.makeText(getApplicationContext(), getString(R.string.pwd_noright_str), Toast.LENGTH_SHORT);
             return;

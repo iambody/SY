@@ -27,6 +27,7 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
+import com.cgbsoft.lib.share.utils.WxAuthorManger;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -43,7 +44,6 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
-import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
@@ -57,10 +57,8 @@ import app.ndk.com.enter.R;
 import app.ndk.com.enter.R2;
 import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
-import app.privatefund.com.share.utils.WxAuthorManger;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
@@ -94,8 +92,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @BindView(R2.id.enter_login_wx_bt_lay)
     RelativeLayout enterLoginWxBtLay;
-    //    @BindView(R2.id.enter_login_wxlogin_lay)
-//    RelativeLayout enterLoginWxloginLay;
+
     @BindView(R2.id.btn_stroll)
     TextView btnStroll;
     //内容登录动作的布局
@@ -153,7 +150,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void before() {
         super.before();
 //        setIsNeedGoneNavigationBar(true);//不显示导航条
-
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -178,13 +174,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
-//        if (AppManager.isVisitor(baseContext) || null == userInfo || BStrUtils.isEmpty(loginName)) {
-//            et_al_username.setText("");
-//        } else if (userInfo != null && !AppManager.isVisitor(baseContext)) {
-//            et_al_username.setText(userInfo.userName);
-//        } else if (loginName != null && !AppManager.isVisitor(baseContext)) {
-//            et_al_username.setText(loginName);
-//        }
         getPresenter().getNavigation();
         if (!TextUtils.isEmpty(et_al_username.getText().toString())) {
             iv_al_del_un.setVisibility(View.VISIBLE);
@@ -196,8 +185,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         } else {
             initoutSideComeIn();
         }
-//        et_al_username.setTextColor(getResources().getColor(R.color.hintcolor));
-//        et_al_username.setHintTextColor(getResources().getColor(R.color.hintcolor));
         et_al_username.addTextChangedListener(new LoginTextWatcher(USERNAME_KEY));
         et_al_password.addTextChangedListener(new LoginTextWatcher(PASSWORD_KEY));
 
@@ -206,9 +193,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mCustomDialog = new CustomDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
-/*产品经理需求 不要首次进来就弹出框*/
+       /*产品经理需求 不要首次进来就弹出框*/
 //        if (!SPreference.isVisableProtocol(getApplicationContext()))
-            new ProtocolDialog(this, 0, null);
+//            new ProtocolDialog(this, 0, null);
         //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
@@ -230,7 +217,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             }
         });
     }
-
 
     private Observable<Integer> killSelfRxObservable;
 
@@ -256,15 +242,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private void initinSideComeIn() {
         loginWeixinsText.setText(getResources().getString(R.string.al_wx_login_strs));
         loginCancle.setVisibility(View.VISIBLE);
-//        btn_al_login.setBackground(getResources().getDrawable(R.drawable.select_btn_normal));
-//        btn_al_login.setBackground(getResources().getDrawable(R.drawable.shape_btn_normal_down));
-//
-//        btn_al_login.setTextColor(getResources().getColor(R.color.white));
-//        //开始展示
-//        enterLoginWxloginLay.setVisibility(View.GONE);
-//        enterLoginWxBtLay.setVisibility(View.VISIBLE);
-//        isShowWxBt = true;
-//        getPresenter().setAnimation(enterLoginWxBtLay);
     }
 
     private void initLocation() {
@@ -272,13 +249,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-
-
             }
 
             @Override
             public void getLocationerror() {
-
             }
         });
     }
@@ -299,7 +273,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.iv_al_back)
     void backClick() {//返回到选择身份页面
-//        openActivity(ChoiceIdentityActivity.class);
         finish();
     }
 
@@ -323,7 +296,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.btn_al_login)
     void loginClick() {//登录
-
         if (!isFixAdjustEd()) return;
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
         String password = et_al_password.getText().toString().trim();
@@ -364,15 +336,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
-        AppInfStore.saveDialogTag(LoginActivity.this,false);
-//        weixin_text = (TextView) findViewById(R.id.login_weixin_text);
-//        if (null != mLoadingDialog && mLoadingDialog.isShowing()) mLoadingDialog.dismiss();
+        AppInfStore.saveDialogTag(LoginActivity.this, false);
     }
 
     @OnClick(R2.id.tv_al_register)
     void registerClick() {//注册
-//        toDataStatistics(1002, 10007, "注册用户");
-//        toDataStatistics(1002, 10017, "选择注册");
         DataStatistApiParam.onStatisToCRegistClick();
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra(IDS_KEY, identity);
@@ -382,8 +350,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.tv_al_forget)
     void forgetClick() {//忘记密码
-//        toDataStatistics(1002, 10006, "忘记密码");
-//        toDataStatistics(1002, 10018, "选择登录");
         DataStatistApiParam.onStatisToForgetPwdClick();
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         intent.putExtra(IDS_KEY, identity);
@@ -393,24 +359,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @OnClick(R2.id.login_weixins_text)
     void weixinxins() {
         if (!NetUtils.isNetworkAvailable(baseContext)) return;
-
-//        enterLoginWxloginLay.setVisibility(View.GONE);
-//        enterLoginWxBtLay.setVisibility(View.VISIBLE);
         isShowWxBt = true;
         enterLoginWxBtLay.setVisibility(View.VISIBLE);
-//        getPresenter().setAnimation(loginWeixinsText);
     }
-
-//    //点击微信上边布局 显示微信登录的按钮页面
-//    @OnClick(R2.id.enter_login_wxlogin_lay)
-//    public void onViewClickedlayout() {
-////        if (!NetUtils.isNetworkAvailable(baseContext)) return;
-////
-////        enterLoginWxloginLay.setVisibility(View.GONE);
-////        enterLoginWxBtLay.setVisibility(View.VISIBLE);
-////        isShowWxBt = true;
-////        getPresenter().setAnimation(enterLoginWxBtLay);
-//    }
 
     @Override
     public void loginSuccess() {
@@ -431,6 +382,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         //todo 测试用
 //        openActivity(MainPageActivity.class);
 //        finish();
+
+
     }
 
     @Override
@@ -480,34 +433,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             mLoadingDialog.setResult(false, getString(R.string.la_no_install_wx_str), 1000);
             return;
         }
-        WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, new WxAuthorManger.AuthorUtilsResultListenr() {
-            @Override
-            public void getAuthorResult(int type, Platform platform) {
-                mLoadingDialog.dismiss();
-                switch (type) {
-                    case WxAuthorManger.WxAuthorOk:
-                        String unionid = platform.getDb().get("unionid");
-                        String userIcon = platform.getDb().getUserIcon();
-                        String userGender = platform.getDb().getUserGender();
-                        String userName = platform.getDb().getUserName();
-                        String openid = platform.getDb().getUserId();
-                        String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
+        WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, (type, platform) -> {
+            mLoadingDialog.dismiss();
+            switch (type) {
+                case WxAuthorManger.WxAuthorOk:
+                    String unionid = platform.getDb().get("unionid");
+                    String userIcon = platform.getDb().getUserIcon();
+                    String userGender = platform.getDb().getUserGender();
+                    String userName = platform.getDb().getUserName();
+                    String openid = platform.getDb().getUserId();
+                    String SexStr = BStrUtils.isEmpty(userGender) ? "2" : userGender.equals("m") ? "0" : "1";
 
-                        if (!mCustomBuilder.isSetPositiveListener()) {
-                            mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
-                                getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon, openid, publicKey);
-                                dialog.dismiss();
-                            });
-                        }
-                        getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
-                        break;
-                    case WxAuthorManger.WxAuthorCANCLE:
-                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-                        break;
-                    case WxAuthorManger.WxAuthorERROR:
-                        mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
-                        break;
-                }
+                    if (!mCustomBuilder.isSetPositiveListener()) {
+                        mCustomBuilder.setPositiveButton(getString(R.string.enter_str), (dialog, which) -> {
+                            getPresenter().toDialogWxLogin(mLoadingDialog, unionid, SexStr, userName, userIcon, openid, publicKey);
+                            dialog.dismiss();
+                        });
+                    }
+                    getPresenter().toWxLogin(mLoadingDialog, mCustomBuilder, unionid, SexStr, userName, userIcon, openid, publicKey);
+                    break;
+                case WxAuthorManger.WxAuthorCANCLE:
+                    mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                    break;
+                case WxAuthorManger.WxAuthorERROR:
+                    mLoadingDialog.setResult(false, getString(R.string.author_error_str), 1000);
+                    break;
             }
         });
         wxAuthorManger.startAuth();
@@ -531,7 +481,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         LoginActivity.this.finish();
     }
 
-
     private class LoginTextWatcher implements TextWatcher {
         private int which;
 
@@ -551,7 +500,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             btn_al_login.setTextColor(getResources().getColor(isFixAdjust() ? R.color.white : R.color.black));
 
             switch (which) {
-
                 case USERNAME_KEY:
                     isUsernameInput = isTextHasLength;
                     iv_al_del_un.setVisibility(isTextHasLength ? View.VISIBLE : View.GONE);
@@ -571,15 +519,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressed() {
+        System.out.println("-------onBackPressed-----fromValidatePassword=" + fromValidatePassword);
         if (fromValidatePassword) {
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
             return;
         }
-
-//        openActivity(ChoiceIdentityActivity.class);
         if (isShowWxBt) {
             isShowWxBt = false;
-//            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return;
         }
@@ -588,14 +535,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isShowWxBt) {
             isShowWxBt = false;
-//            enterLoginWxloginLay.setVisibility(View.VISIBLE);
             enterLoginWxBtLay.setVisibility(View.GONE);
             return true;
         }
 
-        if (event.getAction() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+        System.out.println("-------onKeyDown-----fromValidatePassword=" + fromValidatePassword);
+
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && fromValidatePassword) {
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
             return true;
         }
@@ -655,9 +604,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     /*是否符合条件*/
     boolean isFixAdjustEd() {
         String userName = et_al_username.getText().toString().trim();
-        String userPwd = et_al_password.getText().toString();
+        String userPwd = et_al_password.getText().toString().trim();
         if (BStrUtils.isEmpty(userName) || 11 != userName.length()) {
             PromptManager.ShowCustomToast(baseContext, "请输入正确手机号");
+            return false;
+        }
+        if (BStrUtils.isEmpty(userPwd) || userPwd.length() < 6 || userPwd.length() > 16) {
+            PromptManager.ShowCustomToast(baseContext, "密码长度为6-16位");
             return false;
         }
         return true;
@@ -667,7 +620,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         try {
             ApplicationInfo appInfo = RongContext.getInstance().getPackageManager().getApplicationInfo(RongContext.getInstance().getPackageName(), PackageManager.GET_META_DATA);
             String msg = appInfo.metaData.getString("RONG_CLOUD_APP_KEY");
-            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this) ) {
+            if ("tdrvipksrbgn5".equals(msg) || Utils.isApkInDebug(this)) {
                 mShakeListener = new ShakeListener(this);
                 mShakeListener.setOnShakeListener(onShakeListener);
                 mShakeListener.register();

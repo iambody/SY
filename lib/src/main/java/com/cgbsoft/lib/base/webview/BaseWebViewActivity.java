@@ -262,6 +262,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     }
 
+    public String getTitleName() {
+        return title;
+    }
+
     @Override
     protected T createPresenter() {
         return null;

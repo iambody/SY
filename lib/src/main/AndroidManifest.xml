@@ -8,11 +8,13 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <activity android:name=".ui.Share_InitActivity"></activity>
+
         <activity
             android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
-            android:theme="@style/Theme.AppCompat.DayNight"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <!--权限管理-->
         <activity
             android:name="com.cgbsoft.lib.permission.MyPermissionsActivity"
@@ -37,6 +39,7 @@
             </intent-filter>
         </service>
         <!-- ****************百度****************-->
+
     </application>
 
 </manifest>

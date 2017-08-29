@@ -69,7 +69,7 @@ public class RouteConfig {
 
     // 二维码
     public static final String GOTO_TWO_CODE_ACTIVITY = "qrcode_look_activity";
-    public static final String GOTO_TWO_CODE_READ_ACTIVITY = "qrcode_read_activity";
+    public static final String GOTO_TWO_CODE_READ_ACTIVITY = "qrcode_look_real_activity";
 
     // 带分享的webview
     public static final String GOTO_BASE_WITHSHARE_WEBVIEW = "goto_base_withshare_webview";
@@ -98,6 +98,5 @@ public class RouteConfig {
     //跳转到登录接口
     public static final String GOTO_LOGIN ="enter_loginactivity";
     public static final String GOTO_PDF_ACTIVITY = "gotosharepdf";
-
     public static final String SPLASH_MOVIE = "splash_movie";
 }

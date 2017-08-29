@@ -2,15 +2,14 @@ package com.cgbsoft.lib.listener.listener;
 
 import android.content.Context;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.cgbsoft.lib.R;
 
 /**
  * @author chenlong
@@ -24,6 +23,9 @@ public class GestureManager {
     public static final String ASSERT_GROUP = "1";
     public static final String INVISTE_CARLENDAR = "2";
     public static final String DATUM_MANAGER = "3";
+    public static final String CENTIFY_DIR = "4";
+    public static final String RELATIVE_ASSERT = "5";
+    public static final String RELATIVE_ASSERT_IN_DATDMANAGE = "6";
     public static boolean isNotFirstLook;
 
     public static void showAssertGestureManager(Context context) {

@@ -39,6 +39,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
+import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -53,7 +54,6 @@ import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
-import com.cgbsoft.privatefund.mvp.ui.start.PermissionsActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.chenenyu.router.annotation.Route;
@@ -67,10 +67,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import app.ndk.com.enter.mvp.ui.start.PermissionsActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -108,6 +110,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     TextView memberLevel;
     @BindView(R.id.ll_my_qr)
     LinearLayout myQrAll;
+    @BindView(R.id.tv_identity)
+    TextView identityStatus;
+
+    private boolean showAssert;
 
     private static String levelName;
 
@@ -136,6 +142,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private UserInfoDataEntity.UserInfo userInfo;
     private LoadingDialog mLoadingDialog;
     private Observable<Integer> uploadIcon;
+    private Observable<Boolean> swtichCentifyObservable;
     private android.os.Handler handler = new android.os.Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -153,7 +160,21 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         }
     };
+
     private MyPermissionsChecker mPermissionsChecker;
+    private boolean isClickBack;
+    private boolean hasIndentity;
+    private boolean hasUpload;
+    private String indentityCode;
+    private String title;
+    private String credentialCode;
+    private String status;
+
+    @Override
+    protected void before() {
+        super.before();
+        showAssert = AppManager.isShowAssert(this);
+    }
 
     private void startPermissionsActivity() {
         MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
@@ -165,6 +186,47 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.myqr));
         startActivity(intent);
     }
+
+    /**
+     * 点击证件夹
+     */
+    @OnClick(R.id.rl_personal_information_card_collect)
+    public void gotoCardCollect(){
+        if (showAssert) {
+            goToCardCollect();
+        } else {
+            GestureManager.showGroupGestureManage(this, GestureManager.CENTIFY_DIR);
+        }
+    }
+
+    private void goToCardCollect() {
+        if (null == status) {
+            isClickBack=true;
+            getPresenter().verifyIndentity();
+        } else {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    /**
+     * 点击我的会员
+     */
     @OnClick(R.id.rl_goto_member_center)
     public void gotoMemberCenter(){
         Intent intent = new Intent(this, BaseWebViewActivity.class);
@@ -172,6 +234,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.membercenter);
         startActivity(intent);
     }
+
+    /**
+     * 点击姓名
+     */
     @OnClick(R.id.rl_username_all)
     public void changeUserName(){
         Intent intent = new Intent(this, ChangeNameActivity.class);
@@ -182,6 +248,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }
+
+    /**
+     * 点击性别
+     */
     @OnClick(R.id.rl_usergender_all)
     public void changeUserGender(){
         Intent intent = new Intent(this, ChangeGenderActivity.class);
@@ -189,6 +259,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
     }
 
+    /**
+     * 更换头像
+     */
     @OnClick(R.id.rl_personal_information_icon_all)
     public void changeIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -215,6 +288,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
         initView(savedInstanceState);
         initHeadIconDialog();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPresenter().verifyIndentity();
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -241,6 +321,21 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             }
         });
+
+        swtichCentifyObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_CENTIFY_DIR, Boolean.class);
+        swtichCentifyObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean boovalue) {
+//                getPresenter().verifyIndentity();
+                goToCardCollect();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         calendar = Calendar.getInstance();
@@ -328,13 +423,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             }
         });
 
-        tvCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mHeadIconDialog.dismiss();
-            }
-        });
+        tvCancel.setOnClickListener(v -> mHeadIconDialog.dismiss());
     }
 
     /**
@@ -419,7 +508,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 iconImg.setImageBitmap(bitmap);
                 updateLoadIcon();
             }
-        } else if (requestCode == REQUEST_CODE&&resultCode==PermissionsActivity.PERMISSIONS_GRANTED) {
+        } else if (requestCode == REQUEST_CODE&&resultCode== PermissionsActivity.PERMISSIONS_GRANTED) {
             changeIcon();
 //            mHeadIconDialog.show();
         } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
@@ -559,7 +648,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @OnClick(R.id.rl_show_datepicker)
     public void showDatePicker() {
 
-        new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(year, month, dayOfMonth);
@@ -567,7 +656,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 userDate.setText(format);
                 updateServerDate(format);
             }
-        }, mYear, mMonth, mDay).show();
+        }, mYear, mMonth, mDay);
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+        datePicker.setMaxDate(new Date().getTime());
+        datePickerDialog.show();
     }
 
     /**
@@ -708,6 +800,52 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         Toast.makeText(baseContext.getApplicationContext(),null!=error?error.getMessage():getResources().getString(R.string.upload_icon_fail),Toast.LENGTH_SHORT).show();
         if (null != userInfo) {
             Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
+        }
+    }
+
+    @Override
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode) {
+        this.hasIndentity=hasIndentity;
+        this.hasUpload=hasUpload;
+        this.indentityCode=indentityCode;
+        this.title=title;
+        this.credentialCode=credentialCode;
+        this.status=status;
+        identityStatus.setText(status);
+        if (isClickBack) {
+            isClickBack=false;
+            if (hasIndentity) {
+                if (hasUpload) {//去证件列表
+                    Intent intent = new Intent(this, CardCollectActivity.class);
+                    intent.putExtra("indentityCode",indentityCode);
+                    startActivity(intent);
+                } else {//去上传证件照
+                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(this, SelectIndentityActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+        if (isClickBack) {
+            isClickBack=false;
+            Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (swtichCentifyObservable != null) {
+            RxBus.get().unregister(RxConstant.GOTO_SWITCH_CENTIFY_DIR, swtichCentifyObservable);
         }
     }
 }

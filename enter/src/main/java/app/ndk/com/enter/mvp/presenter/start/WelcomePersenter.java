@@ -1,17 +1,9 @@
 package app.ndk.com.enter.mvp.presenter.start;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-//import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
-import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
@@ -23,9 +15,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 
@@ -222,13 +212,13 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 //                }
 //            });
 //        } else {
-//            String strAddr = getAddressFromLocation(curLoc);
-            //todo
-//            if (TextUtils.isEmpty(strAddr)) {
-////                view.onLocationChanged(-1, 0, 0, strAddr);
-//            } else {
-////                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
-//            }
+////            String strAddr = getAddressFromLocation(curLoc);
+//            //todo
+////            if (TextUtils.isEmpty(strAddr)) {
+//////                view.onLocationChanged(-1, 0, 0, strAddr);
+////            } else {
+//////                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
+////            }
 //        }
     }
 

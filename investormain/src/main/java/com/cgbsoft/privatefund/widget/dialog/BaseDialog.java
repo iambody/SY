@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.widget.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
+import com.cgbsoft.privatefund.R;
 
 /**
  * desc  ${DESC}
@@ -49,7 +50,7 @@ public abstract class BaseDialog extends Dialog {
         getWindow().setAttributes(wparams);
         //开始初始化
 
-        getWindow().setWindowAnimations(app.privatefund.com.share.R.style.share_comment_anims_style);
+        getWindow().setWindowAnimations(R.style.share_comment_anims_style);
     }
 
 

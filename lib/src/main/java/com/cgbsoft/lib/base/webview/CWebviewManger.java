@@ -17,6 +17,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
@@ -26,6 +27,8 @@ import com.cgbsoft.lib.base.model.bean.OtherInfo;
 import com.cgbsoft.lib.base.mvp.ui.QrMidActivity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -373,6 +376,7 @@ public class CWebviewManger {
             RxBus.get().post(RxConstant.BindAdviser, 1);
         } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
+            context.finish();
         }
     }
 
@@ -696,7 +700,7 @@ public class CWebviewManger {
                 return;
             }
 
-            DefaultDialog dialog = new DefaultDialog(context, "呼叫投资顾问".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
+            DefaultDialog dialog = new DefaultDialog(context, "呼叫私行家".concat(name).concat("电话") + "\n" + telephone.concat(" ?"), "取消", "呼叫") {
                 @Override
                 public void left() {
                     dismiss();
@@ -932,38 +936,45 @@ public class CWebviewManger {
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
 
-    private void shareToC(String action) {
-        // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-        PromptManager.ShowCustomToast(context, "shareToC分享的代码需要挪到业务module中 不要写在lib里面");
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        String sharePYQtitle = "";
-//        try {
-//            String title = split[2];
-//            String subTitle = split[3];
-//            String imageTitle = split[4];
-//            String link = split[5];
-//            if (split.length >= 7) {
-//                sharePYQtitle = split[6];
-//            }
-//            link = link.startsWith("/") ? CwebNetConfig.baseParentUrl + link : CwebNetConfig.baseParentUrl + "/" + link;
-//            String shareType = link.contains("apptie/detail.html") ? "chanpin" : link.contains("discover/details.html") ? "zixun" : "";
-//            Share commonShareBean = new CommonShareBean();
-//            commonShareBean.setTitle(title);
-//            commonShareBean.setContent(subTitle);
-//            commonShareBean.setLink(link);
-//            commonShareBean.setYoujianTitleText(title);
-////            if (imageTitle.contains("greeteng")) {
-////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-////                commonShareDialog.show();
-////            } else {
-////                CommonShareDialog commonShareDialog = new CommonShareDialog(context, 1, commonShareBean, null);
-////                commonShareDialog.show();
-////            }
-////            shareDialog.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
+    private void shareToC(String actionUrl) {
+        String actionDecode = URLDecoder.decode(actionUrl);
+        String[] split = actionDecode.split(":");
+        String sharePYQtitle = "";
+
+        String mytitle = split[2];
+        String subTitle = split[3];
+        String imageTitle = split[4];
+        String link = split[5];
+        if (split.length >= 7) {
+            sharePYQtitle = split[6];
+        }
+        boolean isProductShare = actionDecode.contains("product/index.html");
+        link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
+        ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
+        CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+            @Override
+            public void completShare(int shareType) {
+                //分享微信朋友圈成功
+                if(actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
+                    if (!AppManager.isVisitor(context)) {
+                        //自选页面分享朋友圈成功
+                        TaskInfo.complentTask("分享资讯");
+                    }
+                    if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
+                        if (context instanceof BaseWebViewActivity) {
+                            BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+                            DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+                        }
+                    }
+                }
+
+                if (isProductShare) {  // 产品分享需要获取云豆
+                    TaskInfo.complentTask("分享产品");
+                }
+            }
+        });
+        commonShareDialog.show();
     }
 
     private void backPage(String action) {
@@ -1433,7 +1444,7 @@ public class CWebviewManger {
             //解决产
 
 
-            ((Activity) context).startActivityForResult(i, 300);
+//            ((Activity) context).startActivityForResult(i, 300);
 
             if ("产品详情".equals(title) && AppManager.isInvestor(context)) {
 //            new RundouTaskManager(context).executeRundouTask("查看产品");

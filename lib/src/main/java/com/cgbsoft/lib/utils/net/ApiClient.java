@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
+import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.model.CollegeVideoEntity;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.ElegantGoodsEntity;
@@ -17,6 +18,7 @@ import com.cgbsoft.lib.base.model.GroupListEntity;
 import com.cgbsoft.lib.base.model.GroupMemberEntity;
 import com.cgbsoft.lib.base.model.GroupMemberNewEntity;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.IndentityEntity;
 import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.model.OrgManagerEntity;
 import com.cgbsoft.lib.base.model.RongTokenEntity;
@@ -29,11 +31,13 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
+import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import org.json.JSONArray;
@@ -43,12 +47,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
+import rx.Subscription;
 
 /**
  *  * Created by xiaoyu.zhang on 2016/11/10 17:54
@@ -1535,5 +1541,72 @@ public class ApiClient {
         params.put("offset", offset);
         params.put("limit", limit);
         return OKHTTP.getInstance().getRequestManager().getOldSalons(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 获取身份列表
+     * @return
+     */
+    public static Observable<List<IndentityEntity.IndentityBean>> getIndentityObservable() {
+        return OKHTTP.getInstance().getRequestManager().getIndentity().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 判断身份
+     * @return
+     */
+    public static Observable<String> verifyIndentityInClient() {
+        return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttp().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    public static Observable<CardListEntity.Result> getIndentityList(String indentityCode) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerCode", indentityCode);
+        return OKHTTP.getInstance().getRequestManager().getCardList(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 上传证件的远程地址，方式同报备
+     * @param remoteParams
+     * @return
+     */
+    public static Observable<String> uploadIndentityRemotePath(List<String> remoteParams,String customerCode,String credentialCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("customerCode", customerCode);
+        params.put("credentialCode", credentialCode);
+        return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+    private static RequestBody uploadRemotePathUse(List<String> remoteParams,Map params){
+        JSONObject jsonObject = new JSONObject();
+        Iterator<Map.Entry> iterator = params.entrySet().iterator();
+        try {
+            while (iterator.hasNext()) {
+                Map.Entry entry = iterator.next();
+                jsonObject.put(entry.getKey().toString(), entry.getValue());
+            }
+            JSONArray jsonArray = new JSONArray();
+            for (int i=0;i<remoteParams.size();i++) {
+                String path = remoteParams.get(i);
+                JSONObject objImg = new JSONObject();//backImage   frontImage
+                if (i == 0) {
+                    objImg.put("name", "frontImage");
+                } else {
+                    objImg.put("name", "backImage");
+                }
+                objImg.put("url", path);
+                jsonArray.put(objImg);
+            }
+            jsonObject.put("imageUrl", jsonArray);
+        } catch (Exception e) {
+
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+        return body;
+    }
+
+    public static Observable<CardListEntity.Result> getIndentityListAdd(String indentityCode) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("customerCode", indentityCode);
+        return OKHTTP.getInstance().getRequestManager().getCardListAdd(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 }

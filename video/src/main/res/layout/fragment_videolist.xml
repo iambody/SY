@@ -2,18 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--
-        <com.jude.rollviewpager.RollPagerView
-            android:id="@+id/video_videolist_bannerview"
-            android:layout_width="match_parent"
-            android:layout_height="140dp" />-->
-
+    android:orientation="vertical"
+    >
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/video_videolist_indicator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_60_dip"
-
+        android:layout_height="@dimen/ui_58_dip"
         android:layout_marginTop="@dimen/ui_10_dip"/>
 
     <android.support.v4.view.ViewPager

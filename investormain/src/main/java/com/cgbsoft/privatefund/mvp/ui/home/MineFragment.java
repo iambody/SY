@@ -53,8 +53,11 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
+import com.cgbsoft.privatefund.mvp.ui.center.CardCollectActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.DatumManageActivity;
+import com.cgbsoft.privatefund.mvp.ui.center.SelectIndentityActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.SettingActivity;
+import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -65,6 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
+import app.product.com.mvp.ui.ProductDetailActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -196,6 +200,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private UnreadInfoNumber unreadInfoNumber;
 
     public static final String LEVER_NAME = "lever_name_value";
+    private String identity;
+    private String hasIdCard;
+    private String title;
+    private String credentialCode;
+    private String status;
+    private String statusCode;
+    private boolean isClickBack;
 
 //    private Handler handler = new Handler() {
 //        @Override
@@ -251,6 +262,52 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = false;
     }
 
+    @Override
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode) {
+        this.identity=identity;
+        this.hasIdCard=hasIdCard;
+        this.title=title;
+        this.credentialCode=credentialCode;
+        this.status=status;
+        this.statusCode=statusCode;
+        if (TextUtils.isEmpty(statusCode)) {
+            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
+        }else if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
+            noRelativeAssert.setVisibility(View.GONE);
+        } else {
+            noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
+//            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
+        }
+
+        if (isClickBack) {
+            isClickBack=false;
+            if (!TextUtils.isEmpty(identity)) {
+                if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+                    Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialCode",credentialCode);
+                    intent.putExtra("indentityCode",identity);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+                } else {//去证件列表
+                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                    intent.putExtra("indentityCode",identity);
+                    startActivity(intent);
+                }
+            } else {//无身份
+                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable e) {
+        if (isClickBack) {
+            isClickBack=false;
+            Toast.makeText(getActivity().getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void initObserver() {
         swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
         swtichAssetObservable.subscribe(new RxSubscriber<Boolean>() {
@@ -284,6 +341,37 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         break;
                     case GestureManager.DATUM_MANAGER:
                         NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+                        break;
+                    case GestureManager.CENTIFY_DIR:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
+                        break;
+                    case GestureManager.RELATIVE_ASSERT:
+//                        getPresenter().verifyIndentity();
+                        if (null == status) {
+                            isClickBack=true;
+                            getPresenter().verifyIndentity();
+                        } else {
+                            isClickBack=false;
+                            if (!TextUtils.isEmpty(identity)) {
+                                if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+                                    Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+                                    intent.putExtra("credentialCode",credentialCode);
+                                    intent.putExtra("indentityCode",identity);
+                                    intent.putExtra("title", title);
+                                    startActivity(intent);
+                                } else {//去证件列表
+                                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                                    intent.putExtra("indentityCode",identity);
+                                    startActivity(intent);
+                                }
+                            } else {//无身份
+                                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        break;
+                    case GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE:
+                        RxBus.get().post(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, true);
                         break;
                 }
             }
@@ -334,10 +422,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isLoading) {
             return;
         }
-        initRelativeStatus();
+//        initRelativeStatus();
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
+        getPresenter().verifyIndentity();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
@@ -412,7 +501,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_info_caifu_value_ll)
     void gotoWealthctivity() {
-        gotoMemberArea();
+        boolean isBind = AppManager.isBindAdviser(baseActivity);
+        String url = isBind ? CwebNetConfig.healthValue : CwebNetConfig.memeberArea;
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, isBind ? getString(R.string.account_info_caifu_value) : getString(R.string.mine_members));
+        if (!isBind) {
+            intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+        }
+        startActivity(intent);
     }
 
     private void gotoMemberArea() {
@@ -513,7 +610,36 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
-        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
+        if (showAssert) {
+            isClickBack=true;
+
+            if (null == status) {
+                isClickBack=true;
+                getPresenter().verifyIndentity();
+            } else {
+                isClickBack=false;
+                if (!TextUtils.isEmpty(identity)) {
+                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+                        intent.putExtra("credentialCode",credentialCode);
+                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("title", title);
+                        startActivity(intent);
+                    } else {//去证件列表
+                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                        intent.putExtra("indentityCode",identity);
+                        startActivity(intent);
+                    }
+                } else {//无身份
+                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+                    startActivity(intent);
+                }
+            }
+        } else {
+            isClickBack=false;
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
+        }
+//        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
     @OnClick(R.id.mine_bank_asset_match_ll)
@@ -751,6 +877,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
                 textView.setSingleLine(true);
                 textView.setEllipsize(TextUtils.TruncateAt.END);
+                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
                 textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
                 textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
                 textView.setTextColor(Color.parseColor("#5a5a5a"));
@@ -776,27 +903,23 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList = daoUtils.getAllVideoInfo();
+        List<VideoInfoModel> downlList = daoUtils.getDownLoadVideoInfo();
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
-        for (String name : videos) {
-            XTabLayout.Tab tab = xTabLayout.newTab();
-            tab.setText(name);
-            xTabLayout.addTab(tab);
-        }
-        viewPager.setOffscreenPageLimit(2);
         if (videoList == null) {
+            for (String name : videos) {
+                XTabLayout.Tab tab = xTabLayout.newTab();
+                xTabLayout.addTab(tab);
+            }
+            viewPager.setOffscreenPageLimit(2);
             videoList = new ArrayList<>();
             setFragmentParams(playlList, videoList, true);
             setFragmentParams(downlList, videoList, false);
             viewPager.resetHeight(0);
             initViewPage();
+            xTabLayout.setupWithViewPager(viewPager);
         } else {
             videoList.get(0).refrushData(playlList);
             videoList.get(1).refrushData(downlList);
-        }
-        xTabLayout.setupWithViewPager(viewPager);
-        for (int i = 0; i < xTabLayout.getTabCount(); i++) {
-            xTabLayout.getTabAt(i).setText(videos[i]);
         }
     }
 
@@ -834,6 +957,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else if (object instanceof Fragment) {
                     getChildFragmentManager().beginTransaction().detach((Fragment) object);
                 }
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return videos[position];
             }
         });
     }

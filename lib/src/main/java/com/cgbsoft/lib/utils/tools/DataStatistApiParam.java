@@ -571,6 +571,10 @@ public class DataStatistApiParam {
         data3.put("grp", "2002");
         data3.put("act", "20002");
         data3.put("arg1", "登录");
+
+//        data3.put("arg3", "登录");
+//        data3.put("arg4", "登录");
+//        data3.put("arg5", "登录");
         //data3.put("arg3", MApplication.getUser().getToC().getBindTeacher());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
@@ -761,14 +765,14 @@ public class DataStatistApiParam {
      * C端资讯分享到朋友圈
      * type 1标识早知道 2标识大视野
      */
-    public static void onStatisToCShareInfOnCircle(String infTitle, String type) {
+    public static void onStatisToCShareInfOnCircle(String infTitle, String typeName) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2016");
         data3.put("act", "20265");
         data3.put("arg1", "转发文章到朋友圈");
         data3.put("arg2", BaseApplication.BindAdviserState());
         data3.put("arg4", infTitle);
-        data3.put("arg5", type);
+        data3.put("arg5", typeName);
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 

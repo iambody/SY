@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -16,12 +19,13 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoveryListAdapter;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverListContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryListPresenter;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -31,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -46,6 +51,11 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     SwipeToLoadLayout swipeToLoadLayout;
 
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
+    @BindView(R.id.fragment_videoschool_noresult)
+    ImageView fragmentVideoschoolNoresult;
+    @BindView(R.id.fragment_videoschool_noresult_lay)
+    RelativeLayout fragmentVideoschoolNoresultLay;
+
     private LinearLayoutManager linearLayoutManager;
     private DiscoveryFragment discoveryFragment;
 
@@ -75,11 +85,12 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_fragment_video_ls;
+        return R.layout.activity_fragment_discovery_list;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
+
     }
 
     @Override
@@ -102,7 +113,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {
-            getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+            getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         }
     }
 
@@ -134,7 +145,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     public void onLoadMore() {
         CurrentPostion = CurrentPostion + 1;
         isLoadMore = true;
-        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
     }
 
@@ -142,7 +153,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     public void onRefresh() {
         CurrentPostion = 0;
         isLoadMore = false;
-        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion*LIMIT_PAGE), CatoryValue);
+        getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         if (discoveryFragment != null) {
             discoveryFragment.refrushListData();
         }
@@ -151,6 +162,14 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     public void requestListDataSuccess(List<DiscoveryListModel> discoveryListModel) {
+        if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
+            swipeToLoadLayout.setVisibility(View.VISIBLE);
+            fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
+        }
+        if (View.VISIBLE == fragmentVideoschoolNoresultLay.getVisibility()) {//一直隐藏
+            fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
+        }
+
         clodLsAnim(swipeToLoadLayout);
         FreshAp(discoveryListModel, isLoadMore);
         isLoadMore = false;
@@ -159,6 +178,22 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
     @Override
     public void requestListDataFailure(String errMsg) {
         clodLsAnim(swipeToLoadLayout);
+        if (!isLoadMore && 0 == discoveryListAdapter.getItemCount()) {
+            fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
+            swipeToLoadLayout.setVisibility(View.GONE);
+        }
         isLoadMore = false;
     }
+
+    @OnClick(R.id.fragment_videoschool_noresult)
+    public void onViewnoresultClicked() {
+        if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
+            if (discoveryListAdapter != null && discoveryListAdapter.getItemCount() == 0) {
+                getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
+            }
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(app.privatefund.com.vido.R.string.error_net));
+        }
+    }
+
 }

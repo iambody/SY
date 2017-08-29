@@ -66,6 +66,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         videoRootFrame.setListener(this);
 
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+        changeVideoViewSize(getResources().getConfiguration().orientation);
         if (!isSetFullscreenHandler) {
             isSetFullscreenHandler = true;
             videoRootFrame.setToggleFullScreenHandler(() -> {
@@ -109,20 +110,38 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             if (healthIntroduceModel != null) {
                 DataStatistApiParam.operateHealthIntroduceClick(healthIntroduceModel.getText());
             }
-            List<VideoInfo> videos = new ArrayList<>();
-            VideoInfo v1 = new VideoInfo();
-            v1.description = "标清";
-            v1.type = VideoInfo.VideoType.MP4;
-            v1.url = healthIntroduceModel.getSdVideo();
-            videos.add(v1);
-            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
+
+
+//            List<VideoInfo> videos = new ArrayList<>();
+//            VideoInfo v1 = new VideoInfo();
+//            VideoInfo v2 = new VideoInfo();
+//            v1.description = "标清";
+//            v1.type = VideoInfo.VideoType.MP4;
+//            v2.description = "高清";
+//            v2.type = VideoInfo.VideoType.MP4;
+//            v1.url = videoInfoModel.sdUrl;
+//            v2.url = videoInfoModel.hdUrl;
+//            videos.add(v1);
+//            videos.add(v2);
+//            vrf_avd.play(videos);
+//            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
             iv_mvv_cover.setOnClickListener(v -> {
+                List<VideoInfo> videos = new ArrayList<>();
+                VideoInfo v1 = new VideoInfo();
+                VideoInfo v2 = new VideoInfo();
+                v1.description = "标清";
+                v1.type = VideoInfo.VideoType.MP4;
+                v2.description = "高清";
+                v1.url = healthIntroduceModel.getSdVideo();
+                v2.url = healthIntroduceModel.getHdVideo();
+                videos.add(v1);
+                videos.add(v2);
+                videoRootFrame.play(videos);
                 System.out.println("--------iv_mvv_cover");
                 videoRootFrame.play(videos);
             });
         }
     }
-
 
     @Override
     public void requestDataFailure(String errorMsg) {
@@ -195,13 +214,15 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onPause() {
         super.onPause();
-        videoRootFrame.pause();
+        if (videoRootFrame!=null)
+            videoRootFrame.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        videoRootFrame.play();
+        if (videoRootFrame!=null)
+            videoRootFrame.pause();
     }
 
     @Override
@@ -216,11 +237,8 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             case 5://播放中
                 iv_mvv_cover.setVisibility(View.GONE);
                 play_contral.setVisibility(View.GONE);
-                videoRootFrame.pause();
-                RxBus.get().post(RxConstant.SCHOOL_VIDEO_PAUSE,true);
                 break;
             case 4:
-//                iv_mvv_cover.setVisibility(View.GONE);
                 break;
             default:
                 break;

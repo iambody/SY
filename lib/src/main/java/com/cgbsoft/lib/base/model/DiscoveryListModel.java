@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.model;
+package com.cgbsoft.lib.base.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

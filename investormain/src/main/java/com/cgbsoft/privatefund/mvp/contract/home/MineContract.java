@@ -2,10 +2,7 @@ package com.cgbsoft.privatefund.mvp.contract.home;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.privatefund.model.DiscoveryListModel;
 import com.cgbsoft.privatefund.model.MineModel;
-
-import java.util.List;
 
 /**
  * @author chenlong
@@ -22,5 +19,9 @@ public interface MineContract {
         void requestDataSuccess(MineModel mineModel);
 
         void requestDataFailure(String errMsg);
+
+        void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode);
+
+        void verifyIndentityError(Throwable e);
     }
 }

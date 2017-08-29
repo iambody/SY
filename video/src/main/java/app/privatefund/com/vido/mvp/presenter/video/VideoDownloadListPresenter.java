@@ -57,7 +57,8 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                     model.status = VideoStatus.FINISH;
                     saveOrUpdateVideoInfo(model);
                 }
-                dataList.add(createModel(model));
+                if (model.status != VideoStatus.NONE)
+                    dataList.add(createModel(model));
             }
             getView().getLocalListSucc(dataList, isRef);
         } else
@@ -132,8 +133,10 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                 adapterList.add(model.videoId);
         }
         for (DownloadInfo info : getAllDownloadTask()) {
-            if (info.getState() == DownloadManager.DOWNLOADING)
+            if (info.getState() == DownloadManager.DOWNLOADING) {
                 taskList.add(info.getTaskKey());
+//                return true;
+            }
         }
         return taskList.containsAll(adapterList);
     }
@@ -169,7 +172,8 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
 
     @Override
     public void stopDownload(String videoId) {
-        if (getDownloadManager() != null)
+        if (getDownloadManager() == null)
+            return;
             getDownloadManager().stopTask(videoId);
     }
 
@@ -373,6 +377,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             videoInfoModel.status = VideoStatus.FINISH;
             videoInfoModel.localVideoPath = downloadInfo.getTargetPath();
             saveOrUpdateVideoInfo(videoInfoModel);
+//            daoUtils.videoDoneLoad(videoId,videoInfoModel.localVideoPath);
             if (getView() != null)
                 getView().onDownloadFinish(videoId);
         }
@@ -381,6 +386,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         public void onError(DownloadInfo downloadInfo, String errorMsg, Exception e) {
             videoInfoModel.status = VideoStatus.NONE;
             saveOrUpdateVideoInfo(videoInfoModel);
+
             if (getView() != null)
                 getView().onDownloadError(videoId);
         }
@@ -434,5 +440,19 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                 videoList.add(allData.get(i));
         }
         return videoList;
+    }
+
+    /**
+     * 判断列表中是否有任何的选择
+     */
+    public boolean isAnyChoice(List<VideoDownloadListModel> datas) {
+        if (null == datas || 0 == datas.size()) return false;
+        boolean anyChoice = false;
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).isCheck) anyChoice = true;
+        }
+        return anyChoice;
+
+
     }
 }

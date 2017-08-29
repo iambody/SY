@@ -109,6 +109,7 @@ public class GestureVerifyActivity extends BaseActivity<ModifyUserInfoPresenter>
             public void onFinish(String password) {
                 if (!TextUtils.isEmpty(password) && password.equals(SPreference.getToCBean(GestureVerifyActivity.this).getGesturePassword())) {
                     Toast.makeText(GestureVerifyActivity.this, "密码校验成功", Toast.LENGTH_SHORT).show();
+                    AppInfStore.saveValidateErrorNumber(GestureVerifyActivity.this, 5);
                     if (modifyGesturePassword) {
                         Intent intent = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
                         intent.putExtra(GestureEditActivity.PARAM_FROM_MODIFY, true);

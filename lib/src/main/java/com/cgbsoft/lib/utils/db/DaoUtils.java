@@ -57,7 +57,7 @@ public class DaoUtils {
                 historySearchBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getHistorySearchBeanDao();
                 break;
             case W_DATASTISTICS:
-                dataStatisticsBeanDao = ((BaseApplication)context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
+                dataStatisticsBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
         }
     }
 
@@ -80,14 +80,16 @@ public class DaoUtils {
             historySearchBeanDao.deleteAll();
 
     }
-public void clearnHistoryByID(String Type, String userId){
-    List<HistorySearchBean> been = new ArrayList<>();
-    been=getHistorysByType(Type,userId);
-    if(null==been||been.size()==0)return;
-    for(int i=0;i<been.size();i++){
-        historySearchBeanDao.delete(been.get(i));
+
+    public void clearnHistoryByID(String Type, String userId) {
+        List<HistorySearchBean> been = new ArrayList<>();
+        been = getHistorysByType(Type, userId);
+        if (null == been || been.size() == 0) return;
+        for (int i = 0; i < been.size(); i++) {
+            historySearchBeanDao.delete(been.get(i));
+        }
     }
-}
+
     /**
      * 插入一条
      *
@@ -157,6 +159,28 @@ public void clearnHistoryByID(String Type, String userId){
     }
 
     /**
+     * 获取下载记录
+     */
+    /**
+     * 查找所有的缓存视频
+     *
+     * @return
+     */
+    public List<VideoInfoModel> getDownLoadVideoInfo() {
+        //根据最后播放时间倒叙排列
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
+        List<VideoInfoModel> results = new ArrayList<>();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (0 != list.get(i).getDownloadTime() && list.get(i).getStatus() != VideoStatus.NONE)
+                    results.add(getVideoInfoModel(list.get(i)));
+            }
+            return results;
+        }
+        return null;
+    }
+
+    /**
      * 查找所有的缓存视频
      *
      * @return
@@ -167,8 +191,8 @@ public void clearnHistoryByID(String Type, String userId){
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                if(0!=list.get(i).getDownloadTime())
-                results.add(getVideoInfoModel(list.get(i)));
+                if (0 != list.get(i).getDownloadTime())
+                    results.add(getVideoInfoModel(list.get(i)));
             }
             return results;
         }
@@ -209,12 +233,14 @@ public void clearnHistoryByID(String Type, String userId){
      */
     public void deleteVideoInfo(String videoId) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+
         String localPath = null;
         if (videoInfo != null) {
             localPath = videoInfo.getLocalVideoPath();
+//            videoInfo.setIsDelete(VideoStatus.DELETE);
             videoInfo.setIsDelete(VideoStatus.UNDELETE);
             videoInfo.setStatus(VideoStatus.NONE);
-            videoInfo.setFinalPlayTime(0);
+//            videoInfo.setFinalPlayTime(0);
             videoInfo.setSize(0);
             videoInfo.setLocalVideoPath("");
             videoInfo.setPercent(0);
@@ -228,6 +254,19 @@ public void clearnHistoryByID(String Type, String userId){
                 file.delete();
             }
         }
+    }
+
+    /**
+     * 视频下载完成
+     */
+
+    public void videoDoneLoad(String videoId,String path) {
+        VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
+        videoInfo.setStatus(VideoStatus.FINISH);
+        videoInfo.setLocalVideoPath(path);
+        videoInfoDao.update(videoInfo);
+
+
     }
 
     /**
@@ -330,15 +369,15 @@ public void clearnHistoryByID(String Type, String userId){
         return model;
     }
 
-    public List<DataStatisticsBean> getDatastisticList(){
+    public List<DataStatisticsBean> getDatastisticList() {
         return dataStatisticsBeanDao.queryBuilder().list();
     }
 
-    public void deleteDataStatitic(){
+    public void deleteDataStatitic() {
         dataStatisticsBeanDao.deleteAll();
     }
 
-    public void saveDataStatistic(DataStatisticsBean dataStatisticsBean){
+    public void saveDataStatistic(DataStatisticsBean dataStatisticsBean) {
         dataStatisticsBeanDao.save(dataStatisticsBean);
     }
 

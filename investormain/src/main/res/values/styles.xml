@@ -1,4 +1,9 @@
 <resources>
+
+    <style name="appInvTheme" parent="Theme.AppCompat.DayNight" >
+        <!--<item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>-->
+       <!-- <item name="colorPrimary">@color/app_golden</item>-->
+    </style>
     <style name="BottomBarStyle">
         <item name="android:paddingTop">3dp</item>
         <item name="android:paddingBottom">3dp</item>
@@ -120,7 +125,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">73dp</item>
-        <item name="android:background">@color/app_bg</item>
+        <item name="android:background">@drawable/selector_bg_btn_app_bg</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -187,4 +192,11 @@
         <item name="android:paddingLeft">@dimen/ui_10_dip</item>
         <item name="android:paddingRight">@dimen/ui_10_dip</item>
     </style>
+
+    <!--<style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="background" >@color/app_golden</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>-->
 </resources>

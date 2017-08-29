@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -31,14 +30,12 @@ import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
@@ -98,21 +95,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @BindView(R.id.webView)
     BaseWebview baseWebview;
-
-//    @BindView(R.id.cmain_live_dialog)
-//    LinearLayout liveDialog;
-
-//    @BindView(R.id.video_live_close)
-//    ImageView liveDialogClose;
-//
-//    @BindView(R.id.video_live_pop)
-//    RelativeLayout livePop;
-
-//    @BindView(R.id.live_head)
-//    ImageView liveIcon;
-//
-//    @BindView(R.id.live_title)
-//    TextView liveTitle;
 
     private Observable<Boolean> closeMainObservable;
     private Observable<Boolean> reRefrushUserInfoObservable;
@@ -179,6 +161,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -211,6 +194,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             guide.setVisibility(View.GONE);
         }
+        if (null != savedInstanceState) {
+
+        }
+
+
+
         Log.i("MainPageActivity", "----init");
         StatusBarUtil.translucentStatusBar(this);
         initApplication = (InitApplication) getApplication();
@@ -234,7 +223,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        initPlatformCustomer();
 
         showInfoDialog();
-
 
         initIndex(code);
 
@@ -336,6 +324,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (mContentFragment != to) {
             FragmentTransaction transaction = mFragmentManager.beginTransaction();
 //            setCustomAnimations(R.anim.home_fade_in, R.anim.home_fade_out);
+
+
             if (!to.isAdded()) {  // 先判断是否被add过
                 transaction.hide(mContentFragment).add(R.id.fl_main_content, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
@@ -983,5 +973,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+        /**
+         * 解决重影问题  手机内存不足时候回
+         */
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
     }
 }

@@ -84,8 +84,6 @@ dependencies {
     apt "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
     compile project(':lib')
-    compile project(':share')
-    compile project(':share')
     compile project(':commonui')
     compile project(':enter')
 }

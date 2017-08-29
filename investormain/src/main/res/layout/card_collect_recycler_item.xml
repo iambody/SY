@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="71dp"
+    android:id="@+id/rl_card_list_all"
+    >
+    <TextView
+        android:id="@+id/tv_card_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_marginLeft="15dp"
+        android:textSize="@dimen/dimens_sp_16" />
+
+    <TextView
+        android:id="@+id/tv_card_item_value"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="@dimen/ui_10_dip"
+        android:layout_toStartOf="@+id/iv_card_item_right_arrow_gender"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_595959"
+        android:textSize="@dimen/dimens_sp_14"
+        android:text=""
+        />
+
+    <ImageView
+        android:id="@+id/iv_card_item_right_arrow_gender"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/arrow_right"
+        android:layout_marginRight="10dp"
+        />
+    <include
+        layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/ui_15_dip" />
+</RelativeLayout>

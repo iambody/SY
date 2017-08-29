@@ -5,13 +5,23 @@
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme.ActionBar"
-        android:supportsRtl="true">
-        <activity android:name="app.mall.com.mvp.ui.MallAddressListActivity" />
-        <activity android:name="app.mall.com.mvp.ui.MallEditAddressActivity" />
-        <activity android:name="app.mall.com.mvp.ui.PayActivity" />
-        <activity android:name="app.mall.com.mvp.ui.RechargeResultActivity" />
-        <activity android:name="app.mall.com.mvp.ui.PayMethodActivity" />
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.ActionBar">
+        <activity
+            android:name="app.mall.com.mvp.ui.MallAddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.mall.com.mvp.ui.MallEditAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.mall.com.mvp.ui.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.mall.com.mvp.ui.RechargeResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="app.mall.com.mvp.ui.PayMethodActivity"
+            android:screenOrientation="portrait" />
         <!-- 微支付SDK界面 -->
         <!-- 显示网页界面 -->
         <activity

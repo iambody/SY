@@ -41,7 +41,7 @@
         android:scaleType="fitCenter"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/select_happy_life_toolbar_right"
-        android:layout_marginRight="10dp"
+
         android:visibility="gone" />
 
     <TextView

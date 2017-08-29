@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
@@ -46,9 +47,6 @@ import butterknife.BindView;
 public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter> implements VideoSchoolAllInfContract.View {
     @BindView(R2.id.video_videolist_indicator)
     MagicIndicator videoVideolistIndicator;
-//    @BindView(R2.id.video_videolist_bannerview)
-//    RollPagerView videoVideolistBannerview;
-
     //导航器
     CommonNavigator commonNavigator;
     @BindView(R2.id.video_videolist_pager)
@@ -61,7 +59,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     //所有需要的fragment的集合
 
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
-//    BannerAdapter bannerAdapter;
 
     @Override
     protected int layoutID() {
@@ -76,9 +73,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         commonNavigator.setAdapter(videoNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
 
-        commonNavigator.setAdjustMode(true);
-//        commonNavigator.setLeftPadding(DimensionPixelUtil.dip2px(baseActivity,100));
-//        commonNavigator.setRightPadding(DimensionPixelUtil.dip2px(baseActivity,100));
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
@@ -94,7 +88,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     private void initCache() {
         if (null != AppManager.getVideoSchoolCache(baseActivity))
             freashAp(AppManager.getVideoSchoolCache(baseActivity));
-
     }
 
     @Override
@@ -103,8 +96,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private void freashAp(VideoAllModel videoAllModel) {
-//        initBanner(videoAllModel.banner);
-        //Navagation的数据填充
         lazyFragments = new ArrayList<>();
         for (int i = 0; i < videoAllModel.category.size(); i++) {
             VidoListFragment baseLazyFragment = new VidoListFragment();
@@ -118,7 +109,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         fragmentAdapter.freshAp(lazyFragments);
     }
 
-
     @Override
     public void getSchoolAllDataSucc(String data) {
         if (BStrUtils.isEmpty(data)) return;
@@ -130,9 +120,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     public void getSchoolAllDataError(String message) {
         PromptManager.ShowCustomToast(baseActivity, message);
-
     }
-
 
     /**
      * Navigations的Ap
@@ -173,12 +161,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
             CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
 
-//
             View view = layoutInflater.inflate(R.layout.view_item_navigation, null);
-//            LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity,100),LinearLayout.LayoutParams.WRAP_CONTENT);
-//            params.setMargins(DimensionPixelUtil.dip2px(baseActivity,60),0,DimensionPixelUtil.dip2px(baseActivity,60),0);
-//            commonPagerTitleView.setLayoutParams(params);
-
             ImageView imageView = (ImageView) view.findViewById(R.id.view_item_navigation_iv);
 
             TextView textViewdd = (TextView) view.findViewById(R.id.view_item_navigation_txt);
@@ -216,11 +199,12 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         @Override
         public IPagerIndicator getIndicator(Context context) {
             LinePagerIndicator indicator = new LinePagerIndicator(context);
-            indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-
-            indicator.setYOffset(UIUtil.dip2px(context, 3));
-            indicator.setColors(getResources().getColor(R.color.app_golden));
-            indicator.setXOffset(UIUtil.dip2px(context, 10));
+            indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+            indicator.setLineWidth(DimensionPixelUtil.dip2px(context, 30));
+            indicator.setLineHeight(DimensionPixelUtil.dip2px(context, 3));
+//            indicator.setYOffset(UIUtil.dip2px(context, 3));
+            indicator.setColors(context.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
+            indicator.setXOffset(UIUtil.dip2px(context, 30));
             return indicator;
         }
     }

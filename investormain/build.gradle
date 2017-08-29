@@ -96,14 +96,13 @@ android {
     }
     productFlavors{
         huawei{}
-        qihu360{}
+       /*qihu360{}
         tengxun{}
         xiaomi{}
         baidu{}
         yingyonghui{}
         wandoujia{}
-        mumayi{}
-        guanwang{}
+        mumayi{}*/
 
     }
     productFlavors.all {
@@ -178,19 +177,19 @@ dependencies {
     compile "io.reactivex:rxandroid:${rxandroid_need_version}"
     compile "io.reactivex:rxjava:${rxjava_need_version}"
     compile 'me.grantland:autofittextview:0.2.+'
+    compile 'com.takwolf.android:lock9view:0.0.11'
+    compile 'com.android.support:support-v4:24.2.1'
+
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':order')
     compile project(':enter')
-    compile project(':share')
     compile project(':product')
     compile project(':liveold')
     compile project(':im')
     compile project(':commonui')
     compile project(':video')
     compile project(':mall')
-    compile 'com.takwolf.android:lock9view:0.0.11'
-    compile 'com.android.support:support-v4:24.2.1'
     compile project(':health')
 //    compile('com.crashlytics.sdk.android:crashlytics:2.5.2') {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {

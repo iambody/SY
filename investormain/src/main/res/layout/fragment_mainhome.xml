@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/app_bg">
 
     <com.cgbsoft.lib.widget.MySwipeRefreshLayout
         android:id="@+id/main_home_swiperefreshlayout"
@@ -38,7 +39,7 @@
                         <com.jude.rollviewpager.RollPagerView
                             android:id="@+id/main_home_bannerview"
                             android:layout_width="match_parent"
-                            android:layout_height="260dp" />
+                            android:layout_height="@dimen/activity_main_banner" />
 
                     </RelativeLayout>
                     <!-- Banner*** -->
@@ -103,8 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/ui_12_dip"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="@dimen/ui_13_dip"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
 

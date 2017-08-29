@@ -324,11 +324,19 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         }
     }
 
+
     @OnClick(R2.id.tv_avd_delete)
     void deleteClick() {//删除
 
         List<VideoDownloadListModel> list = videoDownloadListAdapter.getList();
         List<VideoDownloadListModel> donelist = videoHaveDownloadListAdapter.getList();
+
+
+        if (!getPresenter().isAnyChoice(list) && !getPresenter().isAnyChoice(donelist)) {
+            return;
+        }
+
+
 //        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
@@ -435,7 +443,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         }
 
 
-        if (getPresenter().isStartAllDownloading(dataList)) {
+        if (getPresenter().isStartAllDownloading(downloadingData)) {
             isAllDownloadStart = true;
             changeAllStart();
         }
@@ -457,6 +465,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public void onDownloadFinish(String videoId) {
+
         refItemUI(videoId);
     }
 
@@ -613,7 +622,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private void choiceChangeText(int num) {
         tv_avd_choiceAll.setText(R.string.cancel_choice_all_str);
-        tv_avd_delete.setTextColor(getResources().getColor(R.color.orange));
+        tv_avd_delete.setTextColor(getResources().getColor(R.color.app_golden));
         tv_avd_delete.setText(getString(R.string.delete_1_str, String.valueOf(num)));
     }
 
@@ -739,9 +748,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         pb_avd.setVisibility(View.VISIBLE);
         tv_avd_speed.setVisibility(View.VISIBLE);
 
-        if (downloadState == DownloadManager.DOWNLOADING ) {
+        if (downloadState == DownloadManager.DOWNLOADING) {
             changeStart(true, iv_avd_pause, tv_avd_pause);
-        } else if ( downloadState == DownloadManager.WAITING) {
+        } else if (downloadState == DownloadManager.WAITING) {
             waiting(iv_avd_pause, tv_avd_pause);
         } else if (downloadState == DownloadManager.PAUSE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);

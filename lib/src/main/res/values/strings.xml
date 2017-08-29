@@ -36,7 +36,7 @@
     <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
     <string name="button_ok">确定</string>
     <string name="hotline">400-188-8848</string>
-    <string name="no_phone_number">对不起，投顾还没有手机号</string>
+    <string name="no_phone_number">对不起，私行家还没有手机号</string>
     <string name="risk_comment_prmpt">当前问卷填写的内容将不会保存，确定要返回么?</string>
     <string name="fc_college_title_str">学院</string>
     <string name="save">保存</string>
@@ -76,4 +76,20 @@
     <string name="no_product_str">当前暂无专题</string>
     <string name="reload_str">下拉重新加载</string>
     <string name="err_net_str">网络连接异常，请检查您的网络设置</string>
+    <string name="error_net">网络连接异常,请检查您的网络</string>
+
+    <!-- ============ 分享======== -->
+    <string name="share_my_card">&#160;&#160;&#160;分享我的职业名片</string>
+    <string name="copyscuuced">复制成功</string>
+    <string name="no_weixin">未安装微信</string>
+    <string name="nulll">--</string>
+
+
+    <string name="lianxiren">联系人</string>
+    <string name="weixin">微信</string>
+    <string name="pengyouquan">朋友圈</string>
+    <string name="youjian">邮件</string>
+    <string name="duanxin">短信</string>
+    <string name="fuzhilianjie">复制链接</string>
+    <string name="pleaseinstanllweixin">请安装微信</string>
 </resources>

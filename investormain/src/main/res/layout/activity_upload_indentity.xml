@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar_id"
+        layout="@layout/layout_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/tv_upload_indentity_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="@color/color_595959"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_upload_tag"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_upload_indentity_tip"
+            android:src="@drawable/upload_indentity_success_tag"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/iv_upload_crad_first_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_upload_crad_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/upload_id_card_front" />
+                <ImageView
+                    android:id="@+id/iv_upload_card_first_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:background="@color/half_truns"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/iv_upload_crad_second_all"
+                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_upload_crad_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/upload_id_card_back"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/iv_upload_card_second_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:background="@color/half_truns"
+                    />
+            </FrameLayout>
+            <LinearLayout
+                android:id="@+id/ll_defeat_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:id="@+id/tv_defeat_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp"
+                    android:text=""
+                    />
+                <TextView
+                    android:id="@+id/tv_defeat_depict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/upload_submit"
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="@dimen/ui_5_dip"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/ui_5_dip"
+        android:background="@drawable/shape_button_elegant"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_sp_16" />
+</LinearLayout>

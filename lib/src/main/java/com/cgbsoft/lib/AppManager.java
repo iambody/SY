@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.base.model.DiscoverModel;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
@@ -11,6 +12,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
+import com.google.gson.Gson;
 
 /**
  * desc  进行不同application的管理 注意 防止误操作无修改 此处只能取状态不能村状态
@@ -25,7 +27,6 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取是否是理财师的标识
-     * .
      *
      * @param context
      * @return
@@ -321,5 +322,15 @@ public class AppManager implements AppinfConstant {
      */
     public static boolean getGuideShowTagOfMine(Context context) {
         return getBasePreference(context).getBoolean("guideshowofmine",false);
+    }
+
+    /**
+     * 获取资讯首页数据
+     */
+    public static DiscoverModel getDiscoveryModleData(Context sContext) {
+        SharedPreferences sharedPreferences = getBasePreference(sContext.getApplicationContext());
+        String homeStr = sharedPreferences.getString(DISCOVERLISTFIRSTDATA, "");
+        if (BStrUtils.isEmpty(homeStr)) return null;
+        return new Gson().fromJson(homeStr, DiscoverModel.class);
     }
 }

@@ -3,7 +3,7 @@
     android:id="@+id/main_main_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/bg_white_with_layer"
     android:orientation="vertical"
     android:layout_marginBottom="15dp">
 
@@ -140,7 +140,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:id="@+id/account_order_all_ll"
-            android:background="@color/app_bg"
+            android:background="@drawable/selector_bg_btn_app_bg"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"

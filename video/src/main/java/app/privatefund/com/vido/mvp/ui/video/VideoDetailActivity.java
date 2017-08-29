@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,10 +31,11 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
-import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -68,8 +68,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import app.privatefund.com.share.bean.ShareCommonBean;
-import app.privatefund.com.share.dialog.CommonShareDialog;
 import app.privatefund.com.vido.R;
 import app.privatefund.com.vido.R2;
 import app.privatefund.com.vido.VideoUtils;
@@ -191,7 +189,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     TextView videoVideplayEditCommentC;
     //发送评论
     @BindView(R2.id.video_videplay_send_comment)
-    Button videoVideplaySendComment;
+    TextView videoVideplaySendComment;
     @BindView(R2.id.video_videplay_edit_comment_lay)
     LinearLayout videoVideplayEditCommentLay;
     @BindView(R2.id.view_title_back_iv)
@@ -298,11 +296,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
         FloatVideoService.stopService();
+
     }
 
     public int getsize() {
-        DaoUtils downsize = new DaoUtils(baseContext, DaoUtils.W_VIDEO);
-       return downsize.getAllVideoInfo().size();
+        return getPresenter().daoUtils.getDownLoadVideoInfo().size();
     }
 
     private void findview() {
@@ -318,7 +316,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
                     String url = CwebNetConfig.productDetail.concat(productBean.schemeId);
 
-                    Router.build(RouteConfig.GOTOPRODUCTDETAIL).with(WebViewConstant.push_message_url, url).with(WebViewConstant.push_message_title, productBean.productName).go(baseContext);
+                    Router.build(RouteConfig.GOTOPRODUCTDETAIL).with(WebViewConstant.push_message_url, url).with(WebViewConstant.PAGE_SHOW_TITLE, true).with(WebViewConstant.push_message_title, productBean.productName).go(baseContext);
                 }
             }
         });
@@ -380,8 +378,14 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onRestart();
         isOnPause = false;
         onPausePlayStauts = 1;
-        //判断书否缓存
-        isCancache = (getPresenter().getVideoInfo(videoId).status == VideoStatus.NONE);
+        vrf_avd.play();
+//        sv_avd.smoothScrollTo(0,20);
+        tv_avd_hd.setEnabled(true);
+        tv_avd_sd.setEnabled(true);
+        tv_avd_hd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_sd.setTextColor(getResources().getColor(R.color.black));
+        tv_avd_cache_num.setText(String.valueOf(getsize()));
+        getLocalVideoInfoSucc(getPresenter().getLocalvideos(videoId));
     }
 
     @Override
@@ -454,7 +458,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());//更新当前播放视频的位置
         openActivity(VideoDownloadListActivity.class);
 
-//        ll_avd_cache_open.
         closeCacheView();
 
     }
@@ -546,6 +549,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 isCancache = true;
+
+
                 break;
             case VideoStatus.FINISH:
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
@@ -969,7 +974,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (keyCode == KeyEvent.KEYCODE_BACK && rl_avd_download.getVisibility() == View.VISIBLE) {
             rl_avd_download.setVisibility(View.GONE);
 //            rl_avd_download.startAnimation(closeAnimationSet);
-
         }
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -980,7 +984,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void onDestroy() {
-
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
@@ -1040,7 +1043,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             videplay_produxt_view.setVisibility(View.VISIBLE);
             VideoInfoEntity.ProductBean productBean = videoAllInf.rows.product.get(0);
             BStrUtils.SetTxt(viewVideoplayProductName, productBean.productName);
-            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", productBean.netUnit));
+            BStrUtils.SetTxt(viewVideoplayProductIncome, String.format("收益基准：%s", "2".equals(productBean.productType)?productBean.netUnit:productBean.incomeMin));
             BStrUtils.SetTxt(viewVideoplayProductDay, String.format("剩余时间：%s", VideoUtils.getDeadLine(productBean.raiseEndTime)));
             BStrUtils.SetTxt(viewVideoplayProductAllday, String.format("产品期限：%s", productBean.term));
             BStrUtils.SetTxt(viewVideoplayProductEdu, String.format("剩余额度：%s", productBean.remainingAmountStr));

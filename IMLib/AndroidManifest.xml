@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.rong.imlib">
 
     <uses-sdk
@@ -19,14 +20,13 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application>
-
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="tdrvipksrbgn5" />
+            android:value="tdrvipksrbgn5"/>
 
-        <!-- 测试:tdrvipksrbgn5--> 
-        <!-- 现网:8luwapkvuz04l-->
+        <!-- 测试tdrvipksrbgn5-->
+        <!-- 现网8luwapkvuz04l-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

@@ -101,6 +101,7 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
         String name = getIntent().getStringExtra("name");
         if (!TextUtils.isEmpty(name)) {
             newName.setText(name);
+            newName.setSelection(name.length());
 //            rightTV.setEnabled(true);
         }
     }
@@ -146,4 +147,15 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
     public void uploadImgError(Throwable error) {
 
     }
+
+    @Override
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode, String status, String statusCode) {
+
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
+
+    }
+
 }

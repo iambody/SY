@@ -40,13 +40,13 @@ public interface RxConstant {
 
     String START_CONVERSATION_OBSERVABLE = "start_conversation_observable";
     //在产品模块 我的排序的dialog点击item时候传递给fragment数据消息
-     String PRODUCT_ORDERBY_TO_FRAGMENT="product_oderby_to_fragment";
+    String PRODUCT_ORDERBY_TO_FRAGMENT = "product_oderby_to_fragment";
     //在产品模块 我的筛选的dialog点击确定时候传递给fragment数据消息
-    String PRODUCT_FILTER_TO_FRAGMENT="product_filtr_to_fragment";
+    String PRODUCT_FILTER_TO_FRAGMENT = "product_filtr_to_fragment";
     //在首页接受需要刷新web的信息配置（游客去登录进入登录需要哦刷新）
-    String MAIN_FRESH_WEB_CONFIG="mainfreshwebconfig";
-//游客等鹿后刷新首页数据
-    String MAIN_FRESH_LAY="mainfreshwebconfig";
+    String MAIN_FRESH_WEB_CONFIG = "mainfreshwebconfig";
+    //游客等鹿后刷新首页数据
+    String MAIN_FRESH_LAY = "mainfreshwebconfig";
     String REFRUSH_WEBVIEW_OBSERVABLE = "refrush_webview_observable";
 
     String REFRUSH_UNREADER_INFO_NUMBER_OBSERVABLE = "refrush_unread_number_observable";
@@ -89,6 +89,10 @@ public interface RxConstant {
     //个人信息页面用到
     String GOTO_PERSONAL_INFORMATION = "personal_information";
 
+    String GOTO_SWITCH_CENTIFY_DIR= "switch_cendify_dir";
+
+    String GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE = "switch_relative_asset_in_datamanage";
+
     //全局跳转
     String JUMP_INDEX = "junp_index";
 
@@ -101,7 +105,7 @@ public interface RxConstant {
 
     String RefreshRiskState = "refresh_risk_state";
 
-    String LOGIN_KILL="login_kill";
+    String LOGIN_KILL = "login_kill";
     String LOGIN_STATUS_DISABLE_OBSERVABLE = "login_status_disable_observable";
     String MAIN_PAGE_KILL = "mainpagekill";
 
@@ -115,6 +119,8 @@ public interface RxConstant {
     String SCHOOL_VIDEO_PAUSE = "SCHOOL_VIDEO_PAUSE";
 
     String SWIPT_CODE_RESULT = "SWIPT_CODE_RESULT";
+    String SELECT_INDENTITY = "select_indentity";
+    String SELECT_INDENTITY_ADD = "select_indentity_add";
 
     String REFRESH_PRODUCT = "REFRESH_PRODUCT";
 }

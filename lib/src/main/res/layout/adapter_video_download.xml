@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
-                    android:textColor="@color/color_5ba8f3"
+                    android:textColor="@color/app_golden"
                     android:textSize="@dimen/dimens_sp_12" />
             </RelativeLayout>
         </RelativeLayout>

@@ -21,13 +21,14 @@
             android:text="@string/footer_huatai"/>
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_sp_14"
-            android:textColor="@color/c_high_black"
             android:drawableLeft="@drawable/icon_footer_xinda"
             android:drawablePadding="2dp"
-            android:text="@string/footer_xinda"/>
+            android:text="@string/footer_xinda"
+            android:textColor="@color/c_high_black"
+            android:textSize="@dimen/dimens_sp_14" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
