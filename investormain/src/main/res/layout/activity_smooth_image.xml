@@ -8,25 +8,25 @@
     <include layout="@layout/title_layout"
         android:id="@+id/title_bar"/>
 
-    <include
-        android:id="@+id/divide_title_content"
-        layout="@layout/acitivity_divide_online"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/title_bar" />
+    <!--<include-->
+        <!--android:id="@+id/divide_title_content"-->
+        <!--layout="@layout/acitivity_divide_online"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@id/title_bar" />-->
 
     <com.cgbsoft.lib.widget.GestureImageView
         android:id="@+id/show_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/divide_title_content"
+        android:layout_below="@id/title_bar"
         android:background="@color/white"
         android:scaleType="fitCenter" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/divide_title_content"
+        android:layout_below="@id/title_bar"
         android:id="@+id/progress_ll"
         android:background="@color/half_large_transparent"
         android:clickable="true"
