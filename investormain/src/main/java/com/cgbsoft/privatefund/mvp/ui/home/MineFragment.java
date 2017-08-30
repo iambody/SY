@@ -34,6 +34,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -62,6 +63,7 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -455,6 +457,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_WODE);
         if (isLoading) {
             return;
         }
@@ -466,6 +469,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_WODE);
     }
 
     @Override

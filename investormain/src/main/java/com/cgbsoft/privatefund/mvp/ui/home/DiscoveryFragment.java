@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -24,6 +25,7 @@ import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryPresenter;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -64,6 +66,18 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @Override
     protected int layoutID() {
         return R.layout.fragment_discover_list;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SIHANG_ZX);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SIHANG_ZX);
     }
 
     @Override

@@ -52,6 +52,7 @@ import com.cn.hugo.android.scanner.QrCodeBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.TIMUserProfile;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,6 +166,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
         baseWebview.loadUrls(CwebNetConfig.pageInit);
         if (AppManager.isVisitor(baseContext) && 4 == currentPostion) { // 是游客模式
             switchID = R.id.nav_left_first;
@@ -812,6 +814,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);//结束统计时长
         try {
             if (liveJsonData != null)
                 SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, liveJsonData.getString("id"));

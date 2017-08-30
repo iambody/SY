@@ -29,6 +29,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.share.utils.WxAuthorManger;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -50,6 +51,7 @@ import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.jhworks.library.ImageSelector;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -336,6 +338,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_DL);
         AppInfStore.saveDialogTag(LoginActivity.this, false);
     }
 
@@ -417,7 +421,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onPause() {
         super.onPause();
-
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_DL);
     }
 
     @OnClick(R2.id.enter_login_wx_bt_lay)
