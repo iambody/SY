@@ -207,7 +207,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String status;
     private String statusCode;
     private boolean isClickBack;
-    private boolean isPieChartClick;
     private String customerName;
     private String credentialNumber;
     private String credentialTitle;
@@ -362,7 +361,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         }
                         break;
                     case GestureManager.INVISTE_CARLENDAR:
-                        toInvestorCarlendarActivity();
+//                        toInvestorCarlendarActivity();
+                        if (null == status) {
+                            isClickBack=true;
+                            getPresenter().verifyIndentity();
+                        } else {
+                            isClickBack=false;
+                            //90：存量已有证件号已上传证件照待审核
+                            if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
+                                replenishCards();
+                            } else {
+                                toInvestorCarlendarActivity();
+                            }
+                        }
                         break;
                     case GestureManager.DATUM_MANAGER:
                         NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
@@ -681,7 +692,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     @OnClick({R.id.account_bank_had_bug_ll,R.id.mine_bank_asset_match_ll})
     void clickAssetPieChart() {
-        isPieChartClick=true;
         if (showAssert) {
             if (null == status) {
                 isClickBack=true;
@@ -717,7 +727,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
         if (showAssert) {
-            toInvestorCarlendarActivity();
+//            toInvestorCarlendarActivity();
+            if (null == status) {
+                isClickBack=true;
+                getPresenter().verifyIndentity();
+            } else {
+                isClickBack=false;
+                //90：存量已有证件号已上传证件照待审核
+                if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
+                    replenishCards();
+                } else {
+                    toInvestorCarlendarActivity();
+                }
+            }
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
         }

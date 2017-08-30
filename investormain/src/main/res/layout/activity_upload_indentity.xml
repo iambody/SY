@@ -108,7 +108,7 @@
                     android:layout_height="214dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/upload_id_card_front" />
+                     />
                 <ImageView
                     android:id="@+id/iv_upload_card_first_cover"
                     android:layout_width="match_parent"
