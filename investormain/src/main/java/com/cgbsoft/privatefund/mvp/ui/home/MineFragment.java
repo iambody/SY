@@ -269,11 +269,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus) {
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus,String credentialCodeExist) {
         this.identity=identity;
         this.hasIdCard=hasIdCard;
         this.title=title;
-        this.credentialCode=credentialCode;
+        this.credentialCode="45".equals(existStatus)?credentialCodeExist:credentialCode;
         this.status=status;
         this.statusCode=statusCode;
         this.customerName=customerName;
@@ -730,6 +730,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra("stateCode", existStatus);
         intent.putExtra("customerName", customerName);
         intent.putExtra("customerNum", credentialNumber);
+        intent.putExtra("isFromSelectIndentity",true);
         startActivity(intent);
     }
 

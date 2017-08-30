@@ -74,8 +74,9 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
                     String credentialNumber = exist.getString("credentialNumber");
                     String credentialTitle = exist.getString("credentialTitle");
                     String stateCodeIn = exist.getString("stateCode");
+                    String credentialCodeExist = exist.getString("credentialCode");
 
-                    getView().verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,stateName,stateCodeOut,customerName,credentialNumber,credentialTitle,stateCodeIn);
+                    getView().verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,stateName,stateCodeOut,customerName,credentialNumber,credentialTitle,stateCodeIn,credentialCodeExist);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().verifyIndentityError(e);

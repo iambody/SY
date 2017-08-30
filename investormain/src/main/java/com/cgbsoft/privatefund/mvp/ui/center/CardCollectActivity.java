@@ -31,20 +31,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import qcloud.mall.R2;
 
 /**
  * Created by fei on 2017/8/10.
  */
 
-public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView,OnRefreshListener ,Toolbar.OnMenuItemClickListener{
+public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView,OnRefreshListener{
 
 //    @BindView(R.id.toolbar)
 //    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
+    @BindView(R.id.title_left)
+    ImageView back;
+    @BindView(R.id.iv_title_right)
+    ImageView ivRight;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
     @BindView(R.id.swipeToLoadLayout)
@@ -53,7 +56,16 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     private List<CardListEntity.CardBean> datas = new ArrayList<>();
     private CardListAdapter adapter;
     private String indentityCode;
-
+    @OnClick(R.id.title_left)
+    public void backClick(){
+        this.finish();
+    }
+    @OnClick(R.id.iv_title_right)
+    public void addCard(){
+        Intent intent = new Intent(this, CardCollectAddActivity.class);
+        intent.putExtra("indentityCode",indentityCode);
+        startActivity(intent);
+    }
     @Override
     protected int layoutID() {
         return R.layout.activity_cardcollect;
@@ -61,14 +73,13 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        back.setVisibility(View.VISIBLE);
         indentityCode = getIntent().getStringExtra("indentityCode");
+        if ("1001".equalsIgnoreCase(indentityCode)) {
+            ivRight.setVisibility(View.VISIBLE);
+            ivRight.setImageDrawable(getResources().getDrawable(R.drawable.card_list_add_selector));
+        }
         titleTV.setText(getResources().getString(R.string.card_collect));
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 //        setSupportActionBar(toolbar);
 //        toolbar.setOnMenuItemClickListener(this);
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
@@ -132,30 +143,6 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     @Override
     protected CardCollectPresenterImpl createPresenter() {
         return new CardCollectPresenterImpl(this,this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if ("1001".equalsIgnoreCase(indentityCode)) {
-            getMenuInflater().inflate(R.menu.page_menu, menu);
-            MenuItem rightItem = menu.findItem(com.cgbsoft.lib.R.id.firstBtn);
-            MenuItem secItem = menu.findItem(com.cgbsoft.lib.R.id.secondBtn);
-            secItem.setVisible(false);
-            rightItem.setTitle("添加");
-            rightItem.setIcon(getResources().getDrawable(R.drawable.card_list_add_selector));
-            rightItem.setVisible(true);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == com.cgbsoft.lib.R.id.firstBtn) {
-            Intent intent = new Intent(this, CardCollectAddActivity.class);
-            intent.putExtra("indentityCode",indentityCode);
-            startActivity(intent);
-        }
-        return false;
     }
 
     @Override
