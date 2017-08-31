@@ -38,6 +38,7 @@ import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -400,6 +401,34 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
+        if (!TextUtils.isEmpty(url) && url.endsWith("mine_active_list.html")) {
+            MobclickAgent.onPageEnd(Constant.SXY_HDZX);
+        }
+        if (CwebNetConfig.mineYunDou.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WDYD);
+        }
+        if (CwebNetConfig.mineCardCoupons.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WDKJ);
+        }
+        if (CwebNetConfig.mineBestCard.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WDHK);
+        }
+        if ((CwebNetConfig.mineGoodsOrder.concat("?labelType=0")).equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WDDD);
+        }
+        if (CwebNetConfig.mineHealthOrder.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WDJK);
+        }
+        if (CwebNetConfig.common_problem.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_CJWT);
+        }
+        if (CwebNetConfig.healthValue.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_CFZ);
+        }
+        if (CwebNetConfig.investeCarlendar.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_TZRL);
+        }
         try {
             mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
         } catch (IllegalAccessException e) {
@@ -412,6 +441,34 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+        if (!TextUtils.isEmpty(url) && url.endsWith("mine_active_list.html")) {
+            MobclickAgent.onPageStart(Constant.SXY_HDZX);
+        }
+        if (CwebNetConfig.mineYunDou.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WDYD);
+        }
+        if (CwebNetConfig.mineCardCoupons.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WDKJ);
+        }
+        if (CwebNetConfig.mineBestCard.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WDHK);
+        }
+        if ((CwebNetConfig.mineGoodsOrder.concat("?labelType=0")).equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WDDD);
+        }
+        if (CwebNetConfig.mineHealthOrder.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WDJK);
+        }
+        if (CwebNetConfig.common_problem.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_CJWT);
+        }
+        if (CwebNetConfig.healthValue.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_CFZ);
+        }
+        if (CwebNetConfig.investeCarlendar.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_TZRL);
+        }
         try {
             mWebview.getClass().getMethod("onResume").invoke(mWebview, (Object[]) null);
         } catch (Exception e) {

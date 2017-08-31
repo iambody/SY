@@ -383,6 +383,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
             if ("30".equals(stateCode)||"70".equals(stateCode)) {
+                if ("100101".equals(credentialCode)) {
+                    isIdCard = true;
+                }
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
@@ -413,28 +416,69 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 tagTv.setText("已通过");
             }
             if ("45".equals(stateCode)) {
-                if ("100101".equals(credentialCode)) {
-                    isIdCard=true;
-                    tagTv.setText("请拍摄实体身份证");
-                    uploadSecond.setVisibility(View.VISIBLE);
-                }
                 replenishAll.setVisibility(View.VISIBLE);
                 replenishName.setText(customerName);
                 replenishNum.setText(customerNum);
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
+                uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
+                switch (credentialCode) {
+                    case "100101"://身份证
+                        isIdCard = true;
+                        uploadSecond.setVisibility(View.VISIBLE);
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
+                        uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
+                        tagTv.setText("请拍摄实体身份证");
+                        break;
+                    case "100102"://中国护照
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
+                        tagTv.setText("请拍摄实体护照");
+                        break;
+                    case "100401"://外籍护照
+                        tagTv.setText("请拍摄实体护照");
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
+                        break;
+                    case "100201"://港澳来往内地通行证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
+                        tagTv.setText("请拍摄实体通行证");
+                        break;
+                    case "100301"://台湾来往内地通行证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
+                        tagTv.setText("请拍摄实体通行证");
+                        break;
+                    case "100103"://军官证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
+                        tagTv.setText("请拍摄实体军官证");
+                        break;
+                    case "100104"://士兵证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_soldier_card));
+                        tagTv.setText("请拍摄实体士兵证");
+                        break;
+                    case "200101"://营业执照
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_business_license));
+                        tagTv.setText("请拍摄实体营业执照");
+                        break;
+                    case "200102"://组织机构代码证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_institution_card));
+                        tagTv.setText("请拍摄实体组织机构代码证");
+                        break;
+                    case "100105"://港澳通行证
+                        uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_provinde_inland_to_gangao));
+                        tagTv.setText("请拍摄实体通行证");
+                        break;
+                }
             } else {
                 replenishAll.setVisibility(View.GONE);
-            }
-            String firstUrl = getIntent().getStringExtra("firstUrl");
-            String secondUrl = getIntent().getStringExtra("secondUrl");
-            Imageload.display(this,firstUrl,uploadFirst);
-            if (!TextUtils.isEmpty(secondUrl)) {
-                uploadSecond.setVisibility(View.VISIBLE);
-                Imageload.display(this,secondUrl,uploadSecond);
-                if ("70".equals(stateCode)) {
-                    uploadSecondCover.setVisibility(View.VISIBLE);
+                String firstUrl = getIntent().getStringExtra("firstUrl");
+                String secondUrl = getIntent().getStringExtra("secondUrl");
+                Imageload.display(this,firstUrl,uploadFirst);
+                if (!TextUtils.isEmpty(secondUrl)) {
+                    uploadSecond.setVisibility(View.VISIBLE);
+                    Imageload.display(this,secondUrl,uploadSecond);
+                    if ("70".equals(stateCode)) {
+                        uploadSecondCover.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

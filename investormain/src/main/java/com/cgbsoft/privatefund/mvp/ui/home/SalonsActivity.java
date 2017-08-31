@@ -34,6 +34,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.SalonsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.SalonsPresenterImpl;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,20 @@ public class SalonsActivity extends BaseActivity<SalonsPresenterImpl> implements
     @Override
     protected int layoutID() {
         return R.layout.activity_salons;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_KHSL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_KHSL);
     }
 
     @Override

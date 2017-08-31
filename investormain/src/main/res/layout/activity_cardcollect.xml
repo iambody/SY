@@ -3,8 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include
-        android:id="@+id/title_bar_id"
-        layout="@layout/title_layout"
+        android:id="@+id/title_bar"
+        layout="@layout/title_normal_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <FrameLayout

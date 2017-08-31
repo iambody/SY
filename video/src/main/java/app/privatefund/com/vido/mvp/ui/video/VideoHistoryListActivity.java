@@ -13,11 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.swipefresh.FullyLinearLayoutManager;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -103,6 +105,20 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @Override
     protected int layoutID() {
         return R.layout.activity_video_history;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_BFJL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_BFJL);
     }
 
     @Override

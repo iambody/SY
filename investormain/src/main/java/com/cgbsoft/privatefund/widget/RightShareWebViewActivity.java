@@ -3,9 +3,12 @@ package com.cgbsoft.privatefund.widget;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.share.dialog.CommonShareDialog;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.annotation.Route;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author chenlong
@@ -25,7 +28,36 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
         }
     }
 
-//    @Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        MobclickAgent.onResume(this);
+        if (CwebNetConfig.BindchiceAdiser.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_WSRYHJ);
+        }
+        if (CwebNetConfig.recommendFriends.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_TJHY);
+        }
+        if (CwebNetConfig.mineAssertOrder.equals(url)) {
+            MobclickAgent.onPageStart(Constant.SXY_TZZH);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        MobclickAgent.onPause(this);
+        if (CwebNetConfig.BindchiceAdiser.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_WSRYHJ);
+        }
+        if (CwebNetConfig.recommendFriends.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_TJHY);
+        }
+        if (CwebNetConfig.mineAssertOrder.equals(url)) {
+            MobclickAgent.onPageEnd(Constant.SXY_TZZH);
+        }
+    }
+    //    @Override
 //    protected void executeOverideUrlCallBack(String actionUrl) {
 //        if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_SHARE)) {
 //            shareToc(actionUrl);

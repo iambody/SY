@@ -20,6 +20,7 @@ import com.cgbsoft.lib.base.model.MallAddress;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -35,6 +36,7 @@ import com.commui.prompt.mvp.contract.MyTaskContract;
 import com.commui.prompt.mvp.listener.MyTaskListener;
 import com.commui.prompt.mvp.model.MyTaskBean;
 import com.commui.prompt.mvp.presenter.MyTaskPresenter;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,6 +93,15 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     protected void onResume() {
         super.onResume();
         getPresenter().getTaskList();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_RENWU);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_RENWU);
     }
 
     @Override

@@ -7,8 +7,10 @@ import android.view.View;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.privatefund.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * desc  ${DESC}
@@ -34,7 +36,16 @@ public class MembersAreaActivity extends BaseMvcActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_HY);
         memberareaWebview.loadUrl("javascript:refresh()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_HY);
     }
 
     public void torule(View V) {

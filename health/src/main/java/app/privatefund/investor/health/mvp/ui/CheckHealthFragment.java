@@ -9,11 +9,13 @@ import android.widget.ImageView;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.recycler.RecyclerControl;
 import com.dinuscxj.refresh.RecyclerRefreshLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 
@@ -48,6 +50,26 @@ public class CheckHealthFragment extends BaseFragment<HealthListPresenter> imple
     @Override
     protected int layoutID() {
         return R.layout.fragment_healthlist;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isCheckHealth) {
+            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JC);
+        } else {
+            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_YL);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isCheckHealth) {
+            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JC);
+        } else {
+            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_YL);
+        }
     }
 
     @Override

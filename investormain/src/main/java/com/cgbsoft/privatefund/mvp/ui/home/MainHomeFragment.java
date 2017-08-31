@@ -52,6 +52,7 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -199,12 +200,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SHOU_YE); //统计页面，"sxyshouye"为页面名称，可自定义
         LogUtils.Log("saassaa", "resume");
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
 //        mainHomeSmartscrollview.smoothScrollTo(0,20);
     }
+
 
     @Override
     public void onHiddenChanged(boolean isVisibleToUser) {
@@ -806,6 +809,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SHOU_YE);
         LogUtils.Log("sssaa", "首页不可见");
     }
 

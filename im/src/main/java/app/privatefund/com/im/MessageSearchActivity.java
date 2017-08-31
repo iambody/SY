@@ -17,10 +17,12 @@ import android.widget.TextView;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.ClearEditText;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,20 @@ public class MessageSearchActivity extends BaseActivity {
     @Override
     protected int layoutID() {
         return R.layout.acitivity_message_search;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_SOUSUO);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_SOUSUO);
     }
 
     @Override
