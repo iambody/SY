@@ -42,6 +42,9 @@ public class RouteConfig {
     // 跳转到欢迎页面
     public static final String GOTO_WELCOME_ACTIVITY = "jumpmodule://welcomeactivity";
 
+    // 跳转到首页
+    public static final String GOTO_FIRST_ACTIVITY = "jumpmodule://firstpagectivity";
+
     // 右边带分享页面
     public static final String GOTO_RIGHT_SHARE_ACTIVITY = "investornmain_right_share_activity";
 
