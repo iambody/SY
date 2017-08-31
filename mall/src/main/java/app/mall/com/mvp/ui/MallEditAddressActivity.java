@@ -33,6 +33,8 @@ import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,6 +92,9 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
     @BindView(R2.id.mall_address_area)
     EditText mall_address_area;
 
+    @BindView(R2.id.title_right_text)
+    TextView title_right_text;
+
     private boolean isAddressNormal;
 
     @Override
@@ -113,6 +118,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
 //                }
 //            }
 //        });
+        title_right_text.setText("删除");
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +168,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             }
         });
         if (addressBean != null) {
+            title_right_text.setVisibility(View.VISIBLE);
             titleMid.setText("编辑地址");
             btn_address_save.setText("保存并使用");
             DataStatistApiParam.editAddress();
@@ -308,6 +315,25 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             return super.onCreateOptionsMenu(menu);
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @OnClick(R2.id.title_right_text)
+    public void titleRightClick() {
+        if (addressBean != null) {
+            new DefaultDialog(this, "确定删除？", "取消", "确认") {
+                @Override
+                public void left() {
+                    this.dismiss();
+                }
+
+                @Override
+                public void right() {
+                    getPresenter().deleteMallAddress(addressBean.getId());
+                    this.dismiss();
+                }
+            }.show();
+        }
     }
 
     @Override
