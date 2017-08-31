@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -21,6 +22,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,6 +216,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JS);
         if (videoRootFrame!=null)
             videoRootFrame.pause();
     }
@@ -221,6 +224,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JS);
         if (videoRootFrame!=null)
             videoRootFrame.pause();
     }

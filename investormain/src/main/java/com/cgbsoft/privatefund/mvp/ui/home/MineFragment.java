@@ -34,6 +34,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -62,6 +63,7 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.readystatesoftware.viewbadger.BadgeView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -207,7 +209,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private String status;
     private String statusCode;
     private boolean isClickBack;
-    private boolean isPieChartClick;
     private String customerName;
     private String credentialNumber;
     private String credentialTitle;
@@ -268,11 +269,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus) {
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus,String credentialCodeExist) {
         this.identity=identity;
         this.hasIdCard=hasIdCard;
         this.title=title;
-        this.credentialCode=credentialCode;
+        this.credentialCode="45".equals(existStatus)?credentialCodeExist:credentialCode;
         this.status=status;
         this.statusCode=statusCode;
         this.customerName=customerName;
@@ -362,7 +363,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         }
                         break;
                     case GestureManager.INVISTE_CARLENDAR:
-                        toInvestorCarlendarActivity();
+//                        toInvestorCarlendarActivity();
+                        if (null == status) {
+                            isClickBack=true;
+                            getPresenter().verifyIndentity();
+                        } else {
+                            isClickBack=false;
+                            //90：存量已有证件号已上传证件照待审核
+                            if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
+                                replenishCards();
+                            } else {
+                                toInvestorCarlendarActivity();
+                            }
+                        }
                         break;
                     case GestureManager.DATUM_MANAGER:
                         NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
@@ -444,6 +457,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_WODE);
         if (isLoading) {
             return;
         }
@@ -455,6 +469,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_WODE);
     }
 
     @Override
@@ -681,7 +701,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     @OnClick({R.id.account_bank_had_bug_ll,R.id.mine_bank_asset_match_ll})
     void clickAssetPieChart() {
-        isPieChartClick=true;
         if (showAssert) {
             if (null == status) {
                 isClickBack=true;
@@ -711,13 +730,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra("stateCode", existStatus);
         intent.putExtra("customerName", customerName);
         intent.putExtra("customerNum", credentialNumber);
+        intent.putExtra("isFromSelectIndentity",true);
         startActivity(intent);
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
         if (showAssert) {
-            toInvestorCarlendarActivity();
+//            toInvestorCarlendarActivity();
+            if (null == status) {
+                isClickBack=true;
+                getPresenter().verifyIndentity();
+            } else {
+                isClickBack=false;
+                //90：存量已有证件号已上传证件照待审核
+                if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
+                    replenishCards();
+                } else {
+                    toInvestorCarlendarActivity();
+                }
+            }
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
         }

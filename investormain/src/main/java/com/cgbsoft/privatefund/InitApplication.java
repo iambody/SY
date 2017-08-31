@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class InitApplication extends InvestorAppli {
 
         //初始化直播
         initLive();
-
+        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
         Thread.setDefaultUncaughtExceptionHandler(new SimuyunUncaughtExceptionHandler(this));
 
         /**

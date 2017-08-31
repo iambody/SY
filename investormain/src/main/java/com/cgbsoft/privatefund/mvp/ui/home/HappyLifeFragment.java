@@ -54,7 +54,6 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
 
     @Override
     protected int titleLayoutId() {
-//        return R.layout.title_normal_elegant;
         return R.layout.title_normal_new;
     }
 

@@ -30,8 +30,10 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -167,6 +169,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     @OnClick(R.id.exit_login_out)
     public void LogOut() {
+        MobclickAgent.onProfileSignOff();
         LogOutAccount returnLogin = new LogOutAccount();
         returnLogin.accounttExit(this);
     }
@@ -231,7 +234,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @OnClick(R.id.sin_recommend_friend)
     public void recommendFriend() {
         DataStatistApiParam.recommendFriend();
-        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        Intent intent = new Intent(this, RightShareWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.recommendFriends);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_recommend));
         startActivity(intent);

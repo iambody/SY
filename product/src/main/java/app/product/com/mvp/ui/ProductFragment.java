@@ -19,6 +19,7 @@ import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.investorm.CacheInvestor;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -32,6 +33,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -224,9 +226,16 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SIHANG_CP);
         //是否需要风险评测d 弹出框
         product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
         productlsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SIHANG_CP);
     }
 
     /**

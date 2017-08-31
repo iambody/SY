@@ -172,6 +172,11 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private String credentialCode;
     private String status;
 
+    @OnClick(R.id.iv_back)
+    public void back(){
+        this.finish();
+    }
+
     @Override
     protected void before() {
         super.before();
