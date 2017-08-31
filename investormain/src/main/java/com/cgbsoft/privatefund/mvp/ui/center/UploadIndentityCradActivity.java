@@ -117,6 +117,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private int REQUEST_CODE_PERMISSON_SECOND = 2002; // 请求码
     private boolean isFromSelectIndentity;
     private String depict;
+    private String stateName;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -317,6 +318,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         });
         credentialCode = getIntent().getStringExtra("credentialCode");
         indentityCode = getIntent().getStringExtra("indentityCode");
+        stateName = getIntent().getStringExtra("stateName");
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
         depict = getIntent().getStringExtra("depict");
         String customerName = getIntent().getStringExtra("customerName");
@@ -394,7 +396,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     tagIv.setVisibility(View.VISIBLE);
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
-                    tagTv.setText("审核失败");
+                    tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
                     defeatTitle.setText("失败原因:");
                     defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
                 }
@@ -403,7 +405,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
-                    tagTv.setText("当前证件已过期");
+                    tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
                     uploadFirstCover.setVisibility(View.VISIBLE);
                     defeatTitle.setText("失败原因:");
                     defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
