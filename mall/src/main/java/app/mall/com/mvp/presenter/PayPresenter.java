@@ -27,7 +27,6 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
         super(context, view);
     }
 
-
     public void getRechargeConfig(){
         addSubscription(ApiClient.getRechargeConfig().subscribe(new RxSubscriber<String>() {
             @Override
