@@ -141,8 +141,10 @@ public class PageJumpMananger {
                 try {
                     obj = new JSONObject(s);
                     String vas = obj.getString("result");
-                    ProductlsBean productlsBean = new Gson().fromJson(vas, ProductlsBean.class);
-                    ProductNavigationUtils.startProductDetailActivity(context, productlsBean.schemeId, productlsBean.productName, 100);
+                    if (!TextUtils.isEmpty(vas)) {
+                        ProductlsBean productlsBean = new Gson().fromJson(vas, ProductlsBean.class);
+                        ProductNavigationUtils.startProductDetailActivity(context, productlsBean.schemeId, productlsBean.productName, 100);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -163,7 +165,7 @@ public class PageJumpMananger {
                 try {
                     obj = new JSONObject(s);
                     String result = obj.getString("result");
-                    if (TextUtils.isEmpty(result)) {
+                    if (!TextUtils.isEmpty(result)) {
                         VideoInfoEntity.Result videoInfoResult = new Gson().fromJson(result, VideoInfoEntity.Result.class);
                         VideoNavigationUtils.stareVideoDetail((Activity) context, videoInfoResult.videoId, videoInfoResult.rows.coverImageUrl);
                     }
