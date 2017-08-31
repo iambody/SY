@@ -64,7 +64,6 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
-        registerLogoutBroadcast();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.BLACK);
         }
@@ -174,18 +173,19 @@ public class BaseMvcActivity extends AppCompatActivity implements  BaseContant {
         super.onDestroy();
         onUnsubscribe();
         AppInfStore.saveDialogTag(BaseMvcActivity.this,false);
-        unRegisterLogoutBroadcast();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        registerLogoutBroadcast();
         MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        unRegisterLogoutBroadcast();
         MobclickAgent.onPause(this);
     }
 
