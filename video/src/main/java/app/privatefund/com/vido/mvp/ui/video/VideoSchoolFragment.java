@@ -12,6 +12,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
@@ -19,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -63,6 +65,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     protected int layoutID() {
         return R.layout.fragment_videolist;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SIHANG_SP);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SIHANG_SP);
     }
 
     @Override

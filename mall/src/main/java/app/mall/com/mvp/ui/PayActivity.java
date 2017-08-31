@@ -23,6 +23,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
@@ -32,6 +33,7 @@ import com.google.gson.Gson;
 import com.iapppay.alpha.interfaces.callback.IPayResultCallback;
 import com.iapppay.alpha.sdk.main.IAppPay;
 import com.iapppay.alpha.sdk.main.IAppPayOrderUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -143,6 +145,20 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             return R.layout.activity_pay;
         }
 //        return R.layout.activity_pay;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_YDCZ);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_YDCZ);
     }
 
     @Override

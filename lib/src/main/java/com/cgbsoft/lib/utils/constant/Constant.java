@@ -187,4 +187,41 @@ public interface Constant {
 
     //分享时候的外网log地址
     public static final String SHARE_LOG="https://upload.simuyun.com/live/106985cc-749d-449e-aaf0-2adfef274469.png";//"http://www.simuyun.com/images/simuyunlogo.png";
+
+    //埋点页面名称
+    public static final String SXY_SHOU_YE = "sxyshouye";//私享云首页
+    public static final String SXY_SIHANG_CP = "sxysihangcp";//私享云尊享私行产品
+    public static final String SXY_SIHANG_SP = "sxysihangsp";//私享云尊享私行视频
+    public static final String SXY_SIHANG_ZX = "sxysihangzx";//私享云尊享私行咨询
+    public static final String SXY_SHENGHUO_SHJ = "sxyshenghuoshj";//私享云乐享生活生活家
+    public static final String SXY_SHENGHUO_SP = "sxyshenghuosp";//私享云乐享生活尚品
+    public static final String SXY_JIANKANG_JS = "sxyjiankangjs";//私享云永享健康介绍
+    public static final String SXY_JIANKANG_JC = "sxyjiankangjc";//私享云永享健康检测/产品介绍
+    public static final String SXY_JIANKANG_YL = "sxyjiankangyl";//私享云永享健康医疗/健康咨询
+    public static final String SXY_WODE = "sxywode";//私享云我的页面
+    public static final String SXY_XIAOXI = "sxyxiaoxi";//私享云我的消息
+    public static final String SXY_WSRYHJ = "sxywsryhj";//私享云我的私人银行家
+    public static final String SXY_SOUSUO = "sxysousuo";//私享云搜索页
+    public static final String SXY_RENWU = "sxyrenwu";//私享云云豆任务页
+    public static final String SXY_TJHY = "sxytjhy";//私享云推荐好友
+    public static final String SXY_YDCZ = "sxyydcz";//私享云云豆充值页
+    public static final String SXY_HDZX = "sxyhdzx";//私享云活动中心页
+    public static final String SXY_FXWJ = "sxyfxwj";//私享云风险问卷页
+    public static final String SXY_KHSL = "sxykhsl";//私享云客户沙龙页
+    public static final String SXY_YJFK = "sxyyjfk";//私享云意见反馈页
+    public static final String SXY_WDYD = "sxywdyd";//私享云我的云豆页
+    public static final String SXY_WDKJ = "sxywdkj";//私享云我的卡券页
+    public static final String SXY_WDHK = "sxywdhk";//私享云我的贺卡页
+    public static final String SXY_WDDD = "sxywddd";//私享云我的订单页
+    public static final String SXY_WDJK = "sxywdjk";//私享云我的健康页
+    public static final String SXY_BFJL = "sxybfjl";//私享云播放记录页
+    public static final String SXY_ZCY = "sxyzcy";//私享云注册页
+    public static final String SXY_DL = "sxydl";//私享云登录页
+    public static final String SXY_CJWT = "sxycjwt";//私享云常见问题页
+    public static final String SXY_HY = "sxyhy";//私享云会员页
+    public static final String SXY_CFZ = "sxycfz";//私享云我的财富值页
+    public static final String SXY_TZRL = "sxytzrl";//私享云投资日历
+    public static final String SXY_TZZH = "sxytzzh";//私享云投资组合
+    public static final String SXY_ZLGL = "sxyzlgl";//私享云资料管理页
+    public static final String SXY_GLZC = "sxyglzc";//私享云关联资产
 }

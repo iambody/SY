@@ -29,7 +29,7 @@ public interface MineContract {
          * @param status 证件审核状态的汉语名字
          * @param statusCode 证件审核状态的code码
          */
-        void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus);
+        void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus,String credentialCodeExist);
 
         void verifyIndentityError(Throwable e);
     }

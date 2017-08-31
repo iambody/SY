@@ -31,9 +31,9 @@ public class MyTaskAdapter extends BaseAdapter<DayTaskBean, MyTaskListener, Recy
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == MyTaskBean.ISHEADER) {
-            return new MyTaskHeaderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_task_header, null), listener);
+            return new MyTaskHeaderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_task_header, parent,false), listener);
         }else if (viewType == MyTaskBean.LIST) {
-            return new MyTaskListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_day_task, null), listener);
+            return new MyTaskListHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_day_task, parent,false), listener);
         }
         return onCreateErrorViewHolder(parent);
     }

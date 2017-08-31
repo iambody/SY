@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
@@ -43,7 +44,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
 //    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
-    @BindView(R.id.iv_back)
+    @BindView(R.id.title_left)
     ImageView ivBack;
     @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
@@ -95,17 +96,15 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     protected int layoutID() {
         return R.layout.activity_cardcollect;
     }
-
+    @OnClick(R.id.title_left)
+    public void backClick(){
+        this.finish();
+    }
     @Override
     protected void init(Bundle savedInstanceState) {
+        ivBack.setVisibility(View.VISIBLE);
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, "", false, false);
         titleTV.setText(getResources().getString(R.string.card_collect_add));
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 //        setSupportActionBar(toolbar);
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 //        toolbar.setNavigationOnClickListener(v -> finish());

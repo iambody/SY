@@ -1163,6 +1163,12 @@ public class DataStatistApiParam {
      *
      * @param
      */
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
     public static void  HomeBannerClick(String bannerTitle) {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2075");
