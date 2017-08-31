@@ -383,6 +383,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
             if ("30".equals(stateCode)||"70".equals(stateCode)) {
+                if ("100101".equals(credentialCode)) {
+                    isIdCard = true;
+                }
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
