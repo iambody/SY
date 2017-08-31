@@ -147,7 +147,6 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
         } else {
             btn_address_save.setEnabled(false);
         }
-
         et_recever_name.addTextChangedListener(this);
         et_recever_address.addTextChangedListener(this);
         et_recever_phone.addTextChangedListener(this);
