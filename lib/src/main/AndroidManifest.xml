@@ -26,6 +26,10 @@
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"
              />
 
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+
         <!-- ****************百度定位****************-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

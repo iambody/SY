@@ -129,18 +129,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
         SPreference.putString(this,"JavascriptInterfaceSP","");
-        pareIntent();
     }
 
-    private void pareIntent() {
-        System.out.println("-------pareIntent");
-        Uri url  = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
-        System.out.println("-------url=" + url);
-        PushNotificationMessage pushNotificationMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
-        if (pushNotificationMessage != null) {
-            System.out.println("-------message=" + pushNotificationMessage.getExtra() + "------content=" +pushNotificationMessage.getPushContent() + "----object=" + pushNotificationMessage.toString());
-        }
-    }
+
 
     @Override
     protected WelcomePersenter createPresenter() {

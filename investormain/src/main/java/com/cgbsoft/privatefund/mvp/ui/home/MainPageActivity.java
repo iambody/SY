@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -46,6 +47,7 @@ import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
+import com.cgbsoft.privatefund.utils.PageJumpMananger;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
@@ -76,6 +78,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.push.notification.PushNotificationMessage;
 import qcloud.liveold.mvp.presenters.LoginHelper;
 import qcloud.liveold.mvp.presenters.ProfileInfoHelper;
 import qcloud.liveold.mvp.presenters.viewinface.LoginView;
@@ -162,7 +165,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -186,6 +188,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 guideMine.setVisibility(View.GONE);
             }
         }
+
     }
 
     @Override
@@ -199,8 +202,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (null != savedInstanceState) {
 
         }
-
-
 
         Log.i("MainPageActivity", "----init");
         StatusBarUtil.translucentStatusBar(this);
@@ -238,6 +239,16 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             initRongInterface();
         }
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
+        // 推送过来的跳转
+        jumpPushMessage();
+    }
+
+    private void jumpPushMessage() {
+        PushNotificationMessage pushMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
+        Uri uri = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
+        if (pushMessage != null && uri != null) {
+            PageJumpMananger.jumpPageFromToMainActivity(this, pushMessage);
+        }
     }
 
     @Override
@@ -983,7 +994,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         /**
          * 解决重影问题  手机内存不足时候回
          */
-
     }
 
     @Override

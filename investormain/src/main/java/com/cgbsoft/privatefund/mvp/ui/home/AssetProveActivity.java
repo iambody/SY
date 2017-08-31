@@ -50,6 +50,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * 资产证明
@@ -93,7 +95,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHOTO = 2;
 
     private int width;
-    private List<String> imagePaths = new ArrayList<>();
+    private ArrayList<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
     private LoadingDialog loading;
     private ImageSelector imageSelector;
@@ -157,11 +159,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
         }else {
-            if (imageSelector == null) {
-                imageSelector = NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
-            } else {
-                imageSelector.start(this, BaseWebViewActivity.REQUEST_IMAGE);
-            }
+//             NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE, imagePaths);
+            MultiImageSelector.create(this).showCamera(false).count(10).multi().origin(imagePaths).start(this, BaseWebViewActivity.REQUEST_IMAGE);
         }
     }
 
@@ -178,11 +177,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 break;
             case MY_PERMISSIONS_REQUEST_CALL_PHOTO:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (imageSelector == null) {
-                        NavigationUtils.startSystemImageMultiForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE);
-                    } else {
-                        imageSelector.start(this, BaseWebViewActivity.REQUEST_IMAGE);
-                    }
+                    MultiImageSelector.create(this).showCamera(false).count(10).multi().origin(imagePaths).start(this, BaseWebViewActivity.REQUEST_IMAGE);
                 } else {
                     // Permission Denied
                     Toast.makeText(AssetProveActivity.this, "请开启系统存储权限", Toast.LENGTH_SHORT).show();
@@ -430,7 +425,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     if ((imagePaths.size() + mSelectPath.size()) > 10) {
                         Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();
