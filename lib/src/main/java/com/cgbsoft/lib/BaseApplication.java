@@ -1,6 +1,8 @@
 package com.cgbsoft.lib;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
 import com.bumptech.glide.Glide;
@@ -110,7 +112,20 @@ public class BaseApplication extends MultiDexApplication {
             e.printStackTrace();
         }
     }
-
+    /**
+     * 获取App安装包信
+     */
+    public PackageInfo getPackageInfo() {
+        PackageInfo info = null;
+        try {
+            info = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace(System.err);
+        }
+        if (info == null)
+            info = new PackageInfo();
+        return info;
+    }
     /**
      * 供埋点使用
      *

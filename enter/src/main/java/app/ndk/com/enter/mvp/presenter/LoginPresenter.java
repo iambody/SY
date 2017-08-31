@@ -29,6 +29,7 @@ import com.cgbsoft.lib.widget.CustomDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +101,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 }
                 RongConnect.initRongTokenConnect(loginBean.userId);
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                MobclickAgent.onProfileSignIn(loginBean.userId);
             }
 
             @Override
@@ -196,6 +198,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                         loadingDialog.setResult(true, getContext().getString(R.string.al_need_bind_phone_str), 1000, () -> getView().toBindActivity());
                     } else
                         loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
+                    MobclickAgent.onProfileSignIn("WX",result.userId);
                 }
             }
 

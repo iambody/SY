@@ -833,8 +833,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 if (isOnPause) {
                     onPausePlayStauts = 1;
                 }
-
-
                 allPlayTime += System.currentTimeMillis() - startPlayTime;
                 LogUtils.Log("playvideoo", "播放描述差时间" + allPlayTime + "；；；播放结束时间" + startPlayTime);
                 if (allPlayTime > fiveMinutes) {

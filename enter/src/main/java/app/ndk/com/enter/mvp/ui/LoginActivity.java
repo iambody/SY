@@ -462,6 +462,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         });
         wxAuthorManger.startAuth();
         DataStatistApiParam.onStatisToWXLoginClick();
+//        MobclickAgent.
     }
 
 
