@@ -61,6 +61,18 @@
             android:text=""
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/title_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/ui_6_dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            />
     </RelativeLayout>
     <include layout="@layout/acitivity_divide_online" />
 </LinearLayout>
