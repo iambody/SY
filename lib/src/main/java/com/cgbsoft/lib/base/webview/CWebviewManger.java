@@ -377,6 +377,18 @@ public class CWebviewManger {
         } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
             context.finish();
+        } else if (action.contains("modificationWebTitle")) {
+            if (context instanceof BaseWebViewActivity) {
+                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+                try {
+                    String urlcodeAction = URLDecoder.decode(action, "utf-8");
+                    String[] split = urlcodeAction.split(":");
+                    String name = split[2];
+                    baseWebViewActivity.modifyTitleName(name);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
