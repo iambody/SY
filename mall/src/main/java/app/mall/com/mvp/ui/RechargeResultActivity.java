@@ -35,8 +35,8 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
     private Button goMall;
     private TextView titleMid;
 
-//    @BindView(R2.id.toolbar)
-//    Toolbar toolbar;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected int layoutID() {
@@ -57,15 +57,9 @@ public class RechargeResultActivity extends BaseActivity<PayResultPresenter> imp
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
