@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -10,6 +11,9 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -73,10 +77,41 @@ public class JavaScriptObjectToc {
     }
 
     /**
-     * H5 存储 Key Value
+     * H5存取数据方法
      */
     @JavascriptInterface
-    public void putValue(String key, String value) {
+    public void postMessage(String params) {
+        if (!TextUtils.isEmpty(params)) {
+            try {
+                JSONObject jsonObject = new JSONObject(params);
+                String eventName = jsonObject.getString("event");
+                switch (eventName) {
+                    case "modifyWebTitle":
+                        String name = jsonObject.getString("title");
+                        modifyWebViewTitleName(name);
+                        break;
+                    case "setTempData":
+                        String keyName = jsonObject.optString("identification");
+                        String values = jsonObject.optString("data");
+                        putValue(keyName, values);
+                        break;
+                    case "getTempData":
+                        String key = jsonObject.optString("identification");
+                        String callName = jsonObject.optString("callback");
+                        String vas = getStringValue(key);
+                        webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * H5 存储 Key Value
+     */
+    private void putValue(String key, String value) {
         Map<String, String> map = new HashMap<String, String>();
         String javascriptInterfaceSP = SPreference.getString(context, "JavascriptInterfaceSP");
         if (javascriptInterfaceSP != null) {
@@ -89,14 +124,27 @@ public class JavaScriptObjectToc {
     /**
      * H5 取值
      */
-    @JavascriptInterface
-    public String getStringValue(String key) {
+    private String getStringValue(String key) {
         String javascriptInterfaceSP = SPreference.getString(context, "JavascriptInterfaceSP");
         if (javascriptInterfaceSP != null) {
             Map map = transStringToMap(javascriptInterfaceSP);
             return (String) map.get(key);
         }
         return "";
+    }
+
+    private void modifyWebViewTitleName(String name) {
+        if (context instanceof BaseWebViewActivity) {
+            BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+            if (!TextUtils.isEmpty(name)) {
+                ThreadUtils.runOnMainThreadDelay(new Runnable() {
+                    @Override
+                    public void run() {
+                        baseWebViewActivity.modifyTitleName(name);
+                    }
+                }, 500);
+            }
+        }
     }
 
     /**
@@ -130,18 +178,4 @@ public class JavaScriptObjectToc {
             items = new StringTokenizer(entrys.nextToken(), "'");
         return map;
     }
-
-////  PromptManager.ShowCustomToast(context,"拉动和打火机");
-//    @JavascriptInterface
-//    public boolean hasAddCarlender(String title, String startTime) {
-//        Log.i("JavaScriptObject", "hasAddCarlender----=" + CalendarManamger.isExist(context, startTime, title));
-//        return CalendarManamger.isExist(context, startTime, title);
-//    }
-//
-//    @JavascriptInterface
-//    public void openPrePlayVideoDialog(String title, String address, String headImgUrl, String startTime, String slog) {
-//        Log.i("JavaScriptObject", "prePlayVideoNotifycation");
-//        EventBus.getDefault().post(new PreVideoPlay(slog, headImgUrl, title, startTime, address));
-//    }
-
 }

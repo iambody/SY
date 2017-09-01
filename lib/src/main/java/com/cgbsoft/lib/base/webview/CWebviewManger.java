@@ -378,15 +378,23 @@ public class CWebviewManger {
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
             context.finish();
         } else if (action.contains("modificationWebTitle")) {
+            String name = "";
+            try {
+                String urlcodeAction = URLDecoder.decode(action, "utf-8");
+                String[] split = urlcodeAction.split(":");
+                name = split[2];
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             if (context instanceof BaseWebViewActivity) {
-                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
-                try {
-                    String urlcodeAction = URLDecoder.decode(action, "utf-8");
-                    String[] split = urlcodeAction.split(":");
-                    String name = split[2];
+                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity)context;
+                if (!TextUtils.isEmpty(name)) {
                     baseWebViewActivity.modifyTitleName(name);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                }
+            } else {
+                if (!TextUtils.isEmpty(name)) {
+                    RxBus.get().post(RxConstant.WEBVIEW_MODIFY_TITLE, name);
                 }
             }
         }

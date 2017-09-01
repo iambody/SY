@@ -63,6 +63,8 @@ public interface RxConstant {
 
     String OPEN_MESSAGE_LIST_PAGE_OBSERVABLE = "open_message_list_activity_observable";
 
+    String WEBVIEW_MODIFY_TITLE = "webview_modify_title";
+
     String MALL_CHOICE_ADDRESS = "choice_address";
 
     String SWITCH_ASSERT_SHOW = "switch_assert_show_hint";
