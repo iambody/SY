@@ -94,7 +94,6 @@ public class PageJumpMananger {
                 final String id = android.substring(android.indexOf("?") + 1);
                 JSONObject j = new JSONObject();
                 if (jumpActivityName.equals("ProductDetailActivity")) {
-//                    j.put("schemeId", id);
                     requestProductDetail(context, id);
                 } else if (jumpActivityName.equals("PlayVideoActivity")) {
                     requestVieoDetail(context, id);

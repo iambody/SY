@@ -73,6 +73,7 @@ public class ReceiveInfoManager {
             try {
                 Bundle bundle = msg.getData();
                 BackgroundManager backgroundManager = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager();
+                Activity currentActivity = backgroundManager.getCurrentActivity();
                 switch (msg.what) {
                     case Constant.RECEIVER_SEND_CODE:
                         final String title = bundle.getString("title");
@@ -89,7 +90,7 @@ public class ReceiveInfoManager {
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
                         if (Constant.msgSystemStatus.equals(SenderId)) {
-                            infoDialog = new DefaultDialog(backgroundManager.getCurrentActivity(), detail, "返回", rightText) {
+                            infoDialog = new DefaultDialog(currentActivity, detail, "返回", rightText) {
                                 @Override
                                 public void left() {
                                     this.dismiss();
@@ -104,7 +105,7 @@ public class ReceiveInfoManager {
                                 }
                             };
                         } else {
-                            infoDialog = new PushDialog(backgroundManager.getCurrentActivity(), title, detail, rightText, "返回", jumpUrl) {
+                            infoDialog = new PushDialog(currentActivity, title, detail, rightText, "返回", jumpUrl) {
                                 @Override
                                 public void left() {
                                     dismiss();
@@ -119,7 +120,7 @@ public class ReceiveInfoManager {
                                 }
                             };
                         }
-                        if (!infoDialog.isShowing()) {
+                        if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                             infoDialog.show();
                         }
                         break;
@@ -131,7 +132,7 @@ public class ReceiveInfoManager {
                                 infoDialog.dismiss();
                             }
                             if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
-                                infoDialog = new DefaultDialog(backgroundManager.getCurrentActivity(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
+                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getContent(), "返回", smMessage.getButtonText()) {
                                     @Override
                                     public void left() {
                                         this.dismiss();
@@ -157,7 +158,7 @@ public class ReceiveInfoManager {
                                     }
                                 };
                             }
-                            if (!infoDialog.isShowing()) {
+                            if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.show();
                             }
                         } else {
