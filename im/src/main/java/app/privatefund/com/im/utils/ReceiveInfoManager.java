@@ -87,6 +87,7 @@ public class ReceiveInfoManager {
                         }
                         if (infoDialog != null && infoDialog.isShowing()) {
                             infoDialog.dismiss();
+                            infoDialog = null;
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
                         if (Constant.msgSystemStatus.equals(SenderId)) {
@@ -130,6 +131,7 @@ public class ReceiveInfoManager {
                         if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
                             if (infoDialog != null && infoDialog.isShowing()) {
                                 infoDialog.dismiss();
+                                infoDialog = null;
                             }
                             if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
                                 infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getContent(), "返回", smMessage.getButtonText()) {
