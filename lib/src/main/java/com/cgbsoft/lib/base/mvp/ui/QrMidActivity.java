@@ -67,3 +67,4 @@ public class QrMidActivity extends Activity {
         }
     }
 }
+

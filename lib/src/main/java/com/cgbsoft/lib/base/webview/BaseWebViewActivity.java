@@ -224,6 +224,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             protected void onRxError(Throwable error) {
             }
         });
+
         if (rightMessageIcon) {
             System.out.println("----------webview=---rightMessageIcon" + rightMessageIcon);
             RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);

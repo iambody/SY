@@ -75,7 +75,7 @@
     <string name="token_error_511_str">您的账号已在其它设备上登录，如非本人操作请尽快修改密码。</string>
     <string name="no_product_str">当前暂无专题</string>
     <string name="reload_str">下拉重新加载</string>
-    <string name="err_net_str">网络链接异常，请检查您的网络设置</string>
+    <string name="err_net_str">网络连接异常，请检查您的网络设置</string>
     <string name="error_net">网络连接异常,请检查您的网络</string>
     <string name="app_error">应用程序错误</string>
     <string name="app_error_message">很抱歉，应用程序出现错误，即将退出。\n请提交错误报告，我们会尽快修复这个问题！</string>

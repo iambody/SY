@@ -39,8 +39,10 @@
                     android:id="@+id/tv_vcd_message"
                     android:layout_width="wrap_content"
                     android:layout_height="120dp"
-                    android:layout_margin="5dp"
-                    android:textSize="@dimen/dimens_sp_15" />
+                    android:layout_margin="15dp"
+                    android:paddingTop="10dp"
+                    android:textColor="#333"
+                    android:textSize="@dimen/dimens_sp_14" />
 
         <TextView
             android:layout_width="wrap_content"

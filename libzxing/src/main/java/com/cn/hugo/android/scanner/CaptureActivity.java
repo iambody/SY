@@ -153,7 +153,7 @@ public final class CaptureActivity extends Activity implements
     private ImageView light;
     private ViewfinderView qr_codeswipe;
 
-     class MyHandler extends Handler {
+    class MyHandler extends Handler {
 
         private WeakReference<Activity> activityReference;
 
@@ -640,11 +640,11 @@ public final class CaptureActivity extends Activity implements
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.capture_scan_photo) {
-                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
-                innerIntent.setType("image/*");
-                Intent wrapperIntent = Intent.createChooser(innerIntent,
-                        "选择二维码图片");
-                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
+            Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
+            innerIntent.setType("image/*");
+            Intent wrapperIntent = Intent.createChooser(innerIntent,
+                    "选择二维码图片");
+            this.startActivityForResult(wrapperIntent, REQUEST_CODE);
 
 //            // TODO 图片选择
 //                Intent ii = new Intent(this, MultiImageSelectorActivity.class);
@@ -674,14 +674,14 @@ public final class CaptureActivity extends Activity implements
         }
 //        switch (v.getId()) {
 //            case R.id.capture_scan_photo: // 图片识别
-                // 打开手机中的相册
+        // 打开手机中的相册
 //                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); // "android.intent.action.GET_CONTENT"
 //                innerIntent.setType("image/*");
 //                Intent wrapperIntent = Intent.createChooser(innerIntent,
 //                        "选择二维码图片");
 //                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
 
-                // TODO 图片选择
+        // TODO 图片选择
 //                Intent ii = new Intent(this, MultiImageSelectorActivity.class);
 //                // 是否显示拍摄图片
 //                ii.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);

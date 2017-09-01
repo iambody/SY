@@ -40,7 +40,7 @@ public class PayPresenter extends BasePresenterImpl<PayContract.View> implements
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().getRechargeConfigSuc(error.toString());
+//                getView().getRechargeConfigSuc(error.toString());
             }
         }));
     }

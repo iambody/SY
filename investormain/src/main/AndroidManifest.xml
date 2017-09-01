@@ -9,7 +9,6 @@
     <!-- 读取电话状态 -->
     <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 使用振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 挂载文件系统 -->
@@ -136,12 +135,14 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
         <meta-data android:value="574e9a6367e58e24960027b0" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <!--
         umeng
             正式Key:5983d8c365b6d632a2000c06
             测试：574e9a6367e58e24960027b0
+            sxy_hiahia：59a7a94d9f06fd642a00131a
           &lt;!&ndash; glide &ndash;&gt;
           <meta-data
               android:name="com.cgbsoft.lib.utils.imgNetLoad.GlideConfiguration"
@@ -524,6 +525,9 @@
             android:process=":QALSERVICE" />
 
         <activity android:name=".mvp.ui.home.SplashMovieActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="97154212d752b81e66a61062775295279a167d05" />
     </application>
 
 </manifest>
