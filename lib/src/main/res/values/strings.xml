@@ -77,7 +77,9 @@
     <string name="reload_str">下拉重新加载</string>
     <string name="err_net_str">网络连接异常，请检查您的网络设置</string>
     <string name="error_net">网络连接异常,请检查您的网络</string>
-
+    <string name="app_error">应用程序错误</string>
+    <string name="app_error_message">很抱歉，应用程序出现错误，即将退出。\n请提交错误报告，我们会尽快修复这个问题！</string>
+    <string name="submit_report">提交报告</string>
     <!-- ============ 分享======== -->
     <string name="share_my_card">&#160;&#160;&#160;分享我的职业名片</string>
     <string name="copyscuuced">复制成功</string>

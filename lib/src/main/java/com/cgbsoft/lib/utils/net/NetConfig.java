@@ -71,7 +71,7 @@ public class NetConfig {
     //获取ip
     final static String GETIP_URL = "cityjson";
     //客户风险评测提交接口
-    final static String USERAGENT_URL = API_URL+"/useragree/sixiangyun";
+    final static String USERAGENT_URL = API_URL + "/useragree/sixiangyun";
 
     final static String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
 
@@ -165,7 +165,7 @@ public class NetConfig {
         //获取用户信息
         final static String GET_USERINFO_URL = AUTH_URL + user + "/userInfo";
         //验证微信验证unionid是否已存在
-        final  static String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
+        final static String WX_UNIONID_CHECK = AUTH_URL + user + "/weChatUnionId";
         // 微信登录
         final static String WX_LOGIN_URL = AUTH_URL + user + "/weChatLogin";
         //注册
@@ -363,9 +363,10 @@ public class NetConfig {
         static final String UPDATE_SALON_AND_CITY = API_URL + "/salons/main";
         static final String UPDATE_SALON = API_URL + "/salons";
     }
+
     static class Indentity {
         static final String GET_INDENTITY_TYPE_LIST = AUTH_URL_V2 + "/credential/config";
-        static final String VERIFY_INDENTITY=AUTH_URL_V2 + "/credential/info";
+        static final String VERIFY_INDENTITY = AUTH_URL_V2 + "/credential/info";
         public static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
         public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         public static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";

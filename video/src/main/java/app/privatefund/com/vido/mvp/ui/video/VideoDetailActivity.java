@@ -552,6 +552,20 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
                 break;
             case VideoStatus.FINISH:
+                if (null == getPresenter().daoUtils.getDownLoadVideoInfo()) return;
+                List<VideoInfoModel> datas = getPresenter().daoUtils.getDownLoadVideoInfo();
+                boolean ishave = false;
+                for (int i = 0; i < datas.size(); i++) {
+                    if (datas.get(i).videoId == videoId) ishave = true;
+
+                }
+                if (ishave) {
+                    tv_avd_cache.setText(R.string.cache_str);
+                    iv_avd_cache.setImageResource(R.drawable.ic_cache);
+                    isCancache = true;
+                    return;
+                }
+
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
                     File file = new File(videoInfoModel.localVideoPath);
                     if (file.isFile() && file.exists()) {
@@ -572,6 +586,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     }
                 }
         }
+
+
     }
 
     //获取视频信息
@@ -833,8 +849,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 if (isOnPause) {
                     onPausePlayStauts = 1;
                 }
-
-
                 allPlayTime += System.currentTimeMillis() - startPlayTime;
                 LogUtils.Log("playvideoo", "播放描述差时间" + allPlayTime + "；；；播放结束时间" + startPlayTime);
                 if (allPlayTime > fiveMinutes) {

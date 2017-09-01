@@ -52,7 +52,6 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.jude.rollviewpager.hintview.IconHintView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -200,7 +199,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart(Constant.SXY_SHOU_YE); //统计页面，"sxyshouye"为页面名称，可自定义
+//        MobclickAgent.onPageStart(Constant.SXY_SHOU_YE); //统计页面，"sxyshouye"为页面名称，可自定义
         LogUtils.Log("saassaa", "resume");
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
@@ -739,9 +738,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         switch (v.getId()) {
             case R.id.main_home_level_lay://等级
                 String url = CwebNetConfig.membercenter;
-//
-//                NavigationUtils.gotoWebActivity(baseActivity, url, "会员专区", false);
-
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 break;
             case R.id.main_home_live_lay://直播
@@ -809,7 +805,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(Constant.SXY_SHOU_YE);
+//        MobclickAgent.onPageEnd(Constant.SXY_SHOU_YE);
         LogUtils.Log("sssaa", "首页不可见");
     }
 
