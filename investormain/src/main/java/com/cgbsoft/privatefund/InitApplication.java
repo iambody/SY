@@ -36,6 +36,8 @@ import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
 import qcloud.liveold.mvp.utils.SxbLogImpl;
 import rx.Observable;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * desc
@@ -48,6 +50,8 @@ public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
+
         //初始化直播
         initLive();
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity

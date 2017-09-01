@@ -1358,6 +1358,7 @@ public class CWebviewManger {
      * @param action
      */
     private void closepage(String action) {
+
         ((Activity) context).finish();
     }
 

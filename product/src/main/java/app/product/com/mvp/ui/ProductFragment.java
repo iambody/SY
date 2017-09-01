@@ -90,6 +90,12 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @BindView(R2.id.series_layout)
     LinearLayout seriesLayout;
 
+    @BindView(R2.id.load_error)
+    TextView load_error;
+
+    @BindView(R2.id.reload)
+    TextView reload;
+
 //    @BindView(R2.id.blurring_view)
 //    BlurringView blurringView;
 
@@ -104,7 +110,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     private Observable<Series> seriesObservable;
     //筛选的确定事件
     private Observable<EventFiltBean> filterObservable;
+    private Observable<Boolean> refreshObserable;
     private LinearLayoutManager linearLayoutManager;
+
     private ProductlsAdapter productlsAdapter;
     //智能排序的视图Pop
     private OrderbyPop orderbyPop;
@@ -293,8 +301,6 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
                     DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.productName, "1".equals(productlsBean.isHotProduct));
                 }
-
-
             }
         });
         fragmentProductrecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -363,6 +369,21 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 
             }
         });
+
+        refreshObserable = RxBus.get().register(ProductPresenter.REFRESH_PRODUCT,Boolean.class);
+
+        refreshObserable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                initConfig();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         // 筛选点击
         filterObservable = RxBus.get().register(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, EventFiltBean.class);
 
@@ -392,6 +413,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
         if (null != seriesObservable)
             RxBus.get().unregister(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMENT, seriesObservable);
 
+        if (null != refreshObserable)
+            RxBus.get().unregister(ProductPresenter.REFRESH_PRODUCT, refreshObserable);
+
         if (null != filterObservable)
             RxBus.get().unregister(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, filterObservable);
     }
@@ -410,6 +434,16 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     protected ProductPresenter createPresenter() {
         return new ProductPresenter(getContext(), this);
     }
+
+    /**
+     * 无网络重新加载
+     */
+    @OnClick(R2.id.reload)
+    public void reload() {
+        CurrentOffset = 0;
+        reSetConditionAction();
+    }
+
 
     @OnClick(R2.id.product_productfragment_paixu)
     public void onProductProductfragmentPaixuClicked() {
@@ -464,6 +498,8 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
     @Override
     public void getDataSucc(int Type, String str) {
         clodLsAnim(swipeToLoadLayout);
+        load_error.setVisibility(View.GONE);
+        reload.setVisibility(View.GONE);
         switch (Type) {
             case ProductContract.LOAD_FILTER://获取到的筛选条件
                 productFilterBean = new Gson().fromJson(str.trim(), ProductFilterBean.class);
@@ -507,14 +543,26 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
 //        PromptManager.ShowCustomToast(getContext(), str);
         switch (Type) {
             case ProductContract.LOAD_FILTER://请求筛选条件失败
-
+                load_error.setVisibility(View.GONE);
+                reload.setVisibility(View.GONE);
                 break;
             case ProductContract.LOAD_PRODUCT_LISTDATA://请求产品列表成功
                 if (!isLoadmore) {
                     productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
                     swipeToLoadLayout.setVisibility(View.GONE);
+                    load_error.setVisibility(View.GONE);
+                    reload.setVisibility(View.GONE);
                 }
                 break;
+            case ProductContract.NET_ERROR: //网络加载失败
+                productProductfragmentEmptyIv.setVisibility(View.VISIBLE);
+                swipeToLoadLayout.setVisibility(View.GONE);
+                productProductfragmentEmptyIv.setImageResource(R.drawable.net_err_tip);
+                load_error.setText(baseActivity.getResources().getString(R.string.err_net_str));
+                load_error.setVisibility(View.VISIBLE);
+                reload.setVisibility(View.VISIBLE);
+
+
         }
         isLoadmore = false;
     }

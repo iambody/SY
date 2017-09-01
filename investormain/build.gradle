@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
+apply plugin: 'io.fabric'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 // 打包时间
 def releaseTime() {
@@ -66,16 +72,16 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('../privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
-            storePassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//            storePassword "privatefund"
         }
         release {
-            storeFile file('../privatefund.keystore')
-            keyAlias "beijing"
-            keyPassword "privatefund"
-            storePassword "privatefund"
+//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
+//            keyAlias "beijing"
+//            keyPassword "privatefund"
+//            storePassword "privatefund"
         }
     }
     applicationVariants.all { variant ->
@@ -89,14 +95,14 @@ android {
     }
     productFlavors{
         guanwang{}
-//        huawei{}
-//        qihu360{}
-//        tengxun{}
-//        xiaomi{}
-//        baidu{}
-//        yingyonghui{}
-//        wandoujia{}
-//        mumayi{}
+        /* huawei{}
+         qihu360{}
+         tengxun{}
+         xiaomi{}
+         baidu{}
+         yingyonghui{}
+         wandoujia{}
+         mumayi{}*/
 
     }
     productFlavors.all {
@@ -185,4 +191,9 @@ dependencies {
     compile project(':video')
     compile project(':mall')
     compile project(':health')
+//    compile('com.crashlytics.sdk.android:crashlytics:2.5.2') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
+//    compile files('libs/gradle-1.24.0.jar')
 }

@@ -93,7 +93,9 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             @Override
             protected void onRxError(Throwable error) {
                 if (null != loadingDialog) loadingDialog.dismiss();
-                getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, error.getMessage());
+                if (error.toString().contains("UnknownHostException")){
+                    getView().getDataFail(ProductContract.NET_ERROR, error.getMessage());
+                }
 
                 isFristRequest = false;
             }

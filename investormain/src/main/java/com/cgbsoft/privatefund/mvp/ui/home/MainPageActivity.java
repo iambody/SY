@@ -302,7 +302,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
      * 各种需要初始化判断是否显示dialog的 eg:风险测评
      */
     private void initDialog() {
-
     }
 
     private void loginLive() {
@@ -403,6 +402,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             case 1://左2
                 switchID = R.id.nav_left_second;
                 currentPostion = 1;
+//                RxBus.get().post(RxConstant.REFRESH_PRODUCT, true);
                 break;
             case 3://左3
                 switchID = R.id.nav_right_first;

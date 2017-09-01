@@ -121,4 +121,6 @@ public interface RxConstant {
     String SWIPT_CODE_RESULT = "SWIPT_CODE_RESULT";
     String SELECT_INDENTITY = "select_indentity";
     String SELECT_INDENTITY_ADD = "select_indentity_add";
+
+    String REFRESH_PRODUCT = "REFRESH_PRODUCT";
 }

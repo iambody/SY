@@ -73,7 +73,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
         AppInfStore.saveDialogTag(BaseActivity.this, false);
-        registerLogoutBroadcast();
 
 //        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
@@ -182,12 +181,14 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        registerLogoutBroadcast();
         OtherDataProvider.addTopActivity(getApplicationContext(), getClass().getName());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        unRegisterLogoutBroadcast();
         MobclickAgent.onPause(this);
     }
 
@@ -358,7 +359,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onDestroy() {
         super.onDestroy();
         AppInfStore.saveDialogTag(BaseActivity.this, false);
-        unRegisterLogoutBroadcast();
         if (mBaseHandler != null) {
             mBaseHandler.removeCallbacksAndMessages(null);
             mBaseHandler = null;
