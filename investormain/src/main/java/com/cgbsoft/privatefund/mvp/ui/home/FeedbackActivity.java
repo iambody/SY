@@ -36,6 +36,7 @@ import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
 import com.jhworks.library.ImageSelector;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 
@@ -189,10 +190,19 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_YJFK);
         if (imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
             imagePaths.add("+");
             feedbackAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_YJFK);
     }
 
     @Override

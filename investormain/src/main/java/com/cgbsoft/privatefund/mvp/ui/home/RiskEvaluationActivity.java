@@ -14,9 +14,11 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 
@@ -101,9 +103,17 @@ public class RiskEvaluationActivity extends BaseActivity {
         return null;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_FXWJ);
+    }
 
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_FXWJ);
         String isEvaluated = SPreference.getUserInfoData(this).getToC().getIsEvaluated();
         String phoneNumber =SPreference.getUserInfoData(this).getPhoneNum();
         if ("2".equals(isEvaluated)) {

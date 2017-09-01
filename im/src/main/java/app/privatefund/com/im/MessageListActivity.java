@@ -9,6 +9,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.chenenyu.router.annotation.Route;
+import com.umeng.analytics.MobclickAgent;
 
 import app.privatefund.com.im.fragment.MainMessageFragment;
 
@@ -40,5 +41,17 @@ public class MessageListActivity extends BaseActivity {
     @Override
     protected BasePresenterImpl createPresenter() {
         return null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

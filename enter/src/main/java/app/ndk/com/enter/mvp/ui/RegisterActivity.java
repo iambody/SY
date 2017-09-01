@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -29,6 +30,7 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.dialog.ProtocolDialog;
 import com.chenenyu.router.Router;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -108,6 +110,20 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     protected int layoutID() {
         return R.layout.activity_register;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(Constant.SXY_ZCY);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(Constant.SXY_ZCY);
     }
 
     @Override

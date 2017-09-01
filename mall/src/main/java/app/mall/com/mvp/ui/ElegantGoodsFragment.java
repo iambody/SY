@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.DividerGridItemDecoration;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +70,18 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     @Override
     protected int layoutID() {
         return R.layout.elegantgoods_fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SHENGHUO_SP);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SHENGHUO_SP);
     }
 
     @Override

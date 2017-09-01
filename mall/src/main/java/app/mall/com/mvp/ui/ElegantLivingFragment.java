@@ -23,6 +23,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,18 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     @Override
     protected int layoutID() {
         return R.layout.elegantliving_fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Constant.SXY_SHENGHUO_SHJ);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Constant.SXY_SHENGHUO_SHJ);
     }
 
     @Override
