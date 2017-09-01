@@ -139,10 +139,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             AppInfStore.saveGuideTag(MainPageActivity.this);
             return;
         }
-        if (getRatio()==1.9f){
+        if (getRatio()>=1.9f){
             guide.setImageDrawable(getResources().getDrawable(guideIdsH[guideindex]));
+        }else{
+            guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
         }
-        guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
 
     }
 
@@ -1015,6 +1016,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int widthPixels = dm.widthPixels;
         int heightPixels = dm.heightPixels;
-        return (float) widthPixels / (float) heightPixels;
+        return (float) heightPixels / (float) widthPixels;
     }
 }
