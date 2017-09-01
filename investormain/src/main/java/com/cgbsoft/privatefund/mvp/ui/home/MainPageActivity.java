@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -126,6 +127,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @BindView(R.id.iv_guide_mine)
     ImageView guideMine;
     private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
+    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
 
     @OnClick(R.id.iv_guide)
@@ -137,7 +139,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             AppInfStore.saveGuideTag(MainPageActivity.this);
             return;
         }
-        guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+        if (getRatio()>=1.9f){
+            guide.setImageDrawable(getResources().getDrawable(guideIdsH[guideindex]));
+        }else{
+            guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
+        }
+
     }
 
     @OnClick(R.id.iv_guide_mine)
@@ -198,6 +205,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             guide.setVisibility(View.VISIBLE);
         } else {
             guide.setVisibility(View.GONE);
+        }
+        if (getRatio()>=1.9f){
+            guide.setImageDrawable(getResources().getDrawable(guideIdsH[0]));
+            guideMine.setImageDrawable(getResources().getDrawable(guideIdsH[4]));
         }
         if (null != savedInstanceState) {
 
@@ -999,5 +1010,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 //        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private float getRatio() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int widthPixels = dm.widthPixels;
+        int heightPixels = dm.heightPixels;
+        return (float) heightPixels / (float) widthPixels;
     }
 }

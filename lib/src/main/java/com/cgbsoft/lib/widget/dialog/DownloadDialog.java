@@ -219,7 +219,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             }
         });
 
-        downloadApkToken = downloadManagerPro.addTask("POF_Cloud_V"+_verName, downloadUrl, 12, fileRoot, false, true);
+        downloadApkToken = downloadManagerPro.addTask("POF_Cloud_V" + _verName, downloadUrl, 12, fileRoot, false, true);
         try {
             downloadManagerPro.startDownload(downloadApkToken);
         } catch (IOException e1) {
