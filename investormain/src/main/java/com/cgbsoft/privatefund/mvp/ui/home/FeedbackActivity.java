@@ -18,12 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.listener.listener.FeedbackListener;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -44,6 +46,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 /**
  * 意见反馈
@@ -186,9 +190,15 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             imagePaths.remove(imagePaths.size() - 1);
             isSub=true;
         }
-        NavigationUtils.startSystemImageForResult(this, REQUEST_SELECT_IMAGE,imagePaths);
+//        NavigationUtils.startSystemImageForResult(this, REQUEST_SELECT_IMAGE,imagePaths);
+        startSysteCamera();
     }
-
+    private void startSysteCamera() {
+        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0));
+        intent.setShowCamera(true);
+        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -219,17 +229,20 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
             LogUtils.Log("aaa","-------000====");
             if (resultCode == RESULT_OK) {
                 isSub=false;
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+                if (data == null) {
+                    return;
+                }
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
                 for (String path : mSelectPath) {
                     LogUtils.Log("aaa","path==="+path);
                 }
                 if (mSelectPath != null && mSelectPath.size() > 0) {
-                    imagePaths.clear();
-                    if (mSelectPath.size() < 12) {
-                        mSelectPath.add("+");
-                    }
+//                    imagePaths.clear();
                     imagePaths.addAll(mSelectPath);
+                    if (imagePaths.size() < 12) {
+                        imagePaths.add("+");
+                    }
                     feedbackAdapter.notifyDataSetChanged();
 //                    imagePaths.add(mSelectPath.get(0));
 //                    feedbackAdapter.addPic(mSelectPath.get(0));
