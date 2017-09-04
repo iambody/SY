@@ -61,7 +61,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
 
-import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 /**
  * desc  ${DESC}
@@ -1102,10 +1101,10 @@ public class CWebviewManger {
 //        ImageSelector selector = ImageSelector.create();
 //        selector.single();  // 选择一张图片
 //        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
-        PhotoPickerIntent intent = new PhotoPickerIntent(context);
-        intent.setPhotoCount(1);
-        intent.setShowCamera(false);
-        context.startActivityForResult(intent,  BaseWebViewActivity.BACK_CAMERA_CODE);
+//        PhotoPickerIntent intent = new PhotoPickerIntent(context);
+//        intent.setPhotoCount(1);
+//        intent.setShowCamera(false);
+//        context.startActivityForResult(intent,  BaseWebViewActivity.BACK_CAMERA_CODE);
     }
 
     private void recommentFriend() {

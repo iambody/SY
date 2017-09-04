@@ -49,8 +49,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.iwf.photopicker.PhotoPickerActivity;
-import me.iwf.photopicker.utils.PhotoPickerIntent;
+import me.iwf.photopicker.PhotoPicker;
 
 /**
  * 资产证明
@@ -186,10 +185,16 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     }
 
     private void startSysteCamera() {
-        PhotoPickerIntent intent = new PhotoPickerIntent(this);
-        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0));
-        intent.setShowCamera(true);
-        startActivityForResult(intent, BaseWebViewActivity.REQUEST_IMAGE);
+//        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+//        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0));
+//        intent.setShowCamera(true);
+//        startActivityForResult(intent, BaseWebViewActivity.REQUEST_IMAGE);
+        PhotoPicker.builder()
+                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0))
+                .setShowCamera(false)
+                .setShowGif(false)
+                .setPreviewEnabled(false)
+                .start(this, BaseWebViewActivity.REQUEST_IMAGE);
     }
 
     private void initData() {
@@ -434,7 +439,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                  if (data == null) {
                   return;
                  }
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     if ((imagePaths.size() + mSelectPath.size()) > 10) {
                         Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();

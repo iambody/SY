@@ -36,7 +36,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -46,8 +45,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPickerActivity;
-import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 /**
  * 意见反馈
@@ -194,10 +193,16 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         startSysteCamera();
     }
     private void startSysteCamera() {
-        PhotoPickerIntent intent = new PhotoPickerIntent(this);
-        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0));
-        intent.setShowCamera(true);
-        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+//        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+//        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0));
+//        intent.setShowCamera(true);
+//        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+        PhotoPicker.builder()
+                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0))
+                .setShowCamera(true)
+                .setShowGif(false)
+                .setPreviewEnabled(false)
+                .start(this, REQUEST_SELECT_IMAGE);
     }
     @Override
     protected void onResume() {
@@ -232,7 +237,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 if (data == null) {
                     return;
                 }
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
                 for (String path : mSelectPath) {
                     LogUtils.Log("aaa","path==="+path);

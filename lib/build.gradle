@@ -110,7 +110,7 @@ dependencies {
     // 照片选择器
 //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'me.iwf.photopicker:PhotoPicker:0.9.7@aar'
-
+    compile 'com.nineoldandroids:library:2.4.0'
     //小红点
     //
     //umeng统计

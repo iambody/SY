@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPickerActivity;
 import rx.Observable;
 
@@ -528,7 +529,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if (requestCode == Constant.REQUEST_IMAGE) {
         } else if (requestCode == BACK_CAMERA_CODE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 System.out.println("-----select1=" + mSelectPath.get(0));
                 String newTargetFile = FileUtils.compressFileToUpload(mSelectPath.get(0), true);
                 String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_HEAD_TYPE);
