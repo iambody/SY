@@ -22,7 +22,6 @@ import com.chenenyu.router.RouteCallback;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jhworks.library.ImageSelector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -73,28 +72,28 @@ public class NavigationUtils {
         context.startActivity(intent);
     }
 
-    public static void startSystemImageForResult(Activity activity, int reqeustCode) {
-        ImageSelector selectSec = ImageSelector.create();
-        selectSec.single();  // 选择一张图片
-        selectSec.start(activity, reqeustCode);
-    }
-
-    public static void startSystemImageForResult(Activity activity, int reqeustCode, ArrayList<String> origins) {
-        ImageSelector selectSec = ImageSelector.create();
-        selectSec.multi();
-        selectSec.count(12);
-        selectSec.origin(origins);
-        selectSec.start(activity, reqeustCode);
-    }
-
-    public static ImageSelector startSystemImageMultiForResult(Activity activity, int reqeustCode) {
-        ImageSelector selectSec = ImageSelector.create();
-        selectSec.openCameraOnly(false);
-        selectSec.multi();
-        selectSec.count(10);
-        selectSec.start(activity, reqeustCode);
-        return selectSec;
-    }
+//    public static void startSystemImageForResult(Activity activity, int reqeustCode) {
+//        ImageSelector selectSec = ImageSelector.create();
+//        selectSec.single();  // 选择一张图片
+//        selectSec.start(activity, reqeustCode);
+//    }
+//
+//    public static void startSystemImageForResult(Activity activity, int reqeustCode, ArrayList<String> origins) {
+//        ImageSelector selectSec = ImageSelector.create();
+//        selectSec.multi();
+//        selectSec.count(12);
+//        selectSec.origin(origins);
+//        selectSec.start(activity, reqeustCode);
+//    }
+//
+//    public static ImageSelector startSystemImageMultiForResult(Activity activity, int reqeustCode) {
+//        ImageSelector selectSec = ImageSelector.create();
+//        selectSec.openCameraOnly(false);
+//        selectSec.multi();
+//        selectSec.count(10);
+//        selectSec.start(activity, reqeustCode);
+//        return selectSec;
+//    }
 
     public static void toMainActivity(Context context) {
         Router.build(RouteConfig.GOTOCMAINHONE).go(context);
