@@ -109,7 +109,7 @@ dependencies {
     compile "com.kogitune:pre-lollipop-activity-transition:${actvityTr_need_version}"
     // 照片选择器
 //    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
-    compile 'me.iwf.photopicker:PhotoPicker:0.1.8'
+    compile 'me.iwf.photopicker:PhotoPicker:0.9.7@aar'
 
     //小红点
     //
