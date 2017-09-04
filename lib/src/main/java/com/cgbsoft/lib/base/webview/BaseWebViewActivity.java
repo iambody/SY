@@ -345,8 +345,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     public void modifyTitleName(String name) {
-        rightItem.setTitle(name);
-        rightItem.setVisible(true);
+        titleMid.setText(name);
     }
 
     /**

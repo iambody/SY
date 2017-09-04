@@ -17,8 +17,6 @@ public class NetConfig {
     private static String START_APP = "https://t4-app";//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
-
-
     private static String BASE = ".simuyun.com";
 
     public static String SERVER_ADD = START_APP + BASE;
