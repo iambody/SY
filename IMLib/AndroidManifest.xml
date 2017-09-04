@@ -25,8 +25,8 @@
             android:name="RONG_CLOUD_APP_KEY"
             android:value="8luwapkvuz04l"/>
 
-        <!-- 测试tdrvipksrbgn5-->
-        <!-- 现网8luwapkvuz04l-->
+        <!-- 测试:tdrvipksrbgn5-->
+        <!-- 现网:8luwapkvuz04l-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

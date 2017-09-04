@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.listener.listener.FeedbackListener;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
@@ -82,6 +81,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     private static final int SMOTH_CODE = 2;
     private int picClickPosition = -1;
     private MyPermissionsChecker mPermissionsChecker;
+    private int REQUEST_SELECT_IMAGE=102;
+    private boolean isSub;
 
     @Override
     protected int layoutID() {
@@ -183,8 +184,9 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         }
         if (imagePaths.size()>0&&imagePaths.get(imagePaths.size() - 1).equals("+")) {
             imagePaths.remove(imagePaths.size() - 1);
+            isSub=true;
         }
-        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+        NavigationUtils.startSystemImageForResult(this, REQUEST_SELECT_IMAGE,imagePaths);
     }
 
     @Override
@@ -192,7 +194,11 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(Constant.SXY_YJFK);
-        if (imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+        if (isSub&&imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+            LogUtils.Log("aaa","imagePaths.size()---"+imagePaths.size());
+            for (String path : imagePaths) {
+                LogUtils.Log("aaa","path---"+path);
+            }
             imagePaths.add("+");
             feedbackAdapter.notifyDataSetChanged();
         }
@@ -208,9 +214,16 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
+        LogUtils.Log("aaa","onactivityResult");
+        if (requestCode == REQUEST_SELECT_IMAGE) {
+            LogUtils.Log("aaa","-------000====");
             if (resultCode == RESULT_OK) {
+                isSub=false;
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+                LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
+                for (String path : mSelectPath) {
+                    LogUtils.Log("aaa","path==="+path);
+                }
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     imagePaths.clear();
                     if (mSelectPath.size() < 12) {
