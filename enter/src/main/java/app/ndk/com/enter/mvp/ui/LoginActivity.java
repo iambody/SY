@@ -50,7 +50,6 @@ import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -567,9 +566,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
 
-        if (REQUEST_CODE == requestCode) {
-            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
-        }
+//        if (REQUEST_CODE == requestCode) {
+//            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+//        }
         if (resultCode == RESULT_OK) {
             String result = data.getExtras().getString("result");
             PromptManager.ShowCustomToast(LoginActivity.this, result);

@@ -33,7 +33,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.RelativeAssetContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.RelatedAssetPresenter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -172,10 +171,10 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (camenIntent.resolveActivity(getPackageManager()) != null) {
-                        ImageSelector selectSec = ImageSelector.create();
-                        selectSec.showCamera(true);
-                        selectSec.openCameraOnly(true);
-                        selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+//                        ImageSelector selectSec = ImageSelector.create();
+//                        selectSec.showCamera(true);
+//                        selectSec.openCameraOnly(true);
+//                        selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
                     } else {
                         Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
                     }
@@ -252,11 +251,11 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         } else {
             Intent camenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (camenIntent.resolveActivity(getPackageManager()) != null) {
-                ImageSelector selectSec = ImageSelector.create();
-//                selectSec.single();  // 选择一张图片
-                selectSec.showCamera(true);
-                selectSec.openCameraOnly(true);
-                selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
+//                ImageSelector selectSec = ImageSelector.create();
+////                selectSec.single();  // 选择一张图片
+//                selectSec.showCamera(true);
+//                selectSec.openCameraOnly(true);
+//                selectSec.start(this, BaseWebViewActivity.BACK_CAMERA_CODE);
             } else {
                 Toast.makeText(this, R.string.no_camera_device, Toast.LENGTH_SHORT).show();
             }
@@ -268,17 +267,17 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BaseWebViewActivity.BACK_CAMERA_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
-                System.out.println("-----select1=" + mSelectPath.get(0));
-                imagePath = com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.compressFileToUpload(mSelectPath.get(0), true);
-                addImage.setVisibility(View.GONE);
-                showImage.setImageBitmap(MyBitmapUtils.getLoacalBitmap(imagePath));
-                IsShowing = true;
-                imageId = null;
-                resultImage.setVisibility(View.GONE);
-                checkFailure.setVisibility(View.GONE);
-                relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
-                commitBtn.setEnabled(true);
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+//                System.out.println("-----select1=" + mSelectPath.get(0));
+//                imagePath = com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils.compressFileToUpload(mSelectPath.get(0), true);
+//                addImage.setVisibility(View.GONE);
+//                showImage.setImageBitmap(MyBitmapUtils.getLoacalBitmap(imagePath));
+//                IsShowing = true;
+//                imageId = null;
+//                resultImage.setVisibility(View.GONE);
+//                checkFailure.setVisibility(View.GONE);
+//                relative_asset_up_shouchizhaopian_txt.setVisibility(View.GONE);
+//                commitBtn.setEnabled(true);
             } else {
                 imagePath = "";
             }

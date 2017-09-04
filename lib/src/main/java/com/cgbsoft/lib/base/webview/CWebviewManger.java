@@ -55,7 +55,6 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
-import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

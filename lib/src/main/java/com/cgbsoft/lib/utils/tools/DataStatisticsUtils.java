@@ -6,19 +6,16 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.TimeUtils;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
-import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
-import com.jhworks.library.utils.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +55,7 @@ public class DataStatisticsUtils {
                 js.put("lat", locationBean.getLocationlatitude());
                 js.put("lng", locationBean.getLocationlontitude());
             }
-            js.put("clicktime", TimeUtils.format(System.currentTimeMillis()));
+//            js.put("clicktime", TimeUtils.format(System.currentTimeMillis()));
             js.put("uid", AppManager.getUserId(context.getApplicationContext()));
             js.put("ip", OtherDataProvider.getIP(context.getApplicationContext()));
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌

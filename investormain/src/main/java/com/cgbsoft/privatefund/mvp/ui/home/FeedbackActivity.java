@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -27,7 +26,6 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -35,7 +33,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -45,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPickerActivity;
 
 /**
  * 意见反馈
@@ -184,7 +182,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         if (imagePaths.size()>0&&imagePaths.get(imagePaths.size() - 1).equals("+")) {
             imagePaths.remove(imagePaths.size() - 1);
         }
-        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+//        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
     }
 
     @Override
@@ -210,7 +208,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     imagePaths.clear();
                     if (mSelectPath.size() < 12) {

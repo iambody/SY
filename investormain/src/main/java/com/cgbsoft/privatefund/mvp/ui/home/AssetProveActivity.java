@@ -40,7 +40,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.AssetProveContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.AssetProvePresenter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 
 import org.json.JSONArray;
 
@@ -98,7 +97,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private ArrayList<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
     private LoadingDialog loading;
-    private ImageSelector imageSelector;
     private static int state;
 
     @Override
@@ -190,7 +188,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private void startSysteCamera() {
         PhotoPickerIntent intent = new PhotoPickerIntent(this);
         intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0));
-        intent.setShowCamera(false);
+        intent.setShowCamera(true);
         startActivityForResult(intent, BaseWebViewActivity.REQUEST_IMAGE);
     }
 
