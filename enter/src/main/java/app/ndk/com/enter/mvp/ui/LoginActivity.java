@@ -50,7 +50,6 @@ import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -327,14 +326,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private ArrayList<String> picLs = new ArrayList<>();
     private int REQUEST_CODE = 20;
 
-    private void testSelectPic() {
-        ImageSelector imageSelector = ImageSelector.create();
-        imageSelector.single();
-        imageSelector.origin(picLs);
-        imageSelector.openCameraOnly(false);
-        imageSelector.start(LoginActivity.this, REQUEST_CODE);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -575,9 +566,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
 
-        if (REQUEST_CODE == requestCode) {
-            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
-        }
+//        if (REQUEST_CODE == requestCode) {
+//            picLs = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+//        }
         if (resultCode == RESULT_OK) {
             String result = data.getExtras().getString("result");
             PromptManager.ShowCustomToast(LoginActivity.this, result);

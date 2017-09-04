@@ -39,6 +39,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
@@ -54,12 +55,13 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
-import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
+
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 /**
  * desc  ${DESC}
@@ -1097,9 +1099,13 @@ public class CWebviewManger {
     }
 
     private void startImagePage(String action) {
-        ImageSelector selector = ImageSelector.create();
-        selector.single();  // 选择一张图片
-        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
+//        ImageSelector selector = ImageSelector.create();
+//        selector.single();  // 选择一张图片
+//        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
+        PhotoPickerIntent intent = new PhotoPickerIntent(context);
+        intent.setPhotoCount(1);
+        intent.setShowCamera(false);
+        context.startActivityForResult(intent,  BaseWebViewActivity.BACK_CAMERA_CODE);
     }
 
     private void recommentFriend() {
