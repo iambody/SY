@@ -49,7 +49,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.iwf.photopicker.PhotoPicker;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * 资产证明
@@ -152,7 +153,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
+//            ActivityCompat.requestmissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
         }else {
             startSysteCamera();
 //             NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE, imagePaths);
@@ -189,12 +190,15 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 //        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0));
 //        intent.setShowCamera(true);
 //        startActivityForResult(intent, BaseWebViewActivity.REQUEST_IMAGE);
-        PhotoPicker.builder()
-                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0))
-                .setShowCamera(false)
-                .setShowGif(false)
-                .setPreviewEnabled(false)
-                .start(this, BaseWebViewActivity.REQUEST_IMAGE);
+//        PhotoPicker.builder()
+//                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0))
+//                .setShowCamera(false)
+//                .setShowGif(false)
+//                .setPreviewEnabled(false)
+//                .start(this, BaseWebViewActivity.REQUEST_IMAGE);
+
+        MultiImageSelector.create(this).showCamera(false).count(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0)).
+                multi().start(this, BaseWebViewActivity.REQUEST_IMAGE);
     }
 
     private void initData() {
@@ -439,7 +443,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                  if (data == null) {
                   return;
                  }
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     if ((imagePaths.size() + mSelectPath.size()) > 10) {
                         Toast.makeText(AssetProveActivity.this, "最多上传10张图片", Toast.LENGTH_SHORT).show();

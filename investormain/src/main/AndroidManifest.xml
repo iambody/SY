@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 读写系统设置 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <!-- 获取错略位置 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" /> -->

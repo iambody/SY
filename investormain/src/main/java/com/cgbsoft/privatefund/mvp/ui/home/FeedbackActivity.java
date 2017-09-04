@@ -45,8 +45,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.iwf.photopicker.PhotoPicker;
-import me.iwf.photopicker.PhotoPickerActivity;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * 意见反馈
@@ -197,12 +197,15 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 //        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0));
 //        intent.setShowCamera(true);
 //        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
-        PhotoPicker.builder()
-                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0))
-                .setShowCamera(true)
-                .setShowGif(false)
-                .setPreviewEnabled(false)
-                .start(this, REQUEST_SELECT_IMAGE);
+//        PhotoPicker.builder()
+//                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0))
+//                .setShowCamera(true)
+//                .setShowGif(false)
+//                .setPreviewEnabled(false)
+//                .start(this, REQUEST_SELECT_IMAGE);
+
+        MultiImageSelector.create(this).showCamera(true).count(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0)).
+                multi().start(this, REQUEST_SELECT_IMAGE);
     }
     @Override
     protected void onResume() {
@@ -237,7 +240,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
                 if (data == null) {
                     return;
                 }
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
                 for (String path : mSelectPath) {
                     LogUtils.Log("aaa","path==="+path);
