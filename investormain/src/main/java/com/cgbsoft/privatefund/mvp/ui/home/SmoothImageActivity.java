@@ -2,7 +2,9 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 放大照片
@@ -41,6 +44,9 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	@BindView(R.id.title_mid)
 	protected TextView titleMid;
 
+	@BindView(R.id.title_right_text)
+	protected TextView rightTextView;
+
 	@BindView(R.id.iv_back)
 	ImageView ivBack;
 	private String localUrl;
@@ -57,6 +63,10 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 		imageView.setImageResource(R.drawable.bg_white);
 //		toolbar.setTitle("");
 		titleMid.setText("图片预览");
+		rightTextView.setVisibility(getIntent().getBooleanExtra(IMAGE_RIGHT_DELETE, false) ? View.VISIBLE : View.GONE);
+		Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_local_video_delete);
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+		rightTextView.setCompoundDrawables(drawable, null, null, null);
 //		setSupportActionBar(toolbar);
 //		toolbar.setOnMenuItemClickListener(this);
 //		toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
@@ -73,6 +83,14 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	@Override
 	protected BasePresenterImpl createPresenter() {
 		return null;
+	}
+
+	@OnClick(R.id.title_right_text)
+	public void onClickRightText() {
+		Intent intent = new Intent();
+		intent.putExtra("deletPath", getIntent().getStringExtra(IMAGE_SAVE_PATH_LOCAL));
+		setResult(Activity.RESULT_OK, intent);
+		finish();
 	}
 
 	private void initImage() {

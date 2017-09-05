@@ -119,11 +119,11 @@ public class ImageSelectorFragment extends Fragment implements LoaderManager.Loa
 
         if (mode == MODE_MULTI && arguments != null) {
 
-//            ArrayList<String> tmp = arguments.getStringArrayList(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST);
-//
-//            if (tmp != null && tmp.size() > 0) {
-//                resultList = tmp;
-//            }
+            ArrayList<String> tmp = arguments.getStringArrayList(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST);
+
+            if (tmp != null && tmp.size() > 0) {
+                resultList = tmp;
+            }
         }
     }
 

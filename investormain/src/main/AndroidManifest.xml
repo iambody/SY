@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 读写系统设置 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <!-- 获取错略位置 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" /> -->
@@ -136,7 +137,7 @@
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
         <meta-data android:name="android.max_aspect" android:value="2.1" />
-        <meta-data android:value="574e9a6367e58e24960027b0" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="5983d8c365b6d632a2000c06" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <!--
         umeng
@@ -405,7 +406,7 @@
         <!-- 融云 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.cgbsoft.privatefund"
+            android:authorities="${applicationId}.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

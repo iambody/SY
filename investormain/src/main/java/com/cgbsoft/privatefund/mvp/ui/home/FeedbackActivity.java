@@ -25,6 +25,7 @@ import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -35,7 +36,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.FeedBackUserContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.FeedBackUserPresenter;
 import com.cgbsoft.privatefund.widget.mvc.adapter.FeedbackAdapter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -45,6 +45,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * 意见反馈
@@ -82,6 +84,8 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     private static final int SMOTH_CODE = 2;
     private int picClickPosition = -1;
     private MyPermissionsChecker mPermissionsChecker;
+    private int REQUEST_SELECT_IMAGE=102;
+    private boolean isSub;
 
     @Override
     protected int layoutID() {
@@ -183,16 +187,36 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         }
         if (imagePaths.size()>0&&imagePaths.get(imagePaths.size() - 1).equals("+")) {
             imagePaths.remove(imagePaths.size() - 1);
+            isSub=true;
         }
-        NavigationUtils.startSystemImageForResult(this, BaseWebViewActivity.REQUEST_IMAGE,imagePaths);
+//        NavigationUtils.startSystemImageForResult(this, REQUEST_SELECT_IMAGE,imagePaths);
+        startSysteCamera();
     }
+    private void startSysteCamera() {
+//        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+//        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0));
+//        intent.setShowCamera(true);
+//        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
+//        PhotoPicker.builder()
+//                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0))
+//                .setShowCamera(true)
+//                .setShowGif(false)
+//                .setPreviewEnabled(false)
+//                .start(this, REQUEST_SELECT_IMAGE);
 
+        MultiImageSelector.create(this).showCamera(true).count(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0)).
+                multi().start(this, REQUEST_SELECT_IMAGE);
+    }
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(Constant.SXY_YJFK);
-        if (imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+        if (isSub&&imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
+            LogUtils.Log("aaa","imagePaths.size()---"+imagePaths.size());
+            for (String path : imagePaths) {
+                LogUtils.Log("aaa","path---"+path);
+            }
             imagePaths.add("+");
             feedbackAdapter.notifyDataSetChanged();
         }
@@ -208,15 +232,25 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
+        LogUtils.Log("aaa","onactivityResult");
+        if (requestCode == REQUEST_SELECT_IMAGE) {
+            LogUtils.Log("aaa","-------000====");
             if (resultCode == RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+                isSub=false;
+                if (data == null) {
+                    return;
+                }
+                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
+                for (String path : mSelectPath) {
+                    LogUtils.Log("aaa","path==="+path);
+                }
                 if (mSelectPath != null && mSelectPath.size() > 0) {
-                    imagePaths.clear();
-                    if (mSelectPath.size() < 12) {
-                        mSelectPath.add("+");
-                    }
+//                    imagePaths.clear();
                     imagePaths.addAll(mSelectPath);
+                    if (imagePaths.size() < 12) {
+                        imagePaths.add("+");
+                    }
                     feedbackAdapter.notifyDataSetChanged();
 //                    imagePaths.add(mSelectPath.get(0));
 //                    feedbackAdapter.addPic(mSelectPath.get(0));

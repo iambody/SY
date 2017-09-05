@@ -72,16 +72,16 @@ android {
 
     signingConfigs {
         debug {
-//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//            storePassword "privatefund"
+            storeFile file('../privatefund.keystore')
+            keyAlias "beijing"
+            keyPassword "privatefund"
+            storePassword "privatefund"
         }
         release {
-//            storeFile file('/Users/fei/workspace/signe/privatefund.keystore')
-//            keyAlias "beijing"
-//            keyPassword "privatefund"
-//            storePassword "privatefund"
+            storeFile file('../privatefund.keystore')
+            keyAlias "beijing"
+            keyPassword "privatefund"
+            storePassword "privatefund"
         }
     }
     applicationVariants.all { variant ->
@@ -95,14 +95,14 @@ android {
     }
     productFlavors{
         guanwang{}
-        /* huawei{}
+        huawei{}
          qihu360{}
          tengxun{}
          xiaomi{}
          baidu{}
          yingyonghui{}
          wandoujia{}
-         mumayi{}*/
+         mumayi{}
 
     }
     productFlavors.all {

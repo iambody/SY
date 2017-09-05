@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.MyBitmapUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -40,7 +40,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.home.AssetProveContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.AssetProvePresenter;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 
 import org.json.JSONArray;
 
@@ -98,7 +97,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private ArrayList<String> imagePaths = new ArrayList<>();
     private List<String> remoteParams = new ArrayList<>();
     private LoadingDialog loading;
-    private ImageSelector imageSelector;
     private static int state;
 
     @Override
@@ -109,7 +107,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     @Override
     protected void init(Bundle savedInstanceState) {
         width = ViewUtils.getDisplayWidth(this);
-
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 //        toolbar.setNavigationOnClickListener(v -> finish());
       ivBack.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +116,6 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             }
         });
         titleMid.setText("资产证明");
-
         ViewUtils.setTextColorAndLink(this, description, R.string.hotline, ContextCompat.getColor(this, R.color.app_golden), (v, linkText) -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
@@ -157,10 +153,10 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
+//            ActivityCompat.requestmissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
         }else {
+            startSysteCamera();
 //             NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE, imagePaths);
-            MultiImageSelector.create(this).showCamera(false).count(10).multi().origin(imagePaths).start(this, BaseWebViewActivity.REQUEST_IMAGE);
         }
     }
 
@@ -177,7 +173,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
                 break;
             case MY_PERMISSIONS_REQUEST_CALL_PHOTO:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    MultiImageSelector.create(this).showCamera(false).count(10).multi().origin(imagePaths).start(this, BaseWebViewActivity.REQUEST_IMAGE);
+                    startSysteCamera();
+//                    NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE, imagePaths);
                 } else {
                     // Permission Denied
                     Toast.makeText(AssetProveActivity.this, "请开启系统存储权限", Toast.LENGTH_SHORT).show();
@@ -186,6 +183,22 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    private void startSysteCamera() {
+//        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+//        intent.setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0));
+//        intent.setShowCamera(true);
+//        startActivityForResult(intent, BaseWebViewActivity.REQUEST_IMAGE);
+//        PhotoPicker.builder()
+//                .setPhotoCount(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0))
+//                .setShowCamera(false)
+//                .setShowGif(false)
+//                .setPreviewEnabled(false)
+//                .start(this, BaseWebViewActivity.REQUEST_IMAGE);
+
+        MultiImageSelector.create(this).showCamera(false).count(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0)).
+                multi().start(this, BaseWebViewActivity.REQUEST_IMAGE);
     }
 
     private void initData() {
@@ -423,9 +436,14 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
+       if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 //                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                 if (data == null) {
+                  return;
+                 }
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {
                     if ((imagePaths.size() + mSelectPath.size()) > 10) {

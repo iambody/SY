@@ -39,6 +39,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
@@ -54,12 +55,12 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.bean.share.NewsBean;
 import com.google.gson.Gson;
-import com.jhworks.library.ImageSelector;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
+
 
 /**
  * desc  ${DESC}
@@ -377,6 +378,26 @@ public class CWebviewManger {
         } else if (action.contains("gotoMineActivity")) { // 跳转到我的活动
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_MINE_ACTIVITY);
             context.finish();
+        } else if (action.contains("modificationWebTitle")) {
+            String name = "";
+            try {
+                String urlcodeAction = URLDecoder.decode(action, "utf-8");
+                String[] split = urlcodeAction.split(":");
+                name = split[2];
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            if (context instanceof BaseWebViewActivity) {
+                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity)context;
+                if (!TextUtils.isEmpty(name)) {
+                    baseWebViewActivity.modifyTitleName(name);
+                }
+            } else {
+                if (!TextUtils.isEmpty(name)) {
+                    RxBus.get().post(RxConstant.WEBVIEW_MODIFY_TITLE, name);
+                }
+            }
         }
     }
 
@@ -1077,9 +1098,13 @@ public class CWebviewManger {
     }
 
     private void startImagePage(String action) {
-        ImageSelector selector = ImageSelector.create();
-        selector.single();  // 选择一张图片
-        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
+//        ImageSelector selector = ImageSelector.create();
+//        selector.single();  // 选择一张图片
+//        selector.start(context, BaseWebViewActivity.BACK_CAMERA_CODE);
+//        PhotoPickerIntent intent = new PhotoPickerIntent(context);
+//        intent.setPhotoCount(1);
+//        intent.setShowCamera(false);
+//        context.startActivityForResult(intent,  BaseWebViewActivity.BACK_CAMERA_CODE);
     }
 
     private void recommentFriend() {

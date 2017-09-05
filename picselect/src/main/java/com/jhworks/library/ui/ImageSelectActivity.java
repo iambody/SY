@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,6 +22,8 @@ import com.jhworks.library.R;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.jhworks.library.ui.ImageSelectorFragment.MODE_MULTI;
 
 /**
  * Author : LiaoJH
@@ -44,13 +47,12 @@ public class ImageSelectActivity extends ImageBaseActivity
         Intent intent = new Intent(context, ImageSelectActivity.class);
         intent.putExtra(Constant.KEY_EXTRA_SHOW_CAMERA, showCamera);
         intent.putExtra(Constant.KEY_EXTRA_SELECT_COUNT, maxCount);
+        intent.putExtra(Constant.KEY_EXTRA_SELECT_MODE, mode);
         if (originData != null) {
 //            intent.putStringArrayListExtra(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST, originData);
-
-            ImageSelectorFragment.resultList=originData;
-
+            intent.putExtra(Constant.KEY_EXTRA_DEFAULT_SELECTED_LIST, originData);
+//            ImageSelectorFragment.resultList=originData;
         }
-        intent.putExtra(Constant.KEY_EXTRA_SELECT_MODE, mode);
         intent.putExtra(Constant.KEY_EXTRA_IMAGE_SPAN_COUNT, imageSpanCount);
         intent.putExtra(Constant.KEY_EXTRA_OPEN_CAMERA_ONLY, onlyOpenCamera);
         return intent;

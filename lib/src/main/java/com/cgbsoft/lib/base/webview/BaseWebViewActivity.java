@@ -37,7 +37,6 @@ import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
-import com.jhworks.library.ImageSelector;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -344,6 +343,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     }
 
+    public void modifyTitleName(String name) {
+        titleMid.setText(name);
+    }
+
     /**
      * @param url
      * @return
@@ -524,11 +527,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if (requestCode == Constant.REQUEST_IMAGE) {
         } else if (requestCode == BACK_CAMERA_CODE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
-                System.out.println("-----select1=" + mSelectPath.get(0));
-                String newTargetFile = FileUtils.compressFileToUpload(mSelectPath.get(0), true);
-                String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_HEAD_TYPE);
-                FileUtils.deleteFile(newTargetFile);
+//                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+//                System.out.println("-----select1=" + mSelectPath.get(0));
+//                String newTargetFile = FileUtils.compressFileToUpload(mSelectPath.get(0), true);
+//                String paths = DownloadUtils.postObject(newTargetFile, Constant.UPLOAD_HEAD_TYPE);
+//                FileUtils.deleteFile(newTargetFile);
             }
         }
     }

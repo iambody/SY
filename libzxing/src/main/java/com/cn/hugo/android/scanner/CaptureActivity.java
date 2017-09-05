@@ -45,7 +45,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
-import com.jhworks.library.ImageSelector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
