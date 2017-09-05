@@ -531,6 +531,24 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         switch (videoInfoModel.status) {
             case VideoStatus.DOWNLOADING:
+
+                if (null == getPresenter().daoUtils.getDownLoadVideoInfo()) return;
+                List<VideoInfoModel> datas = getPresenter().daoUtils.getDownLoadVideoInfo();
+                boolean ishave = false;
+                for (int i = 0; i < datas.size(); i++) {
+                    if (datas.get(i).videoId == videoId) ishave = true;
+
+                }
+                if (!ishave) {
+                    tv_avd_cache.setText(R.string.cache_str);
+                    iv_avd_cache.setImageResource(R.drawable.ic_cache);
+                    isCancache = true;
+                    return;
+                }
+
+
+
+
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
@@ -552,19 +570,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
                 break;
             case VideoStatus.FINISH:
-                if (null == getPresenter().daoUtils.getDownLoadVideoInfo()) return;
-                List<VideoInfoModel> datas = getPresenter().daoUtils.getDownLoadVideoInfo();
-                boolean ishave = false;
-                for (int i = 0; i < datas.size(); i++) {
-                    if (datas.get(i).videoId == videoId) ishave = true;
-
-                }
-                if (ishave) {
-                    tv_avd_cache.setText(R.string.cache_str);
-                    iv_avd_cache.setImageResource(R.drawable.ic_cache);
-                    isCancache = true;
-                    return;
-                }
 
                 if (!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
                     File file = new File(videoInfoModel.localVideoPath);
