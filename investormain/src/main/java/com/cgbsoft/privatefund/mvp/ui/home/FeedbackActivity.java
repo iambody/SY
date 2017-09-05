@@ -204,7 +204,7 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
 //                .setPreviewEnabled(false)
 //                .start(this, REQUEST_SELECT_IMAGE);
 
-        MultiImageSelector.create(this).showCamera(true).count(CollectionUtils.isEmpty(imagePaths) ? 10 : (10 - imagePaths.size() > 0 ? 10 - imagePaths.size() : 0)).
+        MultiImageSelector.create(this).showCamera(true).count(CollectionUtils.isEmpty(imagePaths) ? 12 : (12 - imagePaths.size() > 0 ? 12 - imagePaths.size() : 0)).
                 multi().start(this, REQUEST_SELECT_IMAGE);
     }
     @Override
