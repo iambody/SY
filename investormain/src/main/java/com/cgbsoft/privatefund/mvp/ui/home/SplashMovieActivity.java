@@ -59,7 +59,7 @@ public class SplashMovieActivity extends Activity implements SurfaceHolder.Callb
     }
 
 
- 
+
     private void bindViews() {
         int resID = R.raw.movie_toc;
         
