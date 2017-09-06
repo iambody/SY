@@ -47,7 +47,7 @@ public class DownloadUtils {
         String remotePath = type.concat(UUID.randomUUID().toString().concat(".png"));
         textMap.put("key", remotePath);
         // Content-Disposition
-        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
+//        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
         // OSSAccessKeyId
         textMap.put("OSSAccessKeyId", accessKeyId);
         // policy
@@ -114,8 +114,12 @@ public class DownloadUtils {
                     }
                     File file = new File(inputValue);
                     String filename = file.getName();
-
                     String contentType = "application/octet-stream";
+                    if (filename.toLowerCase().endsWith(".jpg")||filename.toLowerCase().endsWith(".jpeg")||filename.toLowerCase().endsWith(".png")) {
+                        contentType = "image/jpeg";
+                    } else {
+                        contentType = "application/octet-stream";
+                    }
                     StringBuffer strBuf = new StringBuffer();
                     strBuf.append("\r\n").append("--").append(boundary).append(
                             "\r\n");

@@ -213,10 +213,6 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(Constant.SXY_YJFK);
         if (isSub&&imagePaths.size()>0&&imagePaths.size() < 12&&!imagePaths.get(imagePaths.size()-1).equals("+")) {
-            LogUtils.Log("aaa","imagePaths.size()---"+imagePaths.size());
-            for (String path : imagePaths) {
-                LogUtils.Log("aaa","path---"+path);
-            }
             imagePaths.add("+");
             feedbackAdapter.notifyDataSetChanged();
         }
@@ -232,19 +228,13 @@ public class FeedbackActivity extends BaseActivity<FeedBackUserPresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtils.Log("aaa","onactivityResult");
         if (requestCode == REQUEST_SELECT_IMAGE) {
-            LogUtils.Log("aaa","-------000====");
             if (resultCode == RESULT_OK) {
                 isSub=false;
                 if (data == null) {
                     return;
                 }
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                LogUtils.Log("aaa","mSelectPath.size()==="+mSelectPath.size());
-                for (String path : mSelectPath) {
-                    LogUtils.Log("aaa","path==="+path);
-                }
                 if (mSelectPath != null && mSelectPath.size() > 0) {
 //                    imagePaths.clear();
                     imagePaths.addAll(mSelectPath);
