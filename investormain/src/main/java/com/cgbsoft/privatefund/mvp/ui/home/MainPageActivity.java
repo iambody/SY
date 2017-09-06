@@ -115,7 +115,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
-
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -129,6 +128,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
     private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
+    private static final String FRAGMENTS_TAG = "android:support:fragments";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            savedInstanceState.putParcelable(FRAGMENTS_TAG, null);
+        }
+        super.onCreate(savedInstanceState);
+    }
 
     @OnClick(R.id.iv_guide)
     public void guideClick() {
