@@ -210,7 +210,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         switch (status) {
             case 1:
                 linearLayout.setVisibility(View.VISIBLE);
-                checkResult.setText("待审核");
+                checkResult.setText("审核中");
                 commit.setVisibility(View.GONE);
                 hasStatus = true;
                 break;

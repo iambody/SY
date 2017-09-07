@@ -27,6 +27,7 @@ public class LogOutAccount {
 
     public void accounttExit(Context context) {
         try {
+            RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
             AppInfStore.saveIsLogin(context, false);
             AppInfStore.saveUserInfo(context, null);
             AppInfStore.saveUserId(context, "");
@@ -34,13 +35,14 @@ public class LogOutAccount {
             AppInfStore.saveRongTokenExpired(context, 0);
             ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
             AppInfStore.saveUserAccount(context, null);
+            AppInfStore.saveIsVisitor(context, true);
             HashMap<String,Object>map=new HashMap<>();
             map.put("ialoginout",true);
             map.put("fromValidatePassword",needExitApp);
-            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            RxBus.get().post(RxConstant.CLOSE_MAIN_OBSERVABLE, true);
+//            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map);
             ((Activity) context).finish();
-            AppInfStore.saveIsVisitor(context, true);
+
             //退出时清空融云token en
 //            SharedPreferences sharedPreferences = context.getSharedPreferences("tokenExpired.xml", Context.MODE_PRIVATE);
 //            SharedPreferences.Editor edit = sharedPreferences.edit();
