@@ -46,7 +46,7 @@ public class DownloadUtils {
         // 表单域
         Map<String, String> textMap = new LinkedHashMap<>();
         String pre = ".png";
-        if (!TextUtils.isEmpty(localFilePath) && localFilePath.contains(".") && localFilePath.lastIndexOf(".") < localFilePath.length()) {
+        if (!TextUtils.isEmpty(localFilePath) && localFilePath.contains(".") && localFilePath.lastIndexOf(".") < localFilePath.length() - 1) {
             int dex = localFilePath.lastIndexOf(".");
             pre = localFilePath.substring(dex);
         }
