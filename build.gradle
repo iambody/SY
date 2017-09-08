@@ -34,14 +34,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
+def keystorePropertiesFile = rootProject.file("gradle.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 ext {
     compileSdkVersion = 24
     buildToolsVersion = "25.0.0"
     minSdkVersion = 17
     targetSdkVersion = 23
-    versionCode = 60005
-    versionName = "6.0.5"
+    versionCode = keystoreProperties['versionCode'] as int
+    versionName = keystoreProperties['versionName']
     databaseName = "sxydb.db";
     databaseVer = 1;
 
@@ -84,4 +86,6 @@ ext {
     webview_java_script_bridge = '1.0.4'
     routerVersion = "1.1.0"
     compilerVersion = "0.6.0"
+
+    baseUrl = keystoreProperties['baseUrl']
 }
