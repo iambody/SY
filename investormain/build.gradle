@@ -120,6 +120,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
         }
 
         release {
@@ -135,6 +136,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
+            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
         }
     }
 

@@ -19,6 +19,15 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    buildTypes {
+        debug {
+            manifestPlaceholders = [RONG_CLOUD_APP_KEY_VALUE:rootProject.ext.rongCloud]
+        }
+
+        release {
+            manifestPlaceholders = [RONG_CLOUD_APP_KEY_VALUE:rootProject.ext.rongCloud]
+        }
+    }
 }
 
 dependencies {
