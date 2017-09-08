@@ -42,8 +42,6 @@ ext {
     buildToolsVersion = "25.0.0"
     minSdkVersion = 17
     targetSdkVersion = 23
-    versionCode = keystoreProperties['versionCode'] as int
-    versionName = keystoreProperties['versionName']
     databaseName = "sxydb.db";
     databaseVer = 1;
 
@@ -87,7 +85,29 @@ ext {
     routerVersion = "1.1.0"
     compilerVersion = "0.6.0"
 
-    baseUrl = keystoreProperties['baseUrl']
-    umengKey = keystoreProperties['umengKey']
-    rongCloud = keystoreProperties['rongCloud']
+    if (project.hasProperty('versionCode')) {
+        versionCode = Integer.parseInt(versionCode)
+    } else {
+        versionCode = keystoreProperties['versionCode'] as int
+    }
+    if (project.hasProperty('versionName')) {
+        versionName = versionName
+    } else {
+        versionName = keystoreProperties['versionName']
+    }
+    if (project.hasProperty('baseUrl')) {
+        baseUrl = baseUrl
+    } else {
+        baseUrl = keystoreProperties['baseUrl']
+    }
+    if (project.hasProperty('umengKey')) {
+        umengKey = umengKey
+    } else {
+        umengKey = keystoreProperties['umengKey']
+    }
+    if (project.hasProperty('rongCloud')) {
+        rongCloud = rongCloud
+    } else {
+        rongCloud = keystoreProperties['rongCloud']
+    }
 }
