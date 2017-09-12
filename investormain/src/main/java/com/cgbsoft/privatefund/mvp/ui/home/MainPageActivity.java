@@ -129,7 +129,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
-    private DownloadDialog downloadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +183,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
-        downloadDialog.onresume();
         MobclickAgent.onResume(this);       //统计时长
         baseWebview.loadUrls(CwebNetConfig.pageInit);
         if (AppManager.isVisitor(baseContext) && 4 == currentPostion) { // 是游客模式
@@ -342,7 +340,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setActivity();
 
         if (!SPreference.isThisRunOpenDownload(this)) {
-            downloadDialog = new DownloadDialog(this, true, false);
+            new DownloadDialog(this, true, false);
         }
 //        downloadDialog.show();
 

@@ -206,9 +206,6 @@ public class DownloadDialog implements View.OnClickListener, Constant {
         }
         return result;
     }
-    public void onresume(){
-        btn_vcd_sure.setEnabled(true);
-    }
     private void toDownload() {
         btn_vcd_sure.setEnabled(false);
         if (!TextUtils.isEmpty(downloadApkPath)) {
@@ -238,6 +235,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
 
                 Observable.just("现在安装").compose(RxSchedulersHelper.io_main()).subscribe(strs -> {
                     btn_vcd_sure.setText(strs);
+                    btn_vcd_sure.setEnabled(true);
                 }, error -> {
                 });
             }
@@ -246,7 +244,6 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             public void onDownloadProcess(long taskId, double percent, long downloadedLength) {
                 pb_vcd.setProgress((int) percent);
                 Observable.just("已下载(" + (int) percent + "%)").compose(RxSchedulersHelper.io_main()).subscribe(strs -> {
-                    LogUtils.Log("aaa","strs=================="+strs);
                     btn_vcd_sure.setText(strs);
                 }, error -> {
                 });
