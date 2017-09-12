@@ -3,9 +3,12 @@ package com.cgbsoft.lib.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
@@ -31,6 +34,7 @@ import com.cgbsoft.lib.utils.dm.core.DownloadManagerPro;
 import com.cgbsoft.lib.utils.dm.core.DownloadManagerProListener;
 import com.cgbsoft.lib.utils.dm.database.elements.Task;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
@@ -82,6 +86,7 @@ public class DownloadDialog implements View.OnClickListener, Constant {
 
     public void init() {
         _verName = Utils.getVersionName(_context);
+        _newVerName=_verName;
         _verCode = Utils.getVersionCode(_context);
         _appName = _context.getResources().getString(R.string.app_name);
         daoUtils = new DaoUtils(_context, DaoUtils.W_OTHER);
@@ -157,11 +162,16 @@ public class DownloadDialog implements View.OnClickListener, Constant {
                 OtherInfo info = daoUtils.getOtherInfo(APP_DOWNLOAD_PATH);
                 if (info != null) {
                     downloadApkPath = info.getContent();
-                    btn_vcd_sure.setText("现在安装");
+                    File file = new File(downloadApkPath);
+                    if (file.isFile() && file.exists()&&getUninatllApkInfo(_context,file.getAbsolutePath())) {
+                        btn_vcd_sure.setText("现在安装");
+                    }
                 }
 
-                if (_isOpenWindow)
+                if (_isOpenWindow) {
+                    _newVerName=result.version;
                     dialog.show();
+                }
             }
         }
     }
@@ -171,24 +181,47 @@ public class DownloadDialog implements View.OnClickListener, Constant {
     public void onClick(View v) {
         if (v.getId() == R.id.btn_vcd_sure) {
             toDownload();
-            btn_vcd_sure.setEnabled(false);
         } else if (v.getId() == R.id.iv_vcd_cancel) {
             dialog.dismiss();
         }
     }
 
-
+    /**
+     * 判断apk文件是否可以执行
+     * @param context
+     * @param filePath
+     * @return
+     */
+    public boolean getUninatllApkInfo(Context context,String filePath) {
+        boolean result = false;
+        try {
+            PackageManager pm = context.getPackageManager();
+            LogUtils.Log("archiveFilePath", filePath);
+            PackageInfo info = pm.getPackageArchiveInfo(filePath,PackageManager.GET_ACTIVITIES);
+            if (info != null) {
+                result = true;//完整
+            }
+        } catch (Exception e) {
+            result = false;//不完整
+        }
+        return result;
+    }
+    public void onresume(){
+        btn_vcd_sure.setEnabled(true);
+    }
     private void toDownload() {
+        btn_vcd_sure.setEnabled(false);
         if (!TextUtils.isEmpty(downloadApkPath)) {
             File file = new File(downloadApkPath);
-            if (file.isFile() && file.exists()) {
+            if (file.isFile() && file.exists()&&getUninatllApkInfo(_context,file.getAbsolutePath())) {
+                btn_vcd_sure.setEnabled(true);
                 installApk(file);
                 return;
             }
         }
 
         String fileRoot = CacheManager.getCachePath(_context, CacheManager.APK);
-
+        delAllFile(fileRoot);
         String[] strs = downloadUrl.split("/");
         String fileName = strs[strs.length - 1];
 
@@ -213,20 +246,60 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             public void onDownloadProcess(long taskId, double percent, long downloadedLength) {
                 pb_vcd.setProgress((int) percent);
                 Observable.just("已下载(" + (int) percent + "%)").compose(RxSchedulersHelper.io_main()).subscribe(strs -> {
+                    LogUtils.Log("aaa","strs=================="+strs);
                     btn_vcd_sure.setText(strs);
                 }, error -> {
                 });
             }
         });
 
-        downloadApkToken = downloadManagerPro.addTask("POF_Cloud_V" + _verName, downloadUrl, 12, fileRoot, false, true);
+        downloadApkToken = downloadManagerPro.addTask("POF_Cloud_V" + _newVerName, downloadUrl, 12, fileRoot, true, true);
         try {
             downloadManagerPro.startDownload(downloadApkToken);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
+    public static boolean delAllFile(String path) {
+        boolean flag = false;
+        File file = new File(path);
+        if (!file.exists()) {
+            return flag;
+        }
+        if (!file.isDirectory()) {
+            return flag;
+        }
+        String[] tempList = file.list();
+        File temp = null;
+        for (int i = 0; i < tempList.length; i++) {
+            if (path.endsWith(File.separator)) {
+                temp = new File(path + tempList[i]);
+            } else {
+                temp = new File(path + File.separator + tempList[i]);
+            }
+            if (temp.isFile()) {
+                temp.delete();
+            }
+            if (temp.isDirectory()) {
+                delAllFile(path + "/" + tempList[i]);// 先删除文件夹里面的文件
+                delFolder(path + "/" + tempList[i]);// 再删除空文件夹
+                flag = true;
+            }
+        }
+        return flag;
+    }
 
+    public static void delFolder(String folderPath) {
+        try {
+            delAllFile(folderPath); // 删除完里面所有内容
+            String filePath = folderPath;
+            filePath = filePath.toString();
+            File myFilePath = new File(filePath);
+            myFilePath.delete(); // 删除空文件夹
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 安装软件
      *
