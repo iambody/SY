@@ -17,8 +17,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -654,7 +652,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @OnClick(R.id.rl_show_datepicker)
     public void showDatePicker() {
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

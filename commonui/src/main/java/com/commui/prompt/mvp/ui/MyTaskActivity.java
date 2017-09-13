@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -58,12 +62,19 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
     ImageView back;
     @BindView(R2.id.title_mid)
     TextView titleTV;
+    @BindView(R2.id.rv_adt)
+    RecyclerView rcv_commui_task;
     MyTaskAdapter adapter;
+
+    @BindView(R2.id.fragment_videoschool_noresult)
+    ImageView fragmentVideoschoolNoresult;
+    @BindView(R2.id.fragment_videoschool_noresult_lay)
+    LinearLayout fragmentVideoschoolNoresultLay;
+
 
     private Comparator comparator;
     private boolean isFromC;
     private LoadingDialog mLoadingDialog;
-
 
     @OnClick(R2.id.title_left)
     public void clickBack() {
@@ -82,7 +93,6 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         isFromC = AppManager.isInvestor(getApplicationContext());
         adapter = new MyTaskAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(baseContext);
-        RecyclerView rcv_commui_task = (RecyclerView) findViewById(R.id.rv_adt);
         rcv_commui_task.setLayoutManager(linearLayoutManager);
         rcv_commui_task.addItemDecoration(new SimpleItemDecoration(baseContext,R.color.app_divider_gary, R.dimen.ui_1_dip,20));
         rcv_commui_task.setAdapter(adapter);
@@ -154,11 +164,16 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         dayTaskBean.setTaskName("列表头部");
         list.add(0, dayTaskBean);
         adapter.refAllData(list);
+        fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
+        rcv_commui_task.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void getTaskListErr(Throwable error) {
-
+        if (0 == adapter.getItemCount()) {
+            fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
+            rcv_commui_task.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -217,8 +232,6 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
                 DataStatistApiParam.signInEveryDay();
                 break;
         }
-
-
     }
 
     private void signTask() {
@@ -253,5 +266,16 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
 
         }
         this.finish();
+    }
+
+    @OnClick(R2.id.fragment_videoschool_noresult)
+    public void onViewnoresultClicked() {
+        if (NetUtils.isNetworkAvailable(this)) {//有网
+            if (adapter != null && adapter.getItemCount() == 0) {
+                getPresenter().getTaskList();
+            }
+        } else {
+            PromptManager.ShowCustomToast(this, getResources().getString(R.string.error_net));
+        }
     }
 }

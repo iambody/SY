@@ -162,10 +162,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //是否绑定理财师
 //    boolean isBindAdviser;
 //    UserInfoDataEntity.UserInfo userInfo;
-
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, infdataObservable, bindAdviserObservable;
-
     private boolean isLoading;
 
     private UnreadInfoNumber unreadInfoNumber;

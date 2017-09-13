@@ -41,6 +41,8 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     private final String HEALTE_INTRODUCTION_CODE = "4001";
     private final String HEALTH_CHECK_CODE = "4002";
     private final String HEALTH_MEDICAL_CODE = "4003";
+    private final String HEALTH_PROJECT_SIMPLE_CODE = "4004";
+    private final String HEALTH_COURESE_CODE = "4005";
 
     ImageView toolbarLeft;
     ImageView toolbarRight;
@@ -113,6 +115,15 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
                     break;
+                case HEALTH_PROJECT_SIMPLE_CODE:
+                    Bundle projectSimple = new Bundle();
+                    projectSimple.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, true);
+                    CheckHealthFragment projectSimpleFragment = new CheckHealthFragment();
+                    projectSimpleFragment.setArguments(projectSimple);
+                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), projectSimpleFragment,Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen4);
+                    break;
+
             }
         }
         return tabBeens;
