@@ -6,41 +6,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
-import app.privatefund.investor.health.mvp.model.HealthListModel;
+import app.privatefund.investor.health.mvp.model.HealthCourseEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * @author chenlong
  */
-public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+public class HealthCourseAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-    private List<HealthListModel> listModelListdata = new ArrayList<>();
+    private List<HealthCourseEntity.HealthCourseListModel> listModelListdata = new ArrayList<>();
     private Context ApContext;
     private LayoutInflater layoutInflater;
 
-    private ListItemClickListener<HealthListModel> listModelListItemClickListener;
+    private ListItemClickListener<HealthCourseEntity.HealthCourseListModel> listModelListItemClickListener;
 
-    public void setOnItemClickListener(ListItemClickListener<HealthListModel> listener) {
+    public void setOnItemClickListener(ListItemClickListener<HealthCourseEntity.HealthCourseListModel> listener) {
         this.listModelListItemClickListener = listener;
     }
 
-    public HealthSummaryAdapter(Context apContext, List<HealthListModel> listModelListData) {
+    public HealthCourseAdapter(Context apContext, List<HealthCourseEntity.HealthCourseListModel> listModelListData) {
         this.ApContext = apContext;
         this.layoutInflater = LayoutInflater.from(apContext);
         this.listModelListdata = listModelListData;
     }
 
-    public void refrushData(List<HealthListModel> listModelListdata, boolean refrush) {
+    public void refrushData(List<HealthCourseEntity.HealthCourseListModel> listModelListdata, boolean refrush) {
         if (refrush) {
             this.listModelListdata = listModelListdata;
         } else {
@@ -51,7 +54,7 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_health_list, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_fragment_healthcourse, null);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
         return lsViewHolder;
@@ -61,8 +64,11 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         LsViewHolder lsViewHolder = (LsViewHolder) holder;
         lsViewHolder.itemView.setTag(position);
-        HealthListModel healthListModel = listModelListdata.get(position);
-        Imageload.display(ApContext, healthListModel.getImageUrl(), 0, 0, 1, lsViewHolder.imageV, R.drawable.bg_default, R.drawable.bg_default);
+        HealthCourseEntity.HealthCourseListModel healthCourseListModel = listModelListdata.get(position);
+        Imageload.display(ApContext, healthCourseListModel.getThumbnailUrl(), lsViewHolder.Item_fragment_videoschool_image_bg);
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, healthCourseListModel.getReadCount());
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, healthCourseListModel.getTitle());
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, healthCourseListModel.getReleaseDate());
     }
 
     @Override
@@ -76,9 +82,14 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
     }
 
     static class LsViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R2.id.image_view)
-        public ImageView imageV;
+        @BindView(R2.id.item_fragment_videoschool_image_bg)
+        ImageView Item_fragment_videoschool_image_bg;
+        @BindView(R2.id.item_fragment_videoschool_title)
+        TextView Item_fragment_videoschool_title;
+        @BindView(R2.id.item_fragment_videoschool_time)
+        TextView Item_fragment_videoschool_time;
+        @BindView(R2.id.item_fragment_videoschool_readnum)
+        TextView Item_fragment_videoschool_readnum;
 
         LsViewHolder(View view) {
             super(view);

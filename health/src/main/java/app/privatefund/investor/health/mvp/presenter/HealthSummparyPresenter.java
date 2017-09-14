@@ -35,11 +35,10 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
 
     @Override
     public void getHealthList(String offset) {
-        System.out.println("-----HealthListPresenter--offset="+ offset);
         addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                Log.d("HealthListPresenter", "----"+ s.toString());
+                Log.d("HealthSummparyPresenter", "----"+ s.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String vas = jsonObject.getString("result");
