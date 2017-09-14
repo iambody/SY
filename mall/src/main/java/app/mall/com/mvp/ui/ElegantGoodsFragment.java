@@ -225,7 +225,12 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
 
     @Override
     public void showLoadDialog() {
-        mLoadingDialog.show();
+        if (null == mLoadingDialog) {
+            mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
+        }
+        if (!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
     }
 
     @Override

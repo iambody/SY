@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,13 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
 import com.cgbsoft.lib.base.mvp.model.TabBean;
+import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
@@ -45,6 +48,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     ImageView toolbarLeft;
     ImageView toolbarRight;
     private UnreadInfoNumber unreadInfoNumber;
+    private BaseFragment currentFragment;
 
     @Override
     protected int titleLayoutId() {
@@ -94,7 +98,9 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case HEALTE_INTRODUCTION_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new IntroduceHealthFragment(),Integer.parseInt(secondNavigation.getCode()));
+                    IntroduceHealthFragment introduceHealthFragment = new IntroduceHealthFragment();
+                    currentFragment=introduceHealthFragment;
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), introduceHealthFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case HEALTH_CHECK_CODE:
@@ -171,8 +177,33 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     }
 
     @Override
-    protected void clickTabButton(String tabName) {
+    protected void clickTabButton(String tabName, BaseFragment fragment) {
         super.clickTabButton(tabName);
+        this.currentFragment=fragment;
         DataStatistApiParam.everHealthClick(tabName);
     }
+
+    @Override
+    public boolean onBackPressed(Context context) {
+        return currentFragment.onBackPressed(context);
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        LogUtils.Log("aaa","viewBeShow===");
+    }
+
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
+        LogUtils.Log("aaa","viewBeHide===");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.Log("aaa","isVisibleToUser---------------"+isVisibleToUser);
+    }
+
 }

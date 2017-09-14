@@ -22,6 +22,7 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -400,7 +401,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onRestart();
         initUserInfo();
         getPresenter().getProLiveList();
-        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
+//        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, 0);
         RxBus.get().post(RxConstant.RefreshRiskState, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
@@ -452,6 +453,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, position);
         buryPoint(position);
     }
 
@@ -864,6 +866,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
 //            MainTabManager.getInstance().getProductFragment().backClick();
 //        } else
+        if (((BaseFragment) mContentFragment).onBackPressed(MainPageActivity.this)) {
+            return;
+        }
         exitBy2Click();
     }
 

@@ -195,6 +195,7 @@
         <activity
             android:name=".mvp.ui.home.MainPageActivity"
             android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <!-- 权限管理 -->

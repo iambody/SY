@@ -91,7 +91,6 @@ public class MainTabManager {
                 fragment.setArguments(mBundle);
             }
         }
-        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
         return fragment;
     }
 

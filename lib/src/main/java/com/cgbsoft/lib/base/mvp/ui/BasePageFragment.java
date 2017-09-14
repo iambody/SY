@@ -84,14 +84,17 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                     field.setAccessible(true);
                     final View viewTab = (View) field.get(tab);
                     if (viewTab == null) return;
-                    viewTab.setTag(tabBean.getTabName());
+                    viewTab.setTag(1,tabBean.getTabName());
+                    BaseFragment fragment = (BaseFragment) tabBean.getFragment();
+                    viewTab.setTag(2,fragment);
                     viewTab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String tabName = (String) viewTab.getTag();
+                            String tabName = (String) viewTab.getTag(1);
+                            BaseFragment fragment = (BaseFragment) viewTab.getTag(2);
                             LogUtils.Log("aaa","tabName==="+tabName);
                             //这里就可以根据业务需求处理点击事件了。
-                            clickTabButton(tabName);
+                            clickTabButton(tabName,fragment);
                         }
                     });
                 } catch (Exception e) {
@@ -139,6 +142,9 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     protected void clickTabButton(String tabName) {
 
     }
+    protected void clickTabButton(String tabName,BaseFragment fragment) {
+
+    }
 
     protected void setIndex(int code) {
         if (code != 0 && code > 1000) {
@@ -164,4 +170,15 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         return null;
     }
 
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
+        LogUtils.Log("aaa","viewBeHide===----");
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        LogUtils.Log("aaa","viewBeShow===----");
+    }
 }

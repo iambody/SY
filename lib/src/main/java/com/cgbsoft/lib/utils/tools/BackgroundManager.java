@@ -48,6 +48,7 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
       expireDate.add(Calendar.SECOND, EXPIRE_IN_SECOND);
       isDisplay = true;
     Log.i("onActivityPaused", "=========isDisplay=" + isDisplay);
+    RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, 7);//发送除3以外的任意数字来暂停视频
   }
 
   public Calendar getExpireData() {
