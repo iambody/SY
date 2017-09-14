@@ -132,6 +132,14 @@ public class WebViewConstant {
          */
         public static final int HEALTH_MEDICAL_PAGE = 4003;
         /**
+         * 项目简介
+         */
+        public static final int HEALTH_PROJECT_SIMPLE = 4004;
+        /**
+         * 健康课堂
+         */
+        public static final int HEALTH_COURES_PAGE = 4005;
+        /**
          * 我的
          */
         public static final int MINE_PAGE = 50;

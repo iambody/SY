@@ -94,7 +94,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         int certify = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
         int relative = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getStockAssetsStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
         riskLike.setTip(riskType > 0 ? riskResult[riskType - 1] : "");
-        assetCertify.setTip(certify > 0 ? riskResult[certify - 1] : "");
+        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "");
 //        assetCertify.setTip(certify > 0 ? assetStatus[certify - 1] : "未上传");
 //        assetRelative.setTip(relative > 0 ? assetStatus[relative - 1] : "未关联");
 //        if (relative <= 0)  {

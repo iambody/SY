@@ -19,4 +19,26 @@
         android:clipToPadding="false"
         android:background="@color/white"
         />
+
+    <LinearLayout
+        android:id="@+id/fragment_videoschool_noresult_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/fragment_videoschool_noresult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/neterror"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_net"
+            android:layout_marginTop="@dimen/ui_10_dip"/>
+    </LinearLayout>
 </LinearLayout>
