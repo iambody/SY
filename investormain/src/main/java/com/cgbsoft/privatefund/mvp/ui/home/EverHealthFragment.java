@@ -106,22 +106,22 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), introduceHealthFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
-//                case HEALTH_CHECK_CODE:
-//                    Bundle checkBund = new Bundle();
-//                    checkBund.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, true);
-//                    CheckHealthFragment checkHealthFragment = new CheckHealthFragment();
-//                    checkHealthFragment.setArguments(checkBund);
-//                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), checkHealthFragment,Integer.parseInt(secondNavigation.getCode()));
-//                    tabBeens.add(tabBeen2);
-//                    break;
-//                case HEALTH_MEDICAL_CODE:
-//                    Bundle medical = new Bundle();
-//                    medical.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, false);
-//                    CheckHealthFragment medicalHealthFragment = new CheckHealthFragment();
-//                    medicalHealthFragment.setArguments(medical);
-//                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
-//                    tabBeens.add(tabBeen3);
-//                    break;
+                case HEALTH_CHECK_CODE:
+                    Bundle checkBund = new Bundle();
+                    checkBund.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, true);
+                    CheckHealthFragment checkHealthFragment = new CheckHealthFragment();
+                    checkHealthFragment.setArguments(checkBund);
+                    TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), checkHealthFragment,Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen2);
+                    break;
+                case HEALTH_MEDICAL_CODE:
+                    Bundle medical = new Bundle();
+                    medical.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, false);
+                    CheckHealthFragment medicalHealthFragment = new CheckHealthFragment();
+                    medicalHealthFragment.setArguments(medical);
+                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen3);
+                    break;
                 case HEALTH_PROJECT_SIMPLE_CODE:
                     HealthSummaryFragment projectSimpleFragment = new HealthSummaryFragment();
                     TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), projectSimpleFragment,Integer.parseInt(secondNavigation.getCode()));
