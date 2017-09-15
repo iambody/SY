@@ -331,6 +331,12 @@ public class NavigationUtils {
             case WebViewConstant.Navigation.HEALTH_MEDICAL_PAGE:
                 jumpNativeMain(context, map);
                 break;
+            case WebViewConstant.Navigation.HEALTH_PROJECT_SIMPLE:
+                jumpNativeMain(context, map);
+                break;
+            case WebViewConstant.Navigation.HEALTH_COURES_PAGE:
+                jumpNativeMain(context, map);
+                break;
             case WebViewConstant.Navigation.MINE_PAGE:
                 jumpNativeMain(context, map);
                 break;
