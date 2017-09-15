@@ -122,12 +122,12 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
 //                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
 //                    tabBeens.add(tabBeen3);
 //                    break;
-                case HEALTH_CHECK_CODE:
+                case HEALTH_PROJECT_SIMPLE_CODE:
                     HealthSummaryFragment projectSimpleFragment = new HealthSummaryFragment();
                     TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), projectSimpleFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen4);
                     break;
-                case HEALTH_MEDICAL_CODE:
+                case HEALTH_COURESE_CODE:
                     HealthCourseFragment healthCourseFragment = new HealthCourseFragment();
                     TabBean tabBeen5 = new TabBean(secondNavigation.getTitle(), healthCourseFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen5);

@@ -24,6 +24,7 @@ import app.privatefund.investor.health.mvp.model.HealthCourseEntity;
 public class HealthCoursePresenter extends BasePresenterImpl<HealthCourseListContract.View> implements HealthCourseListContract.Presenter {
 
     private final static int PAGE_LIMIT = 20;
+    private int total;
 
     public HealthCoursePresenter(@NonNull Context context, @NonNull HealthCourseListContract.View view) {
         super(context, view);
@@ -39,7 +40,7 @@ public class HealthCoursePresenter extends BasePresenterImpl<HealthCourseListCon
                     JSONObject jsonObject = new JSONObject(s);
                     String stringValue = jsonObject.getString("result");
                     HealthCourseEntity.Result result = new Gson().fromJson(stringValue, new TypeToken<HealthCourseEntity.Result>() {}.getType());
-                    getView().requestDataSuccess(result.getRows());
+                    getView().requestDataSuccess(result.getRows(), result.getTotal());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

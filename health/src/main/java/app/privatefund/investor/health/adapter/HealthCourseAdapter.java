@@ -2,6 +2,7 @@ package app.privatefund.investor.health.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.mvp.model.HealthCourseEntity;
+import app.privatefund.investor.health.mvp.model.HealthListModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,6 +55,18 @@ public class HealthCourseAdapter extends RecyclerView.Adapter implements View.On
         this.notifyDataSetChanged();
     }
 
+    public void notifyDataReadCount(HealthCourseEntity.HealthCourseListModel healthListModel) {
+        if (!CollectionUtils.isEmpty(listModelListdata)) {
+            for (HealthCourseEntity.HealthCourseListModel listModel : listModelListdata) {
+                if (TextUtils.equals(listModel.getId(), healthListModel.getId())) {
+                    listModel.setReadCount(String.valueOf(Integer.parseInt(listModel.getReadCount()) + 1));
+                }
+            }
+            this.notifyDataSetChanged();
+        }
+    }
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_fragment_healthcourse, null);
@@ -66,7 +81,7 @@ public class HealthCourseAdapter extends RecyclerView.Adapter implements View.On
         lsViewHolder.itemView.setTag(position);
         HealthCourseEntity.HealthCourseListModel healthCourseListModel = listModelListdata.get(position);
         Imageload.display(ApContext, healthCourseListModel.getThumbnailUrl(), lsViewHolder.Item_fragment_videoschool_image_bg);
-        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, healthCourseListModel.getReadCount());
+        BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, healthCourseListModel.getReadCount().concat("阅读"));
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, healthCourseListModel.getTitle());
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, healthCourseListModel.getReleaseDate());
     }

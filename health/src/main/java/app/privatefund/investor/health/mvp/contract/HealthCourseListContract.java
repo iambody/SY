@@ -20,7 +20,7 @@ public interface HealthCourseListContract {
 
     interface View extends BaseView {
 
-        void requestDataSuccess(List<HealthCourseEntity.HealthCourseListModel> healthCourseListModels);
+        void requestDataSuccess(List<HealthCourseEntity.HealthCourseListModel> healthCourseListModels, int total);
 
         void requestDataFailure(String errMsg);
     }

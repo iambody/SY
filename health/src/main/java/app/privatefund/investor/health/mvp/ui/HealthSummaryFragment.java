@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
 import com.umeng.analytics.MobclickAgent;
@@ -87,7 +85,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
+        swipeTarget.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_15_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);

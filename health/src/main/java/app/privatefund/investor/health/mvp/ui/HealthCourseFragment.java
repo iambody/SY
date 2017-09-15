@@ -68,6 +68,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     private int CurrentPostion = 0;
     private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
+    private int totalCount;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -89,6 +90,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getDetailUrl()).concat("?id=").concat(discoveryListModel.getId()));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
+            checkHealthAdapter.notifyDataReadCount(discoveryListModel);
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
@@ -167,7 +169,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     }
 
     @Override
-    public void requestDataSuccess(List<HealthCourseEntity.HealthCourseListModel> healthListModelList) {
+    public void requestDataSuccess(List<HealthCourseEntity.HealthCourseListModel> healthListModelList, int total) {
         if (View.GONE == swipeToLoadLayout.getVisibility()) { // 一直显示
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
@@ -183,7 +185,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
         }
-
+        this.totalCount = total;
         clodLsAnim(swipeToLoadLayout);
         FreshAp(healthListModelList, isLoadMore);
         isLoadMore = false;
