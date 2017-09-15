@@ -33,9 +33,11 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.GestureManager;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
+import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
@@ -62,15 +64,19 @@ import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.lzy.okserver.download.DownloadInfo;
+import com.lzy.okserver.download.DownloadManager;
+import com.lzy.okserver.download.DownloadService;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.umeng.analytics.MobclickAgent;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
-import app.product.com.mvp.ui.ProductDetailActivity;
+import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -269,20 +275,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
-    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus,String credentialCodeExist) {
-        this.identity=identity;
-        this.hasIdCard=hasIdCard;
-        this.title=title;
-        this.credentialCode="45".equals(existStatus)?credentialCodeExist:credentialCode;
-        this.status=status;
-        this.statusCode=statusCode;
-        this.customerName=customerName;
-        this.credentialNumber=credentialNumber;
-        this.credentialTitle=credentialTitle;
-        this.existStatus=existStatus;
+    public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode, String status, String statusCode, String customerName, String credentialNumber, String credentialTitle, String existStatus, String credentialCodeExist) {
+        this.identity = identity;
+        this.hasIdCard = hasIdCard;
+        this.title = title;
+        this.credentialCode = "45".equals(existStatus) ? credentialCodeExist : credentialCode;
+        this.status = status;
+        this.statusCode = statusCode;
+        this.customerName = customerName;
+        this.credentialNumber = credentialNumber;
+        this.credentialTitle = credentialTitle;
+        this.existStatus = existStatus;
         if (TextUtils.isEmpty(statusCode)) {
             noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
-        }else if (!TextUtils.isEmpty(statusCode)&&"50".equals(statusCode)) {
+        } else if (!TextUtils.isEmpty(statusCode) && "50".equals(statusCode)) {
             noRelativeAssert.setVisibility(View.GONE);
         } else {
             noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
@@ -290,20 +296,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
 
         if (isClickBack) {
-            isClickBack=false;
+            isClickBack = false;
             if ("45".equals(existStatus)) {
                 replenishCards();
             } else {
                 if (!TextUtils.isEmpty(identity)) {
                     if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                         Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                        intent.putExtra("credentialCode",credentialCode);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("credentialCode", credentialCode);
+                        intent.putExtra("indentityCode", identity);
                         intent.putExtra("title", title);
                         startActivity(intent);
                     } else {//去证件列表
                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("indentityCode", identity);
                         startActivity(intent);
                     }
                 } else {//无身份
@@ -317,8 +323,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void verifyIndentityError(Throwable e) {
         if (isClickBack) {
-            isClickBack=false;
-            Toast.makeText(getActivity().getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+            isClickBack = false;
+            Toast.makeText(getActivity().getApplicationContext(), "服务器忙,请稍后再试!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -350,10 +356,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.ASSERT_GROUP:
 //                        toAssertMatchActivit();
                         if (null == status) {
-                            isClickBack=true;
+                            isClickBack = true;
                             getPresenter().verifyIndentity();
                         } else {
-                            isClickBack=false;
+                            isClickBack = false;
                             //90：存量已有证件号已上传证件照待审核
                             if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
                                 replenishCards();
@@ -365,10 +371,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.INVISTE_CARLENDAR:
 //                        toInvestorCarlendarActivity();
                         if (null == status) {
-                            isClickBack=true;
+                            isClickBack = true;
                             getPresenter().verifyIndentity();
                         } else {
-                            isClickBack=false;
+                            isClickBack = false;
                             //90：存量已有证件号已上传证件照待审核
                             if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
                                 replenishCards();
@@ -386,20 +392,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     case GestureManager.RELATIVE_ASSERT:
 //                        getPresenter().verifyIndentity();
                         if (null == status) {
-                            isClickBack=true;
+                            isClickBack = true;
                             getPresenter().verifyIndentity();
                         } else {
-                            isClickBack=false;
+                            isClickBack = false;
                             if (!TextUtils.isEmpty(identity)) {
                                 if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                                     Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                                    intent.putExtra("credentialCode",credentialCode);
-                                    intent.putExtra("indentityCode",identity);
+                                    intent.putExtra("credentialCode", credentialCode);
+                                    intent.putExtra("indentityCode", identity);
                                     intent.putExtra("title", title);
                                     startActivity(intent);
                                 } else {//去证件列表
                                     Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                                    intent.putExtra("indentityCode",identity);
+                                    intent.putExtra("indentityCode", identity);
                                     startActivity(intent);
                                 }
                             } else {//无身份
@@ -656,23 +662,23 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
         if (showAssert) {
-            isClickBack=true;
+            isClickBack = true;
 
             if (null == status) {
-                isClickBack=true;
+                isClickBack = true;
                 getPresenter().verifyIndentity();
             } else {
-                isClickBack=false;
+                isClickBack = false;
                 if (!TextUtils.isEmpty(identity)) {
                     if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
                         Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                        intent.putExtra("credentialCode",credentialCode);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("credentialCode", credentialCode);
+                        intent.putExtra("indentityCode", identity);
                         intent.putExtra("title", title);
                         startActivity(intent);
                     } else {//去证件列表
                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                        intent.putExtra("indentityCode",identity);
+                        intent.putExtra("indentityCode", identity);
                         startActivity(intent);
                     }
                 } else {//无身份
@@ -681,7 +687,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
             }
         } else {
-            isClickBack=false;
+            isClickBack = false;
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
         }
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
@@ -697,16 +703,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //    }
 
     /**
-     *点击资产饼状图
+     * 点击资产饼状图
      */
-    @OnClick({R.id.account_bank_had_bug_ll,R.id.mine_bank_asset_match_ll})
+    @OnClick({R.id.account_bank_had_bug_ll, R.id.mine_bank_asset_match_ll})
     void clickAssetPieChart() {
         if (showAssert) {
             if (null == status) {
-                isClickBack=true;
+                isClickBack = true;
                 getPresenter().verifyIndentity();
             } else {
-                isClickBack=false;
+                isClickBack = false;
                 //90：存量已有证件号已上传证件照待审核
                 if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
                     replenishCards();
@@ -724,13 +730,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     private void replenishCards() {
         Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-        intent.putExtra("credentialCode",credentialCode);
-        intent.putExtra("indentityCode",identity);
+        intent.putExtra("credentialCode", credentialCode);
+        intent.putExtra("indentityCode", identity);
         intent.putExtra("title", credentialTitle);
         intent.putExtra("stateCode", existStatus);
         intent.putExtra("customerName", customerName);
         intent.putExtra("customerNum", credentialNumber);
-        intent.putExtra("isFromSelectIndentity",true);
+        intent.putExtra("isFromSelectIndentity", true);
         startActivity(intent);
     }
 
@@ -739,10 +745,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (showAssert) {
 //            toInvestorCarlendarActivity();
             if (null == status) {
-                isClickBack=true;
+                isClickBack = true;
                 getPresenter().verifyIndentity();
             } else {
-                isClickBack=false;
+                isClickBack = false;
                 //90：存量已有证件号已上传证件照待审核
                 if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
                     replenishCards();
@@ -995,10 +1001,80 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
+    //*******************************************
+    DownloadManager downloadManager;
+
+    private List<VideoInfoModel> getdownls() {
+
+        DownloadManager downloadManager = DownloadService.getDownloadManager();
+        downloadManager.getThreadPool().setCorePoolSize(1);
+        downloadManager.setTargetFolder(CacheManager.getCachePath(baseActivity, CacheManager.VIDEO));
+
+        List<VideoInfoModel> list = daoUtils.getAllVideoInfo();
+        if (list != null)
+
+        {
+            List<VideoDownloadListModel> dataList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                VideoInfoModel model = list.get(i);
+                DownloadInfo info = downloadManager.getDownloadInfo(model.videoId);
+                if (info != null && info.getState() == DownloadManager.FINISH && model.status != VideoStatus.FINISH) {
+                    model.status = VideoStatus.FINISH;
+                    daoUtils.saveOrUpdateVideoInfo(model);
+                }
+                if (model.status != VideoStatus.NONE)
+                    dataList.add(createModel(model));
+            }
+        }
+        return null;
+    }
+
+
+    private VideoDownloadListModel createModel(VideoInfoModel videoInfoModel) {
+        VideoDownloadListModel model = new VideoDownloadListModel();
+        model.type = VideoDownloadListModel.LIST;
+        model.videoCoverUrl = videoInfoModel.videoCoverUrl;
+        model.videoId = videoInfoModel.videoId;
+        model.videoTitle = videoInfoModel.videoName;
+        model.progressStr = getDownloadedFileSize(videoInfoModel);
+        model.status = videoInfoModel.status;
+        model.downloadTime = videoInfoModel.downloadTime;
+        model.downloadtype = videoInfoModel.downloadtype;
+        model.localPath = videoInfoModel.localVideoPath;
+        model.max = 100;
+        model.progress = (int) (videoInfoModel.percent * 100);
+
+        if (videoInfoModel.downloadtype == VideoStatus.SD) {//标清
+            model.videoUrl = videoInfoModel.sdUrl;
+        } else if (videoInfoModel.downloadtype == VideoStatus.HD) {//高清
+            model.videoUrl = videoInfoModel.hdUrl;
+        }
+        if (model.status != VideoStatus.FINISH) {
+            DownloadInfo info = downloadManager.getDownloadInfo(model.videoId);
+            if (info != null) {
+                if (info.getState() == DownloadManager.DOWNLOADING) {
+                    model.status = VideoStatus.DOWNLOADING;
+                } else if (info.getState() == DownloadManager.WAITING) {
+                    model.status = VideoStatus.WAIT;
+                }
+            }
+        }
+        return model;
+    }
+
+    public String getDownloadedFileSize(VideoInfoModel model) {
+        DecimalFormat df = new DecimalFormat("#0.0");
+        return df.format(model.size / 1024 / 1024) +
+                "M/" +
+                df.format(model.size / 1024 / 1024 * model.percent) +
+                "M";
+    }
+
+    //********************************************************
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList = daoUtils.getDownLoadVideoInfo();
+        List<VideoInfoModel> downlList =  daoUtils.getDownLoadVideoInfo();
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
         if (videoList == null) {
             for (String name : videos) {

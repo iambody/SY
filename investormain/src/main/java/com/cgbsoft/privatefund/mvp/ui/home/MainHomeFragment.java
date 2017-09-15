@@ -181,6 +181,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter(mainHomeBannerview);
+        mainHomeBannerview.getViewPager().setOffscreenPageLimit(6);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
         mainHomeBannerview.setHintPadding(0, 0, 0, 50);
@@ -194,6 +195,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getHomeData();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
+
+
     }
 
     @Override
@@ -356,6 +359,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*  配置view各种资源*/
     private void initConfig() {
+        /**
+         * 手动设置banner高度
+         */
+//        screenWidth
+        RelativeLayout.LayoutParams bannerParames=new RelativeLayout.LayoutParams(screenWidth,(int)((screenWidth*61)/75));
+        mainHomeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
         view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
@@ -570,6 +579,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //初始化banner
     private void initViewPage(List<HomeEntity.Banner> banner) {
         homeBannerAdapter.frash(banner);
+
+
     }
 
     @Override
@@ -712,12 +723,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isLoading = false;
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
+
         //请求数据
         getPresenter().getHomeData();
-
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
-
-//        RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
     }
 
     /* scrollview滑动时候的监听*/
@@ -816,13 +825,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             super(rollPagerView);
         }
 
-//        public BannerAdapter(List<HomeEntity.Banner> banners) {
-//            this.banners = banners;
-//        }
-
         public void frash(List<HomeEntity.Banner> datas) {
             this.banners = datas;
+
             BannerAdapter.this.notifyDataSetChanged();
+            mainHomeBannerview.getViewPager().setCurrentItem(0);
+
         }
 
         @Override
@@ -836,8 +844,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 @Override
                 public void onClick(View v) {
                     NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title);
-                    ;//RightShareWebViewActivity
-//                    UiSkipUtils.toNextActivity(baseActivity, PayActivity.class);
 
                     DataStatistApiParam.HomeBannerClick(banner.title);
                 }
@@ -845,10 +851,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return view;
         }
 
-//        @Override
-//        public int getCount() {
-//            return null == banners ? 0 : banners.size();
-//        }
 
         @Override
         protected int getRealCount() {
