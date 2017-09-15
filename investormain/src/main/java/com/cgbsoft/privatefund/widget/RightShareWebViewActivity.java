@@ -58,42 +58,4 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
             MobclickAgent.onPageEnd(Constant.SXY_TZZH);
         }
     }
-    //    @Override
-//    protected void executeOverideUrlCallBack(String actionUrl) {
-//        if (actionUrl.contains(WebViewConstant.AppCallBack.TOC_SHARE)) {
-//            shareToc(actionUrl);
-//        }
-//    }
-//
-//    private void shareToc(String actionUrl) {
-//        LogUtils.Log("mm", actionUrl);
-//        // sendCommand(’tocShare’,'proName','子标题',,'tocShareProductImg','/apptie/detail.html?schemeId='123456789'');
-//        String actionDecode = URLDecoder.decode(actionUrl);
-//        String[] split = actionDecode.split(":");
-//        String sharePYQtitle = "";
-//
-//        String titles = TextUtils.isEmpty(split[2]) ? title : split[2];
-//        String subTitle = split[3];
-//        String imageTitle = split[4];
-//        String link = split[5];
-//        if (split.length >= 7) {
-//            sharePYQtitle = split[6];
-//        }
-//        link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
-//        if (null != commonShareDialog && commonShareDialog.isShowing()) return;
-//        ShareCommonBean shareCommonBean = new ShareCommonBean(titles, subTitle, link, "");
-//        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, shareType -> {
-//            //分享微信朋友圈成功
-//            if(url.contains("new_detail_toc.html")){
-//                if (!AppManager.isVisitor(baseContext)) {
-//                    //自选页面分享朋友圈成功
-//                    TaskInfo.complentTask("分享资讯");
-//                }
-//                if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
-//                    DataStatistApiParam.onStatisToCShareInfOnCircle(titles,title );
-//                }
-//            }
-//        });
-//        commonShareDialog.show();
-//    }
 }
