@@ -32,6 +32,7 @@ public class RightShareWebViewActivity extends BaseWebViewActivity {
     protected void onResume() {
         super.onResume();
 //        MobclickAgent.onResume(this);
+
         if (CwebNetConfig.BindchiceAdiser.equals(url)) {
             MobclickAgent.onPageStart(Constant.SXY_WSRYHJ);
         }
