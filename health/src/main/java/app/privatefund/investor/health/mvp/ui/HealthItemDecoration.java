@@ -31,7 +31,8 @@ public class HealthItemDecoration extends RecyclerView.ItemDecoration{
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
         int value = parent.getAdapter().getItemCount();
-        if (parent.getChildItemId(view) != parent.getAdapter().getItemId(value - 1)) {
+        int position = parent.getChildAdapterPosition(view)
+        if (position != value - 1) {
             outRect.bottom = margin;
         }
 //        outRect.left = MARGIN_LEFT_RIGHT;
