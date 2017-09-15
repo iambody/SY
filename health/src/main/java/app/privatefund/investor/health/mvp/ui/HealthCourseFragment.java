@@ -154,10 +154,14 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 
     @Override
     public void onLoadMore() {
-        CurrentPostion = CurrentPostion + 1;
-        isLoadMore = true;
-        getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-        DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        if (totalCount != 0 && checkHealthAdapter.getItemCount() != 0 && checkHealthAdapter.getItemCount() < totalCount) {
+            CurrentPostion = CurrentPostion + 1;
+            isLoadMore = true;
+            getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+            DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        } else {
+            clodLsAnim(swipeToLoadLayout);
+        }
     }
 
     @Override

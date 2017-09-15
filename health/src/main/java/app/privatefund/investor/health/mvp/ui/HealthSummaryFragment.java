@@ -76,7 +76,6 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         return R.layout.fragment_health_summary_list;
     }
 
-
     @Override
     protected void onFirstUserVisible() {
         emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目简介"));
