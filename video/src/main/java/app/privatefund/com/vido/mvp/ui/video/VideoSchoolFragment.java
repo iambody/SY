@@ -90,7 +90,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         videoVideolistIndicator.setNavigator(commonNavigator);
 
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
-        videoVideolistPager.setOffscreenPageLimit(20);
+        videoVideolistPager.setOffscreenPageLimit(8);
         //fragment的适配器填充
         videoVideolistPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);

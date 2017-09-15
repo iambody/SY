@@ -3,7 +3,10 @@ package com.cgbsoft.lib.utils.tools;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
@@ -12,10 +15,18 @@ import rx.functions.Func1;
  * 日期 2017/7/19-09:35
  */
 public class RxCountDown {
+    /**
+     * 倒计时定时器定时器
+     *
+     * @param time
+     * @return
+     */
     public static Observable<Integer> countdown(int time) {
         if (time < 0) time = 0;
 
         final int countTime = time;
+
+
         return Observable.interval(0, 1, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -28,4 +39,94 @@ public class RxCountDown {
                 .take(countTime + 1);
 
     }
+
+    /**
+     * 重新封装的定时器****************************************************************************
+     */
+    private static Subscription countDownmSubscription;
+
+    public static void countTimeDown(int time, ICountTime iCountTime1) {
+        if(null!=countDownmSubscription)return;
+        if (time < 0) time = 0;
+
+        final int countTime = time;
+
+        countDownmSubscription=Observable.interval(0, 1, TimeUnit.SECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<Long, Integer>() {
+                    @Override
+                    public Integer call(Long increaseTime) {
+                        return countTime - increaseTime.intValue();
+                    }
+                })
+                .take(countTime + 1).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                iCountTime1.onCompleted( );
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                iCountTime1.onNext(integer);
+            }
+        });
+    }
+
+    public interface ICountTime {
+        void onCompleted( );
+        void onNext(int   timer);
+    }
+
+    public static void stopCountTime() {
+        if(null!=countDownmSubscription&&!countDownmSubscription.isUnsubscribed()){
+            countDownmSubscription.unsubscribe();
+            countDownmSubscription=null;
+        }
+    }
+
+    /***
+     * 重新封装的新的********************************************************************************
+     *
+     */
+    private static Subscription mSubscription;
+    private IRxNext iRxNext;
+
+    public static void rollPoling(int time, IRxNext next) {
+        mSubscription = Observable.interval(time, TimeUnit.SECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        if (null != next)
+                            next.doNext();
+
+
+                    }
+                });
+    }
+
+
+    /**
+     * 取消订阅
+     */
+    public static void cancel() {
+        if (mSubscription != null && !mSubscription.isUnsubscribed()) {
+            mSubscription.unsubscribe();
+        }
+
+    }
+
+
+    public interface IRxNext {
+        void doNext();
+    }
+
+
 }
