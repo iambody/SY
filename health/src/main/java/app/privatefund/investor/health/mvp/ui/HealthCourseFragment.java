@@ -1,5 +1,6 @@
 package app.privatefund.investor.health.mvp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,9 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -36,6 +40,7 @@ import app.privatefund.investor.health.mvp.model.HealthCourseEntity;
 import app.privatefund.investor.health.mvp.presenter.HealthCoursePresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * @author chenlong
@@ -54,8 +59,11 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     TextView emptyTextView;
     @BindView(R2.id.empty_ll)
     LinearLayout emptyLinearlayout;
+    private Observable<Boolean> rerushListObservable;
+    private HealthCourseEntity.HealthCourseListModel currentListModel;
 
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
+    public static final int REQUEST_BACK_CODE = 10;
     @BindView(R2.id.fragment_videoschool_noresult_lay)
     RelativeLayout fragmentVideoschoolNoresultLay;
 
@@ -88,12 +96,29 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getShortName());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getDetailUrl()).concat("?id=").concat(discoveryListModel.getId()));
-            NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            NavigationUtils.startActivityForResultByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap, REQUEST_BACK_CODE);
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
-            checkHealthAdapter.notifyDataReadCount(discoveryListModel);
+            this.currentListModel = discoveryListModel;
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+        initObsaverble();
+    }
+
+    private void initObsaverble() {
+        rerushListObservable = RxBus.get().register(RxConstant.COURSE_HEALTH_LIST_REFRUSH_OBSERVABLE, Boolean.class);
+        rerushListObservable.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                if (currentListModel != null) {
+                    checkHealthAdapter.notifyDataReadCount(currentListModel);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
     }
 
     @Override
@@ -161,6 +186,14 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
         } else {
             clodLsAnim(swipeToLoadLayout);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (rerushListObservable != null) {
+            RxBus.get().unregister(RxConstant.COURSE_HEALTH_LIST_REFRUSH_OBSERVABLE, rerushListObservable);
         }
     }
 
