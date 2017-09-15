@@ -44,6 +44,7 @@ import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.CustomDialog;
+import com.cgbsoft.lib.widget.WeiChatLoginDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
@@ -116,8 +117,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
     //    private UMShareAPI mUMShareAPI;
-    private CustomDialog mCustomDialog;
-    private CustomDialog.Builder mCustomBuilder;
+    private WeiChatLoginDialog mCustomDialog;
+    private WeiChatLoginDialog.Builder mCustomBuilder;
     //公钥直接存内存中
     private String publicKey;
 
@@ -191,7 +192,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, getString(R.string.la_login_loading_str), false, false);
 
-        mCustomDialog = new CustomDialog(this);
+        mCustomDialog = new WeiChatLoginDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
        /*产品经理需求 不要首次进来就弹出框*/

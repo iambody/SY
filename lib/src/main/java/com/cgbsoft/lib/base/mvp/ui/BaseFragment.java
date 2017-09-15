@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.base.mvp.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -42,7 +43,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     protected Activity baseActivity;
     protected int screenWidth;
     //控件是否已经初始化
-    private boolean isCreateView = false;
+    protected boolean isCreateView = false;
     //是否已经加载过数据
     private boolean isLoadData = false;
 
@@ -82,12 +83,17 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser && isCreateView) {
-            lazyLoad();
             viewBeShow();
+            lazyLoad();
+        } else {
+            viewBeHide();
         }
     }
 
     protected void viewBeShow() {
+
+    }
+    protected void viewBeHide() {
 
     }
 
@@ -261,5 +267,9 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     // 判断是否缺少权限
     protected boolean needsPermission(String permission) {
         return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
+    }
+
+    public boolean onBackPressed(Context context){
+        return false;
     }
 }

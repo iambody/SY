@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -61,6 +60,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     SettingItemNormal aboutApp;
 
     private Observable<Boolean> switchButton;
+    private Observable<Boolean> closeSetting;
     private DaoUtils daoUtils;
 
     @Override
@@ -83,6 +83,17 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
             protected void onEvent(Boolean aBoolean) {
                 changeGesturePsdLayout.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
                 gestureSwitch.setSwitchCheck(aBoolean);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
+        closeSetting = RxBus.get().register(RxConstant.CLOSE_SETTING_ACTIVITY_OBSERVABE, Boolean.class);
+        closeSetting.subscribe(new RxSubscriber<Boolean>() {
+            @Override
+            protected void onEvent(Boolean aBoolean) {
+                finish();
             }
 
             @Override
@@ -248,6 +259,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         super.onDestroy();
         if (switchButton != null) {
             RxBus.get().unregister(RxConstant.SET_PAGE_SWITCH_BUTTON, switchButton);
+        }
+        if (closeSetting != null) {
+            RxBus.get().unregister(RxConstant.CLOSE_SETTING_ACTIVITY_OBSERVABE, closeSetting);
         }
     }
 

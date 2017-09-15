@@ -232,8 +232,10 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             @Override
             protected void onEvent(String json) {
                 try {
+                    System.out.println("--------reulst=" + json);
                     JSONObject jsonObject = new JSONObject(json);
                     JSONArray result = jsonObject.getJSONArray("result");
+
                     SPreference.putString(getContext(), "Navigation", result.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();

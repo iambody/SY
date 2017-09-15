@@ -1,5 +1,7 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.text.TextUtils;
+
 import com.cgbsoft.lib.utils.net.NetConfig;
 
 import java.io.BufferedReader;
@@ -40,14 +42,18 @@ public class DownloadUtils {
     private static String encodePolicy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsNTI0Mjg4MDAwXV19";
 
     // 提交表单的URL为bucket域名
-
     public static String postObject(String localFilePath, String type) {
         // 表单域
         Map<String, String> textMap = new LinkedHashMap<>();
-        String remotePath = type.concat(UUID.randomUUID().toString().concat(".png"));
+        String pre = ".png";
+        if (!TextUtils.isEmpty(localFilePath) && localFilePath.contains(".") && localFilePath.lastIndexOf(".") < localFilePath.length() - 1) {
+            int dex = localFilePath.lastIndexOf(".");
+            pre = localFilePath.substring(dex);
+        }
+        String remotePath = type.concat(UUID.randomUUID().toString().concat(pre));
         textMap.put("key", remotePath);
         // Content-Disposition
-        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
+//        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
         // OSSAccessKeyId
         textMap.put("OSSAccessKeyId", accessKeyId);
         // policy
@@ -114,8 +120,12 @@ public class DownloadUtils {
                     }
                     File file = new File(inputValue);
                     String filename = file.getName();
-
                     String contentType = "application/octet-stream";
+                    if (filename.toLowerCase().endsWith(".jpg")||filename.toLowerCase().endsWith(".jpeg")||filename.toLowerCase().endsWith(".png")) {
+                        contentType = "image/jpeg";
+                    } else {
+                        contentType = "application/octet-stream";
+                    }
                     StringBuffer strBuf = new StringBuffer();
                     strBuf.append("\r\n").append("--").append(boundary).append(
                             "\r\n");

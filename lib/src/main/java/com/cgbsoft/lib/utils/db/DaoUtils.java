@@ -119,6 +119,11 @@ public class DaoUtils {
         else return been;
     }
 
+    /**
+     * 获取在欢迎页保存的首页背景图片应用升级信息
+     * @param title
+     * @return
+     */
     public OtherInfo getOtherInfo(String title) {
         return otherInfoDao.queryBuilder().where(OtherInfoDao.Properties.Title.eq(title)).build().unique();
     }
@@ -130,6 +135,11 @@ public class DaoUtils {
         }
     }
 
+    /**
+     * 在欢迎页获取首页背景图片，应用升级信息，然后保存
+     * @param title
+     * @param value
+     */
     public void saveOrUpdataOther(String title, String value) {
         OtherInfo info = getOtherInfo(title);
         if (info != null) {

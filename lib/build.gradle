@@ -47,9 +47,12 @@ android {
         }
     }
     buildTypes {
+        debug {
+            resValue("string", "URL_BASE", rootProject.ext.baseUrl)
+        }
+
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("string", "URL_BASE", rootProject.ext.baseUrl)
         }
     }
 }

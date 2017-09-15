@@ -22,6 +22,7 @@ import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -115,7 +116,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
     private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
-
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -129,6 +129,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
     private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
+    private static final String FRAGMENTS_TAG = "android:support:fragments";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            savedInstanceState.putParcelable(FRAGMENTS_TAG, null);
+        }
+        super.onCreate(savedInstanceState);
+    }
 
     @OnClick(R.id.iv_guide)
     public void guideClick() {
@@ -331,8 +340,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         bottomNavigationBar.setOnClickListener(this);
         bottomNavigationBar.setActivity();
 
-        if (!SPreference.isThisRunOpenDownload(this))
+        if (!SPreference.isThisRunOpenDownload(this)) {
             new DownloadDialog(this, true, false);
+        }
 //        downloadDialog.show();
 
 //        SignBean bean=new SignBean();
@@ -391,7 +401,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onRestart();
         initUserInfo();
         getPresenter().getProLiveList();
-        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, true);
+//        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, 0);
         RxBus.get().post(RxConstant.RefreshRiskState, true);
 //        int index = getIntent().getIntExtra("index", 0);
 //        onTabSelected(index);
@@ -443,6 +453,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 break;
         }
         switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
+        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, position);
         buryPoint(position);
     }
 
@@ -855,6 +866,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
 //            MainTabManager.getInstance().getProductFragment().backClick();
 //        } else
+        if (((BaseFragment) mContentFragment).onBackPressed(MainPageActivity.this)) {
+            return;
+        }
         exitBy2Click();
     }
 

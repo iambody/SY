@@ -17,8 +17,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -452,13 +450,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         Intent takePictureIntent = new Intent(action);
         File f = getPhotoFile();
         mPhotoPath = f.getAbsolutePath();
-        Uri contentUri;
-        //判断是否是AndroidN以及更高的版本
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            contentUri = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, f);
-        } else {
-            contentUri = Uri.fromFile(f);
-        }
+//        Uri contentUri;
+        //判断是、否是AndroidN以及更高的版本
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            contentUri = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, f);
+//        } else {
+//            contentUri = Uri.fromFile(f);
+//        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
@@ -598,7 +596,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         }
         try {
             Intent intent = new Intent("com.android.camera.action.CROP");
-            Uri contentUri;
+//            Uri contentUri;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                 StrictMode.setVmPolicy(builder.build());
@@ -607,22 +605,22 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 //            install.setDataAndType(uri, "application/vnd.android.package-archive");
             }
             //判断是否是AndroidN以及更高的版本
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                contentUri = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, new File(mPhotoPath));
-            } else {
-                contentUri = Uri.fromFile(new File(mPhotoPath));
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                contentUri = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, new File(mPhotoPath));
+//            } else {
+//                contentUri = Uri.fromFile(new File(mPhotoPath));
+//            }
             intent.setDataAndType(Uri.fromFile(new File(mPhotoPath)), "image/*");
             putCropIntentExtras(intent);
             File f = getCroppedHeadFile();
             mPhotoPath = f.getAbsolutePath();
-            Uri contentUriF;
-            //判断是否是AndroidN以及更高的版本
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                contentUriF = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, f);
-            } else {
-                contentUriF = Uri.fromFile(f);
-            }
+//            Uri contentUriF;
+            //判断是否、是AndroidN以及更高的版本
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                contentUriF = FileProvider.getUriForFile(baseContext, BuildConfig.APPLICATION_ID, f);
+//            } else {
+//                contentUriF = Uri.fromFile(f);
+//            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                 StrictMode.setVmPolicy(builder.build());
@@ -654,7 +652,6 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @OnClick(R.id.rl_show_datepicker)
     public void showDatePicker() {
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(baseContext, android.R.style.Theme_Material_Light_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

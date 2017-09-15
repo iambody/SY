@@ -30,6 +30,8 @@ public interface RxConstant {
 
     String SET_PAGE_SWITCH_BUTTON = "set_page_switch_button_observable";
 
+    String CLOSE_SETTING_ACTIVITY_OBSERVABE = "close_setting_activity_observable";
+
     String IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE = "is_play_video_local_delete_observable";
 
     String DOWNLOAD_TO_LIST_OBSERVABLE = "download_to_list_observable";

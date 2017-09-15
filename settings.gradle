@@ -1,2 +1,2 @@
-include ':investormain', ':adviser', ':lib', ':order', ':advisermain', ':commonui', ':live', ':im', ':ndk', ':product', ':enter', ':video', ':libzxing', ':mall', ':IMKit', ':liveold', ':health', 'IMLib'
+include ':investormain', ':adviser', ':lib', ':order', ':advisermain', ':commonui', ':live', ':im', ':ndk', ':product', ':enter', ':video', ':libzxing', ':mall', ':IMKit', ':liveold', ':health', 'IMLib','gsyVideoPlayer-java'
 //':picselect'

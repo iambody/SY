@@ -35,7 +35,7 @@ public class RongConnect {
         String UID = AppManager.getUserId(BaseApplication.getContext());
         String rongToken = AppManager.getRongToken(BaseApplication.getContext());
         Log.i("RongConnect", "rongExpired=" + rongExpired + "-----rongUID=" + UID + "---rongToken=" + rongToken);
-        if (!TextUtils.equals(UID, userId) || !TextUtils.equals("2", String.valueOf(rongExpired)) || TextUtils.isEmpty(rongToken)) {
+        if (!TextUtils.isEmpty(UID) && (!TextUtils.equals(UID, userId) || !TextUtils.equals("2", String.valueOf(rongExpired)) || TextUtils.isEmpty(rongToken))) {
             AppInfStore.saveUserId(BaseApplication.getContext(), userId);
             AppInfStore.saveRongTokenExpired(BaseApplication.getContext(), 2);
             String needExpired = rongExpired == 1 ? "1" : null;

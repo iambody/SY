@@ -26,15 +26,15 @@
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"
              />
 
-        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <!--<activity android:name="me.iwf.photopicker.PhotoPickerActivity"-->
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
 
-        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <!--<activity android:name="me.iwf.photopicker.PhotoPagerActivity"-->
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
 
-        <!--<activity-->
-            <!--android:configChanges="orientation|screenSize"-->
-            <!--android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />-->
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
 
 
         <!-- ****************百度定位****************-->

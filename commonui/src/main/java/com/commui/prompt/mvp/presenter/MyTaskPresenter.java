@@ -6,9 +6,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
-import com.cgbsoft.lib.base.model.SignInEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -25,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * desc  任务presenter

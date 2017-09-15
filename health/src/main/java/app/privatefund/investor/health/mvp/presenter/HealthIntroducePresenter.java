@@ -7,6 +7,7 @@ import android.util.Log;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,10 +32,11 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
 
     @Override
     public void introduceHealth() {
+        getView().showLoadDialog();
         addSubscription(ApiClient.getHealthIntruduce(new HashMap()).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                Log.i("IntroducePresenter", s.toString());
+                getView().hideLoadDialog();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String vas = jsonObject.getString("result");
@@ -48,6 +50,7 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
 
             @Override
             protected void onRxError(Throwable error) {
+                getView().hideLoadDialog();
                 getView().requestDataFailure(error.getMessage());
             }
         }));

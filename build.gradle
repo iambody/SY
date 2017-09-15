@@ -34,14 +34,14 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
+def keystorePropertiesFile = rootProject.file("gradle.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 ext {
     compileSdkVersion = 24
     buildToolsVersion = "25.0.0"
     minSdkVersion = 17
     targetSdkVersion = 23
-    versionCode = 60005
-    versionName = "6.0.5"
     databaseName = "sxydb.db";
     databaseVer = 1;
 
@@ -84,4 +84,30 @@ ext {
     webview_java_script_bridge = '1.0.4'
     routerVersion = "1.1.0"
     compilerVersion = "0.6.0"
+
+    if (project.hasProperty('versionCode')) {
+        versionCode = Integer.parseInt(versionCode)
+    } else {
+        versionCode = keystoreProperties['versionCode'] as int
+    }
+    if (project.hasProperty('versionName')) {
+        versionName = versionName
+    } else {
+        versionName = keystoreProperties['versionName']
+    }
+    if (project.hasProperty('baseUrl')) {
+        baseUrl = baseUrl
+    } else {
+        baseUrl = keystoreProperties['baseUrl']
+    }
+    if (project.hasProperty('umengKey')) {
+        umengKey = umengKey
+    } else {
+        umengKey = keystoreProperties['umengKey']
+    }
+    if (project.hasProperty('rongCloud')) {
+        rongCloud = rongCloud
+    } else {
+        rongCloud = keystoreProperties['rongCloud']
+    }
 }

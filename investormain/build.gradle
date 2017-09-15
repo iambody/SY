@@ -11,7 +11,7 @@ repositories {
 
 // 打包时间
 def releaseTime() {
-    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyyMMdd-HH_mm_ss", TimeZone.getDefault())
 }
 //打包描述
 def releaseDesc() {
@@ -88,7 +88,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace(".apk", "-${releaseDesc()}-${releaseTime()}-${defaultConfig.versionCode}-${defaultConfig.versionName}.apk")
+                def fileName = outputFile.name.replace(".apk", "-${rootProject.ext.baseUrl.substring(8)}-${releaseDesc()}-${releaseTime()}-${defaultConfig.versionCode}-${defaultConfig.versionName}.apk")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -96,14 +96,13 @@ android {
     productFlavors{
         guanwang{}
         huawei{}
-         qihu360{}
-         tengxun{}
-         xiaomi{}
-         baidu{}
-         yingyonghui{}
-         wandoujia{}
-         mumayi{}
-
+        qihu360{}
+        tengxun{}
+        xiaomi{}
+        baidu{}
+        yingyonghui{}
+        wandoujia{}
+        mumayi{}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
@@ -120,6 +119,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
         }
 
         release {
@@ -135,7 +135,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
-
+            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
         }
     }
 

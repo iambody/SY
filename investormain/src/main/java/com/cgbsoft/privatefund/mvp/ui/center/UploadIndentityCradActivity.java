@@ -397,7 +397,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
                     tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
-                    defeatTitle.setText("失败原因:");
+                    defeatTitle.setText(TextUtils.isEmpty(depict)?"":"失败原因:");
                     defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
                 }
                 if ("70".equals(stateCode)) {//70：已过期
@@ -407,7 +407,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
                     tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
                     uploadFirstCover.setVisibility(View.VISIBLE);
-                    defeatTitle.setText("失败原因:");
+                    defeatTitle.setText(TextUtils.isEmpty(depict)?"":"失败原因:");
                     defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
                 }
             }

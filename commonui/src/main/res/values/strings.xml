@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">CmmonUi</string>
-    <string name="task_bonus">任务奖励</string>
+    <string name="task_bonus">云豆任务</string>
     <string name="my_tasks">我的任务</string>
 </resources>

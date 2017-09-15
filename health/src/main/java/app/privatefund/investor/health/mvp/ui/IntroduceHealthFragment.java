@@ -1,11 +1,17 @@
 package app.privatefund.investor.health.mvp.ui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,12 +24,20 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.tencent.qcload.playersdk.ui.UiChangeInterface;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,31 +46,31 @@ import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
 import app.privatefund.investor.health.mvp.model.HealthIntroduceModel;
 import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
+import app.privatefund.investor.health.videos.SampleListener;
+import app.privatefund.investor.health.videos.SampleVideo;
+import app.privatefund.investor.health.videos.SwitchVideoModel;
 import butterknife.BindView;
 import rx.Observable;
 
 /**
  * @author chenlong
  */
-public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresenter> implements PlayerListener, HealthIntroduceContract.View {
+public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresenter> implements HealthIntroduceContract.View {
 
     @BindView(R2.id.introduce_health_text)
     TextView introduce_health_text;
 
-    @BindView(R2.id.vrf_avd)
-    VideoRootFrame videoRootFrame;
+    @BindView(R2.id.detail_player)
+    SampleVideo detailPlayer;
 
-    @BindView(R2.id.rl_avd_head)
-    RelativeLayout rl_avd_head;
-
-    @BindView(R2.id.iv_mvv_cover)
-    ImageView iv_mvv_cover;
-
-    @BindView(R2.id.play_contral)
-    LinearLayout play_contral;
-
-    private boolean isSetFullscreenHandler;
-    private Observable<Boolean> videoStateObservable;
+    private Observable<Integer> videoStateObservable;
+    private List<VideoInfo> videos;
+    private LoadingDialog mLoadingDialog;
+    private ImageView coverImageView;
+    private OrientationUtils orientationUtils;
+    private boolean isPlay;
+    private boolean isPause;
+    private boolean isRelease;
 
     @Override
     protected int layoutID() {
@@ -65,29 +79,19 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        videoRootFrame.setListener(this);
-
+        mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         changeVideoViewSize(getResources().getConfiguration().orientation);
-        if (!isSetFullscreenHandler) {
-            isSetFullscreenHandler = true;
-            videoRootFrame.setToggleFullScreenHandler(() -> {
-                if (videoRootFrame.isFullScreen()) { // 竖屏
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-                } else { // 横屏
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                }
-            });
-        }
-        getPresenter().introduceHealth();
-        videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Boolean.class);
-        videoStateObservable.subscribe(new RxSubscriber<Boolean>() {
+        videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Integer.class);
+        videoStateObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
-            protected void onEvent(Boolean b) {
-                if (b) {
-                    if (videoRootFrame != null) {
-                        videoRootFrame.pause();
+            protected void onEvent(Integer integer) {
+                if (3 != integer&&null!=detailPlayer) {
+                    if (detailPlayer.isIfCurrentIsFullscreen()) {
+//                        onBackPressed(getContext());
+                        detailPlayer.getFullWindowPlayer().onVideoPause();
+                    } else {
+                        detailPlayer.onVideoPause();
                     }
                 }
             }
@@ -97,51 +101,169 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
 
             }
         });
+        initVideo();
+    }
+    @Override
+    public void showLoadDialog() {
+        if (null == mLoadingDialog) {
+            mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
+        }
+        if (!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
+    }
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
+    }
+    @Override
+    protected void loadData() {
+        getPresenter().introduceHealth();
+    }
 
-        play_contral.setOnClickListener(v -> {
-            System.out.println("--------play_contral");
-            videoRootFrame.play();
+    private void initVideo() {
+        //增加封面
+        coverImageView = new ImageView(getActivity());
+        coverImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //coverImageView.setImageResource(R.mipmap.xxx1);
+        detailPlayer.setThumbImageView(coverImageView);
+
+        resolveNormalVideoUI();
+
+        //外部辅助的旋转，帮助全屏
+        orientationUtils = new OrientationUtils(getActivity(), detailPlayer);
+        //初始化不打开外部的旋转
+        orientationUtils.setEnable(false);
+
+        detailPlayer.setIsTouchWiget(true);
+        //detailPlayer.setIsTouchWigetFull(false);
+        //关闭自动旋转
+        detailPlayer.setRotateViewAuto(false);
+        detailPlayer.setLockLand(false);
+        detailPlayer.setShowFullAnimation(false);
+        detailPlayer.setNeedLockFull(true);
+        detailPlayer.setSeekRatio(1);
+
+        detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //直接横屏
+                orientationUtils.resolveByClick();
+
+                //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
+                detailPlayer.startWindowFullscreen(getActivity(), true, true);
+            }
         });
+        detailPlayer.setSwitchShow(false);
+        detailPlayer.setStandardVideoAllCallBack(new SampleListener() {
+            @Override
+            public void onPrepared(String url, Object... objects) {
+                super.onPrepared(url, objects);
+                //开始播放了才能旋转和全屏
+                orientationUtils.setEnable(true);
+                isPlay = true;
+            }
+
+            @Override
+            public void onAutoComplete(String url, Object... objects) {
+                super.onAutoComplete(url, objects);
+            }
+
+            @Override
+            public void onClickStartError(String url, Object... objects) {
+                super.onClickStartError(url, objects);
+            }
+
+            @Override
+            public void onQuitFullscreen(String url, Object... objects) {
+                super.onQuitFullscreen(url, objects);
+                if (orientationUtils != null) {
+                    orientationUtils.backToProtVideo();
+                }
+                LogUtils.Log("aaa","-----------onQuitFullscreen");
+                detailPlayer.setSwitchShow(false);
+            }
+
+            @Override
+            public void onEnterFullscreen(String url, Object... objects) {
+                super.onEnterFullscreen(url, objects);
+                detailPlayer.setSwitchShow(true);
+                LogUtils.Log("aaa","-----------onEnterFullscreen");
+            }
+        });
+
+        detailPlayer.setLockClickListener(new LockClickListener() {
+            @Override
+            public void onClick(View view, boolean lock) {
+                if (orientationUtils != null) {
+                    //配合下方的onConfigurationChanged
+                    orientationUtils.setEnable(!lock);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onBackPressed(Context context) {
+        if (orientationUtils != null) {
+            orientationUtils.backToProtVideo();
+        }
+
+        if (StandardGSYVideoPlayer.backFromWindowFull(context)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void resolveNormalVideoUI() {
+        //增加title
+        detailPlayer.getTitleTextView().setVisibility(View.GONE);
+        detailPlayer.getBackButton().setVisibility(View.GONE);
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //如果旋转了就全屏
+        if (isPlay && !isPause) {
+            detailPlayer.onConfigurationChanged(getActivity(), newConfig, orientationUtils);
+        }
     }
 
     @Override
     public void requestDataSuccess(HealthIntroduceModel healthIntroduceModel) {
         if (healthIntroduceModel != null) {
-            Imageload.display(getContext(), healthIntroduceModel.getImage(), iv_mvv_cover);
+            Imageload.display(getContext(), healthIntroduceModel.getImage(), coverImageView);
             introduce_health_text.setText(healthIntroduceModel.getText());
-            if (healthIntroduceModel != null) {
+            if (healthIntroduceModel != null) {//埋点
                 DataStatistApiParam.operateHealthIntroduceClick(healthIntroduceModel.getText());
             }
 
+            String source1 =healthIntroduceModel.getSdVideo();
+            String name = "标清";
+            SwitchVideoModel switchVideoModel = new SwitchVideoModel(name, source1);
 
-//            List<VideoInfo> videos = new ArrayList<>();
-//            VideoInfo v1 = new VideoInfo();
-//            VideoInfo v2 = new VideoInfo();
-//            v1.description = "标清";
-//            v1.type = VideoInfo.VideoType.MP4;
-//            v2.description = "高清";
-//            v2.type = VideoInfo.VideoType.MP4;
-//            v1.url = videoInfoModel.sdUrl;
-//            v2.url = videoInfoModel.hdUrl;
-//            videos.add(v1);
-//            videos.add(v2);
-//            vrf_avd.play(videos);
-//            changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
-            iv_mvv_cover.setOnClickListener(v -> {
-                List<VideoInfo> videos = new ArrayList<>();
-                VideoInfo v1 = new VideoInfo();
-                VideoInfo v2 = new VideoInfo();
-                v1.description = "标清";
-                v1.type = VideoInfo.VideoType.MP4;
-                v2.description = "高清";
-                v1.url = healthIntroduceModel.getSdVideo();
-                v2.url = healthIntroduceModel.getHdVideo();
-                videos.add(v1);
-                videos.add(v2);
-                videoRootFrame.play(videos);
-                System.out.println("--------iv_mvv_cover");
-                videoRootFrame.play(videos);
-            });
+            String source2 =healthIntroduceModel.getHdVideo();
+            String name2 = "高清";
+            SwitchVideoModel switchVideoModel2 = new SwitchVideoModel(name2, source2);
+
+            List<SwitchVideoModel> list = new ArrayList<>();
+            list.add(switchVideoModel);
+            list.add(switchVideoModel2);
+
+            detailPlayer.setUp(list, true, "");
+
+//                videos = new ArrayList<>();
+//                VideoInfo v1 = new VideoInfo();
+//                VideoInfo v2 = new VideoInfo();
+//                v1.description = "标清";
+//                v1.type = VideoInfo.VideoType.MP4;
+//                v2.description = "高清";
+//                v2.type = VideoInfo.VideoType.MP4;
+//                v1.url = healthIntroduceModel.getSdVideo();
+//                v2.url = healthIntroduceModel.getHdVideo();
+//                videos.add(v1);
+//                videos.add(v2);
+//                videoRootFrame.play(videos);
         }
     }
 
@@ -160,16 +282,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
-                videoRootFrame.pause();
-            }
-        } else {
-            if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
-                videoRootFrame.pause();
-            }
+    protected void viewBeHide() {
+        super.viewBeHide();
+        if (null != detailPlayer) {
+            detailPlayer.onVideoPause();
         }
     }
 
@@ -177,20 +293,17 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @Override
     public void onStart() {
         super.onStart();
-        if (videoRootFrame != null && videoRootFrame.getCurrentStatus() == 5) {
-            videoRootFrame.pause();
-        }
     }
 
     private void changeVideoViewSize(int orientation) {
-        ViewGroup.LayoutParams lp = rl_avd_head.getLayoutParams();
+        ViewGroup.LayoutParams lp = detailPlayer.getLayoutParams();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             lp.width = Utils.getRealScreenWidth(getActivity());
         } else {
             lp.width = Utils.getScreenWidth(getActivity());
         }
         lp.height = lp.width * 9 / 16;
-        rl_avd_head.setLayoutParams(lp);
+        detailPlayer.setLayoutParams(lp);
     }
 
     @Override
@@ -198,54 +311,30 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         return new HealthIntroducePresenter(getContext(), this);
     }
 
-    @Override
-    public void onError(Exception e) {
-        Log.e("PlayVideo ERROR ", e.getMessage());
-    }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (videoRootFrame != null) {
-            videoRootFrame.release();
-            videoRootFrame = null;
-        }
+        isRelease = true;
+        LogUtils.Log("aaa","000000000000000----------ondestory");
+        GSYVideoPlayer.releaseAllVideos();
+        //GSYPreViewManager.instance().releaseMediaPlayer();
+        if (orientationUtils != null)
+            orientationUtils.releaseListener();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        isPause = true;
         MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JS);
-        if (videoRootFrame!=null)
-            videoRootFrame.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        isPause = false;
         MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JS);
-        if (videoRootFrame!=null)
-            videoRootFrame.pause();
-    }
-
-    @Override
-    public void onStateChanged(int i) {
-           /*
-                 * 1 STATE_IDLE 播放器空闲，既不在准备也不在播放 2 STATE_PREPARING 播放器正在准备 3
-				 * STATE_BUFFERING 播放器已经准备完毕，但无法立即播放。此状态
-				 * 的原因有很多，但常见的是播放器需要缓冲更多数据才能开始播放 4 STATE_PAUSE 播放器准备好并可以立即播放当前位置
-				 * 5 STATE_PLAY 播放器正在播放中 6 STATE_ENDED 播放已完毕
-				 */
-        switch (i) {
-            case 5://播放中
-                iv_mvv_cover.setVisibility(View.GONE);
-                play_contral.setVisibility(View.GONE);
-                break;
-            case 4:
-                break;
-            default:
-                break;
-        }
     }
 }

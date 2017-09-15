@@ -19,6 +19,15 @@ public interface HealthIntroduceContract {
 
     interface View extends BaseView {
 
+        /**
+         * 显示loading弹窗
+         */
+        void showLoadDialog();
+        /**
+         * 隐藏loading弹窗
+         */
+        void hideLoadDialog();
+
         void requestDataSuccess(HealthIntroduceModel healthIntroduceModel);
 
         void requestDataFailure(String errorMsg);

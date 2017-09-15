@@ -25,7 +25,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.widget.CustomDialog;
+import com.cgbsoft.lib.widget.WeiChatLoginDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
 import com.google.gson.Gson;
@@ -140,6 +140,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             @Override
             protected void onEvent(String json) {
                 try {
+                    System.out.println("--------reulst=" + json);
                     JSONObject jsonObject = new JSONObject(json);
                     JSONArray result = jsonObject.getJSONArray("result");
                     SPreference.putString(getContext(), "Navigation", result.toString());
@@ -166,7 +167,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
      * @param headimgurl
      */
     @Override
-    public void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl, String openId, String publicKey) {
+    public void toWxLogin(@NonNull LoadingDialog loadingDialog, WeiChatLoginDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl, String openId, String publicKey) {
         addSubscription(ApiClient.wxTestUnioIDCheck(unionid).flatMap(s -> {
             WXUnionIDCheckEntity.Result result = new Gson().fromJson(getV2String(s), WXUnionIDCheckEntity.Result.class);
             if (TextUtils.equals(result.isExist, "0")) {

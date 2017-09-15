@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.widget.CustomDialog;
+import com.cgbsoft.lib.widget.WeiChatLoginDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 
@@ -25,7 +26,7 @@ public interface LoginContract {
         /**
          * 微信登录
          */
-        void toWxLogin(@NonNull LoadingDialog loadingDialog, CustomDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl, String openid, String toWxLogin);
+        void toWxLogin(@NonNull LoadingDialog loadingDialog, WeiChatLoginDialog.Builder builder, String unionid, String sex, String nickName, String headimgurl, String openid, String toWxLogin);
 
         /**
          * 微信登录
