@@ -877,7 +877,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == HealthCourseFragment.REQUEST_BACK_CODE) {
-            System.out.println("-------coursefragment onactivityresult");
             RxBus.get().post(RxConstant.COURSE_HEALTH_LIST_REFRUSH_OBSERVABLE, true);
         }
     }
