@@ -187,8 +187,11 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
 
         if (null == videoListModels) videoListModels = new ArrayList<>();
         if (isAdd) {
-            if (0 != videoListModels.size())
+            if (0 != videoListModels.size()) {//获取数据
                 videoListAdapter.addFreshAp(videoListModels);
+            } else {//加载完毕
+                PromptManager.ShowCustomToast(fBaseActivity,getResources().getString(R.string.no_moredata));
+            }
         } else {
             videoListAdapter.freshAp(videoListModels);
         }

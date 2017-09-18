@@ -38,6 +38,8 @@ public interface RxConstant {
 
     String CLOSE_MAIN_OBSERVABLE = "close_main_observable";
 
+    String COURSE_HEALTH_LIST_REFRUSH_OBSERVABLE = "course_health_list_refrush_observable";
+
     String LOOK_TWO_CODE_OBSERVABLE = "twocode_look_observable";
 
     String START_CONVERSATION_OBSERVABLE = "start_conversation_observable";

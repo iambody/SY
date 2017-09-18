@@ -49,7 +49,8 @@ public class VideoHistoryAdapter extends BaseAdapter<VideoHistoryModel, VideoHis
             VideoHistoryHolder vhh = (VideoHistoryHolder) holder;
             Imageload.display(vhh.context, model.videoCoverUrl, 0, 0, 8, vhh.iv_avh_cover, R.drawable.bg_default, R.drawable.bg_default);
             vhh.tv_avh_title.setText(model.videoTitle);
-            vhh.tv_avh_time.setText(model.time);
+
+            vhh.tv_avh_time.setText( model.time.contains("00:00")?"已看完":model.time);
 
             if (openCheck) {
                 vhh.cb_avh.setVisibility(View.VISIBLE);

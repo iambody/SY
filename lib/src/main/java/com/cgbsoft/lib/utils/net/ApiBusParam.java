@@ -108,6 +108,12 @@ public class ApiBusParam {
         return hashMap;
     }
 
+    public static HashMap getHealthCourseDataParams(int offset) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("offset", String.valueOf(offset));
+        return hashMap;
+    }
+
     public static HashMap getBespeakHealthParams(String id, String name, String phone, String captcha) {
         HashMap hashMap = new HashMap<>();
         hashMap.put("id", id);

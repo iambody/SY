@@ -104,7 +104,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     private void initViewPage() {
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
-        viewPager.setOffscreenPageLimit(20);
+        viewPager.setOffscreenPageLimit(8);
         viewPager.setAdapter(fragmentAdapter);
         ViewPagerHelper.bind(magicIndicator, viewPager);
     }

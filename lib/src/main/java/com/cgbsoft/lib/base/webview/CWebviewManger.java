@@ -1441,10 +1441,12 @@ public class CWebviewManger {
             if (url.startsWith("app6.0")) {
                 url = "/" + url;
             }
+            boolean isHasHttp = false;
             if (url.contains("http")) {
                 url = split[2] + ":" + split[3];
                 if (split.length >= 5) {
                     title = split[4];
+                    isHasHttp = true;
                 }
             } else {
                 url = BaseWebNetConfig.SERVER_ADD + url;
@@ -1454,14 +1456,14 @@ public class CWebviewManger {
             i.putExtra(WebViewConstant.push_message_url, url);
             i.putExtra(WebViewConstant.push_message_title, title);
             if (initPage) {
-                String pushMessage = split[4];
+                String pushMessage = isHasHttp ? split[5] : split[4];
                 i.putExtra(WebViewConstant.push_message_value, pushMessage);
             }
             i.putExtra(WebViewConstant.RIGHT_SAVE, rightSave);
             i.putExtra(WebViewConstant.RIGHT_SHARE, rightShare);
             i.putExtra(WebViewConstant.PAGE_INIT, initPage);
 
-            if (split.length >= 5) {
+            if (split.length >= (isHasHttp ? 6 : 5)) {
                 i.putExtra(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
             }
             //解决产品详情的产品公告进入不能分享
@@ -1509,32 +1511,38 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.PRODUCT_DETAIL)) {
 
-//            actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_DETAIL)
-            String[] split = actionUrl.split(":");
-            try {
-                String url = URLDecoder.decode(split[2], "utf-8");
-                String title = URLDecoder.decode(split[3], "utf-8");
-                if (!url.contains("http")) {
-                    url = BaseWebNetConfig.baseParentUrl + url;
+                String[] split = actionUrl.split(":");
+                String url = split[2];
+                String title = split[3];
+                if (url.startsWith("app6.0")) {
+                    url = "/" + url;
                 }
-
+                boolean isHasHttp = false;
+                if (url.contains("http")) {
+                    url = split[2] + ":" + split[3];
+                    if (split.length >= 5) {
+                        title = split[4];
+                        isHasHttp = true;
+                    }
+                } else {
+                    url = BaseWebNetConfig.SERVER_ADD + url;
+                }
                 HashMap<String, Object> hashMap = new HashMap<>();
+
                 hashMap.put(WebViewConstant.push_message_url, url);
                 hashMap.put(WebViewConstant.push_message_title, title);
-                if (initPage && split.length > 4) {
-                    String pushMessage = split[4];
+                if (initPage) {
+                    String pushMessage = isHasHttp ? split[5] : split[4];
                     hashMap.put(WebViewConstant.push_message_value, pushMessage);
                 }
                 hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
                 hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
                 hashMap.put(WebViewConstant.PAGE_INIT, initPage);
-                if (split.length >= 5) {
+
+                if (split.length >= (isHasHttp ? 6 : 5)) {
                     hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
                 }
-                NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             return true;
         }
         return false;

@@ -21,8 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
 
         <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
             android:id="@+id/swipe_load_more_footer"
@@ -51,4 +53,27 @@
             android:layout_marginTop="@dimen/ui_10_dip"
             android:layout_below="@+id/fragment_videoschool_noresult"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/empty_ll">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_empty_list"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/empty_textview"
+            android:text="当前暂无简介"
+            android:textSize="@dimen/dimens_sp_15"
+            android:gravity="center"
+            android:textColor="@color/color_595959"/>
+    </LinearLayout>
 </RelativeLayout>

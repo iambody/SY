@@ -17,6 +17,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
+//    private static String START_APP = "https://t4-app";//sim
     private static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
@@ -34,9 +35,11 @@ public class NetConfig {
     public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
+    public final static String API_URL_V3 = "api/v3";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String API_NOV2_URL = "api/";
+
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -82,7 +85,7 @@ public class NetConfig {
     final static String ACTION_POINT = PROMOTION_URL + "/common/availableOp";
 
     //全局导航栏
-    final static String NAVIGATION = API_URL_V2 + "/navigation";
+    final static String NAVIGATION = API_URL_V3 + "/navigation";
 
     static class API {
 
@@ -330,6 +333,8 @@ public class NetConfig {
         final static String HEALTH_INTRODUCE_URL = API_URL + "/health/introduce";
 
         final static String HEALTH_GET_URL = API_URL + "/health/commend";
+
+        final static String HEALTH_COURSE_GET_URL = API_URL + "/health/healthCourseList";
 
         // 健康免费资讯预约
         final static String HEALTH_FREE_BESPEAK_URL = API_URL + "/health/consult";

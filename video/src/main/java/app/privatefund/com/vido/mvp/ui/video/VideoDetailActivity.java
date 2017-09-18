@@ -44,6 +44,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
@@ -282,6 +283,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         findview();
         vrf_avd.setListener(this);
+
         getVideoDetailInfo();
         pw_mvv_wait.setVisibility(View.VISIBLE);
         getPresenter().bindDownloadCallback(videoId);
@@ -437,6 +439,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.SD);
         getPresenter().toDownload(videoId);
+
+
+        tv_avd_cache.setText(R.string.caching_str);
+        iv_avd_cache.setImageResource(R.drawable.ic_caching);
+        tv_avd_cache.setClickable(false);
     }
 
     @OnClick(R2.id.tv_avd_hd)
@@ -448,6 +455,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         //todo 开始后台下载
         getPresenter().updataDownloadType(VideoStatus.HD);
         getPresenter().toDownload(videoId);
+
+        tv_avd_cache.setText(R.string.caching_str);
+        iv_avd_cache.setImageResource(R.drawable.ic_caching);
+        tv_avd_cache.setClickable(false);
     }
 
     //打开下载列表页面
@@ -547,8 +558,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
 
 
-
-
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
@@ -595,6 +604,27 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     }
 
+    int cuntTime = 300;
+
+    public void beginCuntDownTime() {
+        RxCountDown.countTimeDown(cuntTime, new RxCountDown.ICountTime() {
+
+            @Override
+            public void onCompleted() {
+                TaskInfo.complentTask("学习视频");
+            }
+
+            @Override
+            public void onNext(int timer) {
+                cuntTime = timer;
+            }
+        });
+    }
+
+    public void stopCountDown() {
+        RxCountDown.stopCountTime();
+    }
+
     //获取视频信息
     @Override
     public void getNetVideoInfoSucc(VideoInfoModel model, VideoInfoEntity.Result result) {
@@ -603,6 +633,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1020, 10101, new String[]{model.videoName, SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         setData();
         play(true);
+
         if (videoInfoModel != null) {
             DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, (model != null && !TextUtils.isEmpty(model.categoryName)) ? model.categoryName : "全部");
         }
@@ -849,6 +880,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 //                if (allPlayTime > fiveMinutes) {
 //                    RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
 //                }
+                beginCuntDownTime();
                 break;
             case 4:
                 if (isOnPause) {
@@ -860,6 +892,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     RxBus.get().post(VIDEO_PLAY5MINUTES_OBSERVABLE, allPlayTime);
                 }
                 isPlaying = false;
+
+                stopCountDown();
                 break;
             default:
                 break;
@@ -1007,6 +1041,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void onDestroy() {
+        stopCountDown();
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());

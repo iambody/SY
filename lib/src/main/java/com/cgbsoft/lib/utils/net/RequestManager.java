@@ -727,6 +727,10 @@ interface RequestManager {
     @GET(NetConfig.Health.HEALTH_GET_URL)
     Observable<ResponseBody> getHealthList(@QueryMap Map<String, String> paramsMap);
 
+    // 健康课程
+    @GET(NetConfig.Health.HEALTH_COURSE_GET_URL)
+    Observable<ResponseBody> getHealthCourseList(@QueryMap Map<String, String> paramsMap);
+
     @GET(NetConfig.Health.HEALTH_INTRODUCE_URL)
     Observable<ResponseBody> getHealthIntruduce(@QueryMap Map<String, String> paramsMap);
 

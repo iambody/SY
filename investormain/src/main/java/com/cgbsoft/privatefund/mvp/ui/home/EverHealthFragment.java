@@ -15,6 +15,8 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -30,6 +32,7 @@ import java.util.List;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
+import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import app.privatefund.investor.health.mvp.ui.HealthSummaryFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
 
@@ -113,18 +116,23 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), checkHealthFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
                     break;
-//                case HEALTH_MEDICAL_CODE:
-//                    Bundle medical = new Bundle();
-//                    medical.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, false);
-//                    CheckHealthFragment medicalHealthFragment = new CheckHealthFragment();
-//                    medicalHealthFragment.setArguments(medical);
-//                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
-//                    tabBeens.add(tabBeen3);
-//                    break;
                 case HEALTH_MEDICAL_CODE:
+                    Bundle medical = new Bundle();
+                    medical.putBoolean(CheckHealthFragment.FROM_CHECK_HEALTH, false);
+                    CheckHealthFragment medicalHealthFragment = new CheckHealthFragment();
+                    medicalHealthFragment.setArguments(medical);
+                    TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), medicalHealthFragment,Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen3);
+                    break;
+                case HEALTH_PROJECT_SIMPLE_CODE:
                     HealthSummaryFragment projectSimpleFragment = new HealthSummaryFragment();
                     TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), projectSimpleFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen4);
+                    break;
+                case HEALTH_COURESE_CODE:
+                    HealthCourseFragment healthCourseFragment = new HealthCourseFragment();
+                    TabBean tabBeen5 = new TabBean(secondNavigation.getTitle(), healthCourseFragment,Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen5);
                     break;
 
             }

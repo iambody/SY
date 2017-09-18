@@ -763,8 +763,9 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         String downloadLength = Formatter.formatFileSize(this, currentSize);
         String totalLength = Formatter.formatFileSize(this, totalSize);
 
-        tv_avd_progress.setText(totalLength + "/" + downloadLength);
-        tv_avd_speed.setText(Formatter.formatFileSize(this, networkSpeed));
+//        tv_avd_progress.setText(totalLength + "/" + downloadLength);
+        tv_avd_progress.setText( downloadLength+ "/" +  totalLength);
+        tv_avd_speed.setText( Formatter.formatFileSize(this, networkSpeed).contains("0.00")?"暂停缓存":Formatter.formatFileSize(this, networkSpeed));
 
         if (downloadState == DownloadManager.NONE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);

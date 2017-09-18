@@ -75,6 +75,7 @@ import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import app.privatefund.com.im.utils.RongCouldUtil;
 import app.privatefund.com.vido.service.FloatVideoService;
+import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -872,6 +873,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         exitBy2Click();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == HealthCourseFragment.REQUEST_BACK_CODE) {
+            RxBus.get().post(RxConstant.COURSE_HEALTH_LIST_REFRUSH_OBSERVABLE, true);
+        }
+    }
 
     private void initDayTask() {
         getPresenter().initDayTask();

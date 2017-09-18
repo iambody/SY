@@ -2,6 +2,7 @@ package app.privatefund.investor.health.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_health_list, null);
+        View view = layoutInflater.inflate(R.layout.item_health_list, parent, false);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
         return lsViewHolder;
