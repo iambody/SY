@@ -514,10 +514,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                         protected void onEvent(Integer integer) {
                             getPresenter().getVideoDetailInfo(mLoadingDialog, videoId);
                             sv_avd.setVisibility(View.VISIBLE);
+
+
                         }
 
                         @Override
                         protected void onRxError(Throwable error) {
+                            this.unsubscribe();
 
                         }
                     });
