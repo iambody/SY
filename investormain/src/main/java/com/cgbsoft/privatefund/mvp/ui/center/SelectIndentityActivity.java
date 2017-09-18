@@ -67,12 +67,11 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     private boolean isInLand;
     private String indentityCode;//身份code
     private String credentialCode;//证件code
-    private String indentityName;//证件名字
+    private String indentityName;//名字
     private Observable<Integer> register;
 
     @OnClick(R.id.indentity_next)
     public void nextButtonClick(){
-        LogUtils.Log("aaa","title==="+indentityName+"----credentialCode====="+credentialCode+"---indentityCode==="+indentityCode);
         if (isInLand) {
             //去上传证件照
             Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
