@@ -39,6 +39,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
-    compile project(':lib')
+
     compile project(':gsyVideoPlayer-java')
 }
