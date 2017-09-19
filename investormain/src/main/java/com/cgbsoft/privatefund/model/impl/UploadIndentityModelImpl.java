@@ -28,7 +28,7 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
-                    if (TextUtils.isEmpty(code)) {
+                    if (TextUtils.isEmpty(code)||"100004".equals(code)) {
                         listener.uploadIndentitySuccess(null);
                     } else {
                         JSONObject result = (JSONObject) jsonObject.get("result");
