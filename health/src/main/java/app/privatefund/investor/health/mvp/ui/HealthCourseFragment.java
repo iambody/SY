@@ -86,7 +86,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 
     @Override
     protected void onFirstUserVisible() {
-        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "资讯课堂"));
+        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "文章"));
         checkHealthAdapter = new HealthCourseAdapter(getActivity(), new ArrayList<>());
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
