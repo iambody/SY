@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -185,6 +186,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
         } else {
+            Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
         }
     }
