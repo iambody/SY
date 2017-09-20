@@ -189,7 +189,7 @@ public class DaoUtils {
 //        }
 //        return null;
         //根据最后播放时间倒叙排列
-        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE),VideoInfoDao.Properties.Status.notEq(VideoStatus.NONE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
@@ -225,7 +225,7 @@ public class DaoUtils {
      * @return
      */
     public List<VideoInfoModel> getAllVideoInfoHistory() {
-        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.HasRecord.eq(VideoStatus.RECORD), VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.HasRecord.eq(VideoStatus.RECORD)).orderDesc(VideoInfoDao.Properties.FinalPlayTime).build().list();
         List<VideoInfoModel> results = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             results.add(getVideoInfoModel(list.get(i)));
@@ -241,7 +241,7 @@ public class DaoUtils {
     public void deleteVideoInfoHistory(String videoId) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
         if (videoInfo != null) {
-            videoInfo.setHasRecord(0);
+            videoInfo.setHasRecord(VideoStatus.UNRECORD);
             videoInfoDao.update(videoInfo);
         }
     }
@@ -257,10 +257,9 @@ public class DaoUtils {
         String localPath = null;
         if (videoInfo != null) {
             localPath = videoInfo.getLocalVideoPath();
-//            videoInfo.setIsDelete(VideoStatus.DELETE);
-            videoInfo.setIsDelete(VideoStatus.UNDELETE);
+            videoInfo.setIsDelete(VideoStatus.DELETE);
             videoInfo.setStatus(VideoStatus.NONE);
-//            videoInfo.setFinalPlayTime(0);
+            videoInfo.setFinalPlayTime(0);
             videoInfo.setSize(0);
             videoInfo.setLocalVideoPath("");
             videoInfo.setPercent(0);
