@@ -1,19 +1,11 @@
 package app.privatefund.investor.health.mvp.ui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,13 +23,9 @@ import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
-import com.tencent.qcload.playersdk.ui.UiChangeInterface;
-import com.tencent.qcload.playersdk.ui.VideoRootFrame;
-import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 import com.umeng.analytics.MobclickAgent;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +51,11 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     @BindView(R2.id.detail_player)
     SampleVideo detailPlayer;
 
+    @BindView(R2.id.rl_video_all)
+    RelativeLayout videoAll;
+    @BindView(R2.id.iv_video_first_play)
+    ImageView videoFirstPlay;
+
     private Observable<Integer> videoStateObservable;
     private List<VideoInfo> videos;
     private LoadingDialog mLoadingDialog;
@@ -71,6 +64,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     private boolean isPlay;
     private boolean isPause;
     private boolean isRelease;
+    private boolean isReady;
 
     @Override
     protected int layoutID() {
@@ -82,6 +76,17 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         changeVideoViewSize(Configuration.ORIENTATION_PORTRAIT);
         changeVideoViewSize(getResources().getConfiguration().orientation);
+        videoFirstPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isReady) {
+                    detailPlayer.startPlayLogic();
+                    videoFirstPlay.setVisibility(View.GONE);
+                } else {
+                    loadData();
+                }
+            }
+        });
         videoStateObservable = RxBus.get().register(RxConstant.PAUSR_HEALTH_VIDEO, Integer.class);
         videoStateObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -250,7 +255,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             list.add(switchVideoModel);
             list.add(switchVideoModel2);
 
-            detailPlayer.setUp(list, true, "");
+            isReady = detailPlayer.setUp(list, true, "");
 
 //                videos = new ArrayList<>();
 //                VideoInfo v1 = new VideoInfo();
@@ -296,14 +301,14 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     }
 
     private void changeVideoViewSize(int orientation) {
-        ViewGroup.LayoutParams lp = detailPlayer.getLayoutParams();
+        ViewGroup.LayoutParams lp = videoAll.getLayoutParams();
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             lp.width = Utils.getRealScreenWidth(getActivity());
         } else {
             lp.width = Utils.getScreenWidth(getActivity());
         }
         lp.height = lp.width * 9 / 16;
-        detailPlayer.setLayoutParams(lp);
+        videoAll.setLayoutParams(lp);
     }
 
     @Override
