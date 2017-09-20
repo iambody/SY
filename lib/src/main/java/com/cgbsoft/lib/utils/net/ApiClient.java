@@ -1095,7 +1095,6 @@ public class ApiClient {
         map.put("user_id", userId);
         return OKHTTP.getInstance().getRequestManager().getAddressList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
-
     //设为默认地址
     public static Observable<String> setDefauleMallAddress(String userId, String id) {
         Map<String, String> map = new HashMap<>();
@@ -1116,6 +1115,12 @@ public class ApiClient {
         Map<String, String> map = new ArrayMap<>();
         map.put("userId", userId);
         return OKHTTP.getInstance().getRequestManager().getProLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    public static Observable<String> loadRedPacket(String userId){
+        Map<String, String> map = new ArrayMap<>();
+        map.put("userId", userId);
+        return OKHTTP.getInstance().getRequestManager().loadRedPacket(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

@@ -5,74 +5,79 @@
     android:orientation="vertical">
 
 
-
     <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:elevation="0dp">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:elevation="0dp">-->
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@color/white"-->
-            <!--android:theme="@style/AppTheme.ActionBar"-->
-            <!--app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">-->
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:theme="@style/AppTheme.ActionBar"-->
+    <!--app:popupTheme="@style/Theme.AppCompat.DayNight.PopupOverlay">-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/title_mid"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/fc_college_title_str"-->
-                <!--android:textColor="@android:color/black"-->
-                <!--android:textSize="@dimen/dimens_sp_18" />-->
-        <!--</android.support.v7.widget.Toolbar>-->
+    <!--<TextView-->
+    <!--android:id="@+id/title_mid"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/fc_college_title_str"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textSize="@dimen/dimens_sp_18" />-->
+    <!--</android.support.v7.widget.Toolbar>-->
     <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
+
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="@dimen/ui_44_dip"
             android:layout_height="@dimen/ui_44_dip"
             android:layout_centerVertical="true"
-            android:clickable="true"
-            android:padding="@dimen/ui_6_dip"
             android:layout_marginLeft="@dimen/ui_6_dip"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_back_black_24dp"
-            />
+            android:clickable="true"
+            android:padding="@dimen/ui_6_dip"
+            android:src="@drawable/ic_back_black_24dp" />
+
         <TextView
             android:id="@+id/title_mid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginEnd="60dp"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:layout_marginStart="60dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:text=""
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/title_right_text"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/ui_6_dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            />
+            android:paddingRight="@dimen/ui_6_dip">
+
+            <TextView
+                android:id="@+id/title_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
     </RelativeLayout>
+
     <include layout="@layout/acitivity_divide_online" />
 </LinearLayout>

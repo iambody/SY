@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/truns"
+    android:orientation="vertical" >
+    <include
+        android:visibility="gone"
+        android:id="@+id/title_title"
+        layout="@layout/title_normal" />
+    <com.cgbsoft.lib.base.webview.BaseWebview
+        android:id="@+id/webview"
+        android:background="@color/truns"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_title" />
+</RelativeLayout>

@@ -299,7 +299,7 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
                 } else {
                     ProductlsBean productlsBean = productlsAdapter.getBeanList().get(position);
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.productName, "1".equals(productlsBean.isHotProduct));
+                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                 }
             }
         });

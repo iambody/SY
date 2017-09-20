@@ -87,6 +87,9 @@ public class NetConfig {
     //全局导航栏
     final static String NAVIGATION = API_URL_V3 + "/navigation";
 
+    //红包雨
+    final static String RED_PACKET = API_URL + "/redpacket";
+
     static class API {
 
         //客户风险评测提交接口

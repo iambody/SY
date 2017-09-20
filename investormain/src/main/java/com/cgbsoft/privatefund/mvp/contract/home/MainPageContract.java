@@ -19,6 +19,8 @@ public interface MainPageContract {
         void initDayTask();
 
         void getUserInfo(boolean tofreshHome);
+
+        void loadRedPacket();
     }
 
     interface View extends BaseView{

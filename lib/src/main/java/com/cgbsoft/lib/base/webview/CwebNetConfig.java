@@ -101,6 +101,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
     // 头条号
     public static String touTiaoHao;
 
+    //贵宾卡兑换
+    public static String vipCardExchange;
+
     static {
         initApi();
         initSxyUrl();
@@ -164,6 +167,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
         adviserrules = baseSxyParentUrl +"/biz/members/rules.html";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html?id=";
+        vipCardExchange = baseSxyParentUrl + "/biz/yundous/rechargeCard.html";
 
 
 

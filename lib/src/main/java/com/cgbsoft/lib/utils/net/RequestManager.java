@@ -841,4 +841,10 @@ interface RequestManager {
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
+
+    /**
+     * 红包雨
+     */
+    @GET(NetConfig.RED_PACKET)
+    Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
 }
