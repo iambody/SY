@@ -404,8 +404,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @OnClick(R2.id.iv_avd_back_play)
     void iv_avd_back_play() {
 //        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
-
+        stopCountDown();
+        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime()+5);
         FloatVideoService.startService(videoId);
+
         finish();
         DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
 
@@ -667,12 +669,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @Override
     public void onDownloadVideoAdd() {
 //        tv_avd_cache_num.setText(String.valueOf(getPresenter().getCacheVideoNum()));
-
-
         tv_avd_cache_num.setText(String.valueOf(getsize()));
         tv_avd_cache.setText(R.string.caching_str);
         iv_avd_cache.setImageResource(R.drawable.ic_caching);
-
         DataStatistApiParam.onStatisToCVideoDetailDownLoadClick(videoInfoModel.videoName);
     }
 

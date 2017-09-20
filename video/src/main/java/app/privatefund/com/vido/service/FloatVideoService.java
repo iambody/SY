@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.FloatView;
 
@@ -48,6 +50,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
     public IBinder onBind(Intent intent) {
         return null;
     }
+
 
     @Override
     public void onCreate() {
@@ -84,6 +87,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
 
         floatView.addToWindow();
         floatView.setFloatViewClickListener(() -> {
+            onDestroy();
             Intent intent = new Intent(getApplicationContext(), VideoDetailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("videoId", mVideoId);
@@ -94,12 +98,15 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         });
     }
 
-    @Override
+
+
+    //    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mediaPlayer != null) {
             if (videoInfoModel != null) {
-                videoInfoModel.currentTime = videoInfoModel.currentTime + mediaPlayer.getCurrentPosition();
+
+                videoInfoModel.currentTime = videoInfoModel.currentTime + allKeepTime;
                 daoUtils.saveOrUpdateVideoInfo(videoInfoModel);
             }
 
@@ -113,24 +120,40 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
             daoUtils = null;
         }
 
-
+        RxCountDown.stopKeepTime();
         telephonyManager.listen(toPhoneStateListener, PhoneStateListener.LISTEN_NONE);
         toPhoneStateListener = null;
 
         floatView.removeFromWindow();
+
+        allKeepTime = 0;
     }
+    static int allKeepTime = 0;
+//    static int cuntTime = 1000000;
 
     public static void startService(String videoId) {
+
         if (!Utils.isServiceRunning(BaseApplication.getContext(), FloatVideoService.class.getName())) {
             BaseApplication.getContext().startService(new Intent(BaseApplication.getContext(), FloatVideoService.class));
         }
         mVideoId = videoId;
+
+
+        RxCountDown.keepTimeDown(new RxCountDown.keepTimeInterface() {
+            @Override
+            public void allTime(int allTime) {
+                allKeepTime=allKeepTime+1;
+                Log.i("ssscsaac","时间："+allKeepTime);
+            }
+        });
     }
 
     public static void stopService() {
+
         if (Utils.isServiceRunning(BaseApplication.getContext(), FloatVideoService.class.getName())) {
             BaseApplication.getContext().stopService(new Intent(BaseApplication.getContext(), FloatVideoService.class));
         }
+
     }
 
 
@@ -152,6 +175,7 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
             mediaPlayer.seekTo(videoInfoModel.currentTime * 1000);
         }
         mediaPlayer.start();
+
     }
 
 

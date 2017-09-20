@@ -316,6 +316,9 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         private String wealth;
         private String memberLevel;
         private String memberValue;
+        //视频列表序言添加
+        private String customerRole;
+
 
         public String getMemberLevel() {
             return memberLevel;
@@ -539,6 +542,14 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
 
         public void setGesturePassword(String gesturePassword) {
             this.gesturePassword = gesturePassword;
+        }
+
+        public String getCustomerRole() {
+            return customerRole;
+        }
+
+        public void setCustomerRole(String customerRole) {
+            this.customerRole = customerRole;
         }
 
         public String getGestureSwitch() {

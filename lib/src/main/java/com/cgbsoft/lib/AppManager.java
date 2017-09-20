@@ -83,7 +83,6 @@ public class AppManager implements AppinfConstant {
     }
 
 
-
     /**
      * 获取聊天页面名称－－产品分享需要用到
      *
@@ -172,7 +171,7 @@ public class AppManager implements AppinfConstant {
      * @return
      */
     public static UserInfoDataEntity.UserInfo getUserInfo(Context context) {
-        return SPreference.getUserInfoData(context);
+        return SPreference.getUserInfoData(context.getApplicationContext());
     }
 
     /**
@@ -307,21 +306,25 @@ public class AppManager implements AppinfConstant {
     }
 
     public static boolean getDialogShow(Context context) {
-        return getBasePreference(context).getBoolean("dialogshow",false);
+        return getBasePreference(context).getBoolean("dialogshow", false);
     }
+
     /**
      * 是否显示除个人中心外的新手引导
+     *
      * @param context
      */
     public static boolean getGuideShowTag(Context context) {
-        return getBasePreference(context).getBoolean("guideshow",false);
+        return getBasePreference(context).getBoolean("guideshow", false);
     }
+
     /**
      * 是否显示个人中心的新手引导
+     *
      * @param context
      */
     public static boolean getGuideShowTagOfMine(Context context) {
-        return getBasePreference(context).getBoolean("guideshowofmine",false);
+        return getBasePreference(context).getBoolean("guideshowofmine", false);
     }
 
     /**
@@ -333,4 +336,20 @@ public class AppManager implements AppinfConstant {
         if (BStrUtils.isEmpty(homeStr)) return null;
         return new Gson().fromJson(homeStr, DiscoverModel.class);
     }
+
+    /**
+     * 获取权限
+     * @param context
+     * @return
+     */
+    public static String getCustomRole(Context context) {
+        return getUserInfo(context).getToC().getCustomerRole();
+    }
+    /**
+     *  获取用户的等级
+     */
+    public static String getCustomType(Context context) {
+        return getUserInfo(context).getToC().getCustomerType();
+    }
+
 }

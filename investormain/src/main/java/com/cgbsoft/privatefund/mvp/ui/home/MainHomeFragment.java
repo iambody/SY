@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,6 +174,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected int layoutID() {
         return R.layout.fragment_mainhome;
     }
+
+    int Timessss = 0;
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
@@ -361,7 +364,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
          * 手动设置banner高度
          */
 //        screenWidth
-        RelativeLayout.LayoutParams bannerParames=new RelativeLayout.LayoutParams(screenWidth,(int)((screenWidth*61)/75));
+        RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
         mainHomeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
         view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
@@ -470,7 +473,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
 
                 mainhomeWebview.loadUrl("javascript:refresh()");
-//                mainhomeWebview.reload();
+                mainhomeWebview.reload();
                 //开始刷新ui
                 mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
                 //登录模式
