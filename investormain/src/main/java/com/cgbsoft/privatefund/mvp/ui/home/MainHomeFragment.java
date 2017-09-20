@@ -470,6 +470,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
 
                 mainhomeWebview.loadUrl("javascript:refresh()");
+//                mainhomeWebview.reload();
                 //开始刷新ui
                 mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
                 //登录模式

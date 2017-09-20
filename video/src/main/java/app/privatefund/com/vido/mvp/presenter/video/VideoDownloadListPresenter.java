@@ -57,7 +57,7 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
                     model.status = VideoStatus.FINISH;
                     saveOrUpdateVideoInfo(model);
                 }
-                if (model.status != VideoStatus.NONE)
+//                if (model.status != VideoStatus.NONE)
                     dataList.add(createModel(model));
             }
             getView().getLocalListSucc(dataList, isRef);
@@ -363,9 +363,12 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             videoInfoModel.size = totalSize;
             if (downloadInfo.getState() == DownloadManager.DOWNLOADING) {
                 videoInfoModel.status = VideoStatus.DOWNLOADING;
-            } else if (downloadInfo.getState() == DownloadManager.PAUSE || downloadInfo.getState() == DownloadManager.NONE) {
-                videoInfoModel.status = VideoStatus.NONE;
+//            } else if (downloadInfo.getState() == DownloadManager.PAUSE || downloadInfo.getState() == DownloadManager.NONE) {
             }
+//            else if ( downloadInfo.getState() == DownloadManager.NONE) {
+//
+//                videoInfoModel.status = VideoStatus.NONE;
+//            }
             saveOrUpdateVideoInfo(videoInfoModel);
 
             if (getView() != null)
@@ -381,6 +384,15 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
             if (getView() != null)
                 getView().onDownloadFinish(videoId);
         }
+
+//        @Override
+//        public void onRemove(DownloadInfo downloadInfo) {
+//            super.onRemove(downloadInfo);
+//
+////            videoInfoModel.status = VideoStatus.NONE;
+////            videoInfoModel.isDelete=VideoStatus.DELETE;
+////            saveOrUpdateVideoInfo(videoInfoModel);
+//        }
 
         @Override
         public void onError(DownloadInfo downloadInfo, String errorMsg, Exception e) {
