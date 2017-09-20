@@ -35,6 +35,9 @@ android {
             jumboMode = true
             javaMaxHeapSize = "8g"
         }
+        ndk {
+            abiFilters "armeabi-v7a" //,"armeabi", "x86_64","x86"
+        }
     }
     signingConfigs {
         debug {

@@ -40,17 +40,6 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_LOCAL_REF_ONE_OBSE
  * 播放历史
  */
 public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPresenter> implements VideoHistoryListContract.View, VideoHistoryListener {
-//    @BindView(R2.id.coordinatorLayout)
-//    CoordinatorLayout coordinatorLayout;
-//
-//    @BindView(R2.id.toolbar)
-//    Toolbar toolbar;
-//
-//    @BindView(R2.id.tv_title)
-//    TextView tv_title;
-
-//    @BindView(R2.id.recyclerRefreshLayout)
-//    RecyclerRefreshLayout recyclerRefreshLayout;
 
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
@@ -71,7 +60,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     @BindView(R2.id.video_history_empty)
     RelativeLayout videoHistoryEmpty;
 
-    //    private RecyclerControl recyclerControl;
     private FullyLinearLayoutManager linearLayoutManager;
     private VideoHistoryAdapter videoHistoryAdapter;
 
@@ -88,7 +76,6 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
     private Observable<Integer> refItemObservable;
     private boolean isChoiceAll;
 
-    //    private MenuItem deleteItem;
     ImageView history_back_iv;
 
     TextView history_del_txt;
@@ -133,9 +120,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         morelinearLayoutManager = new FullyLinearLayoutManager(this);
         morelinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         morelinearLayoutManager.setSmoothScrollbarEnabled(true);
-//        recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
-//        recyclerRefreshLayout.setOnRefreshListener(this);
-//        recyclerRefreshLayout.setEnabled(false);
+
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoHistoryAdapter);
         recyclerView.setHasFixedSize(true);
@@ -145,14 +130,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         moreRecyclerView.setAdapter(morevideoHistoryAdapter);
         moreRecyclerView.setHasFixedSize(true);
 
-//
-//        toolbar.setTitle(null);
-////        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().setTitle(null);
-////        toolbar.setOnMenuItemClickListener(this);
-//        toolbar.setNavigationOnClickListener(v -> finish());
-//        tv_title.setText(R.string.play_history_str);
+
     }
 
     private void initFindId() {
@@ -302,16 +280,12 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
             videoHistoryAdapter.appendToList(dataList);
         }
 
-//        recyclerControl.getDataComplete(isRef);
-//        recyclerControl.setError(this, false, videoHistoryAdapter, new VideoHistoryModel(), "", R.drawable.bfjl_kong);
-//        recyclerRefreshLayout.setEnabled(false);
+
     }
 
     @Override
     public void getLocalListFail(boolean isRef) {
-//        recyclerControl.getDataComplete(isRef);
-//        recyclerControl.setError(this, true, videoHistoryAdapter, new VideoHistoryModel());
-//        recyclerRefreshLayout.setEnabled(false);
+
     }
 
     //    @Override
@@ -319,60 +293,14 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         getPresenter().getLocalVideoInfoList(isRef);
     }
 
-//    @Override
-//    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//    }
-//
-//    @Override
-//    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//
-//    }
+
 
     @Override
     public void onErrorClickListener() {
         onRefresh();
     }
 
-//    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-////        if (item.getItemId() == R.id.firstBtn) {
-////            if (videoHistoryAdapter.getList().size() == 1 && morevideoHistoryAdapter.getList().size() == 1) {
-////                if (videoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR && morevideoHistoryAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-////                    return false;
-////            }
-////            videoHistoryAdapter.changeCheck();
-////            morevideoHistoryAdapter.changeCheck();
-////
-////
-////            if (videoHistoryAdapter.getCheckStatus() && morevideoHistoryAdapter.getCheckStatus()) {
-////                visableBottomLayout();
-////            } else {
-////                unVisableBottomLayout();
-////            }
-////        }
-////        return false;
-//    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        //*******
-//
-//        //********
-////        getMenuInflater().inflate(R.menu.page_menu, menu);
-////        deleteItem = menu.findItem(R.id.firstBtn);
-////        MenuItem secItem = menu.findItem(R.id.secondBtn);
-////        deleteItem.setTitle(R.string.delete_str);
-////
-////        deleteItem.setIcon(R.drawable.ic_local_delete);
-////        secItem.setVisible(false);
-////        //**********
-////        MenuInflater inflater = getMenuInflater();
-//
-//
-//        //*****************
-//        return true;
-//    }
 
     //    @Override
     public void onRefresh() {
@@ -432,11 +360,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         }
     }
 
-//    private void setRefLayoutMarginBottom(int dp) {
-//        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) recyclerRefreshLayout.getLayoutParams();
-//        lp.setMargins(0, 0, 0, Utils.convertDipOrPx(this, dp));
-//        recyclerRefreshLayout.setLayoutParams(lp);
-//    }
+
 
     private void choiceChangeText(int num) {
         tv_avh_choiceAll.setText(R.string.cancel_choice_all_str);
@@ -452,9 +376,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
 
     private void visableBottomLayout() {
         ll_avh.setVisibility(View.VISIBLE);
-//        setRefLayoutMarginBottom(44);
-//        deleteItem.setIcon(null);
-//        deleteItem.setTitle(R.string.cancel_str);
+
         history_del_txt.setVisibility(View.VISIBLE);
         history_del_iv.setVisibility(View.GONE);
         history_del_txt.setText("取消");
@@ -466,9 +388,7 @@ public class VideoHistoryListActivity extends BaseActivity<VideoHistoryListPrese
         ll_avh.setVisibility(View.GONE);
         history_del_txt.setVisibility(View.GONE);
         history_del_iv.setVisibility(View.VISIBLE);
-//        setRefLayoutMarginBottom(0);
-//        deleteItem.setIcon(R.drawable.ic_local_delete);
-//        deleteItem.setTitle(R.string.delete_str);
+
     }
 
 

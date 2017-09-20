@@ -6,7 +6,6 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.R2;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
@@ -17,7 +16,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
-//    private static String START_APP = "https://t4-app";//sim
+//    private static String START_APP = "https://d7-app";//sim
     private static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
