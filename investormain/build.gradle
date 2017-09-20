@@ -66,7 +66,7 @@ android {
         }
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a" //,"x86_64","x86"
+            abiFilters  "armeabi-v7a" //,"armeabi","x86_64","x86"
         }
     }
 
@@ -114,7 +114,7 @@ android {
             versionNameSuffix "-debug"
             // 是否进行混淆
             minifyEnabled false
-            zipAlignEnabled false
+            zipAlignEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置

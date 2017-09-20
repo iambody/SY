@@ -92,7 +92,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new SimpleItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
+        swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getShortName());
@@ -176,6 +176,8 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 //                DataStatistApiParam.operateHealthMedcialClick();
 //            }
         }
+        System.out.println("-----isVisibleToUser=" + isVisibleToUser);
+
     }
 
     @Override
@@ -237,6 +239,8 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.GONE);
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
         isLoadMore = false;
     }
@@ -244,7 +248,9 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
         if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
-            if (checkHealthAdapter != null && checkHealthAdapter.getItemCount() == 0) {
+            if (checkHealthAdapter != null) {
+                CurrentPostion = 0;
+                isLoadMore = false;
                 getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             }
         } else {

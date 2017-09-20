@@ -204,6 +204,8 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.GONE);
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
         isLoadMore = false;
     }
@@ -211,7 +213,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
         if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
-            if (checkHealthAdapter != null && checkHealthAdapter.getItemCount() == 0) {
+            if (checkHealthAdapter != null) {
+                CurrentPostion = 0;
+                isLoadMore = false;
                 getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             }
         } else {
