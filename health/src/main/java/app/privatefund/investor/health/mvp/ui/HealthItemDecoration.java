@@ -32,6 +32,9 @@ public class HealthItemDecoration extends RecyclerView.ItemDecoration{
                                RecyclerView parent, RecyclerView.State state) {
         int value = parent.getAdapter().getItemCount();
         int position = parent.getChildAdapterPosition(view);
+        if (position == 0) {
+            outRect.top = margin;
+        }
         if (position != value - 1) {
             outRect.bottom = margin;
         }

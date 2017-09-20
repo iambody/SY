@@ -204,6 +204,8 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.GONE);
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
         isLoadMore = false;
     }
