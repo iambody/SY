@@ -136,9 +136,15 @@
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
-        <meta-data android:value="${UMENG_APPKEY_VALUE}" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY_VALUE}" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
         <!--
         umeng
             正式Key:5983d8c365b6d632a2000c06
@@ -194,15 +200,15 @@
         <!-- 主页 -->
         <activity
             android:name=".mvp.ui.home.MainPageActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!-- 权限管理 -->
         <!--<activity-->
-            <!--android:name=".mvp.ui.start.PermissionsActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
+        <!--android:name=".mvp.ui.start.PermissionsActivity"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
         <!--
                 &lt;!&ndash;选择身份&ndash;&gt;
                 <activity
@@ -371,6 +377,7 @@
 
         <activity
             android:name=".widget.RightShareWebViewActivity"
+
             android:screenOrientation="portrait" />
 
         <!--

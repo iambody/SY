@@ -353,9 +353,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         isPlayFiveMinteObservable.subscribe(new RxSubscriber<Long>() {
             @Override
             protected void onEvent(Long aLong) {
-                LogUtils.Log("playvideoo", "我已经视频签到了前！！");
                 TaskInfo.complentTask("学习视频");
-                LogUtils.Log("playvideoo", "我已经视频签到了");
             }
 
             @Override
@@ -514,10 +512,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                         protected void onEvent(Integer integer) {
                             getPresenter().getVideoDetailInfo(mLoadingDialog, videoId);
                             sv_avd.setVisibility(View.VISIBLE);
+
+
                         }
 
                         @Override
                         protected void onRxError(Throwable error) {
+                            this.unsubscribe();
 
                         }
                     });
@@ -543,20 +544,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         switch (videoInfoModel.status) {
             case VideoStatus.DOWNLOADING:
 
-                if (null == getPresenter().daoUtils.getDownLoadVideoInfo()) return;
-                List<VideoInfoModel> datas = getPresenter().daoUtils.getDownLoadVideoInfo();
-                boolean ishave = false;
-                for (int i = 0; i < datas.size(); i++) {
-                    if (datas.get(i).videoId == videoId) ishave = true;
-
-                }
-                if (!ishave) {
-                    tv_avd_cache.setText(R.string.cache_str);
-                    iv_avd_cache.setImageResource(R.drawable.ic_cache);
-                    isCancache = true;
-                    return;
-                }
-
 
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
@@ -575,7 +562,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 tv_avd_cache.setText(R.string.cache_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_cache);
                 isCancache = true;
-
 
                 break;
             case VideoStatus.FINISH:
@@ -604,7 +590,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     }
 
-    int cuntTime = 300;
+    private int cuntTime = 300;
 
     public void beginCuntDownTime() {
         RxCountDown.countTimeDown(cuntTime, new RxCountDown.ICountTime() {
@@ -721,8 +707,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
 
         try {
-//            JSONObject obj = new JSONObject(moreCommontStr);
-//            JSONArray rows = obj.getJSONArray("rows");
+
             List<VideoInfoEntity.CommentBean> comments = new Gson().fromJson(getV2String(moreCommontStr), new TypeToken<List<VideoInfoEntity.CommentBean>>() {
             }.getType());
             if (null == comments || 0 == comments.size()) {
@@ -1042,6 +1027,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @Override
     protected void onDestroy() {
         stopCountDown();
+
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -186,6 +187,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         } else {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
+            if (CollectionUtils.isEmpty(healthListModelList)) {
+                Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
+            }
         }
 
         clodLsAnim(swipeToLoadLayout);
