@@ -244,7 +244,9 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
         if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
-            if (checkHealthAdapter != null && checkHealthAdapter.getItemCount() == 0) {
+            if (checkHealthAdapter != null) {
+                CurrentPostion = 0;
+                isLoadMore = false;
                 getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             }
         } else {
