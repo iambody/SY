@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -186,6 +187,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         } else {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
+            if (CollectionUtils.isEmpty(healthListModelList)) {
+                Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
+            }
         }
 
         clodLsAnim(swipeToLoadLayout);
@@ -200,6 +204,8 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.GONE);
+        } else {
+            PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
         isLoadMore = false;
     }
@@ -207,7 +213,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
         if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
-            if (checkHealthAdapter != null && checkHealthAdapter.getItemCount() == 0) {
+            if (checkHealthAdapter != null) {
+                CurrentPostion = 0;
+                isLoadMore = false;
                 getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             }
         } else {

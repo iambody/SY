@@ -31,7 +31,6 @@ import com.cgbsoft.lib.base.model.UserPhoneNumEntity;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
-import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -54,7 +53,6 @@ import java.util.Set;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
-import rx.Subscription;
 
 /**
  *  * Created by xiaoyu.zhang on 2016/11/10 17:54
@@ -151,8 +149,8 @@ public class ApiClient {
         params.put("os", "1");
         params.put("version", Utils.getVersionName(BaseApplication.getContext()));
         params.put("client", AppManager.isAdViser(BaseApplication.getContext()) ? "2" : "1");
-        if (null!=AppManager.getUserId(c)){
-            params.put("userId",AppManager.getUserId(c));
+        if (null != AppManager.getUserId(c)) {
+            params.put("userId", AppManager.getUserId(c));
         }
 
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -304,7 +302,7 @@ public class ApiClient {
             obj.put("openId", openId);
             obj.put("recommendId", "");
             obj.put("client", AppManager.isInvestor(context) ? "C" : "B");
-            obj.put("regChannel","私享云");
+            obj.put("regChannel", "私享云");
 
         } catch (Exception e) {
         }
@@ -355,7 +353,7 @@ public class ApiClient {
             object.put("captcha", code);
             object.put("userType", "1");//1是投资人 2是理财师
             object.put("uniqueCode", uniqueCode);
-            object.put("regChannel","私享云");
+            object.put("regChannel", "私享云");
         } catch (Exception e) {
 
         }
@@ -364,6 +362,7 @@ public class ApiClient {
 
     /**
      * 发送验证码
+     *
      * @param phone
      * @return
      */
@@ -1111,7 +1110,7 @@ public class ApiClient {
     }
 
     //获取直播预告
-    public static Observable<String> getProLiveList(String userId){
+    public static Observable<String> getProLiveList(String userId) {
         Map<String, String> map = new ArrayMap<>();
         map.put("userId", userId);
         return OKHTTP.getInstance().getRequestManager().getProLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -1316,11 +1315,13 @@ public class ApiClient {
     /**
      * 获取商学院外层的fragment的init全部数据
      */
-    public static Observable<String> videoSchoolAllInf() {
+    public static Observable<String> videoSchoolAllInf(String userRole,String userType) {
         JSONObject js = new JSONObject();
         try {
             js.put("offset", 0);
             js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
+            js.put("customerRole", userRole);
+            js.put("customerType", userType);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1333,12 +1334,14 @@ public class ApiClient {
     /**
      * 获取商学院外层的fragment的init全部数据
      */
-    public static Observable<String> videoSchoolLs(String category, int offset) {
+    public static Observable<String> videoSchoolLs(String category, int offset, String userRole, String userType) {
         JSONObject js = new JSONObject();
         try {
             js.put("category", category);
             js.put("offset", offset * Constant.LOAD_VIDEOLS_lIMIT);
             js.put("limit", Constant.LOAD_VIDEOLS_lIMIT);
+            js.put("customerRole", userRole);
+            js.put("customerType", userType);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1362,6 +1365,7 @@ public class ApiClient {
 
     /**
      * 健康-介绍
+     *
      * @param hashMap
      * @return
      */
@@ -1381,6 +1385,7 @@ public class ApiClient {
 
     /**
      * 健康课程
+     *
      * @param hashMap
      * @return
      */
@@ -1435,7 +1440,7 @@ public class ApiClient {
      */
     public static Observable<String> visiterGetUserId(Context context) {
         Map<String, String> map = new HashMap<>();
-        map.put("mid",  DeviceUtils.getPhoneId(context));
+        map.put("mid", DeviceUtils.getPhoneId(context));
         map.put("client", "C");
         map.put("version", String.valueOf(Utils.getVersionCode(context)));
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -1498,17 +1503,20 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
     /**
      * 我的活动列表
      */
     public static Observable<String> getMineActivitesList(HashMap hashMap) {
         return OKHTTP.getInstance().getRequestManager().getMineActivitesList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     /**
      * 修改登录密码
+     *
      * @return
      */
-    public static Observable<String> changeLoginPsdRequest(String userName,String oldPsd,String newPsd) {
+    public static Observable<String> changeLoginPsdRequest(String userName, String oldPsd, String newPsd) {
         Map<String, String> params = new HashMap<>();
         params.put("userName", userName);
         params.put("oldPassword", oldPsd);
@@ -1518,8 +1526,9 @@ public class ApiClient {
 
     /**
      * 更新用户信息
+     *
      * @param userName 用户名字
-     * @param gender 用户性别
+     * @param gender   用户性别
      * @param birthday 用户生日
      * @return
      */
@@ -1530,15 +1539,17 @@ public class ApiClient {
         params.put("birthday", birthday);
         return OKHTTP.getInstance().getRequestManager().updateUserInfoNewC(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     /**
      * 上传头像的远程路径给服务端
      */
-    public static Observable<String> uploadIconRemotePath(String adviserId,String imageRemotePath) {
+    public static Observable<String> uploadIconRemotePath(String adviserId, String imageRemotePath) {
         Map<String, String> params = new HashMap<>();
         params.put("adviserId", adviserId);
         params.put("path", NetConfig.UPLOAD_FILE + imageRemotePath);
         return OKHTTP.getInstance().getRequestManager().uploadIconRemotePath(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     /**
      * 获取沙龙和城市
      */
@@ -1559,6 +1570,7 @@ public class ApiClient {
 
     /**
      * 获取身份列表
+     *
      * @return
      */
     public static Observable<List<IndentityEntity.IndentityBean>> getIndentityObservable() {
@@ -1567,6 +1579,7 @@ public class ApiClient {
 
     /**
      * 判断身份
+     *
      * @return
      */
     public static Observable<String> verifyIndentityInClient() {
@@ -1581,16 +1594,18 @@ public class ApiClient {
 
     /**
      * 上传证件的远程地址，方式同报备
+     *
      * @param remoteParams
      * @return
      */
-    public static Observable<String> uploadIndentityRemotePath(List<String> remoteParams,String customerCode,String credentialCode) {
+    public static Observable<String> uploadIndentityRemotePath(List<String> remoteParams, String customerCode, String credentialCode) {
         Map<String, String> params = new HashMap<>();
         params.put("customerCode", customerCode);
         params.put("credentialCode", credentialCode);
-        return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
-    private static RequestBody uploadRemotePathUse(List<String> remoteParams,Map params){
+
+    private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
         JSONObject jsonObject = new JSONObject();
         Iterator<Map.Entry> iterator = params.entrySet().iterator();
         try {
@@ -1599,7 +1614,7 @@ public class ApiClient {
                 jsonObject.put(entry.getKey().toString(), entry.getValue());
             }
             JSONArray jsonArray = new JSONArray();
-            for (int i=0;i<remoteParams.size();i++) {
+            for (int i = 0; i < remoteParams.size(); i++) {
                 String path = remoteParams.get(i);
                 JSONObject objImg = new JSONObject();//backImage   frontImage
                 if (i == 0) {
@@ -1615,8 +1630,8 @@ public class ApiClient {
 
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-        LogUtils.Log("aaa","---"+body.toString());
-        LogUtils.Log("aaa","==="+jsonObject.toString());
+        LogUtils.Log("aaa", "---" + body.toString());
+        LogUtils.Log("aaa", "===" + jsonObject.toString());
         return body;
     }
 

@@ -19,7 +19,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -28,7 +27,6 @@ import com.cgbsoft.lib.widget.swipefresh.FullyLinearLayoutManager;
 import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.lzy.okserver.download.DownloadManager;
 
-import java.io.File;
 import java.util.List;
 
 import app.privatefund.com.vido.R;
@@ -52,14 +50,6 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.VIDEO_DOWNLOAD_REF_ONE_O
  *  
  */
 public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPresenter> implements VideoDownloadListContract.View, VideoDownloadListListener {
-//    @BindView(R2.id.coordinatorLayout)
-//    CoordinatorLayout coordinatorLayout;
-
-//    @BindView(R2.id.toolbar)
-//    Toolbar toolbar;
-
-//    @BindView(R2.id.tv_title)
-//    TextView tv_title;
 
     @BindView(R2.id.ll_avd_head)
     LinearLayout ll_avd_head;
@@ -69,9 +59,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @BindView(R2.id.tv_avd_start_title)
     TextView tv_avd_start_title;
-//
-//    @BindView(R2.id.recyclerRefreshLayout)
-//    RecyclerRefreshLayout recyclerRefreshLayout;
 
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
@@ -144,9 +131,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         donelinearLayoutManager = new FullyLinearLayoutManager(this);
         donelinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerControl = new RecyclerControl(recyclerRefreshLayout, linearLayoutManager, this);
-//        recyclerRefreshLayout.setOnRefreshListener(this);
-//        recyclerRefreshLayout.setEnabled(false);
         //正在下载的
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(videoDownloadListAdapter);
@@ -156,14 +140,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
         recyclerView.setHasFixedSize(true);
         donerecyclerView.setHasFixedSize(true);
-
-//        toolbar.setTitle(null);
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().setTitle(null);
-//        toolbar.setOnMenuItemClickListener(this);
-//        toolbar.setNavigationOnClickListener(v -> finish());
-
 
         defaultDialog = new DefaultDialog(this, getString(R.string.vdla_is_sure_delete_str), getString(R.string.cancel_str), getString(R.string.enter_str)) {
             @Override
@@ -184,11 +160,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         down_del_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
-//                    if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-//                        return  ;
-//                }
-
                 videoHaveDownloadListAdapter.changeCheck();
                 videoDownloadListAdapter.changeCheck();
 
@@ -204,11 +175,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         down_del_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
-//                    if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-//                        return  ;
-//                }
-
                 videoHaveDownloadListAdapter.changeCheck();
                 videoDownloadListAdapter.changeCheck();
 
@@ -335,7 +301,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (!getPresenter().isAnyChoice(list) && !getPresenter().isAnyChoice(donelist)) {
             return;
         }
-
+//正在下载中***************************************
 
 //        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
@@ -344,48 +310,36 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //                    defaultDialog.show();
 //                } else {
                 getPresenter().delete(list.get(i).videoId);
-                if (list.get(i).status == VideoStatus.FINISH) {
-                    File file = new File(list.get(i).localPath);
-                    if (file.isFile() && file.exists()) {
-                        file.delete();
-                    }
+//                if (list.get(i).status == VideoStatus.FINISH) {
+//                    File file = new File(list.get(i).localPath);
+//                    if (file.isFile() && file.exists()) {
+//                        file.delete();
 //                    }
-                }
+////                    }
+//                }
             }
         }
+        //下载完毕********************************************
         for (int i = 0; i < donelist.size(); i++) {
             if (donelist.get(i).isCheck) {
 //                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
 //                    defaultDialog.show();
 //                } else {
                 getPresenter().delete(donelist.get(i).videoId);
-                if (donelist.get(i).status == VideoStatus.FINISH) {
-
-                    if (null == donelist.get(i).localPath || BStrUtils.isEmpty(donelist.get(i).localPath))
-                        break;
-                    File file = new File(donelist.get(i).localPath);
-                    if (file.isFile() && file.exists()) {
-                        file.delete();
-                    }
-                }
+//                if (donelist.get(i).status == VideoStatus.FINISH) {
+//
+//                    if (null == donelist.get(i).localPath || BStrUtils.isEmpty(donelist.get(i).localPath))
+//                        break;
+//                    File file = new File(donelist.get(i).localPath);
+//                    if (file.isFile() && file.exists()) {
+//                        file.delete();
+//                    }
+//                }
 //                }
             }
         }
         unChoiceChangeText();
 
-//        if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
-//            if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-//                return  ;
-//        }
-
-//        videoHaveDownloadListAdapter.changeCheck();
-//        videoDownloadListAdapter.changeCheck();
-//
-//        if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
-//            visableBottomLayout();
-//        } else {
-//            unVisableBottomLayout();
-//        }
         getHandler().postDelayed(() -> onControlGetDataList(true), 100);
     }
 
@@ -479,38 +433,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     }
 
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.page_menu, menu);
-//        deleteItem = menu.findItem(R.id.firstBtn);
-//        MenuItem secItem = menu.findItem(R.id.secondBtn);
-//        deleteItem.setTitle(R.string.delete_str);
-//        deleteItem.setIcon(R.drawable.ic_local_delete);
-//        secItem.setVisible(false);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-//        if (item.getItemId() == R.id.firstBtn) {//点击右上角的删除按钮
-//            if (videoDownloadListAdapter.getList().size() == 1 || videoHaveDownloadListAdapter.getList().size() == 1) {
-//                if (videoDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR || videoHaveDownloadListAdapter.getList().get(0).type == VideoHistoryModel.ERROR)
-//                    return false;
-//            }
-//
-//            videoHaveDownloadListAdapter.changeCheck();
-//            videoDownloadListAdapter.changeCheck();
-//
-//            if (videoDownloadListAdapter.getCheckStatus() || videoHaveDownloadListAdapter.getCheckStatus()) {
-//                visableBottomLayout();
-//            } else {
-//                unVisableBottomLayout();
-//            }
-//        }
-//        return false;
-//    }
-
+    //
     @Override
     public void onItemClick(int position, ImageView iv_avd_cover, ImageView iv_avd_pause, TextView tv_avd_pause) {
         VideoDownloadListModel model = videoDownloadListAdapter.getList().get(position);
@@ -764,8 +687,8 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         String totalLength = Formatter.formatFileSize(this, totalSize);
 
 //        tv_avd_progress.setText(totalLength + "/" + downloadLength);
-        tv_avd_progress.setText( downloadLength+ "/" +  totalLength);
-        tv_avd_speed.setText( Formatter.formatFileSize(this, networkSpeed).contains("0.00")?"暂停缓存":Formatter.formatFileSize(this, networkSpeed));
+        tv_avd_progress.setText(downloadLength + "/" + totalLength);
+        tv_avd_speed.setText(Formatter.formatFileSize(this, networkSpeed).contains("0.00") ? "暂停缓存" : Formatter.formatFileSize(this, networkSpeed));
 
         if (downloadState == DownloadManager.NONE) {
             changeStart(false, iv_avd_pause, tv_avd_pause);

@@ -3,6 +3,7 @@ package app.privatefund.com.vido.mvp.presenter.video;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -23,7 +24,7 @@ public class VideoSchoolAllInfPresenter extends BasePresenterImpl<VideoSchoolAll
 
     @Override
     public void getVideoSchoolAllInf() {
-        addSubscription(ApiClient.videoSchoolAllInf().subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.videoSchoolAllInf( AppManager.getCustomRole(getContext()),AppManager.getCustomType(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 if (!BStrUtils.isEmpty(s)) {

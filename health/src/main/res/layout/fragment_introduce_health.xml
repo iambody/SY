@@ -5,46 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <app.privatefund.investor.health.videos.SampleVideo
-        android:id="@+id/detail_player"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <RelativeLayout
-        android:id="@+id/rl_avd_head"
+        android:id="@+id/rl_video_all"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
-        <com.tencent.qcload.playersdk.ui.VideoRootFrame
-            android:id="@+id/vrf_avd"
+        <app.privatefund.investor.health.videos.SampleVideo
+            android:id="@+id/detail_player"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
 
         <ImageView
-            android:id="@+id/iv_mvv_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <LinearLayout
-            android:id="@+id/play_contral"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/dialog_transparent1"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/icon_pause" />
-        </LinearLayout>
+            android:id="@+id/iv_video_first_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/vide_school_play_iv" />
     </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
