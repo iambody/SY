@@ -36,7 +36,7 @@
     <string name="msg_camera_framework_bug">抱歉，Android相机出现问题。您可能需要重启设备。</string>
     <string name="button_ok">确定</string>
     <string name="hotline">400-188-8848</string>
-    <string name="no_phone_number">对不起，私行家还没有手机号</string>
+    <string name="no_phone_number">对不起，手机号码为空</string>
     <string name="risk_comment_prmpt">当前问卷填写的内容将不会保存，确定要返回么?</string>
     <string name="fc_college_title_str">学院</string>
     <string name="save">保存</string>
