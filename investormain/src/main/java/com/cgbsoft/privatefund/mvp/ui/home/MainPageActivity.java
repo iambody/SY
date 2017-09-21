@@ -208,6 +208,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 guideMine.setVisibility(View.GONE);
             }
         }
+        getPresenter().loadRedPacket();
 
     }
 

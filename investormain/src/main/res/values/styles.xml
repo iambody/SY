@@ -1,9 +1,10 @@
 <resources>
 
-    <style name="appInvTheme" parent="Theme.AppCompat.DayNight" >
+    <style name="appInvTheme" parent="Theme.AppCompat.DayNight">
         <!--<item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>-->
-       <!-- <item name="colorPrimary">@color/app_golden</item>-->
+        <!-- <item name="colorPrimary">@color/app_golden</item>-->
     </style>
+
     <style name="BottomBarStyle">
         <item name="android:paddingTop">3dp</item>
         <item name="android:paddingBottom">3dp</item>
@@ -71,6 +72,7 @@
         <item name="android:backgroundDimAmount">0.3</item>
         <item name="android:windowAnimationStyle">@null</item>
     </style>
+
     <style name="hintAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color_5a5a5a</item>
@@ -81,10 +83,9 @@
         <item name="android:textColor">@color/text_input_layout_err</item>
     </style>
 
-    <style name="MyTheme" parent="Theme.AppCompat">
-    </style>
+    <style name="MyTheme" parent="Theme.AppCompat"></style>
 
-    <style name="edit_text_style_changepsd" >
+    <style name="edit_text_style_changepsd">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginLeft">20dp</item>
@@ -199,4 +200,27 @@
         <item name="android:padding">0dp</item>
         <item name="android:scaleType">centerInside</item>
     </style>-->
+
+    <style name="TransparentActivity">
+        <item name="android:windowBackground">@color/truns</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
+    <!--全屏加透明-->
+    <style name="TranslucentFullScreenTheme" parent="FullScreenTheme">
+        <item name="android:windowBackground">@color/truns</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!--全屏-->
+    <style name="FullScreenTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!--透明，有任务栏电量时间等-->
+    <style name="NoTitleTranslucentTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/truns</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

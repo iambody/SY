@@ -25,4 +25,6 @@ public class Contant {
 
     public static final String MEMBER_CENTER_TITLE = "会员中心";
 
+    public static final String red_packet_url = "red_packet_url";
+
 }

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -21,11 +22,14 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.chenenyu.router.annotation.Route;
@@ -122,6 +126,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     @BindView(R2.id.title_mid)
     TextView titleMid;
 
+    @BindView(R2.id.title_right_text)
+    TextView titleRight;
+
 //    @BindView(R2.id.toolbar)
 //    Toolbar toolbar;
 
@@ -188,6 +195,20 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
         up_bttag_txts.add(recharge_up_bt3_tag);
+        titleRight.setVisibility(View.VISIBLE);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) titleRight.getLayoutParams();
+        layoutParams.setMargins(0, 0, 20, 0);
+        titleRight.setLayoutParams(layoutParams);
+        titleRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> hashMap1 = new HashMap<>();
+                hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.vipCardExchange);
+                hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.vipCardExchange));
+                NavigationUtils.startActivityByRouter(PayActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
+            }
+        });
+        titleRight.setBackgroundResource(R.drawable.vip_card_icon);
         changePayNumber("301");
         pay_yundou_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -204,9 +225,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             public void afterTextChanged(Editable s) {
                 try {
                     int count = Integer.parseInt(s.toString());
-                    if (AppManager.isInvestor(PayActivity.this)){
+                    if (AppManager.isInvestor(PayActivity.this)) {
                         pay_yundou_queding.setBackgroundColor(0xffbf9b69);
-                    }else {
+                    } else {
                         ydHint.setVisibility(count < 500 ? View.VISIBLE : View.GONE);
                         pay_yundou_queding.setBackgroundColor(count < 500 ? 0xffbebebe : 0xffea1202);
                     }
@@ -280,17 +301,17 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         pay_method_iv.setImageResource(403 == payMethod.getTypeCode() ? R.drawable.pay_weixin_icon : 401 == payMethod.getTypeCode() ? R.drawable.pay_zhifubao_icon : R.drawable.pay_yinlian_icon);
         if (data.getLevels().get(0).getDonationRatio() == 0.0) {
             recharge_up_bt1_tag.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             recharge_up_bt1_tag.setVisibility(View.VISIBLE);
         }
         if (data.getLevels().get(1).getDonationRatio() == 0.0) {
             recharge_up_bt2_tag.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             recharge_up_bt2_tag.setVisibility(View.VISIBLE);
         }
         if (data.getLevels().get(2).getDonationRatio() == 0.0) {
             recharge_up_bt3_tag.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             recharge_up_bt3_tag.setVisibility(View.VISIBLE);
         }
     }
@@ -509,12 +530,12 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
      */
     public void startPay(int payMethod) {
         int ydCount = Integer.parseInt(pay_yundou_edit.getText().toString());
-        if (!AppManager.isInvestor(this)){
+        if (!AppManager.isInvestor(this)) {
             if (ydCount < 500) {
                 Toast.makeText(this, "充值金额不能小于500云豆", Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else if (ydCount<=0){
+        } else if (ydCount <= 0) {
             Toast.makeText(this, "充值金额不能小于1云豆", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -579,7 +600,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         String number = "¥" + paynumber;
         String numberFront = "支付金额：";
         String changeNumber = numberFront + number;
-        payPaynumber.setText(SpannableUtils.setTextForeground(changeNumber, numberFront.length(), changeNumber.length()-1, R.color.app_golden));
+        payPaynumber.setText(SpannableUtils.setTextForeground(changeNumber, numberFront.length(), changeNumber.length() - 1, R.color.app_golden));
     }
 
 }

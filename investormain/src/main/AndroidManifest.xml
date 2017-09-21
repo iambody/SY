@@ -234,9 +234,9 @@
 
         <!-- 权限管理 -->
         <!--<activity-->
-        <!--android:name=".mvp.ui.start.PermissionsActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
+            <!--android:name=".mvp.ui.start.PermissionsActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
         <!--
                 &lt;!&ndash;选择身份&ndash;&gt;
                 <activity
@@ -405,7 +405,6 @@
 
         <activity
             android:name=".widget.RightShareWebViewActivity"
-
             android:screenOrientation="portrait" />
 
         <!--
@@ -560,10 +559,17 @@
             android:exported="false"
             android:process=":QALSERVICE" />
 
-        <activity android:name=".mvp.ui.home.SplashMovieActivity"></activity>
+        <activity android:name=".mvp.ui.home.SplashMovieActivity" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="97154212d752b81e66a61062775295279a167d05" />
+
+        <activity
+            android:name=".mvp.ui.home.RedPacketActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentFullScreenTheme" />
     </application>
 
 </manifest>

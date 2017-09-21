@@ -12,7 +12,6 @@ public class PayConfig {
      */
     public static final String appid = "3012397237";
 
-
     /**
      * 应用名称：
      * 应用在iAppPay云支付平台注册的名称

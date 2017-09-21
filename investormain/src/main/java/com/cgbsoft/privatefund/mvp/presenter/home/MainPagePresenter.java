@@ -1,12 +1,15 @@
 package com.cgbsoft.privatefund.mvp.presenter.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -15,6 +18,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.HomeSignDialog;
 import com.cgbsoft.privatefund.bean.commui.SignBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
+import com.cgbsoft.privatefund.mvp.ui.home.RedPacketActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -38,6 +42,36 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
 
     }
 
+    /**
+     * 红包雨
+     */
+    @Override
+    public void loadRedPacket(){
+
+        ApiClient.loadRedPacket(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    String redpage_url = result.getString("redpage_url");
+                    if (!TextUtils.isEmpty(redpage_url)){
+                        Intent intent = new Intent(getContext(), RedPacketActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra(Contant.red_packet_url, redpage_url);
+                        getContext().startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                String s = error.toString();
+            }
+        });
+    }
     /**
      * 获取直播列表
      */

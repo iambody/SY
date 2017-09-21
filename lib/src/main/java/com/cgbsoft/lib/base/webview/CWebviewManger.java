@@ -398,6 +398,8 @@ public class CWebviewManger {
                     RxBus.get().post(RxConstant.WEBVIEW_MODIFY_TITLE, name);
                 }
             }
+        }else if (action.contains("showTitleRightStr")){
+            showTitleRightStr(action);
         }
     }
 
@@ -406,6 +408,21 @@ public class CWebviewManger {
             ((BaseWebViewActivity) context).showPayItem();
         }
     }
+
+    private void showTitleRightStr(String action){
+        String urlcodeAction = null;
+        try {
+            urlcodeAction = URLDecoder.decode(action, "utf-8");
+            String[] split = urlcodeAction.split(":");
+            String codeStr = split[2];
+            if (context instanceof BaseWebViewActivity) {
+                ((BaseWebViewActivity) context).showTitleRight(codeStr);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void switchShareButton() {
         if (context instanceof BaseWebViewActivity) {

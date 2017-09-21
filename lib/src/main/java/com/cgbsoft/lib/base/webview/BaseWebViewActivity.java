@@ -115,6 +115,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<String> mallDeleteObservable;
     private Observable<Boolean> unReadMessageObservable;
     private Observable<String> callBackObservable;
+    private boolean isH5ControlRight;
 
     @Override
     protected int layoutID() {
@@ -299,16 +300,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
-            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.title_normal_new);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
             relativeLayout.setVisibility(View.VISIBLE);
             relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setImageResource(R.drawable.ic_back_white_24dp);
             imageView.setOnClickListener(v -> finish());
-            TextView titleTextView = (TextView)findViewById(R.id.title_mid_empty);
+            TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
             titleTextView.setText("会员专区");
             titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-            TextView rightText =(TextView)findViewById(R.id.title_right);
+            TextView rightText = (TextView) findViewById(R.id.title_right);
             rightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
             rightText.setText("会员规则");
             rightText.setOnClickListener(v -> {
@@ -331,7 +332,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
     };
 
-    public void showPayItem(){
+    public void showPayItem() {
         rightRechargeShow = true;
         rightItem.setTitle("充值");
         rightItem.setVisible(true);
@@ -340,6 +341,15 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     public void showShareButton() {
         if (rightItem != null) {
             rightItem.setVisible(true);
+        }
+    }
+
+    public void showTitleRight(String rightStr) {
+        isH5ControlRight = true;
+        if (rightItem != null) {
+            rightItem.setTitle(rightStr);
+            rightItem.setVisible(true);
+            rightItem.setIcon(null);
         }
     }
 
@@ -553,8 +563,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             RxBus.get().unregister(RxConstant.UNREAD_MESSAGE_OBSERVABLE, unReadMessageObservable);
         }
 
-        if (callBackObservable!=null){
-            RxBus.get().unregister(RxConstant.SWIPT_CODE_RESULT,callBackObservable);
+        if (callBackObservable != null) {
+            RxBus.get().unregister(RxConstant.SWIPT_CODE_RESULT, callBackObservable);
         }
 
         if (mShakeListener != null) {
@@ -582,7 +592,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else if (rightMemberRule) {
             rightItem.setTitle("会员规则");
             rightItem.setVisible(true);
-        }else {
+        } else {
             rightItem.setIcon(ContextCompat.getDrawable(this, rightMessageIcon ? (hasUnreadInfom ? R.drawable.select_news_new_black_red_point : R.drawable.select_webview_message_index) : R.drawable.select_share_navigation));
             rightItem.setVisible(rightMessageIcon);
         }
@@ -606,10 +616,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
                 intent.putExtra(WebViewConstant.push_message_title, "会员规则");
                 startActivity(intent);
+            } else if (isH5ControlRight) {
+                mWebview.loadUrl("javascript:titltRightClick()");
             } else {
                 pageShare();
+
             }
         }
+
         return false;
     }
 
