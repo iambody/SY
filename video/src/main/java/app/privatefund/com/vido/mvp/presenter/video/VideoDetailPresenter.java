@@ -95,7 +95,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             if (viModel.isDelete == VideoStatus.DELETE)
                 viModel.status = VideoStatus.NONE;
 
-            viModel.hasRecord=VideoStatus.RECORD;
+            viModel.hasRecord = VideoStatus.RECORD;
             getView().getLocalVideoInfoSucc(viModel);
         } else {
             viModel = new VideoInfoModel();
@@ -130,11 +130,11 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 }
                 if (null == viModel) {
                     viModel.status = VideoStatus.NONE;
-                    viModel.hasRecord=VideoStatus.RECORD;
+                    viModel.hasRecord = VideoStatus.RECORD;
                 }
                 if (null != viModel && viModel.isDelete == VideoStatus.DELETE) {
                     viModel.status = VideoStatus.NONE;
-                    viModel.hasRecord=VideoStatus.RECORD;
+                    viModel.hasRecord = VideoStatus.RECORD;
                 }
                 updataLocalVideoInfo();
 
@@ -343,7 +343,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
             if (getView() != null)
                 getView().onDownloadVideoAdd();
-            Log.i("huancun","添加缓存中状态是.."+ viModel.status);
+            Log.i("huancun", "添加缓存中状态是.." + viModel.status);
 
         }
 
@@ -362,16 +362,16 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                 viModel.status = VideoStatus.NONE;
             }
             updataLocalVideoInfo();
-            Log.i("huancun","正在缓存ing中状态是.."+ viModel.status);
+            Log.i("huancun", "正在缓存ing中状态是.." + viModel.status);
         }
 
         @Override
         public void onRemove(DownloadInfo downloadInfo) {
             super.onRemove(downloadInfo);
             viModel.status = VideoStatus.NONE;
-            viModel.isDelete=VideoStatus.DELETE;
+            viModel.isDelete = VideoStatus.DELETE;
             updataLocalVideoInfo();
-            Log.i("huancun","被移除队列中状态是.."+ viModel.status);
+            Log.i("huancun", "被移除队列中状态是.." + viModel.status);
         }
 
         @Override
@@ -380,16 +380,16 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             viModel.localVideoPath = downloadInfo.getTargetPath();
 
             updataLocalVideoInfo();
-
-            getView().onDownloadFinish(viModel);
-            Log.i("huancun","缓存完成中状态是.."+ viModel.status);
+            if (null != getView())
+                getView().onDownloadFinish(viModel);
+            Log.i("huancun", "缓存完成中状态是.." + viModel.status);
         }
 
         @Override
         public void onError(DownloadInfo downloadInfo, String errorMsg, Exception e) {
             viModel.status = VideoStatus.NONE;
             updataLocalVideoInfo();
-            Log.i("huancun","缓存出错状态是.."+ viModel.status);
+            Log.i("huancun", "缓存出错状态是.." + viModel.status);
         }
     }
 
