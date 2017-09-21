@@ -169,7 +169,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/delete_str"
-            android:textColor="@color/app_golden"
+            android:textColor="@color/color_999999"
             android:textSize="12sp" />
     </LinearLayout>
 
