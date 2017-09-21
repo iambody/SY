@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -132,12 +133,21 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     public void changeResWithIdtentify() {
         int leftFirstRes = 0, leftSecRes = 0, centerRes = 0, rightFirstRes = 0, rightSecRes = 0;
         int leftFirstStr, leftSecStr, centerStr, rightFirstStr, rightSecStr;
-        leftFirstRes = nowPosition == 0 ? R.drawable.icon_home_press : R.drawable.icon_home;
-        leftSecRes = nowPosition == 1 ? R.drawable.icon_wealth_press : R.drawable.icon_wealth;
-        centerRes = nowPosition == 2 ? R.drawable.icon_life_press : R.drawable.icon_life;
-        rightFirstRes = nowPosition == 3 ? R.drawable.icon_health_press : R.drawable.icon_health;
-        rightSecRes = nowPosition == 4 ? R.drawable.icon_my_press : R.drawable.icon_my;
 
+        boolean isAutumn = SkineColorManager.isautumnHoliay();
+        if (isAutumn) {
+            leftFirstRes = R.drawable.autumn_one;
+            leftSecRes = R.drawable.autumn_two;
+            centerRes = R.drawable.autumn_three;
+            rightFirstRes = R.drawable.autumn_four;
+            rightSecRes = R.drawable.autumn_five;
+        } else {
+            leftFirstRes = nowPosition == 0 ? R.drawable.icon_home_press : R.drawable.icon_home;
+            leftSecRes = nowPosition == 1 ? R.drawable.icon_wealth_press : R.drawable.icon_wealth;
+            centerRes = nowPosition == 2 ? R.drawable.icon_life_press : R.drawable.icon_life;
+            rightFirstRes = nowPosition == 3 ? R.drawable.icon_health_press : R.drawable.icon_health;
+            rightSecRes = nowPosition == 4 ? R.drawable.icon_my_press : R.drawable.icon_my;
+        }
         leftFirstStr = R.string.vbnb_firsts_str;
         leftSecStr = R.string.vbnb_private_str;
         centerStr = R.string.vbnb_happy_live_str;

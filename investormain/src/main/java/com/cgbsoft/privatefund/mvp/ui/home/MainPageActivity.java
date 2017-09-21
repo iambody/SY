@@ -29,6 +29,8 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
+import com.cgbsoft.lib.utils.PackageIconUtils;
+import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.StatusBarUtil;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -131,6 +133,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
+    PackageIconUtils packageIconUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,9 +152,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             AppInfStore.saveGuideTag(MainPageActivity.this);
             return;
         }
-        if (getRatio()>=1.9f){
+        if (getRatio() >= 1.9f) {
             guide.setImageDrawable(getResources().getDrawable(guideIdsH[guideindex]));
-        }else{
+        } else {
             guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
         }
 
@@ -216,7 +219,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         } else {
             guide.setVisibility(View.GONE);
         }
-        if (getRatio()>=1.9f){
+        if (getRatio() >= 1.9f) {
             guide.setImageDrawable(getResources().getDrawable(guideIdsH[0]));
             guideMine.setImageDrawable(getResources().getDrawable(guideIdsH[4]));
         }
@@ -262,6 +265,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
         jumpPushMessage();
+        //初始化log
+        packageIconUtils = new PackageIconUtils(baseContext, baseContext.getPackageManager(), "com.cgbsoft.privatefund.MainActivity0", "com.cgbsoft.privatefund.MainActivity1");
+
+        boolean isAutumn = SkineColorManager.isautumnHoliay();
+        if (isAutumn) {
+            packageIconUtils.enableComponentName1();
+        } else {
+            packageIconUtils.enableComponentDefault();
+        }
     }
 
     private void jumpPushMessage() {

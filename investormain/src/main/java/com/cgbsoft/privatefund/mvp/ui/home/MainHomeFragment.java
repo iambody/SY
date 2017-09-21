@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -168,6 +168,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean isLoading;
 
     private UnreadInfoNumber unreadInfoNumber;
+
 
     @Override
 
@@ -809,6 +810,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
             }
             DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
+
         }
     }
 
@@ -848,6 +850,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title);
 
                     DataStatistApiParam.HomeBannerClick(banner.title);
+
                 }
             });
             return view;
