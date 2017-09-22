@@ -11,7 +11,7 @@ repositories {
 
 // 打包时间
 def releaseTime() {
-    return new Date().format("yyyyMMdd-HH", TimeZone.getDefault())
+    return new Date().format("yyyyMMdd-HH_mm_ss", TimeZone.getDefault())
 }
 //打包描述
 def releaseDesc() {
@@ -72,13 +72,13 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('D://privatefund.keystore')
+            storeFile file('../privatefund.keystore')
             keyAlias "beijing"
             keyPassword "privatefund"
             storePassword "privatefund"
         }
         release {
-            storeFile file('D://privatefund.keystore')
+            storeFile file('../privatefund.keystore')
             keyAlias "beijing"
             keyPassword "privatefund"
             storePassword "privatefund"
@@ -95,14 +95,14 @@ android {
     }
     productFlavors{
         guanwang{}
-//        huawei{}
-//        qihu360{}
-//        tengxun{}
-//        xiaomi{}
-//        baidu{}
-//        yingyonghui{}
-//        wandoujia{}
-//        mumayi{}
+        huawei{}
+        qihu360{}
+        tengxun{}
+        xiaomi{}
+        baidu{}
+        yingyonghui{}
+        wandoujia{}
+        mumayi{}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
