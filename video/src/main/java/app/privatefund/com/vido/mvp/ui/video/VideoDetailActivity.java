@@ -538,6 +538,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getLocalVideoInfoSucc(VideoInfoModel model) {
+
+
         videoInfoModel = model;
         playerCurrentTime = videoInfoModel.currentTime;
         setData();
