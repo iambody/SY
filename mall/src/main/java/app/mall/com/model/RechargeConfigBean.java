@@ -12,6 +12,8 @@ import java.util.List;
 public class RechargeConfigBean implements Serializable {
     private String waresId;
     private String notifyUrl;
+    private String titleRightImg;
+    private String titleRightUrl;
     private List<RechargeLevel> rechargeLevel;
     private List<PayMethod> chargeLevel;
 
@@ -66,5 +68,21 @@ public class RechargeConfigBean implements Serializable {
 
     public void setLevels(List<RechargeLevel> levels) {
         rechargeLevel = levels;
+    }
+
+    public String getTitleRightImg() {
+        return titleRightImg;
+    }
+
+    public void setTitleRightImg(String titleRightImg) {
+        this.titleRightImg = titleRightImg;
+    }
+
+    public String getTitleRightUrl() {
+        return titleRightUrl;
+    }
+
+    public void setTitleRightUrl(String titleRightUrl) {
+        this.titleRightUrl = titleRightUrl;
     }
 }

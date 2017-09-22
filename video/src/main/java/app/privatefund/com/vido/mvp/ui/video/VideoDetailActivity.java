@@ -405,7 +405,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     void iv_avd_back_play() {
 //        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         stopCountDown();
-        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime()+5);
+        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime() + 5);
         FloatVideoService.startService(videoId);
 
         finish();
@@ -538,6 +538,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getLocalVideoInfoSucc(VideoInfoModel model) {
+
+
         videoInfoModel = model;
         playerCurrentTime = videoInfoModel.currentTime;
         setData();
@@ -545,7 +547,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         switch (videoInfoModel.status) {
             case VideoStatus.DOWNLOADING:
-
 
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
@@ -789,7 +790,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         int isLocalType = -1;
         boolean isCouldLocalPlay = false;
 
-        if (videoInfoModel.status == VideoStatus.FINISH) {
+        if (videoInfoModel.status == VideoStatus.FINISH && !TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+
             File file = new File(videoInfoModel.localVideoPath);
             if (file.isFile() && file.exists()) {
                 isLocalType = videoInfoModel.downloadtype;
@@ -1026,7 +1028,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @Override
     protected void onDestroy() {
         stopCountDown();
-
+        getPresenter().stopDownload(videoId);
+        if (getPresenter().viModel.status != VideoStatus.FINISH) {
+            getPresenter().updataNowStop();
+        }
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
@@ -1130,6 +1135,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private boolean isVideoDownload() {
         if (videoInfoModel.status == VideoStatus.FINISH) {
+            if (TextUtils.isEmpty(videoInfoModel.localVideoPath)) return false;
+
             File file = new File(videoInfoModel.localVideoPath);
             if (file.isFile() && file.exists()) {
                 return true;
@@ -1238,7 +1245,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         private boolean isVideoDownload() {
             if (videoInfoModel == null) {
                 VideoInfoModel model = getPresenter().getVideoInfo(videoId);
+
                 if (model != null && model.status == VideoStatus.FINISH) {
+                    if (TextUtils.isEmpty(model.localVideoPath)) {
+                        return false;
+                    }
                     File file = new File(model.localVideoPath);
                     if (file.isFile() && file.exists()) {
                         return true;
@@ -1247,6 +1258,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 return false;
             } else {
                 if (videoInfoModel.status == VideoStatus.FINISH) {
+                    if (TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+                        return false;
+                    }
                     File file = new File(videoInfoModel.localVideoPath);
                     if (file.isFile() && file.exists()) {
                         return true;
@@ -1261,6 +1275,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
             NetUtils.NetState netStatus = NetUtils.getNetState();
             if (netStatus == NetUtils.NetState.NET_NO) {   //无网络
+
                 if (!isVideoDownload()) {
                     ll_mvv_nowifi.setVisibility(View.VISIBLE);
                     tv_mvv_no_wifi.setText(R.string.avd_no_net_str);
