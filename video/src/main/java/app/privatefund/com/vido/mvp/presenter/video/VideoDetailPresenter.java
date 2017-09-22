@@ -160,6 +160,13 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         viModel.currentTime = playTime;
         updataLocalVideoInfo();
     }
+    public void updataNowStop( ) {
+        if (viModel == null) {
+            return;
+        }
+        viModel.status = VideoStatus.WAIT;
+        updataLocalVideoInfo();
+    }
 
     @Override
     public void updataDownloadType(int type) {

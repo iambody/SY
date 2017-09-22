@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +65,7 @@ public class HorizontalScrollFragment extends BaseFragment {
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        list = getArguments()!= null ? getArguments().getParcelableArrayList(GET_VIDEO_PARAMS) : new ArrayList<>();
+        list = getArguments() != null ? getArguments().getParcelableArrayList(GET_VIDEO_PARAMS) : new ArrayList<>();
         isPlay = getArguments() != null && getArguments().getBoolean(IS_VIDEO_PLAY_PARAMS, false);
         System.out.println("------list=" + list.size());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -80,15 +82,15 @@ public class HorizontalScrollFragment extends BaseFragment {
     private void measureHeight() {
         heaight = CollectionUtils.isEmpty(list) ? DimensionPixelUtil.dip2px(getActivity(), 140) : DimensionPixelUtil.dip2px(getActivity(), 222);
         if (listener != null) {
-            listener.changeData(isPlay ? 0 : 1 ,heaight);
+            listener.changeData(isPlay ? 0 : 1, heaight);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof MainPageActivity){
-            listener =  (MineFragment)MainTabManager.getInstance().getFragmentByIndex(R.id.nav_right_second, 0);
+        if (context instanceof MainPageActivity) {
+            listener = (MineFragment) MainTabManager.getInstance().getFragmentByIndex(R.id.nav_right_second, 0);
         }
     }
 
@@ -108,7 +110,10 @@ public class HorizontalScrollFragment extends BaseFragment {
         if (isPlay) {
             NavigationUtils.startActivity(getActivity(), VideoHistoryListActivity.class);
         } else {
-            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+//            NavigationUtils.startActivity(getActivity(), VideoDownloadListActivity.class);
+
+            Intent intent = new Intent(getActivity(), VideoDownloadListActivity.class).putExtra("isfrommine", true);
+            ((Activity) getActivity()).startActivity(intent);
         }
     }
 
@@ -154,8 +159,8 @@ public class HorizontalScrollFragment extends BaseFragment {
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View view = mInflater.inflate(R.layout.fragment_horizontal_item, viewGroup, false);
             ViewHolder viewHolder = new ViewHolder(view);
-            viewHolder.mImg = (ImageView)view.findViewById(R.id.mine_video_image_id);
-            viewHolder.mTxt = (TextView)view.findViewById(R.id.mine_video_text);
+            viewHolder.mImg = (ImageView) view.findViewById(R.id.mine_video_image_id);
+            viewHolder.mTxt = (TextView) view.findViewById(R.id.mine_video_text);
             return viewHolder;
         }
 
@@ -170,16 +175,17 @@ public class HorizontalScrollFragment extends BaseFragment {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View arg0){
+        public ViewHolder(View arg0) {
             super(arg0);
             this.rootView = arg0;
         }
+
         View rootView;
         ImageView mImg;
         TextView mTxt;
     }
 
-    public interface ChangeHeightListener{
-        void changeData(int position,int height);
+    public interface ChangeHeightListener {
+        void changeData(int position, int height);
     }
 }

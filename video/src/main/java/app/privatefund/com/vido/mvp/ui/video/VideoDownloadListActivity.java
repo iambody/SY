@@ -106,6 +106,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
     ImageView down_del_iv;
     ImageView down_back_iv;
     MyScrollview down_myscrollview;
+    boolean isfrommine;
 
     @Override
     protected void after() {
@@ -126,7 +127,7 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 //        tv_title.setText(R.string.local_video_str);
         videoDownloadListAdapter = new VideoDownloadListAdapter(this);
         videoHaveDownloadListAdapter = new VideoDownloadListAdapter(new HaveDownloadListListener());
-
+        isfrommine = getIntent().getBooleanExtra("isfrommine", false);
         linearLayoutManager = new FullyLinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         donelinearLayoutManager = new FullyLinearLayoutManager(this);
@@ -303,39 +304,18 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         }
 //正在下载中***************************************
 
-//        list.addAll(null == donelist ? new ArrayList<VideoDownloadListModel>() : donelist);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isCheck) {
-//                if (TextUtils.equals(nowPlayVideoId, list.get(i).videoId)) {
-//                    defaultDialog.show();
-//                } else {
                 getPresenter().delete(list.get(i).videoId);
-//                if (list.get(i).status == VideoStatus.FINISH) {
-//                    File file = new File(list.get(i).localPath);
-//                    if (file.isFile() && file.exists()) {
-//                        file.delete();
-//                    }
-////                    }
-//                }
+
             }
         }
         //下载完毕********************************************
         for (int i = 0; i < donelist.size(); i++) {
             if (donelist.get(i).isCheck) {
-//                if (TextUtils.equals(nowPlayVideoId, donelist.get(i).videoId)) {
-//                    defaultDialog.show();
-//                } else {
+
                 getPresenter().delete(donelist.get(i).videoId);
-//                if (donelist.get(i).status == VideoStatus.FINISH) {
-//
-//                    if (null == donelist.get(i).localPath || BStrUtils.isEmpty(donelist.get(i).localPath))
-//                        break;
-//                    File file = new File(donelist.get(i).localPath);
-//                    if (file.isFile() && file.exists()) {
-//                        file.delete();
-//                    }
-//                }
-//                }
+
             }
         }
         unChoiceChangeText();
@@ -378,9 +358,14 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         } else {
             ll_avd_head.setVisibility(View.VISIBLE);
         }
-
+        List<VideoDownloadListModel> downloadingData;
         //获取未下载的数据
-        List<VideoDownloadListModel> downloadingData = getPresenter().getVideoList(dataList, false);
+//        if (isfrommine) {
+//             downloadingData = getPresenter().getVideoLisWait(dataList);
+//        } else {
+            downloadingData = getPresenter().getVideoList(dataList, false);
+//        }
+
         //获取已下载的数据
         List<VideoDownloadListModel> DownloadData = getPresenter().getVideoList(dataList, true);
         //展示已下载的view 的title
@@ -395,13 +380,14 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         } else {
             videoDownloadListAdapter.appendToList(dataList);
         }
-
+        isfrommine = false;
 
         if (getPresenter().isStartAllDownloading(downloadingData)) {
             isAllDownloadStart = true;
             changeAllStart();
         }
         getPresenter().bindDownloadCallback();
+
 
     }
 
@@ -511,7 +497,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     @Override
     public void onErrorClickListener() {
-//        onRefresh();
 
     }
 
@@ -561,8 +546,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
 
     private void visableBottomLayout() {
         setRefLayoutMarginBottom(44);
-//        deleteItem.setIcon(null);/*
-//        deleteItem.setTitle(R.string.cancel_str);*/
 
         down_del_iv.setVisibility(View.GONE);
         down_del_txt.setVisibility(View.VISIBLE);
@@ -576,9 +559,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         down_del_iv.setVisibility(View.VISIBLE);
         down_del_txt.setVisibility(View.GONE);
 
-
-//        deleteItem.setIcon(R.drawable.ic_local_delete);
-//        deleteItem.setTitle(R.string.delete_str);
     }
 
     private void changeAllStart() {
@@ -632,9 +612,6 @@ public class VideoDownloadListActivity extends BaseActivity<VideoDownloadListPre
         if (position == -1)
             return;
         onControlGetDataList(true);
-//        videoDownloadListAdapter.getList().remove(position);
-////        videoDownloadListAdapter.getList().add(model);
-//        videoDownloadListAdapter.notifyDataSetChanged();
     }
 
     private void refItemUI(String videoId, boolean isFinish, long currentSize, long totalSize, float progress, long networkSpeed, int downloadState) {

@@ -790,7 +790,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         int isLocalType = -1;
         boolean isCouldLocalPlay = false;
 
-        if (videoInfoModel.status == VideoStatus.FINISH&&!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+        if (videoInfoModel.status == VideoStatus.FINISH && !TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
 
             File file = new File(videoInfoModel.localVideoPath);
             if (file.isFile() && file.exists()) {
@@ -1029,6 +1029,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     protected void onDestroy() {
         stopCountDown();
         getPresenter().stopDownload(videoId);
+        if (getPresenter().viModel.status != VideoStatus.FINISH) {
+            getPresenter().updataNowStop();
+        }
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
