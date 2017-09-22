@@ -790,7 +790,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         int isLocalType = -1;
         boolean isCouldLocalPlay = false;
 
-        if (videoInfoModel.status == VideoStatus.FINISH) {
+        if (videoInfoModel.status == VideoStatus.FINISH&&!TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+
             File file = new File(videoInfoModel.localVideoPath);
             if (file.isFile() && file.exists()) {
                 isLocalType = videoInfoModel.downloadtype;
@@ -1027,7 +1028,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @Override
     protected void onDestroy() {
         stopCountDown();
-
+        getPresenter().stopDownload(videoId);
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
             RxBus.get().post(VIDEO_LOCAL_REF_ONE_OBSERVABLE, vrf_avd.getCurrentTime());
@@ -1131,6 +1132,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private boolean isVideoDownload() {
         if (videoInfoModel.status == VideoStatus.FINISH) {
+            if (TextUtils.isEmpty(videoInfoModel.localVideoPath)) return false;
+
             File file = new File(videoInfoModel.localVideoPath);
             if (file.isFile() && file.exists()) {
                 return true;
@@ -1239,7 +1242,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         private boolean isVideoDownload() {
             if (videoInfoModel == null) {
                 VideoInfoModel model = getPresenter().getVideoInfo(videoId);
+
                 if (model != null && model.status == VideoStatus.FINISH) {
+                    if (TextUtils.isEmpty(model.localVideoPath)) {
+                        return false;
+                    }
                     File file = new File(model.localVideoPath);
                     if (file.isFile() && file.exists()) {
                         return true;
