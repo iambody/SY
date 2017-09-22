@@ -44,7 +44,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
     public VideoDetailPresenter(@NonNull Context context, @NonNull VideoDetailContract.View view) {
         super(context, view);
-        daoUtils = new DaoUtils(context, DaoUtils.W_VIDEO);
+        daoUtils = new DaoUtils(context.getApplicationContext(), DaoUtils.W_VIDEO);
         downloadManager = DownloadService.getDownloadManager();
         downloadManager.getThreadPool().setCorePoolSize(1);
         downloadManager.setTargetFolder(CacheManager.getCachePath(context, CacheManager.VIDEO));
@@ -160,6 +160,13 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         viModel.currentTime = playTime;
         updataLocalVideoInfo();
     }
+    public void updataNowStop( ) {
+        if (viModel == null) {
+            return;
+        }
+        viModel.status = VideoStatus.WAIT;
+        updataLocalVideoInfo();
+    }
 
     @Override
     public void updataDownloadType(int type) {
@@ -234,6 +241,12 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }
         if (downloadInfo != null)
             downloadInfo.setListener(new VideoDownloadCallback(videoId));
+    }
+
+    public void stopDownload(String videoId) {
+        if (downloadManager == null)
+            return;
+        downloadManager.stopTask(videoId);
     }
 
     //添加评论

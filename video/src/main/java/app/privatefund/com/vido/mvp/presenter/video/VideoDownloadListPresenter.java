@@ -69,9 +69,14 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
     @Override
     public String getDownloadedFileSize(VideoInfoModel model) {
         DecimalFormat df = new DecimalFormat("#0.0");
-        return df.format(model.size / 1024 / 1024) +
+//        return df.format(model.size / 1024 / 1024) +
+//                "M/" +
+//                df.format(model.size / 1024 / 1024 * model.percent) +
+//                "M";
+
+        return df.format(model.size / 1024 / 1024 * model.percent) +
                 "M/" +
-                df.format(model.size / 1024 / 1024 * model.percent) +
+                df.format(model.size / 1024 / 1024) +
                 "M";
     }
 
@@ -453,7 +458,22 @@ public class VideoDownloadListPresenter extends BasePresenterImpl<VideoDownloadL
         }
         return videoList;
     }
-
+//    /**
+//     * 筛选出来未下载和已下载的数据
+//     * false标识未下载  true标识已经下载数据
+//     */
+//    public List<VideoDownloadListModel> getVideoListStop(List<VideoDownloadListModel> allData ) {
+//
+//        if (null == allData || 0 == allData.size()) return new ArrayList<>();
+//        List<VideoDownloadListModel> videoList = new ArrayList<>();
+//        for (int i = 0; i < allData.size(); i++) {
+//            if (VideoStatus.FINISH != allData.get(i).status)//获取下载未完成的数据
+//
+//                videoList.add(allData.get(i));
+//
+//        }
+//        return videoList;
+//    }
     /**
      * 判断列表中是否有任何的选择
      */
