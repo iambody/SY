@@ -68,6 +68,18 @@ public class RongCouldUtil {
         return false;
     }
 
+    public boolean customConversationAll(String conversationSenderId) {
+        if (conversationSenderId.equals(Constant.msgLiveStatus)
+                || conversationSenderId.equals(Constant.msgProductStatus)
+                || conversationSenderId.equals(Constant.msgMarketingStatus)
+                || conversationSenderId.equals(Constant.msgOperationStatus)
+                || conversationSenderId.equals(Constant.msgSystemStatus)
+                || conversationSenderId.equals(Constant.msgTradeInformation)) {
+            return true;
+        }
+        return false;
+    }
+
     public static void customServerTop(Context context, RongConversationListAdapter rongConversationListAdapter) {
         UIConversation tempServer = null;
         UIConversation bindAdviser = null;
