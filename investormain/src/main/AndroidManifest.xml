@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 读取电话状态 -->
     <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
-
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <!-- 使用振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 挂载文件系统 -->
@@ -190,7 +190,7 @@
             android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen">
-            <!--<intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -234,9 +234,9 @@
 
         <!-- 权限管理 -->
         <!--<activity-->
-            <!--android:name=".mvp.ui.start.PermissionsActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
+        <!--android:name=".mvp.ui.start.PermissionsActivity"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
         <!--
                 &lt;!&ndash;选择身份&ndash;&gt;
                 <activity

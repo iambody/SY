@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -272,8 +274,30 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         boolean isAutumn = SkineColorManager.isautumnHoliay();
         if (isAutumn) {
             packageIconUtils.enableComponentName1();
+            //需要重启默认的应用*****************************
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            List<ResolveInfo> resolves = baseContext.getPackageManager().queryIntentActivities(intent, 0);
+            for (ResolveInfo res : resolves) {
+                if (res.activityInfo != null) {
+                    ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                    am.killBackgroundProcesses(res.activityInfo.packageName);
+                }
+            }
         } else {
             packageIconUtils.enableComponentDefault();
+            //需要重启默认的应用*****************************
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            List<ResolveInfo> resolves = baseContext.getPackageManager().queryIntentActivities(intent, 0);
+            for (ResolveInfo res : resolves) {
+                if (res.activityInfo != null) {
+                    ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                    am.killBackgroundProcesses(res.activityInfo.packageName);
+                }
+            }
         }
     }
 

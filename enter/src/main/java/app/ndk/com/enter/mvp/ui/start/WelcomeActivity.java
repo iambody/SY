@@ -17,7 +17,6 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -44,6 +43,8 @@ import io.rong.push.notification.PushNotificationMessage;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+import static android.Manifest.permission.INSTALL_SHORTCUT;
+
 /**
  * 欢迎页
  * Created by xiaoyu.zhang on 2016/11/16 09:01
@@ -55,11 +56,12 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE,PERMISSION_WRITE_STORAGE};
+    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE,PERMISSION_WRITE_STORAGE,INSTALL_SHORTCUT};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
+
 
     private boolean isStop = false;
     private final int defaultTime = 4000;
