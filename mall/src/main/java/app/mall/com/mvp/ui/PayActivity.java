@@ -27,8 +27,10 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.ImageUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -126,8 +128,8 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     @BindView(R2.id.title_mid)
     TextView titleMid;
 
-    @BindView(R2.id.title_right_text)
-    TextView titleRight;
+    @BindView(R2.id.title_right_image)
+    ImageView titleRight;
 
 //    @BindView(R2.id.toolbar)
 //    Toolbar toolbar;
@@ -195,20 +197,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         up_bttag_txts.add(recharge_up_bt1_tag);
         up_bttag_txts.add(recharge_up_bt2_tag);
         up_bttag_txts.add(recharge_up_bt3_tag);
-        titleRight.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) titleRight.getLayoutParams();
-        layoutParams.setMargins(0, 0, 20, 0);
-        titleRight.setLayoutParams(layoutParams);
-        titleRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String, Object> hashMap1 = new HashMap<>();
-                hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.vipCardExchange);
-                hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.vipCardExchange));
-                NavigationUtils.startActivityByRouter(PayActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
-            }
-        });
-        titleRight.setBackgroundResource(R.drawable.vip_card_icon);
+
         changePayNumber("301");
         pay_yundou_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -282,7 +271,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
     /**
      * 获取数据后需要刷新数据
      */
-    private void freshData(RechargeConfigBean data) {
+    private void freshData(final RechargeConfigBean data) {
         //首先刷新上边三个按钮  此处 先判断size大小
         recharge_up_bt1.setText(String.format("%d", data.getLevels().get(0).getYdAmount()));
         recharge_up_bt2.setText(String.format("%d", data.getLevels().get(1).getYdAmount()));
@@ -313,6 +302,20 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             recharge_up_bt3_tag.setVisibility(View.INVISIBLE);
         } else {
             recharge_up_bt3_tag.setVisibility(View.VISIBLE);
+        }
+
+        if (!TextUtils.isEmpty(data.getTitleRightImg())) {
+            titleRight.setVisibility(View.VISIBLE);
+            titleRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String, Object> hashMap1 = new HashMap<>();
+                    hashMap1.put(WebViewConstant.push_message_url, data.getTitleRightUrl());
+                    hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.vipCardExchange));
+                    NavigationUtils.startActivityByRouter(PayActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
+                }
+            });
+            Imageload.display(this, data.getTitleRightImg(), titleRight);
         }
     }
 
