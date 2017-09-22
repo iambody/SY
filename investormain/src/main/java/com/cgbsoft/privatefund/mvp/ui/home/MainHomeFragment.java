@@ -24,7 +24,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -183,7 +182,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter(mainHomeBannerview);
-        mainHomeBannerview.getViewPager().setOffscreenPageLimit(6);
+        mainHomeBannerview.getViewPager().setOffscreenPageLimit(10);
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
         mainHomeBannerview.setHintPadding(0, 0, 0, 50);
@@ -726,7 +725,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isLoading = false;
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
-
+        mainHomeBannerview.getViewPager().setCurrentItem(0);
         //请求数据
         getPresenter().getHomeData();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
@@ -833,7 +832,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             this.banners = datas;
 
             BannerAdapter.this.notifyDataSetChanged();
-            mainHomeBannerview.getViewPager().setCurrentItem(0);
+
 
         }
 

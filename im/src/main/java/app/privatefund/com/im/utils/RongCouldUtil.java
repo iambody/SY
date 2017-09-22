@@ -1,6 +1,7 @@
 package app.privatefund.com.im.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.InvestorAppli;
@@ -69,9 +70,11 @@ public class RongCouldUtil {
 
     public static void customServerTop(Context context, RongConversationListAdapter rongConversationListAdapter) {
         UIConversation tempServer = null;
-        UIConversation topGroupConversation = null;
+        UIConversation bindAdviser = null;
+        String bindAdviserId = TextUtils.isEmpty(AppManager.getUserInfo(context).getToC().getBandingAdviserId()) ? "" : AppManager.getUserInfo(context).getToC().getBandingAdviserId();
+
         int index = 0;
-        int topGroupConversationIndex = 0;
+        int bindAdvierIndex = 0;
         for (int i = 0; i < rongConversationListAdapter.getCount(); i++) {
             UIConversation itemConversation = rongConversationListAdapter.getItem(i);
             if (context.getString(R.string.simuyun_server).equals(itemConversation.getUIConversationTitle())) {
@@ -86,16 +89,16 @@ public class RongCouldUtil {
 
         for (int i = 0; i < rongConversationListAdapter.getCount(); i++) {
             UIConversation itemConversation = rongConversationListAdapter.getItem(i);
-            if (Contants.topConversationGroupId.equals(itemConversation.getConversationTargetId())) {
-                topGroupConversationIndex = i;
-                topGroupConversation = itemConversation;
+            if (bindAdviserId.equals(itemConversation.getConversationTargetId())) {
+                bindAdvierIndex = i;
+                bindAdviser = itemConversation;
                 break;
             }
         }
 
-        if (topGroupConversation != null) {
-            rongConversationListAdapter.remove(topGroupConversationIndex);
-            rongConversationListAdapter.add(topGroupConversation, 1);
+        if (bindAdviser != null) {
+            rongConversationListAdapter.remove(bindAdvierIndex);
+            rongConversationListAdapter.add(bindAdviser, tempServer != null ? 1 : 0);
         }
     }
 }
