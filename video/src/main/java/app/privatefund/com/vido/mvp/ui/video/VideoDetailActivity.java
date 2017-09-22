@@ -405,7 +405,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     void iv_avd_back_play() {
 //        toDataStatistics(1021, 10102, new String[]{"缩小", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         stopCountDown();
-        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime()+5);
+        getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime() + 5);
         FloatVideoService.startService(videoId);
 
         finish();
@@ -1247,6 +1247,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 return false;
             } else {
                 if (videoInfoModel.status == VideoStatus.FINISH) {
+                    if (TextUtils.isEmpty(videoInfoModel.localVideoPath)) {
+                        return false;
+                    }
                     File file = new File(videoInfoModel.localVideoPath);
                     if (file.isFile() && file.exists()) {
                         return true;
@@ -1261,6 +1264,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
             NetUtils.NetState netStatus = NetUtils.getNetState();
             if (netStatus == NetUtils.NetState.NET_NO) {   //无网络
+
                 if (!isVideoDownload()) {
                     ll_mvv_nowifi.setVisibility(View.VISIBLE);
                     tv_mvv_no_wifi.setText(R.string.avd_no_net_str);
