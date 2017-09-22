@@ -548,7 +548,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         switch (videoInfoModel.status) {
             case VideoStatus.DOWNLOADING:
 
-
                 tv_avd_cache.setText(R.string.caching_str);
                 iv_avd_cache.setImageResource(R.drawable.ic_caching);
 
