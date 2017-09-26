@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 /**
@@ -59,5 +60,9 @@ public class MySwipeRefreshLayout extends SwipeRefreshLayout {
         }
         // 如果是Y轴位移大于X轴，事件交给swipeRefreshLayout处理。
         return super.onInterceptTouchEvent(ev);
+    }
+    @Override
+    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+        return !isRefreshing() && super.onStartNestedScroll(child, target, nestedScrollAxes);
     }
 }
