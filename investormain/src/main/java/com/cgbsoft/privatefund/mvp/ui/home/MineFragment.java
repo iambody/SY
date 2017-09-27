@@ -1070,11 +1070,37 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 "M";
     }
 
+
+//    public List<VideoInfoModel>getDownloadls(){
+//        List<VideoInfoModel> list = daoUtils.getAllVideoInfo();
+//        if (list != null) {
+//            List<VideoDownloadListModel> dataList = new ArrayList<>();
+//            for (int i = 0; i < list.size(); i++) {
+//                VideoInfoModel model = list.get(i);
+//                DownloadInfo info = getDownloadManager().getDownloadInfo(model.videoId);
+//                if (info != null && info.getState() == DownloadManager.FINISH && model.status != VideoStatus.FINISH) {
+//                    model.status = VideoStatus.FINISH;
+//                    saveOrUpdateVideoInfo(model);
+//                }
+////                if (model.status != VideoStatus.NONE)
+//                dataList.add(createModel(model));
+//            }
+//            getView().getLocalListSucc(dataList, isRef);
+//        } else
+//            getView().getLocalListFail(isRef);
+//
+//    }
+
     //********************************************************
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
         List<VideoInfoModel> downlList =  daoUtils.getDownLoadVideoInfo();
+
+
+
+
+
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
         if (videoList == null) {
             for (String name : videos) {

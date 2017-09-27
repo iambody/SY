@@ -178,26 +178,26 @@ public class DaoUtils {
      */
     public List<VideoInfoModel> getDownLoadVideoInfo() {
 //        //根据最后播放时间倒叙排列
-//        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
-//        List<VideoInfoModel> results = new ArrayList<>();
-//        if (list != null) {
-//            for (int i = 0; i < list.size(); i++) {
-//                if (0 != list.get(i).getDownloadTime() && list.get(i).getStatus() != VideoStatus.NONE)
-//                    results.add(getVideoInfoModel(list.get(i)));
-//            }
-//            return results;
-//        }
-//        return null;
-        //根据最后播放时间倒叙排列
-        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE),VideoInfoDao.Properties.Status.notEq(VideoStatus.NONE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
+        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
         List<VideoInfoModel> results = new ArrayList<>();
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
-                results.add(getVideoInfoModel(list.get(i)));
+                if (0 != list.get(i).getDownloadTime() && list.get(i).getStatus() != VideoStatus.NONE)
+                    results.add(getVideoInfoModel(list.get(i)));
             }
             return results;
         }
         return null;
+//        //根据最后播放时间倒叙排列
+//        List<VideoInfo> list = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.IsDelete.eq(VideoStatus.UNDELETE),VideoInfoDao.Properties.Status.notEq(VideoStatus.NONE)).orderAsc(VideoInfoDao.Properties.Status).build().list();
+//        List<VideoInfoModel> results = new ArrayList<>();
+//        if (list != null) {
+//            for (int i = 0; i < list.size(); i++) {
+//                results.add(getVideoInfoModel(list.get(i)));
+//            }
+//            return results;
+//        }
+//        return null;
     }
 
     /**

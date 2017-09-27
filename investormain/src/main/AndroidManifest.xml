@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 读取电话状态 -->
     <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <!-- 使用振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 挂载文件系统 -->
@@ -190,11 +190,11 @@
             android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen">
-          <!--  <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--  <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>-->
         </activity>
         <!--name：组件名字-->
         <!--enabled：该组件是否启动-->
@@ -570,6 +570,18 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentFullScreenTheme" />
+
+
+        <receiver android:name=".utils.receiver.AppInstallReceiver"
+            android:label="@string/app_name_customer">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

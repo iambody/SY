@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -378,7 +379,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_level_lay.setOnClickListener(this);
         mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
         // 设置下拉进度的主题颜色
-        mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click);
+        mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click, R.color.app_golden_click);
+        mainHomeSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
@@ -532,10 +536,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                 }
 
-//                if (liveInfBean.isLiveing) {//直播中
-//                    main_home_level_lay.setVisibility(View.GONE);
-//                } else {//没直播
-//                }
             }
 
             @Override
@@ -565,8 +565,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             RxBus.get().unregister(RxConstant.BindAdviser, bindAdviserObservable);
         }
     }
-/* 显示直播的布局*/
 
+    /* 显示直播的布局*/
     private void showLiveView() {
         main_home_live_lay.setVisibility(View.VISIBLE);
         int ivWidth = (int) (screenWidth * 2.6 / 5);
@@ -638,11 +638,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getUseriInfsucc(int type) {
         switch (type) {
             case 1:
-
                 initDataInf();
-//                initshowlay();
-//                hindCard();
-//         timeCountDown();
                 break;
         }
     }
@@ -861,6 +857,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return null == banners ? 0 : banners.size();
         }
 
+//        @Override
+//        public int getItemPosition(Object object) {
+//            return POSITION_NONE;
+//        }
     }
 
     private void isUnvisibel(boolean isshow) {
