@@ -142,7 +142,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineCardCoupons = baseSxyParentUrl + "/biz/card/mine_card.html";
         mineBestCard = baseSxyParentUrl + "/biz/celebrate/no_celebrate.html";
         selectAdviser = baseSxyParentUrl + "/biz/adviser/assets_basis.html";
-        discoveryDetail = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
+//      discoveryDetail = baseSxyParentUrl + "/biz/product/new_detail_toc.html"; // 博伦页面 （热搜进去没有内容，其他资讯页面是没有问题）
+        discoveryDetail = baseSxyParentUrl + "/biz/information/details.html";
         memeberArea = baseSxyParentUrl + "/biz/members/index.html";
         healthValue = baseSxyParentUrl + "/biz/members/wealth.html";
         investeCarlendar = baseSxyParentUrl + "/biz/calendar/index.html";
