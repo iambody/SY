@@ -62,7 +62,8 @@ android {
         //忽略方法数限制的检查
         dexOptions {
             jumboMode = true
-            javaMaxHeapSize = "8g"
+            maxProcessCount 4 // this is the default value
+            javaMaxHeapSize = "4g"
         }
 
         ndk {
@@ -192,7 +193,7 @@ dependencies {
     compile project(':mall')
     compile project(':health')
 //    compile('com.crashlytics.sdk.android:crashlytics:2.5.2') {
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
         transitive = true;
     }
 //    compile files('libs/gradle-1.24.0.jar')

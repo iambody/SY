@@ -36,6 +36,8 @@ public interface MainPageContract {
         void signInSuc();
 
         void toFreshUserinfHome();
+        void loadSoSuccess(String filePath);
 
+        void loadSoError();
     }
 }

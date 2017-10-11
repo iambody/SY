@@ -116,6 +116,7 @@ public interface RxConstant {
     String MAIN_PAGE_KILL = "mainpagekill";
 
     String MAIN_PAGE_KILL_START = "mainpagekillstart";
+    String DOWN_DAMIC_SO = "down_damic_so";
 
     String REFRESH_LIVE_DATA = "REFRESH_LIVE_DATA";
 

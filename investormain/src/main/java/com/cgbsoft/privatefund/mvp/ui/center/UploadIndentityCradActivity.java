@@ -186,6 +186,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
     @OnClick(R.id.upload_submit)
     public void photoSubmit(){
+        submit.setEnabled(false);
         List<String> paths = new ArrayList<>();
         if (isIdCard) {
             if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
@@ -248,6 +249,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         remoteParams.add(NetConfig.UPLOAD_FILE.concat(paths));
                     } else {
                         ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+                        submit.setEnabled(true);
                         mLoadingDialog.dismiss();
                         return;
                     }
@@ -267,6 +269,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             if (mLoadingDialog.isShowing()) {
                 return;
             }
+            submit.setEnabled(false);
             mLoadingDialog.show();
         } catch (Exception e) {
         }
@@ -274,6 +277,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void hideLoadDialog() {
+        submit.setEnabled(true);
         mLoadingDialog.dismiss();
     }
 

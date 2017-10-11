@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -50,6 +51,12 @@ public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Set up Crashlytics, disabled for debug builds
+//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+//                .build();
+        // Initialize Fabric with the debug-disabled crashlytics.
+//        Fabric.with(this, crashlyticsKit);
         Fabric.with(this, new Crashlytics());
 
         //初始化直播

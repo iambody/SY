@@ -9,7 +9,10 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.bodys.FileDownloadCallback;
+import com.cgbsoft.lib.bodys.FileDownloadTask;
 import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.listener.listener.SoProgressListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -25,7 +28,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
+
+import okhttp3.ResponseBody;
 
 /**
  * 首页功能实现，数据调用
@@ -214,6 +222,16 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             }
         }));
     }
-
-
+    /**
+     * 下载文件
+     * @param url
+     * @param target 保存的文件
+     * @param callback
+     */
+    public void getSoFile(String url, File target, FileDownloadCallback callback) {
+        if (!TextUtils.isEmpty(url) && target != null) {
+            FileDownloadTask task = new FileDownloadTask(url, target, callback);
+            task.execute();
+        }
+    }
 }

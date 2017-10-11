@@ -381,4 +381,7 @@ public class NetConfig {
         public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         public static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
     }
+    public static class SoDown{
+        public static final String DOWN_RUL=UPLOAD_FILE+"android_so/armeabi-v7a.zip";
+    }
 }

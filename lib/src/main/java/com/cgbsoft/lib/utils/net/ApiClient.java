@@ -33,6 +33,7 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
+import com.cgbsoft.lib.listener.listener.SoProgressListener;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
@@ -1630,8 +1631,6 @@ public class ApiClient {
 
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-        LogUtils.Log("aaa", "---" + body.toString());
-        LogUtils.Log("aaa", "===" + jsonObject.toString());
         return body;
     }
 

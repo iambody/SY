@@ -13,7 +13,7 @@ buildscript {
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
         classpath 'com.chenenyu.router:gradle-plugin:latest.integration'
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.24.2'
     }
 }
 
@@ -26,7 +26,8 @@ allprojects {
             // 由于Library module中引用了 ipay 库的 aar，在多 module 的情况下，
             // 其他的module编译会报错，所以需要在所有工程的repositories
             // 下把mall module中的libs目录添加到依赖关系中
-            dirs project(':mall').file('libs')
+            //TOdo
+            dirs file(rootDir.absolutePath+'/mall/libs')
         }
     }
 }

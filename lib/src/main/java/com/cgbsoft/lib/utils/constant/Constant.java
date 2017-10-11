@@ -224,4 +224,8 @@ public interface Constant {
     public static final String SXY_TZZH = "sxytzzh";//私享云投资组合
     public static final String SXY_ZLGL = "sxyzlgl";//私享云资料管理页
     public static final String SXY_GLZC = "sxyglzc";//私享云关联资产
+
+    public static final String SO_ZIP_NAME = "sixiangyun_so.zip";
+    public static final String NEED_DAMIC_SO = "sixiangyun_so.zip";
+
 }
