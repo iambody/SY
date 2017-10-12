@@ -354,6 +354,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     public void onClick(View v) {
         if (v.getId() == R.id.comment_share_dismiss_bt) {
             CommonShareDialog.this.dismiss();
+            if(null!=commentShareListener){
+                commentShareListener.cancleShare();
+            }
         }
     }
 
@@ -547,6 +550,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     @Override
     public void dismiss() {
         super.dismiss();
+        if(null!=commentShareListener){
+            commentShareListener.cancleShare();
+        }
         try {
             CloseShareSdk();
         } catch (Exception e) {
@@ -555,9 +561,11 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 
     /**
      * 预留的回调接口哦
+     * -1时候表示弹框消失了
      */
     public interface CommentShareListener {
         //分享成功
         void completShare(int shareType);
+        void cancleShare( );
     }
 }

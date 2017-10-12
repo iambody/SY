@@ -194,6 +194,9 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
             }
         } else {
             videoListAdapter.freshAp(videoListModels);
+            if(0==videoListModels.size()){
+                PromptManager.ShowCustomToast(fBaseActivity,getResources().getString(R.string.no_initvideo));
+            }
         }
 
     }

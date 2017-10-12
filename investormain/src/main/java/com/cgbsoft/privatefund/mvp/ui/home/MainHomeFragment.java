@@ -183,7 +183,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         homeBannerAdapter = new BannerAdapter(mainHomeBannerview);
-        mainHomeBannerview.getViewPager().setOffscreenPageLimit(10);
+
         mainHomeBannerview.setAdapter(homeBannerAdapter);
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
         mainHomeBannerview.setHintPadding(0, 0, 0, 50);
@@ -580,6 +580,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     //初始化banner
     private void initViewPage(List<HomeEntity.Banner> banner) {
+//        if(null!=banner&&0!=banner.size()){
+//            mainHomeBannerview.getViewPager().setOffscreenPageLimit(banner.size());
+//        }
+
         homeBannerAdapter.frash(banner);
 
 
@@ -592,7 +596,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {
-        if(mainHomeSwiperefreshlayout.isRefreshing()){
+        if (mainHomeSwiperefreshlayout.isRefreshing()) {
             mainHomeSwiperefreshlayout.setRefreshing(false);
         }
         if (null != data) {
@@ -621,7 +625,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     public void getResultError(String error) {
-        if(mainHomeSwiperefreshlayout.isRefreshing()){
+        if (mainHomeSwiperefreshlayout.isRefreshing()) {
             mainHomeSwiperefreshlayout.setRefreshing(false);
         }
     }
@@ -724,9 +728,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isLoading = true;
 
         isLoading = false;
+        if (homeBannerAdapter.getRealCount()-1==mainHomeBannerview.getViewPager().getCurrentItem()||homeBannerAdapter.getRealCount()>3) {
+            mainHomeBannerview.getViewPager().setOffscreenPageLimit(10);
+
+        }else{
+            mainHomeBannerview.getViewPager().setOffscreenPageLimit(3);
+        }
+        mainHomeBannerview.getViewPager().setCurrentItem(0);
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
-        mainHomeBannerview.getViewPager().setCurrentItem(0);
+
         //请求数据
         getPresenter().getHomeData();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
@@ -831,10 +842,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         public void frash(List<HomeEntity.Banner> datas) {
             this.banners = datas;
-
-            BannerAdapter.this.notifyDataSetChanged();
-
-
+            mainHomeBannerview.getViewPager().getAdapter().notifyDataSetChanged();
         }
 
         @Override
@@ -862,10 +870,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return null == banners ? 0 : banners.size();
         }
 
-//        @Override
-//        public int getItemPosition(Object object) {
-//            return POSITION_NONE;
-//        }
     }
 
     private void isUnvisibel(boolean isshow) {

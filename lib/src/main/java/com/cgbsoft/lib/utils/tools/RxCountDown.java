@@ -1,5 +1,8 @@
 package com.cgbsoft.lib.utils.tools;
 
+import android.support.annotation.NonNull;
+import android.view.View;
+
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -184,5 +187,50 @@ public class RxCountDown {
         void doNext();
     }
 
+/**********************点击防抖功能******************************/
+public static Observable<Void> clickView(@NonNull View view) {
+    checkNoNull(view);
+    return Observable.create(new ViewClickOnSubscribe(view));
+}
 
+    /**
+     * 查空
+     */
+    private static <T> void checkNoNull(T value) {
+        if (value == null) {
+            throw new NullPointerException("generic value here is null");
+        }
+    }
+
+    private static class ViewClickOnSubscribe implements Observable.OnSubscribe<Void> {
+        private View view;
+
+        public ViewClickOnSubscribe(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void call(final Subscriber<? super Void> subscriber) {
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //订阅没取消
+                    if (!subscriber.isUnsubscribed()) {
+                        //发送消息
+                        subscriber.onNext(null);
+                    }
+                }
+            };
+            view.setOnClickListener(onClickListener);
+        }
+    }
+//    RxUtils.clickView(btnClick/*your view*/)
+//            .throttleFirst(1000, TimeUnit.MILLISECONDS)
+//                .subscribe(new Action1<Void>() {
+//        @Override
+//        public void call(Void aVoid) {
+//            Toast.makeText(getActivity(), "rx click triggered", Toast.LENGTH_SHORT).show();
+//        }
+//    });
+    /**************************************************************/
 }
