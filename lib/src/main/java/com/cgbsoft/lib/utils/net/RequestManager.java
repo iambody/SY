@@ -38,6 +38,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import rx.Observable;
+import rx.Subscription;
 
 /**
  *  * Created by xiaoyu.zhang on 2016/11/7 16:14

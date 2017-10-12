@@ -1,19 +1,30 @@
 package com.cgbsoft.lib.utils.dm.Utils.helper;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.utils.ZipUtils;
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.LogUtils;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -234,5 +245,157 @@ public class FileUtils {
         }
         return degree;
     }
+    public static File getTempFile(String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath(), fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath(), fileName);
+        }
+        return file;
+    }
+    /**
+     * 删除文件或文件夹
+     *
+     * @param file
+     */
+    public static void deleteDir(File file) {
+        if (null == file || !file.exists()) {
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isDirectory()) {
+                    deleteDir(files[i]);
+                } else {
+                    files[i].delete();
+                }
+            }
+            file.delete();
+        } else {
+            file.delete();
+        }
+    }
+    public static File createTempFile(String fileName) {
+        File file = deleteTempFile(fileName);
+        if (null == file) {
+            return null;
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return file;
+    }
 
+    public static File deleteTempFile(String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath(), fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath(), fileName);
+        }
+        if (file != null && file.exists()) {
+            file.delete();
+        }
+        return file;
+    }
+
+    public static void doUnzip(final File origiFile, final UnZipCallback callBack) {
+//        File h5Res = new File(MyApplication.getInstance().getH5NativePath());
+//        FileUtil.deleteDir(h5Res);
+        new Thread(new Runnable() {
+            public File zipFile;
+
+            @Override
+            public void run() {
+                BufferedInputStream bis = null;
+                BufferedOutputStream bos = null;
+                InputStream fileDescriptor = null;
+                int BUFFER = 10240;
+                File dir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
+                zipFile = new File(dir.getParent() , Constant.SO_ZIP_NAME);
+                try {
+//                    if (null == origiFile || !origiFile.exists()) {
+//                        fileDescriptor = MyApplication.getInstance().getResources().getAssets().open("home.zip");
+//                    } else {
+                    fileDescriptor = new FileInputStream(origiFile);
+//                    }
+                    bis = new BufferedInputStream(fileDescriptor, BUFFER);
+                    bos = new BufferedOutputStream(new FileOutputStream(zipFile), BUFFER);
+                    byte[] buffer = new byte[BUFFER];
+                    int read = 0;
+                    while ((read = bis.read(buffer)) > 0) {// 循环从输入流读取
+                        // buffer字节
+                        bos.write(buffer, 0, read);// 将读取的输入流写入到输出流
+                    }
+                    closeStream(bis, bos);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+                try {
+                    ZipUtils.unzip(zipFile, new ZipUtils.ZipAction() {
+                        @Override
+                        public void star() {
+                            callBack.beginUnZip();
+                        }
+
+                        @Override
+                        public void updateProgress(int progress) {
+                            callBack.updateProgress(progress);
+                        }
+
+                        @Override
+                        public void end() {
+                            if (zipFile != null && zipFile.exists()) {
+                                zipFile.delete();
+                            }
+                            callBack.endUnZip();
+                            LogUtils.Log("aaa", "****************************************************end unzip");
+                        }
+
+                        @Override
+                        public void error() {
+                            callBack.failed();
+                        }
+                    });
+                } catch (Exception e) {
+                    callBack.failed();
+                    e.printStackTrace();
+                    return;
+                }
+                callBack.success();
+            }
+        }).start();
+    }
+    public static void closeStream(BufferedInputStream bis, BufferedOutputStream bos) {
+        try {
+            bos.flush();// 刷新缓冲区
+            bis.close();
+            bos.close();
+        } catch (Exception e) {
+            try {
+                bos.flush();// 刷新缓冲区
+                bis.close();
+                bos.close();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return;
+            }
+        }
+    }
+    public interface UnZipCallback {
+        void success();
+
+        void beginUnZip();
+
+        void updateProgress(int progerss);
+
+        void endUnZip();
+        void failed();
+    }
 }

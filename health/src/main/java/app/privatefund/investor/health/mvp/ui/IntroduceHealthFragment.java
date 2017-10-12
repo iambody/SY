@@ -3,6 +3,7 @@ package app.privatefund.investor.health.mvp.ui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.utils.SoFileUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -19,13 +21,16 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.utils.MyLoad;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.tencent.qcload.playersdk.util.VideoInfo;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +70,7 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     private boolean isPause;
     private boolean isRelease;
     private boolean isReady;
+    private boolean clickedNotPlayed;
 
     @Override
     protected int layoutID() {
@@ -80,9 +86,10 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             @Override
             public void onClick(View v) {
                 if (isReady) {
-                    detailPlayer.startPlayLogic();
-                    videoFirstPlay.setVisibility(View.GONE);
+                    clickedNotPlayed=false;
+                    firstPlay();
                 } else {
+                    clickedNotPlayed=true;
                     loadData();
                 }
             }
@@ -108,6 +115,13 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
         });
         initVideo();
     }
+
+    private void firstPlay() {
+        clickedNotPlayed=false;
+        detailPlayer.startPlayLogic();
+        videoFirstPlay.setVisibility(View.GONE);
+    }
+
     @Override
     public void showLoadDialog() {
         if (null == mLoadingDialog) {
@@ -123,7 +137,11 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
     }
     @Override
     protected void loadData() {
-        getPresenter().introduceHealth();
+        if (!SoFileUtils.isLoadSoFile(getActivity())) {
+            RxBus.get().post(RxConstant.DOWN_DAMIC_SO,true);
+        } else {
+            getPresenter().introduceHealth();
+        }
     }
 
     private void initVideo() {
@@ -254,8 +272,11 @@ public class IntroduceHealthFragment extends BaseFragment<HealthIntroducePresent
             List<SwitchVideoModel> list = new ArrayList<>();
             list.add(switchVideoModel);
             list.add(switchVideoModel2);
-
+            detailPlayer.setIjkLibLoader(new MyLoad(SoFileUtils.loadSoToApp(getActivity())));
             isReady = detailPlayer.setUp(list, true, "");
+            if (clickedNotPlayed) {
+                firstPlay();
+            }
 
 //                videos = new ArrayList<>();
 //                VideoInfo v1 = new VideoInfo();
