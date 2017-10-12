@@ -592,6 +592,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     public void getResultSucc(HomeEntity.Result data) {
+        if(mainHomeSwiperefreshlayout.isRefreshing()){
+            mainHomeSwiperefreshlayout.setRefreshing(false);
+        }
         if (null != data) {
             initResultData(data);
             //设置&&刷新缓存数据
@@ -618,7 +621,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     public void getResultError(String error) {
-
+        if(mainHomeSwiperefreshlayout.isRefreshing()){
+            mainHomeSwiperefreshlayout.setRefreshing(false);
+        }
     }
 
     /*获取缓存成功*/
@@ -717,7 +722,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onRefresh() {
         isLoading = true;
-        mainHomeSwiperefreshlayout.setRefreshing(false);
+
         isLoading = false;
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
