@@ -188,7 +188,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
         mainHomeBannerview.setHintPadding(0, 0, 0, 50);
         mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
-//        mainHomeBannerview.set
         initshowlay();
         timeCountDown();
         //缓存
@@ -209,7 +208,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
-//        mainHomeSmartscrollview.smoothScrollTo(0,20);
     }
 
 
@@ -223,7 +221,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {
             isVisible = false;
             LogUtils.Log("sssaa", "首页可见");
-//            mainhomeWebview.loadUrls("javascript:refresh()");
             mainHomeBannerview.pause();
         }
     }
@@ -239,7 +236,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /*开始倒计时十秒*/
     private void timeCountDown() {
-//        LogUtils.Log("cvcvcv","开始倒计时");
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {
@@ -248,7 +244,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }).subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
-//                LogUtils.Log("cvcvcv"," 倒计时结束");
                 hindCard();
             }
 
@@ -387,12 +382,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
         main_home_live_lay.setOnClickListener(this);
-//        userInfo = AppManager.getUserInfo(baseActivity);
-//        isBindAdviser = AppManager.isBindAdviser(baseActivity);
         //游客模式下或者没有绑定过理财师需要
         initDataInf();
         initRxEvent();
-//        showLiveView();
         mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
     }
 
@@ -507,9 +499,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                     case 0://预告
                         main_home_live_lay.setVisibility(View.VISIBLE);
-//                        main_home_live_lay.setClickable(false);
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-//                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
                         //标题和内容view_live_title
                         BStrUtils.SetTxt(view_live_title, "直播预告:");
@@ -523,7 +513,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         main_home_live_lay.setClickable(true);
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-//                        Imageload.display(baseActivity, liveInfBean.image, view_live_iv_bg);
                         Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
                         //标题和内容
                         BStrUtils.SetTxt(view_live_content, liveInfBean.title);
@@ -574,16 +563,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ivWidth, ivHeight);
         viewLiveIvLay.setLayoutParams(layoutParams);
         //下边需要填充
-        //viewLiveIv 直播的图片
-        //viewLiveTitle直播的title
     }
 
     //初始化banner
     private void initViewPage(List<HomeEntity.Banner> banner) {
-//        if(null!=banner&&0!=banner.size()){
-//            mainHomeBannerview.getViewPager().setOffscreenPageLimit(banner.size());
-//        }
-
         homeBannerAdapter.frash(banner);
 
 
@@ -728,10 +711,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         isLoading = true;
 
         isLoading = false;
-        if (homeBannerAdapter.getRealCount()-1==mainHomeBannerview.getViewPager().getCurrentItem()||homeBannerAdapter.getRealCount()>3) {
+        if (homeBannerAdapter.getRealCount() - 1 == mainHomeBannerview.getViewPager().getCurrentItem() || homeBannerAdapter.getRealCount() > 3) {
             mainHomeBannerview.getViewPager().setOffscreenPageLimit(10);
 
-        }else{
+        } else {
             mainHomeBannerview.getViewPager().setOffscreenPageLimit(3);
         }
         mainHomeBannerview.getViewPager().setCurrentItem(0);
@@ -891,8 +874,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeAdviserRelationLay.setVisibility(View.GONE);
             //隐藏游客模式的右侧文字布局
 
-//            mainHomeAdviserInfIv
-//                    mainHomeVisterAdviserInfIv
         }
 
         if (mainHomeVisterAdviserLayyy.getVisibility() == View.VISIBLE) {
