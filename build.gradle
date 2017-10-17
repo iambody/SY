@@ -28,9 +28,6 @@ allprojects {
             // 下把mall module中的libs目录添加到依赖关系中
             //TOdo
             dirs file(rootDir.absolutePath+'/mall/libs')
-//            dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
-//            dirs file('../ocrlib/libs')
-//            dirs 'libs','../ocrlib/libs','../mall/libs'
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
         }
     }
