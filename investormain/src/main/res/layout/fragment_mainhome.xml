@@ -36,11 +36,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.jude.rollviewpager.RollPagerView
+                      <!--  <com.jude.rollviewpager.RollPagerView
                             android:id="@+id/main_home_bannerview"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/activity_main_banner" />
-
+                            android:layout_height="@dimen/activity_main_banner"
+                            android:visibility="gone"/>
+-->
+                        <com.cgbsoft.lib.widget.BannerView
+                            android:id="@+id/home_bannerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="260dp"
+                            app:layout_scrollFlags="scroll|enterAlways"/>
                     </RelativeLayout>
                     <!-- Banner*** -->
                     <!-- 直播预报的布局 -->

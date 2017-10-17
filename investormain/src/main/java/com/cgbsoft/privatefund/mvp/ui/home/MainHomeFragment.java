@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +20,7 @@ import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
+import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -41,6 +41,7 @@ import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
+import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
@@ -50,10 +51,8 @@ import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
-import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.adapter.LoopPagerAdapter;
-import com.jude.rollviewpager.hintview.IconHintView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
@@ -80,8 +79,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
-    @BindView(R.id.main_home_bannerview)
-    RollPagerView mainHomeBannerview;
+    //    @BindView(R.id.main_home_bannerview)
+//    RollPagerView mainHomeBannerview;
     @BindView(R.id.main_home_horizontalscrollview_lay)
     LinearLayout mainHomeHorizontalscrollviewLay;
     @BindView(R.id.main_home_horizontalscrollview)
@@ -112,7 +111,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView viewLiveTitle;
     //直播预告
     View main_home_live_lay;
-
     @BindView(R.id.view_live_iv_lay)
     RelativeLayout viewLiveIvLay;
     @BindView(R.id.main_home_adviser_title)
@@ -142,6 +140,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     RelativeLayout mainHomeVisterLay;
     @BindView(R.id.main_home_invisiter_txt_lay)
     LinearLayout mainHomeInvisiterTxtLay;
+    @BindView(R.id.home_bannerview)
+    BannerView homeBannerview;
     //直播
     TextView view_live_title_tag;
     //图片,小图标
@@ -156,19 +156,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean isShowAdviserCard;
     //游客模式下是否已经展示出来
     private boolean isVisiterShow;
-    // Banner适配器
-    private BannerAdapter homeBannerAdapter;
     // Fragment当前状态是否可见
     protected boolean isVisible;
     //是否绑定理财师
-//    boolean isBindAdviser;
-//    UserInfoDataEntity.UserInfo userInfo;
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, infdataObservable, bindAdviserObservable;
-    private boolean isLoading;
-
     private UnreadInfoNumber unreadInfoNumber;
-
+    private boolean isLoading;
 
     @Override
 
@@ -176,18 +170,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         return R.layout.fragment_mainhome;
     }
 
-    int Timessss = 0;
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
-        homeBannerAdapter = new BannerAdapter(mainHomeBannerview);
-
-        mainHomeBannerview.setAdapter(homeBannerAdapter);
-        mainHomeBannerview.setHintView(new IconHintView(baseActivity, R.drawable.home_page_pre, R.drawable.home_page_nor, 58));
-        mainHomeBannerview.setHintPadding(0, 0, 0, 50);
-        mainHomeBannerview.setPlayDelay(PLAYDELAYTIME * 1000);
         initshowlay();
         timeCountDown();
         //缓存
@@ -217,11 +204,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (isVisibleToUser) {
             isVisible = true;
             LogUtils.Log("sssaa", "首页不可见");
-            mainHomeBannerview.resume();
+            homeBannerview.endBanner();
         } else {
             isVisible = false;
             LogUtils.Log("sssaa", "首页可见");
-            mainHomeBannerview.pause();
+            homeBannerview.startBanner();
         }
     }
 
@@ -361,7 +348,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
          */
 //        screenWidth
         RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
-        mainHomeBannerview.setLayoutParams(bannerParames);
+        homeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
         view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
@@ -417,7 +404,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-//    boolean islive;
 
     /*  注册监听事件*/
     private void initRxEvent() {
@@ -442,7 +428,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-//                if (islive) return;
                 if (5 == integer) {//需要刷新动作
                     mainHomeSwiperefreshlayout.setRefreshing(true);
                     RxCountDown.countdown(ADVISERLOADTIME).doOnSubscribe(new Action0() {
@@ -567,9 +552,33 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     //初始化banner
     private void initViewPage(List<HomeEntity.Banner> banner) {
-        homeBannerAdapter.frash(banner);
+        initBanner(valuelist(banner));
+    }
 
+    private List<BannerBean> valuelist(List<HomeEntity.Banner> banner) {
+        List<BannerBean> bannerBeen = new ArrayList<>();
+        if (null == banner || banner.size() == 0) return bannerBeen;
 
+        for (HomeEntity.Banner h : banner) {
+            BannerBean b = new BannerBean();
+            b.setImageUrl(h.imageUrl);
+            b.setJumpUrl(h.url);
+            b.setTitle(h.title);
+            bannerBeen.add(b);
+        }
+        return bannerBeen;
+    }
+
+    private void initBanner(List<BannerBean> valuelist) {
+        homeBannerview.initShowImageForNet(getActivity(), valuelist);
+        homeBannerview.setOnclickBannerItemView(bannerBean -> {
+            NavigationUtils.gotoRightShareWebActivity(baseActivity, bannerBean.getImageUrl(), bannerBean.getTitle());
+            DataStatistApiParam.HomeBannerClick(bannerBean.getTitle());
+
+        });
+        if (homeBannerview != null) {
+            homeBannerview.startBanner();
+        }
     }
 
     @Override
@@ -708,19 +717,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*下拉刷新展示*/
     @Override
     public void onRefresh() {
-        isLoading = true;
-
         isLoading = false;
-        if (homeBannerAdapter.getRealCount() - 1 == mainHomeBannerview.getViewPager().getCurrentItem() || homeBannerAdapter.getRealCount() > 3) {
-            mainHomeBannerview.getViewPager().setOffscreenPageLimit(10);
-
-        } else {
-            mainHomeBannerview.getViewPager().setOffscreenPageLimit(3);
-        }
-        mainHomeBannerview.getViewPager().setCurrentItem(0);
         //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
-
         //请求数据
         getPresenter().getHomeData();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
@@ -816,50 +815,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         LogUtils.Log("sssaa", "首页不可见");
     }
 
-    public class BannerAdapter extends LoopPagerAdapter {
-        List<HomeEntity.Banner> banners;
-
-        public BannerAdapter(RollPagerView rollPagerView) {
-            super(rollPagerView);
-        }
-
-        public void frash(List<HomeEntity.Banner> datas) {
-            this.banners = datas;
-            mainHomeBannerview.getViewPager().getAdapter().notifyDataSetChanged();
-        }
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            HomeEntity.Banner banner = banners.get(position);
-            View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_home_banner, null);
-            ImageView imageView = (ImageView) view.findViewById(R.id.item_homeimagecycleview_iv);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            Imageload.display(baseActivity, banner.imageUrl, imageView);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NavigationUtils.gotoRightShareWebActivity(baseActivity, banner.url, banner.title);
-
-                    DataStatistApiParam.HomeBannerClick(banner.title);
-
-                }
-            });
-            return view;
-        }
-
-
-        @Override
-        protected int getRealCount() {
-            return null == banners ? 0 : banners.size();
-        }
-
-    }
-
-    private void isUnvisibel(boolean isshow) {
-        if (!isshow) {//不可见
-
-        }
-    }
 
     private void hindCard() {
         if (null == mainHomeAdviserLayyy) return;
