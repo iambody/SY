@@ -38,7 +38,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import rx.Observable;
-import rx.Subscription;
 
 /**
  *  * Created by xiaoyu.zhang on 2016/11/7 16:14
@@ -848,4 +847,17 @@ interface RequestManager {
      */
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
+
+
+
+    /**
+     * 活体检测获取sign
+     */
+    @GET(NetConfig.Compliance.COMPLIANCE_LIVING_SIGN)
+    Observable<ResponseBody> getLivingSign(@QueryMap Map<String, String> programObject);
+    /**
+     * orc获取sign
+     */
+    @GET(NetConfig.Compliance.COMPLIANCE_OCR_SIGN)
+    Observable<ResponseBody> getOcrSign(@QueryMap Map<String, String> programObject);
 }

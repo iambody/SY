@@ -56,7 +56,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
+import app.ocrlib.com.LivingManger;
+import app.ocrlib.com.LivingResult;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -331,15 +332,31 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*点击消息*/
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        if (AppManager.isVisitor(baseActivity)) {//游客模式
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {//非游客模式
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
+//        if (AppManager.isVisitor(baseActivity)) {//游客模式
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {//非游客模式
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+//        OcrManger ocrManger = new OcrManger(baseActivity, OcrManger.OCR_FRONT, new OcrResult() {
+//        });
+//        ocrManger.startOcr();
+        LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
+            @Override
+            public void livingSucceed() {
+
+            }
+
+            @Override
+            public void livingFailed() {
+
+            }
+        });
+        livingManger.startLivingMatch();
     }
+
 
     /*  配置view各种资源*/
     private void initConfig() {

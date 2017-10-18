@@ -124,6 +124,15 @@ public class NetConfig {
         final static String ORIGNATION_MANAGER = AUTH_URL_V2 + "/rc/managerinfo";
     }
 
+    //合规
+    static class Compliance {
+          final static String compliance = "/compliance";
+        //活体检测的sign获取
+          final static String COMPLIANCE_LIVING_SIGN = API_URL_V2 + compliance + "/livingsign";
+        //OCR获取sign
+          final static String COMPLIANCE_OCR_SIGN = API_URL_V2 + compliance + "/ocrsign";
+    }
+
     static class MALL {
         //新增商城收货地址
         final static String MALL_ADD_ADDRESS = API_URL_V2 + "/yd/insertydaddress";
@@ -381,7 +390,8 @@ public class NetConfig {
         public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         public static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
     }
-    public static class SoDown{
-        public static final String DOWN_RUL=UPLOAD_FILE+"android_so/armeabi-v7a.zip";
+
+    public static class SoDown {
+        public static final String DOWN_RUL = UPLOAD_FILE + "android_so/armeabi-v7a.zip";
     }
 }

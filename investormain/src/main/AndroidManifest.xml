@@ -288,7 +288,7 @@
         <!-- android:screenOrientation="portrait" /> -->
         <!-- 视频下载列表 -->
 
-
+        <activity android:name=".mvc.TestActivity" />
         <!-- 关联资产activity -->
         <activity
             android:name=".mvp.ui.home.RelativeAssetActivity"
@@ -572,12 +572,14 @@
             android:theme="@style/TranslucentFullScreenTheme" />
 
 
-        <receiver android:name=".utils.receiver.AppInstallReceiver"
+        <receiver
+            android:name=".utils.receiver.AppInstallReceiver"
             android:label="@string/app_name_customer">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>

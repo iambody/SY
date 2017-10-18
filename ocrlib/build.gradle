@@ -27,14 +27,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-
-
     //1. 云刷脸SDK
     compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
     //2. 云OCR SDK
@@ -44,4 +42,5 @@ dependencies {
     //4. 皮肤资源包-可选择黑色/白色 默认黑色
     compile(name: 'WbCloudFaceResMidBlack-da5ace4', ext: 'aar')
     //compile(name: 'WbCloudFaceResMidWhite-6c1b278', ext: 'aar')
+    compile project(':lib')
 }
