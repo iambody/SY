@@ -5,14 +5,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.bean.ocr.LivingSign;
+import com.google.gson.Gson;
 import com.webank.wbcloudfaceverify2.tools.ErrorCode;
 import com.webank.wbcloudfaceverify2.tools.IdentifyCardValidate;
 import com.webank.wbcloudfaceverify2.tools.WbCloudFaceVerifySdk;
 import com.webank.wbcloudfaceverify2.ui.FaceVerifyStatus;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * desc   活体检测工具类
@@ -20,8 +26,6 @@ import com.webank.wbcloudfaceverify2.ui.FaceVerifyStatus;
  * 日期 2017/10/17-19:08
  */
 public class LivingManger {
-    private static AppHandler appHandler;
-    private static SignUseCase signUseCase;
     private static LivingResult livingResult;
     //上下文
     private static Context livingContext;
@@ -39,10 +43,11 @@ public class LivingManger {
 
     private static SharedPreferences sp;
 
-    private static String userId = "testCloudFaceVerify" + System.currentTimeMillis();
-    private static String nonce = "52014832029547845621032584562012";
-private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKVYQG+Xc2ykjuUNmXuk4BK5zaeOpHdO9mdUlhvgqp7KZurrDdqvVt5fkeYDWtx26mQu2s7b4Rjn6Y7CbH9jhJrHBLXqcBm7zqhnJ3Y8AhJ9nQPbPnCY1Ln8IN4ejYdY4La49gkzvAFb1N21ipOImAt1HHU0RbuXDz/OVsJ4ZVQFXp8DmdniweHVi049dIPvokwj9z5A0kONQRgrfRvIMLgGQXGfT2RmDGt82K+7lEzGtuexx5F1e3K2IC8ZXuxiOD7hFc478HPSLq0e0U619G99/OePSPD+uhURbobew==";
-    private static  String  APPID="TIDAjl3C";
+    //    private static String userId = "testCloudFaceVerify" + System.currentTimeMillis();
+//    private static String nonce = "52014832029547845621032584562012";
+//    private static String KKKeyicen = "JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKVYQG+Xc2ykjuUNmXuk4BK5zaeOpHdO9mdUlhvgqp7KZurrDdqvVt5fkeYDWtx26mQu2s7b4Rjn6Y7CbH9jhJrHBLXqcBm7zqhnJ3Y8AhJ9nQPbPnCY1Ln8IN4ejYdY4La49gkzvAFb1N21ipOImAt1HHU0RbuXDz/OVsJ4ZVQFXp8DmdniweHVi049dIPvokwj9z5A0kONQRgrfRvIMLgGQXGfT2+A1:D682K+7lEzGtuexx5F1e3K2IC8ZXuxiOD7hFc478HPSLq0e0U619G99/OePSPD+uhURbobew==";
+//    private static String APPID = "TIDAjl3C";
+
     private LivingManger() {
     }
 
@@ -58,9 +63,8 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
 
     //开始初始化*********************************
     private void initConifg() {
-        sp = livingContext.getSharedPreferences("FaceVerify",Context.MODE_PRIVATE);
-        appHandler = new AppHandler();
-        signUseCase = new SignUseCase(appHandler);
+        sp = livingContext.getSharedPreferences("FaceVerify", Context.MODE_PRIVATE);
+
         initProgress();
         //默认选择黑色模式 也可以选择白色（需要在build.gradle里更换对应白色资源包）
         color = WbCloudFaceVerifySdk.BLACK;
@@ -82,10 +86,10 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
                 IdentifyCardValidate vali = new IdentifyCardValidate();
                 String msg = vali.validate_effective(Cardid);
                 if (msg.equals(Cardid)) {
-//                    Log.i(TAG, "Param right!");
-//                    Log.i(TAG, "Called Face Verify Sdk MIDDLE MODE!");
                     progressDlg.show();
-                    signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
+//                    signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
+                    getSign();
+
                 } else {
                     Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
                     return;
@@ -106,7 +110,7 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
      * @param mode
      * @param sign
      */
-    public static void openCloudFaceService(final FaceVerifyStatus.Mode mode, String sign) {
+    public static void openCloudFaceService(final FaceVerifyStatus.Mode mode, String sign, String APPID, String nonce, String userId, String keyicen, String orderNum) {
 
         final String modeShowGuide = mode.toString();
 
@@ -115,7 +119,7 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
                 Cardname,
                 "01",
                 Cardid,
-                "test" + System.currentTimeMillis(),
+                orderNum,
                 "ip=xxx.xxx.xxx.xxx",
                 "lgt=xxx,xxx;lat=xxx.xxx",
                 APPID,
@@ -154,13 +158,11 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
 
                         if (resultCode == 0) {
                             if (null != livingResult) livingResult.livingSucceed();
-//                            Log.d(TAG, "刷脸成功！errorCode=" + resultCode + " ;faceCode= " + faceCode + " ;faceMsg=" + faceMsg + " ;Sign=" + sign+"集合数据====>>>>>>"+showBundleData(extendData));
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             if (null != livingResult) livingResult.livingFailed();
-//                            Log.d(TAG, "刷脸失败！errorCode=" + resultCode + " ;faceCode= " + faceCode + " ;faceMsg=" + faceMsg + " ;Sign=" + sign);
                             if (!isShowFail) {
                                 Toast.makeText(livingContext, "刷脸失败：errorCode=" + resultCode + " ;faceCode= " + faceCode + " ;faceMsg=" + faceMsg, Toast.LENGTH_LONG).show();
                             }
@@ -204,20 +206,39 @@ private static  String keyicen="JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKV
         progressDlg.setCancelable(false);
     }
 
+    public static void destory() {
+        if (null != progressDlg) {
+            progressDlg.dismiss();
+            progressDlg = null;
+        }
+
+    }
+
+    static LivingSign livingSign;
+
     /**
      * 请求server后台的sign
      */
-    private void getSign() {
+    private static void getSign() {
         //开始网络请求==成功就开始登录 失败重新请求
         ApiClient.getLivingSing().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
+                try {
+                    JSONObject object = new JSONObject(s);
 
+
+                    livingSign = new Gson().fromJson(object.getString("result"), LivingSign.class);
+                    openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, livingSign.getSign(), livingSign.getAppId(), livingSign.getNonce(), livingSign.getUserId(), livingSign.getLicence(), livingSign.getOrderNum());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                Log.i("ss", error.getMessage());
+                progressDlg.dismiss();
             }
         });
     }

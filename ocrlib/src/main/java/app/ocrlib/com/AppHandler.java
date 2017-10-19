@@ -6,8 +6,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.webank.wbcloudfaceverify2.ui.FaceVerifyStatus;
-
 /**
  * Created by leoraylei on 16/9/19.
  */
@@ -34,7 +32,7 @@ public class AppHandler {
                 if (msg.arg1 == ARG1_SUCCESS) {
                     String sign = msg.getData().getString(DATA_SIGN);
                     if (msg.getData().getString(DATA_MODE).equals(DATA_MODE_MID)) {//活体检测
-                        LivingManger.openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, sign);
+//                        LivingManger.openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, sign);
                     } else if (msg.getData().getString(DATA_MODE).equals(DATA_MODE_OCR)) { //ocr
                         OcrManger.startOcrActivity(sign);
                     }

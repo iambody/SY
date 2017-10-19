@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -340,13 +341,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
 //        }
 //        DataStatistApiParam.homeClickNew();
-//        OcrManger ocrManger = new OcrManger(baseActivity, OcrManger.OCR_FRONT, new OcrResult() {
-//        });
-//        ocrManger.startOcr();
+
         LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
             @Override
             public void livingSucceed() {
-
+                Log.i("ssalslaklslksaklsakl", "成功了");
             }
 
             @Override
