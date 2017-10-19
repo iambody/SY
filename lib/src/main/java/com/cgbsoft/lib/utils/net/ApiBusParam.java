@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * @author chenlong
  */
-
 public class ApiBusParam {
 
     /**
@@ -152,4 +151,11 @@ public class ApiBusParam {
         hashMap.put("customerIdNumber", customerIdNumber);
         return hashMap;
     }
+
+    public static HashMap getResourceVersion(String currentVersion) {
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("version", currentVersion);
+        return hashMap;
+    }
+
 }

@@ -21,6 +21,8 @@ public interface MainPageContract {
         void getUserInfo(boolean tofreshHome);
 
         void loadRedPacket();
+
+
     }
 
     interface View extends BaseView{

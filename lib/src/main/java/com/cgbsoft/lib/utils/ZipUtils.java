@@ -8,10 +8,12 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -118,4 +120,65 @@ public class ZipUtils {
         return size;
     }
 
+    /**
+     * 解压 zip 文件
+     * @param
+     * @throws IOException
+     */
+    public static boolean unZipFileAtAnyPath(String resourceZip, ZipAction callBack) {
+//        destination = destination.endsWith("/") ? destination : destination+ "/";
+        byte b[] = new byte[1024 * 4];
+        int length;
+        ZipFile zipFile;
+        try {
+            long ziplength = getZipTrueSize(resourceZip);
+            zipFile = new ZipFile(new File(resourceZip));
+            Enumeration enumeration = zipFile.entries();
+            ZipEntry zipEntry = null;
+            if (callBack != null) {
+                callBack.star();
+            }
+            long currentProgress = 0;
+            while (enumeration.hasMoreElements()) {
+                zipEntry = (ZipEntry) enumeration.nextElement();
+                File loadFile = new File(zipEntry.getName());
+                if (zipEntry.isDirectory()) {
+                    loadFile.mkdirs();
+                } else {
+                    if (!loadFile.getParentFile().exists())
+                        loadFile.getParentFile().mkdirs();
+                    if (!loadFile.exists()) {
+                        loadFile.createNewFile();
+                    }
+                    BufferedOutputStream outputStream = new BufferedOutputStream(
+                            new FileOutputStream(loadFile));
+                    BufferedInputStream inputStream = new BufferedInputStream(zipFile.getInputStream(zipEntry));
+                    while ((length = inputStream.read(b)) > 0) {
+                        outputStream.write(b, 0, length);
+                        currentProgress += length;
+                        int progress = (int) ((currentProgress * 100) / ziplength);
+                        if (callBack != null) {
+                            updateProgress(progress,callBack);
+                        }
+                    }
+                    outputStream.flush();
+                    outputStream.close();
+                    inputStream.close();
+                    callBack.end();
+                }
+            }
+            zipFile.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (callBack != null) {
+                callBack.error();
+            }
+        } finally {
+            if (callBack != null) {
+                callBack.end();
+            }
+        }
+        return false;
+    }
 }

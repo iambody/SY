@@ -245,6 +245,7 @@ public class FileUtils {
         }
         return degree;
     }
+
     public static File getTempFile(String fileName) {
         File file = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
@@ -254,6 +255,42 @@ public class FileUtils {
         }
         return file;
     }
+
+    public static File createResourceLocalTempFile(String dir, String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath() + File.separator + dir, fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
+        }
+
+         if (file != null && file.exists()) {
+             file.delete();
+         }
+
+         if (!file.getParentFile().exists()) {
+             file.getParentFile().mkdirs();
+         }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file;
+    }
+
+    public static File getResourceLocalTempFile(String dir, String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath() + File.separator + dir, fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
+        }
+
+        return file;
+    }
+
     /**
      * 删除文件或文件夹
      *
@@ -309,7 +346,6 @@ public class FileUtils {
 //        FileUtil.deleteDir(h5Res);
         new Thread(new Runnable() {
             public File zipFile;
-
             @Override
             public void run() {
                 BufferedInputStream bis = null;
@@ -329,7 +365,6 @@ public class FileUtils {
                     byte[] buffer = new byte[BUFFER];
                     int read = 0;
                     while ((read = bis.read(buffer)) > 0) {// 循环从输入流读取
-                        // buffer字节
                         bos.write(buffer, 0, read);// 将读取的输入流写入到输出流
                     }
                     closeStream(bis, bos);

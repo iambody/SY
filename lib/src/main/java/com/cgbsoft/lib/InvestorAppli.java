@@ -3,6 +3,8 @@ package com.cgbsoft.lib;
 import com.cgbsoft.lib.base.model.bean.UserInfo;
 import com.chenenyu.router.Router;
 
+import java.util.HashMap;
+
 /**
  * desc  投资人Application
  * Created by yangzonghui on 2017/5/4 12:02
@@ -16,6 +18,9 @@ public class InvestorAppli extends BaseApplication {
     private boolean isRequestCustom;
 
     private boolean isTouGuOnline;
+
+    private HashMap<String, String> serverDatahashMap = new HashMap<>();
+
 
     public UserInfo getUserInfo() {
         return userInfo;
@@ -52,5 +57,13 @@ public class InvestorAppli extends BaseApplication {
 
     public void setMainpage(boolean mainpage) {
         isMainpage = mainpage;
+    }
+
+    public HashMap<String, String> getServerDatahashMap() {
+        return serverDatahashMap;
+    }
+
+    public void setServerDatahashMap(HashMap<String, String> serverDatahashMap) {
+        this.serverDatahashMap = serverDatahashMap;
     }
 }

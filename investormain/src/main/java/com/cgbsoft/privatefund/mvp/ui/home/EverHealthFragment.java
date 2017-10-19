@@ -35,6 +35,7 @@ import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import app.privatefund.investor.health.mvp.ui.HealthSummaryFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
+import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragmentTest;
 
 /**
  *@author chenlong
@@ -103,9 +104,14 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case HEALTE_INTRODUCTION_CODE:
-                    IntroduceHealthFragment introduceHealthFragment = new IntroduceHealthFragment();
-                    currentFragment=introduceHealthFragment;
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), introduceHealthFragment,Integer.parseInt(secondNavigation.getCode()));
+                    // TODO
+//                    IntroduceHealthFragment introduceHealthFragment = new IntroduceHealthFragment();
+//                    currentFragment=introduceHealthFragment;
+//                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), introduceHealthFragment,Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen1);
+                    IntroduceHealthFragmentTest testIntroduceFragment = new IntroduceHealthFragmentTest();
+                    currentFragment=testIntroduceFragment;
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), testIntroduceFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case HEALTH_CHECK_CODE:

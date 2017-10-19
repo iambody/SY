@@ -133,8 +133,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         SPreference.putString(this,"JavascriptInterfaceSP","");
     }
 
-
-
     @Override
     protected WelcomePersenter createPresenter() {
         return new WelcomePersenter(this, this);
@@ -146,7 +144,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         if (getPresenter() == null) {
             setPresenter();
         }
-
+        getPresenter().getResourceVersion();
         getPresenter().createFinishObservable();
         getPresenter().toInitInfo();
         getPresenter().getMyLocation();

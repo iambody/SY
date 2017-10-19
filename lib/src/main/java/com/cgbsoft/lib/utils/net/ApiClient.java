@@ -1447,6 +1447,28 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().visitor_get_UserId(mapToBody(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * Common Get Request
+     */
+    public static Observable<String> getCommonGetRequest(String url, HashMap<String, String> params) {
+        return OKHTTP.getInstance().getRequestManager().commonGetRequest(url, createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * Commone Post Request
+     */
+    public static Observable<String> getCommonPostRequest(String url, HashMap<String, String> params) {
+        return OKHTTP.getInstance().getRequestManager().commonPostRequest(url, mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 资源版本号
+     * @param params 本地当前版本号参数
+     * @return
+     */
+    public static Observable<String> getH5ResouceVersion(HashMap<String, String> params) {
+        return OKHTTP.getInstance().getRequestManager().getResourceVersion(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     /**
      * 获取生活家banner
@@ -1496,13 +1518,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
     /**
      * 私享云签到接口
      */
     public static Observable<String> SxySign() {
         Map<String, String> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().sign(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**

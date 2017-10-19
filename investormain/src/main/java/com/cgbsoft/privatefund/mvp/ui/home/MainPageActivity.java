@@ -6,7 +6,6 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
@@ -39,11 +38,11 @@ import com.cgbsoft.lib.bodys.FileDownloadCallback;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
-import com.cgbsoft.lib.listener.listener.SoProgressListener;
 import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.SoFileUtils;
 import com.cgbsoft.lib.utils.StatusBarUtil;
+import com.cgbsoft.lib.utils.ZipUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -67,6 +66,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.PageJumpMananger;
+import com.cgbsoft.privatefund.utils.ZipResourceDownload;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
@@ -150,43 +150,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
     PackageIconUtils packageIconUtils;
-    private ProgressBar progressBar;
-    private AlertDialog downloadDialog;
-    private int lastProgress=0;
 
-    private static final int BEGIN_UNZIP = 0;
-    private static final int UPDATE_PROGRESS = 1;
-    private static final int END_UNZIP = 2;
-    private static final int FAILED_UNZIP = 3;
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int type= (int) msg.obj;
-            switch (type) {
-                case BEGIN_UNZIP:
-                    LogUtils.Log("aaa","begin_unzip");
-                    downloadDialog.show();
-                    progressBar.setProgress(1);
-                    progressBar.invalidate();
-                    break;
-                case UPDATE_PROGRESS:
-                    LogUtils.Log("aaa","unzip_progress"+msg.arg1);
-                    progressBar.setProgress(msg.arg1);
-                    progressBar.invalidate();
-                    break;
-                case END_UNZIP:
-                    LogUtils.Log("aaa","END_UNZIP");
-                    downloadDialog.dismiss();
-                    break;
-                case FAILED_UNZIP:
-                    LogUtils.Log("aaa","FAILED_UNZIP");
-                    downloadDialog.dismiss();
-                    break;
-            }
-        }
-    };
     private Observable<Boolean> downDamicSoObservable;
+    private ZipResourceDownload zipResourceDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,7 +207,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
-        initDownDialog();
+        zipResourceDownload.initDownDialog();
         MobclickAgent.onResume(this);       //统计时长
         baseWebview.loadUrls(CwebNetConfig.pageInit);
         if (AppManager.isVisitor(baseContext) && 4 == currentPostion) { // 是游客模式
@@ -299,6 +265,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         mContentFragment = MainTabManager.getInstance().getFragmentByIndex(R.id.nav_left_first, code);
 
         code = getIntent().getIntExtra("code", 0);
+
+        zipResourceDownload = new ZipResourceDownload(this);
 
 //        initActionPoint();
 
@@ -359,105 +327,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             }
         }
-        if (!SoFileUtils.isLoadSoFile(this)) {
-            downloadSoFileOnce();
-        }
-    }
-
-    private void initDownDialog() {
-        if (null == downloadDialog) {
-            View view = View.inflate(this, R.layout.download_dialog_layout, null);
-            progressBar = (ProgressBar) view.findViewById(R.id.pb_download);
-            downloadDialog = new AlertDialog.Builder(this).setView(view).create();
-            Window window = downloadDialog.getWindow();
-            window.setGravity(Gravity.CENTER);
-            downloadDialog.setCancelable(false);
-            downloadDialog.setCanceledOnTouchOutside(false);
-        }
-    }
-
-    /**
-     * 下载需要动态加载的so文件
-     */
-    private void downloadSoFileOnce() {
-        initDownDialog();
-        File saveFile = FileUtils.createTempFile(Constant.SO_ZIP_NAME);
-        getPresenter().getSoFile(NetConfig.SoDown.DOWN_RUL,saveFile,new FileDownloadCallback(){
-            @Override
-            public void onStart() {
-                super.onStart();
-                LogUtils.Log("aaa","startdown");
-                downloadDialog.show();
-                progressBar.setProgress(1);
-                progressBar.invalidate();
-            }
-
-            @Override
-            public void onProgress(int progress, long networkSpeed) {
-                super.onProgress(progress, networkSpeed);
-                /** 因为会频繁的刷新,这里我只是进度>1%的时候才去显示 */
-                if (progress > lastProgress) {
-                    LogUtils.Log("aaa","down---lastProgress==="+lastProgress);
-                    lastProgress = progress;
-                    progressBar.setProgress(lastProgress);
-                    progressBar.invalidate();
-                }
-            }
-
-            @Override
-            public void onFailure() {
-                super.onFailure();
-                downloadDialog.dismiss();
-                LogUtils.Log("aaa","onFailure");
-            }
-
-            @Override
-            public void onDone() {
-                super.onDone();
-                downloadDialog.dismiss();
-                LogUtils.Log("aaa","onDone");
-                unZipSoFileToApp();
-            }
-        });
-    }
-
-    private void unZipSoFileToApp() {
-        File tempFile = FileUtils.getTempFile(Constant.SO_ZIP_NAME);
-        FileUtils.doUnzip(tempFile, new FileUtils.UnZipCallback() {
-            @Override
-            public void success() {
-
-            }
-
-            @Override
-            public void beginUnZip() {
-                Message msg = Message.obtain();
-                msg.obj=BEGIN_UNZIP;
-                handler.sendMessage(msg);
-            }
-
-            @Override
-            public void updateProgress(int progress) {
-                Message msg = Message.obtain();
-                msg.obj=UPDATE_PROGRESS;
-                msg.arg1=progress;
-                handler.sendMessage(msg);
-            }
-
-            @Override
-            public void endUnZip() {
-                Message msg = Message.obtain();
-                msg.obj=END_UNZIP;
-                handler.sendMessage(msg);
-            }
-
-            @Override
-            public void failed() {
-                Message msg = Message.obtain();
-                msg.obj=FAILED_UNZIP;
-                handler.sendMessage(msg);
-            }
-        });
+        zipResourceDownload.initZipResource();
     }
 
     private void jumpPushMessage() {
@@ -592,7 +462,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //        }
     }
 
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -683,7 +552,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             @Override
             protected void onEvent(Boolean aBoolean) {
                 if (aBoolean) {
-                    downloadSoFileOnce();
+                    zipResourceDownload.downloadSoFileOnce();
                 }
             }
 
@@ -696,13 +565,10 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         killstartObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-
-
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
             }
         });
         killObservable = RxBus.get().register(RxConstant.MAIN_PAGE_KILL, Integer.class);

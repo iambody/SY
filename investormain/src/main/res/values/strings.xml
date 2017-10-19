@@ -280,6 +280,7 @@
         <item>d9-app</item>
         <item>d10-app</item>
         <item>sim-app</item>
+        <item>app</item>
     </string-array>
 
     <string-array name="select_identify">
@@ -301,4 +302,5 @@
         <item>已通过</item>
         <item>已驳回</item>
     </string-array>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"http://app.simuyun.com\",\n  }\n}]</string>
 </resources>

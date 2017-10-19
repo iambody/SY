@@ -343,6 +343,9 @@ public class NetConfig {
 
         // 健康短信验证
         final static String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
+
+        // H5资源版本号
+        final static String HEALTH_RESOURCE_VERSION = API_URL + "/health/resourceVersion";
     }
 
     static class Discovery {

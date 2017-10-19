@@ -36,6 +36,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 import rx.Subscription;
@@ -848,4 +849,24 @@ interface RequestManager {
      */
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
+
+    /**
+     * 通用的Get请求接口
+     */
+    @GET("{address}")
+    Observable<ResponseBody> commonGetRequest(@Path("address") String url, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * 通用的Post请求接口
+     */
+    @POST("{address}")
+    Observable<ResponseBody> commonPostRequest(@Path("address") String url, @Body RequestBody requestBody);
+
+    /**
+     * 获取资源版本号
+     * @param paramsMap
+     * @return
+     */
+    @GET(NetConfig.Health.HEALTH_RESOURCE_VERSION)
+    Observable<ResponseBody> getResourceVersion(@QueryMap Map<String, String> paramsMap);
 }

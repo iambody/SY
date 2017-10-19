@@ -94,6 +94,35 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
+     * 获取本地资源版本号
+     *
+     * @param context
+     * @return
+     */
+    public static int getResouceVersion(Context context) {
+        return getBasePreference(context).getInt(RESOURCE_VERSION, 0);
+    }
+
+    /**
+     * 获取远程资源版本下载地址
+     *
+     * @param context
+     * @return
+     */
+    public static String getResouceDownloadAddress(Context context) {
+        return getBasePreference(context).getString(RESOURCE_DOWNLOAD_ADDRESS, "");
+    }
+
+    /**
+     * 是否有新的资源版本
+     * @param context
+     * @return
+     */
+    public static boolean getResouceVersionHas(Context context) {
+        return getBasePreference(context).getBoolean(RESOURCE_VERSION_HAS, false);
+    }
+
+    /**
      * 获取聊天类型－－产品分享需要用到
      *
      * @param context

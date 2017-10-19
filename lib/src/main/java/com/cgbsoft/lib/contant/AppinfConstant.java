@@ -53,6 +53,21 @@ public interface AppinfConstant {
     String CHAT_NAME = "chatName";
 
     /**
+     * 资源版本
+     */
+    String RESOURCE_VERSION = "resource_version";
+
+    /**
+     * 资源版本下载地址
+     */
+    String RESOURCE_DOWNLOAD_ADDRESS = "resource_download_address";
+
+    /**
+     * 是否有新的资源版本
+     */
+    String RESOURCE_VERSION_HAS = "resource_version_has";
+
+    /**
      * 未读消息
      */
     String UNREAD_INFOMATION = "unread_infomation";
