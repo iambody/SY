@@ -33,11 +33,9 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.encrypt.RSAUtils;
-import com.cgbsoft.lib.listener.listener.SoProgressListener;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import org.json.JSONArray;
@@ -1095,6 +1093,7 @@ public class ApiClient {
         map.put("user_id", userId);
         return OKHTTP.getInstance().getRequestManager().getAddressList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
     //设为默认地址
     public static Observable<String> setDefauleMallAddress(String userId, String id) {
         Map<String, String> map = new HashMap<>();
@@ -1117,7 +1116,7 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getProLiveList(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
-    public static Observable<String> loadRedPacket(String userId){
+    public static Observable<String> loadRedPacket(String userId) {
         Map<String, String> map = new ArrayMap<>();
         map.put("userId", userId);
         return OKHTTP.getInstance().getRequestManager().loadRedPacket(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -1316,7 +1315,7 @@ public class ApiClient {
     /**
      * 获取商学院外层的fragment的init全部数据
      */
-    public static Observable<String> videoSchoolAllInf(String userRole,String userType) {
+    public static Observable<String> videoSchoolAllInf(String userRole, String userType) {
         JSONObject js = new JSONObject();
         try {
             js.put("offset", 0);
@@ -1633,6 +1632,28 @@ public class ApiClient {
         params.put("credentialCode", credentialCode);
         return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
+
+    /**
+     * 获取活体检测的sign值
+     *
+     * @return
+     */
+
+    public static Observable<String> getLivingSing() {
+        Map<String, String> params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getLivingSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取ORC检测的sign值
+     *
+     * @return
+     */
+    public static Observable<String> getOcrSing() {
+        Map<String, String> params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getOcrSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
         JSONObject jsonObject = new JSONObject();

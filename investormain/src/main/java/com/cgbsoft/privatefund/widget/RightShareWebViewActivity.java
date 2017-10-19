@@ -5,7 +5,6 @@ import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.chenenyu.router.annotation.Route;
 import com.umeng.analytics.MobclickAgent;
@@ -16,7 +15,7 @@ import com.umeng.analytics.MobclickAgent;
 @Route(RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY)
 public class RightShareWebViewActivity extends BaseWebViewActivity {
 
-    CommonShareDialog commonShareDialog;
+//    CommonShareDialog commonShareDialog;
 
     @Override
     protected void before() {

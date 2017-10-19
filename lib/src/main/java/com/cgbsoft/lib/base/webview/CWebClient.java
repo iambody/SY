@@ -2,7 +2,6 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -58,7 +57,7 @@ public class CWebClient extends WebViewClient {
     public void setWebviewOnClick(WebviewOnClick webviewOnClick) {
         this.webviewOnClick = webviewOnClick;
     }
-
+    CWebviewManger cWebClient;
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
 //        return super.shouldOverrideUrlLoading(webView, s);
@@ -84,7 +83,8 @@ public class CWebClient extends WebViewClient {
                 /**
                  * 统一指令操作
                  */
-                CWebviewManger cWebClient = new CWebviewManger(curretnAtivity);
+                if(null==cWebClient)
+                  cWebClient = new CWebviewManger(curretnAtivity);
                 cWebClient.setWeb((BaseWebview) webView);
                 cWebClient.setAction(url);
             }

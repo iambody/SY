@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs' //this way we can find the .aar file in libs folder
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    //1. 云刷脸SDK
+    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
+    //2. 云OCR SDK
+    compile(name: 'WbCloudOcrSdk-proRelease-v1.0.5-80f4038', ext: 'aar')
+    //3. 云common SDK
+    compile(name: 'WbCloudNormal-release-v3.0.1-917d1de', ext: 'aar')
+    //4. 皮肤资源包-可选择黑色/白色 默认黑色
+    compile(name: 'WbCloudFaceResMidBlack-da5ace4', ext: 'aar')
+    //compile(name: 'WbCloudFaceResMidWhite-6c1b278', ext: 'aar')
+    compile project(':lib')
+}

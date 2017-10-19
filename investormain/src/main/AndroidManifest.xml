@@ -120,7 +120,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/appInvTheme"
-        tools:replace="android:label,android:icon, android:theme">
+        tools:replace="android:label,android:icon, android:theme,android:allowBackup">
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
@@ -290,7 +290,7 @@
         <!-- android:screenOrientation="portrait" /> -->
         <!-- 视频下载列表 -->
 
-
+        <activity android:name=".mvc.TestActivity" />
         <!-- 关联资产activity -->
         <activity
             android:name=".mvp.ui.home.RelativeAssetActivity"

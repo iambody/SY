@@ -39,7 +39,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import rx.Observable;
-import rx.Subscription;
 
 /**
  *  * Created by xiaoyu.zhang on 2016/11/7 16:14
@@ -781,10 +780,6 @@ interface RequestManager {
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
 
-    // 获取三级导航
-    @GET(NetConfig.NAVIGATION_THREE)
-    Observable<ResponseBody> getNavigationThird(@QueryMap Map<String, String> paramsMap);
-
     //签到
     @POST(NetConfig.SXY.SIGNIN)
     Observable<ResponseBody> sign(@Body RequestBody responseBody);
@@ -854,23 +849,16 @@ interface RequestManager {
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
 
-    /**
-     * 通用的Get请求接口
-     */
-    @GET("{address}")
-    Observable<ResponseBody> commonGetRequest(@Path("address") String url, @QueryMap Map<String, String> paramsMap);
+
 
     /**
-     * 通用的Post请求接口
+     * 活体检测获取sign
      */
-    @POST("{address}")
-    Observable<ResponseBody> commonPostRequest(@Path("address") String url, @Body RequestBody requestBody);
-
+    @GET(NetConfig.Compliance.COMPLIANCE_LIVING_SIGN)
+    Observable<ResponseBody> getLivingSign(@QueryMap Map<String, String> programObject);
     /**
-     * 获取资源版本号
-     * @param paramsMap
-     * @return
+     * orc获取sign
      */
-    @GET(NetConfig.Health.HEALTH_RESOURCE_VERSION)
-    Observable<ResponseBody> getResourceVersion(@QueryMap Map<String, String> paramsMap);
+    @GET(NetConfig.Compliance.COMPLIANCE_OCR_SIGN)
+    Observable<ResponseBody> getOcrSign(@QueryMap Map<String, String> programObject);
 }

@@ -39,7 +39,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
-import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DataStatisticsUtils;
 import com.cgbsoft.lib.utils.tools.JumpNativeUtil;
@@ -389,7 +388,7 @@ public class CWebviewManger {
             }
 
             if (context instanceof BaseWebViewActivity) {
-                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity)context;
+                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
                 if (!TextUtils.isEmpty(name)) {
                     baseWebViewActivity.modifyTitleName(name);
                 }
@@ -398,7 +397,7 @@ public class CWebviewManger {
                     RxBus.get().post(RxConstant.WEBVIEW_MODIFY_TITLE, name);
                 }
             }
-        }else if (action.contains("showTitleRightStr")){
+        } else if (action.contains("showTitleRightStr")) {
             showTitleRightStr(action);
         }
     }
@@ -409,7 +408,7 @@ public class CWebviewManger {
         }
     }
 
-    private void showTitleRightStr(String action){
+    private void showTitleRightStr(String action) {
         String urlcodeAction = null;
         try {
             urlcodeAction = URLDecoder.decode(action, "utf-8");
@@ -974,6 +973,8 @@ public class CWebviewManger {
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
 
+    //    CommonShareDialog commonShareDialog;
+    boolean isShowing;
 
     private void shareToC(String actionUrl) {
         String actionDecode = URLDecoder.decode(actionUrl);
@@ -990,11 +991,13 @@ public class CWebviewManger {
         boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
+        if (isShowing) return;
         CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
+
                 //分享微信朋友圈成功
-                if(actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
+                if (actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
                     if (!AppManager.isVisitor(context)) {
                         //自选页面分享朋友圈成功
                         TaskInfo.complentTask("分享资讯");
@@ -1010,9 +1013,17 @@ public class CWebviewManger {
                 if (isProductShare) {  // 产品分享需要获取云豆
                     TaskInfo.complentTask("分享产品");
                 }
+                isShowing = false;
+
+            }
+
+            @Override
+            public void cancleShare() {
+                isShowing = false;
             }
         });
         commonShareDialog.show();
+        isShowing=true;
     }
 
     private void backPage(String action) {
@@ -1528,37 +1539,37 @@ public class CWebviewManger {
                 actionUrl.contains(WebViewConstant.IntecepterActivity.HEALTH_SPECIAL) ||
                 actionUrl.contains(WebViewConstant.IntecepterActivity.PRODUCT_DETAIL)) {
 
-                String[] split = actionUrl.split(":");
-                String url = split[2];
-                String title = split[3];
-                if (url.startsWith("app6.0")) {
-                    url = "/" + url;
+            String[] split = actionUrl.split(":");
+            String url = split[2];
+            String title = split[3];
+            if (url.startsWith("app6.0")) {
+                url = "/" + url;
+            }
+            boolean isHasHttp = false;
+            if (url.contains("http")) {
+                url = split[2] + ":" + split[3];
+                if (split.length >= 5) {
+                    title = split[4];
+                    isHasHttp = true;
                 }
-                boolean isHasHttp = false;
-                if (url.contains("http")) {
-                    url = split[2] + ":" + split[3];
-                    if (split.length >= 5) {
-                        title = split[4];
-                        isHasHttp = true;
-                    }
-                } else {
-                    url = BaseWebNetConfig.SERVER_ADD + url;
-                }
-                HashMap<String, Object> hashMap = new HashMap<>();
+            } else {
+                url = BaseWebNetConfig.SERVER_ADD + url;
+            }
+            HashMap<String, Object> hashMap = new HashMap<>();
 
-                hashMap.put(WebViewConstant.push_message_url, url);
-                hashMap.put(WebViewConstant.push_message_title, title);
-                if (initPage) {
-                    String pushMessage = isHasHttp ? split[5] : split[4];
-                    hashMap.put(WebViewConstant.push_message_value, pushMessage);
-                }
-                hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
-                hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
-                hashMap.put(WebViewConstant.PAGE_INIT, initPage);
+            hashMap.put(WebViewConstant.push_message_url, url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            if (initPage) {
+                String pushMessage = isHasHttp ? split[5] : split[4];
+                hashMap.put(WebViewConstant.push_message_value, pushMessage);
+            }
+            hashMap.put(WebViewConstant.RIGHT_SAVE, rightSave);
+            hashMap.put(WebViewConstant.RIGHT_SHARE, rightShare);
+            hashMap.put(WebViewConstant.PAGE_INIT, initPage);
 
-                if (split.length >= (isHasHttp ? 6 : 5)) {
-                    hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
-                }
+            if (split.length >= (isHasHttp ? 6 : 5)) {
+                hashMap.put(WebViewConstant.PAGE_SHOW_TITLE, Boolean.valueOf(split[split.length - 1]));
+            }
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             return true;
         }
