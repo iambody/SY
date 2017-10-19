@@ -63,7 +63,6 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     private HealthSummaryAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private boolean isCheckHealth;
 
     /**
      * 类别的数据
@@ -115,44 +114,12 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     protected void create(Bundle Mybundle) {}
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (isCheckHealth) {
-            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JC);
-        } else {
-            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_YL);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isCheckHealth) {
-            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JC);
-        } else {
-            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_YL);
-        }
-    }
-
-    @Override
     protected HealthSummparyPresenter createPresenter() {
         return new HealthSummparyPresenter(getActivity(), this);
     }
 
     public void FreshAp(List<HealthListModel> healthListModelList, boolean isAdd) {
         checkHealthAdapter.refrushData(healthListModelList, !isAdd);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (isCheckHealth) {
-                DataStatistApiParam.operateHealthCheckClick();
-            } else {
-                DataStatistApiParam.operateHealthMedcialClick();
-            }
-        }
     }
 
     @Override

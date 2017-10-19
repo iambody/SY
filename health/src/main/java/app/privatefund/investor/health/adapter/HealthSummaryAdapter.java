@@ -53,7 +53,7 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.item_health_list, parent, false);
+        View view = layoutInflater.inflate(R.layout.list_item_health_project, parent, false);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
         return lsViewHolder;
@@ -64,7 +64,7 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         LsViewHolder lsViewHolder = (LsViewHolder) holder;
         lsViewHolder.itemView.setTag(position);
         HealthListModel healthListModel = listModelListdata.get(position);
-        Imageload.display(ApContext, healthListModel.getImageUrl(), 0, 0, 1, lsViewHolder.imageV, R.drawable.bg_default, R.drawable.bg_default);
+//        Imageload.display(ApContext, healthListModel.getImageUrl(), 0, 0, 1, lsViewHolder.imageV, R.drawable.bg_default, R.drawable.bg_default);
     }
 
     @Override

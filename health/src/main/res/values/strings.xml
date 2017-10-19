@@ -16,4 +16,10 @@
     <string name="please_input_phone">请输入手机号</string>
     <string name="please_input_validate">请填写验证码</string>
     <string name="empty_text_descrption">当前暂无%1$s</string>
+
+    <string name="effectPosition">作用部位：</string>
+    <string name="fitSymptom">适用症状：</string>
+    <string name="fitCrowd">适合人群：</string>
+    <string name="customComment">客户评价</string>
+    <string name="more">更多</string>
 </resources>

@@ -4,4 +4,16 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="health_item_title">
+        <item name="android:textSize">@dimen/ui_32_dip</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="health_item_subtitle">
+        <item name="android:textSize">@dimen/ui_20_dip</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
 </resources>

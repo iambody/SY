@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_ivl_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:id="@+id/item_project_image_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/health_item_title"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/health_title_id"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/health_item_subtitle"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/health_subTitle_id"/>
+    </RelativeLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="15dp"
+       android:gravity="center_vertical|left">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/effectPosition"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="@color/black"
+           android:textSize="@dimen/dimens_sp_16"
+           android:id="@+id/effectPosition"/>
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical|left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fitSymptom"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16"
+            android:id="@+id/fitSymptom"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical|left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fitCrowd"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16"
+            android:id="@+id/fitCrowd"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical|left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customComment"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/dimens_sp_16"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tv_gray"
+            android:textSize="@dimen/dimens_sp_16"
+            android:text="@string/more"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_right_arrow"/>
+    </LinearLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp">
+
+       <com.cgbsoft.lib.widget.RoundImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/custom_image_id"
+           android:src="@drawable/logo"
+           android:layout_marginRight="10dp"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@id/custom_image_id"
+           android:id="@+id/customFromPlatform"
+           android:textSize="@dimen/dimens_sp_16"
+           android:textColor="@color/black"
+           android:textStyle="bold"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toRightOf="@id/custom_image_id"
+           android:layout_below="@id/customFromPlatform"
+           android:layout_marginTop="5dp"
+           android:id="@+id/customComment"
+           android:textSize="@dimen/dimens_sp_16"
+           android:textColor="@color/black"/>
+
+   </RelativeLayout>
+
+</LinearLayout>
