@@ -1518,6 +1518,12 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getNavigation().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 获取全局三级导航
+     */
+    public static Observable<String> getNavigation(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getNavigationThird(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     /**
      * 私享云签到接口

@@ -781,6 +781,10 @@ interface RequestManager {
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
 
+    // 获取三级导航
+    @GET(NetConfig.NAVIGATION_THREE)
+    Observable<ResponseBody> getNavigationThird(@QueryMap Map<String, String> paramsMap);
+
     //签到
     @POST(NetConfig.SXY.SIGNIN)
     Observable<ResponseBody> sign(@Body RequestBody responseBody);

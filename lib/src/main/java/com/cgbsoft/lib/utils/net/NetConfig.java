@@ -86,6 +86,9 @@ public class NetConfig {
     //全局导航栏
     final static String NAVIGATION = API_URL_V3 + "/navigation";
 
+    // 全站三级导航
+    final static String NAVIGATION_THREE = API_URL_V3 + "/navigation/third";
+
     //红包雨
     final static String RED_PACKET = API_URL + "/redpacket";
 
