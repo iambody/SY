@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,8 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.ocrlib.com.LivingManger;
-import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.cardphoto.TestCardCamera;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,8 +79,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
-    //    @BindView(R.id.main_home_bannerview)
-//    RollPagerView mainHomeBannerview;
+
     @BindView(R.id.main_home_horizontalscrollview_lay)
     LinearLayout mainHomeHorizontalscrollviewLay;
     @BindView(R.id.main_home_horizontalscrollview)
@@ -342,18 +339,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        }
 //        DataStatistApiParam.homeClickNew();
 
-        LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
-            @Override
-            public void livingSucceed() {
-                Log.i("ssalslaklslksaklsakl", "成功了");
-            }
-
-            @Override
-            public void livingFailed() {
-
-            }
-        });
-        livingManger.startLivingMatch();
+//        LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
+//            @Override
+//            public void livingSucceed() {
+//                Log.i("ssalslaklslksaklsakl", "成功了");
+//            }
+//
+//            @Override
+//            public void livingFailed() {
+//
+//            }
+//        });
+//        livingManger.startLivingMatch();
+        baseActivity.startActivity(new Intent(baseActivity, TestCardCamera.class));
     }
 
 
