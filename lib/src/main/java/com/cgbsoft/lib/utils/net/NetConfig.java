@@ -346,6 +346,8 @@ public class NetConfig {
 
         final static String HEALTH_GET_URL = API_URL + "/health/commend";
 
+        final static String HEALTH_PROJECT_LIST = API_URL + "/health/healthprojectlist";
+
         final static String HEALTH_COURSE_GET_URL = API_URL + "/health/healthCourseList";
 
         // 健康免费资讯预约

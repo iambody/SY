@@ -17,6 +17,7 @@ import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
 import java.util.List;
 
+import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.adapter.HealthIntroduceFlagRecyclerAdapter;
 import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
@@ -36,7 +37,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @BindView(R2.id.webview)
     BaseWebview baseWebview;
-
 
     private String category;
     private LoadingDialog mLoadingDialog;

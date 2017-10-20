@@ -728,6 +728,10 @@ interface RequestManager {
     @GET(NetConfig.Health.HEALTH_GET_URL)
     Observable<ResponseBody> getHealthList(@QueryMap Map<String, String> paramsMap);
 
+    // 健康项目列表
+    @GET(NetConfig.Health.HEALTH_PROJECT_LIST)
+    Observable<ResponseBody> getHealthProjectList(@QueryMap Map<String, String> paramsMap);
+
     // 健康课程
     @GET(NetConfig.Health.HEALTH_COURSE_GET_URL)
     Observable<ResponseBody> getHealthCourseList(@QueryMap Map<String, String> paramsMap);
@@ -779,6 +783,10 @@ interface RequestManager {
     //获取全局导航
     @GET(NetConfig.NAVIGATION)
     Observable<ResponseBody> getNavigation();
+
+    //获取全局导航
+    @GET(NetConfig.NAVIGATION_THREE)
+    Observable<ResponseBody> getNavigationThird(@QueryMap Map<String, String> params);
 
     //签到
     @POST(NetConfig.SXY.SIGNIN)
@@ -849,8 +857,6 @@ interface RequestManager {
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
 
-
-
     /**
      * 活体检测获取sign
      */
@@ -861,4 +867,24 @@ interface RequestManager {
      */
     @GET(NetConfig.Compliance.COMPLIANCE_OCR_SIGN)
     Observable<ResponseBody> getOcrSign(@QueryMap Map<String, String> programObject);
+
+    /**
+     * 通用的Get请求接口
+     */
+    @GET("{address}")
+    Observable<ResponseBody> commonGetRequest(@Path("address") String url, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * 通用的Post请求接口
+     */
+    @POST("{address}")
+    Observable<ResponseBody> commonPostRequest(@Path("address") String url, @Body RequestBody requestBody);
+
+    /**
+     * 获取资源版本号
+     * @param paramsMap
+     * @return
+     */
+    @GET(NetConfig.Health.HEALTH_RESOURCE_VERSION)
+    Observable<ResponseBody> getResourceVersion(@QueryMap Map<String, String> paramsMap);
 }

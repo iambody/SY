@@ -15,7 +15,6 @@ import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -24,7 +23,6 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +33,7 @@ import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.adapter.HealthSummaryAdapter;
 import app.privatefund.investor.health.mvp.contract.HealthSummaryListContract;
 import app.privatefund.investor.health.mvp.model.HealthListModel;
+import app.privatefund.investor.health.mvp.model.HealthProjectListEntity;
 import app.privatefund.investor.health.mvp.presenter.HealthSummparyPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +69,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     private int CurrentPostion = 0;
     private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
+    private int total;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -78,7 +78,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     @Override
     protected void onFirstUserVisible() {
-        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目简介"));
+        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目"));
         checkHealthAdapter = new HealthSummaryAdapter(getActivity(), new ArrayList<>());
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
@@ -118,16 +118,21 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         return new HealthSummparyPresenter(getActivity(), this);
     }
 
-    public void FreshAp(List<HealthListModel> healthListModelList, boolean isAdd) {
+    public void FreshAp(List<HealthProjectListEntity.HealthProjectItemEntity> healthListModelList, boolean isAdd) {
         checkHealthAdapter.refrushData(healthListModelList, !isAdd);
     }
 
     @Override
     public void onLoadMore() {
-        CurrentPostion = CurrentPostion + 1;
-        isLoadMore = true;
-        getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-        DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        if (total != 0 && checkHealthAdapter.getItemCount() != 0 && checkHealthAdapter.getItemCount() < total) {
+            CurrentPostion = CurrentPostion + 1;
+            isLoadMore = true;
+            getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+            DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        } else {
+            Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
+            clodLsAnim(swipeToLoadLayout);
+        }
     }
 
     @Override
@@ -139,7 +144,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     }
 
     @Override
-    public void requestDataSuccess(List<HealthListModel> healthListModelList) {
+    public void requestDataSuccess(HealthProjectListEntity healthProjectListEntity) {
+        total = healthProjectListEntity.getTotal();
+        List<HealthProjectListEntity.HealthProjectItemEntity> healthProjectlist = healthProjectListEntity.getRows();
         if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
@@ -148,19 +155,19 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         }
 
-        if (CollectionUtils.isEmpty(healthListModelList) && !isLoadMore) {
+        if (CollectionUtils.isEmpty(healthProjectlist) && !isLoadMore) {
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.VISIBLE);
         } else {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
-            if (CollectionUtils.isEmpty(healthListModelList)) {
+            if (CollectionUtils.isEmpty(healthProjectlist)) {
                 Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             }
         }
 
         clodLsAnim(swipeToLoadLayout);
-        FreshAp(healthListModelList, isLoadMore);
+        FreshAp(healthProjectlist, isLoadMore);
         isLoadMore = false;
     }
 

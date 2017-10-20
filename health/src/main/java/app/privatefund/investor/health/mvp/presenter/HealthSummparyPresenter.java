@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.cgbsoft.lib.base.model.HealthEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -15,11 +14,8 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import app.privatefund.investor.health.mvp.contract.HealthSummaryListContract;
-import app.privatefund.investor.health.mvp.model.HealthListModel;
+import app.privatefund.investor.health.mvp.model.HealthProjectListEntity;
 
 /**
  * @author chenlong
@@ -35,27 +31,46 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
 
     @Override
     public void getHealthList(String offset) {
-        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
+//        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String s) {
+//                Log.d("HealthSummparyPresenter", "----"+ s.toString());
+//                try {
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    String vas = jsonObject.getString("result");
+//                    HealthEntity.Result Result = new Gson().fromJson(vas, new TypeToken<HealthEntity.Result>() {}.getType());
+//                    List<HealthEntity.Row> rows = Result.getRows();
+//                    List<HealthListModel> list = new ArrayList<>();
+//                    for (int i = 0; i < rows.size(); i++) {
+//                        HealthListModel model = new HealthListModel();
+//                        model.type = HealthListModel.BOTTOM;
+//                        model.setCode(rows.get(i).getCode());
+//                        model.setId(rows.get(i).getId());
+//                        model.setImageUrl(rows.get(i).getImageUrl());
+//                        model.setTitle(rows.get(i).getTitle());
+//                        model.setUrl(rows.get(i).getUrl());
+//                        list.add(model);
+//                    }
+//                    getView().requestDataSuccess(list);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                getView().requestDataFailure(error.getMessage());
+//            }
+//        }));
+        addSubscription(ApiClient.getHealthProjectList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.d("HealthSummparyPresenter", "----"+ s.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String vas = jsonObject.getString("result");
-                    HealthEntity.Result Result = new Gson().fromJson(vas, new TypeToken<HealthEntity.Result>() {}.getType());
-                    List<HealthEntity.Row> rows = Result.getRows();
-                    List<HealthListModel> list = new ArrayList<>();
-                    for (int i = 0; i < rows.size(); i++) {
-                        HealthListModel model = new HealthListModel();
-                        model.type = HealthListModel.BOTTOM;
-                        model.setCode(rows.get(i).getCode());
-                        model.setId(rows.get(i).getId());
-                        model.setImageUrl(rows.get(i).getImageUrl());
-                        model.setTitle(rows.get(i).getTitle());
-                        model.setUrl(rows.get(i).getUrl());
-                        list.add(model);
-                    }
-                    getView().requestDataSuccess(list);
+                    HealthProjectListEntity Result = new Gson().fromJson(vas, new TypeToken<HealthProjectListEntity>() {}.getType());
+                    getView().requestDataSuccess(Result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

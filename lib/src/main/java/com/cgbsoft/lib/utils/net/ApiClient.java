@@ -1384,6 +1384,13 @@ public class ApiClient {
     }
 
     /**
+     * 健康列表
+     */
+    public static Observable<String> getHealthProjectList(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getHealthProjectList(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 健康课程
      *
      * @param hashMap
