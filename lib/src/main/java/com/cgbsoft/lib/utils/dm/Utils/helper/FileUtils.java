@@ -287,14 +287,37 @@ public class FileUtils {
         } else {
             file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
         }
-
+            
         return file;
     }
 
     /**
+     * 找出指定文件在目录下的全路径
+     * @param dir
+     * @param fileName
+     * @return
+     */
+    public static String isExsitFileInFileDir(String dir, String fileName) {
+        String resultPath = "";
+        if (!TextUtils.isEmpty(dir)) {
+            File dirFile = new File(dir);
+            File[] files = dirFile.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (!files[i].isDirectory()) {
+                    String name = files[i].getName();
+                    if (TextUtils.equals(name, fileName)) {
+                        resultPath = files[i].getAbsolutePath();
+                        break;
+                    }
+                }
+            }
+        }
+        return resultPath;
+    }
+
+    /**
      * 删除文件或文件夹
-     *
-     * @param file
+     * @param
      */
     public static void deleteDir(File file) {
         if (null == file || !file.exists()) {

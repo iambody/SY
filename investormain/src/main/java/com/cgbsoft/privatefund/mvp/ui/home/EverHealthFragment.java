@@ -34,7 +34,6 @@ import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import app.privatefund.investor.health.mvp.ui.HealthSummaryFragment;
-import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragmentTest;
 
 /**

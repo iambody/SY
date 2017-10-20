@@ -254,6 +254,7 @@ public class ZipResourceDownload {
                 Message msg = Message.obtain();
                 msg.obj=END_UNZIP;
                 handler.sendMessage(msg);
+                saveZipFile.delete();
                 initSoFile();
             }
 
@@ -262,6 +263,7 @@ public class ZipResourceDownload {
                 Message msg = Message.obtain();
                 msg.obj=FAILED_UNZIP;
                 handler.sendMessage(msg);
+                saveZipFile.delete();
                 initSoFile();
             }
         });

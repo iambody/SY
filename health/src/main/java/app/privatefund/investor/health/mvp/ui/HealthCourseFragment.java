@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -46,34 +48,39 @@ import rx.Observable;
  */
 public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter> implements HealthCourseListContract.View, OnLoadMoreListener, OnRefreshListener {
 
-    @BindView(R2.id.swipe_refresh_header)
-    CustomRefreshHeadView swipeRefreshHeader;
-    @BindView(R2.id.swipe_target)
-    RecyclerView swipeTarget;
-    @BindView(R2.id.swipe_load_more_footer)
-    CustomRefreshFootView swipeLoadMoreFooter;
-    @BindView(R2.id.swipeToLoadLayout)
-    SwipeToLoadLayout swipeToLoadLayout;
-    @BindView(R2.id.empty_textview)
-    TextView emptyTextView;
-    @BindView(R2.id.empty_ll)
-    LinearLayout emptyLinearlayout;
-    private Observable<Boolean> rerushListObservable;
-    private HealthCourseEntity.HealthCourseListModel currentListModel;
-
     public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
     public static final int REQUEST_BACK_CODE = 10;
+    private static int LIMIT_PAGE = 20;
+
+    @BindView(R2.id.swipe_refresh_header)
+    CustomRefreshHeadView swipeRefreshHeader;
+
+    @BindView(R2.id.swipe_target)
+    RecyclerView swipeTarget;
+
+    @BindView(R2.id.swipe_load_more_footer)
+    CustomRefreshFootView swipeLoadMoreFooter;
+
+    @BindView(R2.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
+    @BindView(R2.id.empty_textview)
+    TextView emptyTextView;
+
+    @BindView(R2.id.empty_ll)
+    LinearLayout emptyLinearlayout;
+
     @BindView(R2.id.fragment_videoschool_noresult_lay)
     RelativeLayout fragmentVideoschoolNoresultLay;
 
+    private Observable<Boolean> rerushListObservable;
+    private HealthCourseEntity.HealthCourseListModel currentListModel;
     private HealthCourseAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
-
     /**
      * 类别的数据
      */
     private int CurrentPostion = 0;
-    private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
     private int totalCount;
 
@@ -92,7 +99,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
         swipeTarget.setLayoutManager(linearLayoutManager);
         swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
-            HashMap<String ,Object> hashMap = new HashMap<>();
+            HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getShortName());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getDetailUrl()).concat("?id=").concat(discoveryListModel.getId()));
             NavigationUtils.startActivityForResultByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap, REQUEST_BACK_CODE);
@@ -121,19 +128,24 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     }
 
     @Override
-    protected void onUserVisible() {}
+    protected void onUserVisible() {
+    }
 
     @Override
-    protected void onUserInvisible() {}
+    protected void onUserInvisible() {
+    }
 
     @Override
-    protected void DetoryViewAndThing() {}
+    protected void DetoryViewAndThing() {
+    }
 
     @Override
-    protected void initViewsAndEvents(View view) {}
+    protected void initViewsAndEvents(View view) {
+    }
 
     @Override
-    protected void create(Bundle Mybundle) {}
+    protected void create(Bundle Mybundle) {
+    }
 
     @Override
     public void onPause() {
