@@ -881,10 +881,9 @@ interface RequestManager {
     Observable<ResponseBody> commonPostRequest(@Path("address") String url, @Body RequestBody requestBody);
 
     /**
-     * 获取资源版本号
-     * @param paramsMap
-     * @return
+     * 获取资源文件的相关信息
+     * @param
      */
-    @GET(NetConfig.Health.HEALTH_RESOURCE_VERSION)
-    Observable<ResponseBody> getResourceVersion(@QueryMap Map<String, String> paramsMap);
+    @GET(NetConfig.RESOURCE_FILE_INFO)
+    Observable<ResponseBody> requestResourceInfo();
 }

@@ -96,7 +96,7 @@ public class BaseApplication extends MultiDexApplication {
     private void initX5Webview() {
         //x5内核初始化接口
         try {
-            QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
                 @Override
                 public void onCoreInitFinished() {
 

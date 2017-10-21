@@ -29,8 +29,6 @@ import butterknife.BindView;
  * @author chenlong
  */
 public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePresenter> implements HealthIntroduceContract.View {
-//    @BindView(R2.id.ll_category_all)
-//    LinearLayout categoryAll;
 
     @BindView(R2.id.health_introduce_rv)
     RecyclerView recyclerView;

@@ -94,13 +94,13 @@ public class AppManager implements AppinfConstant {
     }
 
     /**
-     * 获取本地资源版本号
+     * 获取本地资源文件名称
      *
      * @param context
      * @return
      */
-    public static int getResouceVersion(Context context) {
-        return getBasePreference(context).getInt(RESOURCE_VERSION, 0);
+    public static String getResouceZipFileName(Context context) {
+        return getBasePreference(context).getString(RESOURCE_ZIP_FILE, "");
     }
 
     /**

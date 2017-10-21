@@ -66,4 +66,10 @@ public class InvestorAppli extends BaseApplication {
     public void setServerDatahashMap(HashMap<String, String> serverDatahashMap) {
         this.serverDatahashMap = serverDatahashMap;
     }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        serverDatahashMap.clear();
+    }
 }

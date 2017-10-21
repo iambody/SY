@@ -8,13 +8,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/6-19:17
  */
-public class HealthItemDecoration extends RecyclerView.ItemDecoration{
+public class HealthItemDecoration extends RecyclerView.ItemDecoration {
 
     protected Drawable divider;
     protected int margin ;

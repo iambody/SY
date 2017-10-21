@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.bodys.FileDownloadCallback;
 import com.cgbsoft.lib.bodys.FileDownloadTask;
 import com.cgbsoft.lib.utils.SoFileUtils;
@@ -37,6 +39,7 @@ public class ZipResourceDownload {
     private int lastProgress = 0;
     private ProgressBar progressBar;
     private AlertDialog downloadDialog;
+    private static final int UPDATE_RESOURCE_ZIP_DIALOG = 2;
 
     public ZipResourceDownload(Context context) {
         this.context = context;
@@ -62,10 +65,16 @@ public class ZipResourceDownload {
                 case END_UNZIP:
                     LogUtils.Log("aaa","END_UNZIP");
                     downloadDialog.dismiss();
+                    if (msg.arg2 == UPDATE_RESOURCE_ZIP_DIALOG) {
+                        initSoFile();
+                    }
                     break;
                 case FAILED_UNZIP:
                     LogUtils.Log("aaa","FAILED_UNZIP");
                     downloadDialog.dismiss();
+                    if (msg.arg2 == UPDATE_RESOURCE_ZIP_DIALOG) {
+                        initSoFile();
+                    }
                     break;
             }
         }
@@ -150,7 +159,8 @@ public class ZipResourceDownload {
      */
     private void unZipSoFileToApp() {
         File tempFile = FileUtils.getTempFile(Constant.SO_ZIP_NAME);
-        FileUtils.doUnzip(tempFile, new FileUtils.UnZipCallback() {
+        File targetDir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
+        FileUtils.doUnzip(tempFile, targetDir, Constant.SO_ZIP_NAME, "dynamic", new FileUtils.UnZipCallback() {
             @Override
             public void success() {
             }
@@ -175,6 +185,7 @@ public class ZipResourceDownload {
                 Message msg = Message.obtain();
                 msg.obj=END_UNZIP;
                 handler.sendMessage(msg);
+                System.out.println("--------down  upSoResourceFile success");
             }
 
             @Override
@@ -182,6 +193,7 @@ public class ZipResourceDownload {
                 Message msg = Message.obtain();
                 msg.obj=FAILED_UNZIP;
                 handler.sendMessage(msg);
+                System.out.println("--------down  upSoResourceFile failure");
             }
         });
     }
@@ -216,6 +228,8 @@ public class ZipResourceDownload {
                 public void onFailure() {
                     super.onFailure();
                     downloadDialog.dismiss();
+                    AppInfStore.saveResourceFileName(context, "");
+                    saveZipFile.delete();
                     initSoFile();
                 }
 
@@ -225,6 +239,7 @@ public class ZipResourceDownload {
                     unZipResourceFile();
                 }
             });
+            task.execute();
         }
     }
 
@@ -232,40 +247,90 @@ public class ZipResourceDownload {
      * 解压H5zip资源文件
      */
     private void unZipResourceFile() {
-        File saveZipFile = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, Constant.RESOURCE_ZIP_NAME);
-        ZipUtils.unZipFileAtAnyPath(saveZipFile.getPath(), new ZipUtils.ZipAction() {
-            @Override
-            public void star() {
-                Message msg = Message.obtain();
-                msg.obj = BEGIN_UNZIP;
-                handler.sendMessage(msg);
-            }
+        File upZipFile = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, Constant.RESOURCE_ZIP_NAME);
+        System.out.println("--------down  upZipResourceFile start=" + upZipFile.getPath());
+        if (upZipFile != null || upZipFile.exists()) {
+//            ZipUtils.unZipFileAtAnyPath(upZipFile.getPath(), new ZipUtils.ZipAction() {
+//                @Override
+//                public void star() {
+//                    Message msg = Message.obtain();
+//                    msg.obj = BEGIN_UNZIP;
+//                    handler.sendMessage(msg);
+//                }
+//
+//                @Override
+//                public void updateProgress(int progerss) {
+//                    Message msg = Message.obtain();
+//                    msg.obj = UPDATE_PROGRESS;
+//                    msg.arg1 = progerss;
+//                    handler.sendMessage(msg);
+//                }
+//
+//                @Override
+//                public void end() {
+//                    Message msg = Message.obtain();
+//                    msg.obj=END_UNZIP;
+//                    handler.sendMessage(msg);
+//                    upZipFile.delete();
+//                    System.out.println("--------down  upZipResourceFile success");
+//                    initSoFile();
+//                }
+//
+//                @Override
+//                public void error() {
+//                    Message msg = Message.obtain();
+//                    msg.obj = FAILED_UNZIP;
+//                    handler.sendMessage(msg);
+//                    upZipFile.delete();
+//                    AppInfStore.saveResourceFileName(context, "");
+//                    System.out.println("--------down  upZipResourceFile error");
+//                    initSoFile();
+//                }
+//            });
+            File targetDir = BaseApplication.getContext().getDir(Constant.HEALTH_ZIP_DIR, Context.MODE_PRIVATE);
+            FileUtils.doUnzip(upZipFile, targetDir, Constant.RESOURCE_ZIP_NAME, Constant.HEALTH_ZIP_DIR, new FileUtils.UnZipCallback() {
+                @Override
+                public void success() {
+                }
 
-            @Override
-            public void updateProgress(int progerss) {
-                Message msg = Message.obtain();
-                msg.obj = UPDATE_PROGRESS;
-                msg.arg1 = progerss;
-                handler.sendMessage(msg);
-            }
+                @Override
+                public void beginUnZip() {
+                    Message msg = Message.obtain();
+                    msg.obj=BEGIN_UNZIP;
+                    msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
+                    handler.sendMessage(msg);
+                }
 
-            @Override
-            public void end() {
-                Message msg = Message.obtain();
-                msg.obj=END_UNZIP;
-                handler.sendMessage(msg);
-                saveZipFile.delete();
-                initSoFile();
-            }
+                @Override
+                public void updateProgress(int progress) {
+                    Message msg = Message.obtain();
+                    msg.obj=UPDATE_PROGRESS;
+                    msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
+                    msg.arg1=progress;
+                    handler.sendMessage(msg);
+                }
 
-            @Override
-            public void error() {
-                Message msg = Message.obtain();
-                msg.obj=FAILED_UNZIP;
-                handler.sendMessage(msg);
-                saveZipFile.delete();
-                initSoFile();
-            }
-        });
+                @Override
+                public void endUnZip() {
+                    Message msg = Message.obtain();
+                    msg.obj = END_UNZIP;
+                    msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
+                    handler.sendMessage(msg);
+                    upZipFile.delete();
+                    System.out.println("--------down  upZipResourceFile success");
+                }
+
+                @Override
+                public void failed() {
+                    Message msg = Message.obtain();
+                    msg.obj = FAILED_UNZIP;
+                    msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
+                    handler.sendMessage(msg);
+                    upZipFile.delete();
+                    AppInfStore.saveResourceFileName(context, "");
+                    System.out.println("--------down  upZipResourceFile error");
+                }
+            });
+        }
     }
 }

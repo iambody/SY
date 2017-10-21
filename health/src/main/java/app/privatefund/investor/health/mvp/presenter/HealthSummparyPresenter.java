@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
@@ -94,7 +95,8 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
      * @return
      */
     public String getLocalHealthModelPath() {
-        File resourceDir = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, "");
+//        File resourceDir = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, "");
+        File resourceDir = BaseApplication.getContext().getDir(Constant.HEALTH_ZIP_DIR, Context.MODE_PRIVATE);
         return FileUtils.isExsitFileInFileDir(resourceDir.getPath(), PRE_HEALTH_MODEL);
     }
 }

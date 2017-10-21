@@ -86,7 +86,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.fragment_health_summary_list;
+        return R.layout.fragment_health_course_list;
     }
 
     @Override

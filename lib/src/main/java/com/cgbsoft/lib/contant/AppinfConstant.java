@@ -53,9 +53,9 @@ public interface AppinfConstant {
     String CHAT_NAME = "chatName";
 
     /**
-     * 资源版本
+     * 资源文件名称
      */
-    String RESOURCE_VERSION = "resource_version";
+    String RESOURCE_ZIP_FILE = "resource_zip_file";
 
     /**
      * 资源版本下载地址

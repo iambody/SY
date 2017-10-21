@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -251,24 +252,22 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
     }
 
     /**
-     * 获取资源版本号
+     * 获取资源版
      */
     @Override
-    public void getResourceVersion() {
-        int currentVersion = AppManager.getResouceVersion(getContext());
-        addSubscription(ApiClient.getH5ResouceVersion(ApiBusParam.getResourceVersion(String.valueOf(currentVersion))).subscribe(new RxSubscriber<String>() {
+    public void requestResourceInfo() {
+        addSubscription(ApiClient.getH5ResourceFileInfo().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String json) {
                 try {
                     System.out.println("------getResourceVersion--reulst=" + json);
                     JSONObject jsonObject = new JSONObject(json);
-                    JSONObject result = jsonObject.getJSONObject("result");
-                    int version = result.getInt("version");
-                    String apKUrl = result.getString("zipUrl");
-                    boolean hasNewResource = AppManager.getResouceVersion(getContext()) < version;
-                    AppInfStore.saveResourceVersion(getContext(), version);
+                    String zipFIleName = jsonObject.getString("zipName");
+                    String zipUrl = jsonObject.getString("downloadUrl");
+                    boolean hasNewResource = !TextUtils.equals(zipFIleName, AppManager.getResouceZipFileName(getContext()));
                     AppInfStore.saveResourceVersionHas(getContext(), hasNewResource);
-                    AppInfStore.saveResourceDownloadAddress(getContext(), apKUrl);
+                    AppInfStore.saveResourceFileName(getContext(), zipFIleName);
+                    AppInfStore.saveResourceDownloadAddress(getContext(), zipUrl);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

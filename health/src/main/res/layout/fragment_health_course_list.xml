@@ -25,7 +25,10 @@
                 android:id="@+id/swipe_target"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff"/>
+                android:background="#ffffff"
+                android:paddingBottom="1dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
 
             <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView
                 android:id="@+id/swipe_load_more_footer"

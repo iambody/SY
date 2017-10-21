@@ -246,7 +246,7 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
-    /**
+    /**.
      * 保存聊天名称 －－产品分享需要用到
      *
      * @param context
@@ -259,13 +259,13 @@ public class AppInfStore implements AppinfConstant {
     }
 
     /**
-     * 保存资源版本号
+     * 保存资源Zip文件名称
      *
      * @param context
      */
-    public static void saveResourceVersion(Context context, int resourceVersion) {
+    public static void saveResourceFileName(Context context, String resourceFileName) {
         SharedPreferences.Editor ed = getBasePreference(context).edit();
-        ed.putInt(RESOURCE_VERSION, resourceVersion);
+        ed.putString(RESOURCE_ZIP_FILE, resourceFileName);
         ed.commit();
     }
 

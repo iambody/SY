@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="15dp">
+    android:padding="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             android:id="@+id/item_project_image_id"/>
 
         <TextView
@@ -44,13 +42,13 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
+           style="@style/health_item_detail"
            android:text="@string/effectPosition"/>
 
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:textColor="@color/black"
-           android:textSize="@dimen/dimens_sp_16"
+           style="@style/health_item_detail"
            android:id="@+id/effectPosition"/>
    </LinearLayout>
 
@@ -63,13 +61,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/health_item_detail"
             android:text="@string/fitSymptom"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimens_sp_16"
+            style="@style/health_item_detail"
             android:id="@+id/fitSymptom"/>
     </LinearLayout>
 
@@ -83,13 +81,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/health_item_detail"
             android:text="@string/fitCrowd"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimens_sp_16"
+            style="@style/health_item_detail"
             android:id="@+id/fitCrowd"/>
     </LinearLayout>
 
@@ -104,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/customComment"
+            android:layout_weight="1"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="@dimen/dimens_sp_16"/>
@@ -111,8 +110,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/tv_gray"
-            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_14"
             android:text="@string/more"
             android:layout_marginRight="10dp"/>
 
@@ -128,8 +127,8 @@
        android:layout_marginTop="10dp">
 
        <com.cgbsoft.lib.widget.RoundImageView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+           android:layout_width="45dp"
+           android:layout_height="45dp"
            android:id="@+id/custom_image_id"
            android:src="@drawable/logo"
            android:layout_marginRight="10dp"/>
@@ -139,7 +138,7 @@
            android:layout_height="wrap_content"
            android:layout_toRightOf="@id/custom_image_id"
            android:id="@+id/customFromPlatform"
-           android:textSize="@dimen/dimens_sp_16"
+           android:textSize="@dimen/dimens_sp_15"
            android:textColor="@color/black"
            android:textStyle="bold"/>
 

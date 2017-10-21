@@ -22,7 +22,7 @@ public interface WelcomeContract {
 
         void getNavigation();
 
-        void getResourceVersion();
+        void requestResourceInfo();
     }
 
     interface View extends BaseView {

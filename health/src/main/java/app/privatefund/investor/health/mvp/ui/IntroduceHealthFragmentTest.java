@@ -25,20 +25,15 @@ public class IntroduceHealthFragmentTest extends BaseFragment{
     }
 
     @Override
-    protected void init(View view, Bundle savedInstanceState) {
-
-    }
+    protected void init(View view, Bundle savedInstanceState) {}
 
     @Override
     protected BasePresenterImpl createPresenter() {
         return null;
     }
 
-
     @Override
     protected void loadData() {
-        baseWebview.loadUrl("file:///android_asset/health/healthConsultation2.html?params=chenlong");
+        baseWebview.loadUrl("file:///android_asset/health/testhealth.html");
     }
-
-
 }

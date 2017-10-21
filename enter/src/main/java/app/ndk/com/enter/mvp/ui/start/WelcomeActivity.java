@@ -144,7 +144,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         if (getPresenter() == null) {
             setPresenter();
         }
-        getPresenter().getResourceVersion();
+        getPresenter().requestResourceInfo();
         getPresenter().createFinishObservable();
         getPresenter().toInitInfo();
         getPresenter().getMyLocation();

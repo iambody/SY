@@ -287,7 +287,7 @@ public class FileUtils {
         } else {
             file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
         }
-            
+
         return file;
     }
 
@@ -302,12 +302,21 @@ public class FileUtils {
         if (!TextUtils.isEmpty(dir)) {
             File dirFile = new File(dir);
             File[] files = dirFile.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                if (!files[i].isDirectory()) {
-                    String name = files[i].getName();
-                    if (TextUtils.equals(name, fileName)) {
-                        resultPath = files[i].getAbsolutePath();
-                        break;
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        String subResult = isExsitFileInFileDir(file.getAbsolutePath(), fileName);
+                         if (!TextUtils.isEmpty(subResult)) {
+                             resultPath = subResult;
+                         }
+                    }
+                    if (file.exists()) {
+                        String name = file.getName();
+                        System.out.println("-----down  name="  +name);
+                        if (TextUtils.equals(name, fileName)) {
+                            resultPath = file.getAbsolutePath();
+                            break;
+                        }
                     }
                 }
             }
@@ -364,7 +373,7 @@ public class FileUtils {
         return file;
     }
 
-    public static void doUnzip(final File origiFile, final UnZipCallback callBack) {
+    public static void doUnzip(final File origiFile, File targetFile, String fileName, String dirName, final UnZipCallback callBack) {
 //        File h5Res = new File(MyApplication.getInstance().getH5NativePath());
 //        FileUtil.deleteDir(h5Res);
         new Thread(new Runnable() {
@@ -375,8 +384,9 @@ public class FileUtils {
                 BufferedOutputStream bos = null;
                 InputStream fileDescriptor = null;
                 int BUFFER = 10240;
-                File dir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
-                zipFile = new File(dir.getParent() , Constant.SO_ZIP_NAME);
+                zipFile = new File(targetFile.getParent() , fileName);
+//                File dir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
+//                zipFile = new File(dir.getParent() , Constant.SO_ZIP_NAME);
                 try {
 //                    if (null == origiFile || !origiFile.exists()) {
 //                        fileDescriptor = MyApplication.getInstance().getResources().getAssets().open("home.zip");
@@ -396,7 +406,7 @@ public class FileUtils {
                     return;
                 }
                 try {
-                    ZipUtils.unzip(zipFile, new ZipUtils.ZipAction() {
+                    ZipUtils.unzip(zipFile, dirName, new ZipUtils.ZipAction() {
                         @Override
                         public void star() {
                             callBack.beginUnZip();

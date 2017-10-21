@@ -1468,12 +1468,11 @@ public class ApiClient {
     }
 
     /**
-     * 资源版本号
-     * @param params 本地当前版本号参数
+     * 资源文件的相关信息
      * @return
      */
-    public static Observable<String> getH5ResouceVersion(HashMap<String, String> params) {
-        return OKHTTP.getInstance().getRequestManager().getResourceVersion(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> getH5ResourceFileInfo() {
+        return OKHTTP.getInstance().getRequestManager().requestResourceInfo().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1527,7 +1526,7 @@ public class ApiClient {
     /**
      * 获取全局三级导航
      */
-    public static Observable<String> getNavigation(HashMap hashMap) {
+    public static Observable<String> getNavigationThird(HashMap hashMap) {
         return OKHTTP.getInstance().getRequestManager().getNavigationThird(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 

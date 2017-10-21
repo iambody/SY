@@ -97,7 +97,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_15_dip));
+        swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_1_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);

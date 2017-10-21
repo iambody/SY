@@ -152,9 +152,9 @@ public class ApiBusParam {
         return hashMap;
     }
 
-    public static HashMap getResourceVersion(String currentVersion) {
-        HashMap hashMap = new HashMap<>();
-        hashMap.put("version", currentVersion);
+    public static HashMap<String, String> getNavigationThird(String code) {
+        HashMap hashMap = new HashMap();
+        hashMap.put("code", code);
         return hashMap;
     }
 

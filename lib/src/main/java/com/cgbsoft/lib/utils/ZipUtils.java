@@ -30,8 +30,8 @@ public class ZipUtils {
      *
      * @param zipFile
      */
-    public static void unzip(File zipFile, ZipAction callback) throws Exception {
-        File dirPath = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
+    public static void unzip(File zipFile, String dirName, ZipAction callback) throws Exception {
+        File dirPath = BaseApplication.getContext().getDir(dirName, Context.MODE_PRIVATE);
         File[] files = dirPath.listFiles();
         if (null != files) {
             FileUtils.deleteDir(dirPath);
@@ -164,7 +164,9 @@ public class ZipUtils {
                     outputStream.flush();
                     outputStream.close();
                     inputStream.close();
-                    callBack.end();
+                    if (callBack != null) {
+                        callBack.end();
+                    }
                 }
             }
             zipFile.close();
@@ -173,10 +175,6 @@ public class ZipUtils {
             e.printStackTrace();
             if (callBack != null) {
                 callBack.error();
-            }
-        } finally {
-            if (callBack != null) {
-                callBack.end();
             }
         }
         return false;

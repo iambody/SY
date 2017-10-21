@@ -119,7 +119,7 @@ public interface Constant {
     //证件上传
     public static final String UPLOAD_INDENTITY_TYPE = "indentity/";
 
-    public static final String HEALTH_ZIP_DIR = "health/";
+    public static final String HEALTH_ZIP_DIR = "health";
 
     // 手势密码
     public static final int POINT_STATE_NORMAL = 0;
