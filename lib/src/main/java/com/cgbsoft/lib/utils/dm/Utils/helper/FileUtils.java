@@ -308,9 +308,9 @@ public class FileUtils {
                         String subResult = isExsitFileInFileDir(file.getAbsolutePath(), fileName);
                          if (!TextUtils.isEmpty(subResult)) {
                              resultPath = subResult;
+                             break;
                          }
-                    }
-                    if (file.exists()) {
+                    } else {
                         String name = file.getName();
                         System.out.println("-----down  name="  +name);
                         if (TextUtils.equals(name, fileName)) {
