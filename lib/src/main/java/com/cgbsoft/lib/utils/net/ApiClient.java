@@ -1456,14 +1456,14 @@ public class ApiClient {
     /**
      * Common Get Request
      */
-    public static Observable<String> getCommonGetRequest(String url, HashMap<String, String> params) {
-        return OKHTTP.getInstance().getRequestManager().commonGetRequest(url, createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> getCommonGetRequest(String url, HashMap params) {
+        return OKHTTP.getInstance().getRequestManager().commonGetRequest(url, createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
      * Commone Post Request
      */
-    public static Observable<String> getCommonPostRequest(String url, HashMap<String, String> params) {
+    public static Observable<String> getCommonPostRequest(String url, HashMap params) {
         return OKHTTP.getInstance().getRequestManager().commonPostRequest(url, mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 

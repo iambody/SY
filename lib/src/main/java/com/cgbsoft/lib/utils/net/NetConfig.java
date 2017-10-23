@@ -281,7 +281,7 @@ public class NetConfig {
     public static String systemRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/system.png";
 
     // 获取资源文件的相关信息
-    public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
+    public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig1.json";
 
     //视频相关模块
     static class VIDEO {

@@ -202,47 +202,105 @@ function sendCommand() {
 window.scrollTo(0, 0);
 
 //==================================================[其他设置]
-Request.options.minTime = 400;
-
 var _Request = Request;
 Request = function(url, options) {
-    options = options || {};
-    var token = cookie.getItem('token');
-    var uid = cookie.getItem('uid');
-    var client = cookie.getItem('client');
-    var mid = cookie.getItem('mid');
-    var version = cookie.getItem('version');
+    this.options = options || {};
+    this.url = url;
 
-    var defaultOptions = {};
-    defaultOptions.headers = {
-        'Accept': '*/*',
-        'token': token,
-        'adviserId': uid,
-        'mid': mid,
-        'version': version
-    };
+    var protocol = location.protocol;
+    if (protocol === 'file:') { //本地直接调用
+        JSEventTarget.create(this);
+    } else if (protocol === 'http:' || protocol === 'https:') { //通过URL调用
+        var token = cookie.getItem('token');
+        var uid = cookie.getItem('uid');
+        var client = cookie.getItem('client');
+        var mid = cookie.getItem('mid');
+        var version = cookie.getItem('version');
 
-    Object.mixin(options, defaultOptions);
+        var defaultOptions = {};
+        defaultOptions.headers = {
+            'Accept': '*/*',
+            'token': token,
+            'adviserId': uid,
+            'mid': mid,
+            'version': version
+        };
 
-    if (!!client) {
-        options.headers['client'] = client;
+        Object.mixin(options, defaultOptions);
+
+        if (!!client) {
+            options.headers['client'] = client;
+        }
+
+        options.contentType = options.contentType || 'application/json';
+        options.maxTime = 15000;
+
+        var _request = new _Request(url, options);
+        _request.on('timeout', function() {
+            if (token) {
+//                    sendCommand('toastError', '当前网络信号较弱，页面打开较慢，请您耐心等待或返回重试');
+            }
+        });
+
+        return _request;
+    } else {
+    }
+};
+
+Request.prototype.send = function(data) {
+    var userAgent = navigator.userAgent;
+    var options = this.options;
+    var url = this.url;
+    var method = options.method;
+    method = method.toUpperCase();
+
+    var dataPackage;
+    if (method === 'POST') {
+        dataPackage = JSON.stringify(data);
+    } else if (method === 'GET') {
+        dataPackage = data.param || {}
+    } else {
+        dataPackage = {}
     }
 
-    options.headers['client'] = 'C';
+    var self = this;
 
-    // options.headers['adviserId'] = "4aa0e114b8fb471d9008d57df747fcad";
-    // options.headers['token'] = "2UXJbGtgdmVUpk3CdqREVzUB5+uWq2hHhgt6gfNoZRb7SgPHDXm4VIy4ElY+hJWOj0hb9XgPcHCe/8HgsfAJJFVZVOPNc/whCrgiTPZ6FV0=";
-
-    options.contentType = options.contentType || 'application/json';
-    options.maxTime = 15000;
-    var _request = new _Request(url, options);
-    _request.on('timeout', function() {
-        if (token) {
-            sendCommand('toastError', '当前网络信号较弱，页面打开较慢，请您耐心等待或返回重试');
+    var tempFuncName = 'func' + Date.now();
+    Request[tempFuncName] = function(status, dataString) {
+        status = status - 0;
+        var dataText;
+        if (arguments.length === 2) {
+            dataText = decodeURIComponent(dataString);
+        } else {
+            dataText = window.simuyun.getRequestValue('Request.' + tempFuncName);
         }
-    });
 
-    return _request;
+        if (status === 200) {
+            self.fire('complete', {
+                status: status,
+                text: dataText
+            });
+        }
+
+        self.fire('finish', {
+            status: status,
+            text: dataText
+        });
+
+        delete Request[tempFuncName];
+    };
+
+    if (/android/i.test(userAgent)) { //安卓
+        window.simuyun.sendRemoteRequest(method, url, dataPackage, 'Request.' + tempFuncName);
+    } else if (/iPad|iPhone|iPod/.test(userAgent)) { //iOS
+        window.webkit.messageHandlers.commond.postMessage({
+            'event': 'sendRemoteRequest',
+            'method': method,
+            'url': url,
+            'param': dataPackage,
+            'jsFunction': 'Request.' + tempFuncName
+        });
+    }
 };
 
 var TokenRequest = function(url, options) {

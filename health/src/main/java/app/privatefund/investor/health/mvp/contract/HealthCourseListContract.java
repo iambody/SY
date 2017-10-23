@@ -23,5 +23,9 @@ public interface HealthCourseListContract {
         void requestDataSuccess(List<HealthCourseEntity.HealthCourseListModel> healthCourseListModels, int total);
 
         void requestDataFailure(String errMsg);
+
+        void showLoadDialog();
+
+        void hideLoadDialog();
     }
 }

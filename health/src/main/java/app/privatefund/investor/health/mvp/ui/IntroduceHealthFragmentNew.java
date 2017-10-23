@@ -56,11 +56,11 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         recyclerView.setHasFixedSize(true);
         healthIntroduceFlagRecyclerAdapter = new HealthIntroduceFlagRecyclerAdapter(baseActivity);
         recyclerView.setAdapter(healthIntroduceFlagRecyclerAdapter);
-        healthIntroduceFlagRecyclerAdapter.setCategoryItemClickListener((view1, oldPosition, position, posBean) -> {
+        healthIntroduceFlagRecyclerAdapter.setCategoryItemClickListener((view1, posBean) -> {
             LogUtils.Log("aaa", "click item");
-            if (TextUtils.equals(category, posBean.getCode())) {
-                return;
-            }
+//            if (TextUtils.equals(category, posBean.getCode())) {
+//                return;
+//            }
             category = posBean.getCode();
             getPresenter().initNavigationContent(baseWebview, posBean);
         });
@@ -89,9 +89,12 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @Override
     public void requestNavigationSuccess(List<HealthIntroduceNavigationEntity> list) {
-        healthIntroduceFlagRecyclerAdapter.setDatas(list);
         if (!CollectionUtils.isEmpty(list)) {
+            list.get(0).setIsCheck(1);
+            healthIntroduceFlagRecyclerAdapter.setDatas(list);
             getPresenter().initNavigationContent(baseWebview, list.get(0));
+        } else {
+            // TODO 没有标签数据
         }
     }
 

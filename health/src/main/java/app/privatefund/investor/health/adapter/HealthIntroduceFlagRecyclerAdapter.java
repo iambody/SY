@@ -16,6 +16,7 @@ import app.privatefund.investor.health.mvp.model.HealthIntroduceNavigationEntity
 
 /**
  * @author chenlong
+ *
  * 介绍下面标签的适配器
  */
 public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<HealthIntroduceFlagRecyclerAdapter.RecyclerViewHolder> {
@@ -23,12 +24,13 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
     private List<HealthIntroduceNavigationEntity> data = new ArrayList<>();
     private Context context;
     private CategoryItemClickListener listener;
-    private int oldCheckPos=-1;
+    private HealthIntroduceNavigationEntity lastHealthIntroduceEntity;
 
     public HealthIntroduceFlagRecyclerAdapter(Context context) {
         this.context = context;
     }
-    public void setDatas(List<HealthIntroduceNavigationEntity> datas){
+
+    public void setDatas(List<HealthIntroduceNavigationEntity> datas) {
         if (null == data) {
             data = new ArrayList<>();
         }
@@ -36,10 +38,29 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
         data.addAll(datas);
         notifyDataSetChanged();
     }
+
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerViewHolder recyclerViewHolder = new RecyclerViewHolder(LayoutInflater.from(context).inflate(R.layout.health_introduce_flag_recycler_item,
                 parent, false));
+        if (null != listener) {
+            recyclerViewHolder.name.setOnClickListener(v -> {
+                HealthIntroduceNavigationEntity healthIntroduceNavigationEntity = (HealthIntroduceNavigationEntity) v.getTag();
+                if (healthIntroduceNavigationEntity.equals(lastHealthIntroduceEntity)) {
+                    return;
+                }
+
+                if (lastHealthIntroduceEntity != null) {
+                    lastHealthIntroduceEntity.setIsCheck(0);
+                }
+                healthIntroduceNavigationEntity.setIsCheck(1);
+                lastHealthIntroduceEntity = healthIntroduceNavigationEntity;
+                notifyDataSetChanged();
+//                holder.name.setBackground(context.getResources().getDrawable(R.drawable.health_introduce_category_selected));
+//                lastSelect =  holder.name;
+                listener.onCategoryItemClick(recyclerViewHolder.name, healthIntroduceNavigationEntity);
+            });
+        }
         return recyclerViewHolder;
     }
 
@@ -47,25 +68,11 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
     public void onBindViewHolder(HealthIntroduceFlagRecyclerAdapter.RecyclerViewHolder holder, int position) {
         HealthIntroduceNavigationEntity healthIntroduceCategoryBean = data.get(position);
         holder.name.setText(healthIntroduceCategoryBean.getTitle());
+        holder.name.setTag(healthIntroduceCategoryBean);
         if (healthIntroduceCategoryBean.getIsCheck() == 1) {
-            this.oldCheckPos=position;
             holder.name.setBackground(ContextCompat.getDrawable(context, R.drawable.health_introduce_category_selected));
         } else {
             holder.name.setBackground(ContextCompat.getDrawable(context, R.drawable.health_introduce_category_normal));
-        }
-        if (null != listener) {
-            holder.name.setOnClickListener(v -> {
-                int pos = holder.getLayoutPosition();
-                if (pos == oldCheckPos) {
-                    return;
-                }
-                holder.name.setBackground(context.getResources().getDrawable(R.drawable.health_introduce_category_selected));
-                healthIntroduceCategoryBean.setIsCheck(1);
-                data.get(oldCheckPos).setIsCheck(0);
-                notifyDataSetChanged();
-                listener.onCategoryItemClick(holder.name, oldCheckPos, pos, healthIntroduceCategoryBean);
-                oldCheckPos=pos;
-            });
         }
     }
 
@@ -86,7 +93,7 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
     }
 
     public interface CategoryItemClickListener{
-        void onCategoryItemClick(View view, int oldPosition, int position, HealthIntroduceNavigationEntity posBean);
+        void onCategoryItemClick(View view, HealthIntroduceNavigationEntity posBean);
     }
 
     public void setCategoryItemClickListener(CategoryItemClickListener listener){

@@ -96,11 +96,19 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
         String id = healthIntroduceNavigationEntity.getCode();
         String fileName = "";
         System.out.println("-------down url=" + url);
+        String subUrl;
+        String params = "";
         if (!TextUtils.isEmpty(url)) {
             if (url.lastIndexOf("/") > 0 && url.lastIndexOf("/") < url.length()) {
                 fileName = url.substring(url.lastIndexOf("/") + 1);
             } else {
                 fileName = url;
+            }
+
+            subUrl = fileName;
+            if (fileName.contains("?")) {
+                fileName = fileName.substring(0, fileName.lastIndexOf("?"));
+                params = subUrl.substring(subUrl.lastIndexOf("?") + 1);
             }
             System.out.println("------down fileName=" + fileName);
             if (!TextUtils.isEmpty(fileName)) {
@@ -110,13 +118,26 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
                 System.out.println("------down find resourceDir=" + resourceDir);
                 System.out.println("------down find findPath=" + findPath);
                 if (findPath != null && new File(findPath).exists()) {
-                    webview.loadUrls("content://".concat(findPath).concat("?id=").concat(id));
+                    webview.loadUrls("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
                     return;
                 }
             }
             if (url.startsWith("http")) {
-                webview.loadUrls(url.concat("?id=").concat(id));
+                webview.loadUrls(url);
             }
         }
+
+//        String testParas = "";
+//        if (url.contains("?")) {
+//            testParas = url.substring(url.lastIndexOf("?") + 1);
+//        }
+//
+//        if (url.contains("feedbackL1")) {
+//            webview.loadUrls("file:///android_asset/health/health/feedbackL1.html".concat(!TextUtils.isEmpty(testParas) ? "?" + testParas : ""));
+//        } else if (url.contains("healthConsultation2.html")) {
+//            webview.loadUrls("file:///android_asset/health/health/healthConsultation2.html".concat(!TextUtils.isEmpty(testParas) ? "?" + testParas : ""));
+//        } else if (url.contains("introduceL1.html")) {
+//            webview.loadUrls("file:///android_asset/health/health/introduceL1.html".concat(!TextUtils.isEmpty(testParas) ? "?" + testParas : ""));
+//        }
     }
 }

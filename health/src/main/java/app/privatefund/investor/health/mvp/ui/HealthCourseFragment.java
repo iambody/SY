@@ -26,6 +26,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
 
@@ -77,6 +78,8 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     private HealthCourseEntity.HealthCourseListModel currentListModel;
     private HealthCourseAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private LoadingDialog mLoadingDialog;
+
     /**
      * 类别的数据
      */
@@ -91,6 +94,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 
     @Override
     protected void onFirstUserVisible() {
+        mLoadingDialog = LoadingDialog.getLoadingDialog(getActivity(), "", false, false);
         emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "文章"));
         checkHealthAdapter = new HealthCourseAdapter(getActivity(), new ArrayList<>());
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -125,6 +129,25 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             protected void onRxError(Throwable error) {
             }
         });
+    }
+
+    /**
+     * 显示loading弹窗
+     */
+    @Override
+    public void showLoadDialog() {
+        if (mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.show();
+    }
+
+    /**
+     * 隐藏loading弹窗
+     */
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
     }
 
     @Override

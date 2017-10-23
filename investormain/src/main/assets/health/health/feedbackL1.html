@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../assets/styles/commons.css" rel="stylesheet">
+    <title id="heathPro">反馈汇总</title>
+    <style>
+        html,body{min-width:320px !important;}
+        .feedbackWrap{margin:10px 15px 30px 15px;}
+        .fbItem{border-bottom: 1px solid #D8D8D8;position:relative;}
+        .fbItem:last-child{border-bottom: none;}
+        .icoImg{width:66px;position: absolute;right:-15px;top:0px;}
+        .icoImg.nosee{display: none;}
+        .userInfo{margin-top:30px;height:50px;}
+        .userInfo div{float:left;height:50px;}
+        .headImg{margin-right:15px}
+        .headImg img{border-radius: 50%;}
+        .userInfo div h1{color:#000000;font-weight: normal;font-size: 15px;font-style: normal;margin:0px;margin-top:4px;}
+        .username{color:#000000;font-size:15px;margin-right:15px;}
+        .userlevel,.usercity{font-size: 14px;color:#595959;}
+        .userInfo div h2{font-weight: normal;font-size: 15px;font-style: normal;margin:0px;margin-top:2px;}
+        .feedbackInfo{margin:15px 10px 0px 10px;}
+        .feedbackInfo p{font-size: 14px;color:#000000;line-height: 20px;}
+        .feedbackImgs{margin-top:10px;}
+        .feedbackImgs img{display:inline-block;}
+        .serverInfo{margin:10px;}
+        .serverInfo li{font-size: 12px;color:#595959}
+    </style>
+</head>
+<body>
+<div id="feedbackWrap" class="feedbackWrap">
+    <!--<div class="fbItem">
+        <div class="userInfo">
+            <div class="headImg">
+                <img src="./images/headImage.jpg" width="50px" height="50px" alt="">
+            </div>
+            <div>
+               <h1><span class="username">私享云用户</span><span class="userlevel">V4福卡会员</span></h1>
+               <h2><span class="usercity">北京市</span></h2>
+            </div>
+        </div>
+        <div class="feedbackInfo">
+            <p>这是一款针对亚健康人群预防保健，修复脑神经、改善注意力的产品。</p>
+            <div class="feedbackImgs">
+                <img src="./images/feedbackImg1.jpg" width="70px" height="70px" alt="">
+                <img src="./images/feedbackImg2.jpg" width="70px" height="70px" alt="">
+            </div>
+        </div>
+        <div class="serverInfo">
+            <ul>
+                <li>服务项目：基因检测</li>
+                <li>服务时间：2017年05月06日</li>
+                <li>服务人：经理</li>
+            </ul>
+        </div>
+        <img class="icoImg" src="./images/stamp.png" width="66px" />
+    </div>
+    <div class="fbItem">
+        <div class="userInfo">
+            <div class="headImg">
+                <img src="./images/headImage.jpg" width="50px" height="50px" alt="">
+            </div>
+            <div>
+                <h1><span class="username">私享云用户</span><span class="userlevel">V4福卡会员</span></h1>
+                <h2><span class="usercity">北京市</span></h2>
+            </div>
+        </div>
+        <div class="feedbackInfo">
+            <p>这是一款针对亚健康人群预防保健，修复脑神经、改善注意力的产品。</p>
+            <div class="feedbackImgs">
+                <img src="./images/feedbackImg1.jpg" width="70px" height="70px" alt="">
+                <img src="./images/feedbackImg2.jpg" width="70px" height="70px" alt="">
+            </div>
+        </div>
+        <div class="serverInfo">
+            <ul>
+                <li>服务项目：基因检测</li>
+                <li>服务时间：2017年05月06日</li>
+                <li>服务人：经理</li>
+            </ul>
+        </div>
+        <img class="icoImg" src="./images/stamp.png" width="66px" />
+    </div>-->
+</div>
+<script type="text/javascript" src="../assets/scripts/our.js"></script>
+<script type="text/javascript" src="../assets/scripts/common.js"></script>
+<script>
+
+    //主逻辑
+    (function(){
+
+        // 接口路径配置
+        var requestConfig = {
+            feedbacks: '/api/v2/health/healthcustomfeedback'
+        };
+
+        //变量和Dom
+        var $feedbackWrap=$('#feedbackWrap');
+        var requestData={
+            "offset": 0,
+            "limit": 100
+        };
+
+
+        //请求数据接口函数
+        function toGetData() {
+            new Request(requestConfig.feedbacks,{
+                'method': 'GET',
+                'noCache': true
+            }).on('finish', function(e) {
+                var result,message;
+                if (e.status != 200) {
+                    sendCommand('toastError', '网络加载失败,请稍后再试!');
+                    return false;
+                }
+
+                try {
+                    data = JSON.parse(e.text);
+                    result=data.rows;
+                    message=data.message;
+                    if(message){
+                        sendCommand('toastError', message);
+                        return false;
+                    }
+
+
+                    nativeCall(result);
+
+
+
+                } catch (ex) {
+                    sendCommand('toastError', '健康项目信息数据解析失败！');
+                    return false;
+                }
+
+            }).send({"param":JSON.stringify(requestData)});
+        }
+
+        toGetData();
+
+        function nativeCall(data){
+            var sItems='';
+            if(data.length>0){
+                sItems=data.map(function(val,index,arr){
+
+                    var sImgs=JSON.parse(val['imageUrl']).map(function(iVal,iIndex){
+                       return '<img src="'+iVal.url+'" width="70px" height="70px" alt="">';
+                    }).join('');
+
+                    var icoClass='';
+                    if(val.isPresent==='1'){
+                        icoClass='icoImg';
+                    }else{
+                        icoClass='icoImg nosee';
+                    }
+
+                    return ''+
+                            '<div class="fbItem">'+
+                                '<div class="userInfo">'+
+                                    '<div class="headImg">'+
+                                        '<img src="'+val.headImage+'" width="50px" height="50px" alt="">'+
+                                    '</div>'+
+                                    '<div>'+
+                                        '<h1><span class="username">'+val.userNickName+'</span><span class="userlevel">'+val.level+'</span></h1>'+
+                                        '<h2><span class="usercity">'+val.city+'</span></h2>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="feedbackInfo">'+
+                                    '<p>'+val.judgment+'</p>'+
+                                    '<div class="feedbackImgs">'+sImgs+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="serverInfo">'+
+                                    '<ul>'+
+                                        '<li>服务项目：'+val.healthTitle+'</li>'+
+                                        '<li>服务时间：'+val.serviceTime+'</li>'+
+                                        '<li>服务人：'+val.userNickName+'</li>'+
+                                    '</ul>'+
+                                '</div>'+
+                                '<img class="'+icoClass+'" src="./images/stamp.png" width="66px" />'+
+                            '</div>';
+
+
+                }).join('');
+            }else{
+                sItems='暂无数据';
+            }
+
+            $feedbackWrap.innerHTML=sItems;
+        }
+        //全局引用
+        window.nativeCall=nativeCall;
+
+    })();
+</script>
+</body>
+</html>

@@ -69,6 +69,7 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
 //                getView().requestDataFailure(error.getMessage());
 //            }
 //        }));
+        getView().showLoadDialog();
         addSubscription(ApiClient.getHealthProjectList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -78,14 +79,18 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
                     String vas = jsonObject.getString("result");
                     HealthProjectListEntity Result = new Gson().fromJson(vas, new TypeToken<HealthProjectListEntity>() {}.getType());
                     getView().requestDataSuccess(Result);
+                    getView().hideLoadDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getView().hideLoadDialog();
+                    getView().requestDataFailure(e.getMessage());
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 getView().requestDataFailure(error.getMessage());
+                getView().hideLoadDialog();
             }
         }));
     }
