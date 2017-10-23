@@ -3,7 +3,9 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
@@ -15,7 +17,7 @@ public class NetConfig {
 
     //    private static String START_APP = "https://app";
 //    private static String START_APP = "https://d7-app";//sim
-    private static String START_APP = "https://d9-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    private static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -127,11 +129,15 @@ public class NetConfig {
 
     //合规
     static class Compliance {
-          final static String compliance = "/compliance";
+        final static String compliance = "/compliance";
         //活体检测的sign获取
-          final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
+        final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
+        //活体检测的反馈
+        final static String COMPLIANCE_LIVING_RESULT = API_URL + compliance + "/queryResult";
         //OCR获取sign
-          final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
+        final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
+        //自定义的ocr
+        final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
     }
 
     static class MALL {

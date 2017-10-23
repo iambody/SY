@@ -1651,6 +1651,16 @@ public class ApiClient {
     }
 
     /**
+     * 活体检测的通知结果接口
+     */
+    public static Observable<String> livingQueryResult(String orderNo) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderNo", orderNo);
+        return OKHTTP.getInstance().getRequestManager().queryLivingResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
      * 获取ORC检测的sign值
      *
      * @return
@@ -1660,6 +1670,16 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getOcrSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 获取自定义OCR的结果（目前只有身份证头像面）
+     * certificateType 1标识身份证头像面；2标识身份证国徽面
+     */
+    public static Observable<String> getOcrResult(int certificateType, String imageUrl) {
+        Map<String, String> params = new HashMap<>();
+        params.put("certificateType", certificateType + "");
+        params.put("imageUrl", imageUrl);
+        return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
         JSONObject jsonObject = new JSONObject();

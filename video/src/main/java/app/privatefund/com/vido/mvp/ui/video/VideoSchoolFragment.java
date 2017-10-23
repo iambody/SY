@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -96,6 +97,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
         initCache();
         getPresenter().getVideoSchoolAllInf();
+
+
     }
 
     /*设置缓存*/
