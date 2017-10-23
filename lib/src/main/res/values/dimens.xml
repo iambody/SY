@@ -30,10 +30,12 @@
     <dimen name="ui_11_dip">11dip</dimen>
     <dimen name="ui_13_dip">13dip</dimen>
     <dimen name="ui_15_dip">15dip</dimen>
+    <dimen name="ui_16_dip">16dip</dimen>
     <dimen name="ui_17_dip">17dip</dimen>
     <dimen name="ui_20_dip">20dip</dimen>
     <dimen name="ui_28_dip">20dip</dimen>
     <dimen name="ui_30_dip">30dip</dimen>
+    <dimen name="ui_32_dip">32dip</dimen>
     <dimen name="ui_40_dip">40dip</dimen>
     <dimen name="ui_44_dip">44dip</dimen>
     <dimen name="ui_45_dip">45dip</dimen>

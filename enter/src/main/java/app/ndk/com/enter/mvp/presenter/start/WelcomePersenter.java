@@ -3,6 +3,8 @@ package app.ndk.com.enter.mvp.presenter.start;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cgbsoft.lib.AppInfStore;
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -12,6 +14,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -24,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
@@ -222,7 +226,6 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 //        }
     }
 
-
     /**
      * 获取全局导航
      */
@@ -235,8 +238,36 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     System.out.println("--------reulst=" + json);
                     JSONObject jsonObject = new JSONObject(json);
                     JSONArray result = jsonObject.getJSONArray("result");
-
                     SPreference.putString(getContext(), "Navigation", result.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+            }
+        }));
+    }
+
+    /**
+     * 获取资源版
+     */
+    @Override
+    public void requestResourceInfo() {
+        addSubscription(ApiClient.getH5ResourceFileInfo().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String json) {
+                try {
+                    System.out.println("------getResourceVersion--reulst=" + json);
+                    JSONObject jsonObject = new JSONObject(json);
+                    String zipFIleName = jsonObject.getString("zipName");
+                    String zipUrl = jsonObject.getString("downloadUrl");
+                    boolean hasNewResource = !TextUtils.equals(zipFIleName, AppManager.getResouceZipFileName(getContext()));
+                    AppInfStore.saveResourceVersionHas(getContext(), hasNewResource);
+                    AppInfStore.saveResourceFileName(getContext(), zipFIleName);
+                    AppInfStore.saveResourceDownloadAddress(getContext(), zipUrl);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +280,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
         }));
 
     }
-//
+
 //    private String getAddressFromLocation(Location location) {
 //        Geocoder geocoder = new Geocoder(getContext());
 //

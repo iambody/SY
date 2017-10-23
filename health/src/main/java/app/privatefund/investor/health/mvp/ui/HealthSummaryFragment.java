@@ -3,7 +3,9 @@ package app.privatefund.investor.health.mvp.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,18 +15,15 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
-import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +33,7 @@ import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.adapter.HealthSummaryAdapter;
 import app.privatefund.investor.health.mvp.contract.HealthSummaryListContract;
-import app.privatefund.investor.health.mvp.model.HealthListModel;
+import app.privatefund.investor.health.mvp.model.HealthProjectListEntity;
 import app.privatefund.investor.health.mvp.presenter.HealthSummparyPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,26 +43,38 @@ import butterknife.OnClick;
  */
 public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresenter> implements HealthSummaryListContract.View, OnLoadMoreListener, OnRefreshListener {
 
-    @BindView(R2.id.swipe_refresh_header)
-    CustomRefreshHeadView swipeRefreshHeader;
     @BindView(R2.id.swipe_target)
     RecyclerView swipeTarget;
-    @BindView(R2.id.swipe_load_more_footer)
-    CustomRefreshFootView swipeLoadMoreFooter;
+
     @BindView(R2.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
 
-    public static final String INIT_LIST_DATA_PARAMS = "list_data_params";
     @BindView(R2.id.fragment_videoschool_noresult_lay)
     RelativeLayout fragmentVideoschoolNoresultLay;
+
     @BindView(R2.id.empty_textview)
     TextView emptyTextView;
+
     @BindView(R2.id.empty_ll)
     LinearLayout emptyLinearlayout;
 
+    @BindView(R2.id.health_project_list_ll)
+    RelativeLayout healthProjectListRl;
+
+    @BindView(R2.id.health_project_model_ll)
+    RelativeLayout healthProjectModelRl;
+
+    @BindView(R2.id.basewebview)
+    BaseWebview baseWebview;
+
+    @BindView(R2.id.icon_to_model)
+    ImageView iconToModel;
+
+    @BindView(R2.id.icon_to_list)
+    ImageView iconToList;
+
     private HealthSummaryAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private boolean isCheckHealth;
 
     /**
      * 类别的数据
@@ -71,6 +82,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     private int CurrentPostion = 0;
     private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
+    private int total;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -79,13 +91,13 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     @Override
     protected void onFirstUserVisible() {
-        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目简介"));
+        emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目"));
         checkHealthAdapter = new HealthSummaryAdapter(getActivity(), new ArrayList<>());
         swipeToLoadLayout.setOnLoadMoreListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new HealthItemDecoration(getActivity(), R.color.white, R.dimen.ui_15_dip));
+        swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_1_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
@@ -97,6 +109,11 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+        String modelHtml = getPresenter().getLocalHealthModelPath();
+        iconToModel.setVisibility(TextUtils.isEmpty(modelHtml) ? View.GONE : View.VISIBLE);
+        if (!TextUtils.isEmpty(modelHtml)) {
+            baseWebview.loadUrls("content://".concat(modelHtml));
+        }
     }
 
     @Override
@@ -115,52 +132,37 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     protected void create(Bundle Mybundle) {}
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (isCheckHealth) {
-            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JC);
-        } else {
-            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_YL);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isCheckHealth) {
-            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JC);
-        } else {
-            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_YL);
-        }
-    }
-
-    @Override
     protected HealthSummparyPresenter createPresenter() {
         return new HealthSummparyPresenter(getActivity(), this);
     }
 
-    public void FreshAp(List<HealthListModel> healthListModelList, boolean isAdd) {
+    public void FreshAp(List<HealthProjectListEntity.HealthProjectItemEntity> healthListModelList, boolean isAdd) {
         checkHealthAdapter.refrushData(healthListModelList, !isAdd);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (isCheckHealth) {
-                DataStatistApiParam.operateHealthCheckClick();
-            } else {
-                DataStatistApiParam.operateHealthMedcialClick();
-            }
-        }
+    @OnClick(R2.id.icon_to_model)
+    public void toGOHealthModel() {
+        healthProjectListRl.setVisibility(View.GONE);
+        healthProjectModelRl.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R2.id.icon_to_list)
+    public void toGOHealthList() {
+        healthProjectListRl.setVisibility(View.VISIBLE);
+        healthProjectModelRl.setVisibility(View.GONE);
     }
 
     @Override
     public void onLoadMore() {
-        CurrentPostion = CurrentPostion + 1;
-        isLoadMore = true;
-        getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-        DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        if (total != 0 && checkHealthAdapter.getItemCount() != 0 && checkHealthAdapter.getItemCount() < total) {
+            CurrentPostion = CurrentPostion + 1;
+            isLoadMore = true;
+            getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+            DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        } else {
+            Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
+            clodLsAnim(swipeToLoadLayout);
+        }
     }
 
     @Override
@@ -172,7 +174,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     }
 
     @Override
-    public void requestDataSuccess(List<HealthListModel> healthListModelList) {
+    public void requestDataSuccess(HealthProjectListEntity healthProjectListEntity) {
+        total = healthProjectListEntity.getTotal();
+        List<HealthProjectListEntity.HealthProjectItemEntity> healthProjectlist = healthProjectListEntity.getRows();
         if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
@@ -181,19 +185,19 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         }
 
-        if (CollectionUtils.isEmpty(healthListModelList) && !isLoadMore) {
+        if (CollectionUtils.isEmpty(healthProjectlist) && !isLoadMore) {
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.VISIBLE);
         } else {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
-            if (CollectionUtils.isEmpty(healthListModelList)) {
+            if (CollectionUtils.isEmpty(healthProjectlist)) {
                 Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             }
         }
 
         clodLsAnim(swipeToLoadLayout);
-        FreshAp(healthListModelList, isLoadMore);
+        FreshAp(healthProjectlist, isLoadMore);
         isLoadMore = false;
     }
 
@@ -212,7 +216,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     @OnClick(R2.id.fragment_videoschool_noresult)
     public void onViewnoresultClicked() {
-        if (NetUtils.isNetworkAvailable(fBaseActivity)) {//有网
+        if (NetUtils.isNetworkAvailable(fBaseActivity)) { // 有网
             if (checkHealthAdapter != null) {
                 CurrentPostion = 0;
                 isLoadMore = false;
@@ -222,5 +226,4 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
     }
-
 }

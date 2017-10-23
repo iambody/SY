@@ -122,6 +122,9 @@
         android:theme="@style/appInvTheme"
         tools:replace="android:label,android:icon, android:theme,android:allowBackup">
         <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+        <meta-data
             android:name="dbName"
             android:value="${DATABASE_NAME}" />
         <meta-data
@@ -281,7 +284,6 @@
                     android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
         -->
 
-
         <!-- 视频列表 -->
         <!-- <activity -->
         <!-- android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity" -->
@@ -297,7 +299,19 @@
         <!-- 资产证明activity -->
         <activity
             android:name=".mvp.ui.home.AssetProveActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="app.simuyun.com"
+                    android:path="/health/detail" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".mvp.ui.home.SmoothImageActivity"
             android:screenOrientation="portrait" />

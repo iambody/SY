@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/iv_recycler_health_item"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="@dimen/dimens_sp_15"
+          android:background="@drawable/health_introduce_category_selected"
+    />

@@ -255,9 +255,9 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     public void updateUiMore(List<ElegantGoodsBeanInterface> allRows) {
         mRefreshLayout.setLoadMoreEnabled(true);
         clodLsAnim(mRefreshLayout);
-            if (allRows.size() == 0||allRows.size() < Constant.LOAD_ELEGANT_GOODS_MORE_lIMIT) {
-                isOver=true;
-            }
+        if (allRows.size() == 0 || allRows.size() < Constant.LOAD_ELEGANT_GOODS_MORE_lIMIT) {
+            isOver=true;
+        }
         prosDatas.addAll(allRows);
         if (prosDatas.size()==0) {
             mRefreshLayout.setLoadMoreEnabled(false);

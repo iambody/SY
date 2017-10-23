@@ -9,7 +9,6 @@ import rx.Subscriber;
 /**
  * Created by xiaoyu.zhang on 2016/8/8.
  */
-
 public abstract class RxSubscriber<T> extends Subscriber<T> {
     private static final String TAG = "RxSubscriber";
 
@@ -41,6 +40,5 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
 
     //重新注册
     protected void toReRxRegister() {
-
     }
 }

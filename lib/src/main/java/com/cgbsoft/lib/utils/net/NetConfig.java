@@ -32,7 +32,7 @@ public class NetConfig {
     public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
-    public final static String API_URL_V3 = "api/v3";
+    public final static String API_URL_V3 = "api/v2";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String API_NOV2_URL = "api/";
@@ -83,6 +83,9 @@ public class NetConfig {
 
     //全局导航栏
     final static String NAVIGATION = API_URL_V3 + "/navigation";
+
+    // 全站三级导航
+    final static String NAVIGATION_THREE = API_URL_V3 + "/navigation/third";
 
     //红包雨
     final static String RED_PACKET = API_URL + "/redpacket";
@@ -277,6 +280,9 @@ public class NetConfig {
     public static String noticeRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/notice.png";
     public static String systemRemoteLogin = "http://simuyun-upload.oss-cn-beijing.aliyuncs.com/information/system.png";
 
+    // 获取资源文件的相关信息
+    public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
+
     //视频相关模块
     static class VIDEO {
         private final static String video = "/information/video";
@@ -343,6 +349,8 @@ public class NetConfig {
 
         final static String HEALTH_GET_URL = API_URL + "/health/commend";
 
+        final static String HEALTH_PROJECT_LIST = API_URL + "/health/healthprojectlist";
+
         final static String HEALTH_COURSE_GET_URL = API_URL + "/health/healthCourseList";
 
         // 健康免费资讯预约
@@ -350,6 +358,7 @@ public class NetConfig {
 
         // 健康短信验证
         final static String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
+
     }
 
     static class Discovery {

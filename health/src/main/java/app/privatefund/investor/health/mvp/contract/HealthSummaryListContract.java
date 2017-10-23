@@ -6,6 +6,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 import java.util.List;
 
 import app.privatefund.investor.health.mvp.model.HealthListModel;
+import app.privatefund.investor.health.mvp.model.HealthProjectListEntity;
 
 /**
  * @author chenlong
@@ -20,7 +21,7 @@ public interface HealthSummaryListContract {
 
     interface View extends BaseView {
 
-        void requestDataSuccess(List<HealthListModel> healthListModels);
+        void requestDataSuccess(HealthProjectListEntity healthListModels);
 
         void requestDataFailure(String errMsg);
     }

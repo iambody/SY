@@ -245,6 +245,7 @@ public class FileUtils {
         }
         return degree;
     }
+
     public static File getTempFile(String fileName) {
         File file = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
@@ -254,10 +255,78 @@ public class FileUtils {
         }
         return file;
     }
+
+    public static File createResourceLocalTempFile(String dir, String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath() + File.separator + dir, fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
+        }
+
+         if (file != null && file.exists()) {
+             file.delete();
+         }
+
+         if (!file.getParentFile().exists()) {
+             file.getParentFile().mkdirs();
+         }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file;
+    }
+
+    public static File getResourceLocalTempFile(String dir, String fileName) {
+        File file = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            file = new File(BaseApplication.getContext().getExternalCacheDir().getPath() + File.separator + dir, fileName);
+        } else {
+            file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
+        }
+
+        return file;
+    }
+
+    /**
+     * 找出指定文件在目录下的全路径
+     * @param dir
+     * @param fileName
+     * @return
+     */
+    public static String isExsitFileInFileDir(String dir, String fileName) {
+        String resultPath = "";
+        if (!TextUtils.isEmpty(dir)) {
+            File dirFile = new File(dir);
+            File[] files = dirFile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        String subResult = isExsitFileInFileDir(file.getAbsolutePath(), fileName);
+                         if (!TextUtils.isEmpty(subResult)) {
+                             resultPath = subResult;
+                             break;
+                         }
+                    } else {
+                        String name = file.getName();
+                        System.out.println("-----down  name="  +name);
+                        if (TextUtils.equals(name, fileName)) {
+                            resultPath = file.getAbsolutePath();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return resultPath;
+    }
+
     /**
      * 删除文件或文件夹
-     *
-     * @param file
+     * @param
      */
     public static void deleteDir(File file) {
         if (null == file || !file.exists()) {
@@ -304,20 +373,20 @@ public class FileUtils {
         return file;
     }
 
-    public static void doUnzip(final File origiFile, final UnZipCallback callBack) {
+    public static void doUnzip(final File origiFile, File targetFile, String fileName, String dirName, final UnZipCallback callBack) {
 //        File h5Res = new File(MyApplication.getInstance().getH5NativePath());
 //        FileUtil.deleteDir(h5Res);
         new Thread(new Runnable() {
             public File zipFile;
-
             @Override
             public void run() {
                 BufferedInputStream bis = null;
                 BufferedOutputStream bos = null;
                 InputStream fileDescriptor = null;
                 int BUFFER = 10240;
-                File dir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
-                zipFile = new File(dir.getParent() , Constant.SO_ZIP_NAME);
+                zipFile = new File(targetFile.getParent() , fileName);
+//                File dir = BaseApplication.getContext().getDir("dynamic", Context.MODE_PRIVATE);
+//                zipFile = new File(dir.getParent() , Constant.SO_ZIP_NAME);
                 try {
 //                    if (null == origiFile || !origiFile.exists()) {
 //                        fileDescriptor = MyApplication.getInstance().getResources().getAssets().open("home.zip");
@@ -329,7 +398,6 @@ public class FileUtils {
                     byte[] buffer = new byte[BUFFER];
                     int read = 0;
                     while ((read = bis.read(buffer)) > 0) {// 循环从输入流读取
-                        // buffer字节
                         bos.write(buffer, 0, read);// 将读取的输入流写入到输出流
                     }
                     closeStream(bis, bos);
@@ -338,7 +406,7 @@ public class FileUtils {
                     return;
                 }
                 try {
-                    ZipUtils.unzip(zipFile, new ZipUtils.ZipAction() {
+                    ZipUtils.unzip(zipFile, dirName, new ZipUtils.ZipAction() {
                         @Override
                         public void star() {
                             callBack.beginUnZip();

@@ -21,6 +21,8 @@ public interface WelcomeContract {
         void getMyLocation();
 
         void getNavigation();
+
+        void requestResourceInfo();
     }
 
     interface View extends BaseView {

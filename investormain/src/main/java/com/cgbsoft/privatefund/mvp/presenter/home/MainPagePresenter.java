@@ -222,16 +222,16 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             }
         }));
     }
-    /**
-     * 下载文件
-     * @param url
-     * @param target 保存的文件
-     * @param callback
-     */
-    public void getSoFile(String url, File target, FileDownloadCallback callback) {
-        if (!TextUtils.isEmpty(url) && target != null) {
-            FileDownloadTask task = new FileDownloadTask(url, target, callback);
-            task.execute();
-        }
-    }
+//    /**
+//     * 下载文件
+//     * @param url
+//     * @param target 保存的文件
+//     * @param callback
+//     */
+//    public void getZipFile(String url, File target, FileDownloadCallback callback) {
+//        if (!TextUtils.isEmpty(url) && target != null) {
+//            FileDownloadTask task = new FileDownloadTask(url, target, callback);
+//            task.execute();
+//        }
+//    }
 }

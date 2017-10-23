@@ -24,7 +24,6 @@ import app.privatefund.investor.health.mvp.model.HealthCourseEntity;
 import app.privatefund.investor.health.mvp.model.HealthListModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * @author chenlong
  */

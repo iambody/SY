@@ -86,7 +86,7 @@ public class ElegantGoodsEntity extends BaseResult<ElegantLivingEntity.Result> {
             return "Result{" + "navigation=" + navigation + ", hot=" + hot + ", all=" + all + '}';
         }
     }
-    public static class ElegantGoodsCategoryBean implements ElegantGoodsBeanInterface{
+    public static class ElegantGoodsCategoryBean implements ElegantGoodsBeanInterface {
         private int id;
         private String title;
         private String navigationId;
