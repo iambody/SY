@@ -216,6 +216,7 @@ public class MallEditAddressActivity extends BaseActivity<MallPresenter> impleme
             MToast.makeText(this, "联系方式不正确！", Toast.LENGTH_LONG).show();
             return;
         }
+
         if (addressBean != null) { //如果有传入值不是新增
             addressBean.setAddress(address);
             addressBean.setPhone(phone);
