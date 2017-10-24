@@ -18,6 +18,8 @@
     <style name="health_item_detail">
         <item name="android:textSize">@dimen/dimens_sp_16</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

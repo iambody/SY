@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +34,12 @@ public class JavaScriptObjectToc {
     private Context context;
     private BaseWebview webView;
     private String url;
+//    private LoadingDialog mLoadingDialog;
 
     public JavaScriptObjectToc(Context context, BaseWebview webView) {
         this.context = context;
         this.webView = webView;
+//        mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
     }
 
     public void setUrl(String url) {
@@ -63,6 +66,21 @@ public class JavaScriptObjectToc {
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }
+
+//    private void hideLoadDialog() {
+//        if (mLoadingDialog != null) {
+//            mLoadingDialog.dismiss();
+//        }
+//    }
+//
+//    private void showLoadDialog() {
+//        if (null == mLoadingDialog) {
+//            mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
+//        }
+//        if (!mLoadingDialog.isShowing()) {
+//            mLoadingDialog.show();
+//        }
+//    }
 
     /**
      * 重新加载url的 对象接口

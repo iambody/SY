@@ -57,6 +57,7 @@ public class CWebClient extends WebViewClient {
     public void setWebviewOnClick(WebviewOnClick webviewOnClick) {
         this.webviewOnClick = webviewOnClick;
     }
+
     CWebviewManger cWebClient;
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {

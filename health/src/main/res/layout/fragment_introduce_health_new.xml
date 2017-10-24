@@ -1,34 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_category_all"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="@drawable/health_introduce_flag_bg"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/health_introduce_has_result">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/health_introduce_rv"
+        <LinearLayout
+            android:id="@+id/ll_category_all"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:paddingLeft="15dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:background="@android:color/transparent">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="110dp"
+            android:background="@drawable/health_introduce_flag_bg">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/health_introduce_rv"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/transparent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingLeft="15dp"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <com.cgbsoft.lib.base.webview.BaseWebview
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
     </LinearLayout>
 
-
-    <com.cgbsoft.lib.base.webview.BaseWebview
-        android:id="@+id/webview"
-        android:scrollbars="none"
+    <LinearLayout
+        android:id="@+id/fragment_introduce_network_error"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/fragment_introduct_noresult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/neterror" />
+
+        <TextView
+            android:id="@+id/network_error_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:text="@string/error_net" />
+
+        <TextView
+            android:id="@+id/tv_health_reload_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/click_reload_str"
+            android:textColor="@color/app_golden"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/icon_empty_list"/>
+
+        <TextView
+            android:id="@+id/empty_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="当前暂时无数据"
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_15" />
+    </LinearLayout>
 
 </LinearLayout>
