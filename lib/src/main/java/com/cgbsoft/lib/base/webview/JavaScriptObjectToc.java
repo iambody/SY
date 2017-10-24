@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +34,12 @@ public class JavaScriptObjectToc {
     private Context context;
     private BaseWebview webView;
     private String url;
+    private LoadingDialog mLoadingDialog;
 
     public JavaScriptObjectToc(Context context, BaseWebview webView) {
         this.context = context;
         this.webView = webView;
+        mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
     }
 
     public void setUrl(String url) {
@@ -62,6 +65,21 @@ public class JavaScriptObjectToc {
 
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
+    }
+
+    private void hideLoadDialog() {
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+        }
+    }
+
+    private void showLoadDialog() {
+        if (null == mLoadingDialog) {
+            mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
+        }
+        if (!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
     }
 
     /**
@@ -101,6 +119,7 @@ public class JavaScriptObjectToc {
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);
+        showLoadDialog();
         ApiClient.getCommonGetRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
@@ -109,6 +128,7 @@ public class JavaScriptObjectToc {
                 investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                 ThreadUtils.runOnMainThread(() -> {
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    hideLoadDialog();
                 });
             }
 
@@ -117,6 +137,7 @@ public class JavaScriptObjectToc {
                 System.out.println("---error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    hideLoadDialog();
                 });
             }
         });
@@ -142,6 +163,7 @@ public class JavaScriptObjectToc {
     }
 
     private void requestPostMethod(String url, String params, String javascirptCallMethod) {
+        showLoadDialog();
         ApiClient.getCommonPostRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
@@ -150,6 +172,7 @@ public class JavaScriptObjectToc {
                     InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                     investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    hideLoadDialog();
                 });
             }
 
@@ -158,6 +181,7 @@ public class JavaScriptObjectToc {
                 System.out.println("---requestPostMethod error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    hideLoadDialog();
                 });
             }
         });

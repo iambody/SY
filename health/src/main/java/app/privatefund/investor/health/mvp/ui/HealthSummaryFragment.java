@@ -106,7 +106,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getTitle());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getUrl()).concat("?healthId=").concat(discoveryListModel.getId()).concat("&healthImg=")
-                    .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()));
+                    .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()).concat("&goCustomFeedBack=0"));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
         });

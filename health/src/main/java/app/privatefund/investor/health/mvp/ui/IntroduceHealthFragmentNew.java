@@ -3,8 +3,9 @@ package app.privatefund.investor.health.mvp.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -12,6 +13,8 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NetUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
@@ -24,6 +27,7 @@ import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
 import app.privatefund.investor.health.mvp.model.HealthIntroduceNavigationEntity;
 import app.privatefund.investor.health.mvp.presenter.HealthIntroducePresenter;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author chenlong
@@ -33,8 +37,20 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     @BindView(R2.id.health_introduce_rv)
     RecyclerView recyclerView;
 
+    @BindView(R2.id.health_introduce_has_result)
+    LinearLayout healthIntroduceHasFlag;
+
+    @BindView(R2.id.fragment_introduce_network_error)
+    LinearLayout introductNetError;
+
+    @BindView(R2.id.empty_ll)
+    LinearLayout healthIntroduceDataEmpty;
+
     @BindView(R2.id.webview)
     BaseWebview baseWebview;
+    private static final int HAS_DATA = 0;
+    private static final int HAS_DATA_NO = 1;
+    private static final int HAS_DATA_ERROR = 2;
 
     private String category;
     private LoadingDialog mLoadingDialog;
@@ -87,20 +103,50 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         }
     }
 
+    private void showErrorAndNoData(int flag) {
+        switch (flag) {
+            case HAS_DATA:
+                healthIntroduceHasFlag.setVisibility(View.VISIBLE);
+                introductNetError.setVisibility(View.GONE);
+                healthIntroduceDataEmpty.setVisibility(View.GONE);
+                break;
+            case HAS_DATA_NO:
+                healthIntroduceHasFlag.setVisibility(View.GONE);
+                introductNetError.setVisibility(View.GONE);
+                healthIntroduceDataEmpty.setVisibility(View.VISIBLE);
+                break;
+            case HAS_DATA_ERROR:
+                healthIntroduceHasFlag.setVisibility(View.GONE);
+                introductNetError.setVisibility(View.VISIBLE);
+                healthIntroduceDataEmpty.setVisibility(View.GONE);
+                break;
+        }
+    }
+
     @Override
     public void requestNavigationSuccess(List<HealthIntroduceNavigationEntity> list) {
         if (!CollectionUtils.isEmpty(list)) {
+            showErrorAndNoData(HAS_DATA);
             list.get(0).setIsCheck(1);
             healthIntroduceFlagRecyclerAdapter.setDatas(list);
             getPresenter().initNavigationContent(baseWebview, list.get(0));
         } else {
-            // TODO 没有标签数据
+            showErrorAndNoData(HAS_DATA_NO);
         }
     }
 
     @Override
     public void requestNavigationFailure(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        if (NetUtils.isNetworkAvailable(getContext())) {
+            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        } else {
+            showErrorAndNoData(HAS_DATA_ERROR);
+            PromptManager.ShowCustomToast(getContext(), getResources().getString(R.string.notify_no_network));
+        }
     }
 
+    @OnClick(R2.id.fragment_introduce_network_error)
+    public void healthIntroduceError() {
+        getPresenter().introduceNavigation(category);
+    }
 }

@@ -85,12 +85,11 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_empty_list" />
+                android:src="@drawable/icon_empty_list"/>
 
             <TextView
                 android:id="@+id/empty_textview"

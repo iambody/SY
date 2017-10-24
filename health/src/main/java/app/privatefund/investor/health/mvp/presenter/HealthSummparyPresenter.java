@@ -14,7 +14,6 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,37 +37,6 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
 
     @Override
     public void getHealthList(String offset) {
-//        addSubscription(ApiClient.getHealthDataList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
-//            @Override
-//            protected void onEvent(String s) {
-//                Log.d("HealthSummparyPresenter", "----"+ s.toString());
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    String vas = jsonObject.getString("result");
-//                    HealthEntity.Result Result = new Gson().fromJson(vas, new TypeToken<HealthEntity.Result>() {}.getType());
-//                    List<HealthEntity.Row> rows = Result.getRows();
-//                    List<HealthListModel> list = new ArrayList<>();
-//                    for (int i = 0; i < rows.size(); i++) {
-//                        HealthListModel model = new HealthListModel();
-//                        model.type = HealthListModel.BOTTOM;
-//                        model.setCode(rows.get(i).getCode());
-//                        model.setId(rows.get(i).getId());
-//                        model.setImageUrl(rows.get(i).getImageUrl());
-//                        model.setTitle(rows.get(i).getTitle());
-//                        model.setUrl(rows.get(i).getUrl());
-//                        list.add(model);
-//                    }
-//                    getView().requestDataSuccess(list);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                getView().requestDataFailure(error.getMessage());
-//            }
-//        }));
         getView().showLoadDialog();
         addSubscription(ApiClient.getHealthProjectList(ApiBusParam.getHealthSummaryDataParams(Integer.parseInt(offset), PAGE_LIMIT)).subscribe(new RxSubscriber<String>() {
             @Override
@@ -100,7 +68,6 @@ public class HealthSummparyPresenter extends BasePresenterImpl<HealthSummaryList
      * @return
      */
     public String getLocalHealthModelPath() {
-//        File resourceDir = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, "");
         File resourceDir = BaseApplication.getContext().getDir(Constant.HEALTH_ZIP_DIR, Context.MODE_PRIVATE);
         return FileUtils.isExsitFileInFileDir(resourceDir.getPath(), PRE_HEALTH_MODEL);
     }

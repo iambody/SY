@@ -3,10 +3,10 @@ package app.privatefund.investor.health.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
@@ -20,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 
 import app.privatefund.investor.health.mvp.contract.HealthIntroduceContract;
@@ -93,7 +92,6 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
     @Override
     public void initNavigationContent(BaseWebview webview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity) {
         String url = healthIntroduceNavigationEntity.getUrl();
-        String id = healthIntroduceNavigationEntity.getCode();
         String fileName = "";
         System.out.println("-------down url=" + url);
         String subUrl;
@@ -110,20 +108,21 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
                 fileName = fileName.substring(0, fileName.lastIndexOf("?"));
                 params = subUrl.substring(subUrl.lastIndexOf("?") + 1);
             }
+
             System.out.println("------down fileName=" + fileName);
             if (!TextUtils.isEmpty(fileName)) {
-//                File resourceDir = FileUtils.getResourceLocalTempFile(Constant.HEALTH_ZIP_DIR, "");
                 File resourceDir = BaseApplication.getContext().getDir(Constant.HEALTH_ZIP_DIR, Context.MODE_PRIVATE);
                 String findPath = FileUtils.isExsitFileInFileDir(resourceDir.getPath(), fileName);
-                System.out.println("------down find resourceDir=" + resourceDir);
                 System.out.println("------down find findPath=" + findPath);
-                if (findPath != null && new File(findPath).exists()) {
+                if (!TextUtils.isEmpty(findPath) && new File(findPath).exists()) {
                     webview.loadUrls("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
                     return;
                 }
             }
             if (url.startsWith("http")) {
                 webview.loadUrls(url);
+            } else {
+                webview.loadUrls(BaseWebNetConfig.baseParentUrl.concat(url.startsWith("/") ? url.substring(1) : url));
             }
         }
 
