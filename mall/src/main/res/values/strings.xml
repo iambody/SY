@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="edit_phone">手机号码</string>
+    <string name="edit_phone">联系方式</string>
     <string name="edit_recever_name">收货人</string>
     <string name="edit_recever_address">详细地址</string>
     <string name="mall_save_address">保存并使用</string>
