@@ -297,7 +297,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     private void changeTitileStyle() {
-        if (rightMemberRule) {
+        if (rightMemberRule||title.equals("我的财富值")) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);

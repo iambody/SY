@@ -41,8 +41,17 @@ public class DownloadUtils {
     private static String signature = "EoN77P/dvoy5qPfXNabiVHB4nK8=";
     private static String encodePolicy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsNTI0Mjg4MDAwXV19";
 
-    // 提交表单的URL为bucket域名
+    public static String postSecretObject(String localFilePath, String type) {
+        return postObject1(localFilePath, type, true);
+    }
+
+
     public static String postObject(String localFilePath, String type) {
+        return postObject1(localFilePath, type, false);
+    }
+
+    // 提交表单的URL为bucket域名
+    private static String postObject1(String localFilePath, String type, Boolean isSecret) {
         // 表单域
         Map<String, String> textMap = new LinkedHashMap<>();
         String pre = ".png";
@@ -62,8 +71,19 @@ public class DownloadUtils {
         textMap.put("Signature", signature);
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", localFilePath);
-        if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
-            return remotePath;
+
+        String UPLOAD_URL;
+        if (NetConfig.START_APP.equals("https://app")) {
+            if (isSecret)
+                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
+            UPLOAD_URL = NetConfig.UPLOAD_FILE;
+        } else {
+            if (isSecret)
+                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
+            UPLOAD_URL = NetConfig.UPLOAD_FILE + "/-/" + NetConfig.SERVER_ADD;
+        }
+        if (formUpload(UPLOAD_URL, textMap, fileMap)) {
+            return UPLOAD_URL + remotePath;
         }
         return null;
     }
@@ -121,7 +141,7 @@ public class DownloadUtils {
                     File file = new File(inputValue);
                     String filename = file.getName();
                     String contentType = "application/octet-stream";
-                    if (filename.toLowerCase().endsWith(".jpg")||filename.toLowerCase().endsWith(".jpeg")||filename.toLowerCase().endsWith(".png")) {
+                    if (filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".jpeg") || filename.toLowerCase().endsWith(".png")) {
                         contentType = "image/jpeg";
                     } else {
                         contentType = "application/octet-stream";

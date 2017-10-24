@@ -243,7 +243,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 remoteParams.clear();
                 for (final String localPath : paths) {
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                    String paths = DownloadUtils.postObject(newTargetFile, "credential/"+credentialCode+"/");
+                    String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/"+credentialCode+"/");
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
                         remoteParams.add(NetConfig.UPLOAD_FILE.concat(paths));

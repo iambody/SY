@@ -11,11 +11,12 @@ public class NetConfig {
     public static boolean isLocal = true;
 
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
+    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
 //    private static String START_APP = "https://d7-app";//sim
-    private static String START_APP = "https://d9-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    public static String START_APP = "https://d9-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -127,11 +128,11 @@ public class NetConfig {
 
     //合规
     static class Compliance {
-          final static String compliance = "/compliance";
+        final static String compliance = "/compliance";
         //活体检测的sign获取
-          final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
+        final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
         //OCR获取sign
-          final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
+        final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
     }
 
     static class MALL {
