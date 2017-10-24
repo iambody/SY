@@ -54,6 +54,7 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * 资产证明
+ *
  * @author chenlong
  */
 @Route("investornmain_proveassetctivity")
@@ -109,7 +110,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         width = ViewUtils.getDisplayWidth(this);
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 //        toolbar.setNavigationOnClickListener(v -> finish());
-      ivBack.setOnClickListener(new View.OnClickListener() {
+        ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -134,9 +135,9 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         return new AssetProvePresenter(getBaseContext(), this);
     }
 
-    public ImageView addImg(){
+    public ImageView addImg() {
         ImageView addImage = new ImageView(getApplicationContext());
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width/4,width/4);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width / 4, width / 4);
         addImage.setLayoutParams(layoutParams);
         addImage.setImageResource(R.drawable.ic_asset_prove_upload);
         addImage.setOnClickListener(v -> {
@@ -149,12 +150,12 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         return addImage;
     }
 
-    public void takePhoto(){
+    public void takePhoto() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 //            ActivityCompat.requestmissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CALL_PHOTO);
-        }else {
+        } else {
             startSysteCamera();
 //             NavigationUtils.startSystemImageForResult(AssetProveActivity.this, BaseWebViewActivity.REQUEST_IMAGE, imagePaths);
         }
@@ -248,18 +249,18 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 
         if (hasStatus) {
             if ("1".equals(userInfoC.getInvestmentType())) {
-                ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
+                ((RadioButton) viewGroup.getChildAt(0)).setChecked(true);
                 if (status != 3) {
                     viewGroup.getChildAt(1).setVisibility(View.GONE);
                 }
             } else if ("2".equals(userInfoC.getInvestmentType())) {
-                ((RadioButton)viewGroup.getChildAt(1)).setChecked(true);
+                ((RadioButton) viewGroup.getChildAt(1)).setChecked(true);
                 if (status != 3) {
                     viewGroup.getChildAt(0).setVisibility(View.GONE);
                 }
             }
         } else {
-            ((RadioButton)viewGroup.getChildAt(0)).setChecked(true);
+            ((RadioButton) viewGroup.getChildAt(0)).setChecked(true);
         }
     }
 
@@ -267,7 +268,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         try {
             imagePaths.clear();
             for (int i = 0; i < jsonArray.length(); i++) {
-                imagePaths.add((String)jsonArray.get(i));
+                imagePaths.add((String) jsonArray.get(i));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,12 +277,12 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 
     private void updateImageViewLayout() {
         frameLayout.removeAllViews();
-        for (int i=0; i < imagePaths.size(); i++) {
+        for (int i = 0; i < imagePaths.size(); i++) {
             String bean = imagePaths.get(i);
             ImageView view = new ImageView(this);
             setImgLayoutParams(view);
             if (!TextUtils.isEmpty(bean) && !bean.startsWith("http") && bean.contains(Constant.UPLOAD_CERTIFICATE_TYPE)) {
-                bean = NetConfig.UPLOAD_FILE + bean;
+                bean = bean.contains(NetConfig.UPLOAD_FILE) ? bean : NetConfig.UPLOAD_FILE + bean;
                 Imageload.display(this, bean, view);
             } else if (bean.startsWith("http")) {
                 Imageload.display(this, bean, view);
@@ -290,12 +291,12 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
             }
             view.setTag(bean);
             view.setOnClickListener(v -> {
-                String url =  (String)v.getTag();
+                String url = (String) v.getTag();
                 Intent intent = new Intent(AssetProveActivity.this, SmoothImageActivity.class);
                 intent.putExtra(SmoothImageActivity.IMAGE_SAVE_PATH_LOCAL, url);
                 intent.putExtra(SmoothImageActivity.IMAGE_RIGHT_DELETE, "[]".equals(SPreference.getToCBean(this).getAssetsCertificationImage()) ||
                         TextUtils.isEmpty(SPreference.getToCBean(this).getAssetsCertificationImage()) ||
-                            3 == Integer.valueOf(SPreference.getToCBean(this).getAssetsCertificationStatus()));
+                        3 == Integer.valueOf(SPreference.getToCBean(this).getAssetsCertificationStatus()));
                 startActivityForResult(intent, SMOTH_CODE);
             });
             frameLayout.addView(view);
@@ -314,9 +315,9 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     }
 
     private boolean isSelectRole() {
-        int value =  viewGroup.getChildCount();
-        for (int i = 0;i < value; i++) {
-            RadioButton radioButton = (RadioButton)viewGroup.getChildAt(i);
+        int value = viewGroup.getChildCount();
+        for (int i = 0; i < value; i++) {
+            RadioButton radioButton = (RadioButton) viewGroup.getChildAt(i);
             if (radioButton.isChecked()) {
                 return true;
             }
@@ -364,8 +365,8 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
 
     private JSONArray getArrayParams(List<String> lists) {
         JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < lists.size() ; i++) {
-            jsonArray.put(lists.get(i).startsWith("http") ? lists.get(i) : NetConfig.UPLOAD_FILE+ lists.get(i));
+        for (int i = 0; i < lists.size(); i++) {
+            jsonArray.put(lists.get(i).startsWith("http") ? lists.get(i) : NetConfig.UPLOAD_FILE + lists.get(i));
         }
         return jsonArray;
     }
@@ -377,7 +378,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
         }
         AppInfStore.updateUserAssetCertificationStatus(this, "1");
         AppInfStore.updateUserAssetCertificationImageUrl(this, getArrayParams(remoteParams).toString());
-        AppInfStore.updateUserInvestentType(this, ((RadioButton)viewGroup.getChildAt(0)).isChecked() ? "1" : "2");
+        AppInfStore.updateUserInvestentType(this, ((RadioButton) viewGroup.getChildAt(0)).isChecked() ? "1" : "2");
         new MToast(AssetProveActivity.this).show("提交成功", 0);
 //        EventBus.getDefault().post(new RefushUser());
         finish();
@@ -402,11 +403,11 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     }
 
     private void uploadInfo() {
-        getPresenter().uploadAssetProveData(getArrayParams(remoteParams) , getSelectType());
+        getPresenter().uploadAssetProveData(getArrayParams(remoteParams), getSelectType());
     }
 
     private String getSelectType() {
-        RadioButton radioButton = (RadioButton)viewGroup.getChildAt(0);
+        RadioButton radioButton = (RadioButton) viewGroup.getChildAt(0);
         if (radioButton != null && radioButton.isChecked()) {
             return "1";
         }
@@ -419,7 +420,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     private void setImgLayoutParams(ImageView img) {
         //ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) img.getLayoutParams();
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, 0);
-        lp.width = (int) (ViewUtils.getDisplayWidth(this)/3);
+        lp.width = (int) (ViewUtils.getDisplayWidth(this) / 3);
         lp.height = lp.width;
         img.setLayoutParams(lp);
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -428,7 +429,7 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     /**
      * 为imageview设置图片
      */
-    private void setImageBitmap(ImageView img, String url){
+    private void setImageBitmap(ImageView img, String url) {
         FileInputStream fis = null;
         img.setImageBitmap(MyBitmapUtils.getLoacalBitmap(url));
     }
@@ -436,13 +437,13 @@ public class AssetProveActivity extends BaseActivity<AssetProvePresenter> implem
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
+        if (requestCode == BaseWebViewActivity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 //                ArrayList<String> mSelectPath = data.getStringArrayListExtra(ImageSelector.EXTRA_RESULT);
 //                ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                 if (data == null) {
-                  return;
-                 }
+                if (data == null) {
+                    return;
+                }
 //                ArrayList<String> mSelectPath = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                 ArrayList<String> mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 if (mSelectPath != null && mSelectPath.size() > 0) {

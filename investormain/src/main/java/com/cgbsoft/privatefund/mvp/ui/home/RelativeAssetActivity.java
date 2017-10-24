@@ -64,7 +64,7 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
 //    protected Toolbar toolbar;
 
     @BindView(R.id.iv_back)
-    protected  ImageView ivBack;
+    protected ImageView ivBack;
     @BindView(R.id.title_mid)
     protected TextView titleMid;
 
@@ -361,11 +361,11 @@ public class RelativeAssetActivity extends BaseActivity<RelatedAssetPresenter> i
     }
 
     private void uploadCertification() {
-        getPresenter().uploadAssetRelatedFile(NetConfig.UPLOAD_FILE + imageId);
+        getPresenter().uploadAssetRelatedFile(imageId.startsWith("http") ? imageId : NetConfig.UPLOAD_FILE + imageId);
     }
 
     protected void onDestroy() {
-        if(loading != null) {
+        if (loading != null) {
             loading.dismiss();
         }
         super.onDestroy();

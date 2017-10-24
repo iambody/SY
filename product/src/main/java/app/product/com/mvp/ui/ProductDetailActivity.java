@@ -152,7 +152,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
         if (liveObserver != null) {
             RxBus.get().unregister(RxConstant.ZHIBO_STATUES, liveObserver);
         }
-
     }
 
     @Override

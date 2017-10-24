@@ -1469,6 +1469,7 @@ public class ApiClient {
 
     /**
      * 资源文件的相关信息
+     *
      * @return
      */
     public static Observable<String> getH5ResourceFileInfo() {
@@ -1580,7 +1581,7 @@ public class ApiClient {
     public static Observable<String> uploadIconRemotePath(String adviserId, String imageRemotePath) {
         Map<String, String> params = new HashMap<>();
         params.put("adviserId", adviserId);
-        params.put("path", NetConfig.UPLOAD_FILE + imageRemotePath);
+        params.put("path", imageRemotePath.contains(NetConfig.UPLOAD_FILE) ? imageRemotePath : NetConfig.UPLOAD_FILE + imageRemotePath);
         return OKHTTP.getInstance().getRequestManager().uploadIconRemotePath(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
