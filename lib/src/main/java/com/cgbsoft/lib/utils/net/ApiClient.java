@@ -1645,7 +1645,7 @@ public class ApiClient {
      * @return
      */
 
-    public static Observable<String> getLivingSing() {
+    public static Observable<String> getLivingSign() {
         Map<String, String> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().getLivingSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
@@ -1665,7 +1665,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<String> getOcrSing() {
+    public static Observable<String> getOcrSign() {
         Map<String, String> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().getOcrSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }

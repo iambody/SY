@@ -230,7 +230,7 @@ public class LivingManger {
      */
     private static void getSign() {
         //开始网络请求==成功就开始登录 失败重新请求
-        ApiClient.getLivingSing().subscribe(new RxSubscriber<String>() {
+        ApiClient.getLivingSign().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {

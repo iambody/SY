@@ -6,23 +6,17 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.PersistableBundle;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -34,21 +28,16 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.bodys.FileDownloadCallback;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.SkineColorManager;
-import com.cgbsoft.lib.utils.SoFileUtils;
 import com.cgbsoft.lib.utils.StatusBarUtil;
-import com.cgbsoft.lib.utils.ZipUtils;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
@@ -78,7 +67,6 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -849,7 +837,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onDestroy();
         initApplication.setMainpage(false);
         if (null != downDamicSoObservable) {
-            RxBus.get().unregister(RxConstant.DOWN_DAMIC_SO,downDamicSoObservable);
+            RxBus.get().unregister(RxConstant.DOWN_DAMIC_SO, downDamicSoObservable);
         }
         if (null != liveTimerObservable) {
             liveTimerObservable.unsubscribe();
@@ -909,8 +897,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     //    @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
-//            liveDialog.setVisibility(View.GONE);
-//            liveDialog.clearAnimation();
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             intent.putExtra("type", "");
@@ -935,11 +921,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
     }
-//
-//    @OnClick(R.id.video_live_close)
-//    public void closeLiveDialog() {
-////        liveDialog.setVisibility(View.GONE);
-//    }
+
 
     @Override
     public void onBackPressed() {
@@ -1066,12 +1048,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loadSoSuccess(String filePath) {
-        LogUtils.Log("aaa","loadSoSuccess");
+        LogUtils.Log("aaa", "loadSoSuccess");
     }
 
     @Override
     public void loadSoError() {
-        LogUtils.Log("aaa","loadSoError");
+        LogUtils.Log("aaa", "loadSoError");
     }
 
     private void SsetBottomNavigation() {
@@ -1090,21 +1072,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     public void initLocation() {
-        LocationBean a = AppManager.getLocation(baseContext);
+//        LocationBean a = AppManager.getLocation(baseContext);
         locationManger = LocationManger.getInstanceLocationManger(baseContext);
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-//                PromptManager.ShowCustomToast(baseContext,"定位成功");
                 locationManger.unregistLocation();
-//                LogUtils.Log("S", "s");
 //                LogUtils.Log("location", "定位成功 城市：" + null == locationBean.getLocationcity() ? "空" : locationBean.getLocationcity());
-
             }
 
             @Override
             public void getLocationerror() {
 //                LogUtils.Log("location", "定位失败");
+                locationManger.unregistLocation();
             }
         });
 

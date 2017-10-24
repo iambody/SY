@@ -37,6 +37,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -974,7 +975,10 @@ public class CWebviewManger {
 //    }
 
     //    CommonShareDialog commonShareDialog;
+
+    //1成功0失败 分享出发js通知H5
     boolean isShowing;
+    String shareJsAction;
 
     private void shareToC(String actionUrl) {
         String actionDecode = URLDecoder.decode(actionUrl);
@@ -987,6 +991,10 @@ public class CWebviewManger {
         String link = split[5];
         if (split.length >= 7) {
             sharePYQtitle = split[6];
+        }
+        shareJsAction = "";
+        if (6 == split.length) {
+            shareJsAction = split[5];
         }
         boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
@@ -1014,16 +1022,21 @@ public class CWebviewManger {
                     TaskInfo.complentTask("分享产品");
                 }
                 isShowing = false;
-
+                if (!BStrUtils.isEmpty(shareJsAction)) {
+                    webview.loadUrl(shareJsAction+"(1)");
+                }
             }
 
             @Override
             public void cancleShare() {
                 isShowing = false;
+                if (!BStrUtils.isEmpty(shareJsAction)) {
+                    webview.loadUrl(shareJsAction+"(0)");
+                }
             }
         });
         commonShareDialog.show();
-        isShowing=true;
+        isShowing = true;
     }
 
     private void backPage(String action) {
