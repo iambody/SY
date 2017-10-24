@@ -34,7 +34,7 @@ public class NetConfig {
     public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
-    public final static String API_URL_V3 = "api/v2";
+    public final static String API_URL_V3 = "api/v3";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String API_NOV2_URL = "api/";
@@ -87,7 +87,7 @@ public class NetConfig {
     final static String NAVIGATION = API_URL_V3 + "/navigation";
 
     // 全站三级导航
-    final static String NAVIGATION_THREE = API_URL_V3 + "/navigation/third";
+    final static String NAVIGATION_THREE = API_URL_V2 + "/navigation/third";
 
     //红包雨
     final static String RED_PACKET = API_URL + "/redpacket";

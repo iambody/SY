@@ -32,6 +32,7 @@ public class HealthCoursePresenter extends BasePresenterImpl<HealthCourseListCon
 
     @Override
     public void getHealthCourseList(String offset) {
+        getView().showLoadDialog();
         addSubscription(ApiClient.getHealthCourseDataList(ApiBusParam.getHealthCourseDataParams(Integer.parseInt(offset))).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -41,13 +42,16 @@ public class HealthCoursePresenter extends BasePresenterImpl<HealthCourseListCon
                     String stringValue = jsonObject.getString("result");
                     HealthCourseEntity.Result result = new Gson().fromJson(stringValue, new TypeToken<HealthCourseEntity.Result>() {}.getType());
                     getView().requestDataSuccess(result.getRows(), result.getTotal());
+                    getView().hideLoadDialog();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getView().hideLoadDialog();
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
+                getView().hideLoadDialog();
                 getView().requestDataFailure(error.getMessage());
             }
         }));

@@ -24,5 +24,9 @@ public interface HealthSummaryListContract {
         void requestDataSuccess(HealthProjectListEntity healthListModels);
 
         void requestDataFailure(String errMsg);
+
+        void showLoadDialog();
+
+        void hideLoadDialog();
     }
 }

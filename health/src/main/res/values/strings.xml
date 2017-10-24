@@ -22,4 +22,5 @@
     <string name="fitCrowd">适合人群：</string>
     <string name="customComment">客户评价</string>
     <string name="more">更多</string>
+    <string name="notify_no_network">网络无连接，请检查网络</string>
 </resources>

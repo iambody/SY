@@ -29,11 +29,12 @@ public class HealthProjectListEntity implements Serializable{
     }
 
     public static class HealthProjectItemEntity {
+
         private String id;
 
         private String title;
 
-        private String sutTitle;
+        private String subtitle;
 
         private String imageUrl;
 
@@ -43,11 +44,11 @@ public class HealthProjectListEntity implements Serializable{
 
         private String fitCrowd;
 
-        private String userThumbnail;
+        private String headImage;
 
-        private String userFrom;
+        private String userNickName;
 
-        private String comment;
+        private String judgment;
 
         private String url;
 
@@ -67,12 +68,12 @@ public class HealthProjectListEntity implements Serializable{
             this.title = title;
         }
 
-        public String getSutTitle() {
-            return sutTitle;
+        public String getSubtitle() {
+            return subtitle;
         }
 
-        public void setSutTitle(String sutTitle) {
-            this.sutTitle = sutTitle;
+        public void setSubtitle(String subtitle) {
+            this.subtitle = subtitle;
         }
 
         public String getImageUrl() {
@@ -107,28 +108,28 @@ public class HealthProjectListEntity implements Serializable{
             this.fitCrowd = fitCrowd;
         }
 
-        public String getUserThumbnail() {
-            return userThumbnail;
+        public String getHeadImage() {
+            return headImage;
         }
 
-        public void setUserThumbnail(String userThumbnail) {
-            this.userThumbnail = userThumbnail;
+        public void setHeadImage(String headImage) {
+            this.headImage = headImage;
         }
 
-        public String getUserFrom() {
-            return userFrom;
+        public String getUserNickName() {
+            return userNickName;
         }
 
-        public void setUserFrom(String userFrom) {
-            this.userFrom = userFrom;
+        public void setUserNickName(String userNickName) {
+            this.userNickName = userNickName;
         }
 
-        public String getComment() {
-            return comment;
+        public String getJudgment() {
+            return judgment;
         }
 
-        public void setComment(String comment) {
-            this.comment = comment;
+        public void setJudgment(String judgment) {
+            this.judgment = judgment;
         }
 
         public String getUrl() {

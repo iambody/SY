@@ -14,6 +14,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +34,12 @@ public class JavaScriptObjectToc {
     private Context context;
     private BaseWebview webView;
     private String url;
+//    private LoadingDialog mLoadingDialog;
 
     public JavaScriptObjectToc(Context context, BaseWebview webView) {
         this.context = context;
         this.webView = webView;
+//        mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
     }
 
     public void setUrl(String url) {
@@ -63,6 +66,21 @@ public class JavaScriptObjectToc {
         Log.i("JavaScriptObjectToc", sb.toString());
         return sb.toString();
     }
+
+//    private void hideLoadDialog() {
+//        if (mLoadingDialog != null) {
+//            mLoadingDialog.dismiss();
+//        }
+//    }
+//
+//    private void showLoadDialog() {
+//        if (null == mLoadingDialog) {
+//            mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
+//        }
+//        if (!mLoadingDialog.isShowing()) {
+//            mLoadingDialog.show();
+//        }
+//    }
 
     /**
      * 重新加载url的 对象接口
@@ -100,15 +118,8 @@ public class JavaScriptObjectToc {
     };
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
-        System.out.println("---javascirptCallMethod=");
-//        String[] vas = params.split("&");
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        for(String targ: vas) {
-//            String[] va = targ.split("=");
-//            hashMap.put(va[0], va[1]);
-//        }
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);
-        ApiClient.getCommonGetRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>(){
+        ApiClient.getCommonGetRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
                 Log.d("HealthBespeakPresenterw", "----"+ sa);
@@ -129,54 +140,6 @@ public class JavaScriptObjectToc {
         });
     }
 
-//    private void requestGetMethod(String url, String params, String javascirptCallMethod) {
-//        String[] vas = params.split("&");
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        for(String targ: vas) {
-//            String[] va = targ.split("=");
-//            hashMap.put(va[0], va[1]);
-//        }
-//        System.out.println("---url=" + url + "---params=" + params);
-//        System.out.println("---javascirptCallMethod=" + javascirptCallMethod);
-//        ApiClient.getCommonGetRequest(url,hashMap).subscribe(new RxSubscriber<String>(){
-//            @Override
-//            protected void onEvent(String sa) {
-//                Log.d("HealthBespeakPresenterw", "----"+ sa);
-//                String s = "{\n" +
-//                "\"message\": \"\",\n" +
-//                "\"result\": {\n" +
-//                "\"content\": \"<p>十几分拉斯就拉风撒酒疯拉斯甲方领导手机开发房间领导手机发了多少家里的事讲课费简单来说放假了</p>\\n\\n<p>真正好大米，自己会说话！ " +
-//                        "黑龙江五常&mdash;&mdash;中国优质稻米之乡，稻米产地中的皇冠，适于耕种水稻的自然条件得天独厚。始于1835年种植的五常大米一度是晚清皇室独享的贡米。" +
-//                        "<img alt=\\\"\\\" src=\\\"https://upload.simuyun.com/banners/b1c00b26-5ee2-4ca3-b9ed-62ce27bbc198.jpeg\\\" />" +
-//                        "地处北纬45&deg;、东经127&deg;，黑龙江第一积温带，全年接受超过2700小时的日照。世界仅存三大黑土地之一，黑土层平均厚度 达2米，土壤中所含有机物高达10%，" +
-//                        "植被覆盖率高达40%。拉林河、阿什河两大水系河网密度，水温高于地下水，水中矿物质含量丰富，皆利于水稻生长。 温馨提示：大米物流为申通快递，一般2-5天左右到货，" +
-//                        "按距离计算到达。个别情况除外（例：遇恶劣天气或交通问题会影响到达时间） 如需要修改相关信息，请在下单后当日告知客服。 若为18:00后下单需修改，" +
-//                        "请在次日10点前联系客服修改。</p>\\n\\n<p><strong>温馨提示：</strong><strong> </strong>商城自收到订单的次工作日发货（最晚不超过2个工作日）" +
-//                        "</p>\\n\\n<p>例：周一提交订单，周二商城会处理发货。 周五提交订单，下周一统一处理发货。</p>\\n\\n<p>预计到货时间：2~3天（除个别特殊情况）</p>\\n\\n<p>如需要修改相关信息，" +
-//                        "请在下单后当日告知客服。 若为18:00后下单需修改，请在次日10点前联系客服修改。</p>\\n\"," +
-//                "\"id\": \"2e4cdcbae0f14351a14b644c9ba83732\",\n" +
-//                "\"title\": \"十几分拉斯就拉风撒酒疯拉斯甲方领导手机开发房间领导手机发了多少家里的事讲课费简单来说放假了闪亮的积分蓝思科技法律手段\",\n" +
-//                "\"releaseDate\": \"2017年09月20日 11:46:14\"\n" +
-//                "},\n" +
-//                "\"code\": \"\"\n" +
-//                "}";
-//                ThreadUtils.runOnMainThread(() -> {
-//                    String ss = s.replaceAll(" +", "");
-//                    ss = ss.replaceAll("\\\\n", "\\\n");
-////                    ss = ss.replaceAll("\\\\\"", "\\\"");
-//                    ss = ss.replaceAll(":","@@@");
-//                    Log.e("ssssssssss",ss);
-//                    webView.loadUrl("javascript:" + javascirptCallMethod + "('" + ss + "')");
-//                });
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                System.out.println("---error message=" + error.getMessage());
-//            }
-//        });
-//    }
-
     private HashMap formatJsonObjectToHashMap(String param) {
         HashMap hashMap = new HashMap<>();
         if (TextUtils.isEmpty(param)) {
@@ -188,7 +151,7 @@ public class JavaScriptObjectToc {
             Iterator<String> iterator = jsonObject.keys();
             while (iterator.hasNext()) {
                 String key = iterator.next();
-                hashMap.put(key, jsonObject.getString(key));
+                hashMap.put(key, jsonObject.get(key));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -202,11 +165,7 @@ public class JavaScriptObjectToc {
             protected void onEvent(String sa) {
                 Log.d("requestPostMethod", "----"+ sa);
                 ThreadUtils.runOnMainThread(() -> {
-//                    String ss = sa.replaceAll(" +", "");
-//                    ss = ss.replaceAll("\\\\n", "\\\n");
-//                    ss = ss.replaceAll(":","@@@");
-//                    Log.e("ssssssssss",ss);
-                    InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
+                    InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                     investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
                 });
@@ -215,7 +174,9 @@ public class JavaScriptObjectToc {
             @Override
             protected void onRxError(Throwable error) {
                 System.out.println("---requestPostMethod error message=" + error.getMessage());
-                webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                ThreadUtils.runOnMainThread(() -> {
+                    webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                });
             }
         });
     }

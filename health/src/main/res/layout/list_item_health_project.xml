@@ -12,146 +12,166 @@
         android:gravity="center_vertical">
 
         <ImageView
+            android:id="@+id/item_project_image_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:id="@+id/item_project_image_id"/>
+            android:scaleType="fitXY" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/health_item_title"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:id="@+id/health_title_id"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/health_item_subtitle"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/health_subTitle_id"/>
+            <TextView
+                android:id="@+id/health_title_id"
+                style="@style/health_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/health_subTitle_id"
+                style="@style/health_item_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:ellipsize="end"
+                android:maxLines="2" />
+        </LinearLayout>
+
     </RelativeLayout>
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="15dp"
-       android:gravity="center_vertical|left">
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           style="@style/health_item_detail"
-           android:text="@string/effectPosition"/>
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           style="@style/health_item_detail"
-           android:id="@+id/effectPosition"/>
-   </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical|left">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/health_item_detail"
-            android:text="@string/fitSymptom"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/health_item_detail"
-            android:id="@+id/fitSymptom"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical|left">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/health_item_detail"
-            android:text="@string/fitCrowd"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/health_item_detail"
-            android:id="@+id/fitCrowd"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center_vertical|left"
-        android:id="@+id/custom_comment_ll">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/effectPosition_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left">
+
+            <TextView
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/effectPosition" />
+
+            <TextView
+                android:id="@+id/effectPosition"
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fitSymptom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical|left">
+
+            <TextView
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fitSymptom" />
+
+            <TextView
+                android:id="@+id/fitSymptom"
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/fitCrowd_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical|left">
+
+            <TextView
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fitCrowd" />
+
+            <TextView
+                android:id="@+id/fitCrowd"
+                style="@style/health_item_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/custom_comment_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical|left">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/customComment"
             android:layout_weight="1"
+            android:text="@string/customComment"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/dimens_sp_16"/>
+            android:textSize="@dimen/dimens_sp_16"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_595959"
-            android:textSize="@dimen/dimens_sp_14"
+            android:layout_marginRight="10dp"
             android:text="@string/more"
-            android:layout_marginRight="10dp"/>
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_14" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_right_arrow"/>
+            android:src="@drawable/ic_right_arrow" />
     </LinearLayout>
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
-       <com.cgbsoft.lib.widget.RoundImageView
-           android:layout_width="45dp"
-           android:layout_height="45dp"
-           android:id="@+id/custom_image_id"
-           android:src="@drawable/logo"
-           android:layout_marginRight="10dp"/>
+        <com.cgbsoft.lib.widget.RoundImageView
+            android:id="@+id/custom_image_id"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/logo" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@id/custom_image_id"
-           android:id="@+id/customFromPlatform"
-           android:textSize="@dimen/dimens_sp_15"
-           android:textColor="@color/black"
-           android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/customFromPlatform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/custom_image_id"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_15"
+            android:textStyle="bold" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_toRightOf="@id/custom_image_id"
-           android:layout_below="@id/customFromPlatform"
-           android:layout_marginTop="5dp"
-           android:id="@+id/customComment"
-           android:textSize="@dimen/dimens_sp_16"
-           android:textColor="@color/black"/>
-
-   </RelativeLayout>
-
+        <TextView
+            android:id="@+id/customComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customFromPlatform"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/custom_image_id"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
+    </RelativeLayout>
 </LinearLayout>

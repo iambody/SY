@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +74,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     @BindView(R2.id.icon_to_list)
     ImageView iconToList;
 
+    private LoadingDialog mLoadingDialog;
     private HealthSummaryAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
 
@@ -91,6 +93,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     @Override
     protected void onFirstUserVisible() {
+        mLoadingDialog = LoadingDialog.getLoadingDialog(getActivity(), "", false, false);
         emptyTextView.setText(String.format(getString(R.string.empty_text_descrption), "项目"));
         checkHealthAdapter = new HealthSummaryAdapter(getActivity(), new ArrayList<>());
         swipeToLoadLayout.setOnLoadMoreListener(this);
@@ -103,7 +106,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getTitle());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getUrl()).concat("?healthId=").concat(discoveryListModel.getId()).concat("&healthImg=")
-                    .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()));
+                    .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()).concat("&goCustomFeedBack=0"));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
         });
@@ -150,6 +153,25 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     public void toGOHealthList() {
         healthProjectListRl.setVisibility(View.VISIBLE);
         healthProjectModelRl.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示loading弹窗
+     */
+    @Override
+    public void showLoadDialog() {
+        if (mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.show();
+    }
+
+    /**
+     * 隐藏loading弹窗
+     */
+    @Override
+    public void hideLoadDialog() {
+        mLoadingDialog.dismiss();
     }
 
     @Override

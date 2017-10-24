@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../assets/styles/commons.css" rel="stylesheet">
+    <title id="heathPro">健康项目</title>
+    <style>
+        html,body{min-width:320px !important;}
+        #contentWrap img{display:block;width:100% !important;height:auto !important;}
+        #contentWrap p{padding:0px 15px 20px;line-height: 30px;font-size: 16px;}
+        #contentWrap ul{padding:0px 15px 30px}
+        #contentWrap h2{overflow: hidden;line-height: 32px;}
+    </style>
+</head>
+<body>
+<div id="contentWrap"></div>
+<script type="text/javascript" src="../assets/scripts/our.js"></script>
+<script type="text/javascript" src="../assets/scripts/common.js"></script>
+<script>
+
+    //主逻辑
+    (function(){
+
+        //url上获取数据
+        var proId = location.parameters.id;
+
+
+        // 接口路径配置
+        var requestConfig = {
+            healthPro: '/api/v2/health/healthintroducecontent'
+        };
+
+        //变量和Dom
+        var $contentWrap=$('#contentWrap');
+        var requestData={id:proId};
+
+
+        //请求数据接口函数
+        function toGetData() {
+            new Request(requestConfig.healthPro,{
+                'method': 'GET',
+                'noCache': true
+            }).on('finish', function(e) {
+                var result,message;
+                if (e.status != 200) {
+                    sendCommand('toastError', '网络加载失败,请稍后再试!');
+                    return false;
+                }
+
+                try {
+
+                    data = JSON.parse(e.text);
+                    result=data.content;
+                    message=data.message;
+                    if(message){
+                        sendCommand('toastError', message);
+                        return false;
+                    }
+
+                    nativeCall(result);
+
+                } catch (ex) {
+                    sendCommand('toastError', '健康项目信息数据解析失败！');
+                    return false;
+                }
+
+            }).send({"param":JSON.stringify(requestData)});
+        }
+
+        toGetData();
+
+        function nativeCall(data){
+            $contentWrap.innerHTML=data;
+        }
+        //全局引用
+        window.nativeCall=nativeCall;
+
+    })();
+
+
+</script>
+</body>
+</html>
