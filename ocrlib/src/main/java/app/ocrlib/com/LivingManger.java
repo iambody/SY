@@ -47,6 +47,7 @@ public class LivingManger {
 //    private static String nonce = "52014832029547845621032584562012";
 //    private static String KKKeyicen = "JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKVYQG+Xc2ykjuUNmXuk4BK5zaeOpHdO9mdUlhvgqp7KZurrDdqvVt5fkeYDWtx26mQu2s7b4Rjn6Y7CbH9jhJrHBLXqcBm7zqhnJ3Y8AhJ9nQPbPnCY1Ln8IN4ejYdY4La49gkzvAFb1N21ipOImAt1HHU0RbuXDz/OVsJ4ZVQFXp8DmdniweHVi049dIPvokwj9z5A0kONQRgrfRvIMLgGQXGfT2+A1:D682K+7lEzGtuexx5F1e3K2IC8ZXuxiOD7hFc478HPSLq0e0U619G99/OePSPD+uhURbobew==";
 //    private static String APPID = "TIDAjl3C";
+    private static LivingSign livingSign;
 
     private LivingManger() {
     }
@@ -110,10 +111,8 @@ public class LivingManger {
      * @param mode
      * @param sign
      */
-    public static void openCloudFaceService(final FaceVerifyStatus.Mode mode, String sign, String APPID, String nonce, String userId, String keyicen, String orderNum) {
-
+    public static void openCloudFaceService(final FaceVerifyStatus.Mode mode, String sign, String APPID, String nonce, String userId, String keyicen, final String orderNum) {
         final String modeShowGuide = mode.toString();
-
         Bundle data = new Bundle();
         WbCloudFaceVerifySdk.InputData inputData = new WbCloudFaceVerifySdk.InputData(
                 Cardname,
@@ -140,7 +139,6 @@ public class LivingManger {
         data.putString(WbCloudFaceVerifySdk.COLOR_MODE, color);
         //是否对录制视频进行检查,默认不检查
 //        data.putBoolean(WbCloudFaceVerifySdk.VIDEO_CHECK, true);
-
         WbCloudFaceVerifySdk.getInstance().init(livingContext, data, new WbCloudFaceVerifySdk.FaceVerifyLoginListener() {
             @Override
             public void onLoginSuccess() {
@@ -157,6 +155,19 @@ public class LivingManger {
                         }
 
                         if (resultCode == 0) {
+                            //需要通知后台*********************
+                            ApiClient.livingQueryResult(orderNum).subscribe(new RxSubscriber<String>() {
+                                @Override
+                                protected void onEvent(String s) {
+
+                                }
+
+                                @Override
+                                protected void onRxError(Throwable error) {
+
+                                }
+                            });
+                            //已经通知后台***********************
                             if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
@@ -214,14 +225,12 @@ public class LivingManger {
 
     }
 
-    static LivingSign livingSign;
-
     /**
      * 请求server后台的sign
      */
     private static void getSign() {
         //开始网络请求==成功就开始登录 失败重新请求
-        ApiClient.getLivingSing().subscribe(new RxSubscriber<String>() {
+        ApiClient.getLivingSign().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {

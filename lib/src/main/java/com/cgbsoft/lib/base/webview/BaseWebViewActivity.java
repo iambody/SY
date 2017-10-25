@@ -296,7 +296,28 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     }
 
     private void changeTitileStyle() {
-        if (rightMemberRule||title.equals("我的财富值")) {
+        if (title.equals("我的财富值")) {
+            toolbar.setVisibility(View.GONE);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            relativeLayout.setVisibility(View.VISIBLE);
+            relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            ImageView imageView = (ImageView) findViewById(R.id.title_left);
+            imageView.setImageResource(R.drawable.ic_back_black_24dp);
+            imageView.setOnClickListener(v -> finish());
+            TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
+            titleTextView.setText("我的财富值");
+            titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+            TextView rightText = (TextView) findViewById(R.id.title_right);
+            rightText.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+            rightText.setText("会员规则");
+            rightText.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
+                intent.putExtra(WebViewConstant.push_message_title, "会员规则");
+                startActivity(intent);
+            });
+        }
+        if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);

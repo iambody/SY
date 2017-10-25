@@ -241,7 +241,7 @@ public class OcrManger {
      */
     private void getSign() {
         //开始网络请求==成功就开始登录 失败重新请求
-        ApiClient.getOcrSing().subscribe(new RxSubscriber<String>() {
+        ApiClient.getOcrSign().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
 

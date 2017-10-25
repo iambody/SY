@@ -68,7 +68,7 @@ import rx.Subscriber;
 import rx.functions.Action0;
 
 /**
- * desc  ${DESC}
+ * desc
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-21:06
  */

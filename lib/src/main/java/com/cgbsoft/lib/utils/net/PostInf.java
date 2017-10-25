@@ -7,8 +7,6 @@ package com.cgbsoft.lib.utils.net;
  */
 public class PostInf {
 
-
-
   //新版登录
     public  class LoginV2Bean{
         private String sign;

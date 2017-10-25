@@ -857,16 +857,32 @@ interface RequestManager {
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
 
+
+
+
     /**
      * 活体检测获取sign
      */
     @GET(NetConfig.Compliance.COMPLIANCE_LIVING_SIGN)
     Observable<ResponseBody> getLivingSign(@QueryMap Map<String, String> programObject);
+
+    /**
+     * 活体检测的结果通知 post
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_LIVING_RESULT)
+    Observable<ResponseBody> queryLivingResult(@Body RequestBody responseBody);
+
     /**
      * orc获取sign
      */
     @GET(NetConfig.Compliance.COMPLIANCE_OCR_SIGN)
     Observable<ResponseBody> getOcrSign(@QueryMap Map<String, String> programObject);
+
+    /**
+     * 自定义人脸识别OCR
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_OCR)
+    Observable<ResponseBody> getOcrResult(@Body RequestBody responseBody);
 
     /**
      * 通用的Get请求接口
@@ -886,4 +902,5 @@ interface RequestManager {
      */
     @GET(NetConfig.RESOURCE_FILE_INFO)
     Observable<ResponseBody> requestResourceInfo();
+//sss
 }

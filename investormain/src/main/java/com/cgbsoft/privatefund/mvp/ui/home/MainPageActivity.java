@@ -837,7 +837,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onDestroy();
         initApplication.setMainpage(false);
         if (null != downDamicSoObservable) {
-            RxBus.get().unregister(RxConstant.DOWN_DAMIC_SO,downDamicSoObservable);
+            RxBus.get().unregister(RxConstant.DOWN_DAMIC_SO, downDamicSoObservable);
         }
         if (null != liveTimerObservable) {
             liveTimerObservable.unsubscribe();
@@ -897,8 +897,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     //    @OnClick(R.id.video_live_pop)
     public void joinLive() {
         if (liveJsonData != null) {
-//            liveDialog.setVisibility(View.GONE);
-//            liveDialog.clearAnimation();
             Intent intent = new Intent(this, LiveActivity.class);
             intent.putExtra("liveJson", liveJsonData.toString());
             intent.putExtra("type", "");
@@ -923,11 +921,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             e.printStackTrace();
         }
     }
-//
-//    @OnClick(R.id.video_live_close)
-//    public void closeLiveDialog() {
-////        liveDialog.setVisibility(View.GONE);
-//    }
+
 
     @Override
     public void onBackPressed() {
@@ -1054,12 +1048,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loadSoSuccess(String filePath) {
-        LogUtils.Log("aaa","loadSoSuccess");
+        LogUtils.Log("aaa", "loadSoSuccess");
     }
 
     @Override
     public void loadSoError() {
-        LogUtils.Log("aaa","loadSoError");
+        LogUtils.Log("aaa", "loadSoError");
     }
 
     private void SsetBottomNavigation() {
@@ -1078,21 +1072,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     public void initLocation() {
-        LocationBean a = AppManager.getLocation(baseContext);
+//        LocationBean a = AppManager.getLocation(baseContext);
         locationManger = LocationManger.getInstanceLocationManger(baseContext);
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
-//                PromptManager.ShowCustomToast(baseContext,"定位成功");
                 locationManger.unregistLocation();
-//                LogUtils.Log("S", "s");
 //                LogUtils.Log("location", "定位成功 城市：" + null == locationBean.getLocationcity() ? "空" : locationBean.getLocationcity());
-
             }
 
             @Override
             public void getLocationerror() {
 //                LogUtils.Log("location", "定位失败");
+                locationManger.unregistLocation();
             }
         });
 

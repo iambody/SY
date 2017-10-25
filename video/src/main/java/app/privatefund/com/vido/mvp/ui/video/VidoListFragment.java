@@ -11,6 +11,7 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -121,6 +122,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
                 VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
 
             }
+
         });
         swipeTarget.setAdapter(videoListAdapter);
 

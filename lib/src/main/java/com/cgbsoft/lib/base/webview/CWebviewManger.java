@@ -37,6 +37,7 @@ import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CacheDataManager;
 import com.cgbsoft.lib.utils.tools.CalendarManamger;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
@@ -987,7 +988,10 @@ public class CWebviewManger {
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
     //    CommonShareDialog commonShareDialog;
+
+    //1成功0失败 分享出发js通知H5
     boolean isShowing;
+    String shareJsAction;
 
     private void shareToC(String actionUrl) {
         String actionDecode = URLDecoder.decode(actionUrl);
@@ -998,9 +1002,13 @@ public class CWebviewManger {
         String subTitle = split[3];
         String imageTitle = split[4];
         String link = split[5];
+        shareJsAction = "";
         if (split.length >= 7) {
             sharePYQtitle = split[6];
+            shareJsAction = split[6];
         }
+//        webview.loadUrl("javascript:resultForSharing(1)");
+
         boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
@@ -1008,6 +1016,10 @@ public class CWebviewManger {
         CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
+                if (!BStrUtils.isEmpty(shareJsAction)) {
+                    webview.loadUrl("javascript:"+shareJsAction+"(1)");
+
+                }
                 //分享微信朋友圈成功
                 if (actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
                     if (!AppManager.isVisitor(context)) {
@@ -1031,10 +1043,14 @@ public class CWebviewManger {
             @Override
             public void cancleShare() {
                 isShowing = false;
+                if (!BStrUtils.isEmpty(shareJsAction)) {
+                    webview.loadUrl("javascript:"+shareJsAction+"(0)");
+
+                }
             }
         });
         commonShareDialog.show();
-        isShowing=true;
+        isShowing = true;
     }
 
     private void backPage(String action) {

@@ -487,7 +487,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onError(Platform platform, int i, Throwable throwable) {
-
+        if(null!=commentShareListener){
+            commentShareListener.cancleShare();
+        }
     }
 
     /**
@@ -544,14 +546,16 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onCancel(Platform platform, int i) {
-
+        if(null!=commentShareListener){
+            commentShareListener.cancleShare();
+        }
     }
 
     @Override
     public void dismiss() {
         super.dismiss();
         if(null!=commentShareListener){
-            commentShareListener.cancleShare();
+//            commentShareListener.cancleShare();
         }
         try {
             CloseShareSdk();

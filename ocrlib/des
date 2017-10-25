@@ -1,11 +1,15 @@
- /**
+      **********************身份证*********************************
+
+        /**身份证
          * 开启相机
          * 参数1: 上下文
          * 参数2: 请求码,用于onActivityResult
          */
+    //1开始拍照获取身份证
         CameraUtil.getInstance().startCamera(this, 100);
+    //2身份证的回调
          @Override
-            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 super.onActivityResult(requestCode, resultCode, data);
                 if(data == null){
                     return;
@@ -15,3 +19,25 @@
                     updateImageView();
                 }
             }
+
+       ***********************活体检测********************************
+            1 活体检测的调用
+            LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
+                      @Override
+                      public void livingSucceed() {
+                      //成功的结果
+                           Log.i("ssalslaklslksaklsakl", "成功了");
+                       }
+
+                      @Override
+                      public void livingFailed() {
+                      // 失败的结果
+                        }
+                   });
+
+           2 开始启动检测
+            livingManger.startLivingMatch();
+
+
+           3 在页面的destory里面需要进行销毁资源
+            livingManger.destory();
