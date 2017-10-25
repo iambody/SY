@@ -5,16 +5,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.ExtendWebView;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
@@ -37,6 +36,9 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     @BindView(R2.id.health_introduce_rv)
     RecyclerView recyclerView;
 
+    @BindView(R2.id.ll_category_all)
+    LinearLayout categoryHealthLayout;
+
     @BindView(R2.id.health_introduce_has_result)
     LinearLayout healthIntroduceHasFlag;
 
@@ -47,7 +49,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     LinearLayout healthIntroduceDataEmpty;
 
     @BindView(R2.id.webview)
-    BaseWebview baseWebview;
+    ExtendWebView baseWebview;
     private static final int HAS_DATA = 0;
     private static final int HAS_DATA_NO = 1;
     private static final int HAS_DATA_ERROR = 2;
@@ -73,13 +75,25 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         healthIntroduceFlagRecyclerAdapter = new HealthIntroduceFlagRecyclerAdapter(baseActivity);
         recyclerView.setAdapter(healthIntroduceFlagRecyclerAdapter);
         healthIntroduceFlagRecyclerAdapter.setCategoryItemClickListener((view1, posBean) -> {
-            LogUtils.Log("aaa", "click item");
-//            if (TextUtils.equals(category, posBean.getCode())) {
-//                return;
-//            }
             category = posBean.getCode();
             getPresenter().initNavigationContent(baseWebview, posBean);
         });
+        baseWebview.setOnScrollChangedCallback(new ExtendWebView.OnScrollChangedCallback() {
+            @Override
+            public void onScrollUp() {
+                if (categoryHealthLayout.getVisibility() == View.VISIBLE) {
+                    categoryHealthLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScrollDown() {
+                if (categoryHealthLayout.getVisibility() == View.GONE) {
+                    categoryHealthLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 
