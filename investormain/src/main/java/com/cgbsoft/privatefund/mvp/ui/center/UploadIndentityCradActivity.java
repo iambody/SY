@@ -246,7 +246,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/"+credentialCode+"/");
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
-                        remoteParams.add(NetConfig.UPLOAD_FILE.concat(paths));
+                        remoteParams.add(paths);
                     } else {
                         ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                         submit.setEnabled(true);

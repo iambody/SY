@@ -74,13 +74,17 @@ public class DownloadUtils {
 
         String UPLOAD_URL;
         if (NetConfig.START_APP.equals("https://app")) {
-            if (isSecret)
+            if (isSecret) {
                 UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
-            UPLOAD_URL = NetConfig.UPLOAD_FILE;
+            } else {
+                UPLOAD_URL = NetConfig.UPLOAD_FILE;
+            }
         } else {
-            if (isSecret)
-                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
-            UPLOAD_URL = NetConfig.UPLOAD_FILE + "/-/" + NetConfig.SERVER_ADD;
+            if (isSecret) {
+                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE+"/-/" + NetConfig.SERVER_ADD;
+            } else {
+                UPLOAD_URL = NetConfig.UPLOAD_FILE + "/-/" + NetConfig.SERVER_ADD;
+            }
         }
         if (formUpload(UPLOAD_URL, textMap, fileMap)) {
             return UPLOAD_URL + remotePath;
