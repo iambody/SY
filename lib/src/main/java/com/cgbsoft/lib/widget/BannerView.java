@@ -132,9 +132,16 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         if (bannerAdapter == null) {
             bannerAdapter = new HomeBannerAdapter(bannerList);
             targetVp.setAdapter(bannerAdapter);
+
         } else {
             bannerAdapter.notifyData(bannerList);
+
         }
+
+
+//         targetVp.setCurrentItem(0);
+
+
     }
 
     private void bannerPointLight(int currentPoint) {
@@ -217,6 +224,15 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             if (!CollectionUtils.isEmpty(listView)) {
                 this.views = listView;
                 notifyDataSetChanged();
+
+                if (1 == listView.size() || 0 == listView.size()) {
+                } else if (0 == (targetVp.getCurrentItem() + 1) % views.size()) {
+                    targetVp.setCurrentItem(selectedBanner + 1);
+                } else {
+                    targetVp.setCurrentItem(selectedBanner + (listView.size()-(targetVp.getCurrentItem() + 1) % views.size())+1);
+                }
+
+
             }
         }
 
