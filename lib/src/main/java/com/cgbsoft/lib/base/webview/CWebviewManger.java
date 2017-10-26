@@ -1021,7 +1021,7 @@ public class CWebviewManger {
 
                 }
                 //分享微信朋友圈成功
-                if (actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
+                if (actionUrl.contains("new_detail_toc.html") || actionUrl.contains("information/details.html")) { // 资讯分享需要获取云豆和埋点
                     if (!AppManager.isVisitor(context)) {
                         //自选页面分享朋友圈成功
                         TaskInfo.complentTask("分享资讯");
