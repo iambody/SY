@@ -2,7 +2,9 @@ package com.cgbsoft.lib.utils.poster;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ScrollView;
@@ -48,8 +50,9 @@ public class ElevenPoster {
             return path;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 
     /**
@@ -121,6 +124,24 @@ public class ElevenPoster {
          */
         v.measure(measuredWidth, measuredHeight);
         v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+    }
+
+
+    //base64转换成bitmap后在进行保存
+
+    /**
+     * base64转为bitmap
+     */
+    public static Bitmap base64ToBitmap(String base64Data) {
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * 获取base64的路径
+     */
+    public static String base64ToPath(String base64,String name) {
+        return saveBitmapToSDCard(base64ToBitmap(base64), name);
     }
 
 }
