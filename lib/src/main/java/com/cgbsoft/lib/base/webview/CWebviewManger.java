@@ -413,7 +413,7 @@ public class CWebviewManger {
      * @param action
      */
     private void sharePoster(String action) {
-       String path= ScreenShot.GetandSaveCurrentImage(context);
+        String path = ScreenShot.GetandSaveCurrentImage(context);
 
         CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, path, new CommonSharePosterDialog.CommentShareListener() {
             @Override
