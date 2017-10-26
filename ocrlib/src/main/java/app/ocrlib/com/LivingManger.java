@@ -91,6 +91,7 @@ public class LivingManger {
 //                    signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
                     getSign();
 
+
                 } else {
                     Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
                     return;
@@ -155,7 +156,7 @@ public class LivingManger {
                         }
 
                         if (resultCode == 0) {
-                            //需要通知后台*********************
+                            //需要通知后台**************************************************
                             ApiClient.livingQueryResult(orderNum).subscribe(new RxSubscriber<String>() {
                                 @Override
                                 protected void onEvent(String s) {
@@ -167,7 +168,11 @@ public class LivingManger {
 
                                 }
                             });
-                            //已经通知后台***********************
+
+                            //已经通知后台**************************************************
+                            sendDataResult();
+
+
                             if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
@@ -194,6 +199,26 @@ public class LivingManger {
             }
         });
     }
+
+    /**
+     * 二次通知后台
+     */
+    public static void sendDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo) {
+        //需要获取结果的
+        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+    }
+
 
     /**
      * 初始化进度条

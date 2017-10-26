@@ -1662,6 +1662,22 @@ public class ApiClient {
     }
 
     /**
+     * 活体检测二次通知接口
+     * @return
+     */
+    public static Observable<String>getLivingQueryDataResult(String imageUrl,String cardNum,String cardName,String cardValidity,String orderNo){
+        Map<String, String> params = new HashMap<>();
+        params.put("imageUrl", imageUrl);
+        params.put("cardNum", cardNum);
+        params.put("cardName", cardName);
+        params.put("cardValidity", cardValidity);
+        params.put("orderNo", orderNo);
+        return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+
+    }
+
+    /**
      * 获取ORC检测的sign值
      *
      * @return
