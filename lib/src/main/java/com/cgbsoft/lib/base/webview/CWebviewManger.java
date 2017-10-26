@@ -63,7 +63,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
@@ -404,6 +403,22 @@ public class CWebviewManger {
             showTitleRightStr(action);
         } else if (action.contains("shareFromScreenshot")) {
             sharePoster(action);
+        } else if (action.contains("penLargeImage")) {
+            gotoLargeImage(action);
+        }
+    }
+
+    private void gotoLargeImage(String url) {
+        try {
+            String[] urlcodeAction = url.split(":");
+            String urlCoder = URLDecoder.decode(urlcodeAction[2], "utf-8");
+            if (!TextUtils.isEmpty(urlCoder)) {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(Constant.IMAGE_SAVE_PATH_LOCAL, urlCoder);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SMOOT_IMAGE_ACTIVITY, hashMap);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -994,12 +1009,10 @@ public class CWebviewManger {
 //            e.printStackTrace();
 //        }
     }
-//
 //    private void openWeixin(final String title, final String content, final String url, final int image) {
 //        WeiXinShare sh = new WeiXinShare(context, "");
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
-
     //    CommonShareDialog commonShareDialog;
 
     //1成功0失败 分享出发js通知H5
@@ -1034,7 +1047,7 @@ public class CWebviewManger {
 
                 }
                 //分享微信朋友圈成功
-                if (actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
+                if (actionUrl.contains("new_detail_toc.html") || actionUrl.contains("information/details.html")) { // 资讯分享需要获取云豆和埋点
                     if (!AppManager.isVisitor(context)) {
                         //自选页面分享朋友圈成功
                         TaskInfo.complentTask("分享资讯");
@@ -1047,11 +1060,10 @@ public class CWebviewManger {
                     }
                 }
 
-                if (isProductShare) {  // 产品分享需要获取云豆
+                if (isProductShare) { // 产品分享需要获取云豆
                     TaskInfo.complentTask("分享产品");
                 }
                 isShowing = false;
-
             }
 
             @Override

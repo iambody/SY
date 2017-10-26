@@ -1192,19 +1192,6 @@ public class DataStatistApiParam {
     }
 
     /**
-     * 健康首页
-     *
-     * @param
-     */
-    public static void operateHealthFirstClick() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2059");
-        data3.put("act", "20340");
-        data3.put("arg1", "健康服务");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
-    }
-
-    /**
      * 健康监测
      *
      * @param
@@ -1669,6 +1656,32 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+
+    /**
+     * 视频详情
+     * @param
+     */
+    public static void openHealthCourseActivityClick(String courseName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2060");
+        data3.put("act", "20428");
+        data3.put("arg1", "进入健康课堂");
+        data3.put("arg4", courseName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 视频详情
+     * @param
+     */
+    public static void openShareHealthCourseActivityClick(String courseName) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2060");
+        data3.put("act", "20430");
+        data3.put("arg1", "分享健康课堂");
+        data3.put("arg4", courseName);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
 
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
  *
  * @author chenlong
  */
-@Route("investornmain_smoothimageactivity")
+@Route(RouteConfig.SMOOT_IMAGE_ACTIVITY)
 public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 
 	@BindView(R.id.show_image)
@@ -61,7 +62,6 @@ public class SmoothImageActivity extends BaseActivity implements Toolbar.OnMenuI
 	protected void init(Bundle savedInstanceState) {
 		localUrl = getIntent().getStringExtra(IMAGE_SAVE_PATH_LOCAL);
 		imageView.setImageResource(R.drawable.bg_white);
-//		toolbar.setTitle("");
 		titleMid.setText("图片预览");
 		rightTextView.setVisibility(getIntent().getBooleanExtra(IMAGE_RIGHT_DELETE, false) ? View.VISIBLE : View.GONE);
 		Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_local_video_delete);

@@ -8,11 +8,19 @@
     <style name="health_item_title">
         <item name="android:textSize">@dimen/ui_32_dip</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:shadowColor">#5f000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
     </style>
 
     <style name="health_item_subtitle">
         <item name="android:textSize">@dimen/ui_20_dip</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:shadowColor">#5f000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
     </style>
 
     <style name="health_item_detail">

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
-import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -107,7 +105,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             hashMap.put(WebViewConstant.push_message_title, discoveryListModel.getShortName());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getDetailUrl()).concat("?id=").concat(discoveryListModel.getId()));
             NavigationUtils.startActivityForResultByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap, REQUEST_BACK_CODE);
-            DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
+            DataStatistApiParam.openHealthCourseActivityClick(discoveryListModel.getTitle());
             this.currentListModel = discoveryListModel;
         });
         swipeTarget.setAdapter(checkHealthAdapter);
@@ -171,26 +169,6 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-//        if (isCheckHealth) {
-//            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_JC);
-//        } else {
-//            MobclickAgent.onPageEnd(Constant.SXY_JIANKANG_YL);
-//        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        if (isCheckHealth) {
-//            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_JC);
-//        } else {
-//            MobclickAgent.onPageStart(Constant.SXY_JIANKANG_YL);
-//        }
-    }
-
-    @Override
     protected HealthCoursePresenter createPresenter() {
         return new HealthCoursePresenter(getActivity(), this);
     }
@@ -219,7 +197,6 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             CurrentPostion = CurrentPostion + 1;
             isLoadMore = true;
             getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-            DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
         } else {
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
@@ -239,7 +216,6 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
         CurrentPostion = 0;
         isLoadMore = false;
         getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-        DataStatistApiParam.operatePrivateBankDiscoverUpRefrushClick();
     }
 
     @Override
