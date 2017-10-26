@@ -67,5 +67,10 @@
     <dimen name="ui_100_dip">100dp</dimen>
     <dimen name="ui_124_dip">124dp</dimen>
     <dimen name="ui_90_dip">90dp</dimen>
+    <dimen name="ui_100_px">100px</dimen>
+    <dimen name="ui_150_px">150px</dimen>
+    <dimen name="ui_180_px">180px</dimen>
+    <dimen name="ui_240_px">240px</dimen>
+    <dimen name="ui_220_px">220px</dimen>
 
 </resources>

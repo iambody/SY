@@ -2,7 +2,6 @@ package com.cgbsoft.lib.share.dialog;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,17 +14,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
-import com.cgbsoft.lib.share.bean.ShareCommonBean;
 import com.cgbsoft.lib.share.bean.ShareViewBean;
 import com.cgbsoft.lib.share.utils.ShareUtils;
-import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -45,12 +40,11 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
 /**
- * desc
+ * desc  分享海报的图片
  * author wangyongkui  wangyongkui@simuyun.com
- * 日期 17/3/31-18:26
+ * 日期 2017/10/26-16:06
  */
-
-public class CommonShareDialog extends Dialog implements PlatformActionListener, View.OnClickListener {
+public class CommonSharePosterDialog extends Dialog implements PlatformActionListener, View.OnClickListener {
 
     /**
      * 微信分享标识
@@ -89,13 +83,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      * 是微信朋友圈
      */
     public static final int Tag_Style_WxPyq = 4;
-
-
     /**
      * 根据不同的Tag进行处理
      */
     private int Tag_Style;
-
 
     /**
      * 没有用ButterKnife 所以下边会有一坨
@@ -141,28 +132,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     private FlowLayoutView comment_share_flowlayout;
     /**
-     * 保存下分享的不带名片的url 和 带名片的url
-     */
-    private String UrlNoCode, UrlCode;
-
-
-    /**
-     * 有的短信和邮件需要后边仅仅的添加一个parms
-     */
-    private String SMSNoCode, SMSCode;
-    private String EmailNoCode, EmailCode;
-    /**
      * 是否符合
      */
     private boolean IsCanShare;
-
-
-    /**
-     * 需要的分享bean
-     *
-     * @param
-     */
-    private ShareCommonBean commonShareBean;
 
     /**
      * 所有可能需要用到的view=>联系人，微信，朋友圈，邮件，短信，复制链接
@@ -203,50 +175,32 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      * 预留的回调接口进行动态的需求
      */
 
-    private CommentShareListener commentShareListener;
+    private CommonSharePosterDialog.CommentShareListener commentShareListener;
     private UserInfoDataEntity.UserInfo userInfo;
 
-    public CommonShareDialog(Context dcontext, int tag_Style, ShareCommonBean commonShareBean, CommentShareListener commentShareListener) {
+    /**
+     * 分享海报时候获取的
+     *
+     * @param dcontext
+     * @param tag_Style
+     * @param imagPath
+     * @param commentShareListener
+     */
+    private String imageSharePath;
+
+    public CommonSharePosterDialog(Context dcontext, int tag_Style, String imagPath, CommonSharePosterDialog.CommentShareListener commentShareListener) {
         super(dcontext, R.style.share_comment_style);
         Dcontext = dcontext;
         Tag_Style = tag_Style;
-        this.commonShareBean = commonShareBean;
+        imageSharePath = imagPath;
         this.commentShareListener = commentShareListener;
         ShareSDK.initSDK(Dcontext);
         userInfo = AppManager.getUserInfo(Dcontext);
 //     根据需求分享理财是名片
         IsCanShare = !BStrUtils.isEmpty(userInfo.realName) && userInfo.isAdvisers.endsWith("y") && AppManager.isAdViser(Dcontext);
-        IUrl(commonShareBean);
-    }
-
-    //配置url 进行选中未选择的替换
-    private void IUrl(ShareCommonBean BBshare) {
-        //分享微信
-        UrlNoCode = BBshare.getShareUrl();
-//      根据需求进行判断  UrlCode = BBshare.getUrl() + UserInfManger.GetCardUrlParms(true);
-        //分享短信
-//        if (!BStrUtils.isEmpty(BBshare.getDuanxinText())) {
-//            SMSNoCode = BBshare.getDuanxinText();
-//            SMSCode = BBshare.getDuanxinText().replace(UrlNoCode, UrlCode);
-//        }
-        //分享邮件
-//        if (!BStrUtils.isEmpty(BBshare.getYoujianText())) {
-//            EmailNoCode = BBshare.getYoujianText();
-//            EmailCode = BBshare.getYoujianText().replace(UrlNoCode, UrlCode);
-//        }
-        if (IsCanShare) //如果有真实姓名&&是理财师 直接所有url设置为 带card url的
-            SetBeanCardUrl(true);
 
     }
 
-    /**
-     * 根据选择状态进行处理 分享bean的url或者短信url的配置
-     */
-    public void SetBeanCardUrl(boolean IsAddCard) {
-        commonShareBean.setShareUrl(IsAddCard ? UrlCode : UrlNoCode);
-//        commonShareBean.setDuanxinText(IsAddCard ? SMSCode : SMSNoCode);
-//        commonShareBean.setYoujianText(IsAddCard ? EmailCode : EmailNoCode);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,7 +220,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         for (ShareViewBean h : ViewLs) {
             SetAnimation(h.getShareView());
             comment_share_flowlayout.addView(h.getShareView());
-            h.getShareView().setOnClickListener(new MyShareClick(h.getPostion()));
+            h.getShareView().setOnClickListener(new CommonSharePosterDialog.MyShareClick(h.getPostion()));
         }
         SetAnimation(comment_share_dismiss_bt);
         SetDownToUpAnimation(comment_share_up_lay);
@@ -282,19 +236,9 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         comment_share_flowlayout = (FlowLayoutView) BaseView.findViewById(R.id.comment_share_flowlayout);
         comment_share_dismiss_bt = ViewHolders.get(BaseView, R.id.comment_share_dismiss_bt);
         commont_share_card_auth_tag = ViewHolders.get(BaseView, R.id.commont_share_card_auth_tag);
-        comment_share_dismiss_bt.setOnClickListener(CommonShareDialog.this);
+        comment_share_dismiss_bt.setOnClickListener(CommonSharePosterDialog.this);
         common_card_select_bt.setOnClickListener(this);
-//        commont_share_card_auth_tag.setVisibility(UserInfManger.IsPlatformAuth() ? View.VISIBLE : View.INVISIBLE);
         comment_share_up_lay.setVisibility(IsCanShare ? View.VISIBLE : View.INVISIBLE);
-
-//        comment_share_card_address.setVisibility(BStrUtils.isEmpty(UserInfManger.GetWorkCity()) ? View.INVISIBLE : View.VISIBLE);
-//        commont_share_card_level.setVisibility(BStrUtils.isEmpty(UserInfManger.GetLevelStr()) ? View.INVISIBLE : View.VISIBLE);
-//        //平台认证
-////
-//        UiHelper.SetTxt(commont_share_card_level, UserInfManger.GetLevelStr());
-//        UiHelper.SetTxt(comment_share_card_address, UserInfManger.GetWorkCity());
-//        if (!BStrUtils.isEmpty(UserInfManger.GetRealName()))
-//            UiHelper.SetTxt(comment_share_card_name, String.format("%s经理", UserInfManger.GetRealName().charAt(0)));
 
 
         SetViews(Tag_Style);
@@ -356,7 +300,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.comment_share_dismiss_bt) {
-            CommonShareDialog.this.dismiss();
+            CommonSharePosterDialog.this.dismiss();
             if (null != commentShareListener) {
                 commentShareListener.cancleShare();
             }
@@ -378,13 +322,12 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
                 case 1://微信
                     share_Type = SHARE_WX;
-                    WeChatShare(commonShareBean);
+                    WxImg(imageSharePath);
 
                     break;
                 case 2://朋友圈
                     share_Type = SHARE_WXCIRCLE;
-//                    WxCircleShare(commonShareBean);
-                    WxCircrImg(commonShareBean);
+                    WxCircrImg(imageSharePath);
                     break;
                 case 3://邮件
                     break;
@@ -393,7 +336,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                 case 5://复制链接
                     break;
             }
-            CommonShareDialog.this.dismiss();
+            CommonSharePosterDialog.this.dismiss();
         }
 
     }
@@ -424,79 +367,54 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         ShareSDK.stopSDK(Dcontext);
     }
 
+
     /**
-     * 微信分享的初始化
+     * 分享海报到好友
      */
-    private void WeChatShare(ShareCommonBean WxShareData) {
+    private void WxImg(String WxShareData) {
         if (!Utils.isWeixinAvilible(Dcontext)) {//没有安装微信
             PromptManager.ShowCustomToast(Dcontext, Dcontext.getResources().getString(R.string.pleaseinstanllweixin));
             return;
         }
-        platform_wx = ShareSDK.getPlatform(Wechat.NAME);
-        Wechat.ShareParams sp = new Wechat.ShareParams();
-        sp.setShareType(Platform.SHARE_WEBPAGE);// 一定要设置分享属性
-        sp.setTitle(WxShareData.getShareTitle());
-        sp.setText(BStrUtils.isEmpty(WxShareData.getShareContent()) ? WxShareData.getShareTitle() : WxShareData.getShareContent());
-        sp.setUrl(WxShareData.getShareUrl());
-        sp.setImageData(null);
-        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog()) ? Constant.SHARE_LOG : WxShareData.getShareNetLog());
-
-        sp.setImagePath(null);
-
-        platform_wx.setPlatformActionListener(this); // 设置分享事件回调
-        // 执行分享
-        platform_wx.share(sp);
-    }
-
-    /**
-     * 朋友圈分享
-     */
-    private void WxCircleShare(ShareCommonBean WxShareData) {
-        if (!Utils.isWeixinAvilible(Dcontext)) {//没有安装微信
-            PromptManager.ShowCustomToast(Dcontext, Dcontext.getResources().getString(R.string.pleaseinstanllweixin));
-            return;
-        }
-        platform_circle = ShareSDK.getPlatform(WechatMoments.NAME);
+        platform_circle = ShareSDK.getPlatform(Wechat.NAME);
         WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
-        sp.setShareType(Platform.SHARE_WEBPAGE);
-        sp.setTitle(WxShareData.getShareTitle());
-        sp.setText(WxShareData.getShareContent());
-        sp.setUrl(WxShareData.getShareUrl());
-        sp.setImageData(null);
-        sp.setImageUrl(BStrUtils.isEmpty(WxShareData.getShareNetLog()) ? Constant.SHARE_LOG : WxShareData.getShareNetLog());
-        sp.setImagePath(null);
+        sp.setShareType(Platform.SHARE_IMAGE);
+        sp.setImagePath(WxShareData);
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享
         platform_circle.share(sp);
     }
 
     /**
-     * 分享海报
-     *
-     * @param WxShareData
+     * 分享海报到朋友圈
      */
-    private void WxCircrImg(ShareCommonBean WxShareData) {
+    private void WxCircrImg(String WxShareData) {
+        if (!Utils.isWeixinAvilible(Dcontext)) {//没有安装微信
+            PromptManager.ShowCustomToast(Dcontext, Dcontext.getResources().getString(R.string.pleaseinstanllweixin));
+            return;
+        }
         platform_circle = ShareSDK.getPlatform(WechatMoments.NAME);
         WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_IMAGE);
-        sp.setImagePath(getPostPath());
+        sp.setImagePath(WxShareData);
+
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享
         platform_circle.share(sp);
     }
 
-    /**
-     * 生成view的对于图片地址
-     */
-    private String getPostPath() {
-//        View postView = LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
-//        return  ElevenPoster.getViewPath(postView, "sss");
-        ScrollView postView = (ScrollView) LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
-        ElevenPoster.resetViewSize((Activity) Dcontext, postView);
-        return ElevenPoster.getScrollViewPath(postView, "sss");
-
-
-    }
+//    /**
+//     * 生成view的对于图片地址
+//     */
+//    private String getPostPath() {
+////        View postView = LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
+////        return  ElevenPoster.getViewPath(postView, "sss");
+//        ScrollView postView = (ScrollView) LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
+//        ElevenPoster.resetViewSize((Activity) Dcontext, postView);
+//        return ElevenPoster.getScrollViewPath(postView, "sss");
+//
+//
+//    }
 
     /**
      * 微信分享成功
@@ -605,4 +523,5 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 
         void cancleShare();
     }
+
 }
