@@ -1,7 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -173,14 +172,14 @@ public class JavaScriptObjectToc {
         return hashMap;
     }
 
-
-    private void activateNativeLivePlayer(JSONObject jsonObject) {
+    @JavascriptInterface
+    public void activateNativeLivePlayer(String jsonObject) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("liveJson", jsonObject.toString());
+        hashMap.put("liveJson", jsonObject);
         NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTOLIVE, hashMap);
-
         try {
-            SPreference.putString(InvestorAppli.getContext(), Contant.CUR_LIVE_ROOM_NUM, jsonObject.getString("id"));
+            JSONObject jsonObject1 = new JSONObject(jsonObject);
+            SPreference.putString(InvestorAppli.getContext(), Contant.CUR_LIVE_ROOM_NUM, jsonObject1.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
