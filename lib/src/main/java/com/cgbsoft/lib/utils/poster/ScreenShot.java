@@ -18,7 +18,7 @@ public class ScreenShot {
     // 获取内置SD卡路径
     private static String sdCardPath = Environment.getExternalStorageDirectory().getPath();
     // 图片文件路径
-    private static String filePath = sdCardPath + File.separator + "screenshot.png";
+    private static String filePath = sdCardPath + File.separator + System.currentTimeMillis()+"screenshot.png";
 
     /**
      * 获取和保存当前屏幕的截图
