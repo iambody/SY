@@ -1654,24 +1654,32 @@ public class ApiClient {
     /**
      * 活体检测的通知结果接口
      */
-    public static Observable<String> livingQueryResult(String orderNo) {
+    public static Observable<String> livingQueryResult(String orderNo,String cardName,String cardNum) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
+        params.put("cardName",cardName);
+        params.put("cardNum",cardNum);
         return OKHTTP.getInstance().getRequestManager().queryLivingResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
     /**
      * 活体检测二次通知接口
+     *
      * @return
      */
-    public static Observable<String>getLivingQueryDataResult(String imageUrl,String cardNum,String cardName,String cardValidity,String orderNo){
+    public static Observable<String> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
         Map<String, String> params = new HashMap<>();
         params.put("imageUrl", imageUrl);
-        params.put("cardNum", cardNum);
-        params.put("cardName", cardName);
-        params.put("cardValidity", cardValidity);
+        params.put("number", cardNum);
+        params.put("name", cardName);
+        params.put("periodValidity", cardValidity);
         params.put("orderNo", orderNo);
+        params.put("faceCode", faceCode);
+//证件夹*********************
+        params.put("credentialCode", credentialCode);
+        params.put("customerCode", customerCode);
+        params.put("type", type);
         return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
 

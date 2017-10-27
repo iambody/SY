@@ -2,6 +2,7 @@ package com.cgbsoft.lib.utils.poster;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Environment;
 import android.view.View;
 
@@ -29,6 +30,20 @@ public class ScreenShot {
         dView.setDrawingCacheEnabled(true);
         dView.buildDrawingCache();
         Bitmap bitmap = Bitmap.createBitmap(dView.getDrawingCache());
+        //********************出去状态栏的代码******************
+        // 获取状态栏高度
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        // 获取屏幕长和高
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay()
+                .getHeight();
+        // 去掉状态栏，如果需要的话
+        // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
+        Bitmap b = Bitmap.createBitmap(bitmap, 0, statusBarHeight, width, height
+                - statusBarHeight);
+        //********************出去状态栏的代码******************
         if (bitmap != null) {
             try {
                 File file = new File(filePath);
@@ -39,7 +54,8 @@ public class ScreenShot {
                     file.createNewFile();
                 }
                 FileOutputStream os = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+                b.compress(Bitmap.CompressFormat.PNG, 100, os);
                 os.flush();
                 os.close();
                 return filePath;

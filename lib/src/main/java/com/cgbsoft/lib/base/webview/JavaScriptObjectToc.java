@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,12 +9,14 @@ import android.webkit.JavascriptInterface;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
+import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -103,6 +106,7 @@ public class JavaScriptObjectToc {
         });
     }
 
+    //生成海报的监听
     @JavascriptInterface
     public void shareCustomizedImage(String data) {
         String actionDecode = URLDecoder.decode(data);
@@ -123,6 +127,24 @@ public class JavaScriptObjectToc {
         commonSharePosterDialog.show();
     }
 
+    //截屏通知的监听
+    @JavascriptInterface
+    public void shareScreenshot() {
+        String paths = ScreenShot.GetandSaveCurrentImage((Activity) context);
+        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
+            @Override
+            public void completShare() {
+
+            }
+
+            @Override
+            public void cancleShare() {
+
+            }
+        });
+        commonScreenDialog.show();
+    }
+
     @JavascriptInterface
     public void sendRemoteRequest(String requestMethod, String addressUrl, String params, String javascriptCallMethod) {
         if ("get".equals(requestMethod.toLowerCase())) {
@@ -134,13 +156,15 @@ public class JavaScriptObjectToc {
 
     @JavascriptInterface
     public String getRequestValue(String key) {
-        InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
+        InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
         if (investorAppli.getServerDatahashMap() != null) {
             String hasVas = investorAppli.getServerDatahashMap().get(key);
             return hasVas;
         }
         return "";
-    };
+    }
+
+    ;
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);
@@ -150,11 +174,11 @@ public class JavaScriptObjectToc {
                 showLoadDialog();
             }
         });
-        ApiClient.getCommonGetRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
+        ApiClient.getCommonGetRequest(url, formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
-                Log.d("HealthBespeakPresenterw", "----"+ sa);
-                InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
+                Log.d("HealthBespeakPresenterw", "----" + sa);
+                InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                 investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                 ThreadUtils.runOnMainThread(() -> {
                     webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
@@ -212,10 +236,10 @@ public class JavaScriptObjectToc {
                 showLoadDialog();
             }
         });
-        ApiClient.getCommonPostRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
+        ApiClient.getCommonPostRequest(url, formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
-                Log.d("requestPostMethod", "----"+ sa);
+                Log.d("requestPostMethod", "----" + sa);
                 ThreadUtils.runOnMainThread(() -> {
                     InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                     investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
@@ -337,4 +361,6 @@ public class JavaScriptObjectToc {
             items = new StringTokenizer(entrys.nextToken(), "'");
         return map;
     }
+
+
 }
