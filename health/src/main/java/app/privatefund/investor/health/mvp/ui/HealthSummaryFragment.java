@@ -81,6 +81,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     /**
      * 类别的数据
      */
+    private String modelHtml;
     private int CurrentPostion = 0;
     private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
@@ -112,7 +113,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-        String modelHtml = getPresenter().getLocalHealthModelPath();
+        modelHtml = getPresenter().getLocalHealthModelPath();
         iconToModel.setVisibility(TextUtils.isEmpty(modelHtml) ? View.GONE : View.VISIBLE);
         if (!TextUtils.isEmpty(modelHtml)) {
             baseWebview.loadUrls("file://".concat(modelHtml));
@@ -201,6 +202,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         List<HealthProjectListEntity.HealthProjectItemEntity> healthProjectlist = healthProjectListEntity.getRows();
         if (View.GONE == swipeToLoadLayout.getVisibility()) {//一直显示
             swipeToLoadLayout.setVisibility(View.VISIBLE);
+            iconToModel.setVisibility(TextUtils.isEmpty(modelHtml) ? View.GONE : View.VISIBLE);
             fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         }
         if (View.VISIBLE == fragmentVideoschoolNoresultLay.getVisibility()) {//一直隐藏
@@ -210,8 +212,10 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         if (CollectionUtils.isEmpty(healthProjectlist) && !isLoadMore) {
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.VISIBLE);
+            iconToModel.setVisibility(View.GONE);
         } else {
             swipeToLoadLayout.setVisibility(View.VISIBLE);
+            iconToModel.setVisibility(TextUtils.isEmpty(modelHtml) ? View.GONE : View.VISIBLE);
             emptyLinearlayout.setVisibility(View.GONE);
             if (CollectionUtils.isEmpty(healthProjectlist)) {
                 Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
@@ -230,13 +234,14 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             fragmentVideoschoolNoresultLay.setVisibility(View.VISIBLE);
             swipeToLoadLayout.setVisibility(View.GONE);
             emptyLinearlayout.setVisibility(View.GONE);
+            iconToModel.setVisibility(View.GONE);
         } else {
             PromptManager.ShowCustomToast(fBaseActivity, getResources().getString(R.string.error_net));
         }
         isLoadMore = false;
     }
 
-    @OnClick(R2.id.fragment_videoschool_noresult)
+    @OnClick(R2.id.fragment_videoschool_noresult_lay)
     public void onViewnoresultClicked() {
         if (NetUtils.isNetworkAvailable(fBaseActivity)) { // 有网
             if (checkHealthAdapter != null) {
