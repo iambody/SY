@@ -8,8 +8,12 @@ import android.view.MotionEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.JavaScriptObjectToc;
 
+/**
+ * @author chenlong
+ */
 public class MyBaseWebview extends WebView {
 
     private OnScrollChangedCallback onScrollChangedCallback;
@@ -17,6 +21,7 @@ public class MyBaseWebview extends WebView {
     private GestureDetector gestureDetector;
     private Context cb;
     private JavaScriptObjectToc javaScriptObject;
+    private CWebClient cWebClient;
 
     public MyBaseWebview(Context context) {
         super(context);
@@ -24,10 +29,6 @@ public class MyBaseWebview extends WebView {
         initView(context);
         gestureDetector = new GestureDetector(this.getContext(),
                 onGestureListener);
-    }
-
-    public OnScrollChangedCallback getOnScrollChangedCallback() {
-        return onScrollChangedCallback;
     }
 
     public void setOnScrollChangedCallback(OnScrollChangedCallback onScrollChangedCallback) {
@@ -58,16 +59,14 @@ public class MyBaseWebview extends WebView {
         getSettings().setCacheMode(android.webkit.WebSettings.LOAD_NO_CACHE);
         getSettings().setAppCacheEnabled(false);
         getSettings().setDefaultFontSize(16);
-        //硬件加速暂时不用  目前Android不支持view级别开启硬件加速
-//        this.setLayerType(View.LAYER_TYPE_HARDWARE,null);
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT) {
             this.setWebContentsDebuggingEnabled(true);
         }
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
-//        setWebChromeClient(new WebChromeClient());
+//        setWebChromeClient(new BaseWebview.WVChromeClient());
 //        cWebClient = new CWebClient(BaseWebview.this, javaScriptObject, wcontext, click, isShangxueyuan);
-        //目前先写C侧的Client 后续B重构会添加判断 添加B||C的Client
+//        //目前先写C侧的Client 后续B重构会添加判断 添加B||C的Client
 //        setWebViewClient(isInitData ? new WebViewClient() {
 //            @Override
 //            public boolean shouldOverrideUrlLoading(com.tencent.smtt.sdk.WebView webView, String s) {
@@ -88,13 +87,15 @@ public class MyBaseWebview extends WebView {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
-            float y = e2.getY() - e1.getY();
-            if (y > 100) {
-                // 右滑 事件
-                onScrollChangedCallback.onScrollDown();
-            } else if (y < -100) {
-                // 左滑事件
-                onScrollChangedCallback.onScrollUp();
+            if (getContentHeight() * getScale() > getHeight()) {
+                float y = e2.getY() - e1.getY();
+                if (y > 100) {
+                    // 右滑 事件
+                    onScrollChangedCallback.onScrollDown();
+                } else if (y < -100) {
+                    // 左滑事件
+                    onScrollChangedCallback.onScrollUp();
+                }
             }
             return true;
         }
