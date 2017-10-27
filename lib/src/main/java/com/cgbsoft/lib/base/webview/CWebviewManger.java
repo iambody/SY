@@ -1049,7 +1049,7 @@ public class CWebviewManger {
         boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
-        if (isShowing) return;
+//        if (isShowing) return;
         CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
@@ -1074,12 +1074,12 @@ public class CWebviewManger {
                 if (isProductShare) { // 产品分享需要获取云豆
                     TaskInfo.complentTask("分享产品");
                 }
-                isShowing = false;
+//                isShowing = false;
             }
 
             @Override
             public void cancleShare() {
-                isShowing = false;
+//                isShowing = false;
                 if (!BStrUtils.isEmpty(shareJsAction)) {
                     webview.loadUrl("javascript:" + shareJsAction + "(0)");
 
@@ -1087,7 +1087,7 @@ public class CWebviewManger {
             }
         });
         commonShareDialog.show();
-        isShowing = true;
+//        isShowing = true;
     }
 
     private void backPage(String action) {
