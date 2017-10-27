@@ -3,11 +3,11 @@ package app.privatefund.investor.health.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.webkit.WebView;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
-import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
@@ -90,7 +90,7 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
     }
 
     @Override
-    public void initNavigationContent(BaseWebview webview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity) {
+    public void initNavigationContent(WebView webview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity) {
         String url = healthIntroduceNavigationEntity.getUrl();
         String fileName = "";
         System.out.println("-------down url=" + url);
@@ -115,14 +115,14 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
                 String findPath = FileUtils.isExsitFileInFileDir(resourceDir.getPath(), fileName);
                 System.out.println("------down find findPath=" + findPath);
                 if (!TextUtils.isEmpty(findPath) && new File(findPath).exists()) {
-                    webview.loadUrls("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
+                    webview.loadUrl("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
                     return;
                 }
             }
             if (url.startsWith("http")) {
-                webview.loadUrls(url);
+                webview.loadUrl(url);
             } else {
-                webview.loadUrls(BaseWebNetConfig.baseParentUrl.concat(url.startsWith("/") ? url.substring(1) : url));
+                webview.loadUrl(BaseWebNetConfig.baseParentUrl.concat(url.startsWith("/") ? url.substring(1) : url));
             }
         }
 

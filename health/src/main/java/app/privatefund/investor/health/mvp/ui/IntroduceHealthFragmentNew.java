@@ -7,6 +7,8 @@ import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -16,7 +18,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.widget.ExtendWebView;
+import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
@@ -52,15 +54,17 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     LinearLayout healthIntroduceDataEmpty;
 
     @BindView(R2.id.webview)
-    ExtendWebView baseWebview;
+    MyBaseWebview baseWebview;
     private static final int HAS_DATA = 0;
     private static final int HAS_DATA_NO = 1;
     private static final int HAS_DATA_ERROR = 2;
+    private static final int DISTANCE_MAR_LENGT = 40;
 
     private String category;
     private LoadingDialog mLoadingDialog;
     private LinearLayoutManager linearLayoutManager;
     private HealthIntroduceFlagRecyclerAdapter healthIntroduceFlagRecyclerAdapter;
+    private GestureDetector gestureDetector;
 
     @Override
     protected int layoutID() {
@@ -81,7 +85,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
             category = posBean.getCode();
             getPresenter().initNavigationContent(baseWebview, posBean);
         });
-        baseWebview.setOnScrollChangedCallback(new ExtendWebView.OnScrollChangedCallback() {
+        baseWebview.setOnScrollChangedCallback(new MyBaseWebview.OnScrollChangedCallback() {
             @Override
             public void onScrollUp() {
                 if (categoryHealthLayout.getVisibility() == View.VISIBLE) {
@@ -96,7 +100,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
                 }
             }
         });
-
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 

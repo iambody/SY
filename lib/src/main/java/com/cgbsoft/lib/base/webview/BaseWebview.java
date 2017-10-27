@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.cgbsoft.lib.R;
@@ -127,7 +128,7 @@ public class BaseWebview extends WebView {
     }
 
     //进度显示
-    private class WVChromeClient extends WebChromeClient {
+    public class WVChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {

@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.tencent.smtt.sdk.WebView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,15 +37,21 @@ import java.util.StringTokenizer;
  * 日期 2017/5/4-17:59
  */
 public class JavaScriptObjectToc {
-
     private Context context;
-    private BaseWebview webView;
+    private WebView webView;
+    private android.webkit.WebView googleWebView;
     private String url;
     private LoadingDialog mLoadingDialog;
 
-    public JavaScriptObjectToc(Context context, BaseWebview webView) {
+    public JavaScriptObjectToc(Context context, WebView webView) {
         this.context = context;
         this.webView = webView;
+        mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
+    }
+
+    public JavaScriptObjectToc(Context context, android.webkit.WebView googleWebView) {
+        this.context = context;
+        this.googleWebView = googleWebView;
         mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
     }
 
@@ -99,6 +106,8 @@ public class JavaScriptObjectToc {
         ThreadUtils.runOnMainThread(() -> {
             if (webView != null) {
                 webView.loadUrl(url);
+            } else if (googleWebView != null) {
+                googleWebView.loadUrl(url);
             }
         });
     }
@@ -157,7 +166,11 @@ public class JavaScriptObjectToc {
                 InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
                 investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -166,7 +179,11 @@ public class JavaScriptObjectToc {
             protected void onRxError(Throwable error) {
                 System.out.println("---error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -219,7 +236,11 @@ public class JavaScriptObjectToc {
                 ThreadUtils.runOnMainThread(() -> {
                     InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                     investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -228,7 +249,11 @@ public class JavaScriptObjectToc {
             protected void onRxError(Throwable error) {
                 System.out.println("---requestPostMethod error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -258,7 +283,11 @@ public class JavaScriptObjectToc {
                         String key = jsonObject.optString("identification");
                         String callName = jsonObject.optString("callback");
                         String vas = getStringValue(key);
-                        webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        if (webView != null) {
+                            webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        } else if (googleWebView != null) {
+                            googleWebView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        }
                         break;
                 }
             } catch (JSONException e) {

@@ -1044,20 +1044,25 @@ public class CWebviewManger {
             public void completShare(int shareType) {
                 if (!BStrUtils.isEmpty(shareJsAction)) {
                     webview.loadUrl("javascript:" + shareJsAction + "(1)");
-
                 }
-                //分享微信朋友圈成功
-                if (actionUrl.contains("new_detail_toc.html") || actionUrl.contains("information/details.html")) { // 资讯分享需要获取云豆和埋点
-                    if (!AppManager.isVisitor(context)) {
-                        //自选页面分享朋友圈成功
-                        TaskInfo.complentTask("分享资讯");
-                    }
-                    if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
-                        if (context instanceof BaseWebViewActivity) {
-                            BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
-                            DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+
+                try {
+                    String decodeUrl = URLDecoder.decode(actionUrl, "utf-8");
+                    //分享微信朋友圈成功
+                    if (decodeUrl.contains("new_detail_toc.html") || decodeUrl.contains("information/details.html")) { // 资讯分享需要获取云豆和埋点
+                        if (!AppManager.isVisitor(context)) {
+                            //自选页面分享朋友圈成功
+                            TaskInfo.complentTask("分享资讯");
+                        }
+                        if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
+                            if (context instanceof BaseWebViewActivity) {
+                                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+                                DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+                            }
                         }
                     }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
 
                 if (isProductShare) { // 产品分享需要获取云豆

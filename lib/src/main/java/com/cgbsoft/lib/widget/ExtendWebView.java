@@ -29,6 +29,7 @@ public class ExtendWebView extends BaseWebview {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        System.out.println("---------ExtendWebView MotionEvent");
         return super.onTouchEvent(event);
     }
 
@@ -50,10 +51,14 @@ public class ExtendWebView extends BaseWebview {
             if (Math.abs(scrollX)*1.5 < Math.abs(scrollY) && Math.abs(scrollY) > SCROLL_MAX) {
                 if (scrollY < 0) {
                     System.out.println("----------onScrollDown");
-                    mOnScrollChangedCallback.onScrollDown();
+                    if (mOnScrollChangedCallback != null) {
+                        mOnScrollChangedCallback.onScrollDown();
+                    }
                 } else {
                     System.out.println("----------onScrollUp");
-                    mOnScrollChangedCallback.onScrollUp();
+                    if (mOnScrollChangedCallback != null) {
+                        mOnScrollChangedCallback.onScrollUp();
+                    }
                 }
             }
 //        }

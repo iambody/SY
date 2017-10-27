@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clickable="true"
         android:id="@+id/health_introduce_has_result">
 
         <LinearLayout
@@ -26,11 +27,13 @@
                 android:background="@android:color/transparent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:paddingLeft="15dp"></android.support.v7.widget.RecyclerView>
+                android:paddingLeft="15dp"/>
         </LinearLayout>
 
-        <com.cgbsoft.lib.widget.ExtendWebView
-            android:id="@+id/webview"
+        <!--<com.cgbsoft.lib.widget.ExtendWebView-->
+        <!--<com.cgbsoft.lib.base.webview.BaseWebview-->
+        <com.cgbsoft.lib.widget.MyBaseWebview
+        android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none" />

@@ -1,8 +1,9 @@
 package app.privatefund.investor.health.mvp.contract;
 
+import android.webkit.WebView;
+
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.lib.base.webview.BaseWebview;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface HealthIntroduceContract {
 
         void introduceNavigation(String code);
 
-        void initNavigationContent(BaseWebview baseWebview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity);
+        void initNavigationContent(WebView baseWebview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity);
     }
 
     interface View extends BaseView {
