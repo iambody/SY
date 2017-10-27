@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_20_dip">
+
+        <ImageView
+            android:id="@+id/dialog_screen_cancle_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/ui_40_dip"
+            android:src="@drawable/share_fanhui_1" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dialog_screen_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/ui_30_dip"
+        android:layout_marginRight="@dimen/ui_30_dip"
+        android:layout_marginTop="@dimen/dimens_sp_10"
+        android:layout_weight="1"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ui_30_dip"
+        android:layout_marginLeft="@dimen/ui_30_dip"
+        android:layout_marginRight="@dimen/ui_30_dip"
+        android:layout_marginTop="@dimen/dimens_sp_10"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/dialog_screen_wx_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/wexin_share" />
+
+        <ImageView
+            android:id="@+id/dialog_screen_pyq_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/share_moents" />
+    </LinearLayout>
+</LinearLayout>

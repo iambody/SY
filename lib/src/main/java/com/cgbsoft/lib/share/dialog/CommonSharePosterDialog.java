@@ -403,18 +403,7 @@ public class CommonSharePosterDialog extends Dialog implements PlatformActionLis
         platform_circle.share(sp);
     }
 
-//    /**
-//     * 生成view的对于图片地址
-//     */
-//    private String getPostPath() {
-////        View postView = LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
-////        return  ElevenPoster.getViewPath(postView, "sss");
-//        ScrollView postView = (ScrollView) LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
-//        ElevenPoster.resetViewSize((Activity) Dcontext, postView);
-//        return ElevenPoster.getScrollViewPath(postView, "sss");
-//
-//
-//    }
+
 
     /**
      * 微信分享成功
@@ -523,5 +512,7 @@ public class CommonSharePosterDialog extends Dialog implements PlatformActionLis
 
         void cancleShare();
     }
+
+
 
 }

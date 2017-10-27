@@ -33,6 +33,14 @@ public class LivingManger {
     private static String Cardname;
     //身份证号
     private static String Cardid;
+    //**credentialCode
+    private static String credentialCode;
+    //**customerCode
+    private static String customerCode;
+    //**type
+    private static String type;
+//****一串正反面
+    private static  String imageUrl;
     //是否显示成功页面  暂时显示成功失败页面
     private static boolean isShowSuccess = true;
     private static boolean isShowFail = true;
@@ -42,22 +50,29 @@ public class LivingManger {
     private static ProgressDialog progressDlg;
 
     private static SharedPreferences sp;
-
-    //    private static String userId = "testCloudFaceVerify" + System.currentTimeMillis();
-//    private static String nonce = "52014832029547845621032584562012";
-//    private static String KKKeyicen = "JG7ipvk02aMb0BTnciy+EvStgPHb4oAzfiioi3uIpE3DrZKVYQG+Xc2ykjuUNmXuk4BK5zaeOpHdO9mdUlhvgqp7KZurrDdqvVt5fkeYDWtx26mQu2s7b4Rjn6Y7CbH9jhJrHBLXqcBm7zqhnJ3Y8AhJ9nQPbPnCY1Ln8IN4ejYdY4La49gkzvAFb1N21ipOImAt1HHU0RbuXDz/OVsJ4ZVQFXp8DmdniweHVi049dIPvokwj9z5A0kONQRgrfRvIMLgGQXGfT2+A1:D682K+7lEzGtuexx5F1e3K2IC8ZXuxiOD7hFc478HPSLq0e0U619G99/OePSPD+uhURbobew==";
-//    private static String APPID = "TIDAjl3C";
     private static LivingSign livingSign;
 
     private LivingManger() {
     }
 
-
-    public LivingManger(Context livingContext, String cardname, String cardid, LivingResult ocrResult) {
+    /**
+     * @param livingContext
+     * @param cardname
+     * @param cardid
+     * @param credentialcode
+     * @param customercode
+     * @param Type
+     * @param ocrResult
+     */
+    public LivingManger(Context livingContext, String cardname, String cardid, String credentialcode, String customercode, String Type,String imageurl, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
-        Cardname = cardname;
-        Cardid = cardid;
+        this.Cardname = cardname;
+        this.Cardid = cardid;
+        this.credentialCode = credentialcode;
+        this.customerCode = customercode;
+        this.type = Type;
+        this.imageUrl=imageurl;
         initConifg();
 
     }
@@ -90,6 +105,7 @@ public class LivingManger {
                     progressDlg.show();
 //                    signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
                     getSign();
+
 
                 } else {
                     Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
@@ -143,7 +159,6 @@ public class LivingManger {
             @Override
             public void onLoginSuccess() {
                 progressDlg.dismiss();
-
                 WbCloudFaceVerifySdk.getInstance().startActivityForSecurity(new WbCloudFaceVerifySdk.FaceVerifyResultForSecureListener() {
                     @Override
                     public void onFinish(int resultCode, boolean nextShowGuide, String faceCode, String faceMsg, String sign, Bundle extendData) {
@@ -155,8 +170,8 @@ public class LivingManger {
                         }
 
                         if (resultCode == 0) {
-                            //需要通知后台*********************
-                            ApiClient.livingQueryResult(orderNum).subscribe(new RxSubscriber<String>() {
+                            //需要通知后台**************************************************
+                            ApiClient.livingQueryResult(orderNum, Cardname, Cardid).subscribe(new RxSubscriber<String>() {
                                 @Override
                                 protected void onEvent(String s) {
 
@@ -167,7 +182,11 @@ public class LivingManger {
 
                                 }
                             });
-                            //已经通知后台***********************
+
+                            //已经通知后台**************************************************
+//                            sendDataResult();
+
+
                             if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
@@ -194,6 +213,7 @@ public class LivingManger {
             }
         });
     }
+
 
     /**
      * 初始化进度条
@@ -252,5 +272,24 @@ public class LivingManger {
         });
     }
 
+    /**
+     * 二次通知后台
+     * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的
+     */
+    public static void sendDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
+        //需要获取结果的
+        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+    }
 }
 
