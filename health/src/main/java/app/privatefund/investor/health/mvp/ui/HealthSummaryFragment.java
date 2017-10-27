@@ -1,5 +1,9 @@
 package app.privatefund.investor.health.mvp.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +48,9 @@ import butterknife.OnClick;
  */
 public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresenter> implements HealthSummaryListContract.View, OnLoadMoreListener, OnRefreshListener {
 
+    @BindView(R2.id.root_container_id)
+    LinearLayout rootView;
+
     @BindView(R2.id.swipe_target)
     RecyclerView swipeTarget;
 
@@ -77,6 +84,8 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     private LoadingDialog mLoadingDialog;
     private HealthSummaryAdapter checkHealthAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private AnimatorSet mRightOutSet;
+    private AnimatorSet mLeftInSet;
 
     /**
      * 类别的数据
@@ -86,6 +95,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     private static int LIMIT_PAGE = 20;
     private boolean isLoadMore;
     private int total;
+    private boolean mIsShowList = true;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -118,6 +128,35 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         if (!TextUtils.isEmpty(modelHtml)) {
             baseWebview.loadUrls("file://".concat(modelHtml));
         }
+        setAnimators();
+        setCameraDistance();
+    }
+
+    // 设置动画
+    private void setAnimators() {
+        mRightOutSet = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(),R.animator.right_out);
+        mLeftInSet = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.left_in);
+
+        // 设置点击事件
+        mRightOutSet.addListener(new AnimatorListenerAdapter() {
+            @Override public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                rootView.setClickable(false);
+            }
+        });
+        mLeftInSet.addListener(new AnimatorListenerAdapter() {
+            @Override public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                rootView.setClickable(true);
+            }
+        });
+    }
+
+    private void setCameraDistance() {
+        int distance = 16000;
+        float scale = getResources().getDisplayMetrics().density * distance;
+        healthProjectListRl.setCameraDistance(scale);
+        healthProjectModelRl.setCameraDistance(scale);
     }
 
     @Override
@@ -146,14 +185,32 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
 
     @OnClick(R2.id.icon_to_model)
     public void toGOHealthModel() {
+        flipCard();
         healthProjectListRl.setVisibility(View.GONE);
         healthProjectModelRl.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R2.id.icon_to_list)
     public void toGOHealthList() {
+        flipCard();
         healthProjectListRl.setVisibility(View.VISIBLE);
         healthProjectModelRl.setVisibility(View.GONE);
+    }
+
+    public void flipCard() {
+        if (!mIsShowList) {
+            mRightOutSet.setTarget(healthProjectListRl);
+            mLeftInSet.setTarget(healthProjectModelRl);
+            mRightOutSet.start();
+            mLeftInSet.start();
+            mIsShowList = true;
+        } else {
+            mRightOutSet.setTarget(healthProjectModelRl);
+            mLeftInSet.setTarget(healthProjectListRl);
+            mRightOutSet.start();
+            mLeftInSet.start();
+            mIsShowList = false;
+        }
     }
 
     /**

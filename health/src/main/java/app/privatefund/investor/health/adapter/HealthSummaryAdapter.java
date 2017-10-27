@@ -80,7 +80,7 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         BStrUtils.SetTxt1(lsViewHolder.fitCrowdView, healthListModel.getFitCrowd());
         Imageload.display(ApContext, healthListModel.getHeadImage(), 0, 0, 1, lsViewHolder.customImage, null, null);
         BStrUtils.SetTxt1(lsViewHolder.customFromPlatformView, healthListModel.getUserNickName());
-        BStrUtils.SetTxt1(lsViewHolder.customCommentView, healthListModel.getJudgment());
+        BStrUtils.SetTxt1(lsViewHolder.customCommentView, TextUtils.isEmpty(healthListModel.getJudgment()) ? "当前暂无数据" : healthListModel.getJudgment());
         lsViewHolder.effectPositionLayout.setVisibility(TextUtils.isEmpty(healthListModel.getEffectPosition()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitSymptomLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitSymptom()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitCrowdLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitCrowd()) ? View.GONE : View.VISIBLE);
