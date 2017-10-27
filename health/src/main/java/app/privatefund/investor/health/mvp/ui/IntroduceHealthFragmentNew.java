@@ -167,6 +167,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @OnClick(R2.id.fragment_introduce_network_error)
     public void healthIntroduceError() {
-        getPresenter().introduceNavigation(category);
+        getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 }
