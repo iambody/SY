@@ -127,7 +127,6 @@ public class JavaScriptObjectToc {
     public void sendRemoteRequest(String requestMethod, String addressUrl, String params, String javascriptCallMethod) {
         if ("get".equals(requestMethod.toLowerCase())) {
             requestGetMethodCallBack(addressUrl, params, javascriptCallMethod);
-//            requestGetMethod(addre、ssUrl, params, javascriptCallMethod);
         } else if ("post".equals(requestMethod.toLowerCase())) {
             requestPostMethod(addressUrl, params, javascriptCallMethod);
         }

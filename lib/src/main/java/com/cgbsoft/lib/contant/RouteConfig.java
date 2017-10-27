@@ -28,6 +28,9 @@ public class RouteConfig {
 
     public static final String VALIDATE_GESTURE_PASSWORD = "investornmain_gestureverifyactivity";
 
+    // 放大图片
+    public static final String SMOOT_IMAGE_ACTIVITY = "investornmain_smoothimageactivity";
+
     //我的任务
     public static final String INVTERSTOR_MAIN_TASK = "invister_main_task_activity";
 

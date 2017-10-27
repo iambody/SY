@@ -136,7 +136,6 @@ public class NetworkUtils {
         return tm != null ? tm.getPhoneType() : -1;
     }
 
-
     /**
      * 获取当前的网络类型(WIFI,2G,3G,4G)
      * <p>需添加权限 android.permission.ACCESS_NETWORK_STATE</p>
@@ -161,7 +160,6 @@ public class NetworkUtils {
                 netType = NETWORK_WIFI;
             } else if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
                 switch (info.getSubtype()) {
-
                     case NETWORK_TYPE_GSM:
                     case TelephonyManager.NETWORK_TYPE_GPRS:
                     case TelephonyManager.NETWORK_TYPE_CDMA:

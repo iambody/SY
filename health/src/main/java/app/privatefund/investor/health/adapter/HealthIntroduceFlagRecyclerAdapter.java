@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
     private Context context;
     private CategoryItemClickListener listener;
     private HealthIntroduceNavigationEntity lastHealthIntroduceEntity;
+    private HealthIntroduceNavigationEntity firstHealthIntroduceEntity;
 
     public HealthIntroduceFlagRecyclerAdapter(Context context) {
         this.context = context;
@@ -35,6 +37,9 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
             data = new ArrayList<>();
         }
         data.clear();
+        if (!CollectionUtils.isEmpty(datas)) {
+            firstHealthIntroduceEntity = datas.get(0);
+        }
         data.addAll(datas);
         notifyDataSetChanged();
     }
@@ -52,12 +57,13 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
 
                 if (lastHealthIntroduceEntity != null) {
                     lastHealthIntroduceEntity.setIsCheck(0);
+                } else if (firstHealthIntroduceEntity != null) {
+                    firstHealthIntroduceEntity.setIsCheck(0);
                 }
+
                 healthIntroduceNavigationEntity.setIsCheck(1);
                 lastHealthIntroduceEntity = healthIntroduceNavigationEntity;
                 notifyDataSetChanged();
-//                holder.name.setBackground(context.getResources().getDrawable(R.drawable.health_introduce_category_selected));
-//                lastSelect =  holder.name;
                 listener.onCategoryItemClick(recyclerViewHolder.name, healthIntroduceNavigationEntity);
             });
         }
@@ -75,7 +81,6 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
             holder.name.setBackground(ContextCompat.getDrawable(context, R.drawable.health_introduce_category_normal));
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -97,6 +102,6 @@ public class HealthIntroduceFlagRecyclerAdapter extends RecyclerView.Adapter<Hea
     }
 
     public void setCategoryItemClickListener(CategoryItemClickListener listener){
-        this.listener=listener;
+        this.listener = listener;
     }
 }

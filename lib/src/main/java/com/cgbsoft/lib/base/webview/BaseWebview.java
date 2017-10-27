@@ -188,11 +188,10 @@ public class BaseWebview extends WebView {
 
     public void shouldOverrideUrlLoading(WebView view, String url) {
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 //TODO 去通知商学院  其他逻辑处理已经好了 只用确定按照那种方式进行调用即可
-                //                EventBus.getDefault().post(new ShangxueyuanBackBean());
+                //EventBus.getDefault().post(new ShangxueyuanBackBean());
             }
         }, 500);
     }

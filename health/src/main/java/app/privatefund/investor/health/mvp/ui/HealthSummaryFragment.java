@@ -115,7 +115,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         String modelHtml = getPresenter().getLocalHealthModelPath();
         iconToModel.setVisibility(TextUtils.isEmpty(modelHtml) ? View.GONE : View.VISIBLE);
         if (!TextUtils.isEmpty(modelHtml)) {
-            baseWebview.loadUrls("content://".concat(modelHtml));
+            baseWebview.loadUrls("file://".concat(modelHtml));
         }
     }
 
