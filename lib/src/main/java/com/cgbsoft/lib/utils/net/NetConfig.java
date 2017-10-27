@@ -16,7 +16,7 @@ public class NetConfig {
 
     //    private static String START_APP = "https://app";
     public static String START_APP = "https://d8-app";//sim
-//    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    //    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -128,15 +128,18 @@ public class NetConfig {
 
     //合规
     static class Compliance {
-          final static String compliance = "/compliance";
+        final static String compliance = "/compliance";
         //活体检测的sign获取
         final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
-        //活体检测的反馈
+        //活体检测的反馈(慕夏处理)
         final static String COMPLIANCE_LIVING_RESULT = API_URL + compliance + "/queryResult";
+        //活体检测的第二次反馈结果(茼筒处理)
+        final static String COMPLIANCE_BEAN_RESULT = API_URL + compliance +"/faceRecognition";
         //OCR获取sign
         final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
+
     }
 
     static class MALL {

@@ -645,7 +645,7 @@ interface RequestManager {
 
     //获取直播预告
     @GET(NetConfig.LIVE.GET_PRO_LIST)
-    Observable<ResponseBody> getProLiveList(@QueryMap Map<String,String> paramsMap);
+    Observable<ResponseBody> getProLiveList(@QueryMap Map<String, String> paramsMap);
 
     //主播开房间
     @POST(NetConfig.LIVE.HOST_OPEN_LIVE)
@@ -772,11 +772,13 @@ interface RequestManager {
      */
     @GET(NetConfig.ELEGANT.GETBANNER)
     Observable<BaseResult<ElegantLivingEntity.Result>> elegantLivingBanners(@QueryMap Map<String, String> paramsMap);
+
     /**
      * 尚品首页第一次加载数据
      */
     @GET(NetConfig.ELEGANT.GETGOODSFIRST)
     Observable<BaseResult<ElegantGoodsEntity.Result>> elegantGoodsFirst(@QueryMap Map<String, String> paramsMap);
+
     @GET(NetConfig.ELEGANT.GETGOODSMORE)
     Observable<BaseResult<ElegantGoodsEntity.ResultMore>> elegantGoodsMore(@QueryMap Map<String, String> params);
 
@@ -791,8 +793,10 @@ interface RequestManager {
     //签到
     @POST(NetConfig.SXY.SIGNIN)
     Observable<ResponseBody> sign(@Body RequestBody responseBody);
+
     /**
      * 修改用户登录密码
+     *
      * @param responseBody
      * @return
      */
@@ -801,26 +805,31 @@ interface RequestManager {
 
     /**
      * 更新用户信息
+     *
      * @param requestBody
      * @return
      */
     @POST(NetConfig.ChangePsd.UPDATE_USERINFO)
     Observable<ResponseBody> updateUserInfoNewC(@Body RequestBody requestBody);
+
     /**
      * 上传头像的远程路径给服务端
      */
     @POST(NetConfig.ChangePsd.UPDATE_USERICON)
     Observable<ResponseBody> uploadIconRemotePath(@Body RequestBody requestBody);
+
     /**
      * 获取沙龙和城市
      */
     @GET(NetConfig.Salon.UPDATE_SALON_AND_CITY)
     Observable<BaseResult<SalonsEntity.Result>> getSalonsAndCitys(@QueryMap Map<String, String> params);
+
     @GET(NetConfig.Salon.UPDATE_SALON)
     Observable<BaseResult<OldSalonsEntity.SalonBean>> getOldSalons(@QueryMap Map<String, String> params);
 
     /**
      * 获取身份列表
+     *
      * @return
      */
     @GET(NetConfig.Indentity.GET_INDENTITY_TYPE_LIST)
@@ -834,6 +843,7 @@ interface RequestManager {
 
     /**
      * 获取证件列表
+     *
      * @param params
      * @return
      */
@@ -842,6 +852,7 @@ interface RequestManager {
 
     /**
      * 上传证件远程地址
+     *
      * @param requestBody
      * @return
      */
@@ -858,8 +869,6 @@ interface RequestManager {
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
 
 
-
-
     /**
      * 活体检测获取sign
      */
@@ -871,6 +880,12 @@ interface RequestManager {
      */
     @POST(NetConfig.Compliance.COMPLIANCE_LIVING_RESULT)
     Observable<ResponseBody> queryLivingResult(@Body RequestBody responseBody);
+
+    /**
+     * 活体检测二次结果哦通知处理
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
+    Observable<ResponseBody> queryDataResult(@Body RequestBody requestBody);
 
     /**
      * orc获取sign
@@ -898,6 +913,7 @@ interface RequestManager {
 
     /**
      * 获取资源文件的相关信息
+     *
      * @param
      */
     @GET(NetConfig.RESOURCE_FILE_INFO)

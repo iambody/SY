@@ -30,14 +30,11 @@ public class ElevenPoster {
         view.buildDrawingCache();
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
-//        int w = view.getWidth();
-//        int h = view.getHeight();
-//        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         return bitmap;
     }
 
     public static String saveBitmapToSDCard(Bitmap bitmap, String imagename) {
-        String path = "/sdcard/" + "imgad-" + imagename + ".jpg";
+        String path = "/sdcard/" + "sxy" + imagename + ".jpg";
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(path);
@@ -140,7 +137,7 @@ public class ElevenPoster {
     /**
      * 获取base64的路径
      */
-    public static String base64ToPath(String base64,String name) {
+    public static String base64ToPath(String base64, String name) {
         return saveBitmapToSDCard(base64ToBitmap(base64), name);
     }
 

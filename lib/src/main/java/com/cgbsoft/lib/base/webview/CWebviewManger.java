@@ -29,14 +29,12 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.share.bean.ShareCommonBean;
 import com.cgbsoft.lib.share.dialog.CommonShareDialog;
-import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -404,6 +402,7 @@ public class CWebviewManger {
         } else if (action.contains("shareFromScreenshot")) {
             sharePoster(action);
         } else if (action.contains("penLargeImage")) {
+            //分享截屏的图片
             gotoLargeImage(action);
         }
     }
@@ -428,20 +427,32 @@ public class CWebviewManger {
      * @param action
      */
     private void sharePoster(String action) {
-        String path = ScreenShot.GetandSaveCurrentImage(context);
+//        String path = ScreenShot.GetandSaveCurrentImage(context);
+//        CommonScreenDialog commonScreenDialog=new CommonScreenDialog(context, path, new CommonScreenDialog.CommentScreenListener() {
+//            @Override
+//            public void completShare() {
+//
+//            }
+//
+//            @Override
+//            public void cancleShare() {
+//
+//            }
+//        });
+//        commonScreenDialog.show();
 
-        CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, path, new CommonSharePosterDialog.CommentShareListener() {
-            @Override
-            public void completShare(int shareType) {
-
-            }
-
-            @Override
-            public void cancleShare() {
-
-            }
-        });
-        commonSharePosterDialog.show();
+//        CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, path, new CommonSharePosterDialog.CommentShareListener() {
+//            @Override
+//            public void completShare(int shareType) {
+//
+//            }
+//
+//            @Override
+//            public void cancleShare() {
+//
+//            }
+//        });
+//        commonSharePosterDialog.show();
     }
 
     private void showPayItem(String action) {
