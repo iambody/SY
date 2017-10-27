@@ -12,7 +12,7 @@ import android.widget.ScrollView;
 import java.io.FileOutputStream;
 
 /**
- * desc  ${DESC}
+ * desc 双十一海报模板生成器
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/10/26-09:17
  */
