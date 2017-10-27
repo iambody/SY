@@ -30,9 +30,6 @@ public class ElevenPoster {
         view.buildDrawingCache();
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
-//        int w = view.getWidth();
-//        int h = view.getHeight();
-//        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         return bitmap;
     }
 
