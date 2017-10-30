@@ -1,8 +1,5 @@
 package app.ocrlib.com.cardphoto;
 
-/**
- * Created by yue on 2015/8/13.
- */
 
 import android.app.Activity;
 import android.content.Intent;

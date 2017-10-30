@@ -28,10 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by yue on 15/10/29.
- * Bitmap处理工具
- */
+
 public class CameraBitmapUtils {
     private CameraBitmapUtils() {
     }
