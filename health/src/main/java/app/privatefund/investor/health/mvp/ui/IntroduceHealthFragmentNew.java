@@ -1,19 +1,17 @@
 package app.privatefund.investor.health.mvp.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
@@ -22,6 +20,7 @@ import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.privatefund.investor.health.R;
@@ -65,6 +64,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     private LinearLayoutManager linearLayoutManager;
     private HealthIntroduceFlagRecyclerAdapter healthIntroduceFlagRecyclerAdapter;
     private GestureDetector gestureDetector;
+    private List<View> oldList;
 
     @Override
     protected int layoutID() {
@@ -102,6 +102,58 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         });
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().getWindow().getDecorView().addOnLayoutChangeListener(new      View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                if (oldList != null &&getAllChildViews(getActivity().getWindow().getDecorView()).size() > oldList.size()) {
+
+                    for (View view :getAllChildViews(getActivity().getWindow().getDecorView())) {
+
+                        if (!oldList.contains(view)) {
+                            view.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
+                ArrayList<View> outView= new ArrayList<View>();
+                getActivity().getWindow().getDecorView().findViewsWithText(outView, "QQ浏览器", View.FIND_VIEWS_WITH_TEXT);
+                int size = outView.size();
+                if (outView != null && outView.size() > 0) {
+                    oldList =getAllChildViews(getActivity().getWindow().getDecorView());
+                    outView.get(0).setVisibility(View.GONE);
+                }
+            }
+        });
+
+    }
+
+    private List<View> getAllChildViews(View view) {
+
+        List<View> allchildren = new ArrayList<View>();
+
+        if (view instanceof ViewGroup) {
+
+            ViewGroup vp = (ViewGroup) view;
+
+            for (int i = 0; i < vp.getChildCount(); i++) {
+                View viewchild = vp.getChildAt(i);
+                allchildren.add(viewchild);
+                allchildren.addAll(getAllChildViews(viewchild));
+            }
+
+        }
+
+        return allchildren;
+
+    }
+
 
     @Override
     protected HealthIntroducePresenter createPresenter() {

@@ -8,11 +8,13 @@ import android.webkit.WebView;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.ExtendWebView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -90,7 +92,7 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
     }
 
     @Override
-    public void initNavigationContent(WebView webview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity) {
+    public void initNavigationContent(BaseWebview webview, HealthIntroduceNavigationEntity healthIntroduceNavigationEntity) {
         String url = healthIntroduceNavigationEntity.getUrl();
         String fileName = "";
         System.out.println("-------down url=" + url);

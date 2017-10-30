@@ -36,15 +36,6 @@ public class ExtendWebView extends BaseWebview {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-//        float webcontent = getContentHeight() * getScale();
-//        float webnow = getHeight() - DimensionPixelUtil.dp2px(getContext(), 110) + getScrollY();
-//        if (Math.abs(webcontent - webnow) < 5) { // 处于底端
-//            mOnScrollChangedCallback.onScrollToBottom();
-//            System.out.println("----------onScrollToBottom");
-//        } else if (getScrollY() == 0) {  // 处于顶端
-//            mOnScrollChangedCallback.onScrollToTop();
-//            System.out.println("----------onScrollToTop");
-//        } else {
             int scrollX = l - oldl;
             int scrollY = t - oldt;
             System.out.println("---t=" + t + "----oldt=" + oldt +  "----scrollX=" + scrollX + "------srcollY=" + scrollY);
