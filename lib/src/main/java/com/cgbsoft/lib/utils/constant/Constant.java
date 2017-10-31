@@ -119,6 +119,9 @@ public interface Constant {
     //证件上传
     public static final String UPLOAD_INDENTITY_TYPE = "indentity/";
 
+    //合规的
+    public static final String UPLOAD_COMPLIANCE_TYPE = "compliance/";
+
     public static final String HEALTH_ZIP_DIR = "health";
 
     // 手势密码

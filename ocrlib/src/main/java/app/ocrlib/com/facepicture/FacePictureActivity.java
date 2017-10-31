@@ -18,7 +18,12 @@ import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
+
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +31,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import app.ocrlib.com.R;
+import app.ocrlib.com.utils.BitmapUtils;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * desc    人脸拍照
@@ -39,29 +50,33 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     SurfaceHolder surfaceholder;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facepicture);
+        surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
+
+        surfaceholder = surfaceview.getHolder();
+        surfaceholder.addCallback(this);
     }
 
     /**
      * 初始化相机
      */
     private void initCamera() {
-        surfaceholder = surfaceview.getHolder();
-        surfaceholder.addCallback(this);
         //CameraID表示0或者1，表示是前置摄像头还是后置摄像头
         camera = Camera.open(1);
 //        getPicImageResult();
         Camera.Parameters parameters = camera.getParameters();
-        surfaceholder.addCallback(this);
 //        强制竖屏
         camera.setDisplayOrientation(90);
         setPreviewSize(camera, parameters);
 
-        surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
+    }
 
+    public void paizhao(View V) {
+        getPicImageResult();
     }
 
     /**
@@ -105,9 +120,34 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         //*****旋转一下
         Matrix matrix = new Matrix();
         matrix.postRotate(-90);
-        Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
+        //Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
         Bitmap nbmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
+        //开始上传bitmap并获取远程路径
+        upLoadBitmap(nbmp2);
 
+
+    }
+
+    String facePath = null;
+
+    //开始上传bitmap并且进行处理
+    private void upLoadBitmap(Bitmap nbmp2) {
+        facePath = BitmapUtils.saveBitmap(nbmp2, "face");
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                //异步操作相关代码
+                String imageId = DownloadUtils.postObject(facePath, Constant.UPLOAD_COMPLIANCE_TYPE);
+                subscriber.onNext(imageId);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String data) {
+                        // 主线程操作
+                    }
+                });
     }
 
     /**
@@ -141,41 +181,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
         }).start();
 
-        //因为这是一个耗时的操作，所以放到另一个线程中运行
-
-//        Observable.create(new Observable.OnSubscribe<Bitmap>() {
-//            @Override
-//            public void call(Subscriber<? super Bitmap> subscriber) {
-//                subscriber.onNext(bitmap);
-//                subscriber.onCompleted();
-//            }
-//        }).map(new Func1<Bitmap, Integer>() {
-//            @Override
-//            public Integer call(Bitmap bitmap) {
-//                FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
-//                //格式必须为RGB_565才可以识别
-//                Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
-//                //返回识别的人脸数
-//                int faceCount = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES).findFaces(bmp, faces);
-//                bmp.recycle();
-//                return null;
-//            }
-//        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Integer>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Integer integer) {
-//
-//            }
-//        });
 
 
     }
@@ -235,7 +240,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             e.printStackTrace();
         }
         camera.startPreview();
-
     }
 
     @Override

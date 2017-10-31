@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
+import app.ocrlib.com.identitycard.IdentityCardActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -318,7 +318,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //判断是否有拨打电话权限
         if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
             PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
-
             return;
         }
 
@@ -330,14 +329,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*点击消息*/
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        if (AppManager.isVisitor(baseActivity)) {//游客模式
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {//非游客模式
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
+//        if (AppManager.isVisitor(baseActivity)) {//游客模式
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {//非游客模式
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE,2));
 
     }
 

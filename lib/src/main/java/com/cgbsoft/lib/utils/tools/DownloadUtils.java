@@ -60,7 +60,11 @@ public class DownloadUtils {
             pre = localFilePath.substring(dex);
         }
         String remotePath = type.concat(UUID.randomUUID().toString().concat(pre));
-        textMap.put("key", remotePath);
+//        if (NetConfig.START_APP.equals("https://app")) {
+            textMap.put("key", remotePath);
+//        } else {
+//            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + remotePath);
+//        }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
         // OSSAccessKeyId
@@ -72,22 +76,25 @@ public class DownloadUtils {
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", localFilePath);
 
-        String UPLOAD_URL;
-        if (NetConfig.START_APP.equals("https://app")) {
-            if (isSecret) {
-                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
-            } else {
-                UPLOAD_URL = NetConfig.UPLOAD_FILE;
-            }
-        } else {
-            if (isSecret) {
-                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE+"/-/" + NetConfig.SERVER_ADD;
-            } else {
-                UPLOAD_URL = NetConfig.UPLOAD_FILE + "/-/" + NetConfig.SERVER_ADD;
-            }
-        }
-        if (formUpload(UPLOAD_URL, textMap, fileMap)) {
-            return UPLOAD_URL + remotePath;
+//        String UPLOAD_URL;
+
+//        if (NetConfig.START_APP.equals("https://app")) {
+//            if (isSecret) {
+//                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
+//            } else {
+//                UPLOAD_URL = NetConfig.UPLOAD_FILE;
+//            }
+//        } else {
+//            if (isSecret) {
+//                UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE+"/-/" + NetConfig.SERVER_ADD;
+//            } else {
+//                UPLOAD_URL = NetConfig.UPLOAD_FILE + "/-/" + NetConfig.SERVER_ADD;
+//            }
+//        }
+
+
+        if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
+            return NetConfig.UPLOAD_FILE+remotePath;
         }
         return null;
     }
