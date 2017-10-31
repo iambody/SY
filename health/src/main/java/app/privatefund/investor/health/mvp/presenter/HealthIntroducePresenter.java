@@ -3,6 +3,7 @@ package app.privatefund.investor.health.mvp.presenter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.webkit.WebView;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -13,6 +14,7 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.widget.ExtendWebView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -115,14 +117,14 @@ public class HealthIntroducePresenter extends BasePresenterImpl<HealthIntroduceC
                 String findPath = FileUtils.isExsitFileInFileDir(resourceDir.getPath(), fileName);
                 System.out.println("------down find findPath=" + findPath);
                 if (!TextUtils.isEmpty(findPath) && new File(findPath).exists()) {
-                    webview.loadUrls("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
+                    webview.loadUrl("file://".concat(findPath).concat(TextUtils.isEmpty(params) ? "" : "?" + params));
                     return;
                 }
             }
             if (url.startsWith("http")) {
-                webview.loadUrls(url);
+                webview.loadUrl(url);
             } else {
-                webview.loadUrls(BaseWebNetConfig.baseParentUrl.concat(url.startsWith("/") ? url.substring(1) : url));
+                webview.loadUrl(BaseWebNetConfig.baseParentUrl.concat(url.startsWith("/") ? url.substring(1) : url));
             }
         }
 

@@ -19,6 +19,8 @@ public class InvestorAppli extends BaseApplication {
 
     private boolean isTouGuOnline;
 
+    private String tempFile;
+
     private HashMap<String, String> serverDatahashMap = new HashMap<>();
 
 

@@ -3,22 +3,19 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
 public class NetConfig {
     public static boolean isLocal = true;
-
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
+    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
     public static String START_APPEND = "https://";
 
     //    private static String START_APP = "https://app";
-//    private static String START_APP = "https://d7-app";//sim
-    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    public static String START_APP = "https://app";//sim
+    //    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -39,7 +36,6 @@ public class NetConfig {
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String API_NOV2_URL = "api/";
-
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -130,15 +126,18 @@ public class NetConfig {
 
     //合规
     static class Compliance {
-          final static String compliance = "/compliance";
+        final static String compliance = "/compliance";
         //活体检测的sign获取
         final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
-        //活体检测的反馈
+        //活体检测的反馈(慕夏处理)
         final static String COMPLIANCE_LIVING_RESULT = API_URL + compliance + "/queryResult";
+        //活体检测的第二次反馈结果(茼筒处理)
+        final static String COMPLIANCE_BEAN_RESULT = API_URL + compliance +"/faceRecognition";
         //OCR获取sign
         final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
+
     }
 
     static class MALL {

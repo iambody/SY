@@ -338,6 +338,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
+
     }
 
 

@@ -127,7 +127,7 @@ public class BaseWebview extends WebView {
     }
 
     //进度显示
-    private class WVChromeClient extends WebChromeClient {
+    public class WVChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
