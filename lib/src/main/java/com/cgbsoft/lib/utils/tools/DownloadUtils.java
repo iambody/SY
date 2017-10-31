@@ -63,7 +63,7 @@ public class DownloadUtils {
         if (NetConfig.START_APP.equals("https://app")) {
             textMap.put("key", remotePath);
         } else {
-            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + remotePath);
+            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + "/" + remotePath);
         }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
