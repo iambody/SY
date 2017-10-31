@@ -383,8 +383,8 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
                 case 2://朋友圈
                     share_Type = SHARE_WXCIRCLE;
-//                    WxCircleShare(commonShareBean);
-                    WxCircrImg(commonShareBean);
+                    WxCircleShare(commonShareBean);
+//                    WxCircrImg(commonShareBean);
                     break;
                 case 3://邮件
                     break;
