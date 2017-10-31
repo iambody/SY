@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -16,9 +18,12 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +108,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -123,11 +127,26 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
                 }
 
                 ArrayList<View> outView= new ArrayList<View>();
-                getActivity().getWindow().getDecorView().findViewsWithText(outView, "QQ浏览器", View.FIND_VIEWS_WITH_TEXT);
+                getActivity().getWindow().getDecorView().findViewsWithText(outView, "微信好友", View.FIND_VIEWS_WITH_TEXT);
                 int size = outView.size();
                 if (outView != null && outView.size() > 0) {
                     oldList =getAllChildViews(getActivity().getWindow().getDecorView());
                     outView.get(0).setVisibility(View.GONE);
+                }
+
+                ArrayList<View> outViewQuan= new ArrayList<View>();
+                getActivity().getWindow().getDecorView().findViewsWithText(outViewQuan, "微信朋友圈", View.FIND_VIEWS_WITH_TEXT);
+                int sizeQUan = outViewQuan.size();
+                if (outViewQuan != null && outViewQuan.size() > 0) {
+                    oldList =getAllChildViews(getActivity().getWindow().getDecorView());
+                    outViewQuan.get(0).setVisibility(View.GONE);
+                }
+
+                ArrayList<View> outViewqq= new ArrayList<View>();
+                getActivity().getWindow().getDecorView().findViewsWithText(outViewqq, "QQ浏览器", View.FIND_VIEWS_WITH_TEXT);
+                if (outViewqq != null && outViewqq.size() > 0) {
+                    oldList =getAllChildViews(getActivity().getWindow().getDecorView());
+                    outViewqq.get(0).setVisibility(View.GONE);
                 }
             }
         });
