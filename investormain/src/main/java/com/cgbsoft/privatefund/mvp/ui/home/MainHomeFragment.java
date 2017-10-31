@@ -752,7 +752,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         Intent intent = new Intent(baseActivity, LiveActivity.class);
                         intent.putExtra("liveJson", homeliveInfBean.jsonstr);
-                        intent.putExtra("type", "a");
                         startActivity(intent);
 
                         SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);

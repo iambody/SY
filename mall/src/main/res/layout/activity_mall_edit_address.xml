@@ -71,7 +71,6 @@
                     android:gravity="center_vertical|left"
                     android:hint="@string/edit_phone"
                     android:inputType="number"
-                    android:maxLength="11"
                     android:singleLine="true"
                     android:layout_marginBottom="5dp"
                     android:textColor="#ff000000"
