@@ -4,26 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +141,20 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
                 if (outViewqq != null && outViewqq.size() > 0) {
                     oldList =getAllChildViews(getActivity().getWindow().getDecorView());
                     outViewqq.get(0).setVisibility(View.GONE);
+                }
+
+                ArrayList<View> friendQQ= new ArrayList<View>();
+                getActivity().getWindow().getDecorView().findViewsWithText(friendQQ, "QQ好友", View.FIND_VIEWS_WITH_TEXT);
+                if (friendQQ != null && friendQQ.size() > 0) {
+                    oldList =getAllChildViews(getActivity().getWindow().getDecorView());
+                    friendQQ.get(0).setVisibility(View.GONE);
+                }
+
+                ArrayList<View> friendQuan = new ArrayList<View>();
+                getActivity().getWindow().getDecorView().findViewsWithText(friendQuan, "QQ空间", View.FIND_VIEWS_WITH_TEXT);
+                if (friendQuan != null && friendQuan.size() > 0) {
+                    oldList =getAllChildViews(getActivity().getWindow().getDecorView());
+                    friendQuan.get(0).setVisibility(View.GONE);
                 }
             }
         });
