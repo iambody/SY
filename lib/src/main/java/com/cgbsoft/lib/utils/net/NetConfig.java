@@ -28,8 +28,8 @@ public class NetConfig {
 
     public final static String API_URL = "api/v2";
     public final static String LIVE_URL = "zhibo/v2";
-    public final static String AUTH_URL = "auth/v2";
-    public final static String PROMOTION_URL = "promotion/v2";
+            public final static String AUTH_URL = "auth/v2";
+            public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
     public final static String API_URL_V3 = "api/v3";
