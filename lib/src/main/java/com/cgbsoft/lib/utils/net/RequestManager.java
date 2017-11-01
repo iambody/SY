@@ -25,6 +25,7 @@ import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
+import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
 
 import java.util.List;
 import java.util.Map;
@@ -897,7 +898,7 @@ interface RequestManager {
      * 自定义人脸识别OCR
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
-    Observable<ResponseBody> getOcrResult(@Body RequestBody responseBody);
+    Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
 
     /**
      * 通用的Get请求接口

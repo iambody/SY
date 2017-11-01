@@ -215,15 +215,19 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
                     }
                     bos = new BufferedOutputStream(new FileOutputStream(file));
                     bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);//将图片压缩到流中
-
+                    if (null != cameraResult) {
+                        cameraResult.picResult(savePath);
+                    }
                 } else {
                     File file = new File(savePath);
                     file.delete();
                     Toast.makeText(ctx, "没有检测到内存卡", Toast.LENGTH_SHORT).show();
+                    cameraResult.picFailed();
                 }
             } catch (Exception e) {
                 File file = new File(savePath);
                 file.delete();
+                cameraResult.picFailed();
                 e.printStackTrace();
             } finally {
                 try {
@@ -235,7 +239,7 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     intent.setData(uri);
                     ctx.sendBroadcast(intent);
-                    ctx.startActivity(intent.setClass(ctx, IdentityCardTest.class));
+//                    ctx.startActivity(intent.setClass(ctx, IdentityCardTest.class));
                 } catch (IOException e) {
                     e.printStackTrace();
 

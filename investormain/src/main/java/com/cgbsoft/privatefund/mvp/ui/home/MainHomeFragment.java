@@ -314,13 +314,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 登录模式点击电话*/
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
-
         //判断是否有拨打电话权限
         if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
             PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
             return;
         }
-
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
     }
@@ -337,7 +335,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
 //        }
 //        DataStatistApiParam.homeClickNew();
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE,2));
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, 2));
 
     }
 

@@ -25,7 +25,7 @@ public class IdentityCardTest extends AppCompatActivity {
     }
 
     public void inview( ) {
-        String path = Environment.getExternalStorageDirectory().getPath() + "/test.jpg";
+        String path = Environment.getExternalStorageDirectory().getPath() + "/tesst.jpg";
         imageView = (ImageView) findViewById(R.id.iid);
         imageView.setImageBitmap(BitmapFactory.decodeFile(path));
     }

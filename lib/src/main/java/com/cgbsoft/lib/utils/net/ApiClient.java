@@ -37,6 +37,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1699,11 +1700,12 @@ public class ApiClient {
      * 获取自定义OCR的结果（目前只有身份证头像面）
      * certificateType 1标识身份证头像面；2标识身份证国徽面
      */
-    public static Observable<String> getOcrResult(int certificateType, String imageUrl) {
+    public static Observable<IdentityCard> getOcrResult(String imageUrl, int faceType) {
         Map<String, String> params = new HashMap<>();
-        params.put("certificateType", certificateType + "");
+        params.put("credentialType", "100101");//身份证标识默认是100101
         params.put("imageUrl", imageUrl);
-        return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        params.put("faceType", faceType+"");
+        return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
