@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.bean.ocr;
+package com.cgbsoft.privatefund.bean.living;
 
 /**
  * desc 身份证正反面公用的bean的数据javabean

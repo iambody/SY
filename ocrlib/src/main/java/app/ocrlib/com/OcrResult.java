@@ -1,6 +1,6 @@
 package app.ocrlib.com;
 
-import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 /**
  * desc  ${DESC}

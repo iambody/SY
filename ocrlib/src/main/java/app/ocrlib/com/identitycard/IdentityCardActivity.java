@@ -25,7 +25,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import app.ocrlib.com.R;
 import rx.Observable;
@@ -140,7 +140,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 //异步操作相关代码
-                String imageId = DownloadUtils.postObject(ivPath, Constant.UPLOAD_COMPLIANCE_OCR);
+                String imageId = DownloadUtils.postSecretObject(ivPath, Constant.UPLOAD_COMPLIANCE_OCR);
                 subscriber.onNext(imageId);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

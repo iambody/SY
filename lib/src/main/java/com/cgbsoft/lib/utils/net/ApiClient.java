@@ -37,7 +37,8 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1669,7 +1670,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<String> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
+    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
         Map<String, String> params = new HashMap<>();
         params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
@@ -1681,21 +1682,21 @@ public class ApiClient {
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
         params.put("type", type);
-        return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     }
 
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode) {
+    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo",orderNo);
         params.put("faceCode",faceCode);
         params.put("number",number);
         params.put("name",name);
         params.put("credentialCode",name);
-        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
 //        queryComontDataResult
     }

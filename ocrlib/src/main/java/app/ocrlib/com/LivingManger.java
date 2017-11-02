@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.privatefund.bean.ocr.LivingSign;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.LivingSign;
 import com.google.gson.Gson;
 import com.webank.wbcloudfaceverify2.tools.ErrorCode;
 import com.webank.wbcloudfaceverify2.tools.IdentifyCardValidate;
@@ -33,6 +36,8 @@ public class LivingManger {
     private static String Cardname;
     //身份证号
     private static String Cardid;
+    //有效期
+    private static String cardValidity;
     //credentialCode
     private static String credentialCode;
     //customerCode
@@ -65,7 +70,7 @@ public class LivingManger {
      * @param Type
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String cardname, String cardid, String credentialcode, String customercode, String Type, String imageurl, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String cardname, String cardid, String cardvalidity, String credentialcode, String customercode, String Type, String imageurl, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.Cardname = cardname;
@@ -74,6 +79,7 @@ public class LivingManger {
         this.customerCode = customercode;
         this.type = Type;
         this.imageUrl = imageurl;
+        this.cardValidity = cardvalidity;
         this.MangerType = 2;
         initConifg();
 
@@ -84,9 +90,10 @@ public class LivingManger {
      *
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String credentialcode, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
+        this.credentialCode = credentialcode;
         this.MangerType = 1;
         initConifg();
 
@@ -184,16 +191,23 @@ public class LivingManger {
                         if (resultCode == 0) {//成功
                             //需要通知后台
                             if (2 == MangerType) {
-                                sendDataResult();
+                                sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, faceCode, credentialCode, customerCode, type);
                             } else {
-                                sendCommontDataResult();
+                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode);
                             }
                             //已经通知后台 if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
                             }
                         } else {//失败
-                            if (null != livingResult) livingResult.livingFailed();
+//                            if (null != livingResult) livingResult.livingFailed();
+                            //需要通知后台
+                            if (2 == MangerType) {
+                                sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, faceCode, credentialCode, customerCode, type);
+                            } else {
+                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode);
+                            }
+                            //已经通知后台
                             if (!isShowFail) {
                                 Toast.makeText(livingContext, "刷脸失败：errorCode=" + resultCode + " ;faceCode= " + faceCode + " ;faceMsg=" + faceMsg, Toast.LENGTH_LONG).show();
                             }
@@ -275,33 +289,32 @@ public class LivingManger {
      */
     public static void sendDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
         //需要获取结果的
-        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type).subscribe(new RxSubscriber<String>() {
+        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type).subscribe(new RxSubscriber<LivingResultData>() {
             @Override
-            protected void onEvent(String s) {
-
+            protected void onEvent(LivingResultData data) {
+                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, data);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, new LivingResultData());
             }
         });
-
     }
 
     /**
      * 公用锁的通知后台模式
      */
     public static void sendCommontDataResult(String orderNo, String faceCode, String number, String name, String credentialCode) {
-        ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode).subscribe(new RxSubscriber<String>() {
+        ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode).subscribe(new RxSubscriber<LivingResultData>() {
             @Override
-            protected void onEvent(String s) {
-
+            protected void onEvent(LivingResultData data) {
+                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, data);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-
+                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, new LivingResultData());
             }
         });
     }

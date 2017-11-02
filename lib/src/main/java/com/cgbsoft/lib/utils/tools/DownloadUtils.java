@@ -76,8 +76,8 @@ public class DownloadUtils {
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", localFilePath);
 
-        String UPLOAD_URL;
-
+//        String UPLOAD_URL;
+//
 //        if (isSecret) {
 //            UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
 //        } else {

@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 
@@ -138,7 +140,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 //异步操作相关代码
-                String imageId = DownloadUtils.postObject(facePath, Constant.UPLOAD_COMPLIANCE_FACE);
+                String imageId = DownloadUtils.postSecretObject(facePath, Constant.UPLOAD_COMPLIANCE_FACE);
                 subscriber.onNext(imageId);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -146,6 +148,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     @Override
                     public void call(String data) {
                         // 主线程操作
+                        RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, data);
+//                        COMPLIANCE_FACEUP
                     }
                 });
     }
@@ -176,7 +180,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
 
         }).start();
-
 
 
     }

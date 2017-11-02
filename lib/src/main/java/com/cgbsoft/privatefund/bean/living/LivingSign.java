@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.bean.ocr;
+package com.cgbsoft.privatefund.bean.living;
 
 /**
  * desc  ${DESC}
@@ -14,6 +14,9 @@ public class LivingSign {
     private String nonce;//": "2e93c3b4cecb44f095dcf5b9214d39e6",
     private String orderNum;//": "24ac272fe92d4fa29802ca431378e1a5"
     private String userId;
+
+    private String  idCardNum;
+    private String  idCardName;
 
     public String getUserId() {
         return userId;
@@ -61,5 +64,21 @@ public class LivingSign {
 
     public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public String getIdCardNum() {
+        return idCardNum;
+    }
+
+    public void setIdCardNum(String idCardNum) {
+        this.idCardNum = idCardNum;
+    }
+
+    public String getIdCardName() {
+        return idCardName;
+    }
+
+    public void setIdCardName(String idCardName) {
+        this.idCardName = idCardName;
     }
 }
