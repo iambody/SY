@@ -86,7 +86,12 @@ public class DownloadUtils {
         }
 
         if (formUpload(UPLOAD_URL, textMap, fileMap)) {
-            return UPLOAD_URL + remotePath;
+            if (NetConfig.START_APP.equals("https://app")) {
+                return UPLOAD_URL + remotePath;
+            } else {
+                String domainUrl = NetConfig.SERVER_ADD.replace("https://", "");
+                return UPLOAD_URL + "-/".concat(domainUrl).concat("/").concat(remotePath);
+            }
         }
         return null;
     }
@@ -156,8 +161,6 @@ public class DownloadUtils {
                             + inputName + "\"; filename=\"" + filename
                             + "\"\r\n");
                     strBuf.append("Content-Type: " + contentType + "\r\n\r\n");
-
-
                     out.write(strBuf.toString().getBytes());
                     DataInputStream in = new DataInputStream(new FileInputStream(file));
                     int bytes = 0;
