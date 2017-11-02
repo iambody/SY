@@ -55,7 +55,12 @@ public interface AppinfConstant {
     /**
      * 资源文件名称
      */
-    String RESOURCE_ZIP_FILE = "resource_zip_file";
+    String RESOURCE_ZIP_FILE_OLD = "resource_zip_file_old";
+
+    /**
+     * 资源文件名称
+     */
+    String RESOURCE_ZIP_FILE_SERVER = "resource_zip_file_server";
 
     /**
      * 资源版本下载地址

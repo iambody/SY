@@ -99,8 +99,12 @@ public class AppManager implements AppinfConstant {
      * @param context
      * @return
      */
-    public static String getResouceZipFileName(Context context) {
-        return getBasePreference(context).getString(RESOURCE_ZIP_FILE, "");
+    public static String getResouceZipOldFileName(Context context) {
+        return getBasePreference(context).getString(RESOURCE_ZIP_FILE_OLD, "");
+    }
+
+    public static String getResouceZipServerFileName(Context context) {
+        return getBasePreference(context).getString(RESOURCE_ZIP_FILE_SERVER, "");
     }
 
     /**

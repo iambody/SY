@@ -180,9 +180,7 @@ public class JavaScriptObjectToc {
             return hasVas;
         }
         return "";
-    }
-
-    ;
+    };
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);

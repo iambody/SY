@@ -147,7 +147,6 @@ public class OKHTTP {
         //应用拦截器：设置缓存策略
         Interceptor cacheInterceptor = chain -> {
             Request request = chain.request();
-
             NetUtils.NetState state = NetUtils.getNetState();
             //无网的时候强制使用缓存
             if (state == NetUtils.NetState.NET_NO) {

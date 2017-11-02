@@ -5,16 +5,15 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CWebClient;
 import com.cgbsoft.lib.base.webview.JavaScriptObjectToc;
 
 /**
  * @author chenlong
  */
-public class MyBaseWebview extends WebView {
+public class MyBaseWebview extends BaseWebview {
 
     private OnScrollChangedCallback onScrollChangedCallback;
 
@@ -43,13 +42,17 @@ public class MyBaseWebview extends WebView {
                 onGestureListener);
     }
 
+    public GestureDetector gesGestureDetector() {
+        return gestureDetector;
+    }
+
     private void initView(Context context) {
         //开启js脚本支持
         getSettings().setJavaScriptEnabled(true);
         getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         //适配手机大小
         getSettings().setUseWideViewPort(true);
-        getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        getSettings().setLayoutAlgorithm(com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         getSettings().setLoadWithOverviewMode(true);
         getSettings().setBuiltInZoomControls(true);
         getSettings().setSavePassword(true);
@@ -74,7 +77,6 @@ public class MyBaseWebview extends WebView {
 //            }
 //        } : cWebClient);
     }
-
 
     // 重载滑动事件
     @Override

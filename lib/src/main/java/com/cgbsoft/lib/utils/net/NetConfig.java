@@ -11,7 +11,6 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
 public class NetConfig {
     public static boolean isLocal = true;
-
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
     public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
     public static String START_APPEND = "https://";
@@ -31,15 +30,14 @@ public class NetConfig {
 
     public final static String API_URL = "api/v2";
     public final static String LIVE_URL = "zhibo/v2";
-    public final static String AUTH_URL = "auth/v2";
-    public final static String PROMOTION_URL = "promotion/v2";
+            public final static String AUTH_URL = "auth/v2";
+            public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
     public final static String API_URL_V3 = "api/v3";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String API_NOV2_URL = "api/";
-
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {

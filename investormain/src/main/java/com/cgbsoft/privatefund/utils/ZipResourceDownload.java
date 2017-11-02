@@ -81,7 +81,7 @@ public class ZipResourceDownload {
     };
 
     public void initZipResource() {
-        if (AppManager.getResouceVersionHas(context)) {
+        if (!TextUtils.isEmpty(AppManager.getResouceZipServerFileName(context)) && !TextUtils.equals(AppManager.getResouceZipOldFileName(context), AppManager.getResouceZipServerFileName(context))) {
             downloadResourceZipFile();
         } else {
             initSoFile();
@@ -228,7 +228,7 @@ public class ZipResourceDownload {
                 public void onFailure() {
                     super.onFailure();
                     downloadDialog.dismiss();
-                    AppInfStore.saveResourceFileName(context, "");
+                    AppInfStore.saveResourceOldFileName(context, "");
                     saveZipFile.delete();
                     initSoFile();
                 }
@@ -280,6 +280,7 @@ public class ZipResourceDownload {
                     msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
                     handler.sendMessage(msg);
                     upZipFile.delete();
+                    AppInfStore.saveResourceOldFileName(context, AppManager.getResouceZipServerFileName(context));
                     System.out.println("--------down  upZipResourceFile success");
                 }
 
@@ -290,7 +291,7 @@ public class ZipResourceDownload {
                     msg.arg2 = UPDATE_RESOURCE_ZIP_DIALOG;
                     handler.sendMessage(msg);
                     upZipFile.delete();
-                    AppInfStore.saveResourceFileName(context, "");
+                    AppInfStore.saveResourceOldFileName(context, "");
                     System.out.println("--------down  upZipResourceFile error");
                 }
             });
