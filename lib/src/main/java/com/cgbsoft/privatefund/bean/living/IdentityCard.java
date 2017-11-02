@@ -15,7 +15,7 @@ public class IdentityCard {
     private String birth;
     private String sex;
     private String address;
-    //0标识正面 1标识反面 -1为识别到身份证信息
+    //1是识别成功 0为识别失败
     private int Type;
 
 
