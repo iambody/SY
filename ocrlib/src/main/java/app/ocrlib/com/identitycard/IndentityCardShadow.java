@@ -38,7 +38,7 @@ public class IndentityCardShadow extends View {
 
         canvas.clipRect(0, 0, screenWidth, screenHeitht);
         canvas.clipRect(getShadowRegionRect(), Region.Op.DIFFERENCE);
-        canvas.drawColor(0xa6000000);
+        canvas.drawColor(0x99000000);
         canvas.save();
         canvas.restore();
     }

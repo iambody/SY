@@ -90,10 +90,11 @@ public class LivingManger {
      *
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String credentialcode, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String credentialcode, String customercode, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.credentialCode = credentialcode;
+        this.customerCode = customercode;
         this.MangerType = 1;
         initConifg();
 
@@ -193,7 +194,7 @@ public class LivingManger {
                             if (2 == MangerType) {
                                 sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, faceCode, credentialCode, customerCode, type);
                             } else {
-                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode);
+                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode, customerCode);
                             }
                             //已经通知后台 if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
@@ -205,7 +206,7 @@ public class LivingManger {
                             if (2 == MangerType) {
                                 sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, faceCode, credentialCode, customerCode, type);
                             } else {
-                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode);
+                                sendCommontDataResult(orderNum, faceCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode, customerCode);
                             }
                             //已经通知后台
                             if (!isShowFail) {
@@ -305,8 +306,8 @@ public class LivingManger {
     /**
      * 公用锁的通知后台模式
      */
-    public static void sendCommontDataResult(String orderNo, String faceCode, String number, String name, String credentialCode) {
-        ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode).subscribe(new RxSubscriber<LivingResultData>() {
+    public static void sendCommontDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
+        ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode, customerCode).subscribe(new RxSubscriber<LivingResultData>() {
             @Override
             protected void onEvent(LivingResultData data) {
                 RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, data);

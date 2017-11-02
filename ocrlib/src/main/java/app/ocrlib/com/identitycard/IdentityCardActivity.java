@@ -153,7 +153,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
-                                identityCard.setType(currentFace);
+                                identityCard.setType(1);
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
@@ -164,7 +164,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                             protected void onRxError(Throwable error) {
                                 Log.i("OCR回调", "信息失败" + error.getMessage());
                                 IdentityCard identityCard = new IdentityCard();
-                                identityCard.setType(-1);
+                                identityCard.setType(0);
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);

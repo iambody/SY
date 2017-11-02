@@ -1689,16 +1689,16 @@ public class ApiClient {
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode) {
+    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode,String customerCode) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo",orderNo);
         params.put("faceCode",faceCode);
         params.put("number",number);
         params.put("name",name);
-        params.put("credentialCode",name);
+        params.put("credentialCode",credentialCode);
+        params.put("customerCode",customerCode);
         return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
-//        queryComontDataResult
     }
 
     /**
