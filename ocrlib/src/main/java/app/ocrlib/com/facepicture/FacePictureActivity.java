@@ -149,7 +149,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     public void call(String data) {
                         // 主线程操作
                         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, data);
-//                        COMPLIANCE_FACEUP
+                        FacePictureActivity.this.finish();
+//                      COMPLIANCE_FACEUP
                     }
                 });
     }

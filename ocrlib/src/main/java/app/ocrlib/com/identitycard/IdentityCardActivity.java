@@ -155,6 +155,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
                                 identityCard.setType(currentFace);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
+                                IdentityCardActivity.this.finish();
                             }
 
                             @Override
@@ -163,7 +164,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setType(-1);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
-
+                                IdentityCardActivity.this.finish();
                             }
                         });
                     }
