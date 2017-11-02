@@ -149,7 +149,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                     public void call(final String data) {
                         // 主线程操作获取了远程的url
                         Log.i("OCR回调", "远程地址" + data);
-                        ApiClient.getOcrResult(data, currentFace).subscribe(new RxSubscriber<IdentityCard>() {
+                        ApiClient.getOcrResult(data, currentFace+1).subscribe(new RxSubscriber<IdentityCard>() {
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
