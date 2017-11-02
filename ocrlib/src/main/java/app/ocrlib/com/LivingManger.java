@@ -220,7 +220,14 @@ public class LivingManger {
             @Override
             public void onLoginFailed(String errorCode, String errorMsg) {
                 progressDlg.dismiss();
-                if (null != livingResult) livingResult.livingFailed();
+//                if (null != livingResult) livingResult.livingFailed();
+                //需要通知后台
+                if (2 == MangerType) {
+                    sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, errorCode, credentialCode, customerCode, type);
+                } else {
+                    sendCommontDataResult(orderNum, errorCode, livingSign.getIdCardNum(), livingSign.getIdCardName(), credentialCode, customerCode);
+                }
+
                 if (errorCode.equals(ErrorCode.FACEVERIFY_LOGIN_PARAMETER_ERROR)) {
                     Toast.makeText(livingContext, "传入参数有误！" + errorMsg, Toast.LENGTH_SHORT).show();
                 } else {
