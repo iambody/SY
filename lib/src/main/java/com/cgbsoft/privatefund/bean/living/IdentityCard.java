@@ -7,6 +7,8 @@ package com.cgbsoft.privatefund.bean.living;
  */
 public class IdentityCard {
 
+    private String localPath;
+    private String remotPath;
     private String idCardName;//": "李永强",
     private String idCardNum;//": "37148119901112251X"
     private String validDate;//": "2018-07-11"
@@ -15,6 +17,7 @@ public class IdentityCard {
     private String address;
     //0标识正面 1标识反面 -1为识别到身份证信息
     private int Type;
+
 
     public String getBirth() {
         return birth;
@@ -72,5 +75,19 @@ public class IdentityCard {
         this.validDate = validDate;
     }
 
+    public String getLocalPath() {
+        return localPath;
+    }
 
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
+    }
+
+    public String getRemotPath() {
+        return remotPath;
+    }
+
+    public void setRemotPath(String remotPath) {
+        this.remotPath = remotPath;
+    }
 }

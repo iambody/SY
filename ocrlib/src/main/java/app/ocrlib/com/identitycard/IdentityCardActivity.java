@@ -92,7 +92,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
         int screenHeight = dm.heightPixels;
-        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this,140), DimensionPixelUtil.dip2px(this,140));
         int height = (int) (screenWidth * 0.8);//拍照的阴影框的高度为屏幕宽度的80%  0.8
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
@@ -146,7 +146,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
-                    public void call(String data) {
+                    public void call(final String data) {
                         // 主线程操作获取了远程的url
                         Log.i("OCR回调", "远程地址" + data);
                         ApiClient.getOcrResult(data, currentFace).subscribe(new RxSubscriber<IdentityCard>() {
@@ -154,6 +154,8 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                             protected void onEvent(IdentityCard identityCard) {
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
                                 identityCard.setType(currentFace);
+                                identityCard.setLocalPath(ivPath);
+                                identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
                                 IdentityCardActivity.this.finish();
                             }
@@ -163,6 +165,8 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                 Log.i("OCR回调", "信息失败" + error.getMessage());
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setType(-1);
+                                identityCard.setLocalPath(ivPath);
+                                identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
                                 IdentityCardActivity.this.finish();
                             }
