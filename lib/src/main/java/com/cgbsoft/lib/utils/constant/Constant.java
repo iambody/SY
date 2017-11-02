@@ -121,6 +121,10 @@ public interface Constant {
 
     //合规的
     public static final String UPLOAD_COMPLIANCE_TYPE = "compliance/";
+    //合规的人脸照片
+    public static final String UPLOAD_COMPLIANCE_FACE = "complianceFace/";
+    //合规的OCR身份证照片
+    public static final String UPLOAD_COMPLIANCE_OCR = "complianceOcr/";
 
     public static final String HEALTH_ZIP_DIR = "health";
 

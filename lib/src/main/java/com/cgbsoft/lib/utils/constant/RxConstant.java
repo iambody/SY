@@ -95,7 +95,7 @@ public interface RxConstant {
     //个人信息页面用到
     String GOTO_PERSONAL_INFORMATION = "personal_information";
 
-    String GOTO_SWITCH_CENTIFY_DIR= "switch_cendify_dir";
+    String GOTO_SWITCH_CENTIFY_DIR = "switch_cendify_dir";
 
     String GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE = "switch_relative_asset_in_datamanage";
 
@@ -130,4 +130,14 @@ public interface RxConstant {
     String SELECT_INDENTITY_ADD = "select_indentity_add";
 
     String REFRESH_PRODUCT = "REFRESH_PRODUCT";
+
+    /************************合规需要的通知compliance**********************/
+    //上传完人脸后返回人脸的远程url 应用场景：1非大陆居民证件齐全后修改问卷时候的人脸对比
+    String COMPLIANCE_FACEUP = "compliance_faceup";
+    //拍完身份证正面时候需要的正面信息通知
+    String COMPLIANCE_CARD_FRONT = "compliance_card_front";
+    //拍完身份证反面时候需要的反面信息
+    String COMPLIANCE_CARD_BACK = "compliance_card_back";
+
+
 }

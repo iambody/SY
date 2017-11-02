@@ -6,7 +6,7 @@ package app.ocrlib.com;
  * 日期 2017/10/17-19:10
  */
 public interface LivingResult {
-    void livingSucceed();
+    void livingSucceed(String resultCode);
 
     void livingFailed();
 }

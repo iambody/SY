@@ -138,7 +138,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 //异步操作相关代码
-                String imageId = DownloadUtils.postObject(facePath, Constant.UPLOAD_COMPLIANCE_TYPE);
+                String imageId = DownloadUtils.postObject(facePath, Constant.UPLOAD_COMPLIANCE_FACE);
                 subscriber.onNext(imageId);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -152,10 +152,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     /**
      * 检测人脸
-     *
-     * @param bitmap
-     * @param postion
-     * @param handler
      */
     private void findFace(final Bitmap bitmap, final int postion, final Handler handler) {
         if (null == bitmap) return;
@@ -187,8 +183,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     /**
      * 设置preview和picturesize的尺寸 大多数手机因为设置的不支持底层 会造成崩溃
-     *
-     * @param
      */
     public void setPreviewSize(Camera camera, Camera.Parameters parameters) {
         try {

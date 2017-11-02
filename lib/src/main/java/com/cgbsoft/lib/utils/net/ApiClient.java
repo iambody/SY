@@ -1655,11 +1655,11 @@ public class ApiClient {
     /**
      * 活体检测的通知结果接口
      */
-    public static Observable<String> livingQueryResult(String orderNo,String cardName,String cardNum) {
+    public static Observable<String> livingQueryResult(String orderNo, String cardName, String cardNum) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
-        params.put("cardName",cardName);
-        params.put("cardNum",cardNum);
+        params.put("cardName", cardName);
+        params.put("cardNum", cardNum);
         return OKHTTP.getInstance().getRequestManager().queryLivingResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
@@ -1677,13 +1677,27 @@ public class ApiClient {
         params.put("periodValidity", cardValidity);
         params.put("orderNo", orderNo);
         params.put("faceCode", faceCode);
-//证件夹*********************
+        //证件夹*********************
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
         params.put("type", type);
         return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
+    }
 
+    /**
+     * 活体公用检测锁的通知server的接口
+     */
+    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderNo",orderNo);
+        params.put("faceCode",faceCode);
+        params.put("number",number);
+        params.put("name",name);
+        params.put("credentialCode",name);
+        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+//        queryComontDataResult
     }
 
     /**
@@ -1704,7 +1718,7 @@ public class ApiClient {
         Map<String, String> params = new HashMap<>();
         params.put("credentialType", "100101");//身份证标识默认是100101
         params.put("imageUrl", imageUrl);
-        params.put("faceType", faceType+"");
+        params.put("faceType", faceType + "");
         return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 

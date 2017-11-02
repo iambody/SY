@@ -883,10 +883,15 @@ interface RequestManager {
     Observable<ResponseBody> queryLivingResult(@Body RequestBody responseBody);
 
     /**
-     * 活体检测二次结果哦通知处理
+     * 活体检测结果通知处理
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
     Observable<ResponseBody> queryDataResult(@Body RequestBody requestBody);
+    /**
+     * 活体检测公用锁的通知接口
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_BEAN_COMMENT_RESULT)
+    Observable<ResponseBody> queryComontDataResult(@Body RequestBody requestBody);
 
     /**
      * orc获取sign

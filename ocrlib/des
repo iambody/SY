@@ -21,7 +21,7 @@
 
         ***********************开启活体检测********************************
             1 活体检测的调用
-            LivingManger livingManger = new LivingManger(baseActivity, "王永奎".trim(), "411023199011101070".trim(), new LivingResult() {
+            LivingManger livingManger = new LivingManger(Context livingContext, String cardname, String cardid, String credentialcode, String customercode, String Type, String imageurl, new LivingResult() {
                       @Override
                       public void livingSucceed() {
                       //成功的结果
@@ -40,5 +40,30 @@
 
            3 在页面的destory里面需要进行销毁资源
             livingManger.destory();
+
+              ***********************公用的开启活体检测********************************
+                        1 活体检测的调用
+                        LivingManger livingManger = new LivingManger(baseActivity, new LivingResult() {
+                                  @Override
+                                  public void livingSucceed() {
+                                  //成功的结果
+                                       Log.i("ssalslaklslksaklsakl", "成功了");
+                                   }
+
+                                  @Override
+                                  public void livingFailed() {
+                                  // 失败的结果
+                                    }
+                               });
+
+                       2 开始启动检测
+                        livingManger.startLivingMatch();
+
+
+                       3 在页面的destory里面需要进行销毁资源
+                        livingManger.destory();
+
+
+
         ************************开启拍摄人脸*****************************************
          baseActivity.startActivity(new Intent(baseActivity, FacePictureActivity.class));

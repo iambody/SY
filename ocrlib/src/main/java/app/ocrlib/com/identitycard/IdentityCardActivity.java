@@ -18,7 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
@@ -33,7 +35,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * desc  ${DESC}
+ * desc  ${ }
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/10/31-13:49
  */
@@ -49,9 +51,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     public static final String CARD_FACE = "cardface";
     private int currentFace;
     //身份证正面
-    public static final int FACE_FRONT = 1;
+    public static final int FACE_FRONT = 0;
     //身份证反面
-    public static final int FACE_BACK = 2;
+    public static final int FACE_BACK = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,13 +97,13 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
             case FACE_FRONT:
-                iConParams.setMargins((height/2)- DimensionPixelUtil.dip2px(this,20),width-DimensionPixelUtil.dip2px(this,60),0,0);
+                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 20), width - DimensionPixelUtil.dip2px(this, 60), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_face_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
                 break;
             case FACE_BACK:
-                iConParams.setMargins((height/2),screenHeight-width-DimensionPixelUtil.dip2px(this,60),0,0);
+                iConParams.setMargins((height / 2), screenHeight - width - DimensionPixelUtil.dip2px(this, 60), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_back));
@@ -117,7 +119,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void picResult(String ivPath) {
                 Log.i("OCR回调", "活体回调结果成功" + ivPath);
-//                IdentityCardActivity.this.startActivity(new Intent(IdentityCardActivity.this, IdentityCardTest.class));
+                //IdentityCardActivity.this.startActivity(new Intent(IdentityCardActivity.this, IdentityCardTest.class));
                 analyzeCard(ivPath);
             }
 
@@ -138,7 +140,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 //异步操作相关代码
-                String imageId = DownloadUtils.postObject(ivPath, Constant.UPLOAD_COMPLIANCE_TYPE);
+                String imageId = DownloadUtils.postObject(ivPath, Constant.UPLOAD_COMPLIANCE_OCR);
                 subscriber.onNext(imageId);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -151,12 +153,17 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
-
+                                identityCard.setType(currentFace);
+                                RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
                             }
 
                             @Override
                             protected void onRxError(Throwable error) {
                                 Log.i("OCR回调", "信息失败" + error.getMessage());
+                                IdentityCard identityCard = new IdentityCard();
+                                identityCard.setType(-1);
+                                RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
+
                             }
                         });
                     }

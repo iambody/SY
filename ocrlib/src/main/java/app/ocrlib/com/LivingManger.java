@@ -33,29 +33,30 @@ public class LivingManger {
     private static String Cardname;
     //身份证号
     private static String Cardid;
-    //**credentialCode
+    //credentialCode
     private static String credentialCode;
-    //**customerCode
+    //customerCode
     private static String customerCode;
-    //**type
+    //type
     private static String type;
-//****一串正反面
-    private static  String imageUrl;
+    //一串正反面
+    private static String imageUrl;
     //是否显示成功页面  暂时显示成功失败页面
     private static boolean isShowSuccess = true;
     private static boolean isShowFail = true;
     //主题颜色
     private static String color;
-
     private static ProgressDialog progressDlg;
-
     private static SharedPreferences sp;
     private static LivingSign livingSign;
+    private static int MangerType;
 
     private LivingManger() {
     }
 
     /**
+     * 身份证流程的活体检测构造
+     *
      * @param livingContext
      * @param cardname
      * @param cardid
@@ -64,7 +65,7 @@ public class LivingManger {
      * @param Type
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String cardname, String cardid, String credentialcode, String customercode, String Type,String imageurl, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String cardname, String cardid, String credentialcode, String customercode, String Type, String imageurl, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.Cardname = cardname;
@@ -72,7 +73,21 @@ public class LivingManger {
         this.credentialCode = credentialcode;
         this.customerCode = customercode;
         this.type = Type;
-        this.imageUrl=imageurl;
+        this.imageUrl = imageurl;
+        this.MangerType = 2;
+        initConifg();
+
+    }
+
+    /**
+     * 公用的活体检验构造函数
+     *
+     * @param ocrResult
+     */
+    public LivingManger(Context livingContext, LivingResult ocrResult) {
+        this.livingResult = ocrResult;
+        this.livingContext = livingContext;
+        this.MangerType = 1;
         initConifg();
 
     }
@@ -80,13 +95,10 @@ public class LivingManger {
     //开始初始化*********************************
     private void initConifg() {
         sp = livingContext.getSharedPreferences("FaceVerify", Context.MODE_PRIVATE);
-
         initProgress();
         //默认选择黑色模式 也可以选择白色（需要在build.gradle里更换对应白色资源包）
         color = WbCloudFaceVerifySdk.BLACK;
-//        color = WbCloudFaceVerifySdk.WHITE;
-
-
+        //color = WbCloudFaceVerifySdk.WHITE;
     }
 
     /**
@@ -103,7 +115,7 @@ public class LivingManger {
                 String msg = vali.validate_effective(Cardid);
                 if (msg.equals(Cardid)) {
                     progressDlg.show();
-//                    signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
+                    //signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
                     getSign();
 
 
@@ -154,7 +166,7 @@ public class LivingManger {
         //颜色设置
         data.putString(WbCloudFaceVerifySdk.COLOR_MODE, color);
         //是否对录制视频进行检查,默认不检查
-//        data.putBoolean(WbCloudFaceVerifySdk.VIDEO_CHECK, true);
+        //data.putBoolean(WbCloudFaceVerifySdk.VIDEO_CHECK, true);
         WbCloudFaceVerifySdk.getInstance().init(livingContext, data, new WbCloudFaceVerifySdk.FaceVerifyLoginListener() {
             @Override
             public void onLoginSuccess() {
@@ -169,29 +181,18 @@ public class LivingManger {
                             faceMsg = "";
                         }
 
-                        if (resultCode == 0) {
-                            //需要通知后台**************************************************
-                            ApiClient.livingQueryResult(orderNum, Cardname, Cardid).subscribe(new RxSubscriber<String>() {
-                                @Override
-                                protected void onEvent(String s) {
-
-                                }
-
-                                @Override
-                                protected void onRxError(Throwable error) {
-
-                                }
-                            });
-
-                            //已经通知后台**************************************************
-//                            sendDataResult();
-
-
-                            if (null != livingResult) livingResult.livingSucceed();
+                        if (resultCode == 0) {//成功
+                            //需要通知后台
+                            if (2 == MangerType) {
+                                sendDataResult();
+                            } else {
+                                sendCommontDataResult();
+                            }
+                            //已经通知后台 if (null != livingResult) livingResult.livingSucceed();
                             if (!isShowSuccess) {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
+                        } else {//失败
                             if (null != livingResult) livingResult.livingFailed();
                             if (!isShowFail) {
                                 Toast.makeText(livingContext, "刷脸失败：errorCode=" + resultCode + " ;faceCode= " + faceCode + " ;faceMsg=" + faceMsg, Toast.LENGTH_LONG).show();
@@ -214,7 +215,6 @@ public class LivingManger {
         });
     }
 
-
     /**
      * 初始化进度条
      */
@@ -222,7 +222,6 @@ public class LivingManger {
         if (progressDlg != null) {
             progressDlg.dismiss();
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             progressDlg = new ProgressDialog(livingContext);
         } else {
@@ -255,8 +254,6 @@ public class LivingManger {
             protected void onEvent(String s) {
                 try {
                     JSONObject object = new JSONObject(s);
-
-
                     livingSign = new Gson().fromJson(object.getString("result"), LivingSign.class);
                     openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, livingSign.getSign(), livingSign.getAppId(), livingSign.getNonce(), livingSign.getUserId(), livingSign.getLicence(), livingSign.getOrderNum());
                 } catch (JSONException e) {
@@ -290,6 +287,23 @@ public class LivingManger {
             }
         });
 
+    }
+
+    /**
+     * 公用锁的通知后台模式
+     */
+    public static void sendCommontDataResult(String orderNo, String faceCode, String number, String name, String credentialCode) {
+        ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 }
 

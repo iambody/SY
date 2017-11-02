@@ -60,11 +60,11 @@ public class DownloadUtils {
             pre = localFilePath.substring(dex);
         }
         String remotePath = type.concat(UUID.randomUUID().toString().concat(pre));
-        if (NetConfig.START_APP.equals("https://app")) {
+//        if (NetConfig.START_APP.equals("https://app")) {
             textMap.put("key", remotePath);
-        } else {
-            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + "/" + remotePath);
-        }
+//        } else {
+//            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + "/" + remotePath);
+//        }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
         // OSSAccessKeyId
@@ -78,14 +78,14 @@ public class DownloadUtils {
 
         String UPLOAD_URL;
 
-        if (isSecret) {
-            UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
-        } else {
-            UPLOAD_URL = NetConfig.UPLOAD_FILE;
-        }
+//        if (isSecret) {
+//            UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
+//        } else {
+//            UPLOAD_URL = NetConfig.UPLOAD_FILE;
+//        }
 
-        if (formUpload(UPLOAD_URL, textMap, fileMap)) {
-            return UPLOAD_URL + remotePath;
+        if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
+            return NetConfig.UPLOAD_FILE + remotePath;
         }
         return null;
     }
