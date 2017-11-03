@@ -24,4 +24,12 @@ public class LivingResultData {
     public void setRecognitionCode(String recognitionCode) {
         this.recognitionCode = recognitionCode;
     }
+
+    public LivingResultData() {
+    }
+
+    public LivingResultData(String recognitionMsg, String recognitionCode) {
+        this.recognitionMsg = recognitionMsg;
+        this.recognitionCode = recognitionCode;
+    }
 }

@@ -1521,7 +1521,7 @@ public class DataStatistApiParam {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2015");
         data3.put("act", "20076");
-        data3.put("arg1", "短信");
+        data3.put("arg1", "对话");
         data3.put("arg2", BaseApplication.BindAdviserState());
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }

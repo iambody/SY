@@ -92,7 +92,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
         int screenHeight = dm.heightPixels;
-        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this,140), DimensionPixelUtil.dip2px(this,140));
+        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 140), DimensionPixelUtil.dip2px(this, 140));
         int height = (int) (screenWidth * 0.8);//拍照的阴影框的高度为屏幕宽度的80%  0.8
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
@@ -119,7 +119,6 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void picResult(String ivPath) {
                 Log.i("OCR回调", "活体回调结果成功" + ivPath);
-                //IdentityCardActivity.this.startActivity(new Intent(IdentityCardActivity.this, IdentityCardTest.class));
                 analyzeCard(ivPath);
             }
 
@@ -149,26 +148,26 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                     public void call(final String data) {
                         // 主线程操作获取了远程的url
                         Log.i("OCR回调", "远程地址" + data);
-                        ApiClient.getOcrResult(data, currentFace+1).subscribe(new RxSubscriber<IdentityCard>() {
+                        ApiClient.getOcrResult(data, currentFace + 1).subscribe(new RxSubscriber<IdentityCard>() {
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
-                                Log.i("OCR回调", "信息成功" + identityCard.toString());
-                                identityCard.setType(1);
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
-                                RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
+                                RxBus.get().post(currentFace == FACE_FRONT ? RxConstant.COMPLIANCE_CARD_FRONT : RxConstant.COMPLIANCE_CARD_BACK, identityCard);
                                 IdentityCardActivity.this.finish();
+                                Log.i("OCR回调", "信息成功" + identityCard.toString());
                             }
 
                             @Override
                             protected void onRxError(Throwable error) {
-                                Log.i("OCR回调", "信息失败" + error.getMessage());
                                 IdentityCard identityCard = new IdentityCard();
-                                identityCard.setType(0);
+                                identityCard.setAnalysisType("0");
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
-                                RxBus.get().post(currentFace==FACE_FRONT?RxConstant.COMPLIANCE_CARD_FRONT:RxConstant.COMPLIANCE_CARD_BACK,identityCard);
+                                identityCard.setAnalysisMsg(error.getMessage());
+                                RxBus.get().post(currentFace == FACE_FRONT ? RxConstant.COMPLIANCE_CARD_FRONT : RxConstant.COMPLIANCE_CARD_BACK, identityCard);
                                 IdentityCardActivity.this.finish();
+                                Log.i("OCR回调", "信息失败" + error.getMessage());
                             }
                         });
                     }

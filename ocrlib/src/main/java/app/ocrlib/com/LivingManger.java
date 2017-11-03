@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.LivingSign;
@@ -44,6 +42,10 @@ public class LivingManger {
     private static String customerCode;
     //type
     private static String type;
+    //性别 男女
+    private static String sex;
+    //生日
+    private static String birthday;
     //一串正反面
     private static String imageUrl;
     //是否显示成功页面  暂时显示成功失败页面
@@ -70,7 +72,7 @@ public class LivingManger {
      * @param Type
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String cardname, String cardid, String cardvalidity, String credentialcode, String customercode, String Type, String imageurl, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String cardname, String cardid, String cardvalidity, String credentialcode, String customercode, String sex, String birthday, String Type, String imageurl, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.Cardname = cardname;
@@ -81,6 +83,8 @@ public class LivingManger {
         this.imageUrl = imageurl;
         this.cardValidity = cardvalidity;
         this.MangerType = 2;
+        this.sex = sex;
+        this.birthday = birthday;
         initConifg();
 
     }
@@ -100,7 +104,7 @@ public class LivingManger {
 
     }
 
-    //开始初始化*********************************
+    /******************开始初始化*****************/
     private void initConifg() {
         sp = livingContext.getSharedPreferences("FaceVerify", Context.MODE_PRIVATE);
         initProgress();
@@ -109,9 +113,7 @@ public class LivingManger {
         //color = WbCloudFaceVerifySdk.WHITE;
     }
 
-    /**
-     * 开始活体检测
-     */
+    /************开始活体检测**********************/
     public static void startLivingMatch() {
         if (Cardname != null && Cardname.length() != 0) {
             if (Cardid != null && Cardid.length() != 0) {
@@ -123,10 +125,7 @@ public class LivingManger {
                 String msg = vali.validate_effective(Cardid);
                 if (msg.equals(Cardid)) {
                     progressDlg.show();
-                    //signUseCase.execute(AppHandler.DATA_MODE_MID, APPID, userId, nonce);
                     getSign();
-
-
                 } else {
                     Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
                     return;
@@ -201,7 +200,6 @@ public class LivingManger {
                                 Toast.makeText(livingContext, "刷脸成功", Toast.LENGTH_SHORT).show();
                             }
                         } else {//失败
-//                            if (null != livingResult) livingResult.livingFailed();
                             //需要通知后台
                             if (2 == MangerType) {
                                 sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, faceCode, credentialCode, customerCode, type);
@@ -220,7 +218,6 @@ public class LivingManger {
             @Override
             public void onLoginFailed(String errorCode, String errorMsg) {
                 progressDlg.dismiss();
-//                if (null != livingResult) livingResult.livingFailed();
                 //需要通知后台
                 if (2 == MangerType) {
                     sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, errorCode, credentialCode, customerCode, type);
@@ -293,36 +290,38 @@ public class LivingManger {
 
     /**
      * 二次通知后台
-     * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的
+     * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的 返回的数据0成功 1客服审核 2ocr错误3标识失败
      */
     public static void sendDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
         //需要获取结果的
-        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type).subscribe(new RxSubscriber<LivingResultData>() {
+        ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type, sex, birthday).subscribe(new RxSubscriber<LivingResultData>() {
             @Override
             protected void onEvent(LivingResultData data) {
-                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, data);
+                if (null != livingResult) livingResult.livingSucceed(data);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, new LivingResultData());
+                if (null != livingResult)
+                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
             }
         });
     }
 
     /**
-     * 公用锁的通知后台模式
+     * 公用锁的通知后台模式0成功 1客服审核 2ocr错误3标识失败
      */
     public static void sendCommontDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
         ApiClient.getLivingQueryCommntDataResult(orderNo, faceCode, number, name, credentialCode, customerCode).subscribe(new RxSubscriber<LivingResultData>() {
             @Override
             protected void onEvent(LivingResultData data) {
-                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, data);
+                if (null != livingResult) livingResult.livingSucceed(data);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                RxBus.get().post(RxConstant.COMPLIANCE_LIVING_COMMONT_RESULT, new LivingResultData());
+                if (null != livingResult)
+                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
             }
         });
     }

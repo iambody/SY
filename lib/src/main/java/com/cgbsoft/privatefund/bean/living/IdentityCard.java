@@ -16,8 +16,16 @@ public class IdentityCard {
     private String sex;
     private String address;
     //1是识别成功 0为识别失败
-    private int Type;
+    private String analysisType;
+    private String analysisMsg;
 
+    public String getAnalysisMsg() {
+        return analysisMsg;
+    }
+
+    public void setAnalysisMsg(String analysisMsg) {
+        this.analysisMsg = analysisMsg;
+    }
 
     public String getBirth() {
         return birth;
@@ -43,12 +51,12 @@ public class IdentityCard {
         this.address = address;
     }
 
-    public int getType() {
-        return Type;
+    public String getAnalysisType() {
+        return analysisType;
     }
 
-    public void setType(int type) {
-        Type = type;
+    public void setAnalysisType(String analysisType) {
+        this.analysisType = analysisType;
     }
 
     public String getIdCardName() {
@@ -89,5 +97,21 @@ public class IdentityCard {
 
     public void setRemotPath(String remotPath) {
         this.remotPath = remotPath;
+    }
+
+    @Override
+    public String toString() {
+        return "IdentityCard{" +
+                "localPath='" + localPath + '\'' +
+                ", remotPath='" + remotPath + '\'' +
+                ", idCardName='" + idCardName + '\'' +
+                ", idCardNum='" + idCardNum + '\'' +
+                ", validDate='" + validDate + '\'' +
+                ", birth='" + birth + '\'' +
+                ", sex='" + sex + '\'' +
+                ", address='" + address + '\'' +
+                ", analysisType='" + analysisType + '\'' +
+                ", analysisMsg='" + analysisMsg + '\'' +
+                '}';
     }
 }

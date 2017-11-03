@@ -1670,7 +1670,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
+    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type,String sex,String birthday) {
         Map<String, String> params = new HashMap<>();
         params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
@@ -1682,6 +1682,8 @@ public class ApiClient {
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
         params.put("type", type);
+        params.put("sex", sex);
+        params.put("birthday", birthday);
         return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     }

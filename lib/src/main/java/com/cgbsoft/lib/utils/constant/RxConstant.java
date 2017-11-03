@@ -139,8 +139,8 @@ public interface RxConstant {
     //拍完身份证反面时候需要的反面信息
     String COMPLIANCE_CARD_BACK = "compliance_card_back";
     //公用的获取到活体检测的结果
-    String COMPLIANCE_LIVING_COMMONT_RESULT = "compliance_living_commont_result";
+    //String COMPLIANCE_LIVING_COMMONT_RESULT = "compliance_living_commont_result";
     //私用的获取到活体检测的结果
-    String COMPLIANCE_LIVING_PRIVATE_RESULT = "compliance_living_commont_result";
+    //String COMPLIANCE_LIVING_PRIVATE_RESULT = "compliance_living_commont_result";
 
 }

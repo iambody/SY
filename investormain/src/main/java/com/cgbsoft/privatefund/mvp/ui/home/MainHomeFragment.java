@@ -335,7 +335,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
 //        }
 //        DataStatistApiParam.homeClickNew();
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, 2));
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
 
     }
 
