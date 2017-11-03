@@ -1670,7 +1670,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type,String sex,String birthday) {
+    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
         Map<String, String> params = new HashMap<>();
         params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
@@ -1691,14 +1691,14 @@ public class ApiClient {
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name,String credentialCode,String customerCode) {
+    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
         Map<String, String> params = new HashMap<>();
-        params.put("orderNo",orderNo);
-        params.put("faceCode",faceCode);
-        params.put("number",number);
-        params.put("name",name);
-        params.put("credentialCode",credentialCode);
-        params.put("customerCode",customerCode);
+        params.put("orderNo", orderNo);
+        params.put("faceCode", faceCode);
+        params.put("number", number);
+        params.put("name", name);
+        params.put("credentialCode", credentialCode);
+        params.put("customerCode", customerCode);
         return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
 
     }
@@ -1723,6 +1723,17 @@ public class ApiClient {
         params.put("imageUrl", imageUrl);
         params.put("faceType", faceType + "");
         return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * person对比
+     * @return
+     */
+    public static Observable<String> getPersonCompare(String remotPath) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("url", remotPath);
+        return OKHTTP.getInstance().getRequestManager().getPersonCompare(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
     }
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {

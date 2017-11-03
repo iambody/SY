@@ -12,8 +12,6 @@
         android:layout_alignParentTop="true"
 
         >
-
-
         <SurfaceView
             android:id="@+id/facepicture_surfaceview"
             android:layout_width="match_parent"
@@ -34,15 +32,16 @@
 
             android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/head_outline" />
+            android:src="@drawable/head_outline"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#409eff"
+            android:textColor="@color/app_golden"
             android:text="保持正脸正对框内"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
             android:textSize="@dimen/dimens_sp_20"
+
             android:layout_marginTop="@dimen/ui_40_dip"/>
     </RelativeLayout>
 
@@ -53,8 +52,8 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:onClick="paizhao"
-        android:src="@drawable/ocr_camera_img"
-        android:layout_marginBottom="@dimen/ui_30_dip"
+        android:src="@drawable/ocr_camera_img1"
+        android:layout_marginBottom="@dimen/ui_20_dip"
         android:text="拍照" />
 
 

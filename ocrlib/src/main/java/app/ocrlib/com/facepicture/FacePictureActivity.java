@@ -23,7 +23,9 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 
@@ -58,7 +60,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facepicture);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
-
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
     }
@@ -69,9 +70,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     private void initCamera() {
         //CameraID表示0或者1，表示是前置摄像头还是后置摄像头
         camera = Camera.open(1);
-//        getPicImageResult();
+        //getPicImageResult();
         Camera.Parameters parameters = camera.getParameters();
-//        强制竖屏
+        //强制竖屏
         camera.setDisplayOrientation(90);
         setPreviewSize(camera, parameters);
 
@@ -149,8 +150,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     public void call(String data) {
                         // 主线程操作
                         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, data);
+                        Log.i("PersonCompare", "上传成功了" + data);
+                        personCompare(data);
                         FacePictureActivity.this.finish();
-//                      COMPLIANCE_FACEUP
+
                     }
                 });
     }
@@ -201,7 +204,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 Iterator<Camera.Size> itor = sizeList.iterator();
                 while (itor.hasNext()) {
                     Camera.Size cur = itor.next();
-//                    if(cur.width<1000)minSize=cur.width;
+                    //if(cur.width<1000)minSize=cur.width;
                     if (cur.width >= PreviewWidth
                             && cur.height >= PreviewHeight) {
 
@@ -247,6 +250,30 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        camera.stopPreview();
+        //手动释放 一定得加！
+        camera.release();
+        camera=null;
+    }
 
+    /**
+     * person对比
+     *
+     * @param remotpath
+     */
+    private void personCompare(final String remotpath) {
+        ApiClient.getPersonCompare(remotpath).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.i("PersonCompare", "对比成功了" + remotpath);
+                PromptManager.ShowCustomToast(FacePictureActivity.this,"对比成功了！！！！" + remotpath);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                Log.i("PersonCompare", "对比失败了" + remotpath);
+                PromptManager.ShowCustomToast(FacePictureActivity.this,"对比失败了" );
+            }
+        });
     }
 }

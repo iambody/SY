@@ -2,7 +2,6 @@ package app.ocrlib.com.identitycard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -65,12 +64,12 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
             finish();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+//        } else {
             setContentView(R.layout.activity_identitycard);
             initView();
-        }
+//        }
 
     }
 
@@ -97,7 +96,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
             case FACE_FRONT:
-                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 20), width - DimensionPixelUtil.dip2px(this, 60), 0, 0);
+                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 20), width - DimensionPixelUtil.dip2px(this, 80), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_face_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
@@ -199,6 +198,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             takePhoto();
         }
     }
+
 
 
 }

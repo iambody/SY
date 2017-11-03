@@ -86,7 +86,6 @@ public class LivingManger {
         this.sex = sex;
         this.birthday = birthday;
         initConifg();
-
     }
 
     /**

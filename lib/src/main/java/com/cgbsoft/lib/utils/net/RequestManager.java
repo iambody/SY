@@ -905,6 +905,11 @@ interface RequestManager {
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
     Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
+    /**
+     * person对比
+     */
+    @GET(NetConfig.Compliance.COMPLIANCE_PERSON_COMPARE)
+    Observable<ResponseBody>getPersonCompare(@QueryMap Map<String, String> programObject);
 
     /**
      * 通用的Get请求接口
