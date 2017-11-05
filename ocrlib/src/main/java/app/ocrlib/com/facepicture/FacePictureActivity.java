@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.privatefund.bean.living.FaceInf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -149,10 +150,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     @Override
                     public void call(String data) {
                         // 主线程操作
-                        RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, data);
+                        RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data,facePath));
                         Log.i("PersonCompare", "上传成功了" + data);
-                        personCompare(data);
-                        FacePictureActivity.this.finish();
+//                        personCompare(data);
+//                        FacePictureActivity.this.finish();
 
                     }
                 });
