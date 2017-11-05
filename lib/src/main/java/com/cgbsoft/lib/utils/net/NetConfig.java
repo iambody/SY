@@ -135,7 +135,7 @@ public class NetConfig {
         //活体检测的反馈(慕夏处理)
         final static String COMPLIANCE_LIVING_RESULT = API_URL + compliance + "/queryResult";
         //活体检测的反馈结果(茼筒处理)
-        final static String COMPLIANCE_BEAN_RESULT = API_URL + compliance +"/recognition";
+        final static String COMPLIANCE_BEAN_RESULT = "/auth/v3/credential/livingbody";//API_URL + compliance +"/recognition";
         //公共的人脸锁的server反馈结果
         final static String COMPLIANCE_BEAN_COMMENT_RESULT = API_URL + compliance +"/recognition/common";
         //OCR获取sign
