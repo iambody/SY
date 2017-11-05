@@ -1623,6 +1623,15 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttp().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 新版本判断身份
+     *
+     * @return
+     */
+    public static Observable<String> verifyIndentityInClientV3() {
+        return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttpV3().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
     public static Observable<CardListEntity.Result> getIndentityList(String indentityCode) {
         Map<String, Object> params = new HashMap<>();
         params.put("customerCode", indentityCode);
@@ -1640,6 +1649,18 @@ public class ApiClient {
         params.put("customerCode", customerCode);
         params.put("credentialCode", credentialCode);
         return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 获取证件详情
+     * @param credentialCode
+     * @return
+     */
+    public static Observable<String> getCredentialDetial(String credentialCode){
+        Map<String,String> params = new HashMap<>();
+        params.put("id",credentialCode);
+        return OKHTTP.getInstance().getRequestManager().getCredentialDetial(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

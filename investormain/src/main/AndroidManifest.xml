@@ -19,8 +19,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 读写系统设置 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <uses-permission android:name="android.permission.READ_FRAME_BUFFER"/>
+    <uses-permission android:name="android.permission.READ_FRAME_BUFFER" />
     <!-- 获取错略位置 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" /> -->
@@ -194,17 +193,20 @@
             android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Fullscreen">
-            <!--  <intent-filter>
+
+            <!--
+              <intent-filter>
                   <action android:name="android.intent.action.MAIN" />
 
                   <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>-->
+              </intent-filter>
+            -->
         </activity>
-        <!--name：组件名字-->
-        <!--enabled：该组件是否启动-->
-        <!--icon：组件图标-->
-        <!--label：组件标签说明-->
-        <!--targetActivity：组件的类-->
+        <!-- name：组件名字 -->
+        <!-- enabled：该组件是否启动 -->
+        <!-- icon：组件图标 -->
+        <!-- label：组件标签说明 -->
+        <!-- targetActivity：组件的类 -->
         <activity-alias
             android:name=".MainActivity0"
             android:enabled="true"
@@ -237,10 +239,10 @@
             android:screenOrientation="portrait" />
 
         <!-- 权限管理 -->
-        <!--<activity-->
-        <!--android:name=".mvp.ui.start.PermissionsActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />-->
+        <!-- <activity -->
+        <!-- android:name=".mvp.ui.start.PermissionsActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" /> -->
         <!--
                 &lt;!&ndash;选择身份&ndash;&gt;
                 <activity
@@ -285,6 +287,7 @@
                     android:theme="@style/Theme.AppCompat.DayNight.Fullscreen" />
         -->
 
+
         <!-- 视频列表 -->
         <!-- <activity -->
         <!-- android:name="com.cgbsoft.adviser.mvp.ui.college.VideoListActivity" -->
@@ -308,9 +311,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="app.simuyun.com"
-                    android:path="/health/detail" />
+                    android:path="/health/detail"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -586,7 +589,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentFullScreenTheme" />
 
-
         <receiver
             android:name=".utils.receiver.AppInstallReceiver"
             android:label="@string/app_name_customer">
@@ -599,6 +601,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".mvp.ui.home.CrenditralGuideActivity"></activity>
     </application>
 
 </manifest>

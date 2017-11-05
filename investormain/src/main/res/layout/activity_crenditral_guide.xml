@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity">
+
+
+     <Button
+         android:id="@+id/jump_crenditral_detial"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:text="进入详情"
+         style="@style/button_style"
+         android:layout_marginLeft="15dp"
+         android:layout_marginRight="15dp"
+         android:background="@color/app_golden"
+         android:textSize="@dimen/dimens_sp_16"
+         android:textColor="@color/white"
+         android:layout_alignParentBottom="true"
+         android:layout_marginBottom="18dp"
+         />
+</RelativeLayout>

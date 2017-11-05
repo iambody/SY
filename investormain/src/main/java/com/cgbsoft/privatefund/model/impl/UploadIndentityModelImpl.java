@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.privatefund.model.CredentialModelListener;
 import com.cgbsoft.privatefund.model.UploadIndentityModel;
 import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 
@@ -21,14 +22,14 @@ import rx.subscriptions.CompositeSubscription;
 
 public class UploadIndentityModelImpl implements UploadIndentityModel {
     @Override
-    public void uploadIndentity(CompositeSubscription subscription, UploadIndentityModelListener listener,List<String> remoteParams,String customerCode,String credentialCode) {
-        subscription.add(ApiClient.uploadIndentityRemotePath(remoteParams,customerCode,credentialCode).subscribe(new RxSubscriber<String>() {
+    public void uploadIndentity(CompositeSubscription subscription, UploadIndentityModelListener listener, List<String> remoteParams, String customerCode, String credentialCode) {
+        subscription.add(ApiClient.uploadIndentityRemotePath(remoteParams, customerCode, credentialCode).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
-                    if (TextUtils.isEmpty(code)||"100004".equals(code)) {
+                    if (TextUtils.isEmpty(code) || "100004".equals(code)) {
                         listener.uploadIndentitySuccess(null);
                     } else {
                         JSONObject result = (JSONObject) jsonObject.get("result");
@@ -44,8 +45,25 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
 
             @Override
             protected void onRxError(Throwable error) {
-                LogUtils.Log("aaa","error==="+error.getMessage());
+                LogUtils.Log("aaa", "error===" + error.getMessage());
                 listener.uploadIndentityError(error);
+            }
+        }));
+    }
+
+    @Override
+    public void credentialDetail(CompositeSubscription subscription, CredentialModelListener listener, String credentialCode) {
+        subscription.add(ApiClient.getCredentialDetial(credentialCode).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                LogUtils.Log("getCredentialDetial", "onEvent===" + s);
+                listener.getCrentialSuccess(s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("aaa", "error===" + error.getMessage());
+                listener.getCrentialError(error);
             }
         }));
     }

@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.IndentityAdapter;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.SelectIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SelectIndentityPresenterImpl;
 
@@ -79,6 +80,8 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
             intent.putExtra("indentityCode",indentityCode);
             intent.putExtra("isFromSelectIndentity",true);
             intent.putExtra("title", indentityName);
+            intent.putExtra("credentialStateMedel",
+                    new CredentialStateMedel("","100101","10","5","0","未上传","1001","身份证","0","未上传","5"));
             startActivity(intent);
         } else {
             //去证件列表

@@ -21,6 +21,9 @@ public interface UploadIndentityContract {
         void hideLoadDialog();
         void uploadIndentitySuccess(String s);
         void uploadIndentityError(Throwable error);
+
+        void credentialDetialSuccess(String s);
+        void credentialDetialError(Throwable error);
     }
     interface UploadIndentityPresenter extends BasePresenter {
         /**

@@ -211,6 +211,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/private_bank_bottom_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

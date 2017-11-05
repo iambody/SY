@@ -7,7 +7,7 @@ package com.cgbsoft.privatefund.bean.living;
  */
 public class LivingResultData {
     private String recognitionMsg;//":"姓名和身份证不匹配"
-    private String recognitionCode;//":"0"
+    private String recognitionCode;// 0成功 1客服审核 2ocr错误3标识失败
 
     public String getRecognitionMsg() {
         return recognitionMsg;

@@ -37,6 +37,7 @@ public class NetConfig {
     public final static String API_URL_V3 = "api/v3";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
+    public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
 
     static {
@@ -404,9 +405,12 @@ public class NetConfig {
     static class Indentity {
         static final String GET_INDENTITY_TYPE_LIST = AUTH_URL_V2 + "/credential/config";
         static final String VERIFY_INDENTITY = AUTH_URL_V2 + "/credential/info";
-        public static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
-        public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
-        public static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
+        //新版获取证件信息
+        static final String VERIFY_INDENTITY_V3 = AUTH_URL_V3 + "/credential/baseinfo";
+        static final String CREDENTIALS_DETILS  = AUTH_URL_V3+"/credential/detail";
+        static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
+        static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
+        static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
     }
 
     public static class SoDown {

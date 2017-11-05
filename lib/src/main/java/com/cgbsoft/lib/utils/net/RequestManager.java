@@ -844,6 +844,12 @@ interface RequestManager {
     Observable<ResponseBody> verifyIndentityInOkhttp();
 
     /**
+     * 获取身份信息
+     */
+    @GET(NetConfig.Indentity.VERIFY_INDENTITY_V3)
+    Observable<ResponseBody> verifyIndentityInOkhttpV3();
+
+    /**
      * 获取证件列表
      *
      * @param params
@@ -860,6 +866,9 @@ interface RequestManager {
      */
     @POST(NetConfig.Indentity.UPLOAD_REMOTE_PATHS)
     Observable<ResponseBody> uploadRemotePath(@Body RequestBody requestBody);
+
+    @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
+    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);

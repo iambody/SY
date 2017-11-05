@@ -9,6 +9,87 @@
         layout="@layout/title_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/rl_recognition_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_recognition_name_edit"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="70dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textSize="16sp"
+                android:text="姓&#160;&#160;&#160;&#8201;名"/>
+            <TextView
+                android:id="@+id/recognition_name_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                />
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:textSize="16sp"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_recognition_idcard_num"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件号码"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/recognition_idcard_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_recognition_validDate"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="70dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textSize="16sp"
+                android:text="证件有效期"/>
+            <TextView
+                android:id="@+id/recognition_validDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                />
+        </LinearLayout>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/rl_replenish_card_all"
         android:layout_width="match_parent"
@@ -66,6 +147,7 @@
             />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/rl_tip"
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
