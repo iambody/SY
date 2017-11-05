@@ -152,6 +152,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         // 主线程操作
                         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data,facePath));
                         Log.i("PersonCompare", "上传成功了" + data);
+                        FacePictureActivity.this.finish();
 //                        personCompare(data);
 //                        FacePictureActivity.this.finish();
 
