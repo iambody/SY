@@ -45,11 +45,9 @@ public class DownloadUtils {
         return postObject1(localFilePath, type, true);
     }
 
-
     public static String postObject(String localFilePath, String type) {
         return postObject1(localFilePath, type, false);
     }
-
     // 提交表单的URL为bucket域名
     private static String postObject1(String localFilePath, String type, Boolean isSecret) {
         // 表单域
@@ -63,7 +61,8 @@ public class DownloadUtils {
         if (NetConfig.START_APP.equals("https://app")) {
             textMap.put("key", remotePath);
         } else {
-            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + "/" + remotePath);
+            String domain = NetConfig.SERVER_ADD.replace("https://", "");
+            textMap.put("key", "-/" + domain + "/" + remotePath);
         }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
@@ -85,7 +84,12 @@ public class DownloadUtils {
         }
 
         if (formUpload(UPLOAD_URL, textMap, fileMap)) {
-            return UPLOAD_URL + remotePath;
+            if (NetConfig.START_APP.equals("https://app")) {
+                return UPLOAD_URL + remotePath;
+            } else {
+                String domain = NetConfig.SERVER_ADD.replace("https://", "");
+                return UPLOAD_URL +  "-/" + domain + "/" + remotePath;
+            }
         }
         return null;
     }
