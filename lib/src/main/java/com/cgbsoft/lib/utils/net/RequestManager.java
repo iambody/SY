@@ -26,7 +26,6 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
-import com.cgbsoft.privatefund.bean.living.LivingResultData;
 
 import java.util.List;
 import java.util.Map;
@@ -896,12 +895,12 @@ interface RequestManager {
      * 活体检测结果通知处理
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
-    Observable<BaseResult<LivingResultData> > queryDataResult(@Body RequestBody requestBody);
+    Observable<ResponseBody > queryDataResult(@Body RequestBody requestBody);
     /**
      * 活体检测公用锁的通知接口
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_COMMENT_RESULT)
-    Observable<BaseResult<LivingResultData>> queryComontDataResult(@Body RequestBody requestBody);
+    Observable<ResponseBody> queryComontDataResult(@Body RequestBody requestBody);
 
     /**
      * orc获取sign

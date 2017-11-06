@@ -130,7 +130,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         //开始上传bitmap并获取远程路径
         upLoadBitmap(nbmp2);
 
-
     }
 
     String facePath = null;
@@ -152,8 +151,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         // 主线程操作
                         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data,facePath));
                         Log.i("PersonCompare", "上传成功了" + data);
-//                        FacePictureActivity.this.finish();
-                        personCompare(data);
+                        FacePictureActivity.this.finish();
+//                        personCompare(data);
 //                        personCompare(data);
 //                        FacePictureActivity.this.finish();
 
@@ -270,6 +269,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             protected void onEvent(String s) {
                 Log.i("PersonCompare", "对比成功了" + remotpath);
                 PromptManager.ShowCustomToast(FacePictureActivity.this,"对比成功了！！！！" + remotpath);
+
             }
 
             @Override

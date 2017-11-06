@@ -174,7 +174,6 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                     mLoadingDialog.dismiss();
 
                                 }
-                                mLoadingDialog.dismiss();
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setAnalysisType("0");
                                 identityCard.setLocalPath(ivPath);

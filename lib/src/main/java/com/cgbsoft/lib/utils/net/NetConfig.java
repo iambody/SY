@@ -3,9 +3,7 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
@@ -17,7 +15,7 @@ public class NetConfig {
 
     //    private static String START_APP = "https://app";
 //    public static String START_APP = "https://app";//sim
-        public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+        public static String START_APP = "https://d6-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";

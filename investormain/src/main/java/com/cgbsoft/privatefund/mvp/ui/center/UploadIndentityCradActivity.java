@@ -51,7 +51,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
@@ -261,10 +263,20 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
+            List<Map<String,Object>> cardmaps=new ArrayList<>();
+            Map<String,Object>mapfront=new HashMap();
+            mapfront.put("name","frontImage");
+            mapfront.put("url",firstPhotoPath);
+            Map<String,Object>mapback=new HashMap();
+            mapback.put("name","backImage");
+            mapback.put("url",secondPhotoPath);
+            cardmaps.add(mapfront);
+            cardmaps.add(mapback);
+            List<String>remotePths=new ArrayList<>();
+            remotePths.add(firstPhotoPath);
+            remotePths.add(secondPhotoPath);
             //0 成功 1客服审核 2ocr错误 3标识失败
-            livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", idcardImages.toString(), new LivingResult() {
+            livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
                 @Override
                 public void livingSucceed(LivingResultData resultData) {
                     switch (resultData.getRecognitionCode()) {

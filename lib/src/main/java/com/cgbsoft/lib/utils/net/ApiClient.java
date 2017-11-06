@@ -38,7 +38,6 @@ import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
-import com.cgbsoft.privatefund.bean.living.LivingResultData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1691,9 +1690,9 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<LivingResultData> getLivingQueryDataResult(JSONArray imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
+    public static Observable<String> getLivingQueryDataResult(  List<String>  imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
         Map<String, Object> params = new HashMap<>();
-        params.put("imageUrl", imageUrl);
+//        params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
         params.put("name", cardName);
         params.put("periodValidity", cardValidity);
@@ -1705,14 +1704,14 @@ public class ApiClient {
         params.put("type", type);
         params.put("sex", sex);
         params.put("birthday", birthday);
-        return OKHTTP.getInstance().getRequestManager().queryDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().queryDataResult(uploadRemotePathUse(imageUrl,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<LivingResultData> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
+    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
         params.put("faceCode", faceCode);
@@ -1720,7 +1719,7 @@ public class ApiClient {
         params.put("name", name);
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
-        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
