@@ -137,7 +137,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
      * @param ivPath
      */
     private void analyzeCard(final String ivPath) {
-        mLoadingDialog.setLoading("解析中..");
+        mLoadingDialog.setLoading("");
         mLoadingDialog.show();
 
         Observable.create(new Observable.OnSubscribe<String>() {
@@ -212,7 +212,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         super.onDestroy();
         if (null != mLoadingDialog) {
             mLoadingDialog.dismiss();
-            mLoadingDialog=null;
+            mLoadingDialog = null;
         }
     }
 

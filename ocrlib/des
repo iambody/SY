@@ -65,5 +65,14 @@
 
 
 
-        ************************开启拍摄人脸*****************************************
+        ************************开启拍摄person*****************************************
          baseActivity.startActivity(new Intent(baseActivity, FacePictureActivity.class));
+         返回的通知
+         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf());
+
+        ************************开启拍摄person进行person对比 person对比锁*****************************************
+         baseActivity.startActivity(new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON,true));
+         返回的通知 0代表成功 1代表失败  int值
+         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 0);
+
+

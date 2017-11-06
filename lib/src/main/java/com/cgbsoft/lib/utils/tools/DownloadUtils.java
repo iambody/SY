@@ -63,7 +63,8 @@ public class DownloadUtils {
 //        if (NetConfig.START_APP.equals("https://app")) {
             textMap.put("key", remotePath);
 //        } else {
-//            textMap.put("key", "/-/" + NetConfig.SERVER_ADD + "/" + remotePath);
+//            String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
+//            textMap.put("key", "-/" + mainUrl + "/" + remotePath);
 //        }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
@@ -85,7 +86,13 @@ public class DownloadUtils {
 //        }
 
         if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
-            return NetConfig.UPLOAD_FILE + remotePath;
+//            if (NetConfig.START_APP.equals("https://app")) {
+                return NetConfig.UPLOAD_FILE + remotePath;
+//            } else {
+//                String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
+//                return NetConfig.UPLOAD_FILE + "-/" + mainUrl + "/" + remotePath;
+//            }
+
         }
         return null;
     }

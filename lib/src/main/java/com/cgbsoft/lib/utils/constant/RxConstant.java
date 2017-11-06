@@ -132,7 +132,7 @@ public interface RxConstant {
     String REFRESH_PRODUCT = "REFRESH_PRODUCT";
 
     /************************合规需要的通知compliance**********************/
-    //上传完人脸后返回人脸的远程url 应用场景：1非大陆居民证件齐全后修改问卷时候的人脸对比
+    //上传完人脸后返回人脸的远程url 应用场景：1非大陆居民证件齐全后修改问卷时候的人脸对比 bean是FaceInf
     String COMPLIANCE_FACEUP = "compliance_faceup";
     //拍完身份证正面时候需要的正面信息通知
     String COMPLIANCE_CARD_FRONT = "compliance_card_front";
@@ -142,5 +142,7 @@ public interface RxConstant {
     //String COMPLIANCE_LIVING_COMMONT_RESULT = "compliance_living_commont_result";
     //私用的获取到活体检测的结果
     //String COMPLIANCE_LIVING_PRIVATE_RESULT = "compliance_living_commont_result";
+   //person的对比 默认INTEGER.CLASS 0标识成功 1标识失败
+    String COMPLIANCE_PERSON_COMPARE="compliance_person_compare";
 
 }
