@@ -253,7 +253,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         } catch (IOException e) {
             e.printStackTrace();
         }
-        camera.startPreview();=
+        camera.startPreview();
     }
 
     @Override
