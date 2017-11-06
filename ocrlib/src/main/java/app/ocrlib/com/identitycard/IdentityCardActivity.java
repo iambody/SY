@@ -24,6 +24,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import app.ocrlib.com.R;
@@ -53,6 +54,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     public static final int FACE_FRONT = 0;
     //身份证反面
     public static final int FACE_BACK = 1;
+    private LoadingDialog mLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,11 +66,12 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
             finish();
         }
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
 //        } else {
-            setContentView(R.layout.activity_identitycard);
-            initView();
+        setContentView(R.layout.activity_identitycard);
+        initView();
 //        }
 
     }
@@ -134,6 +137,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
      * @param ivPath
      */
     private void analyzeCard(final String ivPath) {
+        mLoadingDialog.setLoading("解析中..");
+        mLoadingDialog.show();
+
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
@@ -150,15 +156,25 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                         ApiClient.getOcrResult(data, currentFace + 1).subscribe(new RxSubscriber<IdentityCard>() {
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
+                                if (null != mLoadingDialog) {
+                                    mLoadingDialog.dismiss();
+
+                                }
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace == FACE_FRONT ? RxConstant.COMPLIANCE_CARD_FRONT : RxConstant.COMPLIANCE_CARD_BACK, identityCard);
                                 IdentityCardActivity.this.finish();
                                 Log.i("OCR回调", "信息成功" + identityCard.toString());
+
                             }
 
                             @Override
                             protected void onRxError(Throwable error) {
+                                if (null != mLoadingDialog) {
+                                    mLoadingDialog.dismiss();
+
+                                }
+                                mLoadingDialog.dismiss();
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setAnalysisType("0");
                                 identityCard.setLocalPath(ivPath);
@@ -193,12 +209,20 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mLoadingDialog) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog=null;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         if (R.id.btn_shoot == v.getId()) {//拍照
             takePhoto();
         }
     }
-
 
 
 }
