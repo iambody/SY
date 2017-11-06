@@ -29,6 +29,11 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.privatefund.bean.living.FaceInf;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,17 +54,23 @@ import rx.schedulers.Schedulers;
  * 日期 2017/10/24-16:28
  */
 public class FacePictureActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-    Camera camera;
+    private Camera camera;
 
-    SurfaceView surfaceview;
+    private SurfaceView surfaceview;
 
-    SurfaceHolder surfaceholder;
+    private SurfaceHolder surfaceholder;
 
+    //是否需要进行person对比
+    private boolean isNeedPersonCompare = false;
+
+    //需要进行person比较的key
+    public static String TAG_NEED_PERSON = "needPersonCompare";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facepicture);
+        isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
@@ -149,12 +160,13 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     @Override
                     public void call(String data) {
                         // 主线程操作
-                        RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data,facePath));
                         Log.i("PersonCompare", "上传成功了" + data);
-                        FacePictureActivity.this.finish();
-//                        personCompare(data);
-//                        personCompare(data);
-//                        FacePictureActivity.this.finish();
+                        if (isNeedPersonCompare) {
+                            personCompare(data);
+                        } else {
+                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath));
+                            FacePictureActivity.this.finish();
+                        }
 
                     }
                 });
@@ -217,17 +229,16 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 }
             }
             parameters.setPreviewSize(PreviewWidth, PreviewHeight); //获得摄像区域的大小
-//            parameters.setPreviewFrameRate(3);//每秒3帧  每秒从摄像头里面获得3个画面
+            //parameters.setPreviewFrameRate(3);//每秒3帧  每秒从摄像头里面获得3个画面
             parameters.setJpegQuality(100);
             parameters.setPictureFormat(PixelFormat.JPEG);//设置照片输出的格式
             parameters.set("jpeg-quality", 100);//设置照片质量
             parameters.setPictureSize(PreviewWidth, PreviewHeight);//设置拍出来的屏幕大小
-//            //
             //设置放大倍数
             parameters.setZoom(1);
-            camera.setParameters(parameters);//把上面的设置 赋给摄像头
+            //把上面的设置 赋给摄像头
+            camera.setParameters(parameters);
         } catch (Exception e) {
-//            Log.e(TAG, e.toString());
         }
 
     }
@@ -242,7 +253,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         } catch (IOException e) {
             e.printStackTrace();
         }
-        camera.startPreview();
+        camera.startPreview();=
     }
 
     @Override
@@ -255,7 +266,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         camera.stopPreview();
         //手动释放 一定得加！
         camera.release();
-        camera=null;
+        camera = null;
     }
 
     /**
@@ -268,14 +279,28 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             @Override
             protected void onEvent(String s) {
                 Log.i("PersonCompare", "对比成功了" + remotpath);
-                PromptManager.ShowCustomToast(FacePictureActivity.this,"对比成功了！！！！" + remotpath);
-
+                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String result = obj.getString("result");
+                    LivingResultData recognitionCode = new Gson().fromJson(result, LivingResultData.class);
+                    if ("0".equals(recognitionCode.getRecognitionCode())) {//成功
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 0);
+                    } else {//失败
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                FacePictureActivity.this.finish();
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("PersonCompare", "对比失败了" + remotpath);
-                PromptManager.ShowCustomToast(FacePictureActivity.this,"对比失败了" );
+                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
+                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
+                FacePictureActivity.this.finish();
             }
         });
     }

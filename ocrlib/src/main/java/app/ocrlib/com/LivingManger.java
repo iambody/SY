@@ -308,13 +308,14 @@ public class LivingManger {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                PromptManager.ShowCustomToast(livingContext, "返回成功了");
+                PromptManager.ShowCustomToast(livingContext, "返回成功了");
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
+                PromptManager.ShowCustomToast(livingContext, error.getMessage());
             }
         });
     }
