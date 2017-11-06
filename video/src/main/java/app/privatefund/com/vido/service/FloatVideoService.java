@@ -138,7 +138,6 @@ public class FloatVideoService extends Service implements MediaPlayer.OnPrepared
         }
         mVideoId = videoId;
 
-
         RxCountDown.keepTimeDown(new RxCountDown.keepTimeInterface() {
             @Override
             public void allTime(int allTime) {
