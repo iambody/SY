@@ -22,6 +22,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
@@ -171,15 +172,15 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             isClickBack = false;
             if (hasIndentity) {
+
+                CredentialStateMedel credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
                 if (hasUpload) {//去证件列表
                     Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode", indentityCode);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                     startActivity(intent);
                 } else {//去上传证件照
                     Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode", credentialCode);
-                    intent.putExtra("indentityCode", indentityCode);
-                    intent.putExtra("title", title);
+                    intent.putExtra("credentialStateMedel", credentialStateMedel);
                     startActivity(intent);
                 }
             } else {//无身份
@@ -222,16 +223,15 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         assetRelative.setTip(status);
         if (isClickBack) {
             isClickBack = false;
+            CredentialStateMedel credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
             if (hasIndentity) {
                 if (hasUpload) {//去证件列表
                     Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode", indentityCode);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                     startActivity(intent);
                 } else {//去上传证件照
                     Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode", credentialCode);
-                    intent.putExtra("indentityCode", indentityCode);
-                    intent.putExtra("title", title);
+                    intent.putExtra("credentialStateMedel", credentialStateMedel);
                     startActivity(intent);
                 }
             } else {//无身份

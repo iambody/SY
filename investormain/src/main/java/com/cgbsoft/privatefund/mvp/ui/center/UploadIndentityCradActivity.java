@@ -35,6 +35,7 @@ import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialModel;
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.facepicture.FacePictureActivity;
 import app.ocrlib.com.identitycard.IdentityCardActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -152,6 +154,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private CredentialModel credentialModel;
     private IdentityCard identityCard;
     private LivingManger livingManger;
+    private Observable<FaceInf> complianceFaceupCallBack;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -263,16 +266,16 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            List<Map<String,Object>> cardmaps=new ArrayList<>();
-            Map<String,Object>mapfront=new HashMap();
-            mapfront.put("name","frontImage");
-            mapfront.put("url",firstPhotoPath);
-            Map<String,Object>mapback=new HashMap();
-            mapback.put("name","backImage");
-            mapback.put("url",secondPhotoPath);
+            List<Map<String, Object>> cardmaps = new ArrayList<>();
+            Map<String, Object> mapfront = new HashMap();
+            mapfront.put("name", "frontImage");
+            mapfront.put("url", firstPhotoPath);
+            Map<String, Object> mapback = new HashMap();
+            mapback.put("name", "backImage");
+            mapback.put("url", secondPhotoPath);
             cardmaps.add(mapfront);
             cardmaps.add(mapback);
-            List<String>remotePths=new ArrayList<>();
+            List<String> remotePths = new ArrayList<>();
             remotePths.add(firstPhotoPath);
             remotePths.add(secondPhotoPath);
             //0 成功 1客服审核 2ocr错误 3标识失败
@@ -282,10 +285,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     switch (resultData.getRecognitionCode()) {
                         //0 成功 1客服审核 2ocr错误 3标识失败
                         case "0":
+
                             break;
                         case "1":
+
                             break;
                         case "2":
+
                             break;
                         case "3":
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
@@ -298,6 +304,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 @Override
                 public void livingFailed(LivingResultData resultData) {
                     LivingResultData resultData1 = resultData;
+                    Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                 }
             });
             livingManger.startLivingMatch();
@@ -336,6 +343,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }
         if (mLoadingDialog == null) {
             mLoadingDialog = new LoadingDialog(this);
+        }
+        if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
+            startActivity(new Intent(this, FacePictureActivity.class));
+            return;
         }
         mLoadingDialog.show();
         new Thread() {
@@ -420,7 +431,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     private void init(CredentialModel credentialModel) {
         identityCard = new IdentityCard();
-        initIdCardSelCallBack();
         String stateCode = credentialModel.getStateCode();
         if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
             uploadFirst.setEnabled(true);
@@ -588,16 +598,27 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     @Override
+    public void uploadOtherCrenditral(String result) {
+        if (!TextUtils.isEmpty(result)) {
+            Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
+            RxBus.get().post(SELECT_INDENTITY, 0);
+            RxBus.get().post(SELECT_INDENTITY_ADD, 0);
+            Intent intent = new Intent(this, CardCollectActivity.class);
+            intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
+            startActivity(intent);
+            this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     protected int layoutID() {
         return R.layout.activity_upload_indentity;
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//        toolbar.setTitle("");
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-//        toolbar.setNavigationOnClickListener(v -> finish());
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -605,6 +626,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         });
         initView();
+        initIdCardSelCallBack();
         credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
         if (!TextUtils.isEmpty(credentialStateMedel.getCredentialDetailId())) {
             getCredentialInfo(String.format("%d", credentialStateMedel.getCredentialDetailId()));
@@ -621,9 +643,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }
 
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
-        String customerName = getIntent().getStringExtra("customerName");
-        String customerNum = getIntent().getStringExtra("customerNum");
-
     }
 
     private void getCredentialInfo(String credentialId) {
@@ -633,7 +652,18 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private void initIdCardSelCallBack() {
         registerFrontCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_FRONT, IdentityCard.class);
         registerBackCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_BACK, IdentityCard.class);
+        complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
+        complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
+            @Override
+            protected void onEvent(FaceInf faceInf) {
+                getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+            }
 
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         registerFrontCallBack.subscribe(new RxSubscriber<IdentityCard>() {
             @Override
             protected void onEvent(IdentityCard identityCard) {
@@ -650,7 +680,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionNameLinearLayout.setVisibility(View.VISIBLE);
                     recognitionNumLinearLayout.setVisibility(View.VISIBLE);
                     rlTip.setVisibility(View.GONE);
-                }else {
+                } else {
                     recognitionNameLinearLayout.setVisibility(View.GONE);
                     recognitionNumLinearLayout.setVisibility(View.GONE);
                 }
@@ -673,7 +703,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
                     recognitionValidDate.setText(identityCard.getValidDate());
                     rlTip.setVisibility(View.GONE);
-                }else {
+                } else {
                     recognitionValidLinearLayout.setVisibility(View.GONE);
                 }
             }
@@ -687,7 +717,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     private void initView() {
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, "", false, false);
-//        CARD_WIDTH = CARD_HEIGHT *(32/22);
     }
 
     @Override

@@ -7,4 +7,5 @@ package com.cgbsoft.privatefund.model;
 public interface UploadIndentityModelListener {
     void uploadIndentitySuccess(String result);
     void uploadIndentityError(Throwable error);
+    void uploadOtherCrendtialSuccess(String result);
 }

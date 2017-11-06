@@ -33,6 +33,12 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     }
 
     @Override
+    public void uploadOtherCrenditial(List<String> remoteParams, String customerCode, String credentialCode, String remotePerson) {
+        uploadIndentityView.showLoadDialog();
+        uploadModel.uploadOtherCrenditial(getCompositeSubscription(),this,remoteParams,customerCode,credentialCode,remotePerson);
+    }
+
+    @Override
     public void getCredentialInfo(String credentialId) {
         uploadIndentityView.showLoadDialog();
         uploadModel.credentialDetail(getCompositeSubscription(),this,credentialId);
@@ -48,6 +54,12 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     public void uploadIndentityError(Throwable error) {
         uploadIndentityView.hideLoadDialog();
         uploadIndentityView.uploadIndentityError(error);
+    }
+
+    @Override
+    public void uploadOtherCrendtialSuccess(String result) {
+        uploadIndentityView.hideLoadDialog();
+        uploadIndentityView.uploadOtherCrenditral(result);
     }
 
     @Override

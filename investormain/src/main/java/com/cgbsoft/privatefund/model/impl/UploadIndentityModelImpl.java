@@ -52,6 +52,34 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
     }
 
     @Override
+    public void uploadOtherCrenditial(CompositeSubscription subscription, UploadIndentityModelListener listener, List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParams) {
+        subscription.add(ApiClient.uploadOtherRemotePath(remoteParams, customerCode, credentialCode,remotePersonParams).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    String recognitionCode = result.getString("recognitionCode");
+                    String recognitionMsg = result.getString("recognitionMsg");
+                    if ("1".equals(recognitionCode)) {
+                        listener.uploadOtherCrendtialSuccess(recognitionMsg);
+                    }
+                } catch (JSONException e) {
+                    listener.uploadIndentityError(e);
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("aaa", "error===" + error.getMessage());
+                listener.uploadIndentityError(error);
+            }
+        }));
+    }
+
+    @Override
     public void credentialDetail(CompositeSubscription subscription, CredentialModelListener listener, String credentialCode) {
         subscription.add(ApiClient.getCredentialDetial(credentialCode).subscribe(new RxSubscriber<String>() {
             @Override

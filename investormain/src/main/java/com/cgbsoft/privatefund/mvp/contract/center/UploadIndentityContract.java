@@ -24,15 +24,17 @@ public interface UploadIndentityContract {
 
         void credentialDetialSuccess(String s);
         void credentialDetialError(Throwable error);
+
+        void uploadOtherCrenditral(String s);
     }
     interface UploadIndentityPresenter extends BasePresenter {
         /**
-         *
          * @param remoteParams 远程地址集合
          * @param customerCode 父级身份code
          * @param credentialCode 子级身份code
          */
         void uploadIndentity(List<String> remoteParams,String customerCode,String credentialCode);
 
+        void uploadOtherCrenditial(List<String> remoteParams,String customerCode,String credentialCode,String remotePerson);
     }
 }

@@ -1650,6 +1650,22 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().uploadRemotePath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 上传其他证件 + 照片
+     * @param remoteParams
+     * @param customerCode
+     * @param credentialCode
+     * @return
+     */
+    public static Observable<String> uploadOtherRemotePath(List<String> remoteParams, String customerCode, String credentialCode,String remotePersonParam) {
+        Map<String, String> params = new HashMap<>();
+        params.put("customerCode", customerCode);
+        params.put("credentialCode", credentialCode);
+        params.put("faceImage",remotePersonParam);
+        params.put("type","10");
+        return OKHTTP.getInstance().getRequestManager().uploadOtherPath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
 
     /**
      * 获取证件详情
@@ -1667,7 +1683,6 @@ public class ApiClient {
      *
      * @return
      */
-
     public static Observable<String> getLivingSign() {
         Map<String, String> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().getLivingSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());

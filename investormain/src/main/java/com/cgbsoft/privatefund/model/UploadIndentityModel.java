@@ -18,6 +18,7 @@ public interface UploadIndentityModel {
      * @param credentialCode 子级code
      */
     void uploadIndentity(CompositeSubscription subscription, UploadIndentityModelListener listener,List<String> remoteParams,String customerCode,String credentialCode);
+    void uploadOtherCrenditial(CompositeSubscription subscription, UploadIndentityModelListener listener,List<String> remoteParams,String customerCode,String credentialCode,String remotePersonParams);
 
     void credentialDetail(CompositeSubscription subscription, CredentialModelListener listener,String credentialCode);
 }

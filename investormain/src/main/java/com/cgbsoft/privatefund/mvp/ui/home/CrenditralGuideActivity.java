@@ -10,10 +10,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 
-import java.io.Serializable;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class CrenditralGuideActivity extends BaseMvcActivity {

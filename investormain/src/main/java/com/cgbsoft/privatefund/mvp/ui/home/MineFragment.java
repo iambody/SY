@@ -516,7 +516,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         }
                         break;
                     case GestureManager.DATUM_MANAGER:
-                        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+                        Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                        intent1.putExtra("credentialStateMedel",credentialStateMedel);
+                        startActivity(intent1);
                         break;
                     case GestureManager.CENTIFY_DIR:
                         RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
@@ -806,7 +808,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             jumpGuidePage();
                         } else {//去证件列表
                             Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                            intent.putExtra("indentityCode",credentialStateMedel.getCustomerIdentity());
+                            intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                             startActivity(intent);
                         }
                     } else {//无身份
@@ -898,7 +900,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_bank_datum_manager_ll)
     void gotoDatumCarlendarActivity() {
         if (showAssert) {
-            NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+            Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+            intent1.putExtra("credentialStateMedel",credentialStateMedel);
+            startActivity(intent1);
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }

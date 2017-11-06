@@ -866,6 +866,9 @@ interface RequestManager {
     @POST(NetConfig.Indentity.UPLOAD_REMOTE_PATHS)
     Observable<ResponseBody> uploadRemotePath(@Body RequestBody requestBody);
 
+    @POST(NetConfig.Indentity.UPLOAD_OTHER_CREDENTIALS)
+    Observable<ResponseBody> uploadOtherPath(@Body RequestBody requestBody);
+
     @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
     Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
 
