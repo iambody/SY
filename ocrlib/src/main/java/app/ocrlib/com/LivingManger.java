@@ -18,6 +18,7 @@ import com.webank.wbcloudfaceverify2.tools.IdentifyCardValidate;
 import com.webank.wbcloudfaceverify2.tools.WbCloudFaceVerifySdk;
 import com.webank.wbcloudfaceverify2.ui.FaceVerifyStatus;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,7 +48,7 @@ public class LivingManger {
     //生日
     private static String birthday;
     //一串正反面
-    private static String imageUrl;
+    private static JSONArray imageUrl;
     //是否显示成功页面  暂时显示成功失败页面
     private static boolean isShowSuccess = true;
     private static boolean isShowFail = true;
@@ -72,7 +73,7 @@ public class LivingManger {
      * @param Type
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String cardname, String cardid, String cardvalidity, String credentialcode, String customercode, String sex, String birthday, String Type, String imageurl, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String cardname, String cardid, String cardvalidity, String credentialcode, String customercode, String sex, String birthday, String Type, JSONArray imageurl, LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.Cardname = cardname;
@@ -291,7 +292,7 @@ public class LivingManger {
      * 二次通知后台
      * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的 返回的数据0成功 1客服审核 2ocr错误3标识失败
      */
-    public static void sendDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
+    public static void sendDataResult(JSONArray imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
         //需要获取结果的
         ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type, sex, birthday).subscribe(new RxSubscriber<LivingResultData>() {
             @Override

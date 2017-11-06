@@ -1691,8 +1691,8 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<LivingResultData> getLivingQueryDataResult(String imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
-        Map<String, String> params = new HashMap<>();
+    public static Observable<LivingResultData> getLivingQueryDataResult(JSONArray imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
+        Map<String, Object> params = new HashMap<>();
         params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
         params.put("name", cardName);

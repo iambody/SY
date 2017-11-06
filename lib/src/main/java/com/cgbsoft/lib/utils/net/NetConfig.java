@@ -143,7 +143,7 @@ public class NetConfig {
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
         //人脸照片对比person照片库compare
-        final static String COMPLIANCE_PERSON_COMPARE = API_URL_V3+"/credential/comparepersonimage";
+        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3+"/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
     }
 
     static class MALL {
