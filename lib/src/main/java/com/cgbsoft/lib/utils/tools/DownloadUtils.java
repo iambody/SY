@@ -61,7 +61,7 @@ public class DownloadUtils {
         }
         String remotePath = type.concat(UUID.randomUUID().toString().concat(pre));
 //        if (NetConfig.START_APP.equals("https://app")) {
-        textMap.put("key", remotePath);
+            textMap.put("key", remotePath);
 //        } else {
 //            String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
 //            textMap.put("key", "-/" + mainUrl + "/" + remotePath);
@@ -87,7 +87,7 @@ public class DownloadUtils {
 
         if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
 //            if (NetConfig.START_APP.equals("https://app")) {
-            return NetConfig.UPLOAD_FILE + remotePath;
+                return NetConfig.UPLOAD_FILE + remotePath;
 //            } else {
 //                String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
 //                return NetConfig.UPLOAD_FILE + "-/" + mainUrl + "/" + remotePath;
