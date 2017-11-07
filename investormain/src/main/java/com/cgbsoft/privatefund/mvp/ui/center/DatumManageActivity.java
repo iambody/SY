@@ -86,9 +86,9 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             @Override
             protected void onEvent(Integer integer) {
                 //0代表成功 1代表失败  int值
-                if (0 == integer){
+                if (0 == integer) {
                     NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                }else {
+                } else {
 
                 }
             }
@@ -175,16 +175,21 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             if ("10".equals(credentialStateMedel.getCustomerType())) {
                 if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                    if ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                    if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                        //TODO 加上三个月判断逻辑
                         startMatchLiving();
+                    } else if ("5".equals(credentialStateMedel.getIdCardState())) {
+                        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent);
                     }
                 } else {
-                    if ("50".equals(credentialStateMedel.getCredentialState()) && "0".equals(credentialStateMedel.getCustomerImageState())) {
+                    if ("50".equals(credentialStateMedel.getCredentialState()) && "1".equals(credentialStateMedel.getCustomerImageState())) {
                         startMatchImg();
+                    } else if ("5".equals(credentialStateMedel.getCustomerImageState())) {
+                        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);

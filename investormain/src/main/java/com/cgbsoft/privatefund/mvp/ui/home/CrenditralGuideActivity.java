@@ -68,8 +68,8 @@ public class CrenditralGuideActivity extends BaseMvcActivity {
                         intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                         startActivity(intent);
                     }
-
                 }
+                finish();
             }
         });
     }
