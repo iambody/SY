@@ -10,6 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/rl_recognition_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,9 +45,11 @@
 
                 />
             <Button
+                android:id="@+id/bt_recognition_name_edit"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:textSize="16sp"
+                style="@style/golden_btn"
                 android:layout_marginRight="15dp"/>
         </LinearLayout>
 

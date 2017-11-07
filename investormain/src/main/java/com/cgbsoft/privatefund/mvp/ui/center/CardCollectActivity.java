@@ -125,6 +125,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //            }
 //        }
         if (cardBean.getCode().startsWith("1001")&&(!cardBean.getCode().equals("100101"))) {
+            //TODO 添加次数判断
             livingManger = new LivingManger(this,"100101","1001", new LivingResult() {
                 @Override
                 public void livingSucceed(LivingResultData resultData) {

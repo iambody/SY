@@ -118,6 +118,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     TextView recognitionValidDate;
     @BindView(R.id.rl_tip)
     RelativeLayout rlTip;
+    @BindView(R.id.bt_recognition_name_edit)
+    Button btRecognitionNameEdit;
 
 
     private LoadingDialog mLoadingDialog;
@@ -676,7 +678,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     "", "", "","");
             init(credentialModel);
         }
-
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
     }
 
