@@ -173,6 +173,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         if (isNeedPersonCompare) {
                             personCompare(data);
                         } else {
+                            Log.i("PersonCompare", "没进行对比直接退出" + data);
                             if (null != mLoadingDialog)
                                 mLoadingDialog.dismiss();
                             RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath));

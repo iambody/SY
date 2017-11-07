@@ -41,7 +41,6 @@ import app.ocrlib.com.facepicture.FacePictureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * @author chenlong
@@ -166,7 +165,6 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     @OnClick(R.id.datum_manage_risk)
     public void gotoRiskComment() {
         goToDatumCollect();
-
     }
 
     private void goToDatumCollect() {

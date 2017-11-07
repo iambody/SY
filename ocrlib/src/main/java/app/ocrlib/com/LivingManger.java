@@ -117,6 +117,10 @@ public class LivingManger {
 
     /************开始活体检测**********************/
     public static void startLivingMatch() {
+        if (1 == MangerType) {//如果是公用的
+            publicStartLivingMatch();
+            return;
+        }
         if (Cardname != null && Cardname.length() != 0) {
             if (Cardid != null && Cardid.length() != 0) {
                 if (Cardid.contains("x")) {
@@ -140,6 +144,57 @@ public class LivingManger {
             Toast.makeText(livingContext, "用户姓名不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
+    }
+
+    /**
+     * 公用人脸锁先获取sign
+     */
+    private static void publicStartLivingMatch() {
+        //开始网络请求==成功就开始登录 失败重新请求
+        ApiClient.getLivingSign().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    livingSign = new Gson().fromJson(object.getString("result"), LivingSign.class);
+                    Cardname = livingSign.getIdCardName();
+                    Cardid = livingSign.getIdCardNum();
+                    /****需要先判断身份证号***/
+                    if (Cardname != null && Cardname.length() != 0) {
+                        if (Cardid != null && Cardid.length() != 0) {
+                            if (Cardid.contains("x")) {
+                                Cardid = Cardid.replace('x', 'X');
+                            }
+
+                            IdentifyCardValidate vali = new IdentifyCardValidate();
+                            String msg = vali.validate_effective(Cardid);
+                            if (msg.equals(Cardid)) {
+                                openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, livingSign.getSign(), livingSign.getAppId(), livingSign.getNonce(), livingSign.getUserId(), livingSign.getLicence(), livingSign.getOrderNum());
+                            } else {
+                                Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } else {
+                            Toast.makeText(livingContext, "用户证件号不能为空", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } else {
+                        Toast.makeText(livingContext, "用户姓名不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+//                    openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, livingSign.getSign(), livingSign.getAppId(), livingSign.getNonce(), livingSign.getUserId(), livingSign.getLicence(), livingSign.getOrderNum());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                Log.i("ss", error.getMessage());
+                progressDlg.dismiss();
+                PromptManager.ShowCustomToast(livingContext, "获取sign失败了！！");
+            }
+        });
     }
 
     /**
@@ -286,7 +341,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
                 progressDlg.dismiss();
-                PromptManager.ShowCustomToast(livingContext,"获取sign失败了！！");
+                PromptManager.ShowCustomToast(livingContext, "获取sign失败了！！");
             }
         });
     }
@@ -296,12 +351,12 @@ public class LivingManger {
      * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的 返回的数据0成功 1客服审核 2ocr错误3标识失败
      */
     public static void sendDataResult(List<String> imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
-       Log.i("活体living","开始请求活体接口");
+        Log.i("活体living", "开始请求活体接口");
         //需要获取结果的
         ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type, sex, birthday).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String data) {
-                Log.i("活体living"," 活体接口返回成功"+data);
+                Log.i("活体living", " 活体接口返回成功" + data);
 //                if (null != livingResult) livingResult.livingSucceed(data);
                 try {
                     JSONObject obj = new JSONObject(data);
@@ -316,7 +371,7 @@ public class LivingManger {
 
             @Override
             protected void onRxError(Throwable error) {
-                Log.i("活体living"," 活体接口返回失败"+error.getMessage());
+                Log.i("活体living", " 活体接口返回失败" + error.getMessage());
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());
@@ -346,7 +401,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
-                PromptManager.ShowCustomToast(livingContext,error.getMessage());
+                PromptManager.ShowCustomToast(livingContext, error.getMessage());
             }
         });
     }

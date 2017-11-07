@@ -258,6 +258,7 @@ public class CWebviewManger {
             userInfo.getToC().setCustomerType(split[2]);
             AppInfStore.saveUserInfo(context, userInfo);
             NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
+
             context.finish();
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
