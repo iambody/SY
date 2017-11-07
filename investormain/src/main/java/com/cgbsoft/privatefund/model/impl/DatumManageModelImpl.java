@@ -1,14 +1,11 @@
 package com.cgbsoft.privatefund.model.impl;
 
-import android.text.TextUtils;
-
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.model.CardCollectModelListener;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
-import com.cgbsoft.privatefund.model.PersonalInformationModel;
-import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -80,6 +77,20 @@ public class DatumManageModelImpl implements DatumManageModel {
     }
 
     public void getLivingCount(CompositeSubscription subscription, DatumManageModelListener listener){
+        subscription.add(ApiClient.getLivingCount().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                listener.getLivingCountSuccess(s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                listener.getLivingCountError(error);
+            }
+        }));
+    }
+
+    public void getCardCollectLivingCount(CompositeSubscription subscription, CardCollectModelListener listener){
         subscription.add(ApiClient.getLivingCount().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {

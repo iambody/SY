@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -21,6 +21,9 @@ import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,6 @@ import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
 import butterknife.BindView;
 import butterknife.OnClick;
-import qcloud.mall.R2;
 
 /**
  * Created by fei on 2017/8/10.
@@ -124,9 +126,9 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //                secondUrl=images.get(1).getUrl();
 //            }
 //        }
-        if (cardBean.getCode().startsWith("1001")&&(!cardBean.getCode().equals("100101"))) {
+        if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101"))) {
             //TODO 添加次数判断
-            livingManger = new LivingManger(this,"100101","1001", new LivingResult() {
+            livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
                 @Override
                 public void livingSucceed(LivingResultData resultData) {
                     resultData.getRecognitionCode();
@@ -222,6 +224,34 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     @Override
     public void getCardListError(Throwable error) {
         clodLsAnim(mRefreshLayout);
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        try {
+            JSONObject js = new JSONObject(s);
+            JSONObject result = js.getJSONObject("result");
+            String failCount = result.getString("failCount");
+            //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
+            String validCode = result.getString("validCode");
+            if ("0".equals(validCode)) {
+                if ("3".equals(failCount)) {
+                    Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
+                } else {
+//                    livingManger.startLivingMatch();
+                }
+            } else if ("1".equals(validCode)) {
+//                startMatchImg();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
     }
 
     @Override
