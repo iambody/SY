@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.google.gson.Gson;
@@ -66,6 +67,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     //需要进行person比较的key
     public static String TAG_NEED_PERSON = "needPersonCompare";
 
+    private LoadingDialog mLoadingDialog;
+
+    private boolean isCanclick = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +79,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
     }
 
     /**
@@ -91,6 +97,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     }
 
     public void paizhao(View V) {
+        if (!isCanclick) return;
+        isCanclick = false;
         getPicImageResult();
     }
 
@@ -147,6 +155,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     //开始上传bitmap并且进行处理
     private void upLoadBitmap(Bitmap nbmp2) {
+        mLoadingDialog.show();
         facePath = BitmapUtils.saveBitmap(nbmp2, "face");
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -164,6 +173,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         if (isNeedPersonCompare) {
                             personCompare(data);
                         } else {
+                            if (null != mLoadingDialog)
+                                mLoadingDialog.dismiss();
                             RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath));
                             FacePictureActivity.this.finish();
                         }
@@ -269,16 +280,28 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         camera = null;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mLoadingDialog) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+    }
+
     /**
      * person对比
      *
      * @param remotpath
      */
     private void personCompare(final String remotpath) {
+        Log.i("PersonCompare", "开始调用person对比" + remotpath);
         ApiClient.getPersonCompare(remotpath).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                Log.i("PersonCompare", "对比成功了" + remotpath);
+                if (null != mLoadingDialog)
+                    mLoadingDialog.dismiss();
+
                 PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -286,8 +309,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     LivingResultData recognitionCode = new Gson().fromJson(result, LivingResultData.class);
                     if ("0".equals(recognitionCode.getRecognitionCode())) {//成功
                         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 0);
+                        Log.i("PersonCompare", "对比成功了开始发射信息" + remotpath);
                     } else {//失败
                         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
+                        Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -297,6 +322,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
             @Override
             protected void onRxError(Throwable error) {
+                isCanclick=true;
+                if (null != mLoadingDialog)
+                    mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
                 PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
                 RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
