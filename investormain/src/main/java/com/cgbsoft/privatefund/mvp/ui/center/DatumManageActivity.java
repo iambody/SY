@@ -176,8 +176,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             if ("10".equals(credentialStateMedel.getCustomerType())) {
                 if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
                     if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
-                        //TODO 加上三个月判断逻辑
-                        startMatchLiving();
+                        getPresenter().getLivingCount();
                     } else if ("5".equals(credentialStateMedel.getIdCardState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else {
