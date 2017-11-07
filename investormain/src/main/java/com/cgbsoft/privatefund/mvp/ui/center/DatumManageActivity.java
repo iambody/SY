@@ -400,14 +400,15 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             JSONObject js = new JSONObject(s);
             JSONObject result = js.getJSONObject("result");
             String failCount = result.getString("failCount");
+            //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
             String validCode = result.getString("validCode");
-            if ("1".equals(validCode)) {
+            if ("0".equals(validCode)) {
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
                 } else {
                     livingManger.startLivingMatch();
                 }
-            } else {
+            } else if ("1".equals(validCode)){
                 startMatchImg();
             }
         } catch (JSONException e) {

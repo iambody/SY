@@ -23,8 +23,9 @@ public class CredentialModel {
     private String comment;
     private String appUserId;
     private String customerName;
+    private String numberTrue;
 
-    public CredentialModel(String id, ArrayList<CardListEntity.ImageBean> imageUrl, String stateName, String name, String stateCode, String number, String periodValidity, String code, String comment, String appUserId, String customerName) {
+    public CredentialModel(String id, ArrayList<CardListEntity.ImageBean> imageUrl, String stateName, String name, String stateCode, String number, String periodValidity, String code, String comment, String appUserId, String customerName,String numberTrue) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.stateName = stateName;
@@ -36,6 +37,16 @@ public class CredentialModel {
         this.comment = comment;
         this.appUserId = appUserId;
         this.customerName = customerName;
+        this.numberTrue = numberTrue;
+    }
+
+
+    public String getNumberTrue() {
+        return numberTrue;
+    }
+
+    public void setNumberTrue(String numberTrue) {
+        this.numberTrue = numberTrue;
     }
 
     public String getCustomerName() {
