@@ -13,6 +13,10 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
@@ -20,6 +24,7 @@ import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,8 +34,10 @@ import java.util.List;
 
 import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.facepicture.FacePictureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 /**
  * Created by fei on 2017/8/10.
@@ -56,6 +63,8 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     private CredentialStateMedel credentialStateMedel;
     private String indentityCode;
     private LivingManger livingManger;
+    private CardListEntity.CardBean cardBean;
+    private Observable<Integer> register;
 
     @OnClick(R.id.title_left)
     public void backClick() {
@@ -97,10 +106,31 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         recyclerView.setHasFixedSize(true);
         adapter = new CardListAdapter(datas, this);
         recyclerView.setAdapter(adapter);
+        initCallBack();
         adapter.setItemClickListener(new CardListAdapter.CardListItemClick() {
             @Override
             public void itemClick(int position, CardListEntity.CardBean cardBean) {
                 goToUploadPage(cardBean);
+            }
+        });
+    }
+
+    private void initCallBack() {
+        register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, Integer.class);
+        register.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                //0代表成功 1代表失败  int值
+                if (0 == integer) {
+                    jumpDetial();
+                } else {
+
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
             }
         });
     }
@@ -117,6 +147,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
      * @param cardBean
      */
     private void goToUploadPage(CardListEntity.CardBean cardBean) {
+        this.cardBean = cardBean;
 
         String stateCode = cardBean.getStateCode();
 //        if (!"5".equals(stateCode)) {//证件审核状态code码：5：未上传；10：审核中；30：已驳回；50：已通过；70：已过期
@@ -127,34 +158,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //            }
 //        }
         if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101"))) {
-            //TODO 添加次数判断
-            livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
-                @Override
-                public void livingSucceed(LivingResultData resultData) {
-                    resultData.getRecognitionCode();
-                    credentialStateMedel = new CredentialStateMedel();
-                    credentialStateMedel.setCredentialCode(cardBean.getCode());
-                    credentialStateMedel.setCredentialState(cardBean.getStateCode());
-                    credentialStateMedel.setCredentialTypeName(cardBean.getName());
-                    credentialStateMedel.setCredentialStateName(cardBean.getStateName());
-                    credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
-                    credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
-                    credentialStateMedel.setCredentialDetailId(cardBean.getId());
-                    Intent intent = new Intent(CardCollectActivity.this, UploadIndentityCradActivity.class);
-
-                    if (null != credentialStateMedel) {
-                        intent.putExtra("credentialStateMedel", credentialStateMedel);
-                    }
-                    startActivity(intent);
-                }
-
-                @Override
-                public void livingFailed(LivingResultData resultData) {
-
-                }
-
-            });
-            livingManger.startLivingMatch();
+            getPresenter().getLivingCount();
         } else {
             credentialStateMedel = new CredentialStateMedel();
             credentialStateMedel.setCredentialCode(cardBean.getCode());
@@ -218,7 +222,10 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        livingManger.destory();
+        if (null != livingManger)
+            livingManger.destory();
+        if (null!= register)
+            RxBus.get().unregister(RxConstant.COMPLIANCE_PERSON_COMPARE, register);
     }
 
     @Override
@@ -238,15 +245,49 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
                 } else {
-//                    livingManger.startLivingMatch();
+                    livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
+                        @Override
+                        public void livingSucceed(LivingResultData resultData) {
+                            resultData.getRecognitionCode();
+                            jumpDetial();
+                        }
+
+                        @Override
+                        public void livingFailed(LivingResultData resultData) {
+
+                        }
+
+                    });
+                    livingManger.startLivingMatch();
                 }
             } else if ("1".equals(validCode)) {
-//                startMatchImg();
+                startMatchImg();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void jumpDetial() {
+        credentialStateMedel = new CredentialStateMedel();
+        credentialStateMedel.setCredentialCode(cardBean.getCode());
+        credentialStateMedel.setCredentialState(cardBean.getStateCode());
+        credentialStateMedel.setCredentialTypeName(cardBean.getName());
+        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+        credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        Intent intent = new Intent(CardCollectActivity.this, UploadIndentityCradActivity.class);
+
+        if (null != credentialStateMedel) {
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+        }
+        startActivity(intent);
+    }
+
+    private void startMatchImg() {
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true));
     }
 
     @Override

@@ -93,6 +93,16 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     }
 
     @Override
+    public void getLivingCountSuccess(String s) {
+
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
+    }
+
+    @Override
     protected int layoutID() {
         return R.layout.activity_cardcollect;
     }
@@ -129,6 +139,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
             RxBus.get().unregister(SELECT_INDENTITY_ADD,register);
         }
     }
+
     private void initView(Bundle savedInstanceState) {
         indentityCode = getIntent().getStringExtra("indentityCode");
         mRefreshLayout.setLoadMoreEnabled(false);
