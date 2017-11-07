@@ -78,4 +78,18 @@ public class DatumManageModelImpl implements DatumManageModel {
             }
         }));
     }
+
+    public void getLivingCount(CompositeSubscription subscription, DatumManageModelListener listener){
+        subscription.add(ApiClient.getLivingCount().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                listener.getLivingCountSuccess(s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                listener.getLivingCountError(error);
+            }
+        }));
+    }
 }

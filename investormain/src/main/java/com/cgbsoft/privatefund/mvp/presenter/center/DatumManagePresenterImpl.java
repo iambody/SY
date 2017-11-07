@@ -31,6 +31,13 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
     }
 
     @Override
+    public void getLivingCount(){
+        datumManageView.showLoadDialog();
+        datumManageModel.getLivingCount(getCompositeSubscription(),this);
+
+    }
+
+    @Override
     public void verifyIndentityV3() {
         datumManageView.showLoadDialog();
         datumManageModel.verifyIndentityV3(getCompositeSubscription(), this);
@@ -60,5 +67,17 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
         datumManageView.hideLoadDialog();
         datumManageView.verifyIndentitySuccessV3(credentialStateMedel);
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        datumManageView.hideLoadDialog();
+        datumManageView.getLivingCountSuccess(s);
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+        datumManageView.hideLoadDialog();
+        datumManageView.getLivingCountError(error);
     }
 }

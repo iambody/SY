@@ -1631,6 +1631,16 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttpV3().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    public static Observable<String> getLivingCount(){
+        return OKHTTP.getInstance().getRequestManager().getLivingCount().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     *
+     * @param indentityCode
+     * @return
+     */
     public static Observable<CardListEntity.Result> getIndentityList(String indentityCode) {
         Map<String, Object> params = new HashMap<>();
         params.put("customerCode", indentityCode);
