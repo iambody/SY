@@ -286,6 +286,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
                 progressDlg.dismiss();
+                PromptManager.ShowCustomToast(livingContext,"获取sign失败了！！");
             }
         });
     }
@@ -295,10 +296,12 @@ public class LivingManger {
      * 最后三个参数credentialCode||customerCode||type是从证件夹传进来的 返回的数据0成功 1客服审核 2ocr错误3标识失败
      */
     public static void sendDataResult(List<String> imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type) {
+       Log.i("活体living","开始请求活体接口");
         //需要获取结果的
         ApiClient.getLivingQueryDataResult(imageUrl, cardNum, cardName, cardValidity, orderNo, faceCode, credentialCode, customerCode, type, sex, birthday).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String data) {
+                Log.i("活体living"," 活体接口返回成功"+data);
 //                if (null != livingResult) livingResult.livingSucceed(data);
                 try {
                     JSONObject obj = new JSONObject(data);
@@ -313,6 +316,7 @@ public class LivingManger {
 
             @Override
             protected void onRxError(Throwable error) {
+                Log.i("活体living"," 活体接口返回失败"+error.getMessage());
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());

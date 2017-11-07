@@ -32,4 +32,12 @@ public class LivingResultData {
         this.recognitionMsg = recognitionMsg;
         this.recognitionCode = recognitionCode;
     }
+
+    @Override
+    public String toString() {
+        return "LivingResultData{" +
+                "recognitionMsg='" + recognitionMsg + '\'' +
+                ", recognitionCode='" + recognitionCode + '\'' +
+                '}';
+    }
 }
