@@ -673,7 +673,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     "",
                     "",
                     credentialStateMedel.getCredentialCode(),
-                    "", "", "");
+                    "", "", "","");
             init(credentialModel);
         }
 
