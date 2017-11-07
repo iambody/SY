@@ -240,7 +240,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
                 //TODO 第二个状态变成0
-                if ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
                     Intent intent1 = new Intent(this, CardCollectActivity.class);
                     intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                     startActivity(intent1);
