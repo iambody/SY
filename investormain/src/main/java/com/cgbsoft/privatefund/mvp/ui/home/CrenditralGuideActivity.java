@@ -59,7 +59,7 @@ public class CrenditralGuideActivity extends BaseMvcActivity {
                             intent.putExtra("credentialStateMedel", credentialStateMedel);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(CrenditralGuideActivity.this, UploadIndentityCradActivity.class);
+                            Intent intent = new Intent(CrenditralGuideActivity.this, CardCollectActivity.class);
                             intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                             startActivity(intent);
                         }

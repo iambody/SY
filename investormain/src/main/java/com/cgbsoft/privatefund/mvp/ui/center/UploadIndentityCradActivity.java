@@ -287,10 +287,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     switch (resultData.getRecognitionCode()) {
                         //0 成功 1客服审核 2ocr错误 3标识失败
                         case "0":
-                            finish();
+                            submit.setVisibility(View.GONE);
+                            tagIv.setVisibility(View.GONE);
+                            tagTv.setText("审核通过");
                             break;
                         case "1":
-
+                            submit.setVisibility(View.GONE);
+                            tagIv.setVisibility(View.GONE);
+                            tagTv.setText("审核中");
                             finish();
                             break;
                         case "2":
@@ -300,8 +304,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                     }
-
-
                 }
 
                 @Override

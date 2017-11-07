@@ -136,7 +136,9 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                     credentialStateMedel.setCredentialStateName(cardBean.getStateName());
                     credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
                     credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+                    credentialStateMedel.setCredentialDetailId(cardBean.getId());
                     Intent intent = new Intent(CardCollectActivity.this, UploadIndentityCradActivity.class);
+
                     if (null != credentialStateMedel) {
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                     }
@@ -158,6 +160,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
             credentialStateMedel.setCredentialStateName(cardBean.getStateName());
             credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
             credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+            credentialStateMedel.setCredentialDetailId(cardBean.getId());
             Intent intent = new Intent(this, UploadIndentityCradActivity.class);
 //        intent.putExtra("credentialStateMedel", credentialStateMedel);
             if (null != credentialStateMedel) {

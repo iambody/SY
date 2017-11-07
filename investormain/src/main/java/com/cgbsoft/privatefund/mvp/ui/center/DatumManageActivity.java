@@ -85,7 +85,12 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         register.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                //0代表成功 1代表失败  int值
+                if (0 == integer){
+                    NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                }else {
+
+                }
             }
 
             @Override
@@ -395,10 +400,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             if ("1".equals(validCode)) {
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
-                } else{
+                } else {
                     livingManger.startLivingMatch();
                 }
-            }else {
+            } else {
                 startMatchImg();
             }
         } catch (JSONException e) {

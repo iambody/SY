@@ -29,6 +29,15 @@ public class CardListEntity extends BaseResult<CardListEntity.Result>{
         private String code;
         private String comment;
         private String customerName;
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getCustomerName() {
             return customerName;

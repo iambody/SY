@@ -32,7 +32,7 @@
 
             <ImageView
                 android:layout_width="100dp"
-                android:layout_height="100dp" />
+                android:layout_height="80dp" />
         </LinearLayout>
     </ScrollView>
 
@@ -53,7 +53,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/app_golden"
-            android:text="进入详情"
+            android:text="下一步"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_16" />
     </LinearLayout>
