@@ -47,7 +47,7 @@ public class OKHTTP {
     private static OKHTTP mInstance;
     private final OkHttpClient mClient;
 
-    public static final int HTTP_CONNECTION_TIMEOUT = 10 * 1000;
+    public static final int HTTP_CONNECTION_TIMEOUT = 20 * 1000;
     private RequestManager requestManager;
 
     public static OKHTTP getInstance() {

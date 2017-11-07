@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -282,6 +283,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
                 @Override
                 public void livingSucceed(LivingResultData resultData) {
+                    Log.i("活体living","开始回调监听接口！！！"+resultData.toString());
                     switch (resultData.getRecognitionCode()) {
                         //0 成功 1客服审核 2ocr错误 3标识失败
                         case "0":
@@ -304,6 +306,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
                 @Override
                 public void livingFailed(LivingResultData resultData) {
+                    Log.i("活体living","开始回调监听接口失败了！"+resultData.toString());
                     LivingResultData resultData1 = resultData;
                     Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                 }
