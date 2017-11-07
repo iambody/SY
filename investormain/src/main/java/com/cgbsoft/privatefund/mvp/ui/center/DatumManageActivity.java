@@ -399,6 +399,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 } else{
                     livingManger.startLivingMatch();
                 }
+            }else {
+                startMatchImg();
             }
         } catch (JSONException e) {
             e.printStackTrace();
