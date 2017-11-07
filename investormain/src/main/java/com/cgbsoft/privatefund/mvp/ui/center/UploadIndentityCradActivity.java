@@ -349,7 +349,28 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             mLoadingDialog = new LoadingDialog(this);
         }
         if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
-            startActivity(new Intent(this, FacePictureActivity.class));
+            mLoadingDialog.show();
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    remoteParams.clear();
+                    for (final String localPath : paths) {
+                        String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
+                        String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
+                        FileUtils.deleteFile(newTargetFile);
+                        if (!TextUtils.isEmpty(paths)) {
+                            remoteParams.add(paths);
+                        } else {
+                            ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+                            submit.setEnabled(true);
+                            mLoadingDialog.dismiss();
+                            return;
+                        }
+                    }
+                    startActivity(new Intent(baseContext, FacePictureActivity.class));
+                }
+            }.start();
             return;
         }
         mLoadingDialog.show();
@@ -612,9 +633,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
-            Intent intent = new Intent(this, CardCollectActivity.class);
-            intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
-            startActivity(intent);
+            submit.setVisibility(View.GONE);
+            tagTv.setText("审核中");
+            tagIv.setVisibility(View.GONE);
+//            Intent intent = new Intent(this, CardCollectActivity.class);
+//            intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
+//            startActivity(intent);
             this.finish();
         } else {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();

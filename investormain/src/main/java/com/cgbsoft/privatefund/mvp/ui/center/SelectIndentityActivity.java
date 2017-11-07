@@ -23,10 +23,12 @@ import com.cgbsoft.privatefund.adapter.IndentityAdapter;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.SelectIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SelectIndentityPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ndk.com.enter.mvp.ui.start.GuideActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
@@ -75,17 +77,19 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     public void nextButtonClick(){
         if (isInLand) {
             //去上传证件照
-            Intent intent = new Intent(SelectIndentityActivity.this, UploadIndentityCradActivity.class);
+            Intent intent = new Intent(SelectIndentityActivity.this, CrenditralGuideActivity.class);
             intent.putExtra("credentialCode",credentialCode);
             intent.putExtra("indentityCode",indentityCode);
             intent.putExtra("isFromSelectIndentity",true);
             intent.putExtra("title", indentityName);
             intent.putExtra("credentialStateMedel",
-                    new CredentialStateMedel("","100101","10","5","0","未上传","1001","身份证","0","未上传","5"));
+                    new CredentialStateMedel("",credentialCode,"10","5","0","未上传",indentityCode,"身份证","0","未上传","5"));
             startActivity(intent);
         } else {
             //去证件列表
-            Intent intent = new Intent(SelectIndentityActivity.this, CardCollectActivity.class);
+            Intent intent = new Intent(SelectIndentityActivity.this, CrenditralGuideActivity.class);
+            intent.putExtra("credentialStateMedel",
+                    new CredentialStateMedel("",credentialCode,credentialCode.substring(0,2),"5","0","未上传",indentityCode,"","0","未上传","5"));
             intent.putExtra("indentityCode",indentityCode);
             startActivity(intent);
         }
