@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.contract.center;
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 
 import java.util.List;
 
@@ -23,8 +24,12 @@ public interface DatumManageContract {
         void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode);
 
         void verifyIndentityError(Throwable error);
+
+        void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel);
     }
     interface DatumManagePresenter extends BasePresenter {
         void verifyIndentity();
+
+        void verifyIndentityV3();
     }
 }

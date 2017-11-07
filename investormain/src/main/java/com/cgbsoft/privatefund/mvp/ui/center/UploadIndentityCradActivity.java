@@ -285,13 +285,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     switch (resultData.getRecognitionCode()) {
                         //0 成功 1客服审核 2ocr错误 3标识失败
                         case "0":
-
+                            finish();
                             break;
                         case "1":
 
+                            finish();
                             break;
                         case "2":
-
+                            Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                         case "3":
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
@@ -575,14 +576,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 }
             } else {
                 replenishAll.setVisibility(View.GONE);
-                String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
-                String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
-                Imageload.display(this, firstUrl, uploadFirst);
-                if (!TextUtils.isEmpty(secondUrl)) {
-                    uploadSecond.setVisibility(View.VISIBLE);
-                    Imageload.display(this, secondUrl, uploadSecond);
-                    if ("70".equals(stateCode)) {
-                        uploadSecondCover.setVisibility(View.VISIBLE);
+                if (null != credentialModel.getImageUrl()) {
+                    String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
+                    Imageload.display(this, firstUrl, uploadFirst);
+                    if (credentialModel.getImageUrl().size() == 2) {
+                        String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
+                        if (!TextUtils.isEmpty(secondUrl)) {
+                            uploadSecond.setVisibility(View.VISIBLE);
+                            Imageload.display(this, secondUrl, uploadSecond);
+
+                        }
+                        if ("70".equals(stateCode)) {
+                            uploadSecondCover.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
@@ -629,7 +635,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         initIdCardSelCallBack();
         credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
         if (!TextUtils.isEmpty(credentialStateMedel.getCredentialDetailId())) {
-            getCredentialInfo(String.format("%d", credentialStateMedel.getCredentialDetailId()));
+            getCredentialInfo(credentialStateMedel.getCredentialDetailId());
         } else {
             credentialModel = new CredentialModel("", null,
                     credentialStateMedel.getCredentialStateName(),

@@ -22,17 +22,23 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
+import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import app.ocrlib.com.LivingManger;
+import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.facepicture.FacePictureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Subscriber;
 
 /**
  * @author chenlong
@@ -54,12 +60,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     private LoadingDialog mLoadingDialog;
     private Observable<Boolean> swtichRelativeAssetObservable;
     private boolean isClickBack;
-    private boolean hasIndentity;
-    private boolean hasUpload;
-    private String indentityCode;
-    private String title;
-    private String credentialCode;
-    private String status;
+    private CredentialStateMedel credentialStateMedel;
+    private LivingManger livingManger;
 
     @Override
     protected int layoutID() {
@@ -71,6 +73,23 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         initView(savedInstanceState);
         riskResult = getResources().getStringArray(R.array.risk_evalate_text);
         assetStatus = getResources().getStringArray(R.array.assert_certify);
+        credentialStateMedel = new CredentialStateMedel();
+        initCallBack();
+    }
+
+    private void initCallBack() {
+        Observable<Integer> register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, Integer.class);
+        register.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
     }
 
     @Override
@@ -90,7 +109,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart(Constant.SXY_ZLGL);
-        getPresenter().verifyIndentity();
+        getPresenter().verifyIndentityV3();
         int riskType = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getCustomerType()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getCustomerType());
         int certify = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getAssetsCertificationStatus());
         int relative = TextUtils.isEmpty(AppManager.getUserInfo(this).getToC().getStockAssetsStatus()) ? 0 : Integer.valueOf(AppManager.getUserInfo(this).getToC().getStockAssetsStatus());
@@ -138,7 +157,56 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @OnClick(R.id.datum_manage_risk)
     public void gotoRiskComment() {
-        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+        goToDatumCollect();
+
+    }
+
+    private void goToDatumCollect() {
+        if ("".equals(credentialStateMedel.getCustomerIdentity())) {
+            NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+        } else {
+            if ("10".equals(credentialStateMedel.getCustomerType())) {
+                if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+                    if ("50".equals(credentialStateMedel.getIdCardState())&&"0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                        startMatchLiving();
+                    } else {
+                        Intent intent = new Intent(this,UploadIndentityCradActivity.class);
+                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+                        startActivity(intent);
+                    }
+                }else {
+                    if ("50".equals(credentialStateMedel.getCredentialState())&&"0".equals(credentialStateMedel.getCustomerImageState())){
+                        startMatchImg();
+                    }else {
+                        Intent intent = new Intent(this,UploadIndentityCradActivity.class);
+                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+                        startActivity(intent);
+                    }
+                }
+            } else {
+                NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+            }
+        }
+
+    }
+
+    private void startMatchImg(){
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON,true));
+    }
+
+    private void startMatchLiving(){
+        livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
+            @Override
+            public void livingSucceed(LivingResultData resultData) {
+                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+            }
+
+            @Override
+            public void livingFailed(LivingResultData resultData) {
+
+            }
+        });
+        livingManger.startLivingMatch();
     }
 
     @OnClick(R.id.datum_manage_asset_report)
@@ -166,28 +234,76 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void goToCardCollect() {
-        if (null == status) {
-            isClickBack = true;
-            getPresenter().verifyIndentity();
+        if ("".equals(credentialStateMedel.getCredentialCode())) {
+            Intent intent = new Intent(this, SelectIndentityActivity.class);
+            startActivity(intent);
         } else {
-            isClickBack = false;
-            if (hasIndentity) {
-
-                CredentialStateMedel credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
-                if (hasUpload) {//去证件列表
-                    Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    startActivity(intent);
-                } else {//去上传证件照
-                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialStateMedel", credentialStateMedel);
-                    startActivity(intent);
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+                //TODO 第二个状态变成0
+                if ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                    Intent intent1 = new Intent(this, CardCollectActivity.class);
+                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent1);
+                } else {
+                    jumpGuidePage();
                 }
-            } else {//无身份
-                Intent intent = new Intent(this, SelectIndentityActivity.class);
-                startActivity(intent);
+            } else {
+                Intent intent1 = new Intent(this, CardCollectActivity.class);
+                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent1);
             }
         }
+
+//
+//        if (credentialStateMedel != null) {
+////            toInvestorCarlendarActivity();
+//            if (null == credentialStateMedel.getCredentialState()) {
+//                isClickBack = true;
+//                getPresenter().verifyIndentityV3();
+//            } else {
+//                isClickBack = false;
+//                //90：存量已有证件号已上传证件照待审核
+//                if ("45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+//                    replenishCards();
+//                } else {
+//                    toInvestorCarlendarActivity();
+//                }
+//            }
+//        }
+
+//        if (null == status) {
+//            isClickBack = true;
+////            getPresenter().verifyIndentity();
+//            getPresenter().verifyIndentityV3();
+//        } else {
+//            isClickBack = false;
+//            if (hasIndentity) {
+//
+//                CredentialStateMedel credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
+//                if (hasUpload) {//去证件列表
+//                    Intent intent = new Intent(this, CardCollectActivity.class);
+//                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                    startActivity(intent);
+//                } else {//去上传证件照
+//                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+//                    intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                    startActivity(intent);
+//                }
+//            } else {//无身份
+//                Intent intent = new Intent(this, SelectIndentityActivity.class);
+//                startActivity(intent);
+//            }
+//        }
+    }
+
+    private void toInvestorCarlendarActivity() {
+
+    }
+
+    private void replenishCards() {
+        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        startActivity(intent);
     }
 
     @Override
@@ -214,12 +330,6 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @Override
     public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode, String status, String statsCode) {
-        this.hasIndentity = hasIndentity;
-        this.hasUpload = hasUpload;
-        this.indentityCode = indentityCode;
-        this.title = title;
-        this.credentialCode = credentialCode;
-        this.status = status;
         assetRelative.setTip(status);
         if (isClickBack) {
             isClickBack = false;
@@ -249,11 +359,37 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         }
     }
 
+    /**
+     * 跳转到引导页面
+     */
+    private void jumpGuidePage() {
+        Intent intent = new Intent(this, CrenditralGuideActivity.class);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        startActivity(intent);
+    }
+
+    @Override
+    public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
+        String stateCode;
+        String stateName;
+        this.credentialStateMedel = credentialStateMedel;
+        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+            stateCode = credentialStateMedel.getIdCardState();
+            stateName = credentialStateMedel.getIdCardStateName();
+        } else {
+            stateCode = credentialStateMedel.getCredentialState();
+            stateName = credentialStateMedel.getCredentialStateName();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (swtichRelativeAssetObservable != null) {
             RxBus.get().unregister(RxConstant.GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE, swtichRelativeAssetObservable);
+        }
+        if (null != livingManger) {
+            livingManger.destory();
         }
     }
 }

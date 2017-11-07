@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
@@ -22,6 +24,8 @@ import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ocrlib.com.LivingManger;
+import app.ocrlib.com.LivingResult;
 import butterknife.BindView;
 import butterknife.OnClick;
 import qcloud.mall.R2;
@@ -49,6 +53,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     private CardListAdapter adapter;
     private CredentialStateMedel credentialStateMedel;
     private String indentityCode;
+    private LivingManger livingManger;
 
     @OnClick(R.id.title_left)
     public void backClick() {
@@ -119,20 +124,46 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //                secondUrl=images.get(1).getUrl();
 //            }
 //        }
+        if (cardBean.getCode().startsWith("1001")&&(!cardBean.getCode().equals("100101"))) {
+            livingManger = new LivingManger(this,"100101","1001", new LivingResult() {
+                @Override
+                public void livingSucceed(LivingResultData resultData) {
+                    resultData.getRecognitionCode();
+                    credentialStateMedel = new CredentialStateMedel();
+                    credentialStateMedel.setCredentialCode(cardBean.getCode());
+                    credentialStateMedel.setCredentialState(cardBean.getStateCode());
+                    credentialStateMedel.setCredentialTypeName(cardBean.getName());
+                    credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+                    credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+                    credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+                    Intent intent = new Intent(CardCollectActivity.this, UploadIndentityCradActivity.class);
+                    if (null != credentialStateMedel) {
+                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+                    }
+                    startActivity(intent);
+                }
 
-        credentialStateMedel = new CredentialStateMedel();
-        credentialStateMedel.setCredentialCode(cardBean.getCode());
-        credentialStateMedel.setCredentialState(cardBean.getStateCode());
-        credentialStateMedel.setCredentialTypeName(cardBean.getName());
-        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
-        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0,4));
-        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0,2));
-        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                @Override
+                public void livingFailed(LivingResultData resultData) {
+
+                }
+
+            });
+            livingManger.startLivingMatch();
+        } else {
+            credentialStateMedel = new CredentialStateMedel();
+            credentialStateMedel.setCredentialCode(cardBean.getCode());
+            credentialStateMedel.setCredentialState(cardBean.getStateCode());
+            credentialStateMedel.setCredentialTypeName(cardBean.getName());
+            credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+            credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+            credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
 //        intent.putExtra("credentialStateMedel", credentialStateMedel);
-        if (null != credentialStateMedel) {
-            intent.putExtra("credentialStateMedel", credentialStateMedel);
-        }else {
-        }
+            if (null != credentialStateMedel) {
+                intent.putExtra("credentialStateMedel", credentialStateMedel);
+            } else {
+            }
 
 //        intent.putExtra("credentialCode", cardBean.getCode());
 //        intent.putExtra("indentityCode", indentityCode);
@@ -144,7 +175,8 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //        intent.putExtra("customerName", cardBean.getCustomerName());
 //        intent.putExtra("customerNum", cardBean.getNumber());
 //        intent.putExtra("depict", cardBean.getComment());
-        startActivity(intent);
+            startActivity(intent);
+        }
 
     }
 
@@ -175,6 +207,12 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         datas.clear();
         datas.addAll(cardBeans);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        livingManger.destory();
     }
 
     @Override

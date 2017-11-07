@@ -4,10 +4,12 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
 import com.cgbsoft.privatefund.model.PersonalInformationModel;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,29 @@ public class DatumManageModelImpl implements DatumManageModel {
                     String credentialTitle = exist.getString("credentialTitle");
                     String stateCodeIn = exist.getString("stateCode");
                     listener.verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,stateName,stateCodeOut,customerName,credentialNumber,credentialTitle,stateCodeIn);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.verifyIndentityError(e);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                listener.verifyIndentityError(error);
+            }
+        }));
+    }
+
+    public void verifyIndentityV3(CompositeSubscription subscription, DatumManageModelListener listener) {
+        subscription.add(ApiClient.verifyIndentityInClientV3().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    Gson gson = new Gson();
+                    CredentialStateMedel credentialStateMedel = gson.fromJson(result.toString(), CredentialStateMedel.class);
+                    listener.verifyIndentitySuccessV3(credentialStateMedel);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     listener.verifyIndentityError(e);
