@@ -68,4 +68,16 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
         datumManageView.hideLoadDialog();
         datumManageView.verifyIndentitySuccessV3(credentialStateMedel);
     }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        datumManageView.hideLoadDialog();
+        datumManageView.getLivingCountSuccess(s);
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+        datumManageView.hideLoadDialog();
+        datumManageView.getLivingCountError(error);
+    }
 }
