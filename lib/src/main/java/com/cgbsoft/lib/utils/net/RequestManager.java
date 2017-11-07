@@ -848,6 +848,9 @@ interface RequestManager {
     @GET(NetConfig.Indentity.VERIFY_INDENTITY_V3)
     Observable<ResponseBody> verifyIndentityInOkhttpV3();
 
+    @GET(NetConfig.Indentity.GET_LIVING_STATE)
+    Observable<ResponseBody> getLivingCount();
+
     /**
      * 获取证件列表
      *

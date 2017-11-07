@@ -410,6 +410,7 @@ public class NetConfig {
         static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         static final String UPLOAD_OTHER_CREDENTIALS = AUTH_URL_V3 + "/credential/upload";
         static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
+        static final String GET_LIVING_STATE = AUTH_URL_V3 + "/credential/livingbody/history";
     }
 
     public static class SoDown {

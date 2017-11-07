@@ -32,6 +32,9 @@ import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
 import app.ocrlib.com.facepicture.FacePictureActivity;
@@ -167,18 +170,18 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             if ("10".equals(credentialStateMedel.getCustomerType())) {
                 if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                    if ("50".equals(credentialStateMedel.getIdCardState())&&"0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                    if ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
                         startMatchLiving();
                     } else {
-                        Intent intent = new Intent(this,UploadIndentityCradActivity.class);
+                        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent);
                     }
-                }else {
-                    if ("50".equals(credentialStateMedel.getCredentialState())&&"0".equals(credentialStateMedel.getCustomerImageState())){
+                } else {
+                    if ("50".equals(credentialStateMedel.getCredentialState()) && "0".equals(credentialStateMedel.getCustomerImageState())) {
                         startMatchImg();
-                    }else {
-                        Intent intent = new Intent(this,UploadIndentityCradActivity.class);
+                    } else {
+                        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent);
                     }
@@ -190,11 +193,11 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     }
 
-    private void startMatchImg(){
-        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON,true));
+    private void startMatchImg() {
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true));
     }
 
-    private void startMatchLiving(){
+    private void startMatchLiving() {
         livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
@@ -206,7 +209,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
             }
         });
-        livingManger.startLivingMatch();
+        getPresenter().getLivingCount();
+
     }
 
     @OnClick(R.id.datum_manage_asset_report)
@@ -380,6 +384,31 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             stateCode = credentialStateMedel.getCredentialState();
             stateName = credentialStateMedel.getCredentialStateName();
         }
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        try {
+            JSONObject js = new JSONObject(s);
+            JSONObject result = js.getJSONObject("result");
+            String failCount = result.getString("failCount");
+            String validCode = result.getString("validCode");
+            if ("1".equals(validCode)) {
+                if ("3".equals(failCount)) {
+                    Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
+                } else{
+                    livingManger.startLivingMatch();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
     }
 
     @Override
