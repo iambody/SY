@@ -722,4 +722,15 @@ public class Utils {
         }
         return true;
     }
+
+    public static boolean isAppRunningOnTop(Context context, String name) {
+        ActivityManager activityManager = (ActivityManager)context.getSystemService("activity");
+        List runningTaskInfo = activityManager.getRunningTasks(1);
+        if(runningTaskInfo != null && runningTaskInfo.size() != 0) {
+            String topAppPackageName = ((ActivityManager.RunningTaskInfo)runningTaskInfo.get(0)).topActivity.getPackageName();
+            return !TextUtils.isEmpty(name) && name.equals(topAppPackageName);
+        } else {
+            return false;
+        }
+    }
 }
