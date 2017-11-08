@@ -31,6 +31,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -71,10 +72,20 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     private boolean isCanclick = true;
 
+    public static final String PAGE_TAG = "pagtag";
+
+    public static String currentPageTag;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facepicture);
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey(PAGE_TAG)) {
+            currentPageTag = getIntent().getStringExtra(PAGE_TAG);
+        } else {
+            PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
+            finish();
+        }
         isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
         surfaceholder = surfaceview.getHolder();
@@ -176,7 +187,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                             Log.i("PersonCompare", "没进行对比直接退出并发通知" + data);
                             if (null != mLoadingDialog)
                                 mLoadingDialog.dismiss();
-                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath));
+                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath,currentPageTag));
                             FacePictureActivity.this.finish();
                         }
 
@@ -309,10 +320,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     String result = obj.getString("result");
                     LivingResultData recognitionCode = new Gson().fromJson(result, LivingResultData.class);
                     if ("0".equals(recognitionCode.getRecognitionCode())) {//成功
-                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 0);
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(0,currentPageTag));
                         Log.i("PersonCompare", "对比成功了开始发射信息" + remotpath);
                     } else {//失败
-                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1,currentPageTag));
                         Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
                     }
                 } catch (JSONException e) {
@@ -323,12 +334,12 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
             @Override
             protected void onRxError(Throwable error) {
-                isCanclick=true;
+                isCanclick = true;
                 if (null != mLoadingDialog)
                     mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
                 PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
-                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 1);
+                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1,currentPageTag));
                 FacePictureActivity.this.finish();
             }
         });

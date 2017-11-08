@@ -16,7 +16,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
@@ -43,7 +42,7 @@ import rx.Observable;
  */
 
 public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView, OnRefreshListener {
-
+public static final String TAG="CardCollectActivity";
     //    @BindView(R.id.toolbar)
 //    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
@@ -244,7 +243,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
                 } else {
-                    livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
+                    livingManger = new LivingManger(this, "100101", "1001",TAG, new LivingResult() {
                         @Override
                         public void livingSucceed(LivingResultData resultData) {
                             resultData.getRecognitionCode();

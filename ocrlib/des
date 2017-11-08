@@ -68,11 +68,17 @@
         ************************开启拍摄person*****************************************
          baseActivity.startActivity(new Intent(baseActivity, FacePictureActivity.class));
          返回的通知
-         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf());
+         RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(remotpath,localpath,"activityName"));
 
         ************************开启拍摄person进行person对比 person对比锁*****************************************
          baseActivity.startActivity(new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON,true));
          返回的通知 0代表成功 1代表失败  int值
-         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, 0);
+         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(0,"activityName"));
+
+
+最新添加activity的tage需要修改场景
+1进入FacePictureActivity页面时候需要在intent里面添加 key为FacePictureActivity.PAGE_TAG的string类型的标识
+ 监听的时候需要修改的监听bean类型 1只获取照片的回调 原来里面的回调bean为FaceInf  多一个字段pageTage  2获取person对比 原来的回调类型是int现在的类型修改为PersonCompare
+2进入LivingManger的活体验身 公有锁 需要新添加一个参数
 
 

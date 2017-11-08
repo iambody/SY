@@ -60,7 +60,7 @@ public class LivingManger {
     private static SharedPreferences sp;
     private static LivingSign livingSign;
     private static int MangerType;
-
+    public static String currentPageTag;
     private LivingManger() {
     }
 
@@ -96,12 +96,13 @@ public class LivingManger {
      *
      * @param ocrResult
      */
-    public LivingManger(Context livingContext, String credentialcode, String customercode, LivingResult ocrResult) {
+    public LivingManger(Context livingContext, String credentialcode, String customercode,String pageTage,LivingResult ocrResult) {
         this.livingResult = ocrResult;
         this.livingContext = livingContext;
         this.credentialCode = credentialcode;
         this.customerCode = customercode;
         this.MangerType = 1;
+        this.currentPageTag=pageTage;
         initConifg();
 
     }
@@ -393,14 +394,14 @@ public class LivingManger {
                     if (null != livingResult) livingResult.livingSucceed(livingResultData);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    livingResult.livingFailed(new LivingResultData("解析错误", "3"));
+                    livingResult.livingFailed(new LivingResultData("解析错误", "3",currentPageTag));
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 if (null != livingResult)
-                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
+                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3",currentPageTag));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());
             }
         });

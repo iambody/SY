@@ -56,3 +56,4 @@ Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合�
                 PromptManager.ShowCustomToast(baseActivity,"修改后的内容："+resultContent);
             }
         });
+

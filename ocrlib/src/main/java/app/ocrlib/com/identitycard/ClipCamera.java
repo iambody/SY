@@ -149,6 +149,7 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
         mCamera.setParameters(parameters);
 
     }
+
     /**
      * 通过对比得到与宽高比最接近的尺寸（如果有相同尺寸，优先选择）
      *

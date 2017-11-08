@@ -9,7 +9,17 @@ public class FaceInf {
     private String faceRemotePath;
     private String faceLocalPath;
 
+    private String pageTage;
+
     public FaceInf() {
+    }
+
+    public String getPageTage() {
+        return pageTage;
+    }
+
+    public void setPageTage(String pageTage) {
+        this.pageTage = pageTage;
     }
 
     public String getFaceRemotePath() {
@@ -28,8 +38,9 @@ public class FaceInf {
         this.faceLocalPath = faceLocalPath;
     }
 
-    public FaceInf(String faceRemotePath, String faceLocalPath) {
+    public FaceInf(String faceRemotePath, String faceLocalPath,String pageTage) {
         this.faceRemotePath = faceRemotePath;
         this.faceLocalPath = faceLocalPath;
+        this.pageTage=pageTage;
     }
 }

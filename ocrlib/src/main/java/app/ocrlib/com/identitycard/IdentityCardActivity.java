@@ -2,6 +2,7 @@ package app.ocrlib.com.identitycard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -46,6 +48,8 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     private Button btn_shoot;
     //提示文本
     private TextView identitycard_note;
+    //背影
+    private IndentityCardShadow identitycard_shadow;
     //正面的头像
     private ImageView ocr_face_iv;
     public static final String CARD_FACE = "cardface";
@@ -54,9 +58,13 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     public static final int FACE_FRONT = 0;
     //身份证反面
     public static final int FACE_BACK = 1;
+    //相机对焦
+    private Camera.AutoFocusCallback mAutoFocusCallback;
+    //加载
     private LoadingDialog mLoadingDialog;
 
-    @Override
+    private boolean isCanClick = true;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -66,14 +74,33 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
             finish();
         }
-        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
+
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, " ", false, false);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
 //        } else {
         setContentView(R.layout.activity_identitycard);
         initView();
 //        }
+        mAutoFocusCallback = new Camera.AutoFocusCallback() {
 
+            public void onAutoFocus(boolean success, Camera camera) {
+                // TODO Auto-generated method stub
+                if (success) {
+//                    myCamera.setOneShotPreviewCallback(null);
+//                    Toast.makeText(TestPhotoActivity.this,
+//                            "自动聚焦成功" , Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        };
+        identitycard_shadow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                clipCamera.setAutoFocus();
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -81,6 +108,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         btn_shoot = (Button) findViewById(R.id.btn_shoot);
         ocr_face_iv = (ImageView) findViewById(R.id.ocr_face_iv);
         identitycard_note = (TextView) findViewById(R.id.identitycard_note);
+        identitycard_shadow = (IndentityCardShadow) findViewById(R.id.identitycard_shadow);
         clipCamera.setIAutoFocus(this);
         btn_shoot.setOnClickListener(this);
         setIconPostion(currentFace);
@@ -116,6 +144,8 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void takePhoto() {
+        if (!isCanClick) return;
+        isCanClick = false;
         String path = Environment.getExternalStorageDirectory().getPath() + "/" + System.currentTimeMillis() + "identity.jpg";
         clipCamera.takePicture(path, new ClipCamera.CameraResult() {
             @Override
@@ -156,9 +186,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                         ApiClient.getOcrResult(data, currentFace + 1).subscribe(new RxSubscriber<IdentityCard>() {
                             @Override
                             protected void onEvent(IdentityCard identityCard) {
+                                isCanClick = true;
                                 if (null != mLoadingDialog) {
                                     mLoadingDialog.dismiss();
-
                                 }
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
@@ -170,6 +200,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
 
                             @Override
                             protected void onRxError(Throwable error) {
+                                isCanClick = true;
                                 if (null != mLoadingDialog) {
                                     mLoadingDialog.dismiss();
 
@@ -214,6 +245,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+
     }
 
     @Override

@@ -14,6 +14,7 @@
         android:layout_gravity="center" />
 
         <app.ocrlib.com.identitycard.IndentityCardShadow
+            android:id="@+id/identitycard_shadow"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     <!--<ImageView
@@ -37,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:rotation="90"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_shoot"
