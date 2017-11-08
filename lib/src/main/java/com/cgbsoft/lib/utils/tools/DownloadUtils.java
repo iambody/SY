@@ -61,8 +61,8 @@ public class DownloadUtils {
         if (NetConfig.START_APP.equals("https://app")) {
             textMap.put("key", remotePath);
         } else {
-            String domain = NetConfig.SERVER_ADD.replace("https://", "");
-            textMap.put("key", "-/" + domain + "/" + remotePath);
+            String domainUrl = NetConfig.SERVER_ADD.replace("https://", "");
+            textMap.put("key", "-/".concat(domainUrl).concat("/").concat(remotePath));
         }
         // Content-Disposition
 //        textMap.put("Content-Disposition", "attachment;filename=" + localFilePath);
@@ -87,8 +87,8 @@ public class DownloadUtils {
             if (NetConfig.START_APP.equals("https://app")) {
                 return UPLOAD_URL + remotePath;
             } else {
-                String domain = NetConfig.SERVER_ADD.replace("https://", "");
-                return UPLOAD_URL +  "-/" + domain + "/" + remotePath;
+                String domainUrl = NetConfig.SERVER_ADD.replace("https://", "");
+                return UPLOAD_URL + "-/".concat(domainUrl).concat("/").concat(remotePath);
             }
         }
         return null;
@@ -159,8 +159,6 @@ public class DownloadUtils {
                             + inputName + "\"; filename=\"" + filename
                             + "\"\r\n");
                     strBuf.append("Content-Type: " + contentType + "\r\n\r\n");
-
-
                     out.write(strBuf.toString().getBytes());
                     DataInputStream in = new DataInputStream(new FileInputStream(file));
                     int bytes = 0;
