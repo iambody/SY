@@ -64,6 +64,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     private boolean isClickBack;
     private CredentialStateMedel credentialStateMedel;
     private LivingManger livingManger;
+    private boolean isClickRisk;
 
     @Override
     protected int layoutID() {
@@ -86,7 +87,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             protected void onEvent(Integer integer) {
                 //0代表成功 1代表失败  int值
                 if (0 == integer) {
-                    NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                    if (isClickRisk)
+                        NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
                 } else {
 
                 }
@@ -164,6 +166,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @OnClick(R.id.datum_manage_risk)
     public void gotoRiskComment() {
+        isClickRisk = true;
         goToDatumCollect();
     }
 
@@ -177,6 +180,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         getPresenter().getLivingCount();
                     } else if ("5".equals(credentialStateMedel.getIdCardState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+                    } else if ("10".equals(credentialStateMedel.getIdCardState())) {
+                        Toast.makeText(this, "证件审核中，不能填写风险问卷", Toast.LENGTH_LONG).show();
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -187,6 +192,8 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         startMatchImg();
                     } else if ("5".equals(credentialStateMedel.getCustomerImageState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+                    } else if ("10".equals(credentialStateMedel.getCredentialState())) {
+                        Toast.makeText(this, "证件审核中，不能填写风险问卷", Toast.LENGTH_LONG).show();
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -237,6 +244,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @OnClick(R.id.datum_manage_relative_asset)
     public void gotoRelativeAsset() {
+        isClickRisk = false;
         if (showAssert) {
             goToCardCollect();
         } else {
@@ -406,7 +414,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 } else {
                     livingManger.startLivingMatch();
                 }
-            } else if ("1".equals(validCode)){
+            } else if ("1".equals(validCode)) {
                 startMatchImg();
             }
         } catch (JSONException e) {

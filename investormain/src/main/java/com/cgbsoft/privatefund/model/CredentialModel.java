@@ -24,6 +24,8 @@ public class CredentialModel {
     private String appUserId;
     private String customerName;
     private String numberTrue;
+    private String failCount;
+    private String validCode;
 
     public CredentialModel(String id, ArrayList<CardListEntity.ImageBean> imageUrl, String stateName, String name, String stateCode, String number, String periodValidity, String code, String comment, String appUserId, String customerName,String numberTrue) {
         this.id = id;
@@ -40,6 +42,22 @@ public class CredentialModel {
         this.numberTrue = numberTrue;
     }
 
+
+    public String getFailCount() {
+        return failCount;
+    }
+
+    public void setFailCount(String failCount) {
+        this.failCount = failCount;
+    }
+
+    public String getValidCode() {
+        return validCode;
+    }
+
+    public void setValidCode(String validCode) {
+        this.validCode = validCode;
+    }
 
     public String getNumberTrue() {
         return numberTrue;

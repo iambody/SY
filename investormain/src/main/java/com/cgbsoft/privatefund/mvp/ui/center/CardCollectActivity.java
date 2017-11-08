@@ -24,7 +24,6 @@ import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
-import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

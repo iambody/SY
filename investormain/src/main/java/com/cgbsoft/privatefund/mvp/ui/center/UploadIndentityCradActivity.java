@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -32,6 +35,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -50,6 +54,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -120,7 +125,26 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     RelativeLayout rlTip;
     @BindView(R.id.bt_recognition_name_edit)
     Button btRecognitionNameEdit;
-
+    @BindView(R.id.recognition_num_text)
+    TextView recognitionNumText;
+    @BindView(R.id.recognition_name_text)
+    TextView recognitionNameText;
+    @BindView(R.id.recognition_result_text)
+    TextView recognitionResultText;
+    @BindView(R.id.mini_result_ll)
+    LinearLayout miniResultLinear;
+    @BindView(R.id.mini_msg_layout)
+    LinearLayout miniMsgLyout;
+    @BindView(R.id.upload_demo)
+    TextView uploadDemo;
+    @BindView(R.id.rl_recognition_card)
+    LinearLayout RecognitionCardRelative;
+    @BindView(R.id.reject_result_title)
+    TextView rejectResultTitle;
+    @BindView(R.id.divide_line1)
+    View divideLine1;
+    @BindView(R.id.divide_line2)
+    View divideLine2;
 
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
@@ -180,6 +204,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             UiSkipUtils.toNextActivityWithIntent(this, new Intent(this, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
         else
             takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
+    }
+
+    @OnClick(R.id.bt_recognition_name_edit)
+    public void editName() {
+        recognitionNameEdit.setFocusable(true);
+    }
+
+    @OnClick(R.id.upload_demo)
+    public void uploadDemo() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, "/app5.0/order/help.html");
+        hashMap.put(WebViewConstant.push_message_title, "上传示例");
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
     @OnClick(R.id.iv_upload_card_first_cover)
@@ -285,18 +322,32 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
                 @Override
                 public void livingSucceed(LivingResultData resultData) {
-                    Log.i("活体living","开始回调监听接口！！！"+resultData.toString());
+                    Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
                     switch (resultData.getRecognitionCode()) {
                         //0 成功 1客服审核 2ocr错误 3标识失败
                         case "0":
                             submit.setVisibility(View.GONE);
                             tagIv.setVisibility(View.GONE);
                             tagTv.setText("审核通过");
+                            RecognitionCardRelative.setVisibility(View.GONE);
+                            miniResultLinear.setVisibility(View.VISIBLE);
+                            miniMsgLyout.setVisibility(View.VISIBLE);
+                            recognitionNameText.setText(identityCard.getIdCardName());
+                            recognitionNumText.setText(identityCard.getIdCardNum());
+                            recognitionResultText.setText("审核成功");
+                            rejectResultTitle.setText("审核结果");
                             break;
                         case "1":
                             submit.setVisibility(View.GONE);
                             tagIv.setVisibility(View.GONE);
                             tagTv.setText("审核中");
+                            RecognitionCardRelative.setVisibility(View.GONE);
+                            miniResultLinear.setVisibility(View.VISIBLE);
+                            miniMsgLyout.setVisibility(View.VISIBLE);
+                            recognitionNameText.setText(identityCard.getIdCardName());
+                            recognitionNumText.setText(identityCard.getIdCardNum());
+                            recognitionResultText.setText("审核中");
+                            rejectResultTitle.setText("审核结果");
                             finish();
                             break;
                         case "2":
@@ -310,7 +361,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
                 @Override
                 public void livingFailed(LivingResultData resultData) {
-                    Log.i("活体living","开始回调监听接口失败了！"+resultData.toString());
+                    Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
                     LivingResultData resultData1 = resultData;
                     Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                 }
@@ -333,27 +384,44 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 //                return;
 //            }
         } else {
-            if (TextUtils.isEmpty(firstPhotoPath)) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            File fileFirst = new File(firstPhotoPath);
-            if (!fileFirst.exists()) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
-                return;
+            if (!"50".equals(credentialModel.getStateCode())) {
+                if (TextUtils.isEmpty(firstPhotoPath)) {
+                    Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File fileFirst = new File(firstPhotoPath);
+                if (!fileFirst.exists()) {
+                    Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         }
         if (isIdCard) {
-            paths.add(firstPhotoPath);
-            paths.add(secondPhotoPath);
+            if ("50".equals(credentialModel.getStateCode())){
+                remoteParams.clear();
+                remoteParams.add(firstPhotoName);
+                remoteParams.add(secondPhotoPath);
+            }else {
+                paths.add(firstPhotoPath);
+                paths.add(secondPhotoPath);
+            }
         } else {
-            paths.add(firstPhotoPath);
+            if ("50".equals(credentialModel.getStateCode())){
+                remoteParams.clear();
+                remoteParams.add(firstPhotoName);
+            }else {
+                paths.add(firstPhotoPath);
+            }
         }
         if (mLoadingDialog == null) {
             mLoadingDialog = new LoadingDialog(this);
         }
         if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
             mLoadingDialog.show();
+            if (remoteParams.size()!=0){
+                startActivity(new Intent(baseContext, FacePictureActivity.class));
+                return;
+            }
             new Thread() {
                 @Override
                 public void run() {
@@ -372,7 +440,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             return;
                         }
                     }
-                    startActivity(new Intent(baseContext, FacePictureActivity.class));
+                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class)));
                 }
             }.start();
             return;
@@ -516,6 +584,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             uploadFirst.setEnabled(false);
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
+            if ("100101".equals(credentialModel.getCode())) {
+                isIdCard = true;
+            }
             if ("30".equals(stateCode) || "70".equals(stateCode)) {
                 if ("100101".equals(credentialModel.getCode())) {
                     isIdCard = true;
@@ -525,12 +596,20 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setVisibility(View.VISIBLE);
                 if ("30".equals(stateCode)) {//30：已驳回
                     defeatAll.setVisibility(View.VISIBLE);
-                    tagIv.setVisibility(View.VISIBLE);
-                    tagTv.setVisibility(View.VISIBLE);
-                    tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
-                    tagTv.setText(TextUtils.isEmpty(credentialModel.getStateName()) ? "" : credentialModel.getStateName());
-                    defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
-                    defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
+                    if (TextUtils.isEmpty(credentialModel.getNumber())) {
+                        defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
+                        defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        rlTip.setVisibility(View.GONE);
+                        recognitionNumText.setText(credentialModel.getNumber());
+                        recognitionNameText.setText(credentialModel.getCustomerName());
+                        recognitionResultText.setText(credentialModel.getComment());
+                    } else {
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(credentialModel.getCustomerName());
+                        recognitionNumText.setText(credentialModel.getNumber());
+                        recognitionResultText.setText(credentialModel.getComment());
+                    }
                 }
                 if ("70".equals(stateCode)) {//70：已过期
                     defeatAll.setVisibility(View.VISIBLE);
@@ -545,12 +624,26 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
             if ("10".equals(stateCode)) {
                 tagTv.setText("审核中");
+                miniResultLinear.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+                submit.setVisibility(View.GONE);
             }
             if ("50".equals(stateCode)) {
                 tagTv.setText("已通过");
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
             }
             if ("45".equals(stateCode)) {
-                replenishAll.setVisibility(View.VISIBLE);
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+//                replenishAll.setVisibility(View.VISIBLE);
                 replenishName.setText(credentialModel.getCustomerName());
                 replenishNum.setText(credentialModel.getNumber());
                 uploadFirst.setEnabled(true);
@@ -606,12 +699,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 replenishAll.setVisibility(View.GONE);
                 if (null != credentialModel.getImageUrl()) {
                     String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
+                    firstPhotoPath = firstUrl;
                     Imageload.display(this, firstUrl, uploadFirst);
                     if (credentialModel.getImageUrl().size() == 2) {
                         String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
                         if (!TextUtils.isEmpty(secondUrl)) {
                             uploadSecond.setVisibility(View.VISIBLE);
                             Imageload.display(this, secondUrl, uploadSecond);
+                            secondPhotoPath = secondUrl;
 
                         }
                         if ("70".equals(stateCode)) {
@@ -622,6 +717,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         titleTV.setText(credentialModel.getName());
+        if ("50".equals(credentialModel.getStateCode()) && "2".equals(credentialModel.getValidCode()) && credentialModel.getCode().startsWith("10")) {
+            submit.setText("下一步");
+            submit.setVisibility(View.VISIBLE);
+            miniMsgLyout.setVisibility(View.VISIBLE);
+            rlTip.setVisibility(View.GONE);
+            identityCard.setIdCardNum(credentialModel.getNumberTrue());
+            identityCard.setIdCardName(credentialModel.getCustomerName());
+        }
 
     }
 
@@ -664,6 +767,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         });
         initView();
         initIdCardSelCallBack();
+        recognitionNameEdit.setFocusable(false);
         credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
         if (!TextUtils.isEmpty(credentialStateMedel.getCredentialDetailId())) {
             getCredentialInfo(credentialStateMedel.getCredentialDetailId());
@@ -675,7 +779,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     "",
                     "",
                     credentialStateMedel.getCredentialCode(),
-                    "", "", "","");
+                    "", "", "", "");
             init(credentialModel);
         }
         isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
@@ -716,6 +820,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionNameLinearLayout.setVisibility(View.VISIBLE);
                     recognitionNumLinearLayout.setVisibility(View.VISIBLE);
                     rlTip.setVisibility(View.GONE);
+                    divideLine1.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(identityCard.getValidDate())) {
+                        divideLine2.setVisibility(View.VISIBLE);
+                    }
+                    miniMsgLyout.setVisibility(View.GONE);
                 } else {
                     recognitionNameLinearLayout.setVisibility(View.GONE);
                     recognitionNumLinearLayout.setVisibility(View.GONE);
@@ -739,6 +848,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
                     recognitionValidDate.setText(identityCard.getValidDate());
                     rlTip.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine2.setVisibility(View.VISIBLE);
+                    }
+                    miniMsgLyout.setVisibility(View.GONE);
                 } else {
                     recognitionValidLinearLayout.setVisibility(View.GONE);
                 }
