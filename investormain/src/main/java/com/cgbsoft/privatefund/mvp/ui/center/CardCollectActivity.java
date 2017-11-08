@@ -20,6 +20,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
@@ -42,7 +43,7 @@ import rx.Observable;
  */
 
 public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView, OnRefreshListener {
-public static final String TAG="CardCollectActivity";
+    public static final String TAG = "CardCollectActivity";
     //    @BindView(R.id.toolbar)
 //    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
@@ -62,7 +63,7 @@ public static final String TAG="CardCollectActivity";
     private String indentityCode;
     private LivingManger livingManger;
     private CardListEntity.CardBean cardBean;
-    private Observable<Integer> register;
+    private Observable<PersonCompare> register;
 
     @OnClick(R.id.title_left)
     public void backClick() {
@@ -114,15 +115,17 @@ public static final String TAG="CardCollectActivity";
     }
 
     private void initCallBack() {
-        register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, Integer.class);
-        register.subscribe(new RxSubscriber<Integer>() {
+        register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
+        register.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
-            protected void onEvent(Integer integer) {
-                //0代表成功 1代表失败  int值
-                if (0 == integer) {
-                    jumpDetial();
-                } else {
+            protected void onEvent(PersonCompare personCompare) {
+                if (TAG.equals(personCompare.getCurrentPageTag())) {
+                    //0代表成功 1代表失败  int值
+                    if (0 == personCompare.getResultTage()) {
+                        jumpDetial();
+                    } else {
 
+                    }
                 }
             }
 
@@ -243,7 +246,7 @@ public static final String TAG="CardCollectActivity";
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
                 } else {
-                    livingManger = new LivingManger(this, "100101", "1001",  new LivingResult() {
+                    livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
                         @Override
                         public void livingSucceed(LivingResultData resultData) {
                             resultData.getRecognitionCode();
@@ -284,7 +287,7 @@ public static final String TAG="CardCollectActivity";
     }
 
     private void startMatchImg() {
-        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true));
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true).putExtra(FacePictureActivity.PAGE_TAG, TAG));
     }
 
     @Override

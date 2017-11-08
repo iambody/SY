@@ -23,6 +23,7 @@ import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
@@ -82,16 +83,18 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void initCallBack() {
-        Observable<Integer> register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, Integer.class);
-        register.subscribe(new RxSubscriber<Integer>() {
+        Observable<PersonCompare> register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
+        register.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
-            protected void onEvent(Integer integer) {
+            protected void onEvent(PersonCompare personCompare) {
                 //0代表成功 1代表失败  int值
-                if (0 == integer) {
-                    if (isClickRisk)
-                        NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                } else {
+                if (TAG.equals(personCompare.getCurrentPageTag())) {
+                    if (0 == personCompare.getResultTage()) {
+                        if (isClickRisk)
+                            NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                    } else {
 
+                    }
                 }
             }
 
@@ -209,7 +212,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void startMatchImg() {
-        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true));
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true).putExtra(FacePictureActivity.PAGE_TAG, TAG));
     }
 
     private void startMatchLiving() {

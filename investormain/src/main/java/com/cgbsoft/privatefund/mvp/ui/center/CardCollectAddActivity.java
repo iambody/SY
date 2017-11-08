@@ -21,6 +21,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
@@ -64,10 +65,11 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     private CardListAdapter adapter;
     private String indentityCode;
     private Observable<Integer> register;
-    private Observable<Integer> registerPerson;
+    private Observable<PersonCompare> registerPerson;
     private CredentialStateMedel credentialStateMedel;
     private LivingManger livingManger;
     private CardListEntity.CardBean cardBean;
+    private String TAG = "CardCollectAddActivity";
 
     @Override
     public void showLoadDialog() {
@@ -139,7 +141,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     }
 
     private void startMatchImg() {
-        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true));
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true).putExtra(FacePictureActivity.PAGE_TAG, TAG));
     }
 
     private void jumpDetial() {
@@ -199,15 +201,17 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     }
 
     public void initCallBack() {
-        registerPerson = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, Integer.class);
-        registerPerson.subscribe(new RxSubscriber<Integer>() {
+        registerPerson = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
+        registerPerson.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
-            protected void onEvent(Integer integer) {
-                //0代表成功 1代表失败  int值
-                if (0 == integer) {
-                    jumpDetial();
-                } else {
+            protected void onEvent(PersonCompare personCompare) {
+                if (TAG.equals(personCompare.getCurrentPageTag())){
+                    //0代表成功 1代表失败  int值
+                    if (0 == personCompare.getResultTage()) {
+                        jumpDetial();
+                    } else {
 
+                    }
                 }
             }
 
