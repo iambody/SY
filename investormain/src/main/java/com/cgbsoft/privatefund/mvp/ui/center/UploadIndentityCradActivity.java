@@ -278,6 +278,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     public void photoSubmit() {
         submit.setEnabled(false);
         List<String> paths = new ArrayList<>();
+        if ("30".equals(credentialModel.getStateCode())){
+            credentialStateMedel = new CredentialStateMedel();
+            credentialStateMedel.setCredentialCode(credentialModel.getCode());
+            credentialStateMedel.setCredentialState("5");
+            credentialStateMedel.setCredentialTypeName(credentialModel.getCode());
+            credentialStateMedel.setCredentialStateName(credentialModel.getStateName());
+            credentialStateMedel.setCustomerIdentity(credentialModel.getCode().substring(0, 4));
+            credentialStateMedel.setCustomerType(credentialModel.getCode().substring(0, 2));
+            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            startActivity(intent);
+            return;
+        }
         if (isIdCard) {
             if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
@@ -593,7 +606,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
                 if ("30".equals(stateCode)) {//30：已驳回
-                    defeatAll.setVisibility(View.VISIBLE);
+                    submit.setVisibility(View.VISIBLE);
+                    submit.setText("重新上传");
                     if (TextUtils.isEmpty(credentialModel.getNumber())) {
                         defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
                         defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
@@ -610,7 +624,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     }
                 }
                 if ("70".equals(stateCode)) {//70：已过期
-                    defeatAll.setVisibility(View.VISIBLE);
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
@@ -794,7 +807,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
             @Override
             protected void onEvent(FaceInf faceInf) {
-                Log.i("PersonCompare", "我没进行对比接受到了通知"  );
+                Log.i("PersonCompare", "我没进行对比接受到了通知");
                 getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
             }
 
