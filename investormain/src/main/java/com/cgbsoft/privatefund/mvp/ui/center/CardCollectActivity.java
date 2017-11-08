@@ -73,7 +73,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
     @OnClick(R.id.iv_title_right)
     public void addCard() {
         Intent intent = new Intent(this, CardCollectAddActivity.class);
-        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        intent.putExtra("indentityCode", indentityCode);
         startActivity(intent);
     }
 
@@ -156,7 +156,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //                secondUrl=images.get(1).getUrl();
 //            }
 //        }
-        if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101"))) {
+        if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101")) && (!"10".equals(cardBean.getStateCode()))) {
             getPresenter().getLivingCount();
         } else {
             credentialStateMedel = new CredentialStateMedel();
@@ -223,7 +223,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         super.onDestroy();
         if (null != livingManger)
             livingManger.destory();
-        if (null!= register)
+        if (null != register)
             RxBus.get().unregister(RxConstant.COMPLIANCE_PERSON_COMPARE, register);
     }
 
@@ -278,7 +278,6 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
         credentialStateMedel.setCredentialDetailId(cardBean.getId());
         Intent intent = new Intent(CardCollectActivity.this, UploadIndentityCradActivity.class);
-
         if (null != credentialStateMedel) {
             intent.putExtra("credentialStateMedel", credentialStateMedel);
         }

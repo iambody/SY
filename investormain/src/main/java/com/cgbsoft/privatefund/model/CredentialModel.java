@@ -9,21 +9,45 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by zhaojiaqi on 2017/11/3.
  */
-
+/*
+    "customerName": "",
+    "id": "11081",
+    "credentialNumber": "410****4031",
+    "failCount": "0",
+    "credentialCode": "100101",
+    "imageUrl": [
+      {
+        "name": "frontImage",
+        "url": "https://upload.simuyun.com/-/d6-app.simuyun.com/credential/100101/bed6f86d-0e86-48bf-90ac-17a1a551b5a5.jpg"
+      },
+      {
+        "name": "backImage",
+        "url": "https://upload.simuyun.com/-/d6-app.simuyun.com/credential/100101/98b3e816-3289-4e90-9014-61f611db9f30.jpg"
+      }
+    ],
+    "validCode": "2",
+    "userId": "19000000066",
+    "stateName": "已通过",
+    "credentialTypeName": "身份证",
+    "stateCode": "50",
+    "credentialNumberTrue": "410425199108114031",
+    "periodValidity": "2024-07-09",
+    "comment": ""
+ */
 public class CredentialModel {
     private String id;
     private ArrayList<CardListEntity.ImageBean> imageUrl;
 
     private String stateName;
-    private String name;
+    private String credentialTypeName;
     private String stateCode;
-    private String number;
+    private String credentialNumber;
     private String periodValidity;
-    private String code;
+    private String credentialCode;
     private String comment;
-    private String appUserId;
+    private String userId;
     private String customerName;
-    private String numberTrue;
+    private String credentialNumberTrue;
     private String failCount;
     private String validCode;
 
@@ -31,15 +55,15 @@ public class CredentialModel {
         this.id = id;
         this.imageUrl = imageUrl;
         this.stateName = stateName;
-        this.name = name;
+        this.credentialTypeName = name;
         this.stateCode = stateCode;
-        this.number = number;
+        this.credentialNumber = number;
         this.periodValidity = periodValidity;
-        this.code = code;
+        this.credentialCode = code;
         this.comment = comment;
-        this.appUserId = appUserId;
+        this.userId = appUserId;
         this.customerName = customerName;
-        this.numberTrue = numberTrue;
+        this.credentialNumberTrue = numberTrue;
     }
 
 
@@ -60,11 +84,11 @@ public class CredentialModel {
     }
 
     public String getNumberTrue() {
-        return numberTrue;
+        return credentialNumberTrue;
     }
 
     public void setNumberTrue(String numberTrue) {
-        this.numberTrue = numberTrue;
+        this.credentialNumberTrue = numberTrue;
     }
 
     public String getCustomerName() {
@@ -100,11 +124,11 @@ public class CredentialModel {
     }
 
     public String getName() {
-        return name;
+        return credentialTypeName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.credentialTypeName = name;
     }
 
     public String getStateCode() {
@@ -116,11 +140,11 @@ public class CredentialModel {
     }
 
     public String getNumber() {
-        return number;
+        return credentialNumber;
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        this.credentialNumber = number;
     }
 
     public String getPeriodValidity() {
@@ -132,11 +156,11 @@ public class CredentialModel {
     }
 
     public String getCode() {
-        return code;
+        return credentialCode;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.credentialCode = code;
     }
 
     public String getComment() {
@@ -148,11 +172,11 @@ public class CredentialModel {
     }
 
     public String getAppUserId() {
-        return appUserId;
+        return userId;
     }
 
     public void setAppUserId(String appUserId) {
-        this.appUserId = appUserId;
+        this.userId = appUserId;
     }
 
     public static class ImageBean{
