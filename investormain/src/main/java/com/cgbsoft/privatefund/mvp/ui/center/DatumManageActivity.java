@@ -213,7 +213,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void startMatchLiving() {
-        livingManger = new LivingManger(this, "100101", "1001",TAG, new LivingResult() {
+        livingManger = new LivingManger(this, "100101", "1001",  new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
                 NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);

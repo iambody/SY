@@ -243,7 +243,7 @@ public static final String TAG="CardCollectActivity";
                 if ("3".equals(failCount)) {
                     Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
                 } else {
-                    livingManger = new LivingManger(this, "100101", "1001",TAG, new LivingResult() {
+                    livingManger = new LivingManger(this, "100101", "1001",  new LivingResult() {
                         @Override
                         public void livingSucceed(LivingResultData resultData) {
                             resultData.getRecognitionCode();
