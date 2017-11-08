@@ -17,7 +17,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -54,7 +53,6 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -796,6 +794,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
             @Override
             protected void onEvent(FaceInf faceInf) {
+                Log.i("PersonCompare", "我没进行对比接受到了通知"  );
                 getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
             }
 

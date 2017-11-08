@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_alter"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dialog_alter_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/ui_10_dip"
+            android:text="修改"
+            android:textSize="@dimen/ui_16_dip"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/dialog_alter_contentedittext"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ui_5_dip"
+            android:background="@drawable/shape_dialog_alter"
+           android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:padding="@dimen/ui_5_dip"
+            android:textSize="@dimen/dimens_sp_14" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_point2_dp"
+            android:layout_marginTop="@dimen/ui_10_dip"
+            android:src="@color/gray_font" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dialog_alter_leftbt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/select_dialog_alter_left"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/ui_10_dip"
+                android:text="取消"
+                />
+
+            <ImageView
+                android:layout_width="@dimen/dimens_point2_dp"
+                android:layout_height="match_parent"
+                android:src="@color/gray_font" />
+
+            <TextView
+                android:id="@+id/dialog_alter_rightbt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/select_dialog_alter_right"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/ui_10_dip"
+                android:text="确定" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

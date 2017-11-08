@@ -49,3 +49,10 @@ Intent intent = Router.build(uri).getIntent(context);,即可获取一个符合�
  // 获取定位信息bean    用前需要判断  locationBean.getLocationcity() 是否为 null或者空 BStrUtils.isEmpty(locationBean.getLocationcity())（为安全起见 一般情况下是肯定不为空的）
   LocationBean locationBean= AppManager.getLocation(Context);
 
+//修改的输入框
+ AlterDialog dialog=new AlterDialog(baseActivity, "修改场景的标题", "回显的要修改内容", new AlterDialog.AlterCommitListener() {
+            @Override
+            public void commitListener(String resultContent) {
+                PromptManager.ShowCustomToast(baseActivity,"修改后的内容："+resultContent);
+            }
+        });
