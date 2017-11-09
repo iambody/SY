@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +13,9 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.IndentityEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.IndentityAdapter;
@@ -28,21 +27,15 @@ import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.ndk.com.enter.mvp.ui.start.GuideActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
-import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
-
 /**
  * Created by fei on 2017/8/11.
  */
-
 public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresenterImpl> implements SelectIndentityContract.SelectIndentityView{
 
-//    @BindView(R.id.toolbar)
-//    protected Toolbar toolbar;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.title_mid)
@@ -172,11 +165,8 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
                 finish();
             }
         });
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-//        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
-        register = RxBus.get().register(SELECT_INDENTITY, Integer.class);
+        register = RxBus.get().register(RxConstant.SELECT_INDENTITY, Integer.class);
         register.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -194,7 +184,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
     protected void onDestroy() {
         super.onDestroy();
         if (null != register) {
-            RxBus.get().unregister(SELECT_INDENTITY,register);
+            RxBus.get().unregister(RxConstant.SELECT_INDENTITY,register);
         }
     }
 
@@ -207,7 +197,6 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
         indentityAdapter = new IndentityAdapter(this, datas);
         recyclerView.setAdapter(indentityAdapter);
         indentityAdapter.setOnItemClickListener(new IndentityAdapter.OnMyItemClickListener() {
-
             @Override
             public void click(int position,int currentPos) {
                 if (isLeftSelect) {
@@ -221,8 +210,6 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
                 indentityCode = selectBean.getCode();
                 credentialCode = selectBean.getCredentialCode();
                 indentityName = selectBean.getName();
-//                credentialCode = "100101";
-//                indentityName = "身份证";
                 if (TextUtils.isEmpty(indentityCode)) {
                     return;
                 }

@@ -35,8 +35,10 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.widget.dialog.AlterDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.living.FaceInf;
@@ -206,7 +208,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @OnClick(R.id.bt_recognition_name_edit)
     public void editName() {
-        recognitionNameEdit.setFocusable(true);
+        AlterDialog dialog = new AlterDialog(baseContext, "修改姓名", recognitionNameEdit.getText().toString(), new AlterDialog.AlterCommitListener() {
+            @Override
+            public void commitListener(String resultContent) {
+                identityCard.setIdCardName(resultContent);
+                recognitionNameEdit.setText(resultContent);
+            }
+        });
+        dialog.show();
     }
 
     @OnClick(R.id.upload_demo)
@@ -278,7 +287,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     public void photoSubmit() {
         submit.setEnabled(false);
         List<String> paths = new ArrayList<>();
-        if ("30".equals(credentialModel.getStateCode())){
+        if ("30".equals(credentialModel.getStateCode())) {
             credentialStateMedel = new CredentialStateMedel();
             credentialStateMedel.setCredentialCode(credentialModel.getCode());
             credentialStateMedel.setCredentialState("5");
@@ -347,6 +356,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionNumText.setText(identityCard.getIdCardNum());
                             recognitionResultText.setText("审核成功");
                             rejectResultTitle.setText("审核结果");
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+                            ivBack.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    jumpCollect();
+                                }
+                            });
+//                            jumpCollect();
                             break;
                         case "1":
                             submit.setVisibility(View.GONE);
@@ -359,12 +376,15 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionNumText.setText(identityCard.getIdCardNum());
                             recognitionResultText.setText("审核中");
                             rejectResultTitle.setText("审核结果");
-                            finish();
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+//                            finish();
                             break;
                         case "2":
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                         case "3":
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                     }
@@ -408,19 +428,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         if (isIdCard) {
-            if ("50".equals(credentialModel.getStateCode())){
+            if ("50".equals(credentialModel.getStateCode())) {
                 remoteParams.clear();
                 remoteParams.add(firstPhotoName);
                 remoteParams.add(secondPhotoPath);
-            }else {
+            } else {
                 paths.add(firstPhotoPath);
                 paths.add(secondPhotoPath);
             }
         } else {
-            if ("50".equals(credentialModel.getStateCode())){
+            if ("50".equals(credentialModel.getStateCode())) {
                 remoteParams.clear();
                 remoteParams.add(firstPhotoName);
-            }else {
+            } else {
                 paths.add(firstPhotoPath);
             }
         }
@@ -429,7 +449,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }
         if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
             mLoadingDialog.show();
-            if (remoteParams.size()!=0){
+            if (remoteParams.size() != 0) {
                 startActivity(new Intent(baseContext, FacePictureActivity.class));
                 return;
             }
@@ -478,6 +498,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 uploadRemotePaths();
             }
         }.start();
+    }
+
+    private void jumpCollect() {
+        Intent intent = new Intent(baseContext,CardCollectActivity.class);
+        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent);
     }
 
     private void uploadRemotePaths() {
@@ -635,10 +661,15 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
             if ("10".equals(stateCode)) {
                 tagTv.setText("审核中");
-                miniResultLinear.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.VISIBLE);
                 recognitionNumText.setText(credentialModel.getNumber());
                 recognitionNameText.setText(credentialModel.getCustomerName());
                 submit.setVisibility(View.GONE);
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText("审核中");
             }
             if ("50".equals(stateCode)) {
                 tagTv.setText("已通过");

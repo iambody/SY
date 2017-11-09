@@ -171,6 +171,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private String credentialCode;
     private String status;
     private CredentialStateMedel credentialStateMedel;
+    private Observable<String> PersonCredentialObservable;
 
     @OnClick(R.id.iv_back)
     public void back(){
@@ -319,7 +320,22 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         levelName = getIntent().getStringExtra(MineFragment.LEVER_NAME);
         initView(savedInstanceState);
         initHeadIconDialog();
+        initCallBack();
 
+    }
+
+    private void initCallBack() {
+        PersonCredentialObservable = RxBus.get().register(RxConstant.PersonCredential, String.class);
+        PersonCredentialObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String valuse) {
+                //TODO
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+            }
+        });
     }
 
     @Override

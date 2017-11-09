@@ -393,7 +393,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             jumpGuidePage();
                             break;
                         case "30":
-                            jumpGuidePage();
+                            gotoDetial();
                             break;
                         case "45":
                             jumpGuidePage();
@@ -402,9 +402,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             if ("0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
                                 jumpGuidePage();
                             } else {
-                                Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
-                                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                                startActivity(intent1);
+                                gotoDetial();
                             }
                             break;
                         case "70":
@@ -451,6 +449,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //        }
 
 
+    }
+
+    private void gotoDetial() {
+        Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
+        intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent1);
     }
 
 

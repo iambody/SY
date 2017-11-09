@@ -26,6 +26,7 @@ public class GestureManager {
     public static final String CENTIFY_DIR = "4";
     public static final String RELATIVE_ASSERT = "5";
     public static final String RELATIVE_ASSERT_IN_DATDMANAGE = "6";
+    public static final String PERSONINFOACTIVITY = "7";
     public static boolean isNotFirstLook;
 
     public static void showAssertGestureManager(Context context) {

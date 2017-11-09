@@ -30,6 +30,8 @@ public interface RxConstant {
 
     String SET_PAGE_SWITCH_BUTTON = "set_page_switch_button_observable";
 
+    String UPLOAD_CARD_SUCCESS = "UPLOAD_CARD_SUCCESS";
+
     String CLOSE_SETTING_ACTIVITY_OBSERVABE = "close_setting_activity_observable";
 
     String IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE = "is_play_video_local_delete_observable";
@@ -74,6 +76,8 @@ public interface RxConstant {
     String SWITCH_ASSERT_SHOW = "switch_assert_show_hint";
 
     String SWITCH_GROUP_SHOW = "switch_group_show_hint";
+
+    String PersonCredential = "personCredential";
 
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
