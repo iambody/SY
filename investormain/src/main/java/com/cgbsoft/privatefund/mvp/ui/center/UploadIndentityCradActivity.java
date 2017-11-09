@@ -182,6 +182,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private IdentityCard identityCard;
     private LivingManger livingManger;
     private Observable<FaceInf> complianceFaceupCallBack;
+    private Observable<Integer> closePageCallBack;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -291,7 +292,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             credentialStateMedel = new CredentialStateMedel();
             credentialStateMedel.setCredentialCode(credentialModel.getCode());
             credentialStateMedel.setCredentialState("5");
-            credentialStateMedel.setCredentialTypeName(credentialModel.getCode());
+            credentialStateMedel.setIdCardState("5");
+            credentialStateMedel.setCredentialTypeName(credentialModel.getName());
             credentialStateMedel.setCredentialStateName(credentialModel.getStateName());
             credentialStateMedel.setCustomerIdentity(credentialModel.getCode().substring(0, 4));
             credentialStateMedel.setCustomerType(credentialModel.getCode().substring(0, 2));
@@ -371,6 +373,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核成功");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
                             uploadFirstCover.setEnabled(false);
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
@@ -388,6 +391,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核中");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
                             uploadFirstCover.setEnabled(false);
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
@@ -661,12 +665,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 if ("100101".equals(credentialModel.getCode())) {
                     isIdCard = true;
                 }
+                rlTip.setVisibility(View.GONE);
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
                 if ("30".equals(stateCode)) {//30：已驳回
                     submit.setVisibility(View.VISIBLE);
-                    submit.setText("重新上传");
+                    submit.setText("重新提交");
                     if (TextUtils.isEmpty(credentialModel.getNumber())) {
                         defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
                         defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
@@ -841,7 +846,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         });
         initView();
-        initIdCardSelCallBack();
+        initCallBack();
+
         recognitionNameEdit.setFocusable(false);
         credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
         if (!TextUtils.isEmpty(credentialStateMedel.getCredentialDetailId())) {
@@ -864,10 +870,24 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         getPresenter().getCredentialInfo(credentialId);
     }
 
-    private void initIdCardSelCallBack() {
+    private void initCallBack() {
         registerFrontCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_FRONT, IdentityCard.class);
         registerBackCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_BACK, IdentityCard.class);
         complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
+        closePageCallBack = RxBus.get().register(RxConstant.CLOSE_INDENTITY_DETIAL, Integer.class);
+        closePageCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                if (!TextUtils.isEmpty(credentialModel.getId())){
+                    finish();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
             @Override
             protected void onEvent(FaceInf faceInf) {
@@ -1098,7 +1118,22 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        livingManger.destory();
+        if (null!=livingManger){
+            livingManger.destory();
+        }
+        if (null!=closePageCallBack){
+            RxBus.get().unregister(RxConstant.CLOSE_INDENTITY_DETIAL,closePageCallBack);
+        }
+        if (null!=complianceFaceupCallBack){
+            RxBus.get().unregister(RxConstant.COMPLIANCE_FACEUP,complianceFaceupCallBack);
+        }
+        if (null!=registerFrontCallBack){
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_FRONT,registerFrontCallBack);
+        }
+        if (null!=registerBackCallBack){
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK,registerBackCallBack);
+        }
+
     }
 
     private static void putCropIntentExtras(Intent intent) {
