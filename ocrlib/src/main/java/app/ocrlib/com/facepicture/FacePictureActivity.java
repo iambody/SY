@@ -84,7 +84,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             currentPageTag = getIntent().getStringExtra(PAGE_TAG);
         } else {
             PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
+
             finish();
+            return;
         }
         isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);

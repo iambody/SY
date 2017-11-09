@@ -35,7 +35,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.AlterDialog;
@@ -472,7 +471,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             return;
                         }
                     }
-                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.currentPageTag, TAG)));
+                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG)));
                 }
             }.start();
             return;

@@ -15,7 +15,7 @@ public class NetConfig {
 
     //    private static String START_APP = "https://app";
 //    public static String START_APP = "https://app";//sim
-        public static String START_APP = "https://d6-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+        public static String START_APP = "https://t3-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
