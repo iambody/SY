@@ -192,7 +192,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
                 progressDlg.dismiss();
-                PromptManager.ShowCustomToast(livingContext, "获取sign失败了！！");
+                PromptManager.ShowCustomToast(livingContext, "获取sign失败");
             }
         });
     }
@@ -341,7 +341,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
                 progressDlg.dismiss();
-                PromptManager.ShowCustomToast(livingContext, "获取sign失败了！！");
+                PromptManager.ShowCustomToast(livingContext, "获取sign失败");
             }
         });
     }
@@ -366,7 +366,7 @@ public class LivingManger {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                PromptManager.ShowCustomToast(livingContext, "返回成功了");
+//                PromptManager.ShowCustomToast(livingContext, "返回成功了");
             }
 
             @Override

@@ -156,7 +156,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         matrix.postRotate(-90);
         //Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
         Bitmap nbmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
-        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
+//        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
         //开始上传bitmap并获取远程路径
         upLoadBitmap(nbmp2);
 
@@ -314,7 +314,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 if (null != mLoadingDialog)
                     mLoadingDialog.dismiss();
 
-                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
+//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String result = obj.getString("result");
@@ -338,7 +338,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 if (null != mLoadingDialog)
                     mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
-                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
+//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
                 RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1,currentPageTag));
                 FacePictureActivity.this.finish();
             }
