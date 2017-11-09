@@ -47,7 +47,7 @@ import rx.Observable;
  * @author chenlong
  */
 public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> implements DatumManageContract.DatumManageView {
-    public static final String TAG="DatumManageActivity";
+    public static final String TAG = "DatumManageActivity";
     @BindView(R.id.title_left)
     protected ImageView back;
     @BindView(R.id.title_mid)
@@ -216,7 +216,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void startMatchLiving() {
-        livingManger = new LivingManger(this, "100101", "1001",  new LivingResult() {
+        livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
                 NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
@@ -266,8 +266,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     Intent intent1 = new Intent(this, CardCollectActivity.class);
                     intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                     startActivity(intent1);
-                } else {
+                } else if (!("10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel))) {
                     jumpGuidePage();
+                } else {
+                    replenishCards();
                 }
             } else {
                 Intent intent1 = new Intent(this, CardCollectActivity.class);

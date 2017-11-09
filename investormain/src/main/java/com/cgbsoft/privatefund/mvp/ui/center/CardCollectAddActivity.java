@@ -128,7 +128,6 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
                         public void livingFailed(LivingResultData resultData) {
 
                         }
-
                     });
                     livingManger.startLivingMatch();
                 }
@@ -205,7 +204,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
         registerPerson.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
             protected void onEvent(PersonCompare personCompare) {
-                if (TAG.equals(personCompare.getCurrentPageTag())){
+                if (TAG.equals(personCompare.getCurrentPageTag())) {
                     //0代表成功 1代表失败  int值
                     if (0 == personCompare.getResultTage()) {
                         jumpDetial();
@@ -254,23 +253,22 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
 
     private void dealClick(CardListEntity.CardBean cardBean) {
         this.cardBean = cardBean;
-        if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101")) && (!"10".equals(cardBean.getStateCode()))) {
-            getPresenter().getLivingCount();
-        } else {
-            credentialStateMedel = new CredentialStateMedel();
-            credentialStateMedel.setCredentialCode(cardBean.getCode());
-            credentialStateMedel.setCredentialState(cardBean.getStateCode());
-            credentialStateMedel.setCredentialTypeName(cardBean.getName());
-            credentialStateMedel.setCredentialStateName(cardBean.getStateName());
-            credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
-            credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
-            credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        credentialStateMedel = new CredentialStateMedel();
+        credentialStateMedel.setCredentialCode(cardBean.getCode());
+        credentialStateMedel.setCredentialState(cardBean.getStateCode());
+        credentialStateMedel.setCredentialTypeName(cardBean.getName());
+        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+        credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        // 通过，审核中   直接进详情
+        if ("50".equals(cardBean.getStateCode()) || "10".equals(cardBean.getStateCode())) {
             Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-//        intent.putExtra("credentialStateMedel", credentialStateMedel);
-            if (null != credentialStateMedel) {
-                intent.putExtra("credentialStateMedel", credentialStateMedel);
-            } else {
-            }
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            startActivity(intent);
+        } else {
+            getPresenter().getLivingCount();
+        }
 
 //        intent.putExtra("credentialCode", cardBean.getCode());
 //        intent.putExtra("indentityCode", indentityCode);
@@ -282,10 +280,6 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
 //        intent.putExtra("customerName", cardBean.getCustomerName());
 //        intent.putExtra("customerNum", cardBean.getNumber());
 //        intent.putExtra("depict", cardBean.getComment());
-            startActivity(intent);
-        }
-
-
 //        this.finish();
     }
 

@@ -53,21 +53,9 @@ public class CrenditralGuideActivity extends BaseMvcActivity {
             @Override
             public void onClick(View v) {
                 if (null != credentialStateMedel) {
-                    if ("10".equals(credentialStateMedel.getCustomerType())) {
-                        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                            Intent intent = new Intent(CrenditralGuideActivity.this, UploadIndentityCradActivity.class);
-                            intent.putExtra("credentialStateMedel", credentialStateMedel);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(CrenditralGuideActivity.this, CardCollectActivity.class);
-                            intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                            startActivity(intent);
-                        }
-                    }else {
-                        Intent intent = new Intent(CrenditralGuideActivity.this, CardCollectActivity.class);
-                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(CrenditralGuideActivity.this, UploadIndentityCradActivity.class);
+                    intent.putExtra("credentialStateMedel", credentialStateMedel);
+                    startActivity(intent);
                 }
                 finish();
             }

@@ -24,6 +24,7 @@ import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,23 +159,38 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //                secondUrl=images.get(1).getUrl();
 //            }
 //        }
-        if (cardBean.getCode().startsWith("1001") && (!cardBean.getCode().equals("100101")) && (!"10".equals(cardBean.getStateCode()))) {
-            getPresenter().getLivingCount();
-        } else {
-            credentialStateMedel = new CredentialStateMedel();
-            credentialStateMedel.setCredentialCode(cardBean.getCode());
-            credentialStateMedel.setCredentialState(cardBean.getStateCode());
-            credentialStateMedel.setCredentialTypeName(cardBean.getName());
-            credentialStateMedel.setCredentialStateName(cardBean.getStateName());
-            credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
-            credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
-            credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        credentialStateMedel = new CredentialStateMedel();
+        credentialStateMedel.setCredentialCode(cardBean.getCode());
+        credentialStateMedel.setCredentialState(cardBean.getStateCode());
+        credentialStateMedel.setCredentialTypeName(cardBean.getName());
+        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+        credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        //10（审核中）  50（通过）--》   大陆进  详情
+        // 大陆证件非身份证状态不等于
+        //
+        if ("10".equals(cardBean.getStateCode())) {
             Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-//        intent.putExtra("credentialStateMedel", credentialStateMedel);
-            if (null != credentialStateMedel) {
-                intent.putExtra("credentialStateMedel", credentialStateMedel);
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            startActivity(intent);
+        } else if ("50".equals(cardBean.getStateCode())) {
+            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            startActivity(intent);
+        } else {
+            if (cardBean.getCode().startsWith("1001")) {  //大陆需要上传其他证件  先判断次数
+                getPresenter().getLivingCount();
+//                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+//                intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                startActivity(intent);
             } else {
+                Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
+                intent.putExtra("credentialStateMedel", credentialStateMedel);
+                startActivity(intent);
             }
+        }
+
 
 //        intent.putExtra("credentialCode", cardBean.getCode());
 //        intent.putExtra("indentityCode", indentityCode);
@@ -186,8 +202,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
 //        intent.putExtra("customerName", cardBean.getCustomerName());
 //        intent.putExtra("customerNum", cardBean.getNumber());
 //        intent.putExtra("depict", cardBean.getComment());
-            startActivity(intent);
-        }
+
 
     }
 
@@ -234,6 +249,12 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         clodLsAnim(mRefreshLayout);
     }
 
+    /**
+     * 非大陆审核通过  判断有无person
+     * 大陆需要上传其他证件  先判断次数
+     *
+     * @param s
+     */
     @Override
     public void getLivingCountSuccess(String s) {
         try {

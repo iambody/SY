@@ -80,9 +80,7 @@ public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresent
             startActivity(intent);
         } else {
             //去证件列表
-            Intent intent = new Intent(SelectIndentityActivity.this, CrenditralGuideActivity.class);
-            intent.putExtra("credentialStateMedel",
-                    new CredentialStateMedel("",credentialCode,credentialCode.substring(0,2),"5","0","未上传",indentityCode,"","0","未上传","5"));
+            Intent intent = new Intent(SelectIndentityActivity.this, CardCollectActivity.class);
             intent.putExtra("indentityCode",indentityCode);
             startActivity(intent);
         }

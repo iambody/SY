@@ -390,10 +390,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             startActivity(intent);
                             break;
                         case "10":
-                            jumpGuidePage();
+                            gotoDetial();
                             break;
                         case "30":
-                            gotoDetial();
+                            jumpGuidePage();
                             break;
                         case "45":
                             jumpGuidePage();
@@ -521,7 +521,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         break;
                     case GestureManager.DATUM_MANAGER:
                         Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-                        intent1.putExtra("credentialStateMedel",credentialStateMedel);
+                        intent1.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent1);
                         break;
                     case GestureManager.CENTIFY_DIR:
@@ -537,7 +537,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             } else {
                                 isClickBack = false;
                                 if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
-                                    if ("1001".equals(credentialStateMedel.getCustomerIdentity()) ) {//去上传证件照
+                                    if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && ("10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel.getIdCardState()))) {//去上传证件照
                                         jumpGuidePage();
                                     } else {//去证件列表
                                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
@@ -798,7 +798,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
-        if (null!=credentialStateMedel) {
+        if (null != credentialStateMedel) {
             if (showAssert) {
                 isClickBack = true;
 
@@ -849,7 +849,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             } else {
                 isClickBack = false;
                 //90：存量已有证件号已上传证件照待审核
-                if ("0".equals(credentialStateMedel.getCustomerLivingbodyState())||"0".equals(credentialStateMedel.getCustomerImageState())) {//存量用户已有证件号码未上传证件照；
+                if ("0".equals(credentialStateMedel.getCustomerLivingbodyState()) || "0".equals(credentialStateMedel.getCustomerImageState())) {//存量用户已有证件号码未上传证件照；
                     jumpGuidePage();
                 } else {
                     toAssertMatchActivit();
@@ -880,7 +880,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
-        if (credentialStateMedel!=null) {
+        if (credentialStateMedel != null) {
             if (showAssert) {
 //            toInvestorCarlendarActivity();
                 if (null == credentialStateMedel.getCredentialState()) {
@@ -905,7 +905,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoDatumCarlendarActivity() {
         if (showAssert) {
             Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-            intent1.putExtra("credentialStateMedel",credentialStateMedel);
+            intent1.putExtra("credentialStateMedel", credentialStateMedel);
             startActivity(intent1);
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);

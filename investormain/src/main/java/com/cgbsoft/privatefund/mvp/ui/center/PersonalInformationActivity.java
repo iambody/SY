@@ -85,7 +85,7 @@ import rx.Observable;
 public class PersonalInformationActivity extends BaseActivity<PersonalInformationPresenterImpl> implements PersonalInformationContract.PersonalInformationView {
     private static final int REQUEST_CODE_TO_CHANGE_ANME = 1002;
     private static final int REQUEST_CODE_TO_CHANGE_GENDER = 1003;
-//    @BindView(R.id.toolbar)
+    //    @BindView(R.id.toolbar)
 //    protected Toolbar toolbar;
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -144,7 +144,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private LoadingDialog mLoadingDialog;
     private Observable<Integer> uploadIcon;
     private Observable<Boolean> swtichCentifyObservable;
-    private android.os.Handler handler = new android.os.Handler(){
+    private android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -172,9 +172,10 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private String status;
     private CredentialStateMedel credentialStateMedel;
     private Observable<String> PersonCredentialObservable;
+    private Observable<String> switchGroupObservable;
 
     @OnClick(R.id.iv_back)
-    public void back(){
+    public void back() {
         this.finish();
     }
 
@@ -187,8 +188,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private void startPermissionsActivity() {
         MyPermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
     }
+
     @OnClick(R.id.rl_personal_information_qr)
-    public void gotoMyQr(){
+    public void gotoMyQr() {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.myqr);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.myqr));
@@ -199,11 +201,11 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * 点击证件夹
      */
     @OnClick(R.id.rl_personal_information_card_collect)
-    public void gotoCardCollect(){
+    public void gotoCardCollect() {
         if (showAssert) {
             goToCardCollect();
         } else {
-            GestureManager.showGroupGestureManage(this, GestureManager.CENTIFY_DIR);
+            GestureManager.showGroupGestureManage(this, GestureManager.PERSONINFOACTIVITY);
         }
     }
 
@@ -213,7 +215,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             startActivity(intent);
         } else {
             if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                if ("10".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                     Intent intent1 = new Intent(this, CardCollectActivity.class);
                     intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
                     startActivity(intent1);
@@ -260,7 +262,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * 点击我的会员
      */
     @OnClick(R.id.rl_goto_member_center)
-    public void gotoMemberCenter(){
+    public void gotoMemberCenter() {
         Intent intent = new Intent(this, BaseWebViewActivity.class);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.mymember));
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.membercenter);
@@ -271,13 +273,13 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * 点击姓名
      */
     @OnClick(R.id.rl_username_all)
-    public void changeUserName(){
+    public void changeUserName() {
         Intent intent = new Intent(this, ChangeNameActivity.class);
         String nickName = userName.getText().toString();
         if (!TextUtils.isEmpty(nickName)) {
             intent.putExtra("name", nickName);
         }
-        startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_ANME);
+        startActivityForResult(intent, REQUEST_CODE_TO_CHANGE_ANME);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERNAME_ACTIVITY,REQUEST_CODE_TO_CHANGE_ANME);
     }
 
@@ -285,9 +287,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
      * 点击性别
      */
     @OnClick(R.id.rl_usergender_all)
-    public void changeUserGender(){
+    public void changeUserGender() {
         Intent intent = new Intent(this, ChangeGenderActivity.class);
-        startActivityForResult(intent,REQUEST_CODE_TO_CHANGE_GENDER);
+        startActivityForResult(intent, REQUEST_CODE_TO_CHANGE_GENDER);
 //        NavigationUtils.startActivityByRouterForResult(baseContext,RouteConfig.GOTO_CHANGE_USERGENDER_ACTIVITY,REQUEST_CODE_TO_CHANGE_GENDER);
     }
 
@@ -341,7 +343,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     protected void onResume() {
         super.onResume();
-        getPresenter().verifyIndentity();
+        getPresenter().verifyIndentityV3();
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -368,7 +370,18 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
             }
         });
+        switchGroupObservable = RxBus.get().register(RxConstant.SWITCH_GROUP_SHOW, String.class);
+        switchGroupObservable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String valuse) {
+                goToCardCollect();
+            }
 
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         swtichCentifyObservable = RxBus.get().register(RxConstant.GOTO_SWITCH_CENTIFY_DIR, Boolean.class);
         swtichCentifyObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
@@ -407,20 +420,20 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             if (!TextUtils.isEmpty(phoneNum)) {
                 phoneNum = phoneNum.substring(0, 3).concat("****").concat(phoneNum.substring(7));
             } else {
-                phoneNum="未绑定手机号";
+                phoneNum = "未绑定手机号";
             }
             userNum.setText(phoneNum);
 
-            Imageload.display(PersonalInformationActivity.this,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
+            Imageload.display(PersonalInformationActivity.this, userInfo.getHeadImageUrl(), iconImg, R.drawable.logo, null);
 
-            userName.setText(TextUtils.isEmpty(userInfo.getNickName())?"":userInfo.getNickName());
+            userName.setText(TextUtils.isEmpty(userInfo.getNickName()) ? "" : userInfo.getNickName());
 
-            userGender.setText(TextUtils.isEmpty(userInfo.getSex())?"":userInfo.getSex());
+            userGender.setText(TextUtils.isEmpty(userInfo.getSex()) ? "" : userInfo.getSex());
 
-            userDate.setText(TextUtils.isEmpty(userInfo.getBirthday())?"":userInfo.getBirthday());
+            userDate.setText(TextUtils.isEmpty(userInfo.getBirthday()) ? "" : userInfo.getBirthday());
 
 //            memberLevel.setText(TextUtils.isEmpty(userInfo.getToC().getMemberLevel())?"无":userInfo.getToC().getMemberLevel());
-            memberLevel.setText(TextUtils.isEmpty(levelName)?"无":levelName);
+            memberLevel.setText(TextUtils.isEmpty(levelName) ? "无" : levelName);
         }
 
 
@@ -428,7 +441,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     @Override
     protected PersonalInformationPresenterImpl createPresenter() {
-        return new PersonalInformationPresenterImpl(baseContext,this);
+        return new PersonalInformationPresenterImpl(baseContext, this);
     }
 
     /**
@@ -555,21 +568,21 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
                 iconImg.setImageBitmap(bitmap);
                 updateLoadIcon();
             }
-        } else if (requestCode == REQUEST_CODE&&resultCode== PermissionsActivity.PERMISSIONS_GRANTED) {
+        } else if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_GRANTED) {
             changeIcon();
 //            mHeadIconDialog.show();
-        } else if (requestCode==REQUEST_CODE_TO_CHANGE_ANME) {
+        } else if (requestCode == REQUEST_CODE_TO_CHANGE_ANME) {
             userInfo = AppManager.getUserInfo(baseContext);
             if (null != userInfo) {
                 userName.setText(userInfo.getNickName());
             }
-        } else if (requestCode==REQUEST_CODE_TO_CHANGE_GENDER) {
+        } else if (requestCode == REQUEST_CODE_TO_CHANGE_GENDER) {
             if (null == data) {
                 return;
             }
             String gender = data.getStringExtra("gender");
             userGender.setText(gender);
-            getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getRealName():"",gender,null!=userInfo?userInfo.getBirthday():"");
+            getPresenter().updateUserInfoToServer(null != userInfo ? userInfo.getRealName() : "", gender, null != userInfo ? userInfo.getBirthday() : "");
         }
     }
 
@@ -710,15 +723,16 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 
     /**
      * 向服务端更新用户生日
+     *
      * @param format
      */
     private void updateServerDate(String format) {
-        getPresenter().updateUserInfoToServer(null!=userInfo?userInfo.getRealName():"",null!=userInfo?userInfo.getSex():"",format);
+        getPresenter().updateUserInfoToServer(null != userInfo ? userInfo.getRealName() : "", null != userInfo ? userInfo.getSex() : "", format);
     }
 
     @OnClick(R.id.rl_show_address)
     public void showAddressDialog() {
-        List<Map<String, Object>> parentList=null;
+        List<Map<String, Object>> parentList = null;
         try {
             StringBuilder sb = new StringBuilder();
             InputStream open = getResources().getAssets().open("city.json");
@@ -743,18 +757,18 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             public void confirm(Map<String, Object> map) {
                 if (map != null) {
                     String province = (String) map.get("province");
-                    List<Map<String,Object>> cityList = (List<Map<String, Object>>) map.get("city");
+                    List<Map<String, Object>> cityList = (List<Map<String, Object>>) map.get("city");
                     String childPositionStr = (String) map.get("child_position");
                     String grandSonPositionStr = (String) map.get("grandson_position");
                     int childPositionInt = Integer.parseInt(childPositionStr);
                     int grandSonPositionInt = Integer.parseInt(grandSonPositionStr);
                     Map<String, Object> cityObj = cityList.get(childPositionInt);
                     String cityName = (String) cityObj.get("n");
-                    List<Map<String,Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
+                    List<Map<String, Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
                     Map<String, Object> districtObj = districtList.get(grandSonPositionInt);
                     String districtName = (String) districtObj.get("s");
                     userAddress.setText(province.concat(cityName).concat(districtName));
-                    Toast.makeText(getApplicationContext(), "province==="+province+"---cityName==="+cityName+"---districtName==="+districtName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "province===" + province + "---cityName===" + cityName + "---districtName===" + districtName, Toast.LENGTH_SHORT).show();
 
 //                    Iterator<Map.Entry<String, Object>> iterators = map.entrySet().iterator();
 //                    Map.Entry<String, Object> entry = iterators.next();
@@ -822,14 +836,14 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             String newUserGender = userGender.getText().toString();
             userInfo.setBirthday(newUserDate);
             userInfo.setSex(newUserGender);
-            AppInfStore.saveUserInfo(baseContext,userInfo);
+            AppInfStore.saveUserInfo(baseContext, userInfo);
         }
     }
 
     @Override
     public void updateError(Throwable error) {
-        userDate.setText(null!=userInfo?userInfo.getBirthday():"");
-        userDate.setText(null!=userInfo?userInfo.getSex():"");
+        userDate.setText(null != userInfo ? userInfo.getBirthday() : "");
+        userDate.setText(null != userInfo ? userInfo.getSex() : "");
 
     }
 
@@ -837,38 +851,38 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     public void uploadImgSuccess(String imageId) {
         if (null != userInfo) {
             userInfo.setHeadImageUrl(imageId);
-            AppInfStore.saveUserInfo(baseContext,userInfo);
+            AppInfStore.saveUserInfo(baseContext, userInfo);
         }
     }
 
     @Override
     public void uploadImgError(Throwable error) {
-        Toast.makeText(baseContext.getApplicationContext(),null!=error?error.getMessage():getResources().getString(R.string.upload_icon_fail),Toast.LENGTH_SHORT).show();
+        Toast.makeText(baseContext.getApplicationContext(), null != error ? error.getMessage() : getResources().getString(R.string.upload_icon_fail), Toast.LENGTH_SHORT).show();
         if (null != userInfo) {
-            Imageload.display(baseContext,userInfo.getHeadImageUrl(),iconImg, R.drawable.logo, null);
+            Imageload.display(baseContext, userInfo.getHeadImageUrl(), iconImg, R.drawable.logo, null);
         }
     }
 
     @Override
-    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode) {
-        this.hasIndentity=hasIndentity;
-        this.hasUpload=hasUpload;
-        this.indentityCode=indentityCode;
-        this.title=title;
-        this.credentialCode=credentialCode;
-        this.status=status;
+    public void verifyIndentitySuccess(boolean hasIndentity, boolean hasUpload, String indentityCode, String title, String credentialCode, String status, String statusCode) {
+        this.hasIndentity = hasIndentity;
+        this.hasUpload = hasUpload;
+        this.indentityCode = indentityCode;
+        this.title = title;
+        this.credentialCode = credentialCode;
+        this.status = status;
         identityStatus.setText(status);
         if (isClickBack) {
-            isClickBack=false;
+            isClickBack = false;
             if (hasIndentity) {
                 if (hasUpload) {//去证件列表
                     Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     startActivity(intent);
                 } else {//去上传证件照
                     Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",indentityCode);
+                    intent.putExtra("credentialCode", credentialCode);
+                    intent.putExtra("indentityCode", indentityCode);
                     intent.putExtra("title", title);
                     startActivity(intent);
                 }
@@ -882,8 +896,8 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     public void verifyIndentityError(Throwable error) {
         if (isClickBack) {
-            isClickBack=false;
-            Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
+            isClickBack = false;
+            Toast.makeText(getApplicationContext(), "服务器忙,请稍后再试!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -897,6 +911,9 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         super.onDestroy();
         if (swtichCentifyObservable != null) {
             RxBus.get().unregister(RxConstant.GOTO_SWITCH_CENTIFY_DIR, swtichCentifyObservable);
+        }
+        if (switchGroupObservable != null) {
+            RxBus.get().unregister(RxConstant.SWITCH_GROUP_SHOW, switchGroupObservable);
         }
     }
 }

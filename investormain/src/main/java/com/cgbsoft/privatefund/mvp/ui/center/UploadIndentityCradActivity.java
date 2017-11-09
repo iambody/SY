@@ -222,7 +222,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     public void uploadDemo() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.push_message_url, "/app5.0/order/help.html");
-        hashMap.put(WebViewConstant.push_message_title, "上传示例");
+        hashMap.put(WebViewConstant.push_message_title, "示例");
         NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
     }
 
@@ -298,19 +298,33 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Intent intent = new Intent(this, UploadIndentityCradActivity.class);
             intent.putExtra("credentialStateMedel", credentialStateMedel);
             startActivity(intent);
+            submit.setEnabled(true);
             return;
         }
         if (isIdCard) {
             if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
             if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
             if (TextUtils.isEmpty(firstPhotoPath) && !TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
+                return;
+            }
+            if (TextUtils.isEmpty(identityCard.getIdCardName())||TextUtils.isEmpty(identityCard.getIdCardNum())){
+                Toast.makeText(getApplicationContext(), "身份证正面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
+                return;
+            }
+            if (TextUtils.isEmpty(identityCard.getValidDate())){
+                Toast.makeText(getApplicationContext(), "身份证反面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
             JSONArray idcardImages = new JSONArray();
@@ -357,13 +371,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核成功");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            ivBack.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    jumpCollect();
-                                }
-                            });
-//                            jumpCollect();
+                            uploadFirstCover.setEnabled(false);
+                            uploadFirst.setEnabled(false);
+                            uploadSecond.setEnabled(false);
+                            uploadSecondCover.setEnabled(false);
                             break;
                         case "1":
                             submit.setVisibility(View.GONE);
@@ -377,6 +388,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核中");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                            uploadFirstCover.setEnabled(false);
+                            uploadFirst.setEnabled(false);
+                            uploadSecond.setEnabled(false);
+                            uploadSecondCover.setEnabled(false);
 //                            finish();
                             break;
                         case "2":
@@ -418,11 +433,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             if (!"50".equals(credentialModel.getStateCode())) {
                 if (TextUtils.isEmpty(firstPhotoPath)) {
                     Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    submit.setEnabled(true);
                     return;
                 }
                 File fileFirst = new File(firstPhotoPath);
                 if (!fileFirst.exists()) {
                     Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    submit.setEnabled(true);
                     return;
                 }
             }
@@ -451,6 +468,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             mLoadingDialog.show();
             if (remoteParams.size() != 0) {
                 startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+                submit.setEnabled(true);
                 return;
             }
             new Thread() {
@@ -468,12 +486,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                             submit.setEnabled(true);
                             mLoadingDialog.dismiss();
+                            submit.setEnabled(true);
                             return;
                         }
                     }
                     ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG)));
                 }
             }.start();
+            submit.setEnabled(true);
             return;
         }
         mLoadingDialog.show();
@@ -492,12 +512,20 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                         submit.setEnabled(true);
                         mLoadingDialog.dismiss();
+                        submit.setEnabled(true);
                         return;
                     }
                 }
                 uploadRemotePaths();
             }
         }.start();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        submit.setEnabled(true);
     }
 
     private void jumpCollect() {
@@ -578,6 +606,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
                     uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
                     tagTv.setText("请拍摄实体身份证");
+                    submit.setText("下一步");
                     break;
                 case "100102"://中国护照
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
@@ -585,15 +614,18 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     break;
                 case "100401"://外籍护照
                     tagTv.setText("请拍摄实体护照");
+                    submit.setText("下一步");
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
                     break;
                 case "100201"://港澳来往内地通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
                 case "100301"://台湾来往内地通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
                 case "100103"://军官证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
@@ -614,6 +646,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 case "100105"://港澳通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_provinde_inland_to_gangao));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
             }
         } else {//已上传，显示详情
@@ -873,6 +906,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 } else {
                     recognitionNameLinearLayout.setVisibility(View.GONE);
                     recognitionNumLinearLayout.setVisibility(View.GONE);
+                    UploadIndentityCradActivity.this.identityCard.setIdCardNum("");
+                    UploadIndentityCradActivity.this.identityCard.setAddress("");
+                    UploadIndentityCradActivity.this.identityCard.setIdCardName("");
+                    UploadIndentityCradActivity.this.identityCard.setBirth("");
                 }
 
             }
@@ -899,6 +936,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     miniMsgLyout.setVisibility(View.GONE);
                 } else {
                     recognitionValidLinearLayout.setVisibility(View.GONE);
+                    UploadIndentityCradActivity.this.identityCard.setValidDate("");
                 }
             }
 
