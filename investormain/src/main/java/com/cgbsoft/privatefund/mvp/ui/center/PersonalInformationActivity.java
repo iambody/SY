@@ -49,8 +49,10 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.BuildConfig;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.BottomMenuAdapter;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
+import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
 import com.cgbsoft.privatefund.mvp.ui.home.MineFragment;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
@@ -80,8 +82,7 @@ import rx.Observable;
  * Created by sunfei on 2017/7/8 0008.
  */
 @Route(RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY)
-public class PersonalInformationActivity extends BaseActivity<PersonalInformationPresenterImpl> implements PersonalInformationContract
-        .PersonalInformationView {
+public class PersonalInformationActivity extends BaseActivity<PersonalInformationPresenterImpl> implements PersonalInformationContract.PersonalInformationView {
     private static final int REQUEST_CODE_TO_CHANGE_ANME = 1002;
     private static final int REQUEST_CODE_TO_CHANGE_GENDER = 1003;
 //    @BindView(R.id.toolbar)
@@ -169,6 +170,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     private String title;
     private String credentialCode;
     private String status;
+    private CredentialStateMedel credentialStateMedel;
 
     @OnClick(R.id.iv_back)
     public void back(){
@@ -205,28 +207,52 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     }
 
     private void goToCardCollect() {
-        if (null == status) {
-            isClickBack=true;
-            getPresenter().verifyIndentity();
+        if ("".equals(credentialStateMedel.getCredentialCode())) {
+            Intent intent = new Intent(this, SelectIndentityActivity.class);
+            startActivity(intent);
         } else {
-            isClickBack=false;
-            if (hasIndentity) {
-                if (hasUpload) {//去证件列表
-                    Intent intent = new Intent(this, CardCollectActivity.class);
-                    intent.putExtra("indentityCode",indentityCode);
-                    startActivity(intent);
-                } else {//去上传证件照
-                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-                    intent.putExtra("credentialCode",credentialCode);
-                    intent.putExtra("indentityCode",indentityCode);
-                    intent.putExtra("title", title);
-                    startActivity(intent);
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+                if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                    Intent intent1 = new Intent(this, CardCollectActivity.class);
+                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent1);
+                } else {
+                    jumpGuidePage();
                 }
-            } else {//无身份
-                Intent intent = new Intent(this, SelectIndentityActivity.class);
-                startActivity(intent);
+            } else {
+                Intent intent1 = new Intent(this, CardCollectActivity.class);
+                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent1);
             }
         }
+//        if (null == status) {
+//            isClickBack=true;
+//            getPresenter().verifyIndentity();
+//        } else {
+//            isClickBack=false;
+//            if (hasIndentity) {
+//                if (hasUpload) {//去证件列表
+//                    Intent intent = new Intent(this, CardCollectActivity.class);
+//                    intent.putExtra("indentityCode",indentityCode);
+//                    startActivity(intent);
+//                } else {//去上传证件照
+//                    Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+//                    intent.putExtra("credentialCode",credentialCode);
+//                    intent.putExtra("indentityCode",indentityCode);
+//                    intent.putExtra("title", title);
+//                    startActivity(intent);
+//                }
+//            } else {//无身份
+//                Intent intent = new Intent(this, SelectIndentityActivity.class);
+//                startActivity(intent);
+//            }
+//        }
+    }
+
+    private void jumpGuidePage() {
+        Intent intent = new Intent(this, CrenditralGuideActivity.class);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        startActivity(intent);
     }
 
     /**
@@ -843,6 +869,11 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             isClickBack=false;
             Toast.makeText(getApplicationContext(),"服务器忙,请稍后再试!",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void verifyIndentityV3Success(CredentialStateMedel credentialStateMedel) {
+        this.credentialStateMedel = credentialStateMedel;
     }
 
     @Override

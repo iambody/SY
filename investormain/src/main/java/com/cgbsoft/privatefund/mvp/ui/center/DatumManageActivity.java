@@ -392,6 +392,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
     @Override
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
+        assetRelative.setTip(credentialStateMedel.getCredentialStateName());
         String stateCode;
         String stateName;
         this.credentialStateMedel = credentialStateMedel;

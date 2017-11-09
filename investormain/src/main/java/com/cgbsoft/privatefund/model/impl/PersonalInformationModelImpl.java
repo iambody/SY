@@ -5,8 +5,10 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.PersonalInformationModel;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,4 +95,30 @@ public class PersonalInformationModelImpl implements PersonalInformationModel {
             }
         }));
     }
+
+    @Override
+    public void verifyIndentityV3(CompositeSubscription subscription, PersonalInformationModelListener listener) {
+        subscription.add(ApiClient.verifyIndentityInClientV3().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    Gson g = new Gson();
+                    CredentialStateMedel credentialStateMedel = g.fromJson(result.toString(), CredentialStateMedel.class);
+                    listener.verifyIndentitySuccessV3(credentialStateMedel);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.verifyIndentityError(e);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                listener.verifyIndentityError(error);
+            }
+        }));
+    }
+
+
 }
