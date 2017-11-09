@@ -79,6 +79,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPresenterImpl> implements UploadIndentityContract.UploadIndentityView {
 
+    private final String TAG = "UploadIndentityCradActivity";
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.title_mid)
@@ -356,7 +357,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionNumText.setText(identityCard.getIdCardNum());
                             recognitionResultText.setText("审核成功");
                             rejectResultTitle.setText("审核结果");
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
                             ivBack.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -376,15 +377,15 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionNumText.setText(identityCard.getIdCardNum());
                             recognitionResultText.setText("审核中");
                             rejectResultTitle.setText("审核结果");
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
 //                            finish();
                             break;
                         case "2":
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                         case "3":
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY,1);
+                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
                             Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
                             break;
                     }
@@ -450,7 +451,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
             mLoadingDialog.show();
             if (remoteParams.size() != 0) {
-                startActivity(new Intent(baseContext, FacePictureActivity.class));
+                startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
                 return;
             }
             new Thread() {
@@ -471,7 +472,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             return;
                         }
                     }
-                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class)));
+                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.currentPageTag, TAG)));
                 }
             }.start();
             return;
@@ -501,7 +502,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     private void jumpCollect() {
-        Intent intent = new Intent(baseContext,CardCollectActivity.class);
+        Intent intent = new Intent(baseContext, CardCollectActivity.class);
         intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
         startActivity(intent);
     }
@@ -838,8 +839,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
             @Override
             protected void onEvent(FaceInf faceInf) {
-                Log.i("PersonCompare", "我没进行对比接受到了通知");
-                getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+                if (TAG.equals(faceInf.getPageTage())) {
+                    Log.i("PersonCompare", "我没进行对比接受到了通知");
+                    getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+                }
             }
 
             @Override
