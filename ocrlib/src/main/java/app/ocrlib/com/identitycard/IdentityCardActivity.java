@@ -133,9 +133,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
                 break;
             case FACE_BACK:
-                  iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 100), DimensionPixelUtil.dip2px(this, 100));
+                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 100), DimensionPixelUtil.dip2px(this, 100));
 
-                iConParams.setMargins((height *3/ 5)+DimensionPixelUtil.dip2px(this, 16), screenHeight - width - DimensionPixelUtil.dip2px(this, 70), 0, 0);
+                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dip2px(this, 16), screenHeight - width - DimensionPixelUtil.dip2px(this, 70), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_back));
@@ -192,6 +192,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                 if (null != mLoadingDialog) {
                                     mLoadingDialog.dismiss();
                                 }
+                                if (null != identityCard && "0".equals(identityCard.getAnalysisType())) {
+                                    PromptManager.ShowCustomToast(IdentityCardActivity.this, "身份证解析失败,请重试");
+                                }
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
                                 RxBus.get().post(currentFace == FACE_FRONT ? RxConstant.COMPLIANCE_CARD_FRONT : RxConstant.COMPLIANCE_CARD_BACK, identityCard);
@@ -207,6 +210,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                     mLoadingDialog.dismiss();
 
                                 }
+                                PromptManager.ShowCustomToast(IdentityCardActivity.this, "身份证解析失败,请重试");
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setAnalysisType("0");
                                 identityCard.setLocalPath(ivPath);
@@ -247,6 +251,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+
+
+        clipCamera.closeCamera();
 
     }
 

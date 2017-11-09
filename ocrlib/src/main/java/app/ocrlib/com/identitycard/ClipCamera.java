@@ -96,7 +96,14 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
         mCamera = null;
         holder = null;
     }
+    public void closeCamera() {
+        if (mCamera == null) {
+            return;
+        }
 
+        mCamera.release();
+        mCamera = null;
+    }
     @Override
     public void onAutoFocus(boolean success, Camera camera) {
         if (success) {

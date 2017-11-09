@@ -301,6 +301,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+        if(null!=camera){
+            camera.release();
+            camera=null;
+        }
     }
 
     /**
