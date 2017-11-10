@@ -83,7 +83,7 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPresenterImpl> implements UploadIndentityContract.UploadIndentityView {
 
-    private final String TAG = "UploadIndentityCradActivity";
+    private String TAG = "UploadIndentityCradActivity";
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.title_mid)
@@ -304,6 +304,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             credentialStateMedel.setCustomerType(credentialModel.getCode().substring(0, 2));
             Intent intent = new Intent(this, UploadIndentityCradActivity.class);
             intent.putExtra("credentialStateMedel", credentialStateMedel);
+            intent.putExtra("TAG", "Page2");
             startActivity(intent);
             submit.setEnabled(true);
             return;
@@ -481,12 +482,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 return;
             }
 //----------------------------
+            Log.e("submit-----------", "--------------");
             remoteParams.clear();
             for (int i = 0; i < paths.size(); i++) {
                 int finalI = i;
                 Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
+                        Log.e("submit-----------", "1--------------" + paths.get(finalI));
                         //异步操作相关代码
                         String imageId = DownloadUtils.postSecretObject(paths.get(finalI), Constant.UPLOAD_COMPLIANCE_FACE);
                         subscriber.onNext(imageId);
@@ -495,15 +498,17 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String data) {
+                                Log.e("submit-----------", "2--------------");
                                 // 主线程操作
-                                if (!TextUtils.isEmpty(data)){
-                                    remoteParams.add(finalI,data);
-                                    if (remoteParams.size() == paths.size()){
+                                if (!TextUtils.isEmpty(data)) {
+                                    remoteParams.add(finalI, data);
+                                    if (remoteParams.size() == paths.size()) {
+                                        Log.e("submit-----------", remoteParams.get(finalI) + "--------------");
                                         startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
                                         submit.setEnabled(true);
                                         mLoadingDialog.dismiss();
                                     }
-                                }else {
+                                } else {
                                     Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show();
                                     submit.setEnabled(true);
                                     mLoadingDialog.dismiss();
@@ -860,9 +865,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
+            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
             submit.setVisibility(View.GONE);
             tagTv.setText("审核中");
             tagIv.setVisibility(View.GONE);
+
 //            Intent intent = new Intent(this, CardCollectActivity.class);
 //            intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
 //            startActivity(intent);
@@ -885,8 +892,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 finish();
             }
         });
+        String tag = getIntent().getStringExtra("TAG");
+        if (!TextUtils.isEmpty(tag)) {
+            this.TAG = tag;
+        }
         initView();
         initCallBack();
+
 
         recognitionNameEdit.setFocusable(false);
         credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
@@ -932,12 +944,17 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             @Override
             protected void onEvent(FaceInf faceInf) {
                 if (TAG.equals(faceInf.getPageTage())) {
-                    Log.i("PersonCompare", "我没进行对比接受到了通知");
-                    remoteParams = new ArrayList<String>();
+                    Log.i("submit-----------", "4------------");
+                    if (null == remoteParams || remoteParams.size() < 1) {
+                        remoteParams = new ArrayList<String>();
+                        for (int i = 0; i < credentialModel.getImageUrl().size(); i++) {
+                            remoteParams.add(i,credentialModel.getImageUrl().get(i).getUrl());
+                        }
+                    }
+                    Log.i("submit-----------", "------------" + remoteParams.size());
                     if ("100101".equals(credentialModel.getCode())) {
 //                        remoteParams.add();
                     }
-
                     getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
                 }
             }

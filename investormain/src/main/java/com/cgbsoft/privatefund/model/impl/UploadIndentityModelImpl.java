@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.model.impl;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -53,6 +54,7 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
 
     @Override
     public void uploadOtherCrenditial(CompositeSubscription subscription, UploadIndentityModelListener listener, List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParams) {
+        Log.e("submit-----------","5-------");
         subscription.add(ApiClient.uploadOtherRemotePath(remoteParams, customerCode, credentialCode,remotePersonParams).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
