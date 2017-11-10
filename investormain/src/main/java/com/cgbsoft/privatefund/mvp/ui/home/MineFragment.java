@@ -371,57 +371,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
         if (isClickBack) {
             isClickBack = false;
-            //判断是否是大陆居民
-            if (credentialStateMedel.getCustomerIdentity().equals("1001")) {
-                // 判断是否是身份证
-                if (credentialStateMedel.getCredentialState().equals("100101")) {
-                    /**
-                     *     判断状态
-                     * 5： 新用户未上传；
-                     * 10：新用户审核中；
-                     * 30：新用户已驳回；
-                     * 45：存量用户已有证件号码未上传证件照；
-                     * 50：新用户已通过；
-                     * 70：新用户已过期；
-                     */
-                    switch (credentialStateMedel.getIdCardState()) {
-                        case "5":
-                            Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                            startActivity(intent);
-                            break;
-                        case "10":
-                            gotoDetial();
-                            break;
-                        case "30":
-                            jumpGuidePage();
-                            break;
-                        case "45":
-                            jumpGuidePage();
-                            break;
-                        case "50":
-                            if ("0".equals(credentialStateMedel.getCustomerLivingbodyState())) {
-                                jumpGuidePage();
-                            } else {
-                                gotoDetial();
-                            }
-                            break;
-                        case "70":
-                            jumpGuidePage();
-                            break;
-                        default:
-                            jumpGuidePage();
-                            break;
-                    }
-                } else {   //非身份证
-                    Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
-                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    startActivity(intent1);
-                }
-            } else {
-                Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
-                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                startActivity(intent1);
-            }
+            credentialJump();
         }
 
 //        if (isClickBack) {
@@ -529,27 +479,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         break;
                     case GestureManager.RELATIVE_ASSERT:
                         if (credentialStateMedel != null) {
-//                        getPresenter().verifyIndentity();
                             if (null == credentialStateMedel.getCredentialState()) {
                                 isClickBack = true;
-//                            getPresenter().verifyIndentity();
                                 getPresenter().verifyIndentityV3();
                             } else {
                                 isClickBack = false;
-                                if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
-                                    if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && ("5".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState()) || "10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel.getIdCardState()))) {//去上传证件照
-                                        jumpGuidePage();
-                                    } else if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && (true)) {
-                                        replenishCards();
-                                    } else {//去证件列表
-                                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                                        startActivity(intent);
-                                    }
-                                } else {//无身份
-                                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                                    startActivity(intent);
-                                }
+                                credentialJump();
                             }
                         }
                         break;
@@ -563,6 +498,29 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             protected void onRxError(Throwable error) {
             }
         });
+    }
+
+    private void credentialJump() {
+        if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
+                    jumpGuidePage();
+                } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
+                    replenishCards();
+                } else {  //已通过 核身成功
+                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent);
+                }
+            } else {//  非大陆去证件列表
+                Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void showAssert() {
