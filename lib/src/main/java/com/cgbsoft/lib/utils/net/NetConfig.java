@@ -3,7 +3,9 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
