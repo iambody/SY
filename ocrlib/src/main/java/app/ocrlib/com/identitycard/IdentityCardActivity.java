@@ -2,7 +2,6 @@ package app.ocrlib.com.identitycard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -59,7 +57,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     //身份证反面
     public static final int FACE_BACK = 1;
     //相机对焦
-    private Camera.AutoFocusCallback mAutoFocusCallback;
+//    private Camera.AutoFocusCallback mAutoFocusCallback;
     //加载
     private LoadingDialog mLoadingDialog;
 
@@ -82,25 +80,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_identitycard);
         initView();
 //        }
-        mAutoFocusCallback = new Camera.AutoFocusCallback() {
 
-            public void onAutoFocus(boolean success, Camera camera) {
-                // TODO Auto-generated method stub
-                if (success) {
-//                    myCamera.setOneShotPreviewCallback(null);
-//                    Toast.makeText(TestPhotoActivity.this,
-//                            "自动聚焦成功" , Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        };
-        identitycard_shadow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                clipCamera.setAutoFocus();
-                return false;
-            }
-        });
     }
 
     private void initView() {
@@ -122,18 +102,18 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
         int screenHeight = dm.heightPixels;
-        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 140), DimensionPixelUtil.dip2px(this, 140));
+        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 180), DimensionPixelUtil.dip2px(this, 140));
         int height = (int) (screenWidth * 0.8);//拍照的阴影框的高度为屏幕宽度的80%  0.8
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
             case FACE_FRONT:
-                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 20), width - DimensionPixelUtil.dip2px(this, 90), 0, 0);
+                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 40), width - DimensionPixelUtil.dip2px(this, 100), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_face_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
                 break;
             case FACE_BACK:
-                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 100), DimensionPixelUtil.dip2px(this, 100));
+                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 120), DimensionPixelUtil.dip2px(this, 120));
 
                 iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dip2px(this, 16), screenHeight - width - DimensionPixelUtil.dip2px(this, 70), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
@@ -193,7 +173,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                     mLoadingDialog.dismiss();
                                 }
                                 if (null != identityCard && "0".equals(identityCard.getAnalysisType())) {
-                                    PromptManager.ShowCustomToast(IdentityCardActivity.this, "身份证解析失败,请重试");
+                                    PromptManager.ShowCustomToast(IdentityCardActivity.this, "拍摄照片非身份证或者拍摄范围有误，请重新拍摄");
                                 }
                                 identityCard.setLocalPath(ivPath);
                                 identityCard.setRemotPath(data);
@@ -210,7 +190,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                                     mLoadingDialog.dismiss();
 
                                 }
-                                PromptManager.ShowCustomToast(IdentityCardActivity.this, "身份证解析失败,请重试");
+                                PromptManager.ShowCustomToast(IdentityCardActivity.this, "拍摄照片非身份证或者拍摄范围有误，请重新拍摄");
                                 IdentityCard identityCard = new IdentityCard();
                                 identityCard.setAnalysisType("0");
                                 identityCard.setLocalPath(ivPath);

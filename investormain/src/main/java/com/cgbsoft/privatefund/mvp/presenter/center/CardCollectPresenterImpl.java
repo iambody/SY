@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.presenter.center;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -59,6 +60,7 @@ public class CardCollectPresenterImpl extends BasePresenterImpl<CardCollectContr
 
     @Override
     public void getLivingCountSuccess(String s) {
+        Log.i("aaasasasa","获取"+s);
         cardView.hideLoadDialog();
         cardView.getLivingCountSuccess(s);
     }

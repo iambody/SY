@@ -12,7 +12,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".cardphoto.TestCardCamera" />
         <activity android:name=".facepicture.FacePictureActivity" android:screenOrientation="portrait" />
-        <activity android:name=".identitycard.IdentityCardActivity"  />
+        <activity android:name=".identitycard.IdentityCardActivity" android:screenOrientation="portrait" />
         <activity android:name=".identitycard.IdentityCardTest"/>
     </application>
 

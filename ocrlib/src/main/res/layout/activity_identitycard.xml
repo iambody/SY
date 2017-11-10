@@ -11,12 +11,14 @@
         android:id="@+id/surface_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        />
 
         <app.ocrlib.com.identitycard.IndentityCardShadow
             android:id="@+id/identitycard_shadow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
     <!--<ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

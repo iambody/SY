@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -258,6 +259,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
      */
     @Override
     public void getLivingCountSuccess(String s) {
+        Log.i("aaasasasa",s);
         try {
             JSONObject js = new JSONObject(s);
             JSONObject result = js.getJSONObject("result");

@@ -45,6 +45,7 @@ import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
+import com.cgbsoft.lib.widget.dialog.AlterDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
@@ -335,7 +336,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        }
 //        DataStatistApiParam.homeClickNew();
 //        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
-
+        AlterDialog dialog=new AlterDialog(baseActivity, "修改场景的标题", "回显的要修改内容", new AlterDialog.AlterCommitListener() {
+            @Override
+            public void commitListener(String resultContent) {
+                PromptManager.ShowCustomToast(baseActivity,"修改后的内容："+resultContent);
+            }
+        });
+        dialog.show();
 //        UiSkipUtils.toNextActivityWithIntent(baseActivity,new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON,true));
     }
 

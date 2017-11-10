@@ -68,6 +68,7 @@ public class AlterDialog extends BaseDialog implements View.OnClickListener {
         BStrUtils.SetTxt1(dialog_alter_title, showTitle);
         if (!BStrUtils.isEmpty(currentContent)) {
             contentEdittext.setText(currentContent);
+            contentEdittext.setSelection(currentContent.length());
         } else {
             contentEdittext.setHint("请输入相应修改的内容");
         }

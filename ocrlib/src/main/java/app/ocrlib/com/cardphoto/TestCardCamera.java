@@ -71,6 +71,7 @@ public class TestCardCamera extends AppCompatActivity {
 
     private void send() {
         Log.i("oooppllljjo", "开始");
+        List<String> urlssss = new ArrayList<>();
         Observable.from(urlssss).map(new Func1<String, String>() {
             @Override
             public String call(String s) {
