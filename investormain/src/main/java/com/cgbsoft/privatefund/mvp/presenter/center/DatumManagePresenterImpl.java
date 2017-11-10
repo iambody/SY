@@ -5,10 +5,14 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.privatefund.model.CredentialModel;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
 import com.cgbsoft.privatefund.model.impl.DatumManageModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fei on 2017/8/15.
@@ -31,10 +35,23 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
     }
 
     @Override
-    public void getLivingCount(){
+    public void getLivingCount() {
         datumManageView.showLoadDialog();
-        datumManageModel.getLivingCount(getCompositeSubscription(),this);
+        datumManageModel.getLivingCount(getCompositeSubscription(), this);
     }
+
+    @Override
+    public void getCredentialDetial(String credentialCode) {
+        datumManageView.showLoadDialog();
+        datumManageModel.getCredentialDetial(getCompositeSubscription(), this, credentialCode);
+    }
+
+    @Override
+    public void uploadOtherCrendtial(List<String> remoteParams, String customCode, String credentialCode, String remotePerson) {
+        datumManageView.showLoadDialog();
+        datumManageModel.uploadOtherCrenditial(getCompositeSubscription(), this, remoteParams, customCode, credentialCode, remotePerson);
+    }
+
 
     @Override
     public void verifyIndentityV3() {
@@ -78,5 +95,29 @@ public class DatumManagePresenterImpl extends BasePresenterImpl<DatumManageContr
     public void getLivingCountError(Throwable error) {
         datumManageView.hideLoadDialog();
         datumManageView.getLivingCountError(error);
+    }
+
+    @Override
+    public void getCredentialDetialSuccess(CredentialModel credentialModel) {
+        datumManageView.showLoadDialog();
+        datumManageView.getCredentialDetialSuccess(credentialModel);
+    }
+
+    @Override
+    public void getCredentialDetialError(Throwable error) {
+        datumManageView.hideLoadDialog();
+        datumManageView.getCredentialDetialError(error);
+    }
+
+    @Override
+    public void uploadOtherCrendtialSuccess(String s) {
+        datumManageView.hideLoadDialog();
+        datumManageView.uploadOtherCrendtialSuccess(s);
+    }
+
+    @Override
+    public void uploadOtherCrendtialError(Throwable error) {
+        datumManageView.hideLoadDialog();
+        datumManageView.uploadOtherCrendtialError(error);
     }
 }

@@ -715,9 +715,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 tagTv.setText("已通过");
                 miniMsgLyout.setVisibility(View.VISIBLE);
                 rlTip.setVisibility(View.GONE);
-                miniResultLinear.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.VISIBLE);
                 recognitionNumText.setText(credentialModel.getNumber());
                 recognitionNameText.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText(credentialModel.getStateName());
             }
             if ("45".equals(stateCode)) {
                 miniMsgLyout.setVisibility(View.VISIBLE);

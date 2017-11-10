@@ -2,14 +2,19 @@ package com.cgbsoft.privatefund.model.impl;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.CardCollectModelListener;
+import com.cgbsoft.privatefund.model.CredentialModel;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
+import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -52,6 +57,35 @@ public class DatumManageModelImpl implements DatumManageModel {
             }
         }));
     }
+
+
+    public void uploadOtherCrenditial(CompositeSubscription subscription, DatumManageModelListener listener, List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParams) {
+        subscription.add(ApiClient.uploadOtherRemotePath(remoteParams, customerCode, credentialCode,remotePersonParams).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    String recognitionCode = result.getString("recognitionCode");
+                    String recognitionMsg = result.getString("recognitionMsg");
+                    if ("1".equals(recognitionCode)) {
+                        listener.uploadOtherCrendtialSuccess(recognitionMsg);
+                    }
+                } catch (JSONException e) {
+                    listener.uploadOtherCrendtialError(e);
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("aaa", "error===" + error.getMessage());
+                listener.uploadOtherCrendtialError(error);
+            }
+        }));
+    }
+
 
     public void verifyIndentityV3(CompositeSubscription subscription, DatumManageModelListener listener) {
         subscription.add(ApiClient.verifyIndentityInClientV3().subscribe(new RxSubscriber<String>() {
@@ -103,4 +137,30 @@ public class DatumManageModelImpl implements DatumManageModel {
             }
         }));
     }
+
+    public void getCredentialDetial(CompositeSubscription subscription, DatumManageModelListener listener,String credentialCode){
+        subscription.add(ApiClient.getCredentialDetial(credentialCode).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                LogUtils.Log("getCredentialDetial", "onEvent===" + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    Gson g = new Gson();
+                    CredentialModel credentialModel = g.fromJson(result.toString(), CredentialModel.class);
+                    listener.getCredentialDetialSuccess(credentialModel);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.getCredentialDetialError(e);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                LogUtils.Log("aaa", "error===" + error.getMessage());
+                listener.getCredentialDetialError(error);
+            }
+        }));
+    }
+
 }

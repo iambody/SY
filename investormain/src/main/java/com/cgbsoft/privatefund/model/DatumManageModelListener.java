@@ -9,4 +9,8 @@ public interface DatumManageModelListener {
     void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel);
     void getLivingCountSuccess(String s);
     void getLivingCountError(Throwable error);
+    void getCredentialDetialSuccess(CredentialModel credentialModel);
+    void getCredentialDetialError(Throwable error);
+    void uploadOtherCrendtialSuccess(String s);
+    void uploadOtherCrendtialError(Throwable error);
 }

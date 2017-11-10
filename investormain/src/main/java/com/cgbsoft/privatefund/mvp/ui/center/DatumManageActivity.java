@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +23,10 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.PersonCompare;
+import com.cgbsoft.privatefund.model.CredentialModel;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
@@ -35,6 +38,9 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import app.ocrlib.com.LivingManger;
 import app.ocrlib.com.LivingResult;
@@ -67,6 +73,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     private CredentialStateMedel credentialStateMedel;
     private LivingManger livingManger;
     private boolean isClickRisk;
+    private LivingManger livingMangerPrivate;
+    private Observable<FaceInf> complianceFaceupCallBack;
+    private Observable<PersonCompare> register;
+    private CredentialModel credentialModel;
 
     @Override
     protected int layoutID() {
@@ -83,7 +93,21 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void initCallBack() {
-        Observable<PersonCompare> register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
+        complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
+        complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
+            @Override
+            protected void onEvent(FaceInf faceInf) {
+                List<String> remoteParams = new ArrayList<String>();
+                remoteParams.add(credentialModel.getImageUrl().get(0).getUrl());
+                getPresenter().uploadOtherCrendtial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
         register.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
             protected void onEvent(PersonCompare personCompare) {
@@ -180,8 +204,12 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             if ("10".equals(credentialStateMedel.getCustomerType())) {
                 if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                    if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
-                        getPresenter().getLivingCount();
+                    if ("50".equals(credentialStateMedel.getIdCardState())) {
+                        if ("1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+                            getPresenter().getLivingCount();
+                        } else {
+                            getDetial(credentialStateMedel.getCredentialDetailId());
+                        }
                     } else if ("5".equals(credentialStateMedel.getIdCardState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else if ("10".equals(credentialStateMedel.getIdCardState())) {
@@ -192,8 +220,12 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         startActivity(intent);
                     }
                 } else {
-                    if ("50".equals(credentialStateMedel.getCredentialState()) && "1".equals(credentialStateMedel.getCustomerImageState())) {
-                        startMatchImg();
+                    if ("50".equals(credentialStateMedel.getCredentialState())) {
+                        if ("1".equals(credentialStateMedel.getCustomerImageState())) {
+                            startMatchImg();
+                        } else {
+                            getDetial(credentialStateMedel.getCredentialDetailId());
+                        }
                     } else if ("5".equals(credentialStateMedel.getCustomerImageState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else if ("10".equals(credentialStateMedel.getCredentialState())) {
@@ -209,6 +241,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             }
         }
 
+    }
+
+    private void getDetial(String credentialCode) {
+        getPresenter().getCredentialDetial(credentialCode);
     }
 
     private void startMatchImg() {
@@ -256,27 +292,51 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         }
     }
 
-    private void goToCardCollect() {
-        if ("".equals(credentialStateMedel.getCredentialCode())) {
-            Intent intent = new Intent(this, SelectIndentityActivity.class);
-            startActivity(intent);
-        } else {
-            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
-                    Intent intent1 = new Intent(this, CardCollectActivity.class);
-                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    startActivity(intent1);
-                } else if (!("10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel))) {
+    private void credentialJump() {
+        if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                     jumpGuidePage();
-                } else {
+                } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                     replenishCards();
+                } else {  //已通过 核身成功
+                    Intent intent = new Intent(baseContext, CardCollectActivity.class);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent);
                 }
-            } else {
-                Intent intent1 = new Intent(this, CardCollectActivity.class);
-                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                startActivity(intent1);
+            } else {//  非大陆去证件列表
+                Intent intent = new Intent(baseContext, CardCollectActivity.class);
+                intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent);
             }
+        } else {//无身份
+            Intent intent = new Intent(baseContext, SelectIndentityActivity.class);
+            startActivity(intent);
         }
+    }
+
+    private void goToCardCollect() {
+        credentialJump();
+//        if ("".equals(credentialStateMedel.getCredentialCode())) {
+//            Intent intent = new Intent(this, SelectIndentityActivity.class);
+//            startActivity(intent);
+//        } else {
+//            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+//                if ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState())) {
+//                    Intent intent1 = new Intent(this, CardCollectActivity.class);
+//                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                    startActivity(intent1);
+//                } else if (!("10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel))) {
+//                    jumpGuidePage();
+//                } else {
+//                    replenishCards();
+//                }
+//            } else {
+//                Intent intent1 = new Intent(this, CardCollectActivity.class);
+//                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                startActivity(intent1);
+//            }
+//        }
 
 //
 //        if (credentialStateMedel != null) {
@@ -436,6 +496,71 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     @Override
+    public void getCredentialDetialSuccess(CredentialModel credentialModel) {
+        this.credentialModel = credentialModel;
+        startMatch(credentialModel);
+    }
+
+    private void startMatch(CredentialModel credentialModel) {
+        if (credentialModel.getCode().startsWith("1001")) {
+            if (null != credentialModel) {
+                List<String> urls = new ArrayList<>();
+                String url = credentialModel.getImageUrl().get(0).getUrl();
+                urls.add(url);
+                if (credentialModel.getImageUrl().size() == 2) {
+                    urls.add(credentialModel.getImageUrl().get(1).getUrl());
+                }
+                livingMangerPrivate = new LivingManger(baseContext, credentialModel.getCustomerName(), credentialModel.getNumberTrue(), credentialModel.getPeriodValidity(), credentialStateMedel.getCredentialCode(), "1001", "", "", "10", urls, new LivingResult() {
+                    @Override
+                    public void livingSucceed(LivingResultData resultData) {
+                        Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
+                        switch (resultData.getRecognitionCode()) {
+                            //0 成功 1客服审核 2ocr错误 3标识失败
+                            case "0":
+                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                                break;
+                            case "1":
+                                Toast.makeText(baseContext, "识别成功进入客服审核。", Toast.LENGTH_LONG).show();
+//                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                                break;
+                            case "2":
+                                break;
+                            case "3":
+                                Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void livingFailed(LivingResultData resultData) {
+                        Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
+                        LivingResultData resultData1 = resultData;
+                        Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                livingMangerPrivate.startLivingMatch();
+            }
+        } else {
+            startActivity(new Intent(baseContext, FacePictureActivity.class));
+        }
+    }
+
+    @Override
+    public void getCredentialDetialError(Throwable error) {
+
+    }
+
+    @Override
+    public void uploadOtherCrendtialSuccess(String s) {
+        NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+    }
+
+    @Override
+    public void uploadOtherCrendtialError(Throwable error) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (swtichRelativeAssetObservable != null) {
@@ -443,6 +568,15 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         }
         if (null != livingManger) {
             livingManger.destory();
+        }
+        if (null != livingMangerPrivate) {
+            livingMangerPrivate.destory();
+        }
+        if (null != complianceFaceupCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_FACEUP, complianceFaceupCallBack);
+        }
+        if (null != register) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_PERSON_COMPARE, register);
         }
     }
 }

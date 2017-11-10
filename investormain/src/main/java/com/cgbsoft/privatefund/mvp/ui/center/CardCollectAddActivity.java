@@ -208,8 +208,9 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
                     //0代表成功 1代表失败  int值
                     if (0 == personCompare.getResultTage()) {
                         jumpDetial();
+                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
                     } else {
-
+                        Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
                     }
                 }
             }
