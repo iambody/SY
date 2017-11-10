@@ -214,19 +214,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
             Intent intent = new Intent(this, SelectIndentityActivity.class);
             startActivity(intent);
         } else {
-            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-                if ("10".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "1".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
-                    Intent intent1 = new Intent(this, CardCollectActivity.class);
-                    intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    startActivity(intent1);
-                } else {
-                    jumpGuidePage();
-                }
-            } else {
-                Intent intent1 = new Intent(this, CardCollectActivity.class);
-                intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                startActivity(intent1);
-            }
+            credentialJump();
         }
 //        if (null == status) {
 //            isClickBack=true;
@@ -250,6 +238,35 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
 //                startActivity(intent);
 //            }
 //        }
+    }
+
+    private void credentialJump() {
+        if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
+                    jumpGuidePage();
+                } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
+                    jumpDetial();
+                } else {  //已通过 核身成功
+                    Intent intent = new Intent(baseContext, CardCollectActivity.class);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent);
+                }
+            } else {//  非大陆去证件列表
+                Intent intent = new Intent(baseContext, CardCollectActivity.class);
+                intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(baseContext, SelectIndentityActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void jumpDetial() {
+        Intent intent = new Intent(baseContext, UploadIndentityCradActivity.class);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        startActivity(intent);
     }
 
     private void jumpGuidePage() {
