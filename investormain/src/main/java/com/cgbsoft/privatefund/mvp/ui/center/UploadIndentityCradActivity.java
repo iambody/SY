@@ -539,7 +539,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     private void uploadRemotePaths() {
-        getPresenter().uploadIndentity(remoteParams, credentialModel.getCode().substring(0, 3), credentialModel.getCode());
+        getPresenter().uploadIndentity(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode());
     }
 
     @Override
@@ -568,7 +568,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
-                intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 3));
+                intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
                 startActivity(intent);
             }
             this.finish();
