@@ -28,6 +28,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
@@ -68,6 +69,10 @@ import app.ocrlib.com.identitycard.IdentityCardActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
@@ -319,12 +324,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setEnabled(true);
                 return;
             }
-            if (TextUtils.isEmpty(identityCard.getIdCardName())||TextUtils.isEmpty(identityCard.getIdCardNum())){
+            if (TextUtils.isEmpty(identityCard.getIdCardName()) || TextUtils.isEmpty(identityCard.getIdCardNum())) {
                 Toast.makeText(getApplicationContext(), "身份证正面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
                 submit.setEnabled(true);
                 return;
             }
-            if (TextUtils.isEmpty(identityCard.getValidDate())){
+            if (TextUtils.isEmpty(identityCard.getValidDate())) {
                 Toast.makeText(getApplicationContext(), "身份证反面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
                 submit.setEnabled(true);
                 return;
@@ -373,7 +378,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核成功");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
+                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
                             uploadFirstCover.setEnabled(false);
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
@@ -391,7 +396,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             recognitionResultText.setText("审核中");
                             rejectResultTitle.setText("审核结果");
                             RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
+                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
                             uploadFirstCover.setEnabled(false);
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
@@ -475,30 +480,63 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setEnabled(true);
                 return;
             }
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    remoteParams.clear();
-                    for (final String localPath : paths) {
-                        String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                        String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
-                        FileUtils.deleteFile(newTargetFile);
-                        if (!TextUtils.isEmpty(paths)) {
-                            remoteParams.add(paths);
-                        } else {
-                            ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
-                            submit.setEnabled(true);
-                            mLoadingDialog.dismiss();
-                            submit.setEnabled(true);
-                            return;
-                        }
+//----------------------------
+            remoteParams.clear();
+            for (int i = 0; i < paths.size(); i++) {
+                int finalI = i;
+                Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        //异步操作相关代码
+                        String imageId = DownloadUtils.postSecretObject(paths.get(finalI), Constant.UPLOAD_COMPLIANCE_FACE);
+                        subscriber.onNext(imageId);
                     }
-                    ThreadUtils.runOnMainThread(() -> startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG)));
-                }
-            }.start();
-            submit.setEnabled(true);
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<String>() {
+                            @Override
+                            public void call(String data) {
+                                // 主线程操作
+                                if (!TextUtils.isEmpty(data)){
+                                    remoteParams.add(finalI,data);
+                                    if (remoteParams.size() == paths.size()){
+                                        startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+                                        submit.setEnabled(true);
+                                        mLoadingDialog.dismiss();
+                                    }
+                                }else {
+                                    Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show();
+                                    submit.setEnabled(true);
+                                    mLoadingDialog.dismiss();
+                                }
+                            }
+                        });
+            }
             return;
+
+            //====================
+//            new Thread() {
+//                @Override
+//                public void run() {
+//                    super.run();
+//                    remoteParams.clear();
+//                    for (final String localPath : paths) {
+//                        String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
+//                        String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
+//                        FileUtils.deleteFile(newTargetFile);
+//                        if (!TextUtils.isEmpty(paths)) {
+//                            remoteParams.add(paths);
+//                        } else {
+//                            ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+//                            submit.setEnabled(true);
+//                            mLoadingDialog.dismiss();
+//                            return;
+//                        }
+//                    }
+//                    startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+//                }
+//            }.start();
+//            submit.setEnabled(true);
+//            return;
         }
         mLoadingDialog.show();
         new Thread() {
@@ -524,7 +562,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }.start();
     }
-
 
     @Override
     protected void onPause() {
@@ -881,7 +918,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         closePageCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                if (!TextUtils.isEmpty(credentialModel.getId())){
+                if (!TextUtils.isEmpty(credentialModel.getId())) {
                     finish();
                 }
             }
@@ -896,6 +933,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             protected void onEvent(FaceInf faceInf) {
                 if (TAG.equals(faceInf.getPageTage())) {
                     Log.i("PersonCompare", "我没进行对比接受到了通知");
+                    remoteParams = new ArrayList<String>();
+                    if ("100101".equals(credentialModel.getCode())) {
+//                        remoteParams.add();
+                    }
+
                     getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
                 }
             }
@@ -1121,20 +1163,20 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null!=livingManger){
+        if (null != livingManger) {
             livingManger.destory();
         }
-        if (null!=closePageCallBack){
-            RxBus.get().unregister(RxConstant.CLOSE_INDENTITY_DETIAL,closePageCallBack);
+        if (null != closePageCallBack) {
+            RxBus.get().unregister(RxConstant.CLOSE_INDENTITY_DETIAL, closePageCallBack);
         }
-        if (null!=complianceFaceupCallBack){
-            RxBus.get().unregister(RxConstant.COMPLIANCE_FACEUP,complianceFaceupCallBack);
+        if (null != complianceFaceupCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_FACEUP, complianceFaceupCallBack);
         }
-        if (null!=registerFrontCallBack){
-            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_FRONT,registerFrontCallBack);
+        if (null != registerFrontCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_FRONT, registerFrontCallBack);
         }
-        if (null!=registerBackCallBack){
-            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK,registerBackCallBack);
+        if (null != registerBackCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK, registerBackCallBack);
         }
 
     }
