@@ -537,8 +537,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             } else {
                                 isClickBack = false;
                                 if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
-                                    if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && ("30".equals(credentialStateMedel.getIdCardState())||"10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel.getIdCardState()))) {//去上传证件照
+                                    if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && ("5".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState()) || "10".equals(credentialStateMedel.getIdCardState()) || "50".equals(credentialStateMedel.getIdCardState()))) {//去上传证件照
                                         jumpGuidePage();
+                                    } else if ("1001".equals(credentialStateMedel.getCustomerIdentity()) && (true)) {
+                                        replenishCards();
                                     } else {//去证件列表
                                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
                                         intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
