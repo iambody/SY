@@ -761,24 +761,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (null != credentialStateMedel) {
             if (showAssert) {
                 isClickBack = true;
-
                 if (null == credentialStateMedel.getCredentialState()) {
                     isClickBack = true;
                     getPresenter().verifyIndentityV3();
                 } else {
                     isClickBack = false;
-                    if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
-                        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {//去上传证件照
-                            jumpGuidePage();
-                        } else {//去证件列表
-                            Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                            intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
-                            startActivity(intent);
-                        }
-                    } else {//无身份
-                        Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                        startActivity(intent);
-                    }
+                    credentialJump();
                 }
             } else {
                 isClickBack = false;
