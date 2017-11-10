@@ -666,8 +666,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     isIdCard = true;
                 }
                 rlTip.setVisibility(View.GONE);
-                uploadFirst.setEnabled(true);
-                uploadSecond.setEnabled(true);
+                uploadFirst.setEnabled(false);
+                uploadSecond.setEnabled(false);
+                uploadFirstCover.setEnabled(false);
+                uploadSecondCover.setEnabled(false);
                 submit.setVisibility(View.VISIBLE);
                 if ("30".equals(stateCode)) {//30：已驳回
                     submit.setVisibility(View.VISIBLE);
