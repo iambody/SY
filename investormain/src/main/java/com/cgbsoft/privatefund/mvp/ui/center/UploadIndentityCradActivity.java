@@ -608,6 +608,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
+            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));

@@ -241,7 +241,6 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
             }
         }
-
     }
 
     private void getDetial(String credentialCode) {
