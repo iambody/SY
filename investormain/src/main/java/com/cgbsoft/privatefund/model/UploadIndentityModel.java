@@ -21,4 +21,6 @@ public interface UploadIndentityModel {
     void uploadOtherCrenditial(CompositeSubscription subscription, UploadIndentityModelListener listener,List<String> remoteParams,String customerCode,String credentialCode,String remotePersonParams);
 
     void credentialDetail(CompositeSubscription subscription, CredentialModelListener listener,String credentialCode);
+
+    void getLivingCount(CompositeSubscription subscription, CredentialModelListener listener);
 }

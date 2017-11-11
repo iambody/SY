@@ -26,6 +26,9 @@ public interface UploadIndentityContract {
         void credentialDetialError(Throwable error);
 
         void uploadOtherCrenditral(String s);
+
+        void getLivingCountSuccess(String s);
+        void getLivingCountError(Throwable error);
     }
     interface UploadIndentityPresenter extends BasePresenter {
         /**
@@ -36,5 +39,7 @@ public interface UploadIndentityContract {
         void uploadIndentity(List<String> remoteParams,String customerCode,String credentialCode);
 
         void uploadOtherCrenditial(List<String> remoteParams,String customerCode,String credentialCode,String remotePerson);
+
+        void getLivingCount();
     }
 }

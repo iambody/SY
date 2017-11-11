@@ -8,4 +8,7 @@ public interface CredentialModelListener {
     void getCrentialSuccess(String s);
     void getCrentialError(Throwable error);
 
+    void getLivingCountSuccess(String s);
+    void getLivingCountError(Throwable error);
+
 }

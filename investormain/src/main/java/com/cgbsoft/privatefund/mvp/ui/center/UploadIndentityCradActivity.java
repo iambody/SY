@@ -188,6 +188,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private LivingManger livingManger;
     private Observable<FaceInf> complianceFaceupCallBack;
     private Observable<Integer> closePageCallBack;
+    private List<String> remotePths;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -357,74 +358,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             mapback.put("url", secondPhotoPath);
             cardmaps.add(mapfront);
             cardmaps.add(mapback);
-            List<String> remotePths = new ArrayList<>();
+            remotePths = new ArrayList<>();
             remotePths.add(firstPhotoPath);
             remotePths.add(secondPhotoPath);
             //0 成功 1客服审核 2ocr错误 3标识失败
-            livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
-                @Override
-                public void livingSucceed(LivingResultData resultData) {
-                    Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
-                    switch (resultData.getRecognitionCode()) {
-                        //0 成功 1客服审核 2ocr错误 3标识失败
-                        case "0":
-                            submit.setVisibility(View.GONE);
-                            tagIv.setVisibility(View.GONE);
-                            tagTv.setText("审核通过");
-                            RecognitionCardRelative.setVisibility(View.GONE);
-                            miniResultLinear.setVisibility(View.VISIBLE);
-                            miniMsgLyout.setVisibility(View.VISIBLE);
-                            recognitionNameText.setText(identityCard.getIdCardName());
-                            recognitionNumText.setText(identityCard.getIdCardNum());
-                            recognitionResultText.setText("审核成功");
-                            rejectResultTitle.setText("审核结果");
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
-                            uploadFirstCover.setEnabled(false);
-                            uploadFirst.setEnabled(false);
-                            uploadSecond.setEnabled(false);
-                            uploadSecondCover.setEnabled(false);
-                            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
-                            break;
-                        case "1":
-                            submit.setVisibility(View.GONE);
-                            tagIv.setVisibility(View.GONE);
-                            tagTv.setText("审核中");
-                            RecognitionCardRelative.setVisibility(View.GONE);
-                            miniResultLinear.setVisibility(View.VISIBLE);
-                            miniMsgLyout.setVisibility(View.VISIBLE);
-                            recognitionNameText.setText(identityCard.getIdCardName());
-                            recognitionNumText.setText(identityCard.getIdCardNum());
-                            recognitionResultText.setText("审核中");
-                            rejectResultTitle.setText("审核结果");
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
-                            uploadFirstCover.setEnabled(false);
-                            uploadFirst.setEnabled(false);
-                            uploadSecond.setEnabled(false);
-                            uploadSecondCover.setEnabled(false);
-                            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
-//                            finish();
-                            break;
-                        case "2":
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
-                            break;
-                        case "3":
-                            RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
-                            Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
-                            break;
-                    }
-                }
 
-                @Override
-                public void livingFailed(LivingResultData resultData) {
-                    Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
-                    LivingResultData resultData1 = resultData;
-                    Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
-                }
-            });
-            livingManger.startLivingMatch();
+            getPresenter().getLivingCount();
             return;
 
 //            File fileFirst = new File(firstPhotoPath);
@@ -570,6 +509,73 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }.start();
     }
 
+    private void startLivingMatch() {
+        livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
+            @Override
+            public void livingSucceed(LivingResultData resultData) {
+                Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
+                switch (resultData.getRecognitionCode()) {
+                    //0 成功 1客服审核 2ocr错误 3标识失败
+                    case "0":
+                        submit.setVisibility(View.GONE);
+                        tagIv.setVisibility(View.GONE);
+                        tagTv.setText("审核通过");
+                        RecognitionCardRelative.setVisibility(View.GONE);
+                        miniResultLinear.setVisibility(View.VISIBLE);
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(identityCard.getIdCardName());
+                        recognitionNumText.setText(identityCard.getIdCardNum());
+                        recognitionResultText.setText("审核成功");
+                        rejectResultTitle.setText("审核结果");
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+                        uploadFirstCover.setEnabled(false);
+                        uploadFirst.setEnabled(false);
+                        uploadSecond.setEnabled(false);
+                        uploadSecondCover.setEnabled(false);
+                        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
+                        break;
+                    case "1":
+                        submit.setVisibility(View.GONE);
+                        tagIv.setVisibility(View.GONE);
+                        tagTv.setText("审核中");
+                        RecognitionCardRelative.setVisibility(View.GONE);
+                        miniResultLinear.setVisibility(View.VISIBLE);
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(identityCard.getIdCardName());
+                        recognitionNumText.setText(identityCard.getIdCardNum());
+                        recognitionResultText.setText("审核中");
+                        rejectResultTitle.setText("审核结果");
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+                        uploadFirstCover.setEnabled(false);
+                        uploadFirst.setEnabled(false);
+                        uploadSecond.setEnabled(false);
+                        uploadSecondCover.setEnabled(false);
+                        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
+//                            finish();
+                        break;
+                    case "2":
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+                        break;
+                    case "3":
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void livingFailed(LivingResultData resultData) {
+                Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
+                LivingResultData resultData1 = resultData;
+                Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -610,8 +616,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
-            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
-            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
+            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
@@ -870,7 +876,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
-            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
             submit.setVisibility(View.GONE);
             tagTv.setText("审核中");
             tagIv.setVisibility(View.GONE);
@@ -882,6 +888,32 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         } else {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        try {
+            JSONObject js = new JSONObject(s);
+            JSONObject result = js.getJSONObject("result");
+            String failCount = result.getString("failCount");
+            //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
+            String validCode = result.getString("validCode");
+            if ("3".equals(failCount)) {
+                Toast.makeText(this, "非常抱歉，您今日的人脸核身次数超过限制，请明日尝试，", Toast.LENGTH_LONG).show();
+            } else {
+                startLivingMatch();
+                livingManger.startLivingMatch();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
     }
 
     @Override
@@ -953,7 +985,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     if (null == remoteParams || remoteParams.size() < 1) {
                         remoteParams = new ArrayList<String>();
                         for (int i = 0; i < credentialModel.getImageUrl().size(); i++) {
-                            remoteParams.add(i,credentialModel.getImageUrl().get(i).getUrl());
+                            remoteParams.add(i, credentialModel.getImageUrl().get(i).getUrl());
                         }
                     }
                     Log.i("submit-----------", "------------" + remoteParams.size());

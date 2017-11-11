@@ -54,8 +54,8 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
 
     @Override
     public void uploadOtherCrenditial(CompositeSubscription subscription, UploadIndentityModelListener listener, List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParams) {
-        Log.e("submit-----------","5-------");
-        subscription.add(ApiClient.uploadOtherRemotePath(remoteParams, customerCode, credentialCode,remotePersonParams).subscribe(new RxSubscriber<String>() {
+        Log.e("submit-----------", "5-------");
+        subscription.add(ApiClient.uploadOtherRemotePath(remoteParams, customerCode, credentialCode, remotePersonParams).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
@@ -94,6 +94,21 @@ public class UploadIndentityModelImpl implements UploadIndentityModel {
             protected void onRxError(Throwable error) {
                 LogUtils.Log("aaa", "error===" + error.getMessage());
                 listener.getCrentialError(error);
+            }
+        }));
+    }
+
+    @Override
+    public void getLivingCount(CompositeSubscription subscription, CredentialModelListener listener) {
+        subscription.add(ApiClient.getLivingCount().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                listener.getLivingCountSuccess(s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                listener.getLivingCountError(error);
             }
         }));
     }

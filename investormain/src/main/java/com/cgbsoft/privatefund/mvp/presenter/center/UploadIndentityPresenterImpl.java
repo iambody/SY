@@ -39,6 +39,12 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     }
 
     @Override
+    public void getLivingCount() {
+        uploadIndentityView.showLoadDialog();
+        uploadModel.getLivingCount(getCompositeSubscription(),this);
+    }
+
+    @Override
     public void getCredentialInfo(String credentialId) {
         uploadIndentityView.showLoadDialog();
         uploadModel.credentialDetail(getCompositeSubscription(),this,credentialId);
@@ -73,5 +79,17 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
         uploadIndentityView.hideLoadDialog();
         uploadIndentityView.credentialDetialError(error);
 
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        uploadIndentityView.hideLoadDialog();
+        uploadIndentityView.getLivingCountSuccess(s);
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+        uploadIndentityView.hideLoadDialog();
+        uploadIndentityView.getLivingCountError(error);
     }
 }
