@@ -107,6 +107,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
             }
         });
+        startMatchLiving();
         register = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
         register.subscribe(new RxSubscriber<PersonCompare>() {
             @Override
@@ -263,7 +264,6 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
 
             }
         });
-        getPresenter().getLivingCount();
 
     }
 
