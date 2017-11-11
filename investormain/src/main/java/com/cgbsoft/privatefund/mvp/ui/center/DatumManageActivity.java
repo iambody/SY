@@ -117,7 +117,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     if (0 == personCompare.getResultTage()) {
                         if (isClickRisk)
                             NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
                     }
@@ -215,7 +215,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     } else if ("5".equals(credentialStateMedel.getIdCardState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else if ("10".equals(credentialStateMedel.getIdCardState())) {
-                        Toast.makeText(this, "证件审核中，不能填写风险问卷", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "证件正在审核中，通过后方可修改问卷", Toast.LENGTH_LONG).show();
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -231,7 +231,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     } else if ("5".equals(credentialStateMedel.getCustomerImageState())) {
                         NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
                     } else if ("10".equals(credentialStateMedel.getCredentialState())) {
-                        Toast.makeText(this, "证件审核中，不能填写风险问卷", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "证件正在审核中，通过后方可修改问卷", Toast.LENGTH_LONG).show();
                     } else {
                         Intent intent = new Intent(this, UploadIndentityCradActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);

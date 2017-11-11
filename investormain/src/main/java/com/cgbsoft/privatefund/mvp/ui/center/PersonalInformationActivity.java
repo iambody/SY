@@ -921,6 +921,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
     @Override
     public void verifyIndentityV3Success(CredentialStateMedel credentialStateMedel) {
         this.credentialStateMedel = credentialStateMedel;
+        identityStatus.setText(credentialStateMedel.getCredentialStateName());
     }
 
     @Override
