@@ -384,6 +384,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
                             uploadSecondCover.setEnabled(false);
+                            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
                             break;
                         case "1":
                             submit.setVisibility(View.GONE);
@@ -402,6 +403,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             uploadFirst.setEnabled(false);
                             uploadSecond.setEnabled(false);
                             uploadSecondCover.setEnabled(false);
+                            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
 //                            finish();
                             break;
                         case "2":
@@ -457,7 +459,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         if (isIdCard) {
             if ("50".equals(credentialModel.getStateCode())) {
                 remoteParams.clear();
-                remoteParams.add(firstPhotoName);
+                remoteParams.add(firstPhotoPath);
                 remoteParams.add(secondPhotoPath);
             } else {
                 paths.add(firstPhotoPath);
@@ -466,7 +468,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         } else {
             if ("50".equals(credentialModel.getStateCode())) {
                 remoteParams.clear();
-                remoteParams.add(firstPhotoName);
+                remoteParams.add(firstPhotoPath);
             } else {
                 paths.add(firstPhotoPath);
             }
@@ -609,6 +611,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL,0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
                 intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
@@ -867,6 +870,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
             RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
             submit.setVisibility(View.GONE);
             tagTv.setText("审核中");
             tagIv.setVisibility(View.GONE);

@@ -141,6 +141,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(Constant.SXY_ZLGL);
+        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
     }
 
     @Override

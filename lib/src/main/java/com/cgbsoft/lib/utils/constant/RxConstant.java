@@ -136,6 +136,8 @@ public interface RxConstant {
 
     String REFRESH_PRODUCT = "REFRESH_PRODUCT";
 
+    String REFRESH_CREDENTIAL_INFO = "REFRESH_CREDENTIAL_INFO";
+
     /************************合规需要的通知compliance**********************/
     //上传完人脸后返回人脸的远程url 应用场景：1非大陆居民证件齐全后修改问卷时候的人脸对比 bean是FaceInf
     String COMPLIANCE_FACEUP = "compliance_faceup";

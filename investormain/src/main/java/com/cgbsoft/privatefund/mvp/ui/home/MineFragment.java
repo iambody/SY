@@ -214,7 +214,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     public static final String LEVER_NAME = "lever_name_value";
     public boolean isClickBack;
-//    private Handler handler = new Handler() {
+    private Observable<Integer> refreshCredentialObservable;
+    private String stateCode;
+    private String stateName;
+    private String livingState;
+    //    private Handler handler = new Handler() {
 //        @Override
 //        public void handleMessage(Message msg) {
 //            float currentProgress = (float) (roundProgressbar.getProgress());
@@ -340,26 +344,27 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     @Override
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
-        String stateCode;
-        String stateName;
         this.credentialStateMedel = credentialStateMedel;
         if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
             stateCode = credentialStateMedel.getIdCardState();
             stateName = credentialStateMedel.getIdCardStateName();
+            livingState = credentialStateMedel.getCustomerLivingbodyState();
             if ("30".equals(credentialStateMedel.getIdCardState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
             }
         } else {
             stateCode = credentialStateMedel.getCredentialState();
             stateName = credentialStateMedel.getCredentialStateName();
+            livingState = credentialStateMedel.getCustomerImageState();
             if ("30".equals(credentialStateMedel.getCredentialState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
             }
         }
 
+        //5未上传 10审核中 30驳回 45待补传 50已通过
         if (TextUtils.isEmpty(stateCode)) {
             noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
-        } else if (!TextUtils.isEmpty(stateCode) && "50".equals(stateCode)) {
+        } else if (!TextUtils.isEmpty(stateCode) && ("50".equals(stateCode)) || "45".equals(stateCode)) {
             noRelativeAssert.setVisibility(View.GONE);
             privateBackBottomButtons.setVisibility(View.VISIBLE);
         } else {
@@ -428,6 +433,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
         });
 
+        refreshCredentialObservable = RxBus.get().register(RxConstant.REFRESH_CREDENTIAL_INFO, Integer.class);
+        refreshCredentialObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                getPresenter().verifyIndentityV3();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         switchGroupObservable = RxBus.get().register(RxConstant.SWITCH_GROUP_SHOW, String.class);
         switchGroupObservable.subscribe(new RxSubscriber<String>() {
             @Override
@@ -444,7 +462,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             } else {
                                 isClickBack = false;
                                 //90：存量已有证件号已上传证件照待审核
-                                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                                     jumpGuidePage();
                                 } else {
                                     toAssertMatchActivit();
@@ -796,13 +814,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 isClickBack = true;
                 getPresenter().verifyIndentityV3();
             } else {
-                isClickBack = false;
                 //90：存量已有证件号已上传证件照待审核
-                if ("0".equals(credentialStateMedel.getCustomerLivingbodyState()) || "0".equals(credentialStateMedel.getCustomerImageState())) {//存量用户已有证件号码未上传证件照；
+                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                     jumpGuidePage();
                 } else {
                     toAssertMatchActivit();
                 }
+                isClickBack = false;
             }
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
@@ -1273,6 +1291,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
         if (unreadInfoNumber != null) {
             unreadInfoNumber.onDestroy();
+        }
+
+        if (null != refreshCredentialObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_CREDENTIAL_INFO, refreshCredentialObservable);
         }
     }
 
