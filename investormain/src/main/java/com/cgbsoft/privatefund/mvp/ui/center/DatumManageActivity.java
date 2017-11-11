@@ -542,7 +542,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 livingMangerPrivate.startLivingMatch();
             }
         } else {
-            startActivity(new Intent(baseContext, FacePictureActivity.class));
+            startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,TAG));
         }
     }
 
