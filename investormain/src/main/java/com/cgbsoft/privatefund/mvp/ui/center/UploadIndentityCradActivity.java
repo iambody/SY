@@ -780,6 +780,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 recognitionNameText.setText(credentialModel.getCustomerName());
 //                replenishAll.setVisibility(View.VISIBLE);
                 replenishName.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText(credentialModel.getStateName());
+                miniResultLinear.setVisibility(View.VISIBLE);
                 replenishNum.setText(credentialModel.getNumber());
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
