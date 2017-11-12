@@ -95,6 +95,7 @@ public class BStrUtils {
         }
         return str;
     }
+
     /**
      * Json
      * 字符串数组转换成json数组
@@ -114,6 +115,7 @@ public class BStrUtils {
     /**
      * Json
      * 字符串转换成json数组
+     *
      * @param strings
      * @return
      */
@@ -123,20 +125,24 @@ public class BStrUtils {
         stringList.add(strings);
         return LsToJsonArray(stringList);
     }
+
     /**
      * Textview放置文本
      */
     public static void SetTxt(TextView T, String Str) {
         T.setText(NullToStr(Str));
     }
+
     /**
      * Textview放置文本
      */
     public static void SetTxt1(TextView T, String Str) {
         T.setText(NullToStr1(Str));
     }
+
     /**
      * 转换为亿
+     *
      * @param num
      * @return
      */
@@ -145,8 +151,8 @@ public class BStrUtils {
             Float f = Float.parseFloat(num);
             if (f >= 10000.00f) {
                 int vas = f.intValue();
-                if (vas%10000 == 0) {
-                    return vas/10000 + "亿";
+                if (vas % 10000 == 0) {
+                    return vas / 10000 + "亿";
                 }
                 f = f / 10000;
                 String d = String.format("%.2f", f);
@@ -157,16 +163,18 @@ public class BStrUtils {
         }
         return num;
     }
+
     public static void switchColorToBandC(Context context, TextView textView) {
         textView.setTextColor(AppManager.isInvestor(context) ? context.getResources().getColor(R.color.app_golden) : context.getResources().getColor(R.color.color5));
     }
 
     /**
-     *  对V2接口中获取的token进行处理的操作
+     * 对V2接口中获取的token进行处理的操作
+     *
      * @param token
      * @return
      */
-    public static  String decodeSimpleEncrypt(String token) {
+    public static String decodeSimpleEncrypt(String token) {
         String fir = token.substring(0, 1);
         String last = token.substring(1, 2);
         token = token.substring(2, token.length());
@@ -177,10 +185,9 @@ public class BStrUtils {
         if (total % 2 == 0) {
             half = Math.round(total / 2) - 1;
         }
-        token =   replaceBeginAndEnd(result, half);
+        token = replaceBeginAndEnd(result, half);
         return token;
     }
-
 
 
     /**
@@ -188,7 +195,7 @@ public class BStrUtils {
      * 主要思路: 将之前的部分与之后的部分分别逆序，再将整体逆序即可
      *
      * @param str 要进行操作的字符串
-     * @param i 作为分界线的元素的下标
+     * @param i   作为分界线的元素的下标
      * @return 转化之后生成的字符串
      */
     public static String replaceBeginAndEnd(String str, int i) {
@@ -201,12 +208,13 @@ public class BStrUtils {
         reverseCharArray(chars, 0, chars.length - 1);
         return new String(chars);
     }
+
     /**
      * 用来翻转一个数组的某一部分
      *
      * @param charArray 要进行操作的数组
-     * @param begin 要翻转的部分第一个元素的下标
-     * @param end 要翻转的部分最后一个元素的下标
+     * @param begin     要翻转的部分第一个元素的下标
+     * @param end       要翻转的部分最后一个元素的下标
      */
     public static void reverseCharArray(char[] charArray, int begin, int end) {
         char tmp;
@@ -241,6 +249,7 @@ public class BStrUtils {
         }
         return Math.round(f);
     }
+
     /**
      * 小数点后面保留一位
      */
@@ -264,4 +273,11 @@ public class BStrUtils {
         return 0;
     }
 
+    /**
+     * null字段转""
+     */
+    public static String nullToEmpty(String str) {
+        if (null == str) return "";
+        return str;
+    }
 }
