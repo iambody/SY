@@ -496,7 +496,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
             String validCode = result.getString("validCode");
             if ("0".equals(validCode)) {
                 if ("3".equals(failCount)) {
-                    Toast.makeText(this, "失败次数过多，", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "失败次数过多", Toast.LENGTH_LONG).show();
                 } else {
                     livingManger.startLivingMatch();
                 }
