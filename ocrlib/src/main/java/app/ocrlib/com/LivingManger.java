@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.LivingSign;
@@ -60,6 +61,7 @@ public class LivingManger {
     private static SharedPreferences sp;
     private static LivingSign livingSign;
     private static int MangerType;
+
     private LivingManger() {
     }
 
@@ -83,10 +85,10 @@ public class LivingManger {
         this.customerCode = customercode;
         this.type = Type;
         this.imageUrl = imageurl;
-        this.cardValidity = cardvalidity;
+        this.cardValidity = BStrUtils.nullToEmpty(cardvalidity);
         this.MangerType = 2;
-        this.sex = sex;
-        this.birthday = birthday;
+        this.sex =  BStrUtils.nullToEmpty(sex);
+        this.birthday =  BStrUtils.nullToEmpty(birthday);
         initConifg();
     }
 
@@ -393,14 +395,14 @@ public class LivingManger {
                     if (null != livingResult) livingResult.livingSucceed(livingResultData);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    livingResult.livingFailed(new LivingResultData("解析错误", "3" ));
+                    livingResult.livingFailed(new LivingResultData("解析错误", "3"));
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 if (null != livingResult)
-                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3" ));
+                    livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());
             }
         });
