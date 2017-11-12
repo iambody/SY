@@ -351,6 +351,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             livingState = credentialStateMedel.getCustomerLivingbodyState();
             if ("30".equals(credentialStateMedel.getIdCardState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
             }
         } else {
             stateCode = credentialStateMedel.getCredentialState();
@@ -358,6 +359,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             livingState = credentialStateMedel.getCustomerImageState();
             if ("30".equals(credentialStateMedel.getCredentialState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
             }
         }
 

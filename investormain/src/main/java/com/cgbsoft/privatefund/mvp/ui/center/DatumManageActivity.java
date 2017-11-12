@@ -213,8 +213,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         } else {
                             getDetial(credentialStateMedel.getCredentialDetailId());
                         }
-                    } else if ("5".equals(credentialStateMedel.getIdCardState())) {
-                        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+                    } else if ("5".equals(credentialStateMedel.getIdCardState())||"45".equals(credentialStateMedel.getCredentialState())) {
+                        Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
+                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState())) {
                         Toast.makeText(this, "证件正在审核中，通过后方可修改问卷", Toast.LENGTH_LONG).show();
                     } else {
@@ -229,8 +231,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         } else {
                             getDetial(credentialStateMedel.getCredentialDetailId());
                         }
-                    } else if ("5".equals(credentialStateMedel.getCustomerImageState())) {
-                        NavigationUtils.startActivity(this, RiskEvaluationActivity.class);
+                    } else if ("5".equals(credentialStateMedel.getCredentialState())||"45".equals(credentialStateMedel.getCredentialState())) {
+                        Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
+                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getCredentialState())) {
                         Toast.makeText(this, "证件正在审核中，通过后方可修改问卷", Toast.LENGTH_LONG).show();
                     } else {

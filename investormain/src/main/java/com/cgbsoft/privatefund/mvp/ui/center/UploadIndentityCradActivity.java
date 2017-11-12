@@ -316,7 +316,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setEnabled(true);
                 return;
             }
-            if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
+            if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath) && (!"50".equals(credentialModel.getStateCode()))) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
                 submit.setEnabled(true);
                 return;
@@ -331,7 +331,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setEnabled(true);
                 return;
             }
-            if (TextUtils.isEmpty(identityCard.getValidDate())&&(!"50".equals(credentialModel.getStateCode()))) {
+            if (TextUtils.isEmpty(identityCard.getValidDate()) && (!"50".equals(credentialModel.getStateCode()))) {
                 Toast.makeText(getApplicationContext(), "身份证反面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
                 submit.setEnabled(true);
                 return;
@@ -771,6 +771,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 recognitionNumText.setText(credentialModel.getNumber());
                 recognitionNameText.setText(credentialModel.getCustomerName());
                 recognitionResultText.setText(credentialModel.getStateName());
+                if (!credentialModel.getCode().startsWith("1001")){
+                    submit.setVisibility(View.GONE);
+                }
             }
             if ("45".equals(stateCode)) {
                 miniMsgLyout.setVisibility(View.VISIBLE);
@@ -854,7 +857,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         titleTV.setText(credentialModel.getName());
-        if ("50".equals(credentialModel.getStateCode()) && "2".equals(credentialModel.getValidCode()) && credentialModel.getCode().startsWith("10")) {
+        if ("50".equals(credentialModel.getStateCode()) && "2".equals(credentialModel.getValidCode()) && credentialModel.getCode().startsWith("1001")) {
             submit.setText("下一步");
             submit.setVisibility(View.VISIBLE);
             miniMsgLyout.setVisibility(View.VISIBLE);
@@ -969,7 +972,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         closePageCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                if (!TextUtils.isEmpty(credentialModel.getId())) {
+                if ("50".equals(credentialModel.getStateCode())){
+                    return;
+                }
+                if ("45".equals(credentialModel.getStateCode())){
+                    return;
+                }
+                if ((!TextUtils.isEmpty(credentialModel.getId()))){
                     finish();
                 }
             }
