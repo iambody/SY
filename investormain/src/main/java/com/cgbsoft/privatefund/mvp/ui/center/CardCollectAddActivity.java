@@ -120,8 +120,22 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
                     livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
                         @Override
                         public void livingSucceed(LivingResultData resultData) {
-                            resultData.getRecognitionCode();
-                            jumpDetial();
+                            switch (resultData.getRecognitionCode()) {
+                                case "0":
+                                    resultData.getRecognitionCode();
+                                    jumpDetial();
+                                    break;
+                                case "1":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+//                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                                    break;
+                                case "2":
+                                    break;
+                                case "3":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+
                         }
 
                         @Override

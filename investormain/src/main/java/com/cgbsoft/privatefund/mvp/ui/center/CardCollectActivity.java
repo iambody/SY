@@ -17,6 +17,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
@@ -26,6 +27,7 @@ import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
+import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -273,8 +275,22 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                     livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
                         @Override
                         public void livingSucceed(LivingResultData resultData) {
-                            resultData.getRecognitionCode();
-                            jumpDetial();
+                            switch (resultData.getRecognitionCode()) {
+                                case "0":
+                                    resultData.getRecognitionCode();
+                                    jumpDetial();
+                                    break;
+                                case "1":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+//                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                                    break;
+                                case "2":
+                                    break;
+                                case "3":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+
                         }
 
                         @Override

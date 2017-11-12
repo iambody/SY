@@ -771,8 +771,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 recognitionNumText.setText(credentialModel.getNumber());
                 recognitionNameText.setText(credentialModel.getCustomerName());
                 recognitionResultText.setText(credentialModel.getStateName());
-                if (!credentialModel.getCode().startsWith("1001")){
-                    submit.setVisibility(View.GONE);
+                if ((!credentialModel.getCode().startsWith("1001"))&&credentialModel.getCode().startsWith("10")) {
+                    if ( "1".equals(credentialStateMedel.getCustomerImageState())) {
+                        submit.setVisibility(View.GONE);
+                    }else {
+                        submit.setVisibility(View.VISIBLE);
+                        submit.setText("下一步");
+                    }
                 }
             }
             if ("45".equals(stateCode)) {
@@ -972,13 +977,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         closePageCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                if ("50".equals(credentialModel.getStateCode())){
+                if ("50".equals(credentialModel.getStateCode())) {
                     return;
                 }
-                if ("45".equals(credentialModel.getStateCode())){
+                if ("45".equals(credentialModel.getStateCode())) {
                     return;
                 }
-                if ((!TextUtils.isEmpty(credentialModel.getId()))){
+                if ((!TextUtils.isEmpty(credentialModel.getId()))) {
                     finish();
                 }
             }

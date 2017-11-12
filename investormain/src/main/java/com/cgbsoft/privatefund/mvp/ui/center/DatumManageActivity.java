@@ -119,7 +119,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                             NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
 //                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
+                        Toast.makeText(baseContext, "识别失败，请点击重试", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(Constant.SXY_ZLGL);
-        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO,0);
+        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         } else {
                             getDetial(credentialStateMedel.getCredentialDetailId());
                         }
-                    } else if ("5".equals(credentialStateMedel.getIdCardState())||"45".equals(credentialStateMedel.getCredentialState())) {
+                    } else if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getCredentialState())) {
                         Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent);
@@ -231,7 +231,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                         } else {
                             getDetial(credentialStateMedel.getCredentialDetailId());
                         }
-                    } else if ("5".equals(credentialStateMedel.getCredentialState())||"45".equals(credentialStateMedel.getCredentialState())) {
+                    } else if ("5".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getCredentialState())) {
                         Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
                         intent.putExtra("credentialStateMedel", credentialStateMedel);
                         startActivity(intent);
@@ -261,7 +261,21 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
-                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                switch (resultData.getRecognitionCode()) {
+                    case "0":
+                        NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        break;
+                    case "1":
+                        Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(baseContext, "识别成功进入客服审核。", Toast.LENGTH_LONG).show();
+//                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
 
             @Override
@@ -546,7 +560,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 livingMangerPrivate.startLivingMatch();
             }
         } else {
-            startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,TAG));
+            startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
         }
     }
 
