@@ -331,7 +331,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 submit.setEnabled(true);
                 return;
             }
-            if (TextUtils.isEmpty(identityCard.getValidDate())) {
+            if (TextUtils.isEmpty(identityCard.getValidDate())&&(!"50".equals(credentialModel.getStateCode()))) {
                 Toast.makeText(getApplicationContext(), "身份证反面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
                 submit.setEnabled(true);
                 return;
