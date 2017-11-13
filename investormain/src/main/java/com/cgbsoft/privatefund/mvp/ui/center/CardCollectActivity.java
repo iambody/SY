@@ -179,9 +179,15 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
             intent.putExtra("credentialStateMedel", credentialStateMedel);
             startActivity(intent);
         } else if ("50".equals(cardBean.getStateCode())) {
-            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-            intent.putExtra("credentialStateMedel", credentialStateMedel);
-            startActivity(intent);
+            if ("0".equals(credentialStateMedel.getCustomerImageState())){
+                Intent intent = new Intent(baseContext, CrenditralGuideActivity.class);
+                intent.putExtra("credentialStateMedel", credentialStateMedel);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+                intent.putExtra("credentialStateMedel", credentialStateMedel);
+                startActivity(intent);
+            }
         } else {
             if (cardBean.getCode().startsWith("1001")) {  //大陆需要上传其他证件  先判断次数
                 getPresenter().getLivingCount();
