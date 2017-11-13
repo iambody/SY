@@ -189,6 +189,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private Observable<FaceInf> complianceFaceupCallBack;
     private Observable<Integer> closePageCallBack;
     private List<String> remotePths;
+    private Observable<Integer> faceBackCallBack;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -970,10 +971,22 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     private void initCallBack() {
+        faceBackCallBack = RxBus.get().register(RxConstant.COMPIANCE_FACE_BACK, Integer.class);
         registerFrontCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_FRONT, IdentityCard.class);
         registerBackCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_BACK, IdentityCard.class);
         complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
         closePageCallBack = RxBus.get().register(RxConstant.CLOSE_INDENTITY_DETIAL, Integer.class);
+        faceBackCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                hideLoadDialog();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         closePageCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -1247,6 +1260,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }
         if (null != registerBackCallBack) {
             RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK, registerBackCallBack);
+        }
+        if (null != faceBackCallBack){
+            RxBus.get().unregister(RxConstant.COMPIANCE_FACE_BACK,faceBackCallBack);
         }
 
     }
