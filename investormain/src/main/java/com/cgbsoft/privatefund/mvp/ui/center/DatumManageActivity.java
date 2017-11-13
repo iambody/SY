@@ -97,9 +97,11 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
             @Override
             protected void onEvent(FaceInf faceInf) {
-                List<String> remoteParams = new ArrayList<String>();
-                remoteParams.add(credentialModel.getImageUrl().get(0).getUrl());
-                getPresenter().uploadOtherCrendtial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+                if (TAG.equals(faceInf.getPageTage())) {
+                    List<String> remoteParams = new ArrayList<String>();
+                    remoteParams.add(credentialModel.getImageUrl().get(0).getUrl());
+                    getPresenter().uploadOtherCrendtial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+                }
             }
 
             @Override
