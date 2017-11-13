@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -189,7 +190,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                             Log.i("PersonCompare", "没进行对比直接退出并发通知" + data);
                             if (null != mLoadingDialog)
                                 mLoadingDialog.dismiss();
-                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath,currentPageTag));
+                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath, currentPageTag));
                             FacePictureActivity.this.finish();
                         }
 
@@ -301,9 +302,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
-        if(null!=camera){
+        if (null != camera) {
             camera.release();
-            camera=null;
+            camera = null;
         }
     }
 
@@ -326,10 +327,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     String result = obj.getString("result");
                     LivingResultData recognitionCode = new Gson().fromJson(result, LivingResultData.class);
                     if ("0".equals(recognitionCode.getRecognitionCode())) {//成功
-                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(0,currentPageTag));
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(0, currentPageTag));
                         Log.i("PersonCompare", "对比成功了开始发射信息" + remotpath);
                     } else {//失败
-                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1,currentPageTag));
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
                         Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
                     }
                 } catch (JSONException e) {
@@ -345,9 +346,17 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
 //                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
-                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1,currentPageTag));
+                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
                 FacePictureActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK==event.getAction()) {
+            RxBus.get().post(RxConstant.COMPIANCE_FACE_BACK, 1);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

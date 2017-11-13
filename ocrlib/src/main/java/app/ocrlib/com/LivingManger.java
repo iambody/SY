@@ -343,7 +343,7 @@ public class LivingManger {
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
                 progressDlg.dismiss();
-                PromptManager.ShowCustomToast(livingContext, "获取sign失败");
+                PromptManager.ShowCustomToast(livingContext, "系统开小差了，暂时无法提交，请稍后再试！");
             }
         });
     }
@@ -392,6 +392,7 @@ public class LivingManger {
                     JSONObject obj = new JSONObject(data);
                     String result = obj.getString("result");
                     LivingResultData livingResultData = new Gson().fromJson(result, LivingResultData.class);
+                    Log.i("lalalala",data);
                     if (null != livingResult) livingResult.livingSucceed(livingResultData);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -401,6 +402,7 @@ public class LivingManger {
 
             @Override
             protected void onRxError(Throwable error) {
+                Log.i("lalalala",error.getMessage());
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());

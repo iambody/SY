@@ -113,7 +113,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
                 break;
             case FACE_BACK:
-                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 120), DimensionPixelUtil.dip2px(this, 120));
+                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 110), DimensionPixelUtil.dip2px(this, 110));
 
                 iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dip2px(this, 16), screenHeight - width - DimensionPixelUtil.dip2px(this, 70), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);

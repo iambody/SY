@@ -149,7 +149,9 @@ public interface RxConstant {
     //String COMPLIANCE_LIVING_COMMONT_RESULT = "compliance_living_commont_result";
     //私用的获取到活体检测的结果
     //String COMPLIANCE_LIVING_PRIVATE_RESULT = "compliance_living_commont_result";
-   //person的对比 默认INTEGER.CLASS 0标识成功 1标识失败
-    String COMPLIANCE_PERSON_COMPARE="compliance_person_compare";
+    //person的对比 默认INTEGER.CLASS 0标识成功 1标识失败
+    String COMPLIANCE_PERSON_COMPARE = "compliance_person_compare";
+    //人脸拍照时候按返回键 通知card详情
+    String COMPIANCE_FACE_BACK = "compliance_face_back";
 
 }
