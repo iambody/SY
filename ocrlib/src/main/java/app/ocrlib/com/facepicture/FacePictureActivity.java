@@ -354,7 +354,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK==event.getAction()) {
+        if (KeyEvent.KEYCODE_BACK==keyCode) {
             RxBus.get().post(RxConstant.COMPIANCE_FACE_BACK, 1);
         }
         return super.onKeyDown(keyCode, event);
