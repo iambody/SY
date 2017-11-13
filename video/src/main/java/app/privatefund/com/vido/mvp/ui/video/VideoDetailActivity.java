@@ -745,8 +745,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         v1.type = VideoInfo.VideoType.MP4;
         v2.description = "高清";
         v2.type = VideoInfo.VideoType.MP4;
-        v1.url = videoInfoModel.sdUrl;
-        v2.url = videoInfoModel.hdUrl;
+        v1.url = Utils.replaceDomainByIp(videoInfoModel.sdUrl);
+        v2.url = Utils.replaceDomainByIp(videoInfoModel.hdUrl);
         videos.add(v1);
         videos.add(v2);
 
