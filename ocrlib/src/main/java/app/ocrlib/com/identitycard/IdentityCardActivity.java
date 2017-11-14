@@ -77,10 +77,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, " ", false, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
-        }
-        else {
-        setContentView(R.layout.activity_identitycard);
-        initView();
+        } else {
+            setContentView(R.layout.activity_identitycard);
+            initView();
         }
 
     }

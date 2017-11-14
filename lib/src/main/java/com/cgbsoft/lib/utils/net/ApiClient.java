@@ -1798,7 +1798,7 @@ public class ApiClient {
                 } else {
                     objImg.put("name", "backImage");
                 }
-                objImg.put("url", path);
+                objImg.put("url", null==path?"":path);
                 jsonArray.put(objImg);
             }
             jsonObject.put("imageUrl", jsonArray);
