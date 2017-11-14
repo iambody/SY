@@ -87,8 +87,8 @@ public class LivingManger {
         this.imageUrl = imageurl;
         this.cardValidity = BStrUtils.nullToEmpty(cardvalidity);
         this.MangerType = 2;
-        this.sex =  BStrUtils.nullToEmpty(sex);
-        this.birthday =  BStrUtils.nullToEmpty(birthday);
+        this.sex = BStrUtils.nullToEmpty(sex);
+        this.birthday = BStrUtils.nullToEmpty(birthday);
         initConifg();
     }
 
@@ -246,7 +246,14 @@ public class LivingManger {
                         if (faceMsg == null) {
                             faceMsg = "";
                         }
-
+                        if (21000==resultCode) {
+                            PromptManager.ShowCustomToast(livingContext,"取消识别");
+                            return;
+                        }
+                        if (22000==resultCode) {
+                            PromptManager.ShowCustomToast(livingContext,"取消识别");
+                            return;
+                        }
                         if (resultCode == 0) {//成功
                             //需要通知后台
                             if (2 == MangerType) {
@@ -392,7 +399,7 @@ public class LivingManger {
                     JSONObject obj = new JSONObject(data);
                     String result = obj.getString("result");
                     LivingResultData livingResultData = new Gson().fromJson(result, LivingResultData.class);
-                    Log.i("lalalala",data);
+                    Log.i("lalalala", data);
                     if (null != livingResult) livingResult.livingSucceed(livingResultData);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -402,7 +409,7 @@ public class LivingManger {
 
             @Override
             protected void onRxError(Throwable error) {
-                Log.i("lalalala",error.getMessage());
+                Log.i("lalalala", error.getMessage());
                 if (null != livingResult)
                     livingResult.livingFailed(new LivingResultData(error.getMessage(), "3"));
                 PromptManager.ShowCustomToast(livingContext, error.getMessage());

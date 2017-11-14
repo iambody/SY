@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.ocrlib.com.identitycard.IdentityCardActivity;
+import app.ocrlib.com.facepicture.FacePictureActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -335,7 +335,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
 //        }
 //        DataStatistApiParam.homeClickNew();
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
 //        AlterDialog dialog=new AlterDialog(baseActivity, "修改场景的标题", "回显的要修改内容", new AlterDialog.AlterCommitListener() {
 //            @Override
 //            public void commitListener(String resultContent) {
@@ -343,7 +343,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            }
 //        });
 //        dialog.show();
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity,new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,"s"));
+        UiSkipUtils.toNextActivityWithIntent(baseActivity,new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,"s"));
     }
 
 

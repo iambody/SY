@@ -89,16 +89,15 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             currentPageTag = getIntent().getStringExtra(PAGE_TAG);
         } else {
             PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
-
             finish();
             return;
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
-        }else{
-        setContentView(R.layout.activity_facepicture);
-        initview();}
+        } else {
+            setContentView(R.layout.activity_facepicture);
+            initview();
+        }
 
     }
 
@@ -117,9 +116,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         //CameraID表示0或者1，表示是前置摄像头还是后置摄像头
         try {
             camera = Camera.open(1);
-        }catch (Exception e){
+        } catch (Exception e) {
 //            camera = Camera.open();
-            Log.i("kskkssa",e.getMessage());
+            Log.i("kskkssa", e.getMessage());
         }
         //getPicImageResult();
         Camera.Parameters parameters = camera.getParameters();
@@ -128,6 +127,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         setPreviewSize(camera, parameters);
 
     }
+
     public void paizhao(View V) {
         if (!isCanclick) return;
         isCanclick = false;
@@ -147,7 +147,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
                     if (image != null) {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        image.compressToJpeg(new Rect(0, 0, size.width, size.height), 80, stream);
+                        image.compressToJpeg(new Rect(0, 0, size.width, size.height), 70, stream);
 
                         Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
@@ -392,6 +392,11 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     setContentView(R.layout.activity_facepicture);
                     initview();
                 }
+                //相机权限拒绝
+//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+//                     PromptManager.ShowCustomToast(FacePictureActivity.this,"请去系统设置开启权限");
+//                    FacePictureActivity.this.finish();
+//                }
             }
         }
     }
