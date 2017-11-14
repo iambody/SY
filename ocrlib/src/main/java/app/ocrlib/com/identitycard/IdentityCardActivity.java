@@ -2,6 +2,7 @@ package app.ocrlib.com.identitycard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -74,12 +75,13 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         }
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, " ", false, false);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
-//        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+        }
+        else {
         setContentView(R.layout.activity_identitycard);
         initView();
-//        }
+        }
 
     }
 

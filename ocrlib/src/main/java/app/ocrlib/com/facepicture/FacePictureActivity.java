@@ -1,5 +1,7 @@
 package app.ocrlib.com.facepicture;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -9,9 +11,11 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.FaceDetector;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -80,7 +84,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_facepicture);
+
         if (null != getIntent().getExtras() && getIntent().getExtras().containsKey(PAGE_TAG)) {
             currentPageTag = getIntent().getStringExtra(PAGE_TAG);
         } else {
@@ -89,6 +93,16 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             finish();
             return;
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+        }else{
+        setContentView(R.layout.activity_facepicture);
+        initview();}
+
+    }
+
+    private void initview() {
         isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
         surfaceholder = surfaceview.getHolder();
@@ -101,7 +115,12 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
      */
     private void initCamera() {
         //CameraID表示0或者1，表示是前置摄像头还是后置摄像头
-        camera = Camera.open(1);
+        try {
+            camera = Camera.open(1);
+        }catch (Exception e){
+//            camera = Camera.open();
+            Log.i("kskkssa",e.getMessage());
+        }
         //getPicImageResult();
         Camera.Parameters parameters = camera.getParameters();
         //强制竖屏
@@ -109,7 +128,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         setPreviewSize(camera, parameters);
 
     }
-
     public void paizhao(View V) {
         if (!isCanclick) return;
         isCanclick = false;
@@ -169,6 +187,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     //开始上传bitmap并且进行处理
     private void upLoadBitmap(Bitmap nbmp2) {
+        if (isNeedPersonCompare) {
+            mLoadingDialog.setLoading("身份识别中...");
+        }
         mLoadingDialog.show();
         facePath = BitmapUtils.saveBitmap(nbmp2, "face");
         Observable.create(new Observable.OnSubscribe<String>() {
@@ -354,9 +375,24 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK==keyCode) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
             RxBus.get().post(RxConstant.COMPIANCE_FACE_BACK, 1);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 22) {
+            for (int i = 0; i < permissions.length; i++) {
+                String s = permissions[i];
+                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    setContentView(R.layout.activity_facepicture);
+                    initview();
+                }
+            }
+        }
     }
 }
