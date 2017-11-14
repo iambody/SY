@@ -94,6 +94,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     ImageView uploadSecond;
     @BindView(R.id.tv_upload_indentity_tip)
     TextView tagTv;
+    @BindView(R.id.tv_replenish_name_str)
+    TextView tvReplenishName;
     @BindView(R.id.upload_submit)
     Button submit;
     @BindView(R.id.iv_upload_tag)
@@ -651,6 +653,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private void init(CredentialModel credentialModel) {
         identityCard = new IdentityCard();
         String stateCode = credentialModel.getStateCode();
+        if (credentialStateMedel.getCredentialCode().startsWith("20")){
+            tvReplenishName.setText("名    称");
+        }
         if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
             uploadFirst.setEnabled(true);
             uploadSecond.setEnabled(true);
