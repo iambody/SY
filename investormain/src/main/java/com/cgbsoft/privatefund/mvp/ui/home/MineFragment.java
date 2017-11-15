@@ -969,7 +969,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else {
                     Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
                     intent1.putExtra("credentialStateMedel", credentialStateMedel);
-
+                    startActivity(intent1);
                 }
             }
 
