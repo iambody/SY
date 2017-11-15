@@ -998,6 +998,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         livingBackCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
+                livingLoadingState = false;
                 hideLoadDialog();
             }
 
