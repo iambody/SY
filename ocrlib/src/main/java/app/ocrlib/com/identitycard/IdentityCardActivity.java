@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -121,6 +122,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_back));
+                identitycard_note.setVisibility(View.GONE);
                 //身份证反面
                 break;
         }
@@ -246,5 +248,15 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            if (null != mLoadingDialog) {
+                mLoadingDialog.dismiss();
+                mLoadingDialog = null;
+            }
+            clipCamera.closeCamera();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

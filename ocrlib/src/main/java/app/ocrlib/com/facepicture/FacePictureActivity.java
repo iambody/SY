@@ -363,7 +363,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
             @Override
             protected void onRxError(Throwable error) {
-                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
+//                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                 isCanclick = true;
                 if (null != mLoadingDialog)
                     mLoadingDialog.dismiss();

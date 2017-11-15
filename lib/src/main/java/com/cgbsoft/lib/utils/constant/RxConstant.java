@@ -154,4 +154,7 @@ public interface RxConstant {
     //人脸拍照时候按返回键 通知card详情
     String COMPIANCE_FACE_BACK = "compliance_face_back";
 
+    //活体验身页面直接意外返回通知身份证详情页
+    String COMPIANCE_LIVING_BACK="compliance_living_back";
+
 }

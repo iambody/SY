@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -251,22 +253,27 @@ public class LivingManger {
                         }
                         if (21000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
                         if (80000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
                         if (71000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
                         if (10000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
                         if (22000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
                         if (resultCode == 0) {//成功
