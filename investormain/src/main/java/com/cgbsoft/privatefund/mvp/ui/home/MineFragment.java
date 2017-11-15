@@ -524,13 +524,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                 startActivity(intent1);
                             }
                         } else {
-                            if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
-                                jumpCollect();
-                            } else {
-                                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-                                intent1.putExtra("credentialStateMedel", credentialStateMedel);
-                                startActivity(intent1);
-                            }
+                            Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                            intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                            startActivity(intent1);
                         }
                         break;
                     case GestureManager.CENTIFY_DIR:
@@ -582,7 +578,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
-    private void jumpCollect(){
+    private void jumpCollect() {
         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
         intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
         startActivity(intent);
@@ -822,7 +818,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         AppInfStore.saveShowAssetStatus(getActivity(), false);
                     }
                     isClickBack = false;
-                }else {
+                } else {
                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                         jumpCollect();
                     } else {
@@ -963,14 +959,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     intent1.putExtra("credentialStateMedel", credentialStateMedel);
                     startActivity(intent1);
                 }
-            }else {
-                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
-                    jumpCollect();
-                } else {
-                    Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-                    intent1.putExtra("credentialStateMedel", credentialStateMedel);
-                    startActivity(intent1);
-                }
+            } else {
+                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                startActivity(intent1);
             }
 
         } else {
