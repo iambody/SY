@@ -1064,14 +1064,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         registerFrontCallBack.subscribe(new RxSubscriber<IdentityCard>() {
             @Override
             protected void onEvent(IdentityCard identityCard) {
-                Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadFirst);
-                firstPhotoPath = identityCard.getRemotPath();
                 if ("1".equals(identityCard.getAnalysisType())) {
                     UploadIndentityCradActivity.this.identityCard.setAddress(identityCard.getAddress());
                     UploadIndentityCradActivity.this.identityCard.setBirth(identityCard.getBirth());
                     UploadIndentityCradActivity.this.identityCard.setIdCardName(identityCard.getIdCardName());
                     UploadIndentityCradActivity.this.identityCard.setIdCardNum(identityCard.getIdCardNum());
                     UploadIndentityCradActivity.this.identityCard.setSex(identityCard.getSex());
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadFirst);
+                    firstPhotoPath = identityCard.getRemotPath();
                     recognitionNameEdit.setText(identityCard.getIdCardName());
                     recognitionIdCardNum.setText(identityCard.getIdCardNum());
                     recognitionNameLinearLayout.setVisibility(View.VISIBLE);
@@ -1102,9 +1102,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         registerBackCallBack.subscribe(new RxSubscriber<IdentityCard>() {
             @Override
             protected void onEvent(IdentityCard identityCard) {
-                Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadSecond);
-                secondPhotoPath = identityCard.getRemotPath();
                 if ("1".equals(identityCard.getAnalysisType())) {
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadSecond);
+                    secondPhotoPath = identityCard.getRemotPath();
                     UploadIndentityCradActivity.this.identityCard.setValidDate(identityCard.getValidDate());
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
                     recognitionValidDate.setText(identityCard.getValidDate());
