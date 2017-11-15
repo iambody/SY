@@ -90,6 +90,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     TextView titleTV;
     @BindView(R.id.iv_upload_crad_first)
     ImageView uploadFirst;
+    @BindView(R.id.mini_name_text)
+    TextView miniNameText;
     @BindView(R.id.iv_upload_crad_second)
     ImageView uploadSecond;
     @BindView(R.id.tv_upload_indentity_tip)
@@ -667,6 +669,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         identityCard = new IdentityCard();
         String stateCode = credentialModel.getStateCode();
         if (credentialStateMedel.getCredentialCode().startsWith("20")){
+            miniNameText.setText("证件名称");
             tvReplenishName.setText("证件名称");
         }
         if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
