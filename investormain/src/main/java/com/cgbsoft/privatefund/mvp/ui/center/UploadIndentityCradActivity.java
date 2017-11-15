@@ -28,6 +28,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
@@ -891,6 +892,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             rlTip.setVisibility(View.GONE);
             identityCard.setIdCardNum(credentialModel.getNumberTrue());
             identityCard.setIdCardName(credentialModel.getCustomerName());
+        }
+        String imageState = SPreference.getString(this, "imageState");
+        if ((!TextUtils.isEmpty(imageState))&&imageState.equals("1")&&(!credentialModel.getCode().startsWith("1001"))&&(credentialModel.getCode().startsWith("10"))){
+            submit.setVisibility(View.GONE);
         }
 
     }

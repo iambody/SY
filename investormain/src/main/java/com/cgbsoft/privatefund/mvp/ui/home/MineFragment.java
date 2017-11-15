@@ -345,6 +345,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
         this.credentialStateMedel = credentialStateMedel;
+        SPreference.putString(getContext(),"imageState",credentialStateMedel.getCustomerImageState());
         if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
             stateCode = credentialStateMedel.getIdCardState();
             stateName = credentialStateMedel.getIdCardStateName();
