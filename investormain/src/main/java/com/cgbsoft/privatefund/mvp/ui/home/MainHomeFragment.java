@@ -24,9 +24,7 @@ import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
-import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -55,7 +53,6 @@ import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
@@ -799,12 +796,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
                     NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
                 } else {
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url,data.url );
-                    hashMap.put(WebViewConstant.push_message_title, data.title);
-                    hashMap.put(WebViewConstant.RIGHT_SHARE, false);
-                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-//                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+//                    HashMap<String, Object> hashMap = new HashMap<>();
+//                    hashMap.put(WebViewConstant.push_message_url,data.url );
+//                    hashMap.put(WebViewConstant.push_message_title, data.title);
+//                    hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+//                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
                 }
 
             } else if ("app".equals(data.jumpType)) {
