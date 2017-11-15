@@ -1,7 +1,6 @@
 package app.ocrlib.com.facepicture;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -17,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -32,6 +30,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CameraUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -93,14 +92,18 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             finish();
             return;
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this ,
-                    Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED){
-                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);}else{
+
+
+            if (CameraUtils.getCameraPermission(this)) {
                 setContentView(R.layout.activity_facepicture);
                 initview();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
             }
+
+
         } else {
             setContentView(R.layout.activity_facepicture);
             initview();
@@ -331,8 +334,11 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             mLoadingDialog = null;
         }
         if (null != camera) {
-            camera.release();
-            camera = null;
+            try {
+                camera.release();
+                camera = null;
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -395,24 +401,28 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 22) {
-            for (int i = 0; i < permissions.length; i++) {
-                String s = permissions[i];
-                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    setContentView(R.layout.activity_facepicture);
-                    initview();
-                }
-                //相机权限拒绝
-//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-//
-//                    PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
-//                    camera.stopPreview();
-//                    //手动释放 一定得加！
-//                    camera.release();
-//                    camera = null;
+            if (CameraUtils.getCameraPermission(FacePictureActivity.this)) {
+                setContentView(R.layout.activity_facepicture);
+                initview();
+            } else {
+                FacePictureActivity.this.finish();
+                PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
+            }
+//            for (int i = 0; i < permissions.length; i++) {
+//                String s = permissions[i];
+//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+//                    setContentView(R.layout.activity_facepicture);
+//                    initview();
+//                }
+//                if (0 == i && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 //                    FacePictureActivity.this.finish();
+//                    PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
 //                    break;
 //                }
-            }
+//
+
         }
     }
+
+
 }

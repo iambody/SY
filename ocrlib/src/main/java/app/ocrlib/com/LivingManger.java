@@ -69,7 +69,6 @@ public class LivingManger {
 
     /**
      * 身份证流程的活体检测构造
-     *
      * @param livingContext
      * @param cardname
      * @param cardid
@@ -250,6 +249,11 @@ public class LivingManger {
                         }
                         if (faceMsg == null) {
                             faceMsg = "";
+                        }
+                        if (40000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "用户拒绝打开权限");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            return;
                         }
                         if (21000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "取消识别");

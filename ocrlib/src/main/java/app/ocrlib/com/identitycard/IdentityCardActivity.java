@@ -1,7 +1,6 @@
 package app.ocrlib.com.identitycard;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +22,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CameraUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -77,7 +77,12 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
 
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, " ", false, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+            if (CameraUtils.getCameraPermission(this)) {
+                setContentView(R.layout.activity_identitycard);
+                initView();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+            }
         } else {
             setContentView(R.layout.activity_identitycard);
             initView();
@@ -220,13 +225,23 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 22) {
-            for (int i = 0; i < permissions.length; i++) {
-                String s = permissions[i];
-                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    setContentView(R.layout.activity_identitycard);
-                    initView();
-                }
+            if (CameraUtils.getCameraPermission(IdentityCardActivity.this)) {
+                setContentView(R.layout.activity_identitycard);
+                initView();
+            } else {
+                IdentityCardActivity.this.finish();
+                PromptManager.ShowCustomToast(IdentityCardActivity.this, "请去系统设置开启权限");
+
             }
+//            for (int i = 0; i < permissions.length; i++) {
+//                String s = permissions[i];
+//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+//                    setContentView(R.layout.activity_identitycard);
+//                    initView();
+//                }
+//            }
+
+
         }
     }
 
@@ -238,9 +253,10 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             mLoadingDialog = null;
         }
 
-
-        clipCamera.closeCamera();
-
+        try {
+            clipCamera.closeCamera();
+        } catch (Exception e) {
+        }
     }
 
     @Override
