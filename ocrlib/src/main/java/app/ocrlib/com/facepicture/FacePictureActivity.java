@@ -395,9 +395,15 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     initview();
                 }
                 //相机权限拒绝
-//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-//                     PromptManager.ShowCustomToast(FacePictureActivity.this,"请去系统设置开启权限");
+//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+//
+//                    PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
+//                    camera.stopPreview();
+//                    //手动释放 一定得加！
+//                    camera.release();
+//                    camera = null;
 //                    FacePictureActivity.this.finish();
+//                    break;
 //                }
             }
         }
