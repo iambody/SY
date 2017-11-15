@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -93,7 +94,13 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+            if (ContextCompat.checkSelfPermission(this ,
+                    Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);}else{
+                setContentView(R.layout.activity_facepicture);
+                initview();
+            }
         } else {
             setContentView(R.layout.activity_facepicture);
             initview();
