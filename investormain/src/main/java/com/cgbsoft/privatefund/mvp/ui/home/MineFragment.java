@@ -346,23 +346,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
         this.credentialStateMedel = credentialStateMedel;
         SPreference.putString(getContext(), "imageState", credentialStateMedel.getCustomerImageState());
-        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
-            stateCode = credentialStateMedel.getIdCardState();
-            stateName = credentialStateMedel.getIdCardStateName();
-            livingState = credentialStateMedel.getCustomerLivingbodyState();
-            if ("30".equals(credentialStateMedel.getIdCardState())) {
-                privateBackBottomButtons.setVisibility(View.GONE);
-                noRelativeAssert.setVisibility(View.VISIBLE);
-            }
-        } else {
-            stateCode = credentialStateMedel.getCredentialState();
-            stateName = credentialStateMedel.getCredentialStateName();
-            livingState = credentialStateMedel.getCustomerImageState();
-            if ("30".equals(credentialStateMedel.getCredentialState())) {
-                privateBackBottomButtons.setVisibility(View.GONE);
-                noRelativeAssert.setVisibility(View.VISIBLE);
-            }
-        }
+
 
         //5未上传 10审核中 30驳回 45待补传 50已通过
         if (TextUtils.isEmpty(stateCode)) {
@@ -388,6 +372,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isClickBack) {
             isClickBack = false;
             credentialJump();
+        }
+
+        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+            stateCode = credentialStateMedel.getIdCardState();
+            stateName = credentialStateMedel.getIdCardStateName();
+            livingState = credentialStateMedel.getCustomerLivingbodyState();
+            if ("30".equals(credentialStateMedel.getIdCardState())) {
+                privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+            }
+        } else {
+            stateCode = credentialStateMedel.getCredentialState();
+            stateName = credentialStateMedel.getCredentialStateName();
+            livingState = credentialStateMedel.getCustomerImageState();
+            if ("30".equals(credentialStateMedel.getCredentialState())) {
+                privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+            }
         }
 
 //        if (isClickBack) {
