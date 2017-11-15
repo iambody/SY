@@ -90,22 +90,22 @@ public class ReceiveInfoManager {
                             infoDialog = null;
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        if (Constant.msgSystemStatus.equals(SenderId)) {
-                            infoDialog = new DefaultDialog(currentActivity, detail, "返回", rightText) {
-                                @Override
-                                public void left() {
-                                    this.dismiss();
-                                }
-
-                                @Override
-                                public void right() {
-                                    this.dismiss();
-                                    if ("1".equals(type)) {
-                                        onClickConfirm(jumpUrl, title, shareType);
-                                    }
-                                }
-                            };
-                        } else {
+//                        if (Constant.msgSystemStatus.equals(SenderId)) {
+//                            infoDialog = new DefaultDialog(currentActivity, detail, "返回", rightText) {
+//                                @Override
+//                                public void left() {
+//                                    this.dismiss();
+//                                }
+//
+//                                @Override
+//                                public void right() {
+//                                    this.dismiss();
+//                                    if ("1".equals(type)) {
+//                                        onClickConfirm(jumpUrl, title, shareType);
+//                                    }
+//                                }
+//                            };
+//                        } else {
                             infoDialog = new PushDialog(currentActivity, title, detail, rightText, "返回", jumpUrl) {
                                 @Override
                                 public void left() {
@@ -120,7 +120,7 @@ public class ReceiveInfoManager {
                                     }
                                 }
                             };
-                        }
+//                        }
                         if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                             infoDialog.show();
                         }
@@ -133,20 +133,20 @@ public class ReceiveInfoManager {
                                 infoDialog.dismiss();
                                 infoDialog = null;
                             }
-                            if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
-                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getContent(), "返回", smMessage.getButtonText()) {
-                                    @Override
-                                    public void left() {
-                                        this.dismiss();
-                                    }
-
-                                    @Override
-                                    public void right() {
-                                        this.dismiss();
-                                        onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
-                                    }
-                                };
-                            } else {
+//                            if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
+//                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getContent(), "返回", smMessage.getButtonText()) {
+//                                    @Override
+//                                    public void left() {
+//                                        this.dismiss();
+//                                    }
+//
+//                                    @Override
+//                                    public void right() {
+//                                        this.dismiss();
+//                                        onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
+//                                    }
+//                                };
+//                            } else {
                                 infoDialog = new PushDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), smMessage.getButtonText(), "返回", smMessage.getJumpUrl()) {
                                     @Override
                                     public void left() {
@@ -159,7 +159,7 @@ public class ReceiveInfoManager {
                                         onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
                                     }
                                 };
-                            }
+//                            }
                             if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.show();
                             }
