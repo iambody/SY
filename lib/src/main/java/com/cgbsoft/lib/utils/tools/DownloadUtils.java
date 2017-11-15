@@ -77,17 +77,17 @@ public class DownloadUtils {
         Map<String, String> fileMap = new HashMap<String, String>();
         fileMap.put("file", localFilePath);
 
-//        String UPLOAD_URL;
+        String UPLOAD_URL;
 //
-//        if (isSecret) {
-//            UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
-//        } else {
-//            UPLOAD_URL = NetConfig.UPLOAD_FILE;
-//        }
+        if (isSecret) {
+            UPLOAD_URL = NetConfig.UPLOAD_SECRET_FILE;
+        } else {
+            UPLOAD_URL = NetConfig.UPLOAD_FILE;
+        }
 
-        if (formUpload(NetConfig.UPLOAD_FILE, textMap, fileMap)) {
+        if (formUpload(UPLOAD_URL, textMap, fileMap)) {
 //            if (NetConfig.START_APP.equals("https://app")) {
-                return NetConfig.UPLOAD_FILE + remotePath;
+                return UPLOAD_URL + remotePath;
 //            } else {
 //                String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
 //                return NetConfig.UPLOAD_FILE + "-/" + mainUrl + "/" + remotePath;

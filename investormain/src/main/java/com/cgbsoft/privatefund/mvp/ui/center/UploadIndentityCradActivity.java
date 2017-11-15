@@ -935,11 +935,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
             String validCode = result.getString("validCode");
             if ("3".equals(failCount)) {
-                Toast.makeText(this, "非常抱歉，您今日的人脸核身次数超过限制，请明日尝试，", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "非常抱歉，您今日的人脸核身次数超过限制，请明日尝试", Toast.LENGTH_LONG).show();
             } else {
                 startLivingMatch();
                 livingManger.startLivingMatch();
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1077,7 +1076,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     UploadIndentityCradActivity.this.identityCard.setIdCardName(identityCard.getIdCardName());
                     UploadIndentityCradActivity.this.identityCard.setIdCardNum(identityCard.getIdCardNum());
                     UploadIndentityCradActivity.this.identityCard.setSex(identityCard.getSex());
-                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadFirst);
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getLocalPath(), uploadFirst);
                     firstPhotoPath = identityCard.getRemotPath();
                     recognitionNameEdit.setText(identityCard.getIdCardName());
                     recognitionIdCardNum.setText(identityCard.getIdCardNum());
@@ -1110,7 +1109,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             @Override
             protected void onEvent(IdentityCard identityCard) {
                 if ("1".equals(identityCard.getAnalysisType())) {
-                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadSecond);
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getLocalPath(), uploadSecond);
                     secondPhotoPath = identityCard.getRemotPath();
                     UploadIndentityCradActivity.this.identityCard.setValidDate(identityCard.getValidDate());
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
