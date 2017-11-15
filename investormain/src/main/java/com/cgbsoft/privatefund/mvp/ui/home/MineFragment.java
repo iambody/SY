@@ -378,6 +378,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             stateCode = credentialStateMedel.getIdCardState();
             stateName = credentialStateMedel.getIdCardStateName();
             livingState = credentialStateMedel.getCustomerLivingbodyState();
+            if ("10".equals(credentialStateMedel.getIdCardState())) {
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+                noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+            }
             if ("30".equals(credentialStateMedel.getIdCardState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
                 noRelativeAssert.setVisibility(View.VISIBLE);
@@ -389,6 +394,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             if ("30".equals(credentialStateMedel.getCredentialState())) {
                 privateBackBottomButtons.setVisibility(View.GONE);
                 noRelativeAssert.setVisibility(View.VISIBLE);
+            }
+            if ("10".equals(credentialStateMedel.getCredentialState())) {
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+                noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
             }
         }
 
