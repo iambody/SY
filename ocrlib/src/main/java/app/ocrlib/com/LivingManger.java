@@ -56,7 +56,7 @@ public class LivingManger {
     private static boolean isShowFail = true;
     //主题颜色
     private static String color;
-//    private static ProgressDialog progressDlg;
+    //    private static ProgressDialog progressDlg;
     private static LoadingDialog mLoadingDialog;
     private static SharedPreferences sp;
     private static LivingSign livingSign;
@@ -249,12 +249,24 @@ public class LivingManger {
                         if (faceMsg == null) {
                             faceMsg = "";
                         }
-                        if (21000==resultCode) {
-                            PromptManager.ShowCustomToast(livingContext,"取消识别");
+                        if (21000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "取消识别");
                             return;
                         }
-                        if (22000==resultCode) {
-                            PromptManager.ShowCustomToast(livingContext,"取消识别");
+                        if (80000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            return;
+                        }
+                        if (71000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            return;
+                        }
+                        if (10000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "取消识别");
+                            return;
+                        }
+                        if (22000 == resultCode) {
+                            PromptManager.ShowCustomToast(livingContext, "取消识别");
                             return;
                         }
                         if (resultCode == 0) {//成功
@@ -308,7 +320,7 @@ public class LivingManger {
      * 初始化进度条
      */
     private void initProgress() {
-        mLoadingDialog = LoadingDialog.getLoadingDialog(livingContext,"进入识别系统中...", false, false);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(livingContext, "进入识别系统中...", false, false);
 //        if (progressDlg != null) {
 //            progressDlg.dismiss();
 //        }
@@ -327,7 +339,7 @@ public class LivingManger {
     }
 
     public static void destory() {
-        if (null !=  mLoadingDialog ) {
+        if (null != mLoadingDialog) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }

@@ -85,6 +85,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initView() {
+//        PromptManager.ShowCustomToast(IdentityCardActivity.this,"请对齐脸部轮廓，点击拍照按钮");
         clipCamera = (ClipCamera) findViewById(R.id.surface_view);
         btn_shoot = (Button) findViewById(R.id.btn_shoot);
         ocr_face_iv = (ImageView) findViewById(R.id.ocr_face_iv);
@@ -103,20 +104,20 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
         int screenHeight = dm.heightPixels;
-        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 180), DimensionPixelUtil.dip2px(this, 140));
+        RelativeLayout.LayoutParams iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dp2px(this, 180), DimensionPixelUtil.dp2px(this, 140));
         int height = (int) (screenWidth * 0.8);//拍照的阴影框的高度为屏幕宽度的80%  0.8
         int width = (int) (height * 1.6);//身份证宽高比例为1.6
         switch (type) {
             case FACE_FRONT:
-                iConParams.setMargins((height / 2) - DimensionPixelUtil.dip2px(this, 40), width - DimensionPixelUtil.dip2px(this, 100), 0, 0);
+                iConParams.setMargins((height / 2) - DimensionPixelUtil.dp2px(this, 40), width - DimensionPixelUtil.dp2px(this, 100), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_face_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_front));
                 break;
             case FACE_BACK:
-                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(this, 110), DimensionPixelUtil.dip2px(this, 110));
+                iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dp2px(this, 110), DimensionPixelUtil.dp2px(this, 110));
 
-                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dip2px(this, 16), screenHeight - width - DimensionPixelUtil.dip2px(this, 70), 0, 0);
+                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - DimensionPixelUtil.dp2px(this, 70), 0, 0);
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_back));
