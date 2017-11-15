@@ -266,7 +266,7 @@ public class LivingManger {
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
-//                        if (10000 == resultCode) {//1.请确保光线充足;2.请确保人脸正对框内;3.请确保脸部无遮挡
+//                        if (10000 == resultCode) {// .请确保光线充足;2.请确保人脸正对框内;3.请确保脸部无遮挡
 //                            PromptManager.ShowCustomToast(livingContext, "取消识别");
 //                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
 //                            return;
