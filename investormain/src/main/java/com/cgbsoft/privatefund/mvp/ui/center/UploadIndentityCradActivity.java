@@ -192,6 +192,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private Observable<Integer> closePageCallBack;
     private List<String> remotePths;
     private Observable<Integer> faceBackCallBack;
+    private boolean livingLoadingState;
+    private Observable<Integer> livingBackCallBack;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -274,6 +276,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (livingLoadingState){
+            showLoadDialog();
+        }
+    }
+
     @OnClick(R.id.iv_upload_card_second_cover)
     public void uploadSecondCoverClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -295,6 +305,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @OnClick(R.id.upload_submit)
     public void photoSubmit() {
+        livingLoadingState = false;
         submit.setEnabled(false);
         List<String> paths = new ArrayList<>();
         if ("30".equals(credentialModel.getStateCode())) {
@@ -513,9 +524,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     }
 
     private void startLivingMatch() {
+        livingLoadingState = true;
         livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
+                mLoadingDialog.dismiss();
                 Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
                 switch (resultData.getRecognitionCode()) {
                     //0 成功 1客服审核 2ocr错误 3标识失败
@@ -654,7 +667,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         identityCard = new IdentityCard();
         String stateCode = credentialModel.getStateCode();
         if (credentialStateMedel.getCredentialCode().startsWith("20")){
-            tvReplenishName.setText("名    称");
+            tvReplenishName.setText("证件名称");
         }
         if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
             uploadFirst.setEnabled(true);
@@ -981,6 +994,19 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         registerBackCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_BACK, IdentityCard.class);
         complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
         closePageCallBack = RxBus.get().register(RxConstant.CLOSE_INDENTITY_DETIAL, Integer.class);
+        livingBackCallBack = RxBus.get().register(RxConstant.COMPIANCE_LIVING_BACK, Integer.class);
+        livingBackCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                livingLoadingState = false;
+                hideLoadDialog();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
         faceBackCallBack.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
@@ -1038,14 +1064,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         registerFrontCallBack.subscribe(new RxSubscriber<IdentityCard>() {
             @Override
             protected void onEvent(IdentityCard identityCard) {
-                Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadFirst);
-                firstPhotoPath = identityCard.getRemotPath();
                 if ("1".equals(identityCard.getAnalysisType())) {
                     UploadIndentityCradActivity.this.identityCard.setAddress(identityCard.getAddress());
                     UploadIndentityCradActivity.this.identityCard.setBirth(identityCard.getBirth());
                     UploadIndentityCradActivity.this.identityCard.setIdCardName(identityCard.getIdCardName());
                     UploadIndentityCradActivity.this.identityCard.setIdCardNum(identityCard.getIdCardNum());
                     UploadIndentityCradActivity.this.identityCard.setSex(identityCard.getSex());
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadFirst);
+                    firstPhotoPath = identityCard.getRemotPath();
                     recognitionNameEdit.setText(identityCard.getIdCardName());
                     recognitionIdCardNum.setText(identityCard.getIdCardNum());
                     recognitionNameLinearLayout.setVisibility(View.VISIBLE);
@@ -1076,9 +1102,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         registerBackCallBack.subscribe(new RxSubscriber<IdentityCard>() {
             @Override
             protected void onEvent(IdentityCard identityCard) {
-                Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadSecond);
-                secondPhotoPath = identityCard.getRemotPath();
                 if ("1".equals(identityCard.getAnalysisType())) {
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getRemotPath(), uploadSecond);
+                    secondPhotoPath = identityCard.getRemotPath();
                     UploadIndentityCradActivity.this.identityCard.setValidDate(identityCard.getValidDate());
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
                     recognitionValidDate.setText(identityCard.getValidDate());
