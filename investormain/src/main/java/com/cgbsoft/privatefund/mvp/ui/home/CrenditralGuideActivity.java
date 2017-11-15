@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.model.CredentialStateMedel;
-import com.cgbsoft.privatefund.mvp.ui.center.CardCollectActivity;
 import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 
 

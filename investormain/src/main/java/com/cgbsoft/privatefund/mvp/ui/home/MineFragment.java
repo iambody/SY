@@ -345,7 +345,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
         this.credentialStateMedel = credentialStateMedel;
-        SPreference.putString(getContext(),"imageState",credentialStateMedel.getCustomerImageState());
+        SPreference.putString(getContext(), "imageState", credentialStateMedel.getCustomerImageState());
         if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
             stateCode = credentialStateMedel.getIdCardState();
             stateName = credentialStateMedel.getIdCardStateName();
@@ -368,11 +368,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (TextUtils.isEmpty(stateCode)) {
             noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
         } else if (!TextUtils.isEmpty(stateCode) && ("50".equals(stateCode)) || "45".equals(stateCode)) {
-            if ("45".equals(stateCode)){
+            if ("45".equals(stateCode)) {
                 noRelativeAssert.setVisibility(View.VISIBLE);
                 noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
                 privateBackBottomButtons.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 noRelativeAssert.setVisibility(View.GONE);
                 privateBackBottomButtons.setVisibility(View.VISIBLE);
             }
@@ -472,10 +472,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             } else {
                                 isClickBack = false;
                                 //90：存量已有证件号已上传证件照待审核
-                                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                                    jumpGuidePage();
+                                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                        jumpGuidePage();
+                                    } else {
+                                        toAssertMatchActivit();
+                                    }
                                 } else {
-                                    toAssertMatchActivit();
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                        jumpCollect();
+                                    } else {
+                                        toAssertMatchActivit();
+                                    }
                                 }
                             }
                         }
@@ -490,21 +498,39 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                             } else {
                                 isClickBack = false;
                                 //90：存量已有证件号已上传证件照待审核
-                                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                                    jumpGuidePage();
+                                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                        jumpGuidePage();
+                                    } else {
+                                        toInvestorCarlendarActivity();
+                                    }
                                 } else {
-                                    toInvestorCarlendarActivity();
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                        jumpCollect();
+                                    } else {
+                                        toInvestorCarlendarActivity();
+                                    }
                                 }
                             }
                         }
                         break;
                     case GestureManager.DATUM_MANAGER:
-                        if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                            jumpGuidePage();
+                        if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                            if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                jumpGuidePage();
+                            } else {
+                                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                                intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                                startActivity(intent1);
+                            }
                         } else {
-                            Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-                            intent1.putExtra("credentialStateMedel", credentialStateMedel);
-                            startActivity(intent1);
+                            if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                jumpCollect();
+                            } else {
+                                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                                intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                                startActivity(intent1);
+                            }
                         }
                         break;
                     case GestureManager.CENTIFY_DIR:
@@ -554,6 +580,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void jumpCollect(){
+        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent);
     }
 
     private void showAssert() {
@@ -780,15 +812,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 isClickBack = true;
                 getPresenter().verifyIndentityV3();
             } else {
-                //90：存量已有证件号已上传证件照待审核
-                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                    jumpGuidePage();
-                } else {
-                    hideAssert();
-                    showAssert = false;
-                    AppInfStore.saveShowAssetStatus(getActivity(), false);
+                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                    //90：存量已有证件号已上传证件照待审核
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                        jumpGuidePage();
+                    } else {
+                        hideAssert();
+                        showAssert = false;
+                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+                    }
+                    isClickBack = false;
+                }else {
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                        jumpCollect();
+                    } else {
+                        hideAssert();
+                        showAssert = false;
+                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+                    }
+                    isClickBack = false;
                 }
-                isClickBack = false;
             }
         } else {
             GestureManager.showAssertGestureManager(getActivity());
@@ -839,11 +882,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 isClickBack = true;
                 getPresenter().verifyIndentityV3();
             } else {
-                //90：存量已有证件号已上传证件照待审核
-                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                    jumpGuidePage();
+                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                    //90：存量已有证件号已上传证件照待审核
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                        jumpGuidePage();
+                    } else {
+                        toAssertMatchActivit();
+                    }
                 } else {
-                    toAssertMatchActivit();
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                        jumpCollect();
+                    } else {
+                        toAssertMatchActivit();
+                    }
                 }
                 isClickBack = false;
             }
@@ -881,10 +932,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else {
                     isClickBack = false;
                     //90：存量已有证件号已上传证件照待审核
-                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                        jumpGuidePage();
+                    if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                        if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                            jumpGuidePage();
+                        } else {
+                            toInvestorCarlendarActivity();
+                        }
                     } else {
-                        toInvestorCarlendarActivity();
+                        if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                            jumpCollect();
+                        } else {
+                            toInvestorCarlendarActivity();
+                        }
                     }
                 }
             } else {
@@ -896,13 +955,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.mine_bank_datum_manager_ll)
     void gotoDatumCarlendarActivity() {
         if (showAssert) {
-            if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                jumpGuidePage();
-            } else {
-                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
-                intent1.putExtra("credentialStateMedel", credentialStateMedel);
-                startActivity(intent1);
+            if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                    jumpGuidePage();
+                } else {
+                    Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                    intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                    startActivity(intent1);
+                }
+            }else {
+                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                    jumpCollect();
+                } else {
+                    Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                    intent1.putExtra("credentialStateMedel", credentialStateMedel);
+
+                }
             }
+
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }
