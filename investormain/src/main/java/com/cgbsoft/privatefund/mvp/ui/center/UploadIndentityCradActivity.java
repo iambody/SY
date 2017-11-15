@@ -1083,8 +1083,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionNameLinearLayout.setVisibility(View.VISIBLE);
                     recognitionNumLinearLayout.setVisibility(View.VISIBLE);
                     rlTip.setVisibility(View.GONE);
-                    divideLine1.setVisibility(View.VISIBLE);
-                    if (!TextUtils.isEmpty(identityCard.getValidDate())) {
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine1.setVisibility(View.VISIBLE);
+                    }
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
                         divideLine2.setVisibility(View.VISIBLE);
                     }
                     miniMsgLyout.setVisibility(View.GONE);
@@ -1115,6 +1117,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     recognitionValidLinearLayout.setVisibility(View.VISIBLE);
                     recognitionValidDate.setText(identityCard.getValidDate());
                     rlTip.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine1.setVisibility(View.VISIBLE);
+                    }
                     if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
                         divideLine2.setVisibility(View.VISIBLE);
                     }
