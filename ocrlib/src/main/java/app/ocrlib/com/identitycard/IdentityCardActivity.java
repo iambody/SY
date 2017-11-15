@@ -118,7 +118,9 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             case FACE_BACK:
                 iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dp2px(this, 110), DimensionPixelUtil.dp2px(this, 110));
 
-                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - DimensionPixelUtil.dp2px(this, 70), 0, 0);
+//                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - DimensionPixelUtil.dp2px(this, 70), 0, 0);
+                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - (screenHeight - width)*13/40, 0, 0);
+
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
                 identitycard_note.setText(getResources().getString(R.string.put_identitycard_back));

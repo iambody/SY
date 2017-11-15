@@ -335,7 +335,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_BACK));
 //        AlterDialog dialog=new AlterDialog(baseActivity, "修改场景的标题", "回显的要修改内容", new AlterDialog.AlterCommitListener() {
 //            @Override
 //            public void commitListener(String resultContent) {
