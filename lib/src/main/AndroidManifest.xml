@@ -14,7 +14,7 @@
             android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
-
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <!--权限管理-->
         <activity

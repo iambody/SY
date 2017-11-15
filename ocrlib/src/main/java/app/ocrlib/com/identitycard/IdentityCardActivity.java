@@ -119,7 +119,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
                 iConParams = new RelativeLayout.LayoutParams(DimensionPixelUtil.dp2px(this, 110), DimensionPixelUtil.dp2px(this, 110));
 
 //                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - DimensionPixelUtil.dp2px(this, 70), 0, 0);
-                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - (screenHeight - width)*13/40, 0, 0);
+                iConParams.setMargins((height * 3 / 5) + DimensionPixelUtil.dp2px(this, 16), screenHeight - width - (screenHeight - width) * 13 / 40, 0, 0);
 
                 ocr_face_iv.setLayoutParams(iConParams);
                 ocr_face_iv.setImageResource(R.drawable.ocr_nation_blue);
@@ -252,12 +252,16 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (null != mLoadingDialog) {
                 mLoadingDialog.dismiss();
                 mLoadingDialog = null;
             }
-            clipCamera.closeCamera();
+            try {
+                clipCamera.closeCamera();
+            } catch (Exception e) {
+
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

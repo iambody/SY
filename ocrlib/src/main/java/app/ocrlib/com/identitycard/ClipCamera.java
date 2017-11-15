@@ -91,11 +91,15 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCamera.stopPreview();//停止预览
-        mCamera.release();//释放相机资源
-        mCamera = null;
-        holder = null;
+        try {
+            mCamera.stopPreview();//停止预览
+            mCamera.release();//释放相机资源
+            mCamera = null;
+            holder = null;
+        } catch (Exception e) {
+        }
     }
+
     public void closeCamera() {
         if (mCamera == null) {
             return;
@@ -104,6 +108,7 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
         mCamera.release();
         mCamera = null;
     }
+
     @Override
     public void onAutoFocus(boolean success, Camera camera) {
         if (success) {
@@ -160,12 +165,9 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
     /**
      * 通过对比得到与宽高比最接近的尺寸（如果有相同尺寸，优先选择）
      *
-     * @param surfaceWidth
-     *            需要被进行对比的原宽
-     * @param surfaceHeight
-     *            需要被进行对比的原高
-     * @param preSizeList
-     *            需要对比的预览尺寸列表
+     * @param surfaceWidth  需要被进行对比的原宽
+     * @param surfaceHeight 需要被进行对比的原高
+     * @param preSizeList   需要对比的预览尺寸列表
      * @return 得到与原宽高比例最接近的尺寸
      */
     protected Camera.Size getCloselyPreSize(int surfaceWidth, int surfaceHeight,
@@ -178,12 +180,12 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
 //            ReqTmpWidth = surfaceHeight;
 //            ReqTmpHeight = surfaceWidth;
 //        } else {
-            ReqTmpWidth = surfaceWidth;
-            ReqTmpHeight = surfaceHeight;
+        ReqTmpWidth = surfaceWidth;
+        ReqTmpHeight = surfaceHeight;
 //        }
         //先查找preview中是否存在与surfaceview相同宽高的尺寸
-        for(Camera.Size size : preSizeList){
-            if((size.width == ReqTmpWidth) && (size.height == ReqTmpHeight)){
+        for (Camera.Size size : preSizeList) {
+            if ((size.width == ReqTmpWidth) && (size.height == ReqTmpHeight)) {
                 return size;
             }
         }
@@ -204,6 +206,7 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
 
         return retSize;
     }
+
     /**
      * 从列表中选取合适的分辨率
      * 默认w:h = 4:3
