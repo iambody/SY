@@ -353,6 +353,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     } else {//失败
                         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
                         Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
+//                        PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -362,6 +363,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
             @Override
             protected void onRxError(Throwable error) {
+                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                 isCanclick = true;
                 if (null != mLoadingDialog)
                     mLoadingDialog.dismiss();

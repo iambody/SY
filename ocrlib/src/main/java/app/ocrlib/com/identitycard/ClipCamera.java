@@ -138,8 +138,8 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
         for (Camera.Size size : previewSizeList) {
             Log.i(TAG, "previewSizeList size.width=" + size.width + "  size.height=" + size.height);
         }
-//        Camera.Size preSize = getProperSize(previewSizeList, ((float) height) / width);
-        Camera.Size preSize =getCloselyPreSize(width,height,previewSizeList);
+        Camera.Size preSize = getProperSize(previewSizeList, ((float) height) / width);
+//        Camera.Size preSize =getCloselyPreSize(width,height,previewSizeList);
         if (null != preSize) {
             Log.i(TAG, "preSize.width=" + preSize.width + "  preSize.height=" + preSize.height);
 //            parameters.setPreviewSize(preSize.width, preSize.height);

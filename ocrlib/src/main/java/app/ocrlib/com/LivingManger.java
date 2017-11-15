@@ -1,9 +1,7 @@
 package app.ocrlib.com;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +10,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.LivingSign;
 import com.google.gson.Gson;
@@ -57,7 +56,8 @@ public class LivingManger {
     private static boolean isShowFail = true;
     //主题颜色
     private static String color;
-    private static ProgressDialog progressDlg;
+//    private static ProgressDialog progressDlg;
+    private static LoadingDialog mLoadingDialog;
     private static SharedPreferences sp;
     private static LivingSign livingSign;
     private static int MangerType;
@@ -132,7 +132,8 @@ public class LivingManger {
                 IdentifyCardValidate vali = new IdentifyCardValidate();
                 String msg = vali.validate_effective(Cardid);
                 if (msg.equals(Cardid)) {
-                    progressDlg.show();
+//                    progressDlg.show();
+                    mLoadingDialog.show();
                     getSign();
                 } else {
                     Toast.makeText(livingContext, "用户证件号错误", Toast.LENGTH_SHORT).show();
@@ -193,7 +194,8 @@ public class LivingManger {
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
-                progressDlg.dismiss();
+//                progressDlg.dismiss();
+                mLoadingDialog.dismiss();
                 PromptManager.ShowCustomToast(livingContext, "获取sign失败");
             }
         });
@@ -220,7 +222,7 @@ public class LivingManger {
                 nonce,
                 userId,
                 sign,
-                sp.getBoolean(modeShowGuide, true),
+                false,// sp.getBoolean(modeShowGuide, true),
                 mode,
                 keyicen);
 
@@ -236,7 +238,8 @@ public class LivingManger {
         WbCloudFaceVerifySdk.getInstance().init(livingContext, data, new WbCloudFaceVerifySdk.FaceVerifyLoginListener() {
             @Override
             public void onLoginSuccess() {
-                progressDlg.dismiss();
+//                progressDlg.dismiss();
+                mLoadingDialog.dismiss();
                 WbCloudFaceVerifySdk.getInstance().startActivityForSecurity(new WbCloudFaceVerifySdk.FaceVerifyResultForSecureListener() {
                     @Override
                     public void onFinish(int resultCode, boolean nextShowGuide, String faceCode, String faceMsg, String sign, Bundle extendData) {
@@ -283,7 +286,8 @@ public class LivingManger {
 
             @Override
             public void onLoginFailed(String errorCode, String errorMsg) {
-                progressDlg.dismiss();
+//                progressDlg.dismiss();
+                mLoadingDialog.dismiss();
                 //需要通知后台
 //                if (2 == MangerType) {
 //                    sendDataResult(imageUrl, Cardid, Cardname, cardValidity, orderNum, errorCode, credentialCode, customerCode, type);
@@ -304,27 +308,28 @@ public class LivingManger {
      * 初始化进度条
      */
     private void initProgress() {
-        if (progressDlg != null) {
-            progressDlg.dismiss();
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            progressDlg = new ProgressDialog(livingContext);
-        } else {
-            progressDlg = new ProgressDialog(livingContext);
-            progressDlg.setInverseBackgroundForced(true);
-        }
-        progressDlg.setMessage("加载中...");
-        progressDlg.setIndeterminate(true);
-        progressDlg.setCanceledOnTouchOutside(false);
-        progressDlg.setCancelable(true);
-        progressDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDlg.setCancelable(false);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(livingContext,"进入识别系统中...", false, false);
+//        if (progressDlg != null) {
+//            progressDlg.dismiss();
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+//            progressDlg = new ProgressDialog(livingContext);
+//        } else {
+//            progressDlg = new ProgressDialog(livingContext);
+//            progressDlg.setInverseBackgroundForced(true);
+//        }
+//        progressDlg.setMessage("加载中...");
+//        progressDlg.setIndeterminate(true);
+//        progressDlg.setCanceledOnTouchOutside(false);
+//        progressDlg.setCancelable(true);
+//        progressDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDlg.setCancelable(false);
     }
 
     public static void destory() {
-        if (null != progressDlg) {
-            progressDlg.dismiss();
-            progressDlg = null;
+        if (null !=  mLoadingDialog ) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
         }
 
     }
@@ -349,7 +354,7 @@ public class LivingManger {
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
-                progressDlg.dismiss();
+                mLoadingDialog.dismiss();
                 PromptManager.ShowCustomToast(livingContext, "系统开小差了，暂时无法提交，请稍后再试！");
             }
         });
