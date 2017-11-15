@@ -261,17 +261,17 @@ public class LivingManger {
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
-                        if (71000 == resultCode) {
+                        if (71000 == resultCode) {//人脸在框检测超时
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
-                        if (10000 == resultCode) {
-                            PromptManager.ShowCustomToast(livingContext, "取消识别");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
-                            return;
-                        }
-                        if (22000 == resultCode) {
+//                        if (10000 == resultCode) {//1.请确保光线充足;2.请确保人脸正对框内;3.请确保脸部无遮挡
+//                            PromptManager.ShowCustomToast(livingContext, "取消识别");
+//                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+//                            return;
+//                        }
+                        if (22000 == resultCode) {//手机返回键：用户验证中取消
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
