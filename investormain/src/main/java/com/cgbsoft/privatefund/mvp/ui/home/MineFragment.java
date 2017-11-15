@@ -377,6 +377,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
         } else {
             noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+            privateBackBottomButtons.setVisibility(View.GONE);
 //            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
         }
         if (TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
