@@ -875,7 +875,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                             uploadSecond.setVisibility(View.VISIBLE);
                             Imageload.display(this, secondUrl, uploadSecond);
                             secondPhotoPath = secondUrl;
-
                         }
                         if ("70".equals(stateCode)) {
                             uploadSecondCover.setVisibility(View.VISIBLE);
