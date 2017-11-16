@@ -58,6 +58,8 @@ public class ReceiveInfoManager {
         public void handleMessage(Message msg) {
             Activity mCurrentActivityContext = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
             if (("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "LoadCustomerActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "SplashMovieActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
                     "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
