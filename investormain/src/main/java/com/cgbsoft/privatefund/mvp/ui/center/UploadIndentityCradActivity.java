@@ -531,7 +531,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
             @Override
             public void livingSucceed(LivingResultData resultData) {
-                mLoadingDialog.dismiss();
+                hideLoadDialog();
+                livingLoadingState = false;
                 Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
                 switch (resultData.getRecognitionCode()) {
                     //0 成功 1客服审核 2ocr错误 3标识失败
@@ -588,6 +589,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             @Override
             public void livingFailed(LivingResultData resultData) {
                 Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
+                hideLoadDialog();
+                livingLoadingState = false;
                 LivingResultData resultData1 = resultData;
                 Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
             }
