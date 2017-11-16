@@ -70,6 +70,7 @@ public class LivingManger {
 
     /**
      * 身份证流程的活体检测构造
+     *
      * @param livingContext
      * @param cardname
      * @param cardid
@@ -255,22 +256,27 @@ public class LivingManger {
                         }
                         if (40000 == resultCode) {
                             PromptManager.ShowCustomToast(livingContext, "用户拒绝打开权限");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
                             return;
                         }
                         if (21000 == resultCode) {//返回键
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
                             return;
                         }
                         if (80000 == resultCode) {//返回键
+                            PromptManager.ShowCustomToast(livingContext, "请重试");
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
+                            return;
+                        }
+                        if (50000 == resultCode) {//权限异常
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
                             return;
                         }
                         if (71000 == resultCode) {//人脸在框检测超时
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
                             return;
                         }
 //                        if (10000 == resultCode) {// .请确保光线充足;2.请确保人脸正对框内;3.请确保脸部无遮挡
@@ -280,7 +286,7 @@ public class LivingManger {
 //                        }
                         if (22000 == resultCode) {//手机返回键：用户验证中取消
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
-                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
+                            RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK, 1);
                             return;
                         }
                         if (resultCode == 0) {//成功

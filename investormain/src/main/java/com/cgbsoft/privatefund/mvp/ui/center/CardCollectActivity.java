@@ -18,7 +18,6 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
@@ -28,7 +27,6 @@ import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
-import com.cgbsoft.privatefund.mvp.ui.home.RiskEvaluationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,8 +128,9 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                     //0代表成功 1代表失败  int值
                     if (0 == personCompare.getResultTage()) {
                         jumpDetial();
+                        Toast.makeText(baseContext,"身份验证通过",Toast.LENGTH_LONG).show();
                         DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"成功","拍照");
-//                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
+
                     } else {
                         Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
                         DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","拍照");

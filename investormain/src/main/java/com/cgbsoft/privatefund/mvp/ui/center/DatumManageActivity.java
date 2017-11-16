@@ -119,8 +119,9 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     if (0 == personCompare.getResultTage()) {
                         if (isClickRisk)
                             NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        Toast.makeText(baseContext,"身份验证通过",Toast.LENGTH_LONG).show();
                         DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"成功","拍照");
-//                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
+
                     } else {
                         Toast.makeText(baseContext, "识别失败，请点击重试", Toast.LENGTH_LONG).show();
                         DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","拍照");

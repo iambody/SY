@@ -14,9 +14,9 @@ public class NetConfig {
 //    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
-    //    private static String START_APP = "https://app";
-//    public static String START_APP = "https://app";//sim
-        public static String START_APP = "https://t3-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+        private static String START_APP = "https://app";
+//    public static String START_APP = "https://t3-app";//sim
+//        public static String START_APP = "https://sim-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
