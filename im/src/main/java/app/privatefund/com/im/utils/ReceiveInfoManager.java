@@ -134,7 +134,7 @@ public class ReceiveInfoManager {
                                 infoDialog = null;
                             }
                             if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
-                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getDialogTitle(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
+                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
                                     @Override
                                     public void left() {
                                         this.dismiss();
