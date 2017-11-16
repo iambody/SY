@@ -36,7 +36,7 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
      *
      * @param message 收到的消息实体。
      * @param left    剩余未拉取消息数目。
-     * @return 收到消息是否处理完成，true 表示走自已的处理方式，false 走融云默认处理方式。
+     * @return 收到消息是否处理完成，true表示走自已的处理方式，false走融云默认处理方式。
      */
     @Override
     public boolean onReceived(Message message, int left) {
@@ -117,15 +117,17 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                     }
             }
         }
-        if (TextUtils.equals(message.getSenderUserId(), Constant.msgNoKnowInformation) && !Utils.isAppRunningOnTop(InvestorAppli.getContext(), InvestorAppli.getContext().getPackageName())) {
-            UserInfo info = RongUserInfoManager.getInstance().getUserInfo(message.getTargetId()); // 修改活动后台不能显示通知问题
-            if (info != null) {
-                info.setName(" ");
-                RongUserInfoManager.getInstance().setUserInfo(info);
-            }
-            MessageNotificationManager.getInstance().notifyIfNeed(InvestorAppli.getContext(), message, left);
-        }
-        return true;
+//        if (!Utils.isAppRunningOnTop(InvestorAppli.getContext(), InvestorAppli.getContext().getPackageName())) {
+//            UserInfo info = RongUserInfoManager.getInstance().getUserInfo(message.getTargetId()); // 修改活动后台不能显示通知问题
+//            if (info != null) {
+//                info.setName(" ");
+//                RongUserInfoManager.getInstance().setUserInfo(info);
+//            }
+//            System.out.println("-------notifyIfNeed");
+//            MessageNotificationManager.getInstance().notifyIfNeed(InvestorAppli.getContext(), message, left);
+//        }
+//        return true;
+        return false;
     }
 
     @Override
