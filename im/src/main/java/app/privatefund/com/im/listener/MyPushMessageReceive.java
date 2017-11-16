@@ -90,14 +90,17 @@ public class MyPushMessageReceive extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
-        if (!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversationAll(pushNotificationMessage.getSenderId())) {
+        if(!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversationAll(pushNotificationMessage.getSenderId()) &&
+               !TextUtils.isEmpty(pushNotificationMessage.getPushFlag()) && TextUtils.equals("true", pushNotificationMessage.getPushFlag()) ){
+            return true;
+        } else if (!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversationAll(pushNotificationMessage.getSenderId())) {
 //             PageJumpMananger.jumpPageFromToMainActivity(context, pushNotificationMessage);
             System.out.println("------onnotifacationmessageclicked");
-//            Intent notificationIntent = Router.build(Uri.parse(RouteConfig.GOTO_FIRST_ACTIVITY)).getIntent(context);
-//            notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//            notificationIntent.setAction(Intent.ACTION_MAIN);
-//            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(notificationIntent);
+            Intent notificationIntent = Router.build(Uri.parse(RouteConfig.GOTO_FIRST_ACTIVITY)).getIntent(context);
+            notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            notificationIntent.setAction(Intent.ACTION_MAIN);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(notificationIntent);
             return true;
         }
         return false;

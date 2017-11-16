@@ -12,14 +12,18 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.google.gson.Gson;
 
 import app.privatefund.com.im.bean.SMMessage;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.notification.MessageNotificationManager;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 import io.rong.message.CommandMessage;
 import io.rong.message.TextMessage;
 
@@ -113,7 +117,15 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                     }
             }
         }
-        return false;
+        if (TextUtils.equals(message.getSenderUserId(), Constant.msgNoKnowInformation) && !Utils.isAppRunningOnTop(InvestorAppli.getContext(), InvestorAppli.getContext().getPackageName())) {
+            UserInfo info = RongUserInfoManager.getInstance().getUserInfo(message.getTargetId()); // 修改活动后台不能显示通知问题
+            if (info != null) {
+                info.setName(" ");
+                RongUserInfoManager.getInstance().setUserInfo(info);
+            }
+            MessageNotificationManager.getInstance().notifyIfNeed(InvestorAppli.getContext(), message, left);
+        }
+        return true;
     }
 
     @Override
