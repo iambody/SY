@@ -85,7 +85,7 @@ public class ReceiveInfoManager {
                         if (detail == null || detail.equals("") || "".equals(title)) {
                             return;
                         }
-                        if (infoDialog != null && infoDialog.isShowing()) {
+                        if (infoDialog != null && infoDialog.isShowing() && !currentActivity.isFinishing()) {
                             infoDialog.dismiss();
                             infoDialog = null;
                         }
@@ -129,7 +129,7 @@ public class ReceiveInfoManager {
                         final SMMessage smMessage = (SMMessage) bundle.getSerializable("smMessage");
                         Activity mCurrentActivity = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
                         if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
-                            if (infoDialog != null && infoDialog.isShowing()) {
+                            if (infoDialog != null && infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.dismiss();
                                 infoDialog = null;
                             }
