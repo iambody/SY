@@ -870,6 +870,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
             }
         }
+        DataStatistApiParam.mineAssectClick(stateName);
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
@@ -911,6 +912,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
         }
+        DataStatistApiParam.mineAssectGroup();
     }
 
     /**
@@ -960,6 +962,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
             }
         }
+        DataStatistApiParam.investmentCalendar();
     }
 
     @OnClick(R.id.mine_bank_datum_manager_ll)
@@ -982,6 +985,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }
+        DataStatistApiParam.dataManager();
     }
 
     private void toAssertMatchActivit() {
@@ -1410,4 +1414,3 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 }
-

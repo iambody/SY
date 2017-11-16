@@ -17,6 +17,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -79,6 +80,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
         Intent intent = new Intent(this, CardCollectAddActivity.class);
         intent.putExtra("indentityCode", indentityCode);
         startActivity(intent);
+        DataStatistApiParam.cardCollectPlus();
     }
 
     @Override
@@ -114,6 +116,7 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
             @Override
             public void itemClick(int position, CardListEntity.CardBean cardBean) {
                 goToUploadPage(cardBean);
+                DataStatistApiParam.cardCollectClick(cardBean.getCode());
             }
         });
     }
@@ -127,9 +130,12 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                     //0代表成功 1代表失败  int值
                     if (0 == personCompare.getResultTage()) {
                         jumpDetial();
+                        DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"成功","拍照");
 //                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","拍照");
+
                     }
                 }
             }
@@ -285,15 +291,20 @@ public class CardCollectActivity extends BaseActivity<CardCollectPresenterImpl> 
                                 case "0":
                                     resultData.getRecognitionCode();
                                     jumpDetial();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"成功","活体");
+
                                     break;
                                 case "1":
                                     Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
 //                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
                                     break;
                                 case "2":
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
                                     break;
                                 case "3":
                                     Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
                                     break;
                             }
 

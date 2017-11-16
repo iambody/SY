@@ -119,9 +119,11 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     if (0 == personCompare.getResultTage()) {
                         if (isClickRisk)
                             NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"成功","拍照");
 //                        Toast.makeText(baseContext,"识别成功请上传证件",Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(baseContext, "识别失败，请点击重试", Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","拍照");
                     }
                 }
             }
@@ -266,16 +268,20 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 switch (resultData.getRecognitionCode()) {
                     case "0":
                         NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"成功","活体");
                         break;
                     case "1":
                         Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
 //                        Toast.makeText(baseContext, "识别成功进入客服审核。", Toast.LENGTH_LONG).show();
 //                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
                         break;
                     case "2":
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
                         break;
                     case "3":
                         Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
                         break;
                 }
             }
@@ -311,6 +317,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         } else {
             GestureManager.showGroupGestureManage(this, GestureManager.RELATIVE_ASSERT_IN_DATDMANAGE);
         }
+        DataStatistApiParam.cardCollect("资料管理");
     }
 
     private void credentialJump() {

@@ -44,6 +44,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.BuildConfig;
@@ -207,6 +208,7 @@ public class PersonalInformationActivity extends BaseActivity<PersonalInformatio
         } else {
             GestureManager.showGroupGestureManage(this, GestureManager.PERSONINFOACTIVITY);
         }
+        DataStatistApiParam.cardCollect("个人信息");
     }
 
     private void goToCardCollect() {

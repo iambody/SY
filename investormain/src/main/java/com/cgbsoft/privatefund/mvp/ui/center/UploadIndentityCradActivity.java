@@ -35,6 +35,7 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
@@ -649,6 +650,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         } else {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
+        DataStatistApiParam.otherCardUpload(credentialModel.getCode());
     }
 
     @Override

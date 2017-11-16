@@ -1693,7 +1693,118 @@ public class DataStatistApiParam {
         data3.put("grp", "2050");
         data3.put("act", "20503");
         data3.put("arg1", "活体检测结果");
-        data3.put("arg4", faceCode);
+        data3.put("arg2", faceCode);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 证件夹点击
+     * @param from
+     */
+    public static void cardCollect(String from){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20500");
+        data3.put("arg1", "点击证件夹");
+        data3.put("arg2", from);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 证件夹列表点击
+     * @param code
+     */
+    public static void cardCollectClick(String code){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20501");
+        data3.put("arg1", "点击证件列表");
+        data3.put("arg2", code);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 证件夹列表点击
+     */
+    public static void cardCollectPlus(){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20502");
+        data3.put("arg1", "点击加号");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 证件夹列表点击
+     */
+    public static void otherCardUpload(String code){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20504");
+        data3.put("arg1", "详情非身份证上传");
+        data3.put("arg2",code);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 敏感操作验身
+     */
+    public static void sensitiveBodyExam(String code,String isSuccess,String type){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20505");
+        data3.put("arg1", "敏感操作验身");
+        data3.put("arg2",code);
+        data3.put("arg3",isSuccess);
+        data3.put("type",type);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     * 点击关联资产
+     */
+    public static void mineAssectClick(String stateStr){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20506");
+        data3.put("arg1", "我的页面按钮点击");
+        data3.put("arg2",stateStr);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     *
+     * @param
+     */
+    public static void mineAssectGroup(){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20507");
+        data3.put("arg1", "资产组合");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     *
+     * @param
+     */
+    public static void investmentCalendar(){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20508");
+        data3.put("arg1", "投资日历");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
+    /**
+     *
+     * @param
+     */
+    public static void dataManager(){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20509");
+        data3.put("arg1", "资料管理");
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
