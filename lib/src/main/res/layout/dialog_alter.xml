@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
@@ -24,20 +24,23 @@
 
         <EditText
             android:id="@+id/dialog_alter_contentedittext"
-            android:layout_width="200dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ui_5_dip"
+            android:layout_marginTop="@dimen/ui_15_dip"
             android:background="@drawable/shape_dialog_alter"
            android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:padding="@dimen/ui_5_dip"
             android:textSize="@dimen/dimens_sp_14" />
-
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ui_10_dip"
+    android:visibility="invisible"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimens_point2_dp"
-            android:layout_marginTop="@dimen/ui_10_dip"
+            android:layout_marginTop="@dimen/ui_20_dip"
             android:src="@color/gray_font" />
 
         <LinearLayout
@@ -51,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/select_dialog_alter_left"
+                android:background="@drawable/default_dialog_left_btn_select"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -59,22 +62,23 @@
                 android:text="取消"
                 />
 
-            <ImageView
-                android:layout_width="@dimen/dimens_point2_dp"
-                android:layout_height="match_parent"
-                android:src="@color/gray_font" />
-
             <TextView
                 android:id="@+id/dialog_alter_rightbt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/select_dialog_alter_right"
+                android:background="@drawable/ios_right_btn_select"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:padding="@dimen/ui_10_dip"
                 android:text="确定" />
+
+            <ImageView
+                android:layout_width="@dimen/dimens_point2_dp"
+                android:layout_height="match_parent"
+                android:src="@color/gray_font" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

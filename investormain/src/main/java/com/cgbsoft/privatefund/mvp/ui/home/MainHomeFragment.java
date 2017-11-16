@@ -344,6 +344,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        });
 //        dialog.show();
 //        UiSkipUtils.toNextActivityWithIntent(baseActivity,new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,"s"));
+
+
+
+
     }
 
 
