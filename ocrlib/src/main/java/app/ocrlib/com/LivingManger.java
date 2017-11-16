@@ -11,6 +11,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
@@ -247,6 +248,8 @@ public class LivingManger {
                         if (faceCode == null) {
                             faceCode = "";
                         }
+                        DataStatistApiParam.livingBodyCodeResult(faceCode);
+
                         if (faceMsg == null) {
                             faceMsg = "";
                         }

@@ -1684,6 +1684,18 @@ public class DataStatistApiParam {
     }
 
 
+    /**
+     * 活体检测结果
+     * @param
+     */
+    public static void livingBodyCodeResult(String faceCode) {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2050");
+        data3.put("act", "20503");
+        data3.put("arg1", "活体检测结果");
+        data3.put("arg4", faceCode);
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
 
 
 
