@@ -255,12 +255,12 @@ public class LivingManger {
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
-                        if (21000 == resultCode) {
+                        if (21000 == resultCode) {//返回键
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
                         }
-                        if (80000 == resultCode) {
+                        if (80000 == resultCode) {//返回键
                             PromptManager.ShowCustomToast(livingContext, "取消识别");
                             RxBus.get().post(RxConstant.COMPIANCE_LIVING_BACK,1);
                             return;
