@@ -43,7 +43,7 @@ public class AlterDialog extends BaseDialog implements View.OnClickListener {
      * @param content 对话框内容
      */
     public AlterDialog(Context context, String title, String content, AlterCommitListener altercommintlistener) {
-        this(context, R.style.dialog_comment);
+        this(context, R.style.dialog_comment_style);
         this.currentContent = content;
         this.showTitle = title;
         this.altercommintListener = altercommintlistener;
@@ -77,10 +77,10 @@ public class AlterDialog extends BaseDialog implements View.OnClickListener {
     private void initConfig() {
         //配置信息
         WindowManager.LayoutParams wparams = getWindow().getAttributes();
-        wparams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        wparams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        wparams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wparams.height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        wparams.gravity = Gravity.CENTER_HORIZONTAL;
+        wparams.gravity = Gravity.BOTTOM;
         getWindow().setAttributes(wparams);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //开始初始化

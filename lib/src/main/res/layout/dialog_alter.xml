@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/select_dialog_alter_left"
+                android:background="@drawable/default_dialog_left_btn_select"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -69,7 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/select_dialog_alter_right"
+                android:background="@drawable/ios_right_btn_select"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"

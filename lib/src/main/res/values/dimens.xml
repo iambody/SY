@@ -73,4 +73,5 @@
     <dimen name="ui_240_px">240px</dimen>
     <dimen name="ui_220_px">220px</dimen>
     <dimen name="dimens_point2_dp">0.2dp</dimen>
+    <dimen name="ui_26_dip">26dp</dimen>
 </resources>
