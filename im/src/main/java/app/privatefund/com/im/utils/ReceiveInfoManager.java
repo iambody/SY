@@ -92,7 +92,7 @@ public class ReceiveInfoManager {
                             infoDialog = null;
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        if (Constant.msgSystemStatus.equals(SenderId)) {
+                        if (!isNewTitle(title)) {
                             infoDialog = new DefaultDialog(currentActivity, title, detail, "返回", rightText) {
                                 @Override
                                 public void left() {
@@ -135,7 +135,7 @@ public class ReceiveInfoManager {
                                 infoDialog.dismiss();
                                 infoDialog = null;
                             }
-                            if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
+                            if (!isNewTitle(smMessage.getButtonTitle())) {
                                 infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
                                     @Override
                                     public void left() {
@@ -189,6 +189,14 @@ public class ReceiveInfoManager {
             }
         }
     };
+
+    private boolean isNewTitle(String title) {
+        return  TextUtils.equals("早知道", title) ||
+                TextUtils.equals("头条号", title) ||
+                TextUtils.equals("大视野", title) ||
+                TextUtils.equals("名家谈", title) ||
+                TextUtils.equals("云观察", title);
+    }
 
     private void onClickConfirm(String jumpUrl, String title, String shareType) {
         if (jumpUrl.contains("Android")) {
