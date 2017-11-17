@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
@@ -12,9 +13,12 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
@@ -27,9 +31,19 @@ import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:09
@@ -274,7 +288,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //获取更多评论接口
     @Override
     public void getMoreCommont(String voideoId, String CommontId) {
-
         addSubscription(ApiClient.videoCommentLs(voideoId, CommontId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -288,6 +301,25 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }));
     }
 
+    @Override
+    public void addressValidateResult() {
+        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
+        okHttpClient.newCall(request).enqueue(new Callback(){
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String content = new String(response.body().bytes(), "utf-8");
+                getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (NetUtils.isNetworkAvailable(getContext())) {
+                    getView().setAddressValidateResult("0");
+                }
+            }
+        });
+    }
 
     /**
      * 获取本地数据

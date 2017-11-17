@@ -288,6 +288,8 @@ public class NetConfig {
 
     // 获取资源文件的相关信息
     public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
+    // 腾讯视频内容校验文件
+    public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
     //视频相关模块
     static class VIDEO {
