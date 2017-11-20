@@ -240,7 +240,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private boolean isOnPause;
     private int onPausePlayStauts = -1;//默认为-1，没在播放为0 在播放为1
-    private String videoValidateResult; // 视频内容校验结果 1 ：通过， 0 不通过
+//    private String videoValidateResult; // 视频内容校验结果 1 ：通过， 0 不通过
 
     @Override
     protected void after() {
@@ -258,7 +258,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        getPresenter().addressValidateResult();
+//        getPresenter().addressValidateResult();
         videoId = getIntent().getStringExtra("videoId");
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
@@ -413,10 +413,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     }
 
-    @Override
-    public void setAddressValidateResult(String values) {
-        videoValidateResult = values;
-    }
+//    @Override
+//    public void setAddressValidateResult(String values) {
+//        videoValidateResult = values;
+//    }
 
     @OnClick(R2.id.ll_mvv_nowifi)
     void noWifiClick() {
@@ -744,9 +744,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             ll_mvv_nowifi.setVisibility(View.VISIBLE);
             return;
         }
-        if (!urlValdateResult()) {
-            return;
-        }
+//        if (!urlValdateResult()) {
+//            return;
+//        }
         List<VideoInfo> videos = new ArrayList<>();
         VideoInfo v1 = new VideoInfo();
         VideoInfo v2 = new VideoInfo();
@@ -795,9 +795,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             return;
         }
 
-        if (!urlValdateResult()) {
-            return;
-        }
+//        if (!urlValdateResult()) {
+//            return;
+//        }
 
         int isLocalType = -1;
         boolean isCouldLocalPlay = false;
@@ -896,13 +896,13 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
     }
 
-    private boolean urlValdateResult() {
-        if (TextUtils.equals(videoValidateResult, "0")) {
-            MToast.makeText(this, getResources().getString(R.string.video_play_env_exception), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
+//    private boolean urlValdateResult() {
+//        if (TextUtils.equals(videoValidateResult, "0")) {
+//            MToast.makeText(this, getResources().getString(R.string.video_play_env_exception), Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        return true;
+//    }
 
     protected void seekToPlay(int i) {
         if (seekFlag) {

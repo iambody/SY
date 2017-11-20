@@ -301,34 +301,34 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }));
     }
 
-    @Override
-    public void addressValidateResult() {
-        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
-        okHttpClient.newCall(request).enqueue(new Callback(){
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String contentLenght = response.header("Content-Length");
-                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
-                        String content = new String(response.body().bytes(), "utf-8");
-                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
-                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
-                        getView().setAddressValidateResult("0");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                if (NetUtils.isNetworkAvailable(getContext())) {
-                    getView().setAddressValidateResult("0");
-                }
-            }
-        });
-    }
+//    @Override
+//    public void addressValidateResult() {
+//        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
+//        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
+//        okHttpClient.newCall(request).enqueue(new Callback(){
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                try {
+//                    String contentLenght = response.header("Content-Length");
+//                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
+//                        String content = new String(response.body().bytes(), "utf-8");
+//                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
+//                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
+//                        getView().setAddressValidateResult("0");
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                if (NetUtils.isNetworkAvailable(getContext())) {
+//                    getView().setAddressValidateResult("0");
+//                }
+//            }
+//        });
+//    }
 
     /**
      * 获取本地数据
