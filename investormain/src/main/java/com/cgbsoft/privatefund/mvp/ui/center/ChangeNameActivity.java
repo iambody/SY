@@ -17,6 +17,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PersonalInformationPresenterImpl;
 import com.chenenyu.router.annotation.Route;
@@ -155,6 +156,11 @@ public class ChangeNameActivity extends BaseActivity<PersonalInformationPresente
 
     @Override
     public void verifyIndentityError(Throwable error) {
+
+    }
+
+    @Override
+    public void verifyIndentityV3Success(CredentialStateMedel credentialStateMedel) {
 
     }
 

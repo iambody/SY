@@ -53,6 +53,7 @@ import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
@@ -186,6 +187,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.tab_layout)
     XTabLayout xTabLayout;
 
+    @BindView(R.id.private_bank_bottom_buttons)
+    LinearLayout privateBackBottomButtons;
+
     @BindView(R.id.viewpager)
     CustomViewPage viewPager;
 
@@ -202,25 +206,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private Observable<Boolean> swtichAssetObservable;
     private Observable<String> switchGroupObservable;
     private List<HorizontalScrollFragment> videoList;
+    private CredentialStateMedel credentialStateMedel;
 
     private BadgeView waitSender;
     private BadgeView waitReceiver;
     private UnreadInfoNumber unreadInfoNumber;
 
     public static final String LEVER_NAME = "lever_name_value";
-    private String identity;
-    private String hasIdCard;
-    private String title;
-    private String credentialCode;
-    private String status;
-    private String statusCode;
-    private boolean isClickBack;
-    private String customerName;
-    private String credentialNumber;
-    private String credentialTitle;
-    private String existStatus;
-
-//    private Handler handler = new Handler() {
+    public boolean isClickBack;
+    private Observable<Integer> refreshCredentialObservable;
+    private String stateCode;
+    private String stateName;
+    private String livingState;
+    //    private Handler handler = new Handler() {
 //        @Override
 //        public void handleMessage(Message msg) {
 //            float currentProgress = (float) (roundProgressbar.getProgress());
@@ -276,48 +274,48 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode, String status, String statusCode, String customerName, String credentialNumber, String credentialTitle, String existStatus, String credentialCodeExist) {
-        this.identity = identity;
-        this.hasIdCard = hasIdCard;
-        this.title = title;
-        this.credentialCode = "45".equals(existStatus) ? credentialCodeExist : credentialCode;
-        this.status = status;
-        this.statusCode = statusCode;
-        this.customerName = customerName;
-        this.credentialNumber = credentialNumber;
-        this.credentialTitle = credentialTitle;
-        this.existStatus = existStatus;
-        if (TextUtils.isEmpty(statusCode)) {
-            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
-        } else if (!TextUtils.isEmpty(statusCode) && "50".equals(statusCode)) {
-            noRelativeAssert.setVisibility(View.GONE);
-        } else {
-            noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
-//            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
-        }
-
-        if (isClickBack) {
-            isClickBack = false;
-            if ("45".equals(existStatus)) {
-                replenishCards();
-            } else {
-                if (!TextUtils.isEmpty(identity)) {
-                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
-                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                        intent.putExtra("credentialCode", credentialCode);
-                        intent.putExtra("indentityCode", identity);
-                        intent.putExtra("title", title);
-                        startActivity(intent);
-                    } else {//去证件列表
-                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                        intent.putExtra("indentityCode", identity);
-                        startActivity(intent);
-                    }
-                } else {//无身份
-                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                    startActivity(intent);
-                }
-            }
-        }
+//        this.identity = identity;
+//        this.hasIdCard = hasIdCard;
+//        this.title = title;
+//        this.credentialCode = "45".equals(existStatus) ? credentialCodeExist : credentialCode;
+//        this.status = status;
+//        this.statusCode = statusCode;
+//        this.customerName = customerName;
+//        this.credentialNumber = credentialNumber;
+//        this.credentialTitle = credentialTitle;
+//        this.existStatus = existStatus;
+//        if (TextUtils.isEmpty(statusCode)) {
+//            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
+//        } else if (!TextUtils.isEmpty(statusCode) && "50".equals(statusCode)) {
+//            noRelativeAssert.setVisibility(View.GONE);
+//        } else {
+//            noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), status));
+////            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
+//        }
+//
+//        if (isClickBack) {
+//            isClickBack = false;
+//            if ("45".equals(existStatus)) {
+//                replenishCards();
+//            } else {
+//                if (!TextUtils.isEmpty(identity)) {
+//                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+//                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+//                        intent.putExtra("credentialCode", credentialCode);
+//                        intent.putExtra("indentityCode", identity);
+//                        intent.putExtra("title", title);
+//                        startActivity(intent);
+//                    } else {//去证件列表
+//                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                        intent.putExtra("indentityCode", identity);
+//                        startActivity(intent);
+//                    }
+//                } else {//无身份
+//                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -327,6 +325,118 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             Toast.makeText(getActivity().getApplicationContext(), "服务器忙,请稍后再试!", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    /**
+     * @param credentialStateMedel 获取身份状态信息
+     *                             <p>
+     *                             "credentialDetailId": 8630,
+     *                             "credentialCode": "100101",
+     *                             "customerType": "10",
+     *                             "credentialState": "50",
+     *                             "customerImageState": "0",
+     *                             "idCardStateName": "已通过",
+     *                             "customerIdentity": "1001",
+     *                             "credentialTypeName": "身份证",
+     *                             "customerLivingbodyState": "0",
+     *                             "credentialStateName": "已通过",
+     *                             "idCardState": "50"
+     */
+    @Override
+    public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
+        this.credentialStateMedel = credentialStateMedel;
+        SPreference.putString(getContext(), "imageState", credentialStateMedel.getCustomerImageState());
+        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+            stateCode = credentialStateMedel.getIdCardState();
+            stateName = credentialStateMedel.getIdCardStateName();
+            livingState = credentialStateMedel.getCustomerLivingbodyState();
+        } else {
+            stateCode = credentialStateMedel.getCredentialState();
+            stateName = credentialStateMedel.getCredentialStateName();
+            livingState = credentialStateMedel.getCustomerImageState();
+        }
+
+        //5未上传 10审核中 30驳回 45待补传 50已通过
+        if (TextUtils.isEmpty(stateCode)) {
+            noRelativeAssert.setText(getResources().getString(R.string.account_bank_no_relative_assert));
+        } else if (!TextUtils.isEmpty(stateCode) && ("50".equals(stateCode)) || "45".equals(stateCode)) {
+            if ("45".equals(stateCode)) {
+                noRelativeAssert.setVisibility(View.VISIBLE);
+                noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+            } else {
+                noRelativeAssert.setVisibility(View.GONE);
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+            }
+        } else {
+            noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+            privateBackBottomButtons.setVisibility(View.GONE);
+//            noRelativeAssert.setText(getString(R.string.account_bank_no_relative_assert));
+        }
+        if (TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+            privateBackBottomButtons.setVisibility(View.GONE);
+        }
+
+        if (isClickBack) {
+            isClickBack = false;
+            credentialJump();
+        }
+
+        if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {
+            if ("10".equals(credentialStateMedel.getIdCardState())) {
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+                noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+            }
+            if ("30".equals(credentialStateMedel.getIdCardState())) {
+                privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if ("30".equals(credentialStateMedel.getCredentialState())) {
+                privateBackBottomButtons.setVisibility(View.GONE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+            }
+            if ("10".equals(credentialStateMedel.getCredentialState())) {
+                privateBackBottomButtons.setVisibility(View.VISIBLE);
+                noRelativeAssert.setVisibility(View.VISIBLE);
+                noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
+            }
+        }
+
+//        if (isClickBack) {
+//            isClickBack = false;
+//            if ("45".equals(stateCode)) {
+//                replenishCards();
+//            } else {
+//                if (!TextUtils.isEmpty(identity)) {
+//                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
+//                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+//                        intent.putExtra("credentialCode", credentialCode);
+//                        intent.putExtra("indentityCode", identity);
+//                        intent.putExtra("title", title);
+//                        startActivity(intent);
+//                    } else {//去证件列表
+//                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                        intent.putExtra("indentityCode", identity);
+//                        startActivity(intent);
+//                    }
+//                } else {//无身份
+//                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        }
+
+
+    }
+
+    private void gotoDetial() {
+        Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
+        intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent1);
+    }
+
 
     private void initObserver() {
         swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
@@ -347,6 +457,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
         });
 
+        refreshCredentialObservable = RxBus.get().register(RxConstant.REFRESH_CREDENTIAL_INFO, Integer.class);
+        refreshCredentialObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                getPresenter().verifyIndentityV3();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         switchGroupObservable = RxBus.get().register(RxConstant.SWITCH_GROUP_SHOW, String.class);
         switchGroupObservable.subscribe(new RxSubscriber<String>() {
             @Override
@@ -354,63 +477,83 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                AppInfStore.saveShowAssetStatus(getActivity(), true);
                 switch (valuse) {
                     case GestureManager.ASSERT_GROUP:
+                        if (credentialStateMedel != null) {
 //                        toAssertMatchActivit();
-                        if (null == status) {
-                            isClickBack = true;
-                            getPresenter().verifyIndentity();
-                        } else {
-                            isClickBack = false;
-                            //90：存量已有证件号已上传证件照待审核
-                            if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
-                                replenishCards();
+                            if (null == credentialStateMedel.getCredentialState()) {
+                                isClickBack = true;
+//                            getPresenter().verifyIndentity();
+                                getPresenter().verifyIndentityV3();
                             } else {
-                                toAssertMatchActivit();
+                                isClickBack = false;
+                                //90：存量已有证件号已上传证件照待审核
+                                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                        jumpGuidePage();
+                                    } else {
+                                        toAssertMatchActivit();
+                                    }
+                                } else {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                        jumpCollect();
+                                    } else {
+                                        toAssertMatchActivit();
+                                    }
+                                }
                             }
                         }
                         break;
                     case GestureManager.INVISTE_CARLENDAR:
+                        if (credentialStateMedel != null) {
 //                        toInvestorCarlendarActivity();
-                        if (null == status) {
-                            isClickBack = true;
-                            getPresenter().verifyIndentity();
-                        } else {
-                            isClickBack = false;
-                            //90：存量已有证件号已上传证件照待审核
-                            if ("45".equals(statusCode)) {//存量用户已有证件号码未上传证件照；
-                                replenishCards();
+                            if (null == credentialStateMedel.getCredentialState()) {
+                                isClickBack = true;
+//                            getPresenter().verifyIndentity();
+                                getPresenter().verifyIndentityV3();
                             } else {
-                                toInvestorCarlendarActivity();
+                                isClickBack = false;
+                                //90：存量已有证件号已上传证件照待审核
+                                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                        jumpGuidePage();
+                                    } else {
+                                        toInvestorCarlendarActivity();
+                                    }
+                                } else {
+                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                        jumpCollect();
+                                    } else {
+                                        toInvestorCarlendarActivity();
+                                    }
+                                }
                             }
                         }
                         break;
                     case GestureManager.DATUM_MANAGER:
-                        NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+                        if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                            if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                                jumpGuidePage();
+                            } else {
+                                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                                intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                                startActivity(intent1);
+                            }
+                        } else {
+                            Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                            intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                            startActivity(intent1);
+                        }
                         break;
                     case GestureManager.CENTIFY_DIR:
                         RxBus.get().post(RxConstant.GOTO_SWITCH_CENTIFY_DIR, true);
                         break;
                     case GestureManager.RELATIVE_ASSERT:
-//                        getPresenter().verifyIndentity();
-                        if (null == status) {
-                            isClickBack = true;
-                            getPresenter().verifyIndentity();
-                        } else {
-                            isClickBack = false;
-                            if (!TextUtils.isEmpty(identity)) {
-                                if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
-                                    Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                                    intent.putExtra("credentialCode", credentialCode);
-                                    intent.putExtra("indentityCode", identity);
-                                    intent.putExtra("title", title);
-                                    startActivity(intent);
-                                } else {//去证件列表
-                                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                                    intent.putExtra("indentityCode", identity);
-                                    startActivity(intent);
-                                }
-                            } else {//无身份
-                                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                                startActivity(intent);
+                        if (credentialStateMedel != null) {
+                            if (null == credentialStateMedel.getCredentialState()) {
+                                isClickBack = true;
+                                getPresenter().verifyIndentityV3();
+                            } else {
+                                isClickBack = false;
+                                credentialJump();
                             }
                         }
                         break;
@@ -424,6 +567,35 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             protected void onRxError(Throwable error) {
             }
         });
+    }
+
+    private void credentialJump() {
+        if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+            if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
+                    jumpGuidePage();
+                } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
+                    replenishCards();
+                } else {  //已通过 核身成功
+                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent);
+                }
+            } else {//  非大陆去证件列表
+                Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                startActivity(intent);
+            }
+        } else {//无身份
+            Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void jumpCollect() {
+        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent);
     }
 
     private void showAssert() {
@@ -471,7 +643,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
-        getPresenter().verifyIndentity();
+        getPresenter().verifyIndentityV3();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
         }
@@ -646,9 +818,31 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             return;
         }
         if (showAssert) {
-            hideAssert();
-            showAssert = false;
-            AppInfStore.saveShowAssetStatus(getActivity(), false);
+            if (null == credentialStateMedel.getCredentialState()) {
+                isClickBack = true;
+                getPresenter().verifyIndentityV3();
+            } else {
+                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                    //90：存量已有证件号已上传证件照待审核
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                        jumpGuidePage();
+                    } else {
+                        hideAssert();
+                        showAssert = false;
+                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+                    }
+                    isClickBack = false;
+                } else {
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                        jumpCollect();
+                    } else {
+                        hideAssert();
+                        showAssert = false;
+                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+                    }
+                    isClickBack = false;
+                }
+            }
         } else {
             GestureManager.showAssertGestureManager(getActivity());
         }
@@ -661,35 +855,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
-        if (showAssert) {
-            isClickBack = true;
-
-            if (null == status) {
+        if (null != credentialStateMedel) {
+            if (showAssert) {
                 isClickBack = true;
-                getPresenter().verifyIndentity();
+                if (null == credentialStateMedel.getCredentialState()) {
+                    isClickBack = true;
+                    getPresenter().verifyIndentityV3();
+                } else {
+                    isClickBack = false;
+                    credentialJump();
+                }
             } else {
                 isClickBack = false;
-                if (!TextUtils.isEmpty(identity)) {
-                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
-                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-                        intent.putExtra("credentialCode", credentialCode);
-                        intent.putExtra("indentityCode", identity);
-                        intent.putExtra("title", title);
-                        startActivity(intent);
-                    } else {//去证件列表
-                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                        intent.putExtra("indentityCode", identity);
-                        startActivity(intent);
-                    }
-                } else {//无身份
-                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-                    startActivity(intent);
-                }
+                GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
             }
-        } else {
-            isClickBack = false;
-            GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
         }
+        DataStatistApiParam.mineAssectClick(stateName);
 //        NavigationUtils.startActivity(getActivity(), RelativeAssetActivity.class);
     }
 
@@ -708,21 +889,30 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick({R.id.account_bank_had_bug_ll, R.id.mine_bank_asset_match_ll})
     void clickAssetPieChart() {
         if (showAssert) {
-            if (null == status) {
+            if (null == credentialStateMedel.getCredentialState()) {
                 isClickBack = true;
-                getPresenter().verifyIndentity();
+                getPresenter().verifyIndentityV3();
             } else {
-                isClickBack = false;
-                //90：存量已有证件号已上传证件照待审核
-                if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
-                    replenishCards();
+                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                    //90：存量已有证件号已上传证件照待审核
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                        jumpGuidePage();
+                    } else {
+                        toAssertMatchActivit();
+                    }
                 } else {
-                    toAssertMatchActivit();
+                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                        jumpCollect();
+                    } else {
+                        toAssertMatchActivit();
+                    }
                 }
+                isClickBack = false;
             }
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
         }
+        DataStatistApiParam.mineAssectGroup();
     }
 
     /**
@@ -730,44 +920,72 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
      */
     private void replenishCards() {
         Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-        intent.putExtra("credentialCode", credentialCode);
-        intent.putExtra("indentityCode", identity);
-        intent.putExtra("title", credentialTitle);
-        intent.putExtra("stateCode", existStatus);
-        intent.putExtra("customerName", customerName);
-        intent.putExtra("customerNum", credentialNumber);
-        intent.putExtra("isFromSelectIndentity", true);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转到引导页面
+     */
+    private void jumpGuidePage() {
+        Intent intent = new Intent(getActivity(), CrenditralGuideActivity.class);
+        intent.putExtra("credentialStateMedel", credentialStateMedel);
         startActivity(intent);
     }
 
     @OnClick(R.id.mine_bank_invistor_carlendar_ll)
     void gotoInvestorCarlendarActivity() {
-        if (showAssert) {
+        if (credentialStateMedel != null) {
+            if (showAssert) {
 //            toInvestorCarlendarActivity();
-            if (null == status) {
-                isClickBack = true;
-                getPresenter().verifyIndentity();
-            } else {
-                isClickBack = false;
-                //90：存量已有证件号已上传证件照待审核
-                if ("45".equals(existStatus)) {//存量用户已有证件号码未上传证件照；
-                    replenishCards();
+                if (null == credentialStateMedel.getCredentialState()) {
+                    isClickBack = true;
+                    getPresenter().verifyIndentityV3();
                 } else {
-                    toInvestorCarlendarActivity();
+                    isClickBack = false;
+                    //90：存量已有证件号已上传证件照待审核
+                    if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                        if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                            jumpGuidePage();
+                        } else {
+                            toInvestorCarlendarActivity();
+                        }
+                    } else {
+                        if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                            jumpCollect();
+                        } else {
+                            toInvestorCarlendarActivity();
+                        }
+                    }
                 }
+            } else {
+                GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
             }
-        } else {
-            GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
         }
+        DataStatistApiParam.investmentCalendar();
     }
 
     @OnClick(R.id.mine_bank_datum_manager_ll)
     void gotoDatumCarlendarActivity() {
         if (showAssert) {
-            NavigationUtils.startActivity(getActivity(), DatumManageActivity.class);
+            if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+                if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+                    jumpGuidePage();
+                } else {
+                    Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                    intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                    startActivity(intent1);
+                }
+            } else {
+                Intent intent1 = new Intent(getActivity(), DatumManageActivity.class);
+                intent1.putExtra("credentialStateMedel", credentialStateMedel);
+                startActivity(intent1);
+            }
+
         } else {
             GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }
+        DataStatistApiParam.dataManager();
     }
 
     private void toAssertMatchActivit() {
@@ -1095,10 +1313,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initVideoView() {
         videos = InitApplication.getContext().getResources().getStringArray(R.array.mine_video_tag_text);
         List<VideoInfoModel> playlList = daoUtils.getAllVideoInfoHistory();
-        List<VideoInfoModel> downlList =  daoUtils.getDownLoadVideoInfo();
-
-
-
+        List<VideoInfoModel> downlList = daoUtils.getDownLoadVideoInfo();
 
 
         Log.i("MineFragment", "playlist=" + +playlList.size() + "-----downlList=" + downlList.size());
@@ -1186,6 +1401,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (unreadInfoNumber != null) {
             unreadInfoNumber.onDestroy();
         }
+
+        if (null != refreshCredentialObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_CREDENTIAL_INFO, refreshCredentialObservable);
+        }
     }
 
     @Override
@@ -1195,4 +1414,3 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 }
-

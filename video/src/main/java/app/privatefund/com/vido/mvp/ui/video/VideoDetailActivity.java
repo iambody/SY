@@ -58,6 +58,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kogitune.activity_transition.ActivityTransition;
 import com.kogitune.activity_transition.ExitActivityTransition;
+import com.tencent.beacon.event.UserAction;
 import com.tencent.qcload.playersdk.ui.VideoRootFrame;
 import com.tencent.qcload.playersdk.util.PlayerListener;
 import com.tencent.qcload.playersdk.util.VideoInfo;
@@ -298,8 +299,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
         FloatVideoService.stopService();
-
-
+        UserAction.initUserAction(this. getApplicationContext());
     }
 
     public int getsize() {
@@ -729,7 +729,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     }
 
-
     @Override
     public void onError(Exception e) {
         e.printStackTrace();
@@ -754,8 +753,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         v1.type = VideoInfo.VideoType.MP4;
         v2.description = "高清";
         v2.type = VideoInfo.VideoType.MP4;
-        v1.url = videoInfoModel.sdUrl;
-        v2.url = videoInfoModel.hdUrl;
+        v1.url = Utils.replaceDomainByIp(videoInfoModel.sdUrl);
+        v2.url = Utils.replaceDomainByIp(videoInfoModel.hdUrl);
         videos.add(v1);
         videos.add(v2);
 
@@ -819,15 +818,15 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         if (isCouldLocalPlay) {
             if (isLocalType == 0) {//高清
-                v2.url = videoInfoModel.localVideoPath;
+                v2.url =  Utils.replaceDomainByIp(videoInfoModel.localVideoPath);
                 videos.add(v2);
             } else if (isLocalType == 1) {//标清
-                v1.url = videoInfoModel.localVideoPath;
+                v1.url = Utils.replaceDomainByIp(videoInfoModel.localVideoPath);
                 videos.add(v1);
             }
         } else {
-            v1.url = videoInfoModel.sdUrl;
-            v2.url = videoInfoModel.hdUrl;
+            v1.url = Utils.replaceDomainByIp(videoInfoModel.sdUrl);
+            v2.url = Utils.replaceDomainByIp(videoInfoModel.hdUrl);
             videos.add(v1);
             videos.add(v2);
         }

@@ -26,8 +26,14 @@ public class GestureManager {
     public static final String CENTIFY_DIR = "4";
     public static final String RELATIVE_ASSERT = "5";
     public static final String RELATIVE_ASSERT_IN_DATDMANAGE = "6";
+    public static final String PERSONINFOACTIVITY = "7";
+
     public static boolean isNotFirstLook;
 
+    /**
+     * 显示手势密码
+     * @param context
+     */
     public static void showAssertGestureManager(Context context) {
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
         if (HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch())) {
@@ -41,6 +47,12 @@ public class GestureManager {
         }
     }
 
+    /**
+     * 没有设置手势密码开启
+     * @param context
+     * @param rxConstant
+     * @param values
+     */
     private static void showSetGestureDialog(Context context, String rxConstant, String values) {
         if (!isNotFirstLook) {
             isNotFirstLook = true;
@@ -74,6 +86,11 @@ public class GestureManager {
         }
     }
 
+    /**
+     *
+     * @param context
+     * @param values
+     */
     public static void showGroupGestureManage(Context context, String values) {
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
         if (HAD_GESTRUE_PASSWORD.equals(userInfo.getToC().getGestureSwitch())) {

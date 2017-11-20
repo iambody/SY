@@ -23,7 +23,6 @@ public class MainNavigationUtils {
      */
     public static void startCommonWebActivity(Context context ) {
         Intent intent = new Intent(context, RiskEvaluationActivity.class);
-
         ((Activity) context).startActivity(intent);
 
     }

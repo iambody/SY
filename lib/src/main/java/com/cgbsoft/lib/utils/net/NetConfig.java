@@ -3,7 +3,9 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
@@ -35,6 +37,7 @@ public class NetConfig {
     public final static String API_URL_V3 = "api/v3";
     public final static String LIVE_URL_V2 = "zhibo/v2";
     public final static String AUTH_URL_V2 = "auth/v2";
+    public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
 
     static {
@@ -131,13 +134,16 @@ public class NetConfig {
         final static String COMPLIANCE_LIVING_SIGN = API_URL + compliance + "/livingsign";
         //活体检测的反馈(慕夏处理)
         final static String COMPLIANCE_LIVING_RESULT = API_URL + compliance + "/queryResult";
-        //活体检测的第二次反馈结果(茼筒处理)
-        final static String COMPLIANCE_BEAN_RESULT = API_URL + compliance +"/faceRecognition";
+        //活体检测的反馈结果(茼筒处理)
+        final static String COMPLIANCE_BEAN_RESULT = "/auth/v3/credential/livingbody";//API_URL + compliance +"/recognition";
+        //公共的人脸锁的server反馈结果
+        final static String COMPLIANCE_BEAN_COMMENT_RESULT = "/auth/v3/credential/livingbody/common";//PI_URL + compliance +"/recognition/common";//
         //OCR获取sign
         final static String COMPLIANCE_OCR_SIGN = API_URL + compliance + "/ocrsign";
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
-
+        //人脸照片对比person照片库compare
+        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3+"/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
     }
 
     static class MALL {
@@ -401,9 +407,14 @@ public class NetConfig {
     static class Indentity {
         static final String GET_INDENTITY_TYPE_LIST = AUTH_URL_V2 + "/credential/config";
         static final String VERIFY_INDENTITY = AUTH_URL_V2 + "/credential/info";
-        public static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
-        public static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
-        public static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
+        //新版获取证件信息
+        static final String VERIFY_INDENTITY_V3 = AUTH_URL_V3 + "/credential/baseinfo";
+        static final String CREDENTIALS_DETILS  = AUTH_URL_V3+"/credential/detail";
+        static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
+        static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
+        static final String UPLOAD_OTHER_CREDENTIALS = AUTH_URL_V3 + "/credential/upload";
+        static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
+        static final String GET_LIVING_STATE = AUTH_URL_V3 + "/credential/livingbody/history";
     }
 
     public static class SoDown {

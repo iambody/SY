@@ -1,26 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/head_bg"
+    >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
 
-
+        >
         <SurfaceView
             android:id="@+id/facepicture_surfaceview"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
 
-        <app.ocrlib.com.facepicture.FaceBackgroundView
+            />
 
-            android:layout_width="270dp"
-            android:layout_height="270dp"
-            android:layout_centerHorizontal="true" />
+        <!-- <app.ocrlib.com.facepicture.FaceBackgroundView
+             android:layout_width="wrap_content"
+             android:layout_height="440dp"
+             android:layout_centerHorizontal="true"
+             android:layout_marginLeft="90dp"
+             android:background=""/>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
+            android:scaleType="centerCrop"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/head_outline"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_golden"
+            android:text="保持正脸正对框内"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/dimens_sp_20"
+
+            android:layout_marginTop="@dimen/ui_40_dip"/>
     </RelativeLayout>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:onClick="paizhao"
+        android:src="@drawable/ocr_camera_img1"
+        android:layout_marginBottom="@dimen/ui_20_dip"
+        android:text="拍照" />
+
+
+</RelativeLayout>

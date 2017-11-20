@@ -13,10 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 
-/**
- * Created by yue on 15/10/29.
- * 系统工具
- */
+
 @SuppressWarnings("deprecation")
 public class CameraSystemUtils {
     private CameraSystemUtils() {

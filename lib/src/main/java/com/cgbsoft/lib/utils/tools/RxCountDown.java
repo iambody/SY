@@ -91,6 +91,7 @@ public class RxCountDown {
         if (null != keeptimeSubscription &&! keeptimeSubscription.isUnsubscribed()) {
             keeptimeSubscription.unsubscribe();
             times = 0;
+            keeptimeSubscription=null;
         }
     }
 

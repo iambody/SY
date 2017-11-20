@@ -27,7 +27,8 @@ allprojects {
             // 其他的module编译会报错，所以需要在所有工程的repositories
             // 下把mall module中的libs目录添加到依赖关系中
             //TOdo
-            dirs file(rootDir.absolutePath+'/mall/libs')
+//            dirs file(rootDir.absolutePath+'/mall/libs')
+            dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
         }
     }

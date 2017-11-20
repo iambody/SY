@@ -81,7 +81,7 @@ public class BaseWebview extends WebView {
     private void parseAttr(Context context, AttributeSet attributeSet) {
         TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.initWebView);
         isInitData = ta.getBoolean(R.styleable.initWebView_init, false);
-//        System.out.println("-------initData=" + isInitData);
+//       System.out.println("-------initData=" + isInitData);
         ta.recycle();
     }
 
@@ -124,6 +124,8 @@ public class BaseWebview extends WebView {
                 return true;
             }
         } : cWebClient);
+
+//        this.setWebContentsDebuggingEnabled(true);
     }
 
     //进度显示

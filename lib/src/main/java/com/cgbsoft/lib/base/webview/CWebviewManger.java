@@ -258,6 +258,7 @@ public class CWebviewManger {
             userInfo.getToC().setCustomerType(split[2]);
             AppInfStore.saveUserInfo(context, userInfo);
             NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
+
             context.finish();
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
@@ -1099,7 +1100,7 @@ public class CWebviewManger {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
-        Intent intent = new Intent();
+        Intent intent = new  Intent();
         intent.putExtra(BaseWebViewActivity.BACK_PARAM, index - 1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();

@@ -21,6 +21,7 @@ import com.cgbsoft.lib.R;
 public abstract class DefaultDialog extends BaseDialog {
     private String content, left, right;
     private boolean showTitle = false;
+    private String title;
     private LinearLayout doubleBottomLayout, singleBottomLayout;
 
     public DefaultDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
@@ -41,6 +42,14 @@ public abstract class DefaultDialog extends BaseDialog {
      */
     public DefaultDialog(Context context, String content, String left, String right) {
         this(context, R.style.dialog_comment_style);
+        this.content = content;
+        this.left = left;
+        this.right = right;
+    }
+
+    public DefaultDialog(Context context, String title, String content, String left, String right) {
+        this(context, R.style.dialog_comment_style);
+        this.title = title;
         this.content = content;
         this.left = left;
         this.right = right;
@@ -86,14 +95,18 @@ public abstract class DefaultDialog extends BaseDialog {
         mQueren1.setOnClickListener(v -> right());
         mQuxiao.setOnClickListener(v -> left());
         mQueren.setOnClickListener(v -> right());
+        mTitle.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
+        mTitle.setText(title);
     }
 
+    private TextView mTitle;
     private TextView mContent;
     private TextView mQuxiao;
     private TextView mQueren;
     private TextView mQueren1;
 
     private void bindViews() {
+        mTitle = (TextView) findViewById(R.id.default_dialog_title);
         mContent = (TextView) findViewById(R.id.default_dialog_content);
         mQuxiao = (TextView) findViewById(R.id.default_dialog_quxiao);
         mQueren = (TextView) findViewById(R.id.default_dialog_queren);

@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.contract.home;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.MineModel;
 
 /**
@@ -32,5 +33,12 @@ public interface MineContract {
         void verifyIndentitySuccess(String identity, String hasIdCard, String title, String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus,String credentialCodeExist);
 
         void verifyIndentityError(Throwable e);
+
+        /**
+         *
+         * 获取身份状态信息
+         *
+         */
+        void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel);
     }
 }

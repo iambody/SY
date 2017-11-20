@@ -11,4 +11,5 @@ public interface PersonalInformationModelListener {
     void uploadImgError(Throwable error);
     void verifyIndentitySuccess(String result, String hasIdCard,String title,String credentialCode,String status,String statusCode,String customerName,String credentialNumber,String credentialTitle,String existStatus);
     void verifyIndentityError(Throwable error);
+    void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel);
 }

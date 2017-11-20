@@ -25,6 +25,7 @@ import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import java.util.List;
 import java.util.Map;
@@ -842,6 +843,15 @@ interface RequestManager {
     Observable<ResponseBody> verifyIndentityInOkhttp();
 
     /**
+     * 获取身份信息
+     */
+    @GET(NetConfig.Indentity.VERIFY_INDENTITY_V3)
+    Observable<ResponseBody> verifyIndentityInOkhttpV3();
+
+    @GET(NetConfig.Indentity.GET_LIVING_STATE)
+    Observable<ResponseBody> getLivingCount();
+
+    /**
      * 获取证件列表
      *
      * @param params
@@ -858,6 +868,12 @@ interface RequestManager {
      */
     @POST(NetConfig.Indentity.UPLOAD_REMOTE_PATHS)
     Observable<ResponseBody> uploadRemotePath(@Body RequestBody requestBody);
+
+    @POST(NetConfig.Indentity.UPLOAD_OTHER_CREDENTIALS)
+    Observable<ResponseBody> uploadOtherPath(@Body RequestBody requestBody);
+
+    @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
+    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
@@ -882,10 +898,15 @@ interface RequestManager {
     Observable<ResponseBody> queryLivingResult(@Body RequestBody responseBody);
 
     /**
-     * 活体检测二次结果哦通知处理
+     * 活体检测结果通知处理
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
-    Observable<ResponseBody> queryDataResult(@Body RequestBody requestBody);
+    Observable<ResponseBody > queryDataResult(@Body RequestBody requestBody);
+    /**
+     * 活体检测公用锁的通知接口
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_BEAN_COMMENT_RESULT)
+    Observable<ResponseBody> queryComontDataResult(@Body RequestBody requestBody);
 
     /**
      * orc获取sign
@@ -897,7 +918,12 @@ interface RequestManager {
      * 自定义人脸识别OCR
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
-    Observable<ResponseBody> getOcrResult(@Body RequestBody responseBody);
+    Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
+    /**
+     * person对比
+     */
+    @GET(NetConfig.Compliance.COMPLIANCE_PERSON_COMPARE)
+    Observable<ResponseBody>getPersonCompare(@QueryMap Map<String, String> programObject);
 
     /**
      * 通用的Get请求接口

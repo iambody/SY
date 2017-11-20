@@ -13,8 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,30 +24,57 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
 import com.cgbsoft.lib.permission.MyPermissionsChecker;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.widget.dialog.AlterDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.living.FaceInf;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.model.CredentialModel;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl;
-import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import app.ocrlib.com.LivingManger;
+import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.facepicture.FacePictureActivity;
+import app.ocrlib.com.identitycard.IdentityCardActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
@@ -58,18 +85,21 @@ import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPresenterImpl> implements UploadIndentityContract.UploadIndentityView {
 
-//    @BindView(R.id.toolbar)
-//    protected Toolbar toolbar;
+    private String TAG = "UploadIndentityCradActivity";
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.iv_upload_crad_first)
     ImageView uploadFirst;
+    @BindView(R.id.mini_name_text)
+    TextView miniNameText;
     @BindView(R.id.iv_upload_crad_second)
     ImageView uploadSecond;
     @BindView(R.id.tv_upload_indentity_tip)
     TextView tagTv;
+    @BindView(R.id.tv_replenish_name_str)
+    TextView tvReplenishName;
     @BindView(R.id.upload_submit)
     Button submit;
     @BindView(R.id.iv_upload_tag)
@@ -90,6 +120,42 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     TextView replenishName;
     @BindView(R.id.tv_replenish_identitynum)
     TextView replenishNum;
+    @BindView(R.id.ll_recognition_name_edit)
+    LinearLayout recognitionNameLinearLayout;
+    @BindView(R.id.ll_recognition_idcard_num)
+    LinearLayout recognitionNumLinearLayout;
+    @BindView(R.id.ll_recognition_validDate)
+    LinearLayout recognitionValidLinearLayout;
+    @BindView(R.id.recognition_name_edit)
+    TextView recognitionNameEdit;
+    @BindView(R.id.recognition_idcard_num)
+    TextView recognitionIdCardNum;
+    @BindView(R.id.recognition_validDate)
+    TextView recognitionValidDate;
+    @BindView(R.id.rl_tip)
+    RelativeLayout rlTip;
+    @BindView(R.id.bt_recognition_name_edit)
+    Button btRecognitionNameEdit;
+    @BindView(R.id.recognition_num_text)
+    TextView recognitionNumText;
+    @BindView(R.id.recognition_name_text)
+    TextView recognitionNameText;
+    @BindView(R.id.recognition_result_text)
+    TextView recognitionResultText;
+    @BindView(R.id.mini_result_ll)
+    LinearLayout miniResultLinear;
+    @BindView(R.id.mini_msg_layout)
+    LinearLayout miniMsgLyout;
+    @BindView(R.id.upload_demo)
+    TextView uploadDemo;
+    @BindView(R.id.rl_recognition_card)
+    LinearLayout RecognitionCardRelative;
+    @BindView(R.id.reject_result_title)
+    TextView rejectResultTitle;
+    @BindView(R.id.divide_line1)
+    View divideLine1;
+    @BindView(R.id.divide_line2)
+    View divideLine2;
 
     private LoadingDialog mLoadingDialog;
     private String firstPhotoPath;
@@ -107,17 +173,31 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private final String secondPhotoName = "second.jpg";
     private final String firstCropPhotoName = "firstCrop.jpg";
     private final String secondCropPhotoName = "secondCrop.jpg";
-    private String indentityCode;
     private boolean isIdCard;
     private List<String> remoteParams = new ArrayList<>();
-    private String credentialCode;
     private MyPermissionsChecker mPermissionsChecker;
     private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private int REQUEST_CODE_PERMISSON_FIRST = 2000; // 请求码
     private int REQUEST_CODE_PERMISSON_SECOND = 2002; // 请求码
     private boolean isFromSelectIndentity;
-    private String depict;
-    private String stateName;
+    //身份证正面拍照回调
+    private Observable<IdentityCard> registerFrontCallBack;
+    //身份证反面拍照回调
+    private Observable<IdentityCard> registerBackCallBack;
+    //身份证+活体识别回调
+    private Observable<LivingResultData> registerPrivateLivingCallBack;
+    //普通活体识别回调
+    private Observable<LivingResultData> registerCommonLivingCallBack;
+    private CredentialStateMedel credentialStateMedel;
+    private CredentialModel credentialModel;
+    private IdentityCard identityCard;
+    private LivingManger livingManger;
+    private Observable<FaceInf> complianceFaceupCallBack;
+    private Observable<Integer> closePageCallBack;
+    private List<String> remotePths;
+    private Observable<Integer> faceBackCallBack;
+    private boolean livingLoadingState;
+    private Observable<Integer> livingBackCallBack;
 
     private void startPermissionsActivity(int permissionCode) {
         MyPermissionsActivity.startActivityForResult(this, permissionCode, PERMISSIONS);
@@ -136,8 +216,32 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         // 拍照
-        takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
+        if (credentialModel.getCode().equals("100101"))
+            UiSkipUtils.toNextActivityWithIntent(this, new Intent(this, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
+        else
+            takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
     }
+
+    @OnClick(R.id.bt_recognition_name_edit)
+    public void editName() {
+        AlterDialog dialog = new AlterDialog(baseContext, "修改姓名", recognitionNameEdit.getText().toString(), new AlterDialog.AlterCommitListener() {
+            @Override
+            public void commitListener(String resultContent) {
+                identityCard.setIdCardName(resultContent);
+                recognitionNameEdit.setText(resultContent);
+            }
+        });
+        dialog.show();
+    }
+
+    @OnClick(R.id.upload_demo)
+    public void uploadDemo() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(WebViewConstant.push_message_url, "/app5.0/order/help.html");
+        hashMap.put(WebViewConstant.push_message_title, "示例");
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+    }
+
     @OnClick(R.id.iv_upload_card_first_cover)
     public void uploadFirstCoverClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -151,7 +255,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         // 拍照
-        takePhotoByCamera(firstPhotoName, FIRST_REQUEST_CARD_CAMERA);
+        if (credentialModel.getCode().equals("100101"))
+            UiSkipUtils.toNextActivityWithIntent(this, new Intent(this, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_FRONT));
+        else
+            takePhotoByCamera(secondPhotoName, FIRST_REQUEST_CARD_CAMERA);
     }
 
     @OnClick(R.id.iv_upload_crad_second)
@@ -167,8 +274,20 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         // 拍照
-        takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
+        if (credentialModel.getCode().equals("100101"))
+            UiSkipUtils.toNextActivityWithIntent(this, new Intent(this, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_BACK));
+        else
+            takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (livingLoadingState){
+            showLoadDialog();
+        }
+    }
+
     @OnClick(R.id.iv_upload_card_second_cover)
     public void uploadSecondCoverClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -182,58 +301,206 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             }
         }
         // 拍照
-        takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
+        if (credentialModel.getCode().equals("100101"))
+            UiSkipUtils.toNextActivityWithIntent(this, new Intent(this, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_BACK));
+        else
+            takePhotoByCamera(secondPhotoName, SECOND_REQUEST_CARD_CAMERA);
     }
+
     @OnClick(R.id.upload_submit)
-    public void photoSubmit(){
+    public void photoSubmit() {
+        livingLoadingState = false;
         submit.setEnabled(false);
         List<String> paths = new ArrayList<>();
+        if ("30".equals(credentialModel.getStateCode())) {
+            credentialStateMedel = new CredentialStateMedel();
+            credentialStateMedel.setCredentialCode(credentialModel.getCode());
+            credentialStateMedel.setCredentialState("5");
+            credentialStateMedel.setIdCardState("5");
+            credentialStateMedel.setCredentialTypeName(credentialModel.getName());
+            credentialStateMedel.setCredentialStateName(credentialModel.getStateName());
+            credentialStateMedel.setCustomerIdentity(credentialModel.getCode().substring(0, 4));
+            credentialStateMedel.setCustomerType(credentialModel.getCode().substring(0, 2));
+            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            intent.putExtra("TAG", "Page2");
+            startActivity(intent);
+            submit.setEnabled(true);
+            return;
+        }
         if (isIdCard) {
             if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
-            if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
+            if (!TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath) && (!"50".equals(credentialModel.getStateCode()))) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
             if (TextUtils.isEmpty(firstPhotoPath) && !TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
-            File fileFirst = new File(firstPhotoPath);
-            File fileSecond = new File(secondPhotoPath);
-            if (!fileFirst.exists()&&!fileSecond.exists()) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(identityCard.getIdCardName()) || TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                Toast.makeText(getApplicationContext(), "身份证正面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
-            if (fileFirst.exists() && !fileSecond.exists()) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(identityCard.getValidDate()) && (!"50".equals(credentialModel.getStateCode()))) {
+                Toast.makeText(getApplicationContext(), "身份证反面识别失败，请重新上传。", Toast.LENGTH_SHORT).show();
+                submit.setEnabled(true);
                 return;
             }
-            if (!fileFirst.exists()&&fileSecond.exists()) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
-                return;
+            JSONArray idcardImages = new JSONArray();
+            JSONObject frontImage = new JSONObject();
+            JSONObject backImage = new JSONObject();
+            try {
+                frontImage.put("name", "frontImage");
+                frontImage.put("url", firstPhotoPath);
+                backImage.put("name", "backImage");
+                backImage.put("url", secondPhotoPath);
+                idcardImages.put(frontImage);
+                idcardImages.put(backImage);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } else{
-            if(TextUtils.isEmpty(firstPhotoPath)){
-                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            File fileFirst = new File(firstPhotoPath);
-            if (!fileFirst.exists()) {
-                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
-                return;
+            List<Map<String, Object>> cardmaps = new ArrayList<>();
+            Map<String, Object> mapfront = new HashMap();
+            mapfront.put("name", "frontImage");
+            mapfront.put("url", firstPhotoPath);
+            Map<String, Object> mapback = new HashMap();
+            mapback.put("name", "backImage");
+            mapback.put("url", secondPhotoPath);
+            cardmaps.add(mapfront);
+            cardmaps.add(mapback);
+            remotePths = new ArrayList<>();
+            remotePths.add(firstPhotoPath);
+            remotePths.add(secondPhotoPath);
+            //0 成功 1客服审核 2ocr错误 3标识失败
+
+            getPresenter().getLivingCount();
+            return;
+
+//            File fileFirst = new File(firstPhotoPath);
+//            File fileSecond = new File(secondPhotoPath);
+//            if (!fileFirst.exists() && !fileSecond.exists()) {
+//                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            if (fileFirst.exists() && !fileSecond.exists()) {
+//                Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            if (!fileFirst.exists() && fileSecond.exists()) {
+//                Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+        } else {
+            if (!"50".equals(credentialModel.getStateCode())) {
+                if (TextUtils.isEmpty(firstPhotoPath)) {
+                    Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    submit.setEnabled(true);
+                    return;
+                }
+                File fileFirst = new File(firstPhotoPath);
+                if (!fileFirst.exists()) {
+                    Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
+                    submit.setEnabled(true);
+                    return;
+                }
             }
         }
         if (isIdCard) {
-            paths.add(firstPhotoPath);
-            paths.add(secondPhotoPath);
+            if ("50".equals(credentialModel.getStateCode())) {
+                remoteParams.clear();
+                remoteParams.add(firstPhotoPath);
+                remoteParams.add(secondPhotoPath);
+            } else {
+                paths.add(firstPhotoPath);
+                paths.add(secondPhotoPath);
+            }
         } else {
-            paths.add(firstPhotoPath);
+            if ("50".equals(credentialModel.getStateCode())) {
+                remoteParams.clear();
+                remoteParams.add(firstPhotoPath);
+            } else {
+                paths.add(firstPhotoPath);
+            }
         }
         if (mLoadingDialog == null) {
             mLoadingDialog = new LoadingDialog(this);
+        }
+        if ((!"1001".equals(credentialStateMedel.getCustomerIdentity())) && "10".equals(credentialStateMedel.getCustomerType())) {
+            mLoadingDialog.show();
+            if (remoteParams.size() != 0) {
+                startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+                submit.setEnabled(true);
+                return;
+            }
+//----------------------------
+            Log.e("submit-----------", "--------------");
+            remoteParams.clear();
+            for (int i = 0; i < paths.size(); i++) {
+                int finalI = i;
+                Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        Log.e("submit-----------", "1--------------" + paths.get(finalI));
+                        //异步操作相关代码
+                        String imageId = DownloadUtils.postSecretObject(paths.get(finalI), Constant.UPLOAD_COMPLIANCE_FACE);
+                        subscriber.onNext(imageId);
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<String>() {
+                            @Override
+                            public void call(String data) {
+                                Log.e("submit-----------", "2--------------");
+                                // 主线程操作
+                                if (!TextUtils.isEmpty(data)) {
+                                    remoteParams.add(finalI, data);
+                                    if (remoteParams.size() == paths.size()) {
+                                        Log.e("submit-----------", remoteParams.get(finalI) + "--------------");
+                                        startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+                                        submit.setEnabled(true);
+                                        mLoadingDialog.dismiss();
+                                    }
+                                } else {
+                                    Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show();
+                                    submit.setEnabled(true);
+                                    mLoadingDialog.dismiss();
+                                }
+                            }
+                        });
+            }
+            return;
+
+            //====================
+//            new Thread() {
+//                @Override
+//                public void run() {
+//                    super.run();
+//                    remoteParams.clear();
+//                    for (final String localPath : paths) {
+//                        String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
+//                        String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
+//                        FileUtils.deleteFile(newTargetFile);
+//                        if (!TextUtils.isEmpty(paths)) {
+//                            remoteParams.add(paths);
+//                        } else {
+//                            ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
+//                            submit.setEnabled(true);
+//                            mLoadingDialog.dismiss();
+//                            return;
+//                        }
+//                    }
+//                    startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+//                }
+//            }.start();
+//            submit.setEnabled(true);
+//            return;
         }
         mLoadingDialog.show();
         new Thread() {
@@ -243,7 +510,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 remoteParams.clear();
                 for (final String localPath : paths) {
                     String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-                    String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/"+credentialCode+"/");
+                    String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
                     FileUtils.deleteFile(newTargetFile);
                     if (!TextUtils.isEmpty(paths)) {
                         remoteParams.add(paths);
@@ -251,6 +518,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
                         submit.setEnabled(true);
                         mLoadingDialog.dismiss();
+                        submit.setEnabled(true);
                         return;
                     }
                 }
@@ -259,8 +527,92 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }.start();
     }
 
+    private void startLivingMatch() {
+        livingLoadingState = true;
+        livingManger = new LivingManger(baseContext, identityCard.getIdCardName(), identityCard.getIdCardNum(), identityCard.getValidDate(), credentialStateMedel.getCredentialCode(), "1001", identityCard.getSex(), identityCard.getBirth(), "10", remotePths, new LivingResult() {
+            @Override
+            public void livingSucceed(LivingResultData resultData) {
+                hideLoadDialog();
+                livingLoadingState = false;
+                Log.i("活体living", "开始回调监听接口！！！" + resultData.toString());
+                switch (resultData.getRecognitionCode()) {
+                    //0 成功 1客服审核 2ocr错误 3标识失败
+                    case "0":
+                        submit.setVisibility(View.GONE);
+                        tagIv.setVisibility(View.GONE);
+                        tagTv.setText("审核通过");
+                        RecognitionCardRelative.setVisibility(View.GONE);
+                        miniResultLinear.setVisibility(View.VISIBLE);
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(identityCard.getIdCardName());
+                        recognitionNumText.setText(identityCard.getIdCardNum());
+                        recognitionResultText.setText("审核成功");
+                        rejectResultTitle.setText("审核结果");
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+                        uploadFirstCover.setEnabled(false);
+                        uploadFirst.setEnabled(false);
+                        uploadSecond.setEnabled(false);
+                        uploadSecondCover.setEnabled(false);
+                        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
+                        break;
+                    case "1":
+                        submit.setVisibility(View.GONE);
+                        tagIv.setVisibility(View.GONE);
+                        tagTv.setText("审核中");
+                        RecognitionCardRelative.setVisibility(View.GONE);
+                        miniResultLinear.setVisibility(View.VISIBLE);
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(identityCard.getIdCardName());
+                        recognitionNumText.setText(identityCard.getIdCardNum());
+                        recognitionResultText.setText("审核中");
+                        rejectResultTitle.setText("审核结果");
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+                        uploadFirstCover.setEnabled(false);
+                        uploadFirst.setEnabled(false);
+                        uploadSecond.setEnabled(false);
+                        uploadSecondCover.setEnabled(false);
+                        RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
+//                            finish();
+                        break;
+                    case "2":
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+                        break;
+                    case "3":
+                        RxBus.get().post(RxConstant.SELECT_INDENTITY, 1);
+                        Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void livingFailed(LivingResultData resultData) {
+                Log.i("活体living", "开始回调监听接口失败了！" + resultData.toString());
+                hideLoadDialog();
+                livingLoadingState = false;
+                LivingResultData resultData1 = resultData;
+                Toast.makeText(baseContext, resultData.getRecognitionMsg(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        submit.setEnabled(true);
+    }
+
+    private void jumpCollect() {
+        Intent intent = new Intent(baseContext, CardCollectActivity.class);
+        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        startActivity(intent);
+    }
+
     private void uploadRemotePaths() {
-        getPresenter().uploadIndentity(remoteParams,indentityCode,credentialCode);
+        getPresenter().uploadIndentity(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode());
     }
 
     @Override
@@ -287,64 +639,58 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
             RxBus.get().post(SELECT_INDENTITY, 0);
             RxBus.get().post(SELECT_INDENTITY_ADD, 0);
+            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
             if (isFromSelectIndentity) {
                 Intent intent = new Intent(this, CardCollectActivity.class);
-                intent.putExtra("indentityCode", indentityCode);
+                intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
                 startActivity(intent);
             }
             this.finish();
         } else {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
+        DataStatistApiParam.otherCardUpload(credentialModel.getCode());
     }
 
     @Override
     public void uploadIndentityError(Throwable error) {
-        Toast.makeText(getApplicationContext(),"上传失败,请稍后重试!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "上传失败,请稍后重试!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    protected int layoutID() {
-        return R.layout.activity_upload_indentity;
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
-//        toolbar.setTitle("");
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
-//        toolbar.setNavigationOnClickListener(v -> finish());
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        credentialCode = getIntent().getStringExtra("credentialCode");
-        indentityCode = getIntent().getStringExtra("indentityCode");
-        stateName = getIntent().getStringExtra("stateName");
-        isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
-        depict = getIntent().getStringExtra("depict");
-        String customerName = getIntent().getStringExtra("customerName");
-        String customerNum = getIntent().getStringExtra("customerNum");
-        String title = getIntent().getStringExtra("title");
-        if (TextUtils.isEmpty(indentityCode)||TextUtils.isEmpty(credentialCode)) {
-            this.finish();
-            return;
+    public void credentialDetialSuccess(String s) {
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONObject result = jsonObject.getJSONObject("result");
+            Gson g = new Gson();
+            credentialModel = g.fromJson(result.toString(), CredentialModel.class);
+            init(credentialModel);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        String stateCode = getIntent().getStringExtra("stateCode");//证件审核状态code码：5：未上传；10：审核中；30：已驳回；50：已通过；70：已过期
+    }
+
+    private void init(CredentialModel credentialModel) {
+        identityCard = new IdentityCard();
+        String stateCode = credentialModel.getStateCode();
+        if (credentialStateMedel.getCredentialCode().startsWith("20")){
+            miniNameText.setText("证件名称");
+            tvReplenishName.setText("证件名称");
+        }
         if (TextUtils.isEmpty(stateCode) || "5".equals(stateCode)) {//未上传
             uploadFirst.setEnabled(true);
             uploadSecond.setEnabled(true);
             submit.setVisibility(View.VISIBLE);
             tagTv.setVisibility(View.VISIBLE);
-            switch (credentialCode) {
+            switch (credentialModel.getCode()) {
                 case "100101"://身份证
                     isIdCard = true;
                     uploadSecond.setVisibility(View.VISIBLE);
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
                     uploadSecond.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_back));
                     tagTv.setText("请拍摄实体身份证");
+                    submit.setText("下一步");
                     break;
                 case "100102"://中国护照
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_china_passport));
@@ -352,15 +698,18 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     break;
                 case "100401"://外籍护照
                     tagTv.setText("请拍摄实体护照");
+                    submit.setText("下一步");
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_foreign_passport));
                     break;
                 case "100201"://港澳来往内地通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_gangao_to_inland));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
                 case "100301"://台湾来往内地通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_province_taiwan_to_inland));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
                 case "100103"://军官证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_officer_card));
@@ -381,6 +730,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 case "100105"://港澳通行证
                     uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_provinde_inland_to_gangao));
                     tagTv.setText("请拍摄实体通行证");
+                    submit.setText("下一步");
                     break;
             }
         } else {//已上传，显示详情
@@ -388,48 +738,92 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             uploadFirst.setEnabled(false);
             uploadSecond.setEnabled(false);
             submit.setVisibility(View.GONE);
-            if ("30".equals(stateCode)||"70".equals(stateCode)) {
-                if ("100101".equals(credentialCode)) {
+            if ("100101".equals(credentialModel.getCode())) {
+                isIdCard = true;
+            }
+            if ("30".equals(stateCode) || "70".equals(stateCode)) {
+                if ("100101".equals(credentialModel.getCode())) {
                     isIdCard = true;
                 }
-                uploadFirst.setEnabled(true);
-                uploadSecond.setEnabled(true);
+                rlTip.setVisibility(View.GONE);
+                uploadFirst.setEnabled(false);
+                uploadSecond.setEnabled(false);
+                uploadFirstCover.setEnabled(false);
+                uploadSecondCover.setEnabled(false);
                 submit.setVisibility(View.VISIBLE);
                 if ("30".equals(stateCode)) {//30：已驳回
-                    defeatAll.setVisibility(View.VISIBLE);
-                    tagIv.setVisibility(View.VISIBLE);
-                    tagTv.setVisibility(View.VISIBLE);
-                    tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
-                    tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
-                    defeatTitle.setText(TextUtils.isEmpty(depict)?"":"失败原因:");
-                    defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
+                    submit.setVisibility(View.VISIBLE);
+                    submit.setText("重新提交");
+                    if (TextUtils.isEmpty(credentialModel.getNumber())) {
+                        defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
+                        defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        rlTip.setVisibility(View.GONE);
+                        recognitionNumText.setText(credentialModel.getNumber());
+                        recognitionNameText.setText(credentialModel.getCustomerName());
+                        recognitionResultText.setText(credentialModel.getComment());
+                    } else {
+                        miniMsgLyout.setVisibility(View.VISIBLE);
+                        recognitionNameText.setText(credentialModel.getCustomerName());
+                        recognitionNumText.setText(credentialModel.getNumber());
+                        recognitionResultText.setText(credentialModel.getComment());
+                    }
                 }
                 if ("70".equals(stateCode)) {//70：已过期
-                    defeatAll.setVisibility(View.VISIBLE);
                     tagTv.setVisibility(View.VISIBLE);
                     tagIv.setVisibility(View.VISIBLE);
                     tagIv.setImageDrawable(getResources().getDrawable(R.drawable.upload_indentity_error_tag));
-                    tagTv.setText(TextUtils.isEmpty(stateName)?"":stateName);
+                    tagTv.setText(TextUtils.isEmpty(credentialModel.getStateName()) ? "" : credentialModel.getStateName());
                     uploadFirstCover.setVisibility(View.VISIBLE);
-                    defeatTitle.setText(TextUtils.isEmpty(depict)?"":"失败原因:");
-                    defeatDepict.setText(TextUtils.isEmpty(depict)?"":depict);
+                    defeatTitle.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : "失败原因:");
+                    defeatDepict.setText(TextUtils.isEmpty(credentialModel.getComment()) ? "" : credentialModel.getComment());
                 }
             }
             if ("10".equals(stateCode)) {
                 tagTv.setText("审核中");
+                miniResultLinear.setVisibility(View.VISIBLE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+                submit.setVisibility(View.GONE);
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText("审核中");
             }
             if ("50".equals(stateCode)) {
                 tagTv.setText("已通过");
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.VISIBLE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText(credentialModel.getStateName());
+                if ((!credentialModel.getCode().startsWith("1001"))&&credentialModel.getCode().startsWith("10")) {
+                    if ( "1".equals(credentialStateMedel.getCustomerImageState())) {
+                        submit.setVisibility(View.GONE);
+                    }else {
+                        submit.setVisibility(View.VISIBLE);
+                        submit.setText("下一步");
+                    }
+                }
             }
             if ("45".equals(stateCode)) {
-                replenishAll.setVisibility(View.VISIBLE);
-                replenishName.setText(customerName);
-                replenishNum.setText(customerNum);
+                miniMsgLyout.setVisibility(View.VISIBLE);
+                rlTip.setVisibility(View.GONE);
+                miniResultLinear.setVisibility(View.GONE);
+                recognitionNumText.setText(credentialModel.getNumber());
+                recognitionNameText.setText(credentialModel.getCustomerName());
+//                replenishAll.setVisibility(View.VISIBLE);
+                replenishName.setText(credentialModel.getCustomerName());
+                recognitionResultText.setText(credentialModel.getStateName());
+                miniResultLinear.setVisibility(View.VISIBLE);
+                replenishNum.setText(credentialModel.getNumber());
                 uploadFirst.setEnabled(true);
                 uploadSecond.setEnabled(true);
                 submit.setVisibility(View.VISIBLE);
                 uploadFirst.setImageDrawable(getResources().getDrawable(R.drawable.upload_id_card_front));
-                switch (credentialCode) {
+                switch (credentialModel.getCode()) {
                     case "100101"://身份证
                         isIdCard = true;
                         uploadSecond.setVisibility(View.VISIBLE);
@@ -476,25 +870,280 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 }
             } else {
                 replenishAll.setVisibility(View.GONE);
-                String firstUrl = getIntent().getStringExtra("firstUrl");
-                String secondUrl = getIntent().getStringExtra("secondUrl");
-                Imageload.display(this,firstUrl,uploadFirst);
-                if (!TextUtils.isEmpty(secondUrl)) {
-                    uploadSecond.setVisibility(View.VISIBLE);
-                    Imageload.display(this,secondUrl,uploadSecond);
-                    if ("70".equals(stateCode)) {
-                        uploadSecondCover.setVisibility(View.VISIBLE);
+                if (null != credentialModel.getImageUrl()) {
+                    String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
+                    firstPhotoPath = firstUrl;
+                    Imageload.display(this, firstUrl, uploadFirst);
+                    if (credentialModel.getImageUrl().size() == 2) {
+                        String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
+                        if (!TextUtils.isEmpty(secondUrl)) {
+                            uploadSecond.setVisibility(View.VISIBLE);
+                            Imageload.display(this, secondUrl, uploadSecond);
+                            secondPhotoPath = secondUrl;
+                        }
+                        if ("70".equals(stateCode)) {
+                            uploadSecondCover.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
         }
-        titleTV.setText(title);
-        initView(savedInstanceState);
+        titleTV.setText(credentialModel.getName());
+        if ("50".equals(credentialModel.getStateCode()) && "2".equals(credentialModel.getValidCode()) && credentialModel.getCode().startsWith("1001")) {
+            submit.setText("下一步");
+            submit.setVisibility(View.VISIBLE);
+            miniMsgLyout.setVisibility(View.VISIBLE);
+            rlTip.setVisibility(View.GONE);
+            identityCard.setIdCardNum(credentialModel.getNumberTrue());
+            identityCard.setIdCardName(credentialModel.getCustomerName());
+        }
+        String imageState = SPreference.getString(this, "imageState");
+        if ((!TextUtils.isEmpty(imageState))&&imageState.equals("1")&&(!credentialModel.getCode().startsWith("1001"))&&(credentialModel.getCode().startsWith("10"))){
+            submit.setVisibility(View.GONE);
+        }
+
     }
 
-    private void initView(Bundle savedInstanceState) {
+    @Override
+    public void credentialDetialError(Throwable error) {
+        Toast.makeText(getApplicationContext(), "获取证件详情失败！", Toast.LENGTH_SHORT).show();
+        this.finish();
+    }
+
+    @Override
+    public void uploadOtherCrenditral(String result) {
+        if (!TextUtils.isEmpty(result)) {
+            Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
+            RxBus.get().post(SELECT_INDENTITY, 0);
+            RxBus.get().post(SELECT_INDENTITY_ADD, 0);
+            RxBus.get().post(RxConstant.CLOSE_INDENTITY_DETIAL, 0);
+            RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
+            submit.setVisibility(View.GONE);
+            tagTv.setText("审核中");
+            tagIv.setVisibility(View.GONE);
+
+//            Intent intent = new Intent(this, CardCollectActivity.class);
+//            intent.putExtra("indentityCode", credentialModel.getCode().substring(0, 4));
+//            startActivity(intent);
+            this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getLivingCountSuccess(String s) {
+        try {
+            JSONObject js = new JSONObject(s);
+            JSONObject result = js.getJSONObject("result");
+            String failCount = result.getString("failCount");
+            //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
+            String validCode = result.getString("validCode");
+            if ("3".equals(failCount)) {
+                Toast.makeText(this, "非常抱歉，您今日的人脸核身次数超过限制，请明日尝试", Toast.LENGTH_LONG).show();
+            } else {
+                startLivingMatch();
+                livingManger.startLivingMatch();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
+    }
+
+    @Override
+    protected int layoutID() {
+        return R.layout.activity_upload_indentity;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        String tag = getIntent().getStringExtra("TAG");
+        if (!TextUtils.isEmpty(tag)) {
+            this.TAG = tag;
+        }
+        initView();
+        initCallBack();
+
+
+        recognitionNameEdit.setFocusable(false);
+        credentialStateMedel = (CredentialStateMedel) getIntent().getSerializableExtra("credentialStateMedel");
+        if (!TextUtils.isEmpty(credentialStateMedel.getCredentialDetailId())) {
+            getCredentialInfo(credentialStateMedel.getCredentialDetailId());
+        } else {
+            credentialModel = new CredentialModel("", null,
+                    credentialStateMedel.getCredentialStateName(),
+                    credentialStateMedel.getCredentialTypeName(),
+                    credentialStateMedel.getCredentialState(),
+                    "",
+                    "",
+                    credentialStateMedel.getCredentialCode(),
+                    "", "", "", "");
+            init(credentialModel);
+        }
+        isFromSelectIndentity = getIntent().getBooleanExtra("isFromSelectIndentity", false);
+    }
+
+    private void getCredentialInfo(String credentialId) {
+        getPresenter().getCredentialInfo(credentialId);
+    }
+
+    private void initCallBack() {
+        faceBackCallBack = RxBus.get().register(RxConstant.COMPIANCE_FACE_BACK, Integer.class);
+        registerFrontCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_FRONT, IdentityCard.class);
+        registerBackCallBack = RxBus.get().register(RxConstant.COMPLIANCE_CARD_BACK, IdentityCard.class);
+        complianceFaceupCallBack = RxBus.get().register(RxConstant.COMPLIANCE_FACEUP, FaceInf.class);
+        closePageCallBack = RxBus.get().register(RxConstant.CLOSE_INDENTITY_DETIAL, Integer.class);
+        livingBackCallBack = RxBus.get().register(RxConstant.COMPIANCE_LIVING_BACK, Integer.class);
+        livingBackCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                livingLoadingState = false;
+                hideLoadDialog();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        faceBackCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                hideLoadDialog();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        closePageCallBack.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                if ("50".equals(credentialModel.getStateCode())) {
+                    return;
+                }
+                if ("45".equals(credentialModel.getStateCode())) {
+                    return;
+                }
+                if ((!TextUtils.isEmpty(credentialModel.getId()))) {
+                    finish();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        complianceFaceupCallBack.subscribe(new RxSubscriber<FaceInf>() {
+            @Override
+            protected void onEvent(FaceInf faceInf) {
+                if (TAG.equals(faceInf.getPageTage())) {
+                    Log.i("submit-----------", "4------------");
+                    if (null == remoteParams || remoteParams.size() < 1) {
+                        remoteParams = new ArrayList<String>();
+                        for (int i = 0; i < credentialModel.getImageUrl().size(); i++) {
+                            remoteParams.add(i, credentialModel.getImageUrl().get(i).getUrl());
+                        }
+                    }
+                    Log.i("submit-----------", "------------" + remoteParams.size());
+                    if ("100101".equals(credentialModel.getCode())) {
+//                        remoteParams.add();
+                    }
+                    getPresenter().uploadOtherCrenditial(remoteParams, credentialModel.getCode().substring(0, 4), credentialModel.getCode(), faceInf.getFaceRemotePath());
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        registerFrontCallBack.subscribe(new RxSubscriber<IdentityCard>() {
+            @Override
+            protected void onEvent(IdentityCard identityCard) {
+                if ("1".equals(identityCard.getAnalysisType())) {
+                    UploadIndentityCradActivity.this.identityCard.setAddress(identityCard.getAddress());
+                    UploadIndentityCradActivity.this.identityCard.setBirth(identityCard.getBirth());
+                    UploadIndentityCradActivity.this.identityCard.setIdCardName(identityCard.getIdCardName());
+                    UploadIndentityCradActivity.this.identityCard.setIdCardNum(identityCard.getIdCardNum());
+                    UploadIndentityCradActivity.this.identityCard.setSex(identityCard.getSex());
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getLocalPath(), uploadFirst);
+                    firstPhotoPath = identityCard.getRemotPath();
+                    recognitionNameEdit.setText(identityCard.getIdCardName());
+                    recognitionIdCardNum.setText(identityCard.getIdCardNum());
+                    recognitionNameLinearLayout.setVisibility(View.VISIBLE);
+                    recognitionNumLinearLayout.setVisibility(View.VISIBLE);
+                    rlTip.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine1.setVisibility(View.VISIBLE);
+                    }
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine2.setVisibility(View.VISIBLE);
+                    }
+                    miniMsgLyout.setVisibility(View.GONE);
+                } else {
+                    recognitionNameLinearLayout.setVisibility(View.GONE);
+                    recognitionNumLinearLayout.setVisibility(View.GONE);
+                    UploadIndentityCradActivity.this.identityCard.setIdCardNum("");
+                    UploadIndentityCradActivity.this.identityCard.setAddress("");
+                    UploadIndentityCradActivity.this.identityCard.setIdCardName("");
+                    UploadIndentityCradActivity.this.identityCard.setBirth("");
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+        registerBackCallBack.subscribe(new RxSubscriber<IdentityCard>() {
+            @Override
+            protected void onEvent(IdentityCard identityCard) {
+                if ("1".equals(identityCard.getAnalysisType())) {
+                    Imageload.display(UploadIndentityCradActivity.this, identityCard.getLocalPath(), uploadSecond);
+                    secondPhotoPath = identityCard.getRemotPath();
+                    UploadIndentityCradActivity.this.identityCard.setValidDate(identityCard.getValidDate());
+                    recognitionValidLinearLayout.setVisibility(View.VISIBLE);
+                    recognitionValidDate.setText(identityCard.getValidDate());
+                    rlTip.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine1.setVisibility(View.VISIBLE);
+                    }
+                    if (!TextUtils.isEmpty(identityCard.getIdCardNum())) {
+                        divideLine2.setVisibility(View.VISIBLE);
+                    }
+                    miniMsgLyout.setVisibility(View.GONE);
+                } else {
+                    recognitionValidLinearLayout.setVisibility(View.GONE);
+                    UploadIndentityCradActivity.this.identityCard.setValidDate("");
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    private void initView() {
         mLoadingDialog = LoadingDialog.getLoadingDialog(this, "", false, false);
-//        CARD_WIDTH = CARD_HEIGHT *(32/22);
     }
 
     @Override
@@ -507,9 +1156,9 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PERMISSON_FIRST) {
             uploadFirstClick();
-        }else if (requestCode == REQUEST_CODE_PERMISSON_SECOND){
+        } else if (requestCode == REQUEST_CODE_PERMISSON_SECOND) {
             uploadSecondClick();
-        }else if (requestCode == FIRST_REQUEST_CARD_CAMERA) {
+        } else if (requestCode == FIRST_REQUEST_CARD_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 handlePhotoResult(firstCropPhotoName, FIRST_REQUEST_CROP);
             }
@@ -529,7 +1178,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 uploadFirstCover.setVisibility(View.GONE);
 //                updateLoadIcon();
             }
-        }else if (requestCode == SECOND_REQUEST_CROP) {    // 裁剪图片
+        } else if (requestCode == SECOND_REQUEST_CROP) {    // 裁剪图片
             if (resultCode == Activity.RESULT_OK) {
                 deletePhoto(secondPhotoName);
                 Bitmap bitmap = BitmapFactory.decodeFile(secondPhotoPath);//Bimp.revitionImageSizeHalf(filepath);
@@ -560,7 +1209,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 firstPhotoPath = f.getAbsolutePath();
                 break;
             case SECOND_REQUEST_CARD_CAMERA:
-                secondPhotoPath=f.getAbsolutePath();
+                secondPhotoPath = f.getAbsolutePath();
                 break;
             default:
                 firstPhotoPath = f.getAbsolutePath();
@@ -610,7 +1259,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
      * 进行裁剪图片操作
      */
     private void dispatchCropImage(String cropName, int requestCropCode) {
-        if ((FIRST_REQUEST_CROP==requestCropCode&&firstPhotoPath == null)||(SECOND_REQUEST_CROP==requestCropCode&&secondPhotoPath==null)) {
+        if ((FIRST_REQUEST_CROP == requestCropCode && firstPhotoPath == null) || (SECOND_REQUEST_CROP == requestCropCode && secondPhotoPath == null)) {
             return;
         }
         try {
@@ -624,7 +1273,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 intent.setDataAndType(Uri.fromFile(new File(firstPhotoPath)), "image/*");
                 putCropIntentExtras(intent);
                 firstPhotoPath = f.getAbsolutePath();
-            } else if (SECOND_REQUEST_CROP==requestCropCode) {
+            } else if (SECOND_REQUEST_CROP == requestCropCode) {
                 intent.setDataAndType(Uri.fromFile(new File(secondPhotoPath)), "image/*");
                 putCropIntentExtras(intent);
                 secondPhotoPath = f.getAbsolutePath();
@@ -639,6 +1288,30 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "您的手机不支持裁剪图片", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != livingManger) {
+            livingManger.destory();
+        }
+        if (null != closePageCallBack) {
+            RxBus.get().unregister(RxConstant.CLOSE_INDENTITY_DETIAL, closePageCallBack);
+        }
+        if (null != complianceFaceupCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_FACEUP, complianceFaceupCallBack);
+        }
+        if (null != registerFrontCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_FRONT, registerFrontCallBack);
+        }
+        if (null != registerBackCallBack) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK, registerBackCallBack);
+        }
+        if (null != faceBackCallBack){
+            RxBus.get().unregister(RxConstant.COMPIANCE_FACE_BACK,faceBackCallBack);
+        }
+
     }
 
     private static void putCropIntentExtras(Intent intent) {

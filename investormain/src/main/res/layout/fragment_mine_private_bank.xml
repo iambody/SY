@@ -78,6 +78,7 @@
                 android:layout_marginRight="@dimen/ui_10_dip"
                 android:id="@+id/account_bank_go_relative_assert"
                 android:background="@drawable/selector_bg_btn_white_with_golden_boade"
+                android:layout_marginBottom="5dp"
                 android:text="@string/account_bank_no_relative_assert"
                 android:textColor="@color/app_golden"/>
         </LinearLayout>
@@ -211,6 +212,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/private_bank_bottom_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

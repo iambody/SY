@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.model;
 
+import java.util.List;
+
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -8,4 +10,5 @@ import rx.subscriptions.CompositeSubscription;
 
 public interface DatumManageModel {
     void verifyIndentity(CompositeSubscription compositeSubscription, DatumManageModelListener listener);
+    void uploadOtherCrenditial(CompositeSubscription subscription, DatumManageModelListener listener, List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParams);
 }

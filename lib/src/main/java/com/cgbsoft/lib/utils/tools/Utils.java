@@ -33,11 +33,19 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.tencent.msdk.dns.MSDKDnsResolver;
+import com.tencent.qcload.playersdk.util.VideoInfo;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -151,6 +159,17 @@ public class Utils {
             }
         return heightPixels;
     }
+
+//    public static boolean isAppRunningOnTop(Context context, String name) {
+//        ActivityManager activityManager = (ActivityManager)context.getSystemService("activity");
+//        List runningTaskInfo = activityManager.getRunningTasks(1);
+//        if(runningTaskInfo != null && runningTaskInfo.size() != 0) {
+//            String topAppPackageName = ((ActivityManager.RunningTaskInfo)runningTaskInfo.get(0)).topActivity.getPackageName();
+//            return !TextUtils.isEmpty(name) && name.equals(topAppPackageName);
+//        } else {
+//            return false;
+//        }
+//    }
 
     /**
      * 获取状态栏高度
@@ -721,5 +740,45 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static boolean isAppRunningOnTop(Context context, String name) {
+        ActivityManager activityManager = (ActivityManager)context.getSystemService("activity");
+        List runningTaskInfo = activityManager.getRunningTasks(1);
+        if(runningTaskInfo != null && runningTaskInfo.size() != 0) {
+            String topAppPackageName = ((ActivityManager.RunningTaskInfo)runningTaskInfo.get(0)).topActivity.getPackageName();
+            return !TextUtils.isEmpty(name) && name.equals(topAppPackageName);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 通过域名查找Ip
+     * @param domainUrl
+     * @return
+     */
+    public static String getIpByDomain(String domainUrl) {
+       return MSDKDnsResolver.getInstance().getAddrByName(domainUrl);
+    }
+
+    public static String replaceDomainByIp(String url){
+        System.out.println("------url= " + url);
+        if (!TextUtils.isEmpty(url) && StringUtils.startsWithIgnoreCase(url, "http")) {
+            URI uri = null;
+           try {
+                uri = new URI(url);
+                String host = uri.getHost();
+                System.out.println("------returnVal= " + host);
+                String ip = getIpByDomain(host);
+                System.out.println("------ip= " + ip);
+               if (!TextUtils.isEmpty(ip)) {
+                   return uri.toString().replace(host, ip);
+               }
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return url;
     }
 }

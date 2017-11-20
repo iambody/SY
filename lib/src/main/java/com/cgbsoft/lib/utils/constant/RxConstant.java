@@ -30,6 +30,8 @@ public interface RxConstant {
 
     String SET_PAGE_SWITCH_BUTTON = "set_page_switch_button_observable";
 
+    String UPLOAD_CARD_SUCCESS = "UPLOAD_CARD_SUCCESS";
+
     String CLOSE_SETTING_ACTIVITY_OBSERVABE = "close_setting_activity_observable";
 
     String IS_PLAY_VIDEO_LOCAL_DELETE_OBSERVABLE = "is_play_video_local_delete_observable";
@@ -75,6 +77,8 @@ public interface RxConstant {
 
     String SWITCH_GROUP_SHOW = "switch_group_show_hint";
 
+    String PersonCredential = "personCredential";
+
     String INVERSTOR_MAIN_PAGE = "inverstor_main_page";
 
     String ZHIBO_STATUES = "zhibo_status";
@@ -95,7 +99,7 @@ public interface RxConstant {
     //个人信息页面用到
     String GOTO_PERSONAL_INFORMATION = "personal_information";
 
-    String GOTO_SWITCH_CENTIFY_DIR= "switch_cendify_dir";
+    String GOTO_SWITCH_CENTIFY_DIR = "switch_cendify_dir";
 
     String GOTO_SWITCH_RELATIVE_ASSERT_IN_DATAMANAGE = "switch_relative_asset_in_datamanage";
 
@@ -127,7 +131,30 @@ public interface RxConstant {
 
     String SWIPT_CODE_RESULT = "SWIPT_CODE_RESULT";
     String SELECT_INDENTITY = "select_indentity";
+    String CLOSE_INDENTITY_DETIAL = "CLOSE_INDENTITY_DETIAL";
     String SELECT_INDENTITY_ADD = "select_indentity_add";
 
     String REFRESH_PRODUCT = "REFRESH_PRODUCT";
+
+    String REFRESH_CREDENTIAL_INFO = "REFRESH_CREDENTIAL_INFO";
+
+    /************************合规需要的通知compliance**********************/
+    //上传完人脸后返回人脸的远程url 应用场景：1非大陆居民证件齐全后修改问卷时候的人脸对比 bean是FaceInf
+    String COMPLIANCE_FACEUP = "compliance_faceup";
+    //拍完身份证正面时候需要的正面信息通知
+    String COMPLIANCE_CARD_FRONT = "compliance_card_front";
+    //拍完身份证反面时候需要的反面信息
+    String COMPLIANCE_CARD_BACK = "compliance_card_back";
+    //公用的获取到活体检测的结果
+    //String COMPLIANCE_LIVING_COMMONT_RESULT = "compliance_living_commont_result";
+    //私用的获取到活体检测的结果
+    //String COMPLIANCE_LIVING_PRIVATE_RESULT = "compliance_living_commont_result";
+    //person的对比 默认INTEGER.CLASS 0标识成功 1标识失败
+    String COMPLIANCE_PERSON_COMPARE = "compliance_person_compare";
+    //人脸拍照时候按返回键 通知card详情
+    String COMPIANCE_FACE_BACK = "compliance_face_back";
+
+    //活体验身页面直接意外返回通知身份证详情页
+    String COMPIANCE_LIVING_BACK="compliance_living_back";
+
 }

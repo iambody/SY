@@ -7,11 +7,14 @@ import android.util.Log;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +22,6 @@ import java.util.HashMap;
 
 /**
  * @author chenlong
- *
  */
 public class MinePresenter extends BasePresenterImpl<MineContract.View> implements MineContract.Presenter {
 
@@ -34,10 +36,11 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
             @Override
             protected void onEvent(String s) {
                 try {
-                    Log.d("MinePresenter", "----"+ s.toString());
+                    Log.d("MinePresenter", "----" + s.toString());
                     JSONObject jsonObject = new JSONObject(s);
                     String result = jsonObject.getString("result");
-                    MineModel mineModel = new Gson().fromJson(result, new TypeToken<MineModel>() {}.getType());
+                    MineModel mineModel = new Gson().fromJson(result, new TypeToken<MineModel>() {
+                    }.getType());
                     if (result != null) {
                         getView().requestDataSuccess(mineModel);
                     } else {
@@ -76,7 +79,31 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
                     String stateCodeIn = exist.getString("stateCode");
                     String credentialCodeExist = exist.getString("credentialCode");
 
-                    getView().verifyIndentitySuccess(identity,hasIdCard,title,credentialCode,stateName,stateCodeOut,customerName,credentialNumber,credentialTitle,stateCodeIn,credentialCodeExist);
+                    getView().verifyIndentitySuccess(identity, hasIdCard, title, credentialCode, stateName, stateCodeOut, customerName, credentialNumber, credentialTitle, stateCodeIn, credentialCodeExist);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    getView().verifyIndentityError(e);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().verifyIndentityError(error);
+            }
+        }));
+    }
+
+
+    public void verifyIndentityV3() {
+        addSubscription(ApiClient.verifyIndentityInClientV3().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    Gson gson = new Gson();
+                    CredentialStateMedel credentialStateMedel = gson.fromJson(result.toString(), CredentialStateMedel.class);
+                    getView().verifyIndentitySuccessV3(credentialStateMedel);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().verifyIndentityError(e);

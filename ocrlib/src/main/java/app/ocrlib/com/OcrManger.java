@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.privatefund.bean.ocr.IdentityCard;
 import com.webank.mbank.ocr.WbCloudOcrSDK;
 import com.webank.mbank.ocr.net.EXIDCardResult;
 import com.webank.mbank.ocr.tools.ErrorCode;
@@ -118,7 +117,7 @@ public class OcrManger {
                                 PromptManager.ShowCustomToast(ocrContext, "识别成功成功");
                                 EXIDCardResult result = WbCloudOcrSDK.getInstance().getResultReturn();
 
-                                if (null != ocrResult) ocrResult.OcrSucceed(eXIDCardToCard(result));
+//                                if (null != ocrResult) ocrResult.OcrSucceed(eXIDCardToCard(result));
 //                                Intent i = new Intent(FirstActivity.this, ResultActivity.class);
 //                                startActivity(i);
                             } catch (Exception e) {
@@ -151,19 +150,19 @@ public class OcrManger {
     }
 
 
-    private static IdentityCard eXIDCardToCard(EXIDCardResult result) {
-        IdentityCard identityCard = new IdentityCard();
-        identityCard.setAddress(result.address);
-        identityCard.setBirth(result.birth);
-        identityCard.setFrontFullImageSrc(result.frontFullImageSrc);
-        identityCard.setIdNo(result.cardNum);
-        identityCard.setName(result.name);
-        identityCard.setNation(result.nation);
-        identityCard.setOcrId(result.ocrId);
-        identityCard.setSign(result.sign);
-        identityCard.setSex(result.sex);
-        return identityCard;
-    }
+//    private static IdentityCard eXIDCardToCard(EXIDCardResult result) {
+//        IdentityCard identityCard = new IdentityCard();
+//        identityCard.setAddress(result.address);
+//        identityCard.setBirth(result.birth);
+//        identityCard.setFrontFullImageSrc(result.frontFullImageSrc);
+//        identityCard.setIdNo(result.cardNum);
+//        identityCard.setName(result.name);
+//        identityCard.setNation(result.nation);
+//        identityCard.setOcrId(result.ocrId);
+//        identityCard.setSign(result.sign);
+//        identityCard.setSex(result.sex);
+//        return identityCard;
+//    }
 
     /**
      * 初始化进度条
