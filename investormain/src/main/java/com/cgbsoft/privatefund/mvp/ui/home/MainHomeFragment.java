@@ -335,18 +335,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, IdentityCardActivity.class).putExtra(IdentityCardActivity.CARD_FACE, IdentityCardActivity.FACE_BACK));
-//        AlterDialog dialog=new AlterDialog(baseActivity, "修改场景的标题", "回显的要修改内容", new AlterDialog.AlterCommitListener() {
-//            @Override
-//            public void commitListener(String resultContent) {
-//                PromptManager.ShowCustomToast(baseActivity,"修改后的内容："+resultContent);
-//            }
-//        });
-//        dialog.show();
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity,new Intent(baseActivity, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG,"s"));
-
-
-
 
     }
 
@@ -800,11 +788,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
                     NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
                 } else {
-//                    HashMap<String, Object> hashMap = new HashMap<>();
-//                    hashMap.put(WebViewConstant.push_message_url,data.url );
-//                    hashMap.put(WebViewConstant.push_message_title, data.title);
-//                    hashMap.put(WebViewConstant.RIGHT_SHARE, false);
-//                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                     NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
                 }
 
