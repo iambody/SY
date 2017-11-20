@@ -114,6 +114,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
             context.startActivity(notificationIntent);
             return true;
         }
+
         return false;
     }
 }

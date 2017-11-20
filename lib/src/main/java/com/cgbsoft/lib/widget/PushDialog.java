@@ -2,11 +2,9 @@ package com.cgbsoft.lib.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 /**
