@@ -308,8 +308,17 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         okHttpClient.newCall(request).enqueue(new Callback(){
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String content = new String(response.body().bytes(), "utf-8");
-                getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
+                try {
+                    String contentLenght = response.header("Content-Length");
+                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
+                        String content = new String(response.body().bytes(), "utf-8");
+                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
+                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
+                        getView().setAddressValidateResult("0");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
