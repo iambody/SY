@@ -12,8 +12,6 @@ import android.hardware.Camera;
 import android.media.FaceDetector;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +22,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -33,7 +32,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CameraUtils;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.PersonCompare;
@@ -48,6 +47,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import app.ocrlib.com.R;
+import app.ocrlib.com.utils.AnimUtils;
 import app.ocrlib.com.utils.BitmapUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -73,13 +73,15 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     //需要进行person比较的key
     public static String TAG_NEED_PERSON = "needPersonCompare";
 
-    private LoadingDialog mLoadingDialog;
+//    private LoadingDialog mLoadingDialog;
 
     private boolean isCanclick = true;
 
     public static final String PAGE_TAG = "pagtag";
 
     public static String currentPageTag;
+    private ImageView facepiceture_detection_iv;
+    private ImageView facepiceture_eye_detection_iv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +116,13 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     private void initview() {
         isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
+        facepiceture_detection_iv = (ImageView) findViewById(R.id.facepiceture_detection_iv);
+        facepiceture_eye_detection_iv= (ImageView) findViewById(R.id.facepiceture_eye_detection_iv);
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
-        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
+//        AnimUtils.startFaceDetection(this, facepiceture_detection_iv);
+
+//        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
     }
 
     /**
@@ -189,8 +195,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         Bitmap nbmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
 //        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
         //开始上传bitmap并获取远程路径
-        upLoadBitmap(nbmp2);
-
+//        upLoadBitmap(nbmp2);
+        findFace(nbmp2);
     }
 
     String facePath = null;
@@ -198,9 +204,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     //开始上传bitmap并且进行处理
     private void upLoadBitmap(Bitmap nbmp2) {
         if (isNeedPersonCompare) {
-            mLoadingDialog.setLoading("身份识别中...");
+//            mLoadingDialog.setLoading("身份识别中...");
         }
-        mLoadingDialog.show();
+//        mLoadingDialog.show();
         facePath = BitmapUtils.saveBitmap(nbmp2, "face");
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -219,8 +225,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                             personCompare(data);
                         } else {
                             Log.i("PersonCompare", "没进行对比直接退出并发通知" + data);
-                            if (null != mLoadingDialog)
-                                mLoadingDialog.dismiss();
+//                            if (null != mLoadingDialog)
+//                                mLoadingDialog.dismiss();
                             RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath, currentPageTag));
                             FacePictureActivity.this.finish();
                         }
@@ -232,29 +238,60 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     /**
      * 检测人脸
      */
-    private void findFace(final Bitmap bitmap, final int postion, final Handler handler) {
+    private void findFace(final Bitmap bitmap) {
         if (null == bitmap) return;
         final int MAX_FACES = 1;
-        //因为这是一个耗时的操作，所以放到另一个线程中运行
-        new Thread(new Runnable() {
+        Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
-            public void run() {
+            public void call(Subscriber<? super Integer> subscriber) {
                 FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
                 //格式必须为RGB_565才可以识别
                 Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
                 //返回识别的人脸数
                 int faceCount = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES).findFaces(bmp, faces);
                 bmp.recycle();
-                Message message = new Message();
-                message.what = faceCount;
-                message.arg1 = postion;
-                message.obj = bitmap;
-                handler.sendMessage(message);
-
+                subscriber.onNext(faceCount);
             }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer bitmapNumber) {
+                        if (bitmapNumber >= 1) {
+                            PromptManager.ShowCustomToast(FacePictureActivity.this, "检测到人脸");
+                            AnimUtils.startEyeDetection(FacePictureActivity.this,facepiceture_eye_detection_iv,facepiceture_detection_iv);
 
+                            // todo 开始调接口
+                            //开始上传bitmap并获取远程路径
+                            upLoadBitmap(bitmap);
 
-        }).start();
+                        } else {
+                            PromptManager.ShowCustomToast(FacePictureActivity.this, "请人脸对准相框");
+                            getPicImageResult();
+                        }
+                    }
+                });
+
+        //因为这是一个耗时的操作，所以放到另一个线程中运行
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
+//                //格式必须为RGB_565才可以识别
+//                Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
+//                //返回识别的人脸数
+//                int faceCount = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES).findFaces(bmp, faces);
+//                bmp.recycle();
+//                Message message = new Message();
+//                message.what = faceCount;
+//                message.arg1 = postion;
+//                message.obj = bitmap;
+//                handler.sendMessage(message);
+//
+//            }
+//
+//
+//        }).start();
 
 
     }
@@ -311,6 +348,17 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             e.printStackTrace();
         }
         camera.startPreview();
+        //等待三秒在进行取帧
+        RxCountDown.countdown(2).subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                Log.i("daojishi","时间"+integer);
+                if(0==integer){
+                    getPicImageResult();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -329,10 +377,11 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != mLoadingDialog) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
+//        if (null != mLoadingDialog) {
+//            mLoadingDialog.dismiss();
+//            mLoadingDialog = null;
+//        }
+        AnimUtils.stopFaceDetection();
         if (null != camera) {
             try {
                 camera.release();
@@ -352,8 +401,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         ApiClient.getPersonCompare(remotpath).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                if (null != mLoadingDialog)
-                    mLoadingDialog.dismiss();
+//                if (null != mLoadingDialog)
+//                    mLoadingDialog.dismiss();
 
 //                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
                 try {
@@ -378,8 +427,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             protected void onRxError(Throwable error) {
 //                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                 isCanclick = true;
-                if (null != mLoadingDialog)
-                    mLoadingDialog.dismiss();
+//                if (null != mLoadingDialog)
+//                    mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
 //                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
                 RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
