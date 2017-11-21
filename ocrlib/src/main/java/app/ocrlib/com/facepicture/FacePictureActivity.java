@@ -258,7 +258,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     @Override
                     public void call(Integer bitmapNumber) {
                         if (bitmapNumber >= 1) {
-                            PromptManager.ShowCustomToast(FacePictureActivity.this, "检测到人脸");
+//                            PromptManager.ShowCustomToast(FacePictureActivity.this, "检测到人脸");
                             AnimUtils.startEyeDetection(FacePictureActivity.this,facepiceture_eye_detection_iv,facepiceture_detection_iv);
 
                             // todo 开始调接口
@@ -266,6 +266,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                             upLoadBitmap(bitmap);
 
                         } else {
+                            AnimUtils.playNotece(FacePictureActivity.this);
                             PromptManager.ShowCustomToast(FacePictureActivity.this, "请人脸对准相框");
                             getPicImageResult();
                         }
@@ -348,6 +349,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             e.printStackTrace();
         }
         camera.startPreview();
+        AnimUtils.playNotece(FacePictureActivity.this);
         //等待三秒在进行取帧
         RxCountDown.countdown(2).subscribe(new Action1<Integer>() {
             @Override

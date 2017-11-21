@@ -11,14 +11,12 @@
         android:id="@+id/surface_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center" />
 
-        <app.ocrlib.com.identitycard.IndentityCardShadow
-            android:id="@+id/identitycard_shadow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+    <app.ocrlib.com.identitycard.IndentityCardShadow
+        android:id="@+id/identitycard_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <!--<ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,8 +39,7 @@
         android:layout_centerInParent="true"
         android:paddingRight="@dimen/ui_40_dip"
         android:rotation="90"
-        android:textColor="#fff"
-         />
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/btn_shoot"
@@ -53,4 +50,11 @@
         android:layout_marginBottom="@dimen/ui_20_dip"
         android:background="@drawable/ocr_camera_img" />
 
+    <ImageView
+        android:id="@+id/identitycard_scan_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ocr_scan_up"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
