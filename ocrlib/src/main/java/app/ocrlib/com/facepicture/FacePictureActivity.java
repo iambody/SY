@@ -180,6 +180,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 Log.i("camera444444", "previewFrame调用");
             }
         });
+
     }
 
     /**
