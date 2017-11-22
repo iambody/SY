@@ -72,7 +72,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         zipResourceDownload = new ZipResourceDownload(getContext());
-        zipResourceDownload.initZipResource();
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -174,6 +173,14 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 //        return allchildren;
 //    }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.initZipResource();
+        }
+    }
 
     @Override
     protected HealthIntroducePresenter createPresenter() {
