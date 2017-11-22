@@ -98,14 +98,14 @@ android {
     }
     productFlavors{
         guanwang{}
-        huawei{}
-        qihu360{}
-        tengxun{}
-        xiaomi{}
-        baidu{}
-        yingyonghui{}
-        wandoujia{}
-        mumayi{}
+//        huawei{}
+//        qihu360{}
+//        tengxun{}
+//        xiaomi{}
+//        baidu{}
+//        yingyonghui{}
+//        wandoujia{}
+//        mumayi{}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
