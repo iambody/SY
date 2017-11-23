@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
@@ -13,7 +12,6 @@ import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -301,34 +299,34 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }));
     }
 
-//    @Override
-//    public void addressValidateResult() {
-//        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
-//        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
-//        okHttpClient.newCall(request).enqueue(new Callback(){
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                try {
-//                    String contentLenght = response.header("Content-Length");
-//                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
-//                        String content = new String(response.body().bytes(), "utf-8");
-//                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
-//                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
-//                        getView().setAddressValidateResult("0");
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                if (NetUtils.isNetworkAvailable(getContext())) {
-//                    getView().setAddressValidateResult("0");
-//                }
-//            }
-//        });
-//    }
+    @Override
+    public void addressValidateResult() {
+        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
+        okHttpClient.newCall(request).enqueue(new Callback(){
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String contentLenght = response.header("Content-Length");
+                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
+                        String content = new String(response.body().bytes(), "utf-8");
+                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
+                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
+                        getView().setAddressValidateResult("0");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (NetUtils.isNetworkAvailable(getContext())) {
+                    getView().setAddressValidateResult("0");
+                }
+            }
+        });
+    }
 
     /**
      * 获取本地数据
@@ -432,7 +430,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         public void onFinish(DownloadInfo downloadInfo) {
             viModel.status = VideoStatus.FINISH;
             viModel.localVideoPath = downloadInfo.getTargetPath();
-
             updataLocalVideoInfo();
             if (null != getView())
                 getView().onDownloadFinish(viModel);

@@ -82,10 +82,10 @@ public interface VideoDetailContract {
          */
         void getMoreCommont(String voideoId,String CommontId );
 
-//        /**
-//         * 判断视频校验结果
-//         */
-//        void addressValidateResult();
+        /**
+         * 判断视频校验结果
+         */
+        void addressValidateResult();
     }
 
     interface View extends BaseView {
@@ -104,6 +104,6 @@ public interface VideoDetailContract {
 
         void getMoreCommontSucc(String moreCommontStr);
 
-//        void setAddressValidateResult(String result);
+        void setAddressValidateResult(String result);
     }
 }
