@@ -176,8 +176,8 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void viewBeShow() {
+        super.viewBeShow();
         if (zipResourceDownload != null) {
             zipResourceDownload.initZipResource();
         }
