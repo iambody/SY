@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -294,6 +295,12 @@ public class ZipResourceDownload {
                     System.out.println("--------down  upZipResourceFile error");
                 }
             });
+        }
+    }
+
+    public void closeDilaog() {
+        if (downloadDialog != null && downloadDialog.isShowing() && !((Activity)context).isFinishing()) {
+            downloadDialog.dismiss();
         }
     }
 }

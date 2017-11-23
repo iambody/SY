@@ -1,5 +1,6 @@
 package app.privatefund.investor.health.mvp.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +72,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        zipResourceDownload = new ZipResourceDownload(getContext());
+        zipResourceDownload = new ZipResourceDownload(getActivity());
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -179,6 +180,14 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         super.onResume();
         if (zipResourceDownload != null) {
             zipResourceDownload.initZipResource();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.closeDilaog();
         }
     }
 

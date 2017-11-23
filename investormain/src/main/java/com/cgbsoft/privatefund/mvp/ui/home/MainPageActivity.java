@@ -150,6 +150,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onCreate(savedInstanceState);
     }
 
+
+
     @OnClick(R.id.iv_guide)
     public void guideClick() {
         guideindex++;
@@ -885,6 +887,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
+        zipResourceDownload.closeDilaog();
         if (isOnlyClose) {
             return;
         }
