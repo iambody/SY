@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +39,6 @@ import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.utils.RongConnect;
 import io.rong.push.notification.PushNotificationMessage;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -56,7 +56,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     //glide
     private RequestManager requestManager;
     //权限（存储）
-    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE,PERMISSION_WRITE_STORAGE,INSTALL_SHORTCUT};
+    private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE, PERMISSION_WRITE_STORAGE, INSTALL_SHORTCUT};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
     private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
@@ -131,7 +131,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     protected void init(Bundle savedInstanceState) {
         isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
-        SPreference.putString(this,"JavascriptInterfaceSP","");
+        SPreference.putString(this, "JavascriptInterfaceSP", "");
     }
 
     @Override
@@ -262,7 +262,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
-        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
+        //把初始化移动到mainpageActivity页面@陈龙
+//        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
         if (isLoad) {
             if (isNoticePush()) {
@@ -276,16 +277,16 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             if (AppManager.isAdViser(this)) {
                 openActivity(ChoiceIdentityActivity.class);
             } else {
-                if (null==SPreference.getString(this,"splash")){
-                    NavigationUtils.startActivityByRouter(this,RouteConfig.SPLASH_MOVIE);
-                }else {
+                if (null == SPreference.getString(this, "splash")) {
+                    NavigationUtils.startActivityByRouter(this, RouteConfig.SPLASH_MOVIE);
+                } else {
                     openActivity(LoginActivity.class);
                 }
             }
         } else {
-            if (null==SPreference.getString(this,"splash")){
-                NavigationUtils.startActivityByRouter(this,RouteConfig.SPLASH_MOVIE);
-            }else {
+            if (null == SPreference.getString(this, "splash")) {
+                NavigationUtils.startActivityByRouter(this, RouteConfig.SPLASH_MOVIE);
+            } else {
                 openActivity(LoginActivity.class);
             }
         }
@@ -296,7 +297,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         PushNotificationMessage pushMessage = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME);
         Uri uri = getIntent().getParcelableExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME);
         if (pushMessage != null && uri != null) {
-            HashMap<String,Object> hashMap = new HashMap<String, Object>();
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushMessage);
             hashMap.put(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
             NavigationUtils.startActivityByRouter(WelcomeActivity.this, RouteConfig.GOTOCMAINHONE, hashMap);
@@ -319,7 +320,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
             switch (which) {
                 case BUTTON_WAIT:
-//                    btn_wel_cancle.setVisibility(View.VISIBLE);
+                    btn_wel_cancle.setVisibility(View.VISIBLE);
                     break;
                 case DEFAULT_WAIT:
                 case WAIT:

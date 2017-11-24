@@ -119,7 +119,6 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-//        PromptManager.ShowCustomToast(baseContext, "第" + page + "页");
     }
 
     @Override

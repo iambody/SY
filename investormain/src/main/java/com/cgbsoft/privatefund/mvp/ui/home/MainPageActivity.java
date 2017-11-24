@@ -79,6 +79,7 @@ import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
 import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.im.utils.RongConnect;
 import app.privatefund.com.im.utils.RongCouldUtil;
 import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
@@ -137,7 +138,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
-    PackageIconUtils packageIconUtils;
+    private PackageIconUtils packageIconUtils;
 
     private Observable<Boolean> downDamicSoObservable;
     private ZipResourceDownload zipResourceDownload;
@@ -235,6 +236,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (null != savedInstanceState) {
 
         }
+
+        //把welcomeActivity的初始化移动到主页面@陈龙
+        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 //        File file = new File(Environment.getExternalStorageDirectory(), "111/armeabi-v7a");
 //        LogUtils.Log("aaa","file.getAbsolutePath()==="+file.getAbsolutePath());
 //        int result = SoFileUtils.loadSoFile(this, file.getAbsolutePath());
@@ -398,14 +402,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         if (!SPreference.isThisRunOpenDownload(this)) {
             new DownloadDialog(this, true, false);
         }
-//        downloadDialog.show();
 
-//        SignBean bean=new SignBean();
-//        bean.resultMessage="ss";
-//        bean.resultCode="2";
-//        bean.coinNum=4;
-//        HomeSignDialog homeSignDialog=new HomeSignDialog(baseContext,bean);
-//        homeSignDialog.show();
     }
 
     private void switchFragment(Fragment to) {
@@ -1072,18 +1069,15 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     public void initLocation() {
-//        LocationBean a = AppManager.getLocation(baseContext);
         locationManger = LocationManger.getInstanceLocationManger(baseContext);
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
                 locationManger.unregistLocation();
-//                LogUtils.Log("location", "定位成功 城市：" + null == locationBean.getLocationcity() ? "空" : locationBean.getLocationcity());
             }
 
             @Override
             public void getLocationerror() {
-//                LogUtils.Log("location", "定位失败");
                 locationManger.unregistLocation();
             }
         });

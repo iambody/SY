@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
@@ -124,6 +125,7 @@ public class LoadingDialog extends Dialog {
                     }
                 }, duration);
         } catch (Exception e) {
+            Log.i("s",e.getMessage());
             e.printStackTrace();
         }
     }

@@ -39,7 +39,6 @@ import java.util.HashMap;
 
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.LoginContract;
-import app.privatefund.com.im.utils.RongConnect;
 import rx.Observable;
 
 /**
@@ -99,7 +98,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
-                RongConnect.initRongTokenConnect(loginBean.userId);
+                //移动到mainpage页面里面@陈龙
+//                RongConnect.initRongTokenConnect(loginBean.userId);
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
                 MobclickAgent.onProfileSignIn(loginBean.userId);
             }
@@ -108,8 +108,10 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onRxError(Throwable error) {
 
                 LogUtils.Log("LoginPresenter", "----error=" + error.toString());
-//                loadingDialog.dismiss();
-                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
+                loadingDialog.dismiss();
+                PromptManager.ShowCustomToast(getContext(), error.getMessage());
+//                loadingDialog
+//                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
             }
         }));
 
@@ -195,7 +197,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
-                        loadingDialog.dismiss();
+//                        loadingDialog.dismiss();
                         loadingDialog.setResult(true, getContext().getString(R.string.al_need_bind_phone_str), 1000, () -> getView().toBindActivity());
                     } else
                         loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
