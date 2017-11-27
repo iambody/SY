@@ -50,11 +50,11 @@
         android:layout_marginBottom="@dimen/ui_20_dip"
         android:background="@drawable/ocr_camera_img" />
 
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/identitycard_scan_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ocr_scan_up"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/>-->
 </RelativeLayout>

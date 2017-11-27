@@ -1,7 +1,6 @@
 package app.ocrlib.com.identitycard;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,7 +30,6 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import app.ocrlib.com.R;
-import app.ocrlib.com.utils.AnimUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -51,7 +49,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
     //提示文本
     private TextView identitycard_note;
     //扫描
-    private ImageView identitycard_scan_iv;
+//    private ImageView identitycard_scan_iv;
 
     //背影
     private IndentityCardShadow identitycard_shadow;
@@ -101,7 +99,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         btn_shoot = (Button) findViewById(R.id.btn_shoot);
         ocr_face_iv = (ImageView) findViewById(R.id.ocr_face_iv);
         identitycard_note = (TextView) findViewById(R.id.identitycard_note);
-        identitycard_scan_iv = (ImageView) findViewById(R.id.identitycard_scan_iv);
+//        identitycard_scan_iv = (ImageView) findViewById(R.id.identitycard_scan_iv);
         identitycard_shadow = (IndentityCardShadow) findViewById(R.id.identitycard_shadow);
         clipCamera.setIAutoFocus(this);
         btn_shoot.setOnClickListener(this);
@@ -141,11 +139,11 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
         }
 
         //设置扫描的parms
-//        iConParams.setMargins((height / 2) - DimensionPixelUtil.dp2px(this, 40), width - DimensionPixelUtil.dp2px(this, 100), 0, 0);
-        RelativeLayout.LayoutParams sCanConParams = new RelativeLayout.LayoutParams(height, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        identitycard_scan_iv.setLayoutParams(sCanConParams);
-        AnimUtils.IdentityCard((screenHeight - width) / 2 - DimensionPixelUtil.dip2px(this, 20), width + DimensionPixelUtil.dip2px(this, 20), identitycard_scan_iv);
+////        iConParams.setMargins((height / 2) - DimensionPixelUtil.dp2px(this, 40), width - DimensionPixelUtil.dp2px(this, 100), 0, 0);
+//        RelativeLayout.LayoutParams sCanConParams = new RelativeLayout.LayoutParams(height, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//
+//        identitycard_scan_iv.setLayoutParams(sCanConParams);
+//        AnimUtils.IdentityCard((screenHeight - width) / 2 - DimensionPixelUtil.dip2px(this, 20), width + DimensionPixelUtil.dip2px(this, 20), identitycard_scan_iv);
 
     }
 
