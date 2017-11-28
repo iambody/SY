@@ -1,6 +1,7 @@
 package app.ocrlib.com.facepicture;
 
 import android.Manifest;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -43,7 +45,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import app.ocrlib.com.R;
@@ -82,6 +83,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     public static String currentPageTag;
     private ImageView facepiceture_detection_iv;
     private ImageView facepiceture_eye_detection_iv;
+    private int mScreenWidth;
+    private int mScreenHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,8 +99,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-
             if (CameraUtils.getCameraPermission(this)) {
                 setContentView(R.layout.activity_facepicture);
                 initview();
@@ -117,12 +118,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
         surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
         facepiceture_detection_iv = (ImageView) findViewById(R.id.facepiceture_detection_iv);
-        facepiceture_eye_detection_iv= (ImageView) findViewById(R.id.facepiceture_eye_detection_iv);
+        facepiceture_eye_detection_iv = (ImageView) findViewById(R.id.facepiceture_eye_detection_iv);
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
-//        AnimUtils.startFaceDetection(this, facepiceture_detection_iv);
-
-//        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
+        getScreenMetrix(this);
     }
 
     /**
@@ -194,9 +193,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         matrix.postRotate(-90);
         //Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
         Bitmap nbmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
-//        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
         //开始上传bitmap并获取远程路径
-//        upLoadBitmap(nbmp2);
         findFace(nbmp2);
     }
 
@@ -204,10 +201,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     //开始上传bitmap并且进行处理
     private void upLoadBitmap(Bitmap nbmp2) {
-        if (isNeedPersonCompare) {
-//            mLoadingDialog.setLoading("身份识别中...");
-        }
-//        mLoadingDialog.show();
+
+
         facePath = BitmapUtils.saveBitmap(nbmp2, "face");
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -226,8 +221,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                             personCompare(data);
                         } else {
                             Log.i("PersonCompare", "没进行对比直接退出并发通知" + data);
-//                            if (null != mLoadingDialog)
-//                                mLoadingDialog.dismiss();
+
                             RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath, currentPageTag));
                             FacePictureActivity.this.finish();
                         }
@@ -245,6 +239,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
             public void call(Subscriber<? super Integer> subscriber) {
+                //因为这是一个耗时的操作，所以放到另一个线程中运行
                 FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
                 //格式必须为RGB_565才可以识别
                 Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
@@ -259,9 +254,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     @Override
                     public void call(Integer bitmapNumber) {
                         if (bitmapNumber >= 1) {
-//                            PromptManager.ShowCustomToast(FacePictureActivity.this, "检测到人脸");
-                            AnimUtils.startEyeDetection(FacePictureActivity.this,facepiceture_eye_detection_iv,facepiceture_detection_iv);
-
+                            AnimUtils.startEyeDetection(FacePictureActivity.this, facepiceture_eye_detection_iv, facepiceture_detection_iv);
                             // todo 开始调接口
                             //开始上传bitmap并获取远程路径
                             upLoadBitmap(bitmap);
@@ -273,27 +266,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         }
                     }
                 });
-
-        //因为这是一个耗时的操作，所以放到另一个线程中运行
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
-//                //格式必须为RGB_565才可以识别
-//                Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
-//                //返回识别的人脸数
-//                int faceCount = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES).findFaces(bmp, faces);
-//                bmp.recycle();
-//                Message message = new Message();
-//                message.what = faceCount;
-//                message.arg1 = postion;
-//                message.obj = bitmap;
-//                handler.sendMessage(message);
-//
-//            }
-//
-//
-//        }).start();
 
 
     }
@@ -309,22 +281,26 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             Display display = wm.getDefaultDisplay();//获得窗口里面的屏幕
             // 选择合适的预览尺寸
             List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
-            // 如果sizeList只有一个我们也没有必要做什么了，因为就他一个别无选择
-            if (sizeList.size() > 1) {
-                Iterator<Camera.Size> itor = sizeList.iterator();
-                while (itor.hasNext()) {
-                    Camera.Size cur = itor.next();
-                    //if(cur.width<1000)minSize=cur.width;
-                    if (cur.width >= PreviewWidth
-                            && cur.height >= PreviewHeight) {
-
-                        PreviewWidth = cur.width;
-                        PreviewHeight = cur.height;
-                        break;
-                    }
-                }
+            Camera.Size preSize = getCloselyPreSize(mScreenWidth, mScreenHeight, sizeList);
+            if (null != preSize) {
+                parameters.setPreviewSize(PreviewWidth, PreviewHeight); //获得摄像区域的大小
             }
-            parameters.setPreviewSize(PreviewWidth, PreviewHeight); //获得摄像区域的大小
+            // 如果sizeList只有一个我们也没有必要做什么了，因为就他一个别无选择
+//            if (sizeList.size() > 1) {
+//                Iterator<Camera.Size> itor = sizeList.iterator();
+//                while (itor.hasNext()) {
+//                    Camera.Size cur = itor.next();
+//                    //if(cur.width<1000)minSize=cur.width;
+//                    if (cur.width >= PreviewWidth
+//                            && cur.height >= PreviewHeight) {
+//
+//                        PreviewWidth = cur.width;
+//                        PreviewHeight = cur.height;
+//                        break;
+//                    }
+//                }
+//            }
+
             //parameters.setPreviewFrameRate(3);//每秒3帧  每秒从摄像头里面获得3个画面
             parameters.setJpegQuality(100);
             parameters.setPictureFormat(PixelFormat.JPEG);//设置照片输出的格式
@@ -339,6 +315,51 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     }
 
+
+    /**
+     * 通过对比得到与宽高比最接近的尺寸（如果有相同尺寸，优先选择）
+     *
+     * @param surfaceWidth  需要被进行对比的原宽
+     * @param surfaceHeight 需要被进行对比的原高
+     * @param preSizeList   需要对比的预览尺寸列表
+     * @return 得到与原宽高比例最接近的尺寸
+     */
+    protected Camera.Size getCloselyPreSize(int surfaceWidth, int surfaceHeight,
+                                            List<Camera.Size> preSizeList) {
+
+        int ReqTmpWidth;
+        int ReqTmpHeight;
+        // 当屏幕为垂直的时候需要把宽高值进行调换，保证宽大于高
+//        if (mIsPortrait) {
+        ReqTmpWidth = surfaceHeight;
+        ReqTmpHeight = surfaceWidth;
+//        } else {
+//        ReqTmpWidth = surfaceWidth;
+//        ReqTmpHeight = surfaceHeight;
+//        }
+        //先查找preview中是否存在与surfaceview相同宽高的尺寸
+        for (Camera.Size size : preSizeList) {
+            if ((size.width == ReqTmpWidth) && (size.height == ReqTmpHeight)) {
+                return size;
+            }
+        }
+
+        // 得到与传入的宽高比最接近的size
+        float reqRatio = ((float) ReqTmpWidth) / ReqTmpHeight;
+        float curRatio, deltaRatio;
+        float deltaRatioMin = Float.MAX_VALUE;
+        Camera.Size retSize = null;
+        for (Camera.Size size : preSizeList) {
+            curRatio = ((float) size.width) / size.height;
+            deltaRatio = Math.abs(reqRatio - curRatio);
+            if (deltaRatio < deltaRatioMin) {
+                deltaRatioMin = deltaRatio;
+                retSize = size;
+            }
+        }
+
+        return retSize;
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -355,8 +376,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         RxCountDown.countdown(2).subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
-                Log.i("daojishi","时间"+integer);
-                if(0==integer){
+                Log.i("daojishi", "时间" + integer);
+                if (0 == integer) {
                     getPicImageResult();
                 }
             }
@@ -460,21 +481,20 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 FacePictureActivity.this.finish();
                 PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
             }
-//            for (int i = 0; i < permissions.length; i++) {
-//                String s = permissions[i];
-//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-//                    setContentView(R.layout.activity_facepicture);
-//                    initview();
-//                }
-//                if (0 == i && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                    FacePictureActivity.this.finish();
-//                    PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
-//                    break;
-//                }
-//
 
         }
     }
 
-
+    /**
+     * 获取屏幕的宽高
+     *
+     * @param context
+     */
+    private void getScreenMetrix(Context context) {
+        WindowManager WM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        WM.getDefaultDisplay().getMetrics(outMetrics);
+        mScreenWidth = outMetrics.widthPixels;
+        mScreenHeight = outMetrics.heightPixels;
+    }
 }
