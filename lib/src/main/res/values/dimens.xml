@@ -23,6 +23,7 @@
 
     <dimen name="ui_2_dip">2dip</dimen>
     <dimen name="ui_z_dip">0.5dip</dimen>
+    <dimen name="ui_l_dip">0.8dip</dimen>
     <dimen name="ui_1_dip">1dip</dimen>
     <dimen name="ui_4_dip">4dip</dimen>
     <dimen name="ui_5_dip">5dip</dimen>

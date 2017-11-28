@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:scaleType="center"
-                android:src="@drawable/ic_back_white_24dp"/>
+                android:src="@drawable/ic_back_white_dp"/>
 
             <TextView
                 android:id="@+id/title_mid_empty"

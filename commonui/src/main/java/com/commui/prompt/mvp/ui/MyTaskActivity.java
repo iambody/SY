@@ -82,7 +82,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         adapter = new MyTaskAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(baseContext);
         rcv_commui_task.setLayoutManager(linearLayoutManager);
-        rcv_commui_task.addItemDecoration(new SimpleItemDecoration(baseContext,R.color.app_divider_gary, R.dimen.ui_1_dip,20));
+        rcv_commui_task.addItemDecoration(new SimpleItemDecoration(baseContext,R.color.app_split_line, R.dimen.ui_l_dip,20));
         rcv_commui_task.setAdapter(adapter);
         rcv_commui_task.setHasFixedSize(true);
     }
