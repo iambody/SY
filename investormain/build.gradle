@@ -150,14 +150,14 @@ android {
         // 如果为 true，则将所有警告视为错误
         warningsAsErrors false
     }
+//    repositories {
+//        flatDir {
+//            dir '../ocrlib/libs'//,'../mall/libs' // Module A的libs的目录地址
+//        }
+//    }
     repositories {
         flatDir {
             dirs '../ocrlib/libs','../mall/libs' // Module A的libs的目录地址
-        }
-    }
-    repositories {
-        flatDir {
-            dir '../ocrlib/libs'//,'../mall/libs' // Module A的libs的目录地址
         }
     }
 }
@@ -207,10 +207,10 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
         transitive = true;
     }
-    //    compile files('libs/gradle-1.24.0.jar')
-//    compile project(':ocrlib')
-//
-//
+        compile files('libs/gradle-1.24.0.jar')
+    compile project(':ocrlib')
+
+
 //    //1. 云刷脸SDK
 //    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
 //    //2. 云OCR SDK
@@ -219,5 +219,5 @@ dependencies {
 //    compile(name: 'WbCloudNormal-release-v3.0.1-917d1de', ext: 'aar')
 //    //4. 皮肤资源包-可选择黑色/白色 默认黑色
 //    compile(name: 'WbCloudFaceResMidBlack-da5ace4', ext: 'aar')
-    //compile(name: 'WbCloudFaceResMidWhite-6c1b278', ext: 'aar')
+//    compile(name: 'WbCloudFaceResMidWhite-6c1b278', ext: 'aar')
 }

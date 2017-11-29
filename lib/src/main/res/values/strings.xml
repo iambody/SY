@@ -88,7 +88,7 @@
     <string name="no_weixin">未安装微信</string>
     <string name="nulll">--</string>
 
-
+    <string name="health_course">健康课堂</string>
     <string name="lianxiren">联系人</string>
     <string name="weixin">微信</string>
     <string name="pengyouquan">朋友圈</string>
@@ -96,4 +96,7 @@
     <string name="duanxin">短信</string>
     <string name="fuzhilianjie">复制链接</string>
     <string name="pleaseinstanllweixin">请安装微信</string>
+    <string name="zhuliqiye">我们正在助力的核心企业</string>
+    <string name="yiqizhuli">一起来为我助力的企业助力吧</string>
+    <string name="gettravel">赢取价值2万元的私人订制旅游</string>
 </resources>

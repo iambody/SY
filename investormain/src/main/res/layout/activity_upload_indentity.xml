@@ -9,63 +9,247 @@
         layout="@layout/title_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/mini_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/mini_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件姓名"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/recognition_name_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件号码"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/recognition_num_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mini_result_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/reject_result_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件状态"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/recognition_result_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_recognition_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_recognition_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件姓名"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/recognition_name_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/bt_recognition_name_edit"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/golden_shape_sel_btn1"
+                android:text="编辑"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divide_line1"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:background="@color/app_split_line"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_recognition_idcard_num"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件号码"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/recognition_idcard_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <View
+            android:id="@+id/divide_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="10dp"
+            android:background="@color/app_split_line"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_recognition_validDate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="证件有效期"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/recognition_validDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textSize="16sp"
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_replenish_card_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_replenish_name_str"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
             android:layout_marginTop="20dp"
-            android:text="姓&#160;&#160;&#160;&#8201;名"
-            />
+            android:text="证件姓名"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_replenish_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/tv_replenish_name_str"
-            />
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_replenish_identitynum_str"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/tv_replenish_name_str"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
             android:text="证件号"
-            />
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_replenish_identitynum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
             android:layout_below="@+id/tv_replenish_name_str"
-            android:textColor="@color/black"
-            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tv_replenish_identitynum_str"
-            />
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_below="@+id/tv_replenish_identitynum_str"
-            android:background="@color/transparent"
-            />
+            android:background="@color/transparent" />
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/rl_tip"
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
@@ -89,41 +273,45 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <FrameLayout
                 android:id="@+id/iv_upload_crad_first_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/iv_upload_crad_first"
                     android:layout_width="match_parent"
                     android:layout_height="214dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                     />
+                    android:layout_marginRight="15dp" />
+
                 <ImageView
                     android:id="@+id/iv_upload_card_first_cover"
                     android:layout_width="match_parent"
                     android:layout_height="214dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:visibility="gone"
                     android:background="@color/half_truns"
-                    />
+                    android:visibility="gone" />
             </FrameLayout>
+
             <FrameLayout
                 android:id="@+id/iv_upload_crad_second_all"
                 android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
                 <ImageView
                     android:id="@+id/iv_upload_crad_second"
                     android:layout_width="match_parent"
@@ -131,43 +319,66 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:src="@drawable/upload_id_card_back"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/iv_upload_card_second_cover"
                     android:layout_width="match_parent"
                     android:layout_height="214dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:visibility="gone"
                     android:background="@color/half_truns"
-                    />
+                    android:visibility="gone" />
             </FrameLayout>
+
             <LinearLayout
                 android:id="@+id/ll_defeat_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="15dp"
-                android:visibility="gone"
-                >
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/tv_defeat_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_595959"
-                    android:textSize="15sp"
                     android:text=""
-                    />
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/tv_defeat_depict"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_595959"
-                    android:textSize="15sp"
                     android:layout_marginTop="10dp"
                     android:text=""
-                    />
+                    android:textColor="@color/color_595959"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/upload_demo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="查看示例>"
+                    android:textColor="@color/app_golden"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="如有疑问，请拨打客服电话400-188-8848" />
             </LinearLayout>
         </LinearLayout>
 

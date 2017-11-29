@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.contract.center;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 
 /**
  * Created by feigecal on 2017/7/8 0008.
@@ -24,10 +25,13 @@ public interface PersonalInformationContract {
         void verifyIndentitySuccess(boolean hasIndentity,boolean hasUpload,String indentityCode,String title,String credentialCode,String status,String statusCode);
 
         void verifyIndentityError(Throwable error);
+
+        void verifyIndentityV3Success(CredentialStateMedel credentialStateMedel);
     }
     interface PersonalInformationPresenter extends BasePresenter{
         void updateUserInfoToServer(String userName, String gender, String birthday);
         void uploadRemotePath(String adviserId);
         void verifyIndentity();
+        void verifyIndentityV3();
     }
 }

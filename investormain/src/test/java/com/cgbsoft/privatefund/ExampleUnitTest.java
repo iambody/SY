@@ -1,15 +1,13 @@
 package com.cgbsoft.privatefund;
 
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import android.util.Log;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-import rx.functions.Func1;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -19,34 +17,26 @@ import rx.functions.Func1;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("a", "aaa");
+        params.put("b", null);
+        params.put("c", "c");
+        Iterator<Map.Entry<String, Object>> iterator = params.entrySet().iterator();
 
-        List<String> aaa = new ArrayList<>();
-        aaa.add("aaaa");
-        aaa.add("bbbb");
-        aaa.add("cccc");
-        aaa.add("vvvv");
-        aaa.add("aabb");
-        Observable.from(aaa).filter(new Func1<String, Boolean>() {
-            @Override
-            public Boolean call(String s) {
-                return s.endsWith("bb");
-            }
-        }).map(new Func1<String, String>() {
-            @Override
-            public String call(String s) {
-                return "我的map数据=》" + s;
-            }
-        }).subscribe(new RxSubscriber<String>() {
-            @Override
-            protected void onEvent(String s) {
-                LogUtils.Log("zxcvb", s);
-            }
+        try {
+            JSONObject object = new JSONObject();
 
-            @Override
-            protected void onRxError(Throwable error) {
-                LogUtils.Log("zxcvb", "错误");
+            while (iterator.hasNext()) {
+                Map.Entry entry = iterator.next();
+                object.put(entry.getKey().toString(), entry.getValue());
             }
-        });
+            String ss=object.toString();
+            Log.i("s", "sss");
+
+        } catch (Exception e) {
+            Log.i("s", "sss");
+        }
+        Log.i("s", "sss");
 
     }
 }

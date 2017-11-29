@@ -192,37 +192,23 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         String liveJsonStr = getIntent().getStringExtra("liveJson");
         JSONObject liveJson = null;
         try {
-            if ("webJoinLive".equals(getIntent().getStringExtra("type"))) {
-                liveJson = new JSONObject(liveJsonStr);
-                MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
-                MySelfInfo.getInstance().setJoinRoomWay(false);
-                CurLiveInfo.setHostID(liveJson.getString("user_id"));
-                CurLiveInfo.setHostName(liveJson.getString("title"));
-                CurLiveInfo.setHostAvator(liveJson.getString("head_portrait"));
-                CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
-                CurLiveInfo.setMembers(0);
-                CurLiveInfo.setAdmires(11);
-                CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("isShare")));
-                CurLiveInfo.setChatId(liveJson.getString("chat"));
-                CurLiveInfo.setSlogan(liveJson.getString("slogan"));
-                CurLiveInfo.setAllowChat(liveJson.getInt("allow_chat"));
-            } else {
-                liveJson = new JSONObject(liveJsonStr);
-                MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
-                MySelfInfo.getInstance().setJoinRoomWay(false);
-                CurLiveInfo.setHostID(liveJson.getString("userId"));
-                CurLiveInfo.setHostName(liveJson.getString("nickName"));
-                CurLiveInfo.setHostAvator(liveJson.getString("headPortrait"));
-                CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
-                CurLiveInfo.setMembers(0);
-                CurLiveInfo.setAdmires(11);
-                CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("isShare")));
-                CurLiveInfo.setChatId(liveJson.getString("chat"));
-                CurLiveInfo.setSlogan(liveJson.getString("slogan"));
-                CurLiveInfo.setAllowChat(liveJson.getInt("allowChat"));
-                CurLiveInfo.setEquipment(liveJson.getInt("equipment"));
-                CurLiveInfo.setShareUrl(liveJson.getString("shareUrl"));
-            }
+            
+            liveJson = new JSONObject(liveJsonStr);
+            MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
+            MySelfInfo.getInstance().setJoinRoomWay(false);
+            CurLiveInfo.setHostID(liveJson.getString("userId"));
+            CurLiveInfo.setHostName(liveJson.getString("nickName"));
+            CurLiveInfo.setHostAvator(liveJson.getString("headPortrait"));
+            CurLiveInfo.setRoomNum(Integer.parseInt(liveJson.getString("id")));
+            CurLiveInfo.setMembers(0);
+            CurLiveInfo.setAdmires(11);
+            CurLiveInfo.setIsShare(Integer.parseInt(liveJson.getString("isShare")));
+            CurLiveInfo.setChatId(liveJson.getString("chat"));
+            CurLiveInfo.setSlogan(liveJson.getString("slogan"));
+            CurLiveInfo.setAllowChat(liveJson.getInt("allowChat"));
+            CurLiveInfo.setEquipment(liveJson.getInt("equipment"));
+            CurLiveInfo.setShareUrl(liveJson.getString("shareUrl"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

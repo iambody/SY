@@ -673,41 +673,32 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             System.out.println("-------conversation-----unReadMessage");
             UIConversation conversation = null;
             int originalIndex = this.mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
-            if (originalIndex < 0) {
-                originalIndex = mAdapter.findPosition(Conversation.ConversationType.PRIVATE, noticeId);
-                conversation = this.mAdapter.getItem(originalIndex);
+            conversation = this.mAdapter.getItem(originalIndex);
+            if (conversation == null) {
+                MessageContent mc = new MessageContent() {
+                    @Override
+                    public byte[] encode() {
+                        return "公告".getBytes();
+                    }
+
+                    @Override
+                    public int describeContents() {
+                        return 0;
+                    }
+
+                    @Override
+                    public void writeToParcel(Parcel dest, int flags) {
+                    }
+                };
+                Message targetMessage = Message.obtain(noticeId, Conversation.ConversationType.PRIVATE, mc);
+                conversation = UIConversation.obtain(targetMessage, getGatherState(Conversation.ConversationType.PRIVATE));
             } else {
-                conversation = this.mAdapter.getItem(originalIndex);
-                if (conversation == null) {
-                    MessageContent mc = new MessageContent() {
-                        @Override
-                        public byte[] encode() {
-                            return "公告".getBytes();
-                        }
-
-                        @Override
-                        public int describeContents() {
-                            return 0;
-                        }
-
-                        @Override
-                        public void writeToParcel(Parcel dest, int flags) {
-                        }
-                    };
-                    Message targetMessage = Message.obtain(noticeId, Conversation.ConversationType.PRIVATE, mc);
-                    conversation = UIConversation.obtain(targetMessage, getGatherState(Conversation.ConversationType.PRIVATE));
-                }
-            }
-
-            if (conversation != null) {
                 conversation.setUnReadMessageCount(getUnreadNoticeInfoCount());
                 int newPosition = this.mAdapter.findPosition(conversation);
-
                 long showTime = conversation.getSentStatus() == Message.SentStatus.SENT ? message.getSentTime() : message.getReceivedTime();
                 if (showTime != 0) {
                     conversation.setUIConversationTime(showTime);
                 }
-
 //                int unread = 0;
 //                for (UIConversation uiConversation : cacheConversationList) {
 //                    unread += uiConversation.getUnReadMessageCount();
@@ -726,6 +717,7 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                         conversation.setConversationContent(Spannable.Factory.getInstance().newSpannable(content));
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 if (originalIndex < 0) {
@@ -734,7 +726,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
                     this.mAdapter.remove(originalIndex);
                     this.mAdapter.add(conversation, newPosition);
                 }
-
                 mAdapter.notifyDataSetChanged();
             }
         }

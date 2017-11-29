@@ -4,43 +4,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.CardListAdapter;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.CardCollectContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.CardCollectPresenterImpl;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import app.ocrlib.com.LivingManger;
+import app.ocrlib.com.LivingResult;
+import app.ocrlib.com.facepicture.FacePictureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
-import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY;
 import static com.cgbsoft.lib.utils.constant.RxConstant.SELECT_INDENTITY_ADD;
 
 /**
  * Created by fei on 2017/8/15.
  */
 
-public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView,OnRefreshListener {
+public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImpl> implements CardCollectContract.CardCollectView, OnRefreshListener {
 
     private LoadingDialog mLoadingDialog;
-//    @BindView(R.id.toolbar)
+    //    @BindView(R.id.toolbar)
 //    protected Toolbar toolbar;
     @BindView(R.id.title_mid)
     TextView titleTV;
@@ -57,6 +66,11 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     private CardListAdapter adapter;
     private String indentityCode;
     private Observable<Integer> register;
+    private Observable<PersonCompare> registerPerson;
+    private CredentialStateMedel credentialStateMedel;
+    private LivingManger livingManger;
+    private CardListEntity.CardBean cardBean;
+    private String TAG = "CardCollectAddActivity";
 
     @Override
     public void showLoadDialog() {
@@ -93,13 +107,93 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
     }
 
     @Override
+    public void getLivingCountSuccess(String s) {
+        try {
+            JSONObject js = new JSONObject(s);
+            JSONObject result = js.getJSONObject("result");
+            String failCount = result.getString("failCount");
+            //”0”:已过期。”1”:未过期。“2”：无历史 注意：没有活体验身历史的情况，返回空字符串。
+            String validCode = result.getString("validCode");
+            if ("0".equals(validCode)) {
+                if ("3".equals(failCount)) {
+                    Toast.makeText(this, "非常抱歉，您今日的人脸核身次数超过限制，请明日尝试", Toast.LENGTH_LONG).show();
+                } else {
+                    livingManger = new LivingManger(this, "100101", "1001", new LivingResult() {
+                        @Override
+                        public void livingSucceed(LivingResultData resultData) {
+                            switch (resultData.getRecognitionCode()) {
+                                case "0":
+                                    resultData.getRecognitionCode();
+                                    jumpDetial();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"成功","活体");
+                                    break;
+                                case "1":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
+//                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
+                                    break;
+                                case "2":
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
+                                    break;
+                                case "3":
+                                    Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
+                                    DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","活体");
+                                    break;
+                            }
+
+                        }
+
+                        @Override
+                        public void livingFailed(LivingResultData resultData) {
+
+                        }
+                    });
+                    livingManger.startLivingMatch();
+                }
+            } else if ("1".equals(validCode)) {
+                startMatchImg();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startMatchImg() {
+        startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true).putExtra(FacePictureActivity.PAGE_TAG, TAG));
+    }
+
+    private void jumpDetial() {
+        credentialStateMedel = new CredentialStateMedel();
+        credentialStateMedel.setCredentialCode(cardBean.getCode());
+        credentialStateMedel.setCredentialState(cardBean.getStateCode());
+        credentialStateMedel.setCredentialTypeName(cardBean.getName());
+        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+        credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+
+        if (null != credentialStateMedel) {
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+        }
+        startActivity(intent);
+    }
+
+    @Override
+    public void getLivingCountError(Throwable error) {
+
+    }
+
+    @Override
     protected int layoutID() {
         return R.layout.activity_cardcollect;
     }
+
     @OnClick(R.id.title_left)
-    public void backClick(){
+    public void backClick() {
         this.finish();
     }
+
     @Override
     protected void init(Bundle savedInstanceState) {
         ivBack.setVisibility(View.VISIBLE);
@@ -109,6 +203,7 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 //        toolbar.setNavigationOnClickListener(v -> finish());
         initView(savedInstanceState);
+        initCallBack();
         register = RxBus.get().register(SELECT_INDENTITY_ADD, Integer.class);
         register.subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -122,13 +217,44 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
             }
         });
     }
+
+    public void initCallBack() {
+        registerPerson = RxBus.get().register(RxConstant.COMPLIANCE_PERSON_COMPARE, PersonCompare.class);
+        registerPerson.subscribe(new RxSubscriber<PersonCompare>() {
+            @Override
+            protected void onEvent(PersonCompare personCompare) {
+                if (TAG.equals(personCompare.getCurrentPageTag())) {
+                    //0代表成功 1代表失败  int值
+                    if (0 == personCompare.getResultTage()) {
+                        jumpDetial();
+                        Toast.makeText(baseContext,"身份验证通过",Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"成功","拍照");
+
+                    } else {
+                        Toast.makeText(baseContext,"识别失败，请点击重试",Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(cardBean.getCode(),"失败","拍照");
+                    }
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (null != register) {
-            RxBus.get().unregister(SELECT_INDENTITY_ADD,register);
+            RxBus.get().unregister(SELECT_INDENTITY_ADD, register);
+        }
+        if (null != registerPerson) {
+            RxBus.get().unregister(RxConstant.COMPLIANCE_PERSON_COMPARE, registerPerson);
         }
     }
+
     private void initView(Bundle savedInstanceState) {
         indentityCode = getIntent().getStringExtra("indentityCode");
         mRefreshLayout.setLoadMoreEnabled(false);
@@ -147,12 +273,37 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
         });
     }
 
+
     private void dealClick(CardListEntity.CardBean cardBean) {
-        Intent intent = new Intent(this, UploadIndentityCradActivity.class);
-        intent.putExtra("credentialCode", cardBean.getCode());
-        intent.putExtra("indentityCode", indentityCode);
-        intent.putExtra("title", cardBean.getName());
-        startActivity(intent);
+        this.cardBean = cardBean;
+        credentialStateMedel = new CredentialStateMedel();
+        credentialStateMedel.setCredentialCode(cardBean.getCode());
+        credentialStateMedel.setCredentialState(cardBean.getStateCode());
+        credentialStateMedel.setCredentialTypeName(cardBean.getName());
+        credentialStateMedel.setCredentialStateName(cardBean.getStateName());
+        credentialStateMedel.setCustomerIdentity(cardBean.getCode().substring(0, 4));
+        credentialStateMedel.setCustomerType(cardBean.getCode().substring(0, 2));
+        credentialStateMedel.setCredentialDetailId(cardBean.getId());
+        // 通过，审核中   直接进详情
+        if ("50".equals(cardBean.getStateCode()) || "10".equals(cardBean.getStateCode())) {
+            Intent intent = new Intent(this, UploadIndentityCradActivity.class);
+            intent.putExtra("credentialStateMedel", credentialStateMedel);
+            startActivity(intent);
+        } else {
+            getPresenter().getLivingCount();
+        }
+        DataStatistApiParam.cardCollectClick(cardBean.getCode());
+
+//        intent.putExtra("credentialCode", cardBean.getCode());
+//        intent.putExtra("indentityCode", indentityCode);
+//        intent.putExtra("firstUrl", firstUrl);
+//        intent.putExtra("secondUrl", secondUrl);
+//        intent.putExtra("stateCode", stateCode);
+//        intent.putExtra("stateName", cardBean.getStateName());
+//        intent.putExtra("title", cardBean.getName());
+//        intent.putExtra("customerName", cardBean.getCustomerName());
+//        intent.putExtra("customerNum", cardBean.getNumber());
+//        intent.putExtra("depict", cardBean.getComment());
 //        this.finish();
     }
 
@@ -161,9 +312,10 @@ public class CardCollectAddActivity extends BaseActivity<CardCollectPresenterImp
         super.onResume();
         getPresenter().getCardListAdd(indentityCode);
     }
+
     @Override
     protected CardCollectPresenterImpl createPresenter() {
-        return new CardCollectPresenterImpl(this,this);
+        return new CardCollectPresenterImpl(this, this);
     }
 
     @Override

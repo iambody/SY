@@ -81,7 +81,7 @@ public class BaseWebview extends WebView {
     private void parseAttr(Context context, AttributeSet attributeSet) {
         TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.initWebView);
         isInitData = ta.getBoolean(R.styleable.initWebView_init, false);
-//        System.out.println("-------initData=" + isInitData);
+//       System.out.println("-------initData=" + isInitData);
         ta.recycle();
     }
 
@@ -124,10 +124,12 @@ public class BaseWebview extends WebView {
                 return true;
             }
         } : cWebClient);
+
+//        this.setWebContentsDebuggingEnabled(true);
     }
 
     //进度显示
-    private class WVChromeClient extends WebChromeClient {
+    public class WVChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
@@ -188,11 +190,10 @@ public class BaseWebview extends WebView {
 
     public void shouldOverrideUrlLoading(WebView view, String url) {
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 //TODO 去通知商学院  其他逻辑处理已经好了 只用确定按照那种方式进行调用即可
-                //                EventBus.getDefault().post(new ShangxueyuanBackBean());
+                //EventBus.getDefault().post(new ShangxueyuanBackBean());
             }
         }, 500);
     }

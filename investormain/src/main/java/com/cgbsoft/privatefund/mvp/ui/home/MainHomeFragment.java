@@ -314,14 +314,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /* 登录模式点击电话*/
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
-
         //判断是否有拨打电话权限
         if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
             PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
-
             return;
         }
-
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
     }
@@ -338,6 +335,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
+
     }
 
 
@@ -752,7 +750,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         Intent intent = new Intent(baseActivity, LiveActivity.class);
                         intent.putExtra("liveJson", homeliveInfBean.jsonstr);
-                        intent.putExtra("type", "a");
                         startActivity(intent);
 
                         SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
@@ -791,7 +788,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
                     NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
                 } else {
-
                     NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
                 }
 

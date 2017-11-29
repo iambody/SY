@@ -6,9 +6,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-/**
- * Created by leoraylei on 16/9/19.
- */
 
 public class AppHandler {
     public static final int ERROR_DATA = -100;

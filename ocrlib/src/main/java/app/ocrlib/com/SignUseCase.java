@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 
-/**
- * Created by leoraylei on 16/9/19.
- */
 
 public class SignUseCase {
     private static final String TAG = "SignUseCase";

@@ -15,8 +15,6 @@ import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -31,11 +29,9 @@ import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
-import app.privatefund.investor.health.mvp.ui.CheckHealthFragment;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import app.privatefund.investor.health.mvp.ui.HealthSummaryFragment;
 import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragmentNew;
-import app.privatefund.investor.health.mvp.ui.IntroduceHealthFragmentTest;
 
 /**
  *@author chenlong
@@ -46,8 +42,6 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
 
     private final String NAVIGATION_CODE = "40";
     private final String HEALTE_INTRODUCTION_CODE = "4001";
-    private final String HEALTH_CHECK_CODE = "4002";
-    private final String HEALTH_MEDICAL_CODE = "4003";
     private final String HEALTH_PROJECT_SIMPLE_CODE = "4004";
     private final String HEALTH_COURESE_CODE = "4005";
 

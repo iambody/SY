@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 
 import java.io.File;
@@ -73,6 +71,7 @@ public class TestCardCamera extends AppCompatActivity {
 
     private void send() {
         Log.i("oooppllljjo", "开始");
+        List<String> urlssss = new ArrayList<>();
         Observable.from(urlssss).map(new Func1<String, String>() {
             @Override
             public String call(String s) {
@@ -137,21 +136,4 @@ public class TestCardCamera extends AppCompatActivity {
 
     }
 
-    /**
-     * 开始进行ocr
-     */
-    private void cardOcr() {
-
-        ApiClient.getOcrResult(1, "").subscribe(new RxSubscriber<String>() {
-            @Override
-            protected void onEvent(String s) {
-
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-
-            }
-        });
-    }
 }

@@ -37,6 +37,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.rxjava.RxSchedulersHelper;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,6 +166,16 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("contents", json);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 测试环境埋点统计
+     */
+    public static Observable<String> testPushDataStatistics(String json){
+        Map<String, String> map = new HashMap<>();
+        map.put("contents", json);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.T_SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+
     }
 
     /**
@@ -1621,6 +1632,25 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttp().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+    /**
+     * 新版本判断身份
+     *
+     * @return
+     */
+    public static Observable<String> verifyIndentityInClientV3() {
+        return OKHTTP.getInstance().getRequestManager().verifyIndentityInOkhttpV3().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    public static Observable<String> getLivingCount(){
+        return OKHTTP.getInstance().getRequestManager().getLivingCount().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     *
+     * @param indentityCode
+     * @return
+     */
     public static Observable<CardListEntity.Result> getIndentityList(String indentityCode) {
         Map<String, Object> params = new HashMap<>();
         params.put("customerCode", indentityCode);
@@ -1641,11 +1671,38 @@ public class ApiClient {
     }
 
     /**
+     * 上传其他证件 + 照片
+     * @param remoteParams
+     * @param customerCode
+     * @param credentialCode
+     * @return
+     */
+    public static Observable<String> uploadOtherRemotePath(List<String> remoteParams, String customerCode, String credentialCode,String remotePersonParam) {
+        Map<String, String> params = new HashMap<>();
+        params.put("customerCode", customerCode);
+        params.put("credentialCode", credentialCode);
+        params.put("faceImage",remotePersonParam);
+        params.put("type","10");
+        return OKHTTP.getInstance().getRequestManager().uploadOtherPath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 获取证件详情
+     * @param credentialCode
+     * @return
+     */
+    public static Observable<String> getCredentialDetial(String credentialCode){
+        Map<String,String> params = new HashMap<>();
+        params.put("id",credentialCode);
+        return OKHTTP.getInstance().getRequestManager().getCredentialDetial(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取活体检测的sign值
      *
      * @return
      */
-
     public static Observable<String> getLivingSign() {
         Map<String, String> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().getLivingSign(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
@@ -1654,10 +1711,50 @@ public class ApiClient {
     /**
      * 活体检测的通知结果接口
      */
-    public static Observable<String> livingQueryResult(String orderNo) {
+    public static Observable<String> livingQueryResult(String orderNo, String cardName, String cardNum) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
+        params.put("cardName", cardName);
+        params.put("cardNum", cardNum);
         return OKHTTP.getInstance().getRequestManager().queryLivingResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 活体检测二次通知接口
+     *
+     * @return
+     */
+    public static Observable<String> getLivingQueryDataResult(  List<String>  imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
+        Map<String, Object> params = new HashMap<>();
+//        params.put("imageUrl", imageUrl);
+        params.put("number", cardNum);
+        params.put("name", cardName);
+        params.put("periodValidity", cardValidity);
+        params.put("orderNo", orderNo);
+        params.put("faceCode", faceCode);
+        //证件夹*********************
+        params.put("credentialCode", credentialCode);
+        params.put("customerCode", customerCode);
+        params.put("type", type);
+        params.put("sex", sex);
+        params.put("birthday", birthday);
+        return OKHTTP.getInstance().getRequestManager().queryDataResult(uploadRemotePathUse(imageUrl,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 活体公用检测锁的通知server的接口
+     */
+    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderNo", orderNo);
+        params.put("faceCode", faceCode);
+        params.put("number", number);
+        params.put("name", name);
+        params.put("credentialCode", credentialCode);
+        params.put("customerCode", customerCode);
+        return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -1675,11 +1772,23 @@ public class ApiClient {
      * 获取自定义OCR的结果（目前只有身份证头像面）
      * certificateType 1标识身份证头像面；2标识身份证国徽面
      */
-    public static Observable<String> getOcrResult(int certificateType, String imageUrl) {
+    public static Observable<IdentityCard> getOcrResult(String imageUrl, int faceType) {
         Map<String, String> params = new HashMap<>();
-        params.put("certificateType", certificateType + "");
+        params.put("credentialType", "100101");//身份证标识默认是100101
         params.put("imageUrl", imageUrl);
-        return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        params.put("faceType", faceType + "");
+        return OKHTTP.getInstance().getRequestManager().getOcrResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * person对比
+     * @return
+     */
+    public static Observable<String> getPersonCompare(String remotPath) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("url", remotPath);
+        return OKHTTP.getInstance().getRequestManager().getPersonCompare(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
     }
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
@@ -1699,7 +1808,7 @@ public class ApiClient {
                 } else {
                     objImg.put("name", "backImage");
                 }
-                objImg.put("url", path);
+                objImg.put("url", null==path?"":path);
                 jsonArray.put(objImg);
             }
             jsonObject.put("imageUrl", jsonArray);

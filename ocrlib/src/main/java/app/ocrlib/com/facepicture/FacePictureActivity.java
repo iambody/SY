@@ -1,5 +1,6 @@
 package app.ocrlib.com.facepicture;
 
+import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -9,16 +10,37 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.FaceDetector;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
+
+import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CameraUtils;
+import com.cgbsoft.lib.utils.tools.DownloadUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.privatefund.bean.living.FaceInf;
+import com.cgbsoft.privatefund.bean.living.LivingResultData;
+import com.cgbsoft.privatefund.bean.living.PersonCompare;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +48,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import app.ocrlib.com.R;
+import app.ocrlib.com.utils.BitmapUtils;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * desc    人脸拍照
@@ -33,35 +61,87 @@ import app.ocrlib.com.R;
  * 日期 2017/10/24-16:28
  */
 public class FacePictureActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-    Camera camera;
+    private Camera camera;
 
-    SurfaceView surfaceview;
+    private SurfaceView surfaceview;
 
-    SurfaceHolder surfaceholder;
+    private SurfaceHolder surfaceholder;
+
+    //是否需要进行person对比
+    private boolean isNeedPersonCompare = false;
+
+    //需要进行person比较的key
+    public static String TAG_NEED_PERSON = "needPersonCompare";
+
+    private LoadingDialog mLoadingDialog;
+
+    private boolean isCanclick = true;
+
+    public static final String PAGE_TAG = "pagtag";
+
+    public static String currentPageTag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_facepicture);
+
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey(PAGE_TAG)) {
+            currentPageTag = getIntent().getStringExtra(PAGE_TAG);
+        } else {
+            PromptManager.ShowCustomToast(this, getResources().getString(R.string.put_parame));
+            finish();
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            if (CameraUtils.getCameraPermission(this)) {
+                setContentView(R.layout.activity_facepicture);
+                initview();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+            }
+
+
+        } else {
+            setContentView(R.layout.activity_facepicture);
+            initview();
+        }
+
+    }
+
+    private void initview() {
+        isNeedPersonCompare = getIntent().getBooleanExtra(TAG_NEED_PERSON, false);
+        surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
+        surfaceholder = surfaceview.getHolder();
+        surfaceholder.addCallback(this);
+        mLoadingDialog = LoadingDialog.getLoadingDialog(this, "解析中", false, false);
     }
 
     /**
      * 初始化相机
      */
     private void initCamera() {
-        surfaceholder = surfaceview.getHolder();
-        surfaceholder.addCallback(this);
         //CameraID表示0或者1，表示是前置摄像头还是后置摄像头
-        camera = Camera.open(1);
-//        getPicImageResult();
+        try {
+            camera = Camera.open(1);
+        } catch (Exception e) {
+//            camera = Camera.open();
+            Log.i("kskkssa", e.getMessage());
+        }
+        //getPicImageResult();
         Camera.Parameters parameters = camera.getParameters();
-        surfaceholder.addCallback(this);
-//        强制竖屏
+        //强制竖屏
         camera.setDisplayOrientation(90);
         setPreviewSize(camera, parameters);
 
-        surfaceview = (SurfaceView) findViewById(R.id.facepicture_surfaceview);
+    }
 
+    public void paizhao(View V) {
+        if (!isCanclick) return;
+        isCanclick = false;
+        getPicImageResult();
     }
 
     /**
@@ -77,7 +157,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
                     if (image != null) {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        image.compressToJpeg(new Rect(0, 0, size.width, size.height), 80, stream);
+                        image.compressToJpeg(new Rect(0, 0, size.width, size.height), 70, stream);
 
                         Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
@@ -105,17 +185,52 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         //*****旋转一下
         Matrix matrix = new Matrix();
         matrix.postRotate(-90);
-        Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
+        //Bitmap bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), Bitmap.Config.ARGB_8888);
         Bitmap nbmp2 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+//        PromptManager.ShowCustomToast(FacePictureActivity.this, "成功截取");
+        //开始上传bitmap并获取远程路径
+        upLoadBitmap(nbmp2);
 
+    }
+
+    String facePath = null;
+
+    //开始上传bitmap并且进行处理
+    private void upLoadBitmap(Bitmap nbmp2) {
+        if (isNeedPersonCompare) {
+            mLoadingDialog.setLoading("身份识别中...");
+        }
+        mLoadingDialog.show();
+        facePath = BitmapUtils.saveBitmap(nbmp2, "face");
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                //异步操作相关代码
+                String imageId = DownloadUtils.postSecretObject(facePath, Constant.UPLOAD_COMPLIANCE_FACE);
+                subscriber.onNext(imageId);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String data) {
+                        // 主线程操作
+                        Log.i("PersonCompare", "上传成功了" + data);
+                        if (isNeedPersonCompare) {
+                            personCompare(data);
+                        } else {
+                            Log.i("PersonCompare", "没进行对比直接退出并发通知" + data);
+                            if (null != mLoadingDialog)
+                                mLoadingDialog.dismiss();
+                            RxBus.get().post(RxConstant.COMPLIANCE_FACEUP, new FaceInf(data, facePath, currentPageTag));
+                            FacePictureActivity.this.finish();
+                        }
+
+                    }
+                });
     }
 
     /**
      * 检测人脸
-     *
-     * @param bitmap
-     * @param postion
-     * @param handler
      */
     private void findFace(final Bitmap bitmap, final int postion, final Handler handler) {
         if (null == bitmap) return;
@@ -141,49 +256,11 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
         }).start();
 
-        //因为这是一个耗时的操作，所以放到另一个线程中运行
-
-//        Observable.create(new Observable.OnSubscribe<Bitmap>() {
-//            @Override
-//            public void call(Subscriber<? super Bitmap> subscriber) {
-//                subscriber.onNext(bitmap);
-//                subscriber.onCompleted();
-//            }
-//        }).map(new Func1<Bitmap, Integer>() {
-//            @Override
-//            public Integer call(Bitmap bitmap) {
-//                FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
-//                //格式必须为RGB_565才可以识别
-//                Bitmap bmp = bitmap.copy(Bitmap.Config.RGB_565, true);
-//                //返回识别的人脸数
-//                int faceCount = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MAX_FACES).findFaces(bmp, faces);
-//                bmp.recycle();
-//                return null;
-//            }
-//        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Integer>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Integer integer) {
-//
-//            }
-//        });
-
 
     }
 
     /**
      * 设置preview和picturesize的尺寸 大多数手机因为设置的不支持底层 会造成崩溃
-     *
-     * @param
      */
     public void setPreviewSize(Camera camera, Camera.Parameters parameters) {
         try {
@@ -198,7 +275,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 Iterator<Camera.Size> itor = sizeList.iterator();
                 while (itor.hasNext()) {
                     Camera.Size cur = itor.next();
-//                    if(cur.width<1000)minSize=cur.width;
+                    //if(cur.width<1000)minSize=cur.width;
                     if (cur.width >= PreviewWidth
                             && cur.height >= PreviewHeight) {
 
@@ -209,17 +286,16 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                 }
             }
             parameters.setPreviewSize(PreviewWidth, PreviewHeight); //获得摄像区域的大小
-//            parameters.setPreviewFrameRate(3);//每秒3帧  每秒从摄像头里面获得3个画面
+            //parameters.setPreviewFrameRate(3);//每秒3帧  每秒从摄像头里面获得3个画面
             parameters.setJpegQuality(100);
             parameters.setPictureFormat(PixelFormat.JPEG);//设置照片输出的格式
             parameters.set("jpeg-quality", 100);//设置照片质量
             parameters.setPictureSize(PreviewWidth, PreviewHeight);//设置拍出来的屏幕大小
-//            //
             //设置放大倍数
             parameters.setZoom(1);
-            camera.setParameters(parameters);//把上面的设置 赋给摄像头
+            //把上面的设置 赋给摄像头
+            camera.setParameters(parameters);
         } catch (Exception e) {
-//            Log.e(TAG, e.toString());
         }
 
     }
@@ -235,7 +311,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             e.printStackTrace();
         }
         camera.startPreview();
-
     }
 
     @Override
@@ -245,6 +320,109 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        camera.stopPreview();
+        //手动释放 一定得加！
+        camera.release();
+        camera = null;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mLoadingDialog) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+        if (null != camera) {
+            try {
+                camera.release();
+                camera = null;
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * person对比
+     *
+     * @param remotpath
+     */
+    private void personCompare(final String remotpath) {
+        Log.i("PersonCompare", "开始调用person对比" + remotpath);
+        ApiClient.getPersonCompare(remotpath).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                if (null != mLoadingDialog)
+                    mLoadingDialog.dismiss();
+
+//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    String result = obj.getString("result");
+                    LivingResultData recognitionCode = new Gson().fromJson(result, LivingResultData.class);
+                    if ("0".equals(recognitionCode.getRecognitionCode())) {//成功
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(0, currentPageTag));
+                        Log.i("PersonCompare", "对比成功了开始发射信息" + remotpath);
+                    } else {//失败
+                        RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
+                        Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
+//                        PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                FacePictureActivity.this.finish();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+//                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
+                isCanclick = true;
+                if (null != mLoadingDialog)
+                    mLoadingDialog.dismiss();
+                Log.i("PersonCompare", "对比失败了" + remotpath);
+//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
+                RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
+                FacePictureActivity.this.finish();
+            }
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            RxBus.get().post(RxConstant.COMPIANCE_FACE_BACK, 1);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 22) {
+            if (CameraUtils.getCameraPermission(FacePictureActivity.this)) {
+                setContentView(R.layout.activity_facepicture);
+                initview();
+            } else {
+                FacePictureActivity.this.finish();
+                PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
+            }
+//            for (int i = 0; i < permissions.length; i++) {
+//                String s = permissions[i];
+//                if (s.equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+//                    setContentView(R.layout.activity_facepicture);
+//                    initview();
+//                }
+//                if (0 == i && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    FacePictureActivity.this.finish();
+//                    PromptManager.ShowCustomToast(FacePictureActivity.this, "请去系统设置开启权限");
+//                    break;
+//                }
+//
+
+        }
+    }
+
+
 }

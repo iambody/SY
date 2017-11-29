@@ -263,9 +263,20 @@ public class AppInfStore implements AppinfConstant {
      *
      * @param context
      */
-    public static void saveResourceFileName(Context context, String resourceFileName) {
+    public static void saveResourceOldFileName(Context context, String resourceFileName) {
         SharedPreferences.Editor ed = getBasePreference(context).edit();
-        ed.putString(RESOURCE_ZIP_FILE, resourceFileName);
+        ed.putString(RESOURCE_ZIP_FILE_OLD, resourceFileName);
+        ed.commit();
+    }
+
+    /**
+     * 保存资源Zip文件名称
+     *
+     * @param context
+     */
+    public static void saveResourceReserveFileName(Context context, String resourceFileName) {
+        SharedPreferences.Editor ed = getBasePreference(context).edit();
+        ed.putString(RESOURCE_ZIP_FILE_SERVER, resourceFileName);
         ed.commit();
     }
 
@@ -280,16 +291,16 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
-    /**
-     * 是否有资源
-     * @param context
-     * @param resourceVersionHas
-     */
-    public static void saveResourceVersionHas(Context context, boolean resourceVersionHas) {
-        SharedPreferences.Editor ed = getBasePreference(context).edit();
-        ed.putBoolean(RESOURCE_VERSION_HAS, resourceVersionHas);
-        ed.commit();
-    }
+//    /**
+//     * 是否有资源
+//     * @param context
+//     * @param resourceVersionHas
+//     */
+//    public static void saveResourceVersionHas(Context context, boolean resourceVersionHas) {
+//        SharedPreferences.Editor ed = getBasePreference(context).edit();
+//        ed.putBoolean(RESOURCE_VERSION_HAS, resourceVersionHas);
+//        ed.commit();
+//    }
 
     /**
      * 保存聊天名称 －－产品分享需要用到

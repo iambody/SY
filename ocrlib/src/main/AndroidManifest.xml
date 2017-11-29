@@ -2,13 +2,18 @@
 
     package="app.ocrlib.com">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
             android:name=".cardphoto.CardCameraActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".cardphoto.TestCardCamera"/>
+        <activity android:name=".cardphoto.TestCardCamera" />
+        <activity android:name=".facepicture.FacePictureActivity" android:screenOrientation="portrait" />
+        <activity android:name=".identitycard.IdentityCardActivity" android:screenOrientation="portrait" />
+        <activity android:name=".identitycard.IdentityCardTest"/>
     </application>
 
 </manifest>

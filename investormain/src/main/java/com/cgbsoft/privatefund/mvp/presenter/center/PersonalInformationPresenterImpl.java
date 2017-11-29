@@ -10,6 +10,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.privatefund.model.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
 import com.cgbsoft.privatefund.model.impl.PersonalInformationModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.PersonalInformationContract;
@@ -87,6 +88,13 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
         personalInformationView.verifyIndentityError(error);
     }
 
+    @Override
+    public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
+        personalInformationView.hideLoadDialog();
+        personalInformationView.verifyIndentityV3Success(credentialStateMedel);
+    }
+
+
     /**
      * 上传头像的远程路径给服务端
      */
@@ -125,5 +133,11 @@ public class PersonalInformationPresenterImpl extends BasePresenterImpl<Personal
     public void verifyIndentity(){
         personalInformationView.showLoadDialog();
         personalInformationModel.verifyIndentity(getCompositeSubscription(),this);
+    }
+
+    @Override
+    public void verifyIndentityV3() {
+        personalInformationView.showLoadDialog();
+        personalInformationModel.verifyIndentityV3(getCompositeSubscription(),this);
     }
 }

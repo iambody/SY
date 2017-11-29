@@ -58,6 +58,8 @@ public class ReceiveInfoManager {
         public void handleMessage(Message msg) {
             Activity mCurrentActivityContext = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
             if (("LoginActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "LoadCustomerActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
+                    "SplashMovieActivity".equals(mCurrentActivityContext.getClass().getSimpleName()) ||
                     "WelcomeActivity".equals(mCurrentActivityContext.getClass().getSimpleName())) && mainHandler != null) {
                 Message message = Message.obtain();
                 message.setData(msg.getData());
@@ -85,13 +87,13 @@ public class ReceiveInfoManager {
                         if (detail == null || detail.equals("") || "".equals(title)) {
                             return;
                         }
-                        if (infoDialog != null && infoDialog.isShowing()) {
+                        if (infoDialog != null && infoDialog.isShowing() && !currentActivity.isFinishing()) {
                             infoDialog.dismiss();
                             infoDialog = null;
                         }
                         String rightText = type.equals("1") ? "查看" : "知道了";
-                        if (Constant.msgSystemStatus.equals(SenderId)) {
-                            infoDialog = new DefaultDialog(currentActivity, detail, "返回", rightText) {
+                        if (!isNewTitle(title)) {
+                            infoDialog = new DefaultDialog(currentActivity, title, detail, "返回", rightText) {
                                 @Override
                                 public void left() {
                                     this.dismiss();
@@ -129,12 +131,12 @@ public class ReceiveInfoManager {
                         final SMMessage smMessage = (SMMessage) bundle.getSerializable("smMessage");
                         Activity mCurrentActivity = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
                         if (mCurrentActivity.getClass().getSimpleName().equals("MainPageActivity")) {
-                            if (infoDialog != null && infoDialog.isShowing()) {
+                            if (infoDialog != null && infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.dismiss();
                                 infoDialog = null;
                             }
-                            if (Constant.msgSystemStatus.equals(smMessage.getSenderId())) {
-                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getContent(), "返回", smMessage.getButtonText()) {
+                            if (!isNewTitle(smMessage.getButtonTitle())) {
+                                infoDialog = new DefaultDialog(mCurrentActivity, smMessage.getButtonTitle(), smMessage.getContent(), "返回", smMessage.getButtonText()) {
                                     @Override
                                     public void left() {
                                         this.dismiss();
@@ -159,6 +161,8 @@ public class ReceiveInfoManager {
                                         onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
                                     }
                                 };
+
+
                             }
                             if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.show();
@@ -185,6 +189,14 @@ public class ReceiveInfoManager {
             }
         }
     };
+
+    private boolean isNewTitle(String title) {
+        return  TextUtils.equals("早知道", title) ||
+                TextUtils.equals("头条号", title) ||
+                TextUtils.equals("大视野", title) ||
+                TextUtils.equals("名家谈", title) ||
+                TextUtils.equals("云观察", title);
+    }
 
     private void onClickConfirm(String jumpUrl, String title, String shareType) {
         if (jumpUrl.contains("Android")) {

@@ -2,6 +2,7 @@ package com.cgbsoft.lib.share.dialog;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -23,6 +25,7 @@ import com.cgbsoft.lib.share.bean.ShareCommonBean;
 import com.cgbsoft.lib.share.bean.ShareViewBean;
 import com.cgbsoft.lib.share.utils.ShareUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
+import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -354,7 +357,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     public void onClick(View v) {
         if (v.getId() == R.id.comment_share_dismiss_bt) {
             CommonShareDialog.this.dismiss();
-            if(null!=commentShareListener){
+            if (null != commentShareListener) {
                 commentShareListener.cancleShare();
             }
         }
@@ -381,6 +384,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                 case 2://朋友圈
                     share_Type = SHARE_WXCIRCLE;
                     WxCircleShare(commonShareBean);
+//                    WxCircrImg(commonShareBean);
                     break;
                 case 3://邮件
                     break;
@@ -467,6 +471,34 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     }
 
     /**
+     * 分享海报
+     *
+     * @param WxShareData
+     */
+    private void WxCircrImg(ShareCommonBean WxShareData) {
+        platform_circle = ShareSDK.getPlatform(WechatMoments.NAME);
+        WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
+        sp.setShareType(Platform.SHARE_IMAGE);
+        sp.setImagePath(getPostPath());
+        platform_circle.setPlatformActionListener(this); // 设置分享事件回调
+        // 执行分享
+        platform_circle.share(sp);
+    }
+
+    /**
+     * 生成view的对于图片地址
+     */
+    private String getPostPath() {
+//        View postView = LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
+//        return  ElevenPoster.getViewPath(postView, "sss");
+        ScrollView postView = (ScrollView) LayoutInflater.from(Dcontext).inflate(R.layout.testscrooll, null);
+        ElevenPoster.resetViewSize((Activity) Dcontext, postView);
+        return ElevenPoster.getScrollViewPath(postView, "sss");
+
+
+    }
+
+    /**
      * 微信分享成功
      *
      * @param platform
@@ -487,7 +519,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onError(Platform platform, int i, Throwable throwable) {
-        if(null!=commentShareListener){
+        if (null != commentShareListener) {
             commentShareListener.cancleShare();
         }
     }
@@ -546,7 +578,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      */
     @Override
     public void onCancel(Platform platform, int i) {
-        if(null!=commentShareListener){
+        if (null != commentShareListener) {
             commentShareListener.cancleShare();
         }
     }
@@ -554,7 +586,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     @Override
     public void dismiss() {
         super.dismiss();
-        if(null!=commentShareListener){
+        if (null != commentShareListener) {
 //            commentShareListener.cancleShare();
         }
         try {
@@ -570,6 +602,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     public interface CommentShareListener {
         //分享成功
         void completShare(int shareType);
-        void cancleShare( );
+
+        void cancleShare();
     }
 }

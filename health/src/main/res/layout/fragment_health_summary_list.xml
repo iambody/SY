@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/root_container_id">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,6 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:src="@drawable/icon_to_health_model"
             android:visibility="gone" />
 
@@ -119,6 +122,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:src="@drawable/icon_to_healt_list"/>
     </RelativeLayout>
 </LinearLayout>

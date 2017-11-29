@@ -264,9 +264,7 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
                     JSONObject jsonObject = new JSONObject(json);
                     String zipFIleName = jsonObject.getString("zipName");
                     String zipUrl = jsonObject.getString("downloadUrl");
-                    boolean hasNewResource = !TextUtils.equals(zipFIleName, AppManager.getResouceZipFileName(getContext()));
-                    AppInfStore.saveResourceVersionHas(getContext(), hasNewResource);
-                    AppInfStore.saveResourceFileName(getContext(), zipFIleName);
+                    AppInfStore.saveResourceReserveFileName(getContext(), zipFIleName);
                     AppInfStore.saveResourceDownloadAddress(getContext(), zipUrl);
                 } catch (JSONException e) {
                     e.printStackTrace();

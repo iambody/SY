@@ -25,6 +25,7 @@ import com.cgbsoft.lib.base.model.VideoInfoEntity;
 import com.cgbsoft.lib.base.model.VideoLikeEntity;
 import com.cgbsoft.lib.base.model.WXUnionIDCheckEntity;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
+import com.cgbsoft.privatefund.bean.living.IdentityCard;
 
 import java.util.List;
 import java.util.Map;
@@ -645,7 +646,7 @@ interface RequestManager {
 
     //获取直播预告
     @GET(NetConfig.LIVE.GET_PRO_LIST)
-    Observable<ResponseBody> getProLiveList(@QueryMap Map<String,String> paramsMap);
+    Observable<ResponseBody> getProLiveList(@QueryMap Map<String, String> paramsMap);
 
     //主播开房间
     @POST(NetConfig.LIVE.HOST_OPEN_LIVE)
@@ -772,11 +773,13 @@ interface RequestManager {
      */
     @GET(NetConfig.ELEGANT.GETBANNER)
     Observable<BaseResult<ElegantLivingEntity.Result>> elegantLivingBanners(@QueryMap Map<String, String> paramsMap);
+
     /**
      * 尚品首页第一次加载数据
      */
     @GET(NetConfig.ELEGANT.GETGOODSFIRST)
     Observable<BaseResult<ElegantGoodsEntity.Result>> elegantGoodsFirst(@QueryMap Map<String, String> paramsMap);
+
     @GET(NetConfig.ELEGANT.GETGOODSMORE)
     Observable<BaseResult<ElegantGoodsEntity.ResultMore>> elegantGoodsMore(@QueryMap Map<String, String> params);
 
@@ -791,8 +794,10 @@ interface RequestManager {
     //签到
     @POST(NetConfig.SXY.SIGNIN)
     Observable<ResponseBody> sign(@Body RequestBody responseBody);
+
     /**
      * 修改用户登录密码
+     *
      * @param responseBody
      * @return
      */
@@ -801,26 +806,31 @@ interface RequestManager {
 
     /**
      * 更新用户信息
+     *
      * @param requestBody
      * @return
      */
     @POST(NetConfig.ChangePsd.UPDATE_USERINFO)
     Observable<ResponseBody> updateUserInfoNewC(@Body RequestBody requestBody);
+
     /**
      * 上传头像的远程路径给服务端
      */
     @POST(NetConfig.ChangePsd.UPDATE_USERICON)
     Observable<ResponseBody> uploadIconRemotePath(@Body RequestBody requestBody);
+
     /**
      * 获取沙龙和城市
      */
     @GET(NetConfig.Salon.UPDATE_SALON_AND_CITY)
     Observable<BaseResult<SalonsEntity.Result>> getSalonsAndCitys(@QueryMap Map<String, String> params);
+
     @GET(NetConfig.Salon.UPDATE_SALON)
     Observable<BaseResult<OldSalonsEntity.SalonBean>> getOldSalons(@QueryMap Map<String, String> params);
 
     /**
      * 获取身份列表
+     *
      * @return
      */
     @GET(NetConfig.Indentity.GET_INDENTITY_TYPE_LIST)
@@ -833,7 +843,17 @@ interface RequestManager {
     Observable<ResponseBody> verifyIndentityInOkhttp();
 
     /**
+     * 获取身份信息
+     */
+    @GET(NetConfig.Indentity.VERIFY_INDENTITY_V3)
+    Observable<ResponseBody> verifyIndentityInOkhttpV3();
+
+    @GET(NetConfig.Indentity.GET_LIVING_STATE)
+    Observable<ResponseBody> getLivingCount();
+
+    /**
      * 获取证件列表
+     *
      * @param params
      * @return
      */
@@ -842,11 +862,18 @@ interface RequestManager {
 
     /**
      * 上传证件远程地址
+     *
      * @param requestBody
      * @return
      */
     @POST(NetConfig.Indentity.UPLOAD_REMOTE_PATHS)
     Observable<ResponseBody> uploadRemotePath(@Body RequestBody requestBody);
+
+    @POST(NetConfig.Indentity.UPLOAD_OTHER_CREDENTIALS)
+    Observable<ResponseBody> uploadOtherPath(@Body RequestBody requestBody);
+
+    @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
+    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
@@ -856,8 +883,6 @@ interface RequestManager {
      */
     @GET(NetConfig.RED_PACKET)
     Observable<ResponseBody> loadRedPacket(@QueryMap Map<String, String> programObject);
-
-
 
 
     /**
@@ -873,6 +898,17 @@ interface RequestManager {
     Observable<ResponseBody> queryLivingResult(@Body RequestBody responseBody);
 
     /**
+     * 活体检测结果通知处理
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
+    Observable<ResponseBody > queryDataResult(@Body RequestBody requestBody);
+    /**
+     * 活体检测公用锁的通知接口
+     */
+    @POST(NetConfig.Compliance.COMPLIANCE_BEAN_COMMENT_RESULT)
+    Observable<ResponseBody> queryComontDataResult(@Body RequestBody requestBody);
+
+    /**
      * orc获取sign
      */
     @GET(NetConfig.Compliance.COMPLIANCE_OCR_SIGN)
@@ -882,7 +918,12 @@ interface RequestManager {
      * 自定义人脸识别OCR
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
-    Observable<ResponseBody> getOcrResult(@Body RequestBody responseBody);
+    Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
+    /**
+     * person对比
+     */
+    @GET(NetConfig.Compliance.COMPLIANCE_PERSON_COMPARE)
+    Observable<ResponseBody>getPersonCompare(@QueryMap Map<String, String> programObject);
 
     /**
      * 通用的Get请求接口
@@ -898,6 +939,7 @@ interface RequestManager {
 
     /**
      * 获取资源文件的相关信息
+     *
      * @param
      */
     @GET(NetConfig.RESOURCE_FILE_INFO)

@@ -22,8 +22,12 @@ public interface CardCollectContract {
         void hideLoadDialog();
         void getCardListSuccess(List<CardListEntity.CardBean> cardBeans);
         void getCardListError(Throwable error);
+
+        void getLivingCountSuccess(String s);
+        void getLivingCountError(Throwable error);
     }
     interface CardCollectPresenter extends BasePresenter{
         void getCardList(String indentityCode);
+        void getLivingCount();
     }
 }

@@ -61,7 +61,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Set;
 
-
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
@@ -259,6 +258,7 @@ public class CWebviewManger {
             userInfo.getToC().setCustomerType(split[2]);
             AppInfStore.saveUserInfo(context, userInfo);
             NavigationUtils.startActivityByRouter(context, "investornmain_riskresultactivity", "level", split[2]);
+
             context.finish();
         } else if (action.contains("tel:")) {
             NavigationUtils.startDialgTelephone(context, "4001888848");
@@ -400,7 +400,60 @@ public class CWebviewManger {
             }
         } else if (action.contains("showTitleRightStr")) {
             showTitleRightStr(action);
+        } else if (action.contains("shareFromScreenshot")) {
+            sharePoster(action);
+        } else if (action.contains("penLargeImage")) {
+            //分享截屏的图片
+            gotoLargeImage(action);
         }
+    }
+
+    private void gotoLargeImage(String url) {
+        try {
+            String[] urlcodeAction = url.split(":");
+            String urlCoder = URLDecoder.decode(urlcodeAction[2], "utf-8");
+            if (!TextUtils.isEmpty(urlCoder)) {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(Constant.IMAGE_SAVE_PATH_LOCAL, urlCoder);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SMOOT_IMAGE_ACTIVITY, hashMap);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 分享海报
+     *
+     * @param action
+     */
+    private void sharePoster(String action) {
+//        String path = ScreenShot.GetandSaveCurrentImage(context);
+//        CommonScreenDialog commonScreenDialog=new CommonScreenDialog(context, path, new CommonScreenDialog.CommentScreenListener() {
+//            @Override
+//            public void completShare() {
+//
+//            }
+//
+//            @Override
+//            public void cancleShare() {
+//
+//            }
+//        });
+//        commonScreenDialog.show();
+
+//        CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, path, new CommonSharePosterDialog.CommentShareListener() {
+//            @Override
+//            public void completShare(int shareType) {
+//
+//            }
+//
+//            @Override
+//            public void cancleShare() {
+//
+//            }
+//        });
+//        commonSharePosterDialog.show();
     }
 
     private void showPayItem(String action) {
@@ -968,16 +1021,14 @@ public class CWebviewManger {
 //            e.printStackTrace();
 //        }
     }
-//
 //    private void openWeixin(final String title, final String content, final String url, final int image) {
 //        WeiXinShare sh = new WeiXinShare(context, "");
 //        sh.shareWeixinWithID(title, content, url, image);
 //    }
-
     //    CommonShareDialog commonShareDialog;
 
     //1成功0失败 分享出发js通知H5
-    boolean isShowing;
+//    boolean isShowing;isShowingΩ
     String shareJsAction;
 
     private void shareToC(String actionUrl) {
@@ -999,53 +1050,57 @@ public class CWebviewManger {
         boolean isProductShare = actionDecode.contains("product/index.html");
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
-        if (isShowing) return;
+//        if (isShowing) return;
         CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
                 if (!BStrUtils.isEmpty(shareJsAction)) {
-                    webview.loadUrl("javascript:"+shareJsAction+"(1)");
-
+                    webview.loadUrl("javascript:" + shareJsAction + "(1)");
                 }
-                //分享微信朋友圈成功
-                if (actionUrl.contains("new_detail_toc.html")) { // 资讯分享需要获取云豆和埋点
-                    if (!AppManager.isVisitor(context)) {
-                        //自选页面分享朋友圈成功
-                        TaskInfo.complentTask("分享资讯");
-                    }
-                    if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
-                        if (context instanceof BaseWebViewActivity) {
-                            BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
-                            DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+
+                try {
+                    String decodeUrl = URLDecoder.decode(actionUrl, "utf-8");
+                    //分享微信朋友圈成功
+                    if (decodeUrl.contains("new_detail_toc.html") || decodeUrl.contains("information/details.html")) { // 资讯分享需要获取云豆和埋点
+                        if (!AppManager.isVisitor(context)) {
+                            //自选页面分享朋友圈成功
+                            TaskInfo.complentTask("分享资讯");
+                        }
+                        if (CommonShareDialog.SHARE_WXCIRCLE == shareType) {
+                            if (context instanceof BaseWebViewActivity) {
+                                BaseWebViewActivity baseWebViewActivity = (BaseWebViewActivity) context;
+                                DataStatistApiParam.onStatisToCShareInfOnCircle(mytitle, baseWebViewActivity.getTitleName());
+                            }
                         }
                     }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
 
-                if (isProductShare) {  // 产品分享需要获取云豆
+                if (isProductShare) { // 产品分享需要获取云豆
                     TaskInfo.complentTask("分享产品");
                 }
-                isShowing = false;
-
+//                isShowing = false;
             }
 
             @Override
             public void cancleShare() {
-                isShowing = false;
+//                isShowing = false;
                 if (!BStrUtils.isEmpty(shareJsAction)) {
-                    webview.loadUrl("javascript:"+shareJsAction+"(0)");
+                    webview.loadUrl("javascript:" + shareJsAction + "(0)");
 
                 }
             }
         });
         commonShareDialog.show();
-        isShowing = true;
+//        isShowing = true;
     }
 
     private void backPage(String action) {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
-        Intent intent = new Intent();
+        Intent intent = new  Intent();
         intent.putExtra(BaseWebViewActivity.BACK_PARAM, index - 1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();

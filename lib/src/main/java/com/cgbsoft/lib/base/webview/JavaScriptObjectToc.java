@@ -1,5 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,13 +9,24 @@ import android.webkit.JavascriptInterface;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.webview.bean.JsCall;
+import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
+import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.poster.ElevenPoster;
+import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.google.gson.Gson;
+import com.tencent.smtt.sdk.WebView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,15 +42,21 @@ import java.util.StringTokenizer;
  * 日期 2017/5/4-17:59
  */
 public class JavaScriptObjectToc {
-
     private Context context;
-    private BaseWebview webView;
+    private WebView webView;
+    private android.webkit.WebView googleWebView;
     private String url;
     private LoadingDialog mLoadingDialog;
 
-    public JavaScriptObjectToc(Context context, BaseWebview webView) {
+    public JavaScriptObjectToc(Context context, WebView webView) {
         this.context = context;
         this.webView = webView;
+        mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
+    }
+
+    public JavaScriptObjectToc(Context context, android.webkit.WebView googleWebView) {
+        this.context = context;
+        this.googleWebView = googleWebView;
         mLoadingDialog = LoadingDialog.getLoadingDialog(context, "", false, false);
     }
 
@@ -93,15 +111,62 @@ public class JavaScriptObjectToc {
         ThreadUtils.runOnMainThread(() -> {
             if (webView != null) {
                 webView.loadUrl(url);
+            } else if (googleWebView != null) {
+                googleWebView.loadUrl(url);
             }
         });
+    }
+
+    //生成海报的监听
+    @JavascriptInterface
+    public void shareCustomizedImage(String datas) {
+        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+
+        String picPath = ElevenPoster.base64ToPath(jscall.getData(), System.currentTimeMillis() + "");
+
+        CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, picPath, new CommonSharePosterDialog.CommentShareListener() {
+            @Override
+            public void completShare(int shareType) {
+                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+            }
+
+            @Override
+            public void cancleShare() {
+                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+            }
+        });
+        commonSharePosterDialog.show();
+
+    }
+
+    //截屏通知的监听
+    @JavascriptInterface
+    public void shareScreenshot(String datas) {
+
+        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+        String paths = ScreenShot.GetandSaveCurrentImage((Activity) context);
+        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
+            @Override
+            public void completShare() {
+                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+            }
+
+            @Override
+            public void cancleShare() {
+                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+            }
+        });
+        commonScreenDialog.show();
     }
 
     @JavascriptInterface
     public void sendRemoteRequest(String requestMethod, String addressUrl, String params, String javascriptCallMethod) {
         if ("get".equals(requestMethod.toLowerCase())) {
             requestGetMethodCallBack(addressUrl, params, javascriptCallMethod);
-//            requestGetMethod(addre、ssUrl, params, javascriptCallMethod);
         } else if ("post".equals(requestMethod.toLowerCase())) {
             requestPostMethod(addressUrl, params, javascriptCallMethod);
         }
@@ -109,7 +174,7 @@ public class JavaScriptObjectToc {
 
     @JavascriptInterface
     public String getRequestValue(String key) {
-        InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
+        InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
         if (investorAppli.getServerDatahashMap() != null) {
             String hasVas = investorAppli.getServerDatahashMap().get(key);
             return hasVas;
@@ -125,14 +190,18 @@ public class JavaScriptObjectToc {
                 showLoadDialog();
             }
         });
-        ApiClient.getCommonGetRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
+        ApiClient.getCommonGetRequest(url, formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
-                Log.d("HealthBespeakPresenterw", "----"+ sa);
-                InvestorAppli investorAppli = ((InvestorAppli)InvestorAppli.getContext());
+                Log.d("HealthBespeakPresenterw", "----" + sa);
+                InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                 investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -141,7 +210,11 @@ public class JavaScriptObjectToc {
             protected void onRxError(Throwable error) {
                 System.out.println("---error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -167,6 +240,19 @@ public class JavaScriptObjectToc {
         return hashMap;
     }
 
+    @JavascriptInterface
+    public void activateNativeLivePlayer(String jsonObject) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("liveJson", jsonObject);
+        NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTOLIVE, hashMap);
+        try {
+            JSONObject jsonObject1 = new JSONObject(jsonObject);
+            SPreference.putString(InvestorAppli.getContext(), Contant.CUR_LIVE_ROOM_NUM, jsonObject1.getString("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void requestPostMethod(String url, String params, String javascirptCallMethod) {
         ThreadUtils.runOnMainThread(new Runnable() {
             @Override
@@ -174,14 +260,18 @@ public class JavaScriptObjectToc {
                 showLoadDialog();
             }
         });
-        ApiClient.getCommonPostRequest(url,formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
+        ApiClient.getCommonPostRequest(url, formatJsonObjectToHashMap(params)).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String sa) {
-                Log.d("requestPostMethod", "----"+ sa);
+                Log.d("requestPostMethod", "----" + sa);
                 ThreadUtils.runOnMainThread(() -> {
                     InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
                     investorAppli.getServerDatahashMap().put(javascirptCallMethod, sa);
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('200')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -190,7 +280,11 @@ public class JavaScriptObjectToc {
             protected void onRxError(Throwable error) {
                 System.out.println("---requestPostMethod error message=" + error.getMessage());
                 ThreadUtils.runOnMainThread(() -> {
-                    webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    if (webView != null) {
+                        webView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    } else if (googleWebView != null) {
+                        googleWebView.loadUrl("javascript:" + javascirptCallMethod + "('501')");
+                    }
                     hideLoadDialog();
                 });
             }
@@ -220,7 +314,11 @@ public class JavaScriptObjectToc {
                         String key = jsonObject.optString("identification");
                         String callName = jsonObject.optString("callback");
                         String vas = getStringValue(key);
-                        webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        if (webView != null) {
+                            webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        } else if (googleWebView != null) {
+                            googleWebView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                        }
                         break;
                 }
             } catch (JSONException e) {
@@ -299,4 +397,6 @@ public class JavaScriptObjectToc {
             items = new StringTokenizer(entrys.nextToken(), "'");
         return map;
     }
+
+
 }

@@ -294,6 +294,7 @@ public class NavigationUtils {
                 hashMap.put(WebViewConstant.push_message_url, CwebNetConfig.memeberArea);
                 hashMap.put(WebViewConstant.push_message_title, Contant.MEMBER_CENTER_TITLE);
                 hashMap.put(WebViewConstant.RIGHT_SHARE, false);
+//                NavigationUtils.gotoWebActivity((Activity) context,CwebNetConfig.memeberArea,  Contant.MEMBER_CENTER_TITLE, false);
                 NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
                 break;
             case WebViewConstant.Navigation.RECHARGE_PAGE:

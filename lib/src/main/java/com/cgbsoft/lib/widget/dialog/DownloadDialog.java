@@ -163,9 +163,13 @@ public class DownloadDialog implements View.OnClickListener, Constant {
                 if (info != null) {
                     downloadApkPath = info.getContent();
                     File file = new File(downloadApkPath);
-                    if (file.isFile() && file.exists()&&getUninatllApkInfo(_context,file.getAbsolutePath())) {
-                        btn_vcd_sure.setText("现在安装");
+                    if (file != null && file.exists()) {
+                        file.delete();
                     }
+                    // chenlong 每次都重新下载
+//                    if (file.isFile() && file.exists()&&getUninatllApkInfo(_context,file.getAbsolutePath())) {
+//                        btn_vcd_sure.setText("现在安装");
+//                    }
                 }
 
                 if (_isOpenWindow) {
@@ -175,7 +179,6 @@ public class DownloadDialog implements View.OnClickListener, Constant {
             }
         }
     }
-
 
     @Override
     public void onClick(View v) {
