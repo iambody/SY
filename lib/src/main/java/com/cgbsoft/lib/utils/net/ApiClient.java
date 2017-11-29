@@ -160,7 +160,7 @@ public class ApiClient {
     /**
      * 新数据统计
      */
-    public static Observable<String> pushTrackingData(JSONObject json){
+    public static Observable<CommonEntity.Result> pushTrackingData(JSONObject json){
         return OKHTTP.getInstance().getRequestManager().pushTrackingData(formatRequestBody(json)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
     /**

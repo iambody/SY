@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
+import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import rx.Observable;
 import rx.Subscription;
 
 /**
@@ -41,14 +43,12 @@ public class TrackingDataUtils {
     private static DaoUtils daoUtils;
 
     /**
-     * @param code
-     * @param param
+     *
      */
     public static void save(Context context, String event, String param) {
-
-
+        Context applicationContext = context.getApplicationContext();
         if (daoUtils == null) {
-            daoUtils = new DaoUtils(context, DaoUtils.W_TRACKINGDATA);
+            daoUtils = new DaoUtils(applicationContext, DaoUtils.W_TRACKINGDATA);
         }
         //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
         List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingDtatList();
@@ -56,7 +56,7 @@ public class TrackingDataUtils {
             daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
         } else {
             trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis(), param));
-            post(context, trackingDataBeens);
+            post(applicationContext, trackingDataBeens);
             daoUtils.deleteTrackData();
         }
     }
@@ -110,9 +110,9 @@ public class TrackingDataUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        subscription = ApiClient.pushTrackingData(js).subscribe(new RxSubscriber<String>() {
+        subscription = ApiClient.pushTrackingData(js).subscribe(new RxSubscriber<CommonEntity.Result>() {
             @Override
-            protected void onEvent(String string) {
+            protected void onEvent(CommonEntity.Result result) {
                 subscription.unsubscribe();
             }
 
@@ -121,7 +121,6 @@ public class TrackingDataUtils {
                 subscription.unsubscribe();
             }
         });
-
     }
 
 
