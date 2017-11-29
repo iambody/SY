@@ -23,6 +23,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
@@ -117,6 +118,27 @@ public class JavaScriptObjectToc {
         });
     }
 
+    /**
+     * H5调用埋点
+     *
+     * @param param
+     */
+    @JavascriptInterface
+    public void postEventTrackingData(String param) {
+        try {
+            JSONObject ja = new JSONObject(param);
+            JSONObject data = ja.getJSONObject("data");
+            String callback = ja.getString("callback");
+            String d = data.getString("d");
+            String e = data.optString("e");
+            this.webView.loadUrl("javascript:" + callback + "()");
+            TrackingDataUtils.save(context, e, d);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //生成海报的监听
     @JavascriptInterface
     public void shareCustomizedImage(String datas) {
@@ -127,13 +149,13 @@ public class JavaScriptObjectToc {
         CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, picPath, new CommonSharePosterDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
             }
 
             @Override
             public void cancleShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
             }
         });
@@ -150,13 +172,13 @@ public class JavaScriptObjectToc {
         CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
             @Override
             public void completShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
             }
 
             @Override
             public void cancleShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
             }
         });
@@ -180,7 +202,9 @@ public class JavaScriptObjectToc {
             return hasVas;
         }
         return "";
-    };
+    }
+
+    ;
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);

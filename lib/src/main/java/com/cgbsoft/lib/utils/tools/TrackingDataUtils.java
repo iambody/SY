@@ -10,7 +10,6 @@ import android.telephony.TelephonyManager;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.CommonEntity;
-import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.db.DaoUtils;
@@ -24,12 +23,9 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import rx.Observable;
 import rx.Subscription;
 
 /**
