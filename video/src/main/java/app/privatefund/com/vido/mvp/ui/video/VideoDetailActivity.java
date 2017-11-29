@@ -46,6 +46,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
+import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
@@ -204,6 +205,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     @BindView(R2.id.jiangjieren_lay)
     LinearLayout jiangjierenLay;
 
+//    @BindView(R2.id.ll_mvv_url_intercept)
+//    LinearLayout urlIntercept;
+
     TextView video_videplay_time_playnumber_toc;
 
     private View title_videodetail_lay;
@@ -259,7 +263,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//        getPresenter().addressValidateResult();
+//        getPresenter().addressValidateResult(false);
         videoId = getIntent().getStringExtra("videoId");
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
@@ -392,8 +396,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         super.onResume();
         isOnPause = false;
         onPausePlayStauts = -1;
-
-
     }
 
     @OnClick(R2.id.iv_avd_back)
@@ -410,16 +412,36 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         finish();
         DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
-
     }
 
     @Override
-    public void setAddressValidateResult(String values) {
+    public void setAddressValidateResult(String values, boolean refreshPage) {
         videoValidateResult = values;
+        if (TextUtils.equals(values, "0")) {
+            ThreadUtils.runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (vrf_avd != null && vrf_avd.getCurrentStatus() == 5 && isSetDataSource) {
+                        vrf_avd.pause();
+                    }
+                    ll_mvv_nowifi.setVisibility(View.VISIBLE);
+                    tv_mvv_no_wifi.setText(R.string.url_intercept);
+                    tv_mvv_rich_go.setText(R.string.avd_ref_str);
+                }
+            });
+        } else if (refreshPage){
+            ThreadUtils.runOnMainThread(() -> {
+                playChangeNetwork();
+            });
+        }
     }
 
     @OnClick(R2.id.ll_mvv_nowifi)
     void noWifiClick() {
+        if (TextUtils.equals(videoValidateResult, "0")) {
+            getPresenter().addressValidateResult(true);
+            return;
+        }
         play(false);
     }
 
@@ -496,7 +518,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 //                            protected void onEvent(Integer integer) {
                 exitTransition.exit(VideoDetailActivity.this);
 //                            }
-//
 //                            @Override
 //                            protected void onRxError(Throwable error) {
 //
@@ -594,8 +615,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                     }
                 }
         }
-
-
     }
 
     private int cuntTime = 300;
@@ -726,7 +745,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -737,10 +755,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         pw_mvv_wait.setVisibility(View.GONE);
     }
 
-
     private void playNetData() {
         if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI) {
             ll_mvv_nowifi.setVisibility(View.VISIBLE);
+            tv_mvv_no_wifi.setText(R.string.avd_no_wifi_str);
+            tv_mvv_rich_go.setText(R.string.avd_rich_go_str);
             return;
         }
         if (!urlValdateResult()) {
@@ -761,6 +780,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         vrf_avd.play(videos);
         ll_mvv_nowifi.setVisibility(View.GONE);
         pw_mvv_wait.setVisibility(View.GONE);
+//        urlIntercept.setVisibility(View.GONE);
         isSetDataSource = true;
 
         if (!isSetFullscreenHandler) {
@@ -786,6 +806,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (!isVideoDownload())
             if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI && isCheckNet) {
                 ll_mvv_nowifi.setVisibility(View.VISIBLE);
+                tv_mvv_no_wifi.setText(R.string.avd_no_wifi_str);
+                tv_mvv_rich_go.setText(R.string.avd_rich_go_str);
                 return;
             } else {
                 ll_mvv_nowifi.setVisibility(View.GONE);
@@ -834,6 +856,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         vrf_avd.play(videos);
         ll_mvv_nowifi.setVisibility(View.GONE);
         pw_mvv_wait.setVisibility(View.GONE);
+//        urlIntercept.setVisibility(View.GONE);
         isSetDataSource = true;
 
         if (!isSetFullscreenHandler) {
@@ -897,7 +920,10 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private boolean urlValdateResult() {
         if (TextUtils.equals(videoValidateResult, "0")) {
-            MToast.makeText(this, getResources().getString(R.string.video_play_env_exception), Toast.LENGTH_SHORT).show();
+//            urlIntercept.setVisibility(View.VISIBLE);
+            tv_mvv_no_wifi.setVisibility(View.VISIBLE);
+            tv_mvv_no_wifi.setText(R.string.url_intercept);
+            tv_mvv_rich_go.setText(R.string.avd_ref_str);
             if (videoInfoModel != null) {
                 DataStatistApiParam.urlAddressIntercept(videoInfoModel.categoryName, videoInfoModel.videoName);
             }
@@ -1226,8 +1252,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName, videoInfoModel.categoryName);
     }
-
-
     class AnimListener implements Animation.AnimationListener {
         int which;
 
@@ -1291,25 +1315,21 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             NetUtils.NetState netStatus = NetUtils.getNetState();
+            System.out.println("---------NEW="+netStatus);
             if (netStatus == NetUtils.NetState.NET_NO) {   //无网络
 
                 if (!isVideoDownload()) {
                     ll_mvv_nowifi.setVisibility(View.VISIBLE);
                     tv_mvv_no_wifi.setText(R.string.avd_no_net_str);
                     tv_mvv_rich_go.setText(R.string.avd_ref_str);
+//                    urlIntercept.setVisibility(View.GONE);
                 }
                 getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
 
             } else if (netStatus == NetUtils.NetState.NET_WIFI) {   //wifi
                 ll_mvv_nowifi.setVisibility(View.GONE);
-                if (videoInfoModel != null && isSetDataSource) {
-                    if (vrf_avd.getCurrentStatus() != 5) {
-                        vrf_avd.seekTo(videoInfoModel.currentTime);
-                        vrf_avd.play();
-                    }
-                }
+                getPresenter().addressValidateResult(true);
             } else {   //手机流量
                 if (videoInfoModel != null && isSetDataSource) {
                     getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
@@ -1318,6 +1338,17 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 ll_mvv_nowifi.setVisibility(View.VISIBLE);
                 tv_mvv_no_wifi.setText(R.string.avd_no_wifi_str);
                 tv_mvv_rich_go.setText(R.string.avd_rich_go_str);
+//                urlIntercept.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void playChangeNetwork() {
+        if (videoInfoModel != null && isSetDataSource) {
+            ll_mvv_nowifi.setVisibility(View.GONE);
+            if (vrf_avd.getCurrentStatus() != 5) {
+                vrf_avd.seekTo(videoInfoModel.currentTime);
+                vrf_avd.play();
             }
         }
     }

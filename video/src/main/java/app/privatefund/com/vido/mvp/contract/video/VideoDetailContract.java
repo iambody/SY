@@ -85,7 +85,7 @@ public interface VideoDetailContract {
         /**
          * 判断视频校验结果
          */
-        void addressValidateResult();
+        void addressValidateResult(boolean refreshPage);
     }
 
     interface View extends BaseView {
@@ -104,6 +104,6 @@ public interface VideoDetailContract {
 
         void getMoreCommontSucc(String moreCommontStr);
 
-        void setAddressValidateResult(String result);
+        void setAddressValidateResult(String result, boolean refreshPage);
     }
 }
