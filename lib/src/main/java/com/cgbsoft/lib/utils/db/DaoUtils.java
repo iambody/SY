@@ -417,6 +417,10 @@ public class DaoUtils {
         trackingDataBeanDao.save(trackingDataBean);
     }
 
+    public void deleteTrackData(){
+        trackingDataBeanDao.deleteAll();
+    }
+
     public void destory() {
         otherInfoDao = null;
         userInfoDao = null;

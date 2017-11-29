@@ -232,6 +232,9 @@ interface RequestManager {
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<ResponseBody> resetV2Pwd(@Body RequestBody paramsMap);
 
+    @POST(NetConfig.TRACKDATA.TRACKING)
+    Observable<ResponseBody> pushTrackingData(@Body ResponseBody paramsMap);
+
     /**
      * 修改密码
      *

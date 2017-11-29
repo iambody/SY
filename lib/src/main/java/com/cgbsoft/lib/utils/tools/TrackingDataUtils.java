@@ -51,38 +51,17 @@ public class TrackingDataUtils {
             daoUtils = new DaoUtils(context, DaoUtils.W_TRACKINGDATA);
         }
         //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
-        List<TrackingDataBean> datastisticList = daoUtils.getTrackingDtatList();
-        if (datastisticList.size() < 20) {
+        List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingDtatList();
+        if (trackingDataBeens.size() < 20) {
             daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
         } else {
-
+            trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis(), param));
+            post(context, trackingDataBeens);
+            daoUtils.deleteTrackData();
         }
-        if (datastisticList.size() == 4) {
-            jsonArray.put(js);
-            for (DataStatisticsBean dataStatisticsBean : datastisticList) {
-                jsonArray.put(dataStatisticsBean.getJsonObject());
-            }
-
-            subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
-                @Override
-                protected void onEvent(String string) {
-                    subscription.unsubscribe();
-                }
-
-                @Override
-                protected void onRxError(Throwable error) {
-                    subscription.unsubscribe();
-                }
-            });
-            daoUtils.deleteDataStatitic();
-        } else {
-            DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()), js.toString());
-            daoUtils.saveDataStatistic(dataStatisticsBean);
-        }
-
     }
 
-    private void post(Context context) {
+    private static void post(Context context, List<TrackingDataBean> trackingDataBeens) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
         LocationBean locationBean = AppManager.getLocation(context);
@@ -112,6 +91,36 @@ public class TrackingDataUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        for (int i = 0; i < trackingDataBeens.size(); i++) {
+            JSONObject track = new JSONObject();
+            try {
+                track.put("e",trackingDataBeens.get(i).getE());
+                track.put("t",trackingDataBeens.get(i).getT());
+                track.put("d",trackingDataBeens.get(i).getD());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(js);
+        }
+
+        try {
+            js.put("data",jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        subscription = ApiClient.pushTrackingData(js).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String string) {
+                subscription.unsubscribe();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                subscription.unsubscribe();
+            }
+        });
 
     }
 

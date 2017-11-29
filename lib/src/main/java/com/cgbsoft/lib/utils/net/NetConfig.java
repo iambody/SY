@@ -10,12 +10,12 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 public class NetConfig {
     public static boolean isLocal = true;
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-//    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+    //    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
     public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
-        public static String START_APP = "https://app";
-//    public static String START_APP = "https://t3-app";//sim
+    public static String START_APP = "https://app";
+    //    public static String START_APP = "https://t3-app";//sim
 //        public static String START_APP = "https://sim-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
@@ -40,6 +40,7 @@ public class NetConfig {
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
+    public final static String TRACKING_V2 = "ubc/v2";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -133,7 +134,7 @@ public class NetConfig {
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
         //人脸照片对比person照片库compare
-        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3+"/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
+        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3 + "/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
     }
 
     static class MALL {
@@ -283,6 +284,13 @@ public class NetConfig {
     // 获取资源文件的相关信息
     public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
 
+
+    static class TRACKDATA {
+
+        final static String TRACKING = TRACKING_V2 + "track/app";
+
+    }
+
     //视频相关模块
     static class VIDEO {
         private final static String video = "/information/video";
@@ -388,7 +396,7 @@ public class NetConfig {
         static final String VERIFY_INDENTITY = AUTH_URL_V2 + "/credential/info";
         //新版获取证件信息
         static final String VERIFY_INDENTITY_V3 = AUTH_URL_V3 + "/credential/baseinfo";
-        static final String CREDENTIALS_DETILS  = AUTH_URL_V3+"/credential/detail";
+        static final String CREDENTIALS_DETILS = AUTH_URL_V3 + "/credential/detail";
         static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
         static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         static final String UPLOAD_OTHER_CREDENTIALS = AUTH_URL_V3 + "/credential/upload";

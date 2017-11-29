@@ -156,6 +156,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    /**
+     * 新数据统计
+     */
+    public static Observable<String> pushTrackingData(JSONObject json){
+        return OKHTTP.getInstance().getRequestManager().pushTrackingData(formatRequestBody(json)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
     /**
      * 数据统计
      *
