@@ -263,7 +263,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//        getPresenter().addressValidateResult(false);
+        getPresenter().addressValidateResult(false);
         videoId = getIntent().getStringExtra("videoId");
         videoCoverUrl = getIntent().getStringExtra("videoCoverUrl");
         isPlayAnim = getIntent().getBooleanExtra("isPlayAnim", true);
