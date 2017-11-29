@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
+import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.dao.DataStatisticsBeanDao;
 import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
+import com.cgbsoft.lib.utils.db.dao.TrackingDataBeanDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
@@ -32,6 +34,7 @@ public class DaoUtils {
     private VideoInfoDao videoInfoDao;
     private HistorySearchBeanDao historySearchBeanDao;
     private DataStatisticsBeanDao dataStatisticsBeanDao;
+    private TrackingDataBeanDao trackingDataBeanDao;
 
     public static final int W_OTHER = 1;
     public static final int W_USER = 2;
@@ -41,6 +44,7 @@ public class DaoUtils {
 
     public static final int W_TASK = 4;
     public static final int W_DATASTISTICS = 5;
+    public static final int W_TRACKINGDATA = 6;
 
     public DaoUtils(Context context, int which) {
         switch (which) {
@@ -58,6 +62,10 @@ public class DaoUtils {
                 break;
             case W_DATASTISTICS:
                 dataStatisticsBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
+                break;
+            case W_TRACKINGDATA:
+                trackingDataBeanDao = ((BaseApplication)context.getApplicationContext()).getDaoSession().getTrackingDataBeanDao();
+                break;
         }
     }
 
@@ -400,11 +408,21 @@ public class DaoUtils {
         dataStatisticsBeanDao.save(dataStatisticsBean);
     }
 
+
+    public List<TrackingDataBean> getTrackingDtatList() {
+        return trackingDataBeanDao.queryBuilder().list();
+    }
+
+    public void saveTrackingData(TrackingDataBean trackingDataBean){
+        trackingDataBeanDao.save(trackingDataBean);
+    }
+
     public void destory() {
         otherInfoDao = null;
         userInfoDao = null;
         videoInfoDao = null;
         dataStatisticsBeanDao = null;
+        trackingDataBeanDao = null;
     }
 
 }

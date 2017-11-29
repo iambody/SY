@@ -10,6 +10,7 @@ import android.telephony.TelephonyManager;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
+import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -40,10 +41,48 @@ public class TrackingDataUtils {
     private static DaoUtils daoUtils;
 
     /**
-     * @param context
+     * @param code
      * @param param
      */
-    public static void save(Context context, final HashMap<String, String> param) {
+    public static void save(Context context, String event, String param) {
+
+
+        if (daoUtils == null) {
+            daoUtils = new DaoUtils(context, DaoUtils.W_TRACKINGDATA);
+        }
+        //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
+        List<TrackingDataBean> datastisticList = daoUtils.getTrackingDtatList();
+        if (datastisticList.size() < 20) {
+            daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
+        } else {
+
+        }
+        if (datastisticList.size() == 4) {
+            jsonArray.put(js);
+            for (DataStatisticsBean dataStatisticsBean : datastisticList) {
+                jsonArray.put(dataStatisticsBean.getJsonObject());
+            }
+
+            subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String string) {
+                    subscription.unsubscribe();
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    subscription.unsubscribe();
+                }
+            });
+            daoUtils.deleteDataStatitic();
+        } else {
+            DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()), js.toString());
+            daoUtils.saveDataStatistic(dataStatisticsBean);
+        }
+
+    }
+
+    private void post(Context context) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
         LocationBean locationBean = AppManager.getLocation(context);
@@ -72,45 +111,6 @@ public class TrackingDataUtils {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-
-        Iterator iter = param.keySet().iterator();
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
-            String value = param.get(key);
-            try {
-                js.put(key, value);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (daoUtils == null) {
-            daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
-        }
-        //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
-        List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
-        if (datastisticList.size() == 4) {
-            jsonArray.put(js);
-            for (DataStatisticsBean dataStatisticsBean : datastisticList) {
-                jsonArray.put(dataStatisticsBean.getJsonObject());
-            }
-
-            subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
-                @Override
-                protected void onEvent(String string) {
-                    subscription.unsubscribe();
-                }
-
-                @Override
-                protected void onRxError(Throwable error) {
-                    subscription.unsubscribe();
-                }
-            });
-            daoUtils.deleteDataStatitic();
-        } else {
-            DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()), js.toString());
-            daoUtils.saveDataStatistic(dataStatisticsBean);
         }
 
     }
