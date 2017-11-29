@@ -64,7 +64,7 @@ public class DaoUtils {
                 dataStatisticsBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
                 break;
             case W_TRACKINGDATA:
-                trackingDataBeanDao = ((BaseApplication)context.getApplicationContext()).getDaoSession().getTrackingDataBeanDao();
+                trackingDataBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getTrackingDataBeanDao();
                 break;
         }
     }
@@ -129,6 +129,7 @@ public class DaoUtils {
 
     /**
      * 获取在欢迎页保存的首页背景图片应用升级信息
+     *
      * @param title
      * @return
      */
@@ -145,6 +146,7 @@ public class DaoUtils {
 
     /**
      * 在欢迎页获取首页背景图片，应用升级信息，然后保存
+     *
      * @param title
      * @param value
      */
@@ -287,7 +289,7 @@ public class DaoUtils {
      * 视频下载完成
      */
 
-    public void videoDoneLoad(String videoId,String path) {
+    public void videoDoneLoad(String videoId, String path) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
         videoInfo.setStatus(VideoStatus.FINISH);
         videoInfo.setLocalVideoPath(path);
@@ -409,15 +411,28 @@ public class DaoUtils {
     }
 
 
-    public List<TrackingDataBean> getTrackingDtatList() {
+    public int getTrackingDataListSize() {
+        try {
+            List<TrackingDataBean> list = trackingDataBeanDao.queryBuilder().list();
+            if (list == null) {
+                return 0;
+            } else {
+                return list.size();
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public List<TrackingDataBean> getTrackingData() {
         return trackingDataBeanDao.queryBuilder().list();
     }
 
-    public void saveTrackingData(TrackingDataBean trackingDataBean){
+    public void saveTrackingData(TrackingDataBean trackingDataBean) {
         trackingDataBeanDao.save(trackingDataBean);
     }
 
-    public void deleteTrackData(){
+    public void deleteTrackData() {
         trackingDataBeanDao.deleteAll();
     }
 
