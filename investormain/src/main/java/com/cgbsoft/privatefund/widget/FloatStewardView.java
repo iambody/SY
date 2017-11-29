@@ -23,6 +23,7 @@ public class FloatStewardView extends RelativeLayout {
 
     public FloatStewardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initView(context);
     }
 
     public FloatStewardView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -35,7 +36,6 @@ public class FloatStewardView extends RelativeLayout {
      */
     private void initView(Context context) {
         baseView = View.inflate(context, R.layout.view_float_steward, this);
-
 
     }
 
