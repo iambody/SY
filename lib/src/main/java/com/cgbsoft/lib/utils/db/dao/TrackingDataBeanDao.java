@@ -15,7 +15,7 @@ import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 /** 
  * DAO for table "TRACKING_DATA_BEAN".
 */
-public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Void> {
+public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
 
     public static final String TABLENAME = "TRACKING_DATA_BEAN";
 
@@ -24,7 +24,7 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, String.class, "id", false, "ID");
+        public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property E = new Property(1, String.class, "e", false, "E");
         public final static Property T = new Property(2, Long.class, "t", false, "T");
         public final static Property D = new Property(3, String.class, "d", false, "D");
@@ -43,7 +43,7 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TRACKING_DATA_BEAN\" (" + //
-                "\"ID\" TEXT," + // 0: id
+                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"E\" TEXT," + // 1: e
                 "\"T\" INTEGER," + // 2: t
                 "\"D\" TEXT);"); // 3: d
@@ -106,8 +106,8 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Void> {
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
@@ -130,20 +130,22 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Void> {
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(TrackingDataBean entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final String updateKeyAfterInsert(TrackingDataBean entity, long rowId) {
+        return entity.getId();
     }
     
     @Override
-    public Void getKey(TrackingDataBean entity) {
-        return null;
+    public String getKey(TrackingDataBean entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(TrackingDataBean entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override
