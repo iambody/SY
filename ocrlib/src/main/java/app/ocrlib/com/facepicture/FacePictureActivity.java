@@ -63,23 +63,14 @@ import rx.schedulers.Schedulers;
  */
 public class FacePictureActivity extends AppCompatActivity implements SurfaceHolder.Callback {
     private Camera camera;
-
     private SurfaceView surfaceview;
-
     private SurfaceHolder surfaceholder;
-
     //是否需要进行person对比
     private boolean isNeedPersonCompare = false;
-
     //需要进行person比较的key
     public static String TAG_NEED_PERSON = "needPersonCompare";
-
-//    private LoadingDialog mLoadingDialog;
-
     private boolean isCanclick = true;
-
     public static final String PAGE_TAG = "pagtag";
-
     public static String currentPageTag;
     private ImageView facepiceture_detection_iv;
     private ImageView facepiceture_eye_detection_iv;
@@ -201,8 +192,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
     //开始上传bitmap并且进行处理
     private void upLoadBitmap(Bitmap nbmp2) {
-
-
         facePath = BitmapUtils.saveBitmap(nbmp2, "face");
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -281,9 +270,9 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             Display display = wm.getDefaultDisplay();//获得窗口里面的屏幕
             // 选择合适的预览尺寸
             List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
-            Camera.Size preSize = getCloselyPreSize(mScreenWidth, mScreenHeight, sizeList);
+            Camera.Size preSize = getCloselyPreSize(mScreenWidth, mScreenHeight, sizeList,true);
             if (null != preSize) {
-                parameters.setPreviewSize(PreviewWidth, PreviewHeight); //获得摄像区域的大小
+                parameters.setPreviewSize(preSize.width, preSize.height); //获得摄像区域的大小
             }
             // 如果sizeList只有一个我们也没有必要做什么了，因为就他一个别无选择
 //            if (sizeList.size() > 1) {
@@ -325,18 +314,18 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
      * @return 得到与原宽高比例最接近的尺寸
      */
     protected Camera.Size getCloselyPreSize(int surfaceWidth, int surfaceHeight,
-                                            List<Camera.Size> preSizeList) {
+                                            List<Camera.Size> preSizeList, boolean mIsPortrait) {
 
         int ReqTmpWidth;
         int ReqTmpHeight;
         // 当屏幕为垂直的时候需要把宽高值进行调换，保证宽大于高
-//        if (mIsPortrait) {
-        ReqTmpWidth = surfaceHeight;
-        ReqTmpHeight = surfaceWidth;
-//        } else {
-//        ReqTmpWidth = surfaceWidth;
-//        ReqTmpHeight = surfaceHeight;
-//        }
+        if (mIsPortrait) {
+            ReqTmpWidth = surfaceHeight;
+            ReqTmpHeight = surfaceWidth;
+        } else {
+            ReqTmpWidth = surfaceWidth;
+            ReqTmpHeight = surfaceHeight;
+        }
         //先查找preview中是否存在与surfaceview相同宽高的尺寸
         for (Camera.Size size : preSizeList) {
             if ((size.width == ReqTmpWidth) && (size.height == ReqTmpHeight)) {
@@ -401,10 +390,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        if (null != mLoadingDialog) {
-//            mLoadingDialog.dismiss();
-//            mLoadingDialog = null;
-//        }
         AnimUtils.stopFaceDetection();
         if (null != camera) {
             try {
@@ -425,10 +410,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
         ApiClient.getPersonCompare(remotpath).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-//                if (null != mLoadingDialog)
-//                    mLoadingDialog.dismiss();
-
-//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比成功了！！！！" + remotpath);
                 try {
                     JSONObject obj = new JSONObject(s);
                     String result = obj.getString("result");
@@ -439,7 +420,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                     } else {//失败
                         RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
                         Log.i("PersonCompare", "对比失败了开始发射信息" + remotpath);
-//                        PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -449,12 +429,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
             @Override
             protected void onRxError(Throwable error) {
-//                PromptManager.ShowCustomToast(FacePictureActivity.this,"身份证识别失败");
                 isCanclick = true;
-//                if (null != mLoadingDialog)
-//                    mLoadingDialog.dismiss();
                 Log.i("PersonCompare", "对比失败了" + remotpath);
-//                PromptManager.ShowCustomToast(FacePictureActivity.this, "对比失败了");
                 RxBus.get().post(RxConstant.COMPLIANCE_PERSON_COMPARE, new PersonCompare(1, currentPageTag));
                 FacePictureActivity.this.finish();
             }
