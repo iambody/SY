@@ -14,6 +14,7 @@ import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.net.OKHTTP;
@@ -286,6 +287,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //获取更多评论接口
     @Override
     public void getMoreCommont(String voideoId, String CommontId) {
+        //1tetetettetettetetetettetttee
         addSubscription(ApiClient.videoCommentLs(voideoId, CommontId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -300,29 +302,21 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     }
 
     @Override
-    public void addressValidateResult() {
+    public void addressValidateResult(boolean refreshPage) {
         OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
         okHttpClient.newCall(request).enqueue(new Callback(){
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String contentLenght = response.header("Content-Length");
-                    if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) < 10) {
-                        String content = new String(response.body().bytes(), "utf-8");
-                        getView().setAddressValidateResult(TextUtils.equals("ok", content) ? "1" : "0");
-                    } else if (!TextUtils.isEmpty(contentLenght) && Integer.parseInt(contentLenght) > 10){
-                        getView().setAddressValidateResult("0");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String contentLenght = response.header("Content-Length");
+                if (!TextUtils.isEmpty(contentLenght) || !TextUtils.equals("0", contentLenght)) {
+                    getView().setAddressValidateResult("0", refreshPage);
                 }
             }
-
             @Override
             public void onFailure(Call call, IOException e) {
                 if (NetUtils.isNetworkAvailable(getContext())) {
-                    getView().setAddressValidateResult("0");
+                    getView().setAddressValidateResult(TextUtils.equals(((ApiException)e).getCode(), "404") ? "1" : "0", refreshPage);
                 }
             }
         });
