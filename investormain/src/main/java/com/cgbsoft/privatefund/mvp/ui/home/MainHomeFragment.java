@@ -38,6 +38,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
@@ -183,7 +184,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
 
-
+        TrackingDataManger.gohome(baseActivity);
     }
 
     @Override
@@ -298,17 +299,21 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     /*登录模式的点击跳转理财师*/
     @OnClick(R.id.main_home_adviser_title)
     public void adviserTextClick() {
+
         if (AppManager.isBindAdviser(baseActivity)) {
             VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
         } else {
             VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
         }
+         TrackingDataManger.homeGreetings(baseActivity);
+
     }
 
     /*游客模式的点击跳转理财师*/
     @OnClick(R.id.main_home_invisiter_txt_lay)
     public void onViewinvisitertxtlayClicked() {
         VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+        TrackingDataManger.homeGreetings(baseActivity);
     }
 
     /* 登录模式点击电话*/
@@ -321,6 +326,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         getPresenter().gotoConnectAdviser();
         DataStatistApiParam.homeClickDuiHua();
+        TrackingDataManger.homePhone(baseActivity);
     }
 
 
@@ -335,7 +341,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
-
+        TrackingDataManger.homeNew(baseActivity);
     }
 
 
@@ -828,5 +834,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeInvisiterTxtLay.setVisibility(View.GONE);
             isVisiterShow = false;
         }
+        TrackingDataManger.homePersonClose(baseActivity);
     }
 }

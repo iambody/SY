@@ -45,6 +45,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
@@ -518,18 +519,23 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         switch (postion) {
             case 0:
                 DataStatistApiParam.onStatisToCTabMine();
+                TrackingDataManger.tabHome(baseContext);
                 break;
             case 1:
                 DataStatistApiParam.onStatisToCTabProduct();
+                TrackingDataManger.tabPrivateBanck(baseContext);
                 break;
             case 2:
                 DataStatistApiParam.onStatisToCTabDiscover();
+                TrackingDataManger.tabLife(baseContext);
                 break;
             case 3:
                 DataStatistApiParam.onStatisToCTabClub();
+                TrackingDataManger.tabHealth(baseContext);
                 break;
             case 4:
                 DataStatistApiParam.onStatisToCTabCloudKey();
+                TrackingDataManger.tabCenter(baseContext);
                 break;
         }
     }
