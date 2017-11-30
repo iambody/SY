@@ -190,7 +190,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onResume() {
         super.onResume();
-//        MobclickAgent.onPageStart(Constant.SXY_SHOU_YE); //统计页面，"sxyshouye"为页面名称，可自定义
         LogUtils.Log("saassaa", "resume");
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
@@ -744,6 +743,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             case R.id.main_home_level_lay://等级
                 String url = CwebNetConfig.membercenter;
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
+                TrackingDataManger.homeMember(baseActivity);
                 break;
             case R.id.main_home_live_lay://直播
                 if (null == homeliveInfBean) return;
