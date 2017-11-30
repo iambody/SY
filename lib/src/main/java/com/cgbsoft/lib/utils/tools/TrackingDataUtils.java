@@ -46,9 +46,10 @@ public class TrackingDataUtils {
         if (daoUtils == null) {
             daoUtils = new DaoUtils(applicationContext, DaoUtils.W_TRACKINGDATA);
         }
-        //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
-        List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingDtatList();
-        if (trackingDataBeens.size() < 20) {
+        //先查询已经存入的个数，如果已经存入20个直接拼上当前这个埋点，发送给服务器，清除数据
+        int size = daoUtils.getTrackingDataListSize();
+        List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingData();
+        if (size < 20) {
             daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
         } else {
             trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis(), param));
