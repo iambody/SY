@@ -12,8 +12,8 @@ import org.greenrobot.greendao.annotation.Id;
  */
 @Entity
 public class TrackingDataBean {
-    @Id
-    String id;
+    @Id(autoincrement = true)
+    Long _id;
     String e;
     Long t;
     String d;
@@ -24,9 +24,9 @@ public class TrackingDataBean {
         this.d = d;
     }
 
-    @Generated(hash = 363189041)
-    public TrackingDataBean(String id, String e, Long t, String d) {
-        this.id = id;
+    @Generated(hash = 1197713646)
+    public TrackingDataBean(Long _id, String e, Long t, String d) {
+        this._id = _id;
         this.e = e;
         this.t = t;
         this.d = d;
@@ -36,12 +36,12 @@ public class TrackingDataBean {
     public TrackingDataBean() {
     }
 
-    public String getId() {
-        return id;
+    public Long get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
     public String getE() {
