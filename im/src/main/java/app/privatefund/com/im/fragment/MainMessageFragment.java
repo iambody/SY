@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -25,6 +24,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -139,6 +139,7 @@ public class MainMessageFragment extends BaseFragment implements ViewPager.OnPag
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.message_search_in_bottom, 0);
             }
+            TrackingDataManger.imSearch(getActivity());
         });
         initPlatformCustomer();
 //        initOrgManager();

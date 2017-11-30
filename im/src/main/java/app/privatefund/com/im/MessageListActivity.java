@@ -8,6 +8,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.chenenyu.router.annotation.Route;
 import com.umeng.analytics.MobclickAgent;
 
@@ -36,11 +37,18 @@ public class MessageListActivity extends BaseActivity {
         mainMessageFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.message_list, mainMessageFragment).commit();
+        TrackingDataManger.imIn(MessageListActivity.this);
     }
 
     @Override
     protected BasePresenterImpl createPresenter() {
         return null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TrackingDataManger.imBack(MessageListActivity.this);
     }
 
     @Override

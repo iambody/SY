@@ -42,6 +42,7 @@ public class TrackingDataUtils {
      *
      */
     public static void save(Context context, String event, String param) {
+        if(true)return;
         Context applicationContext = context.getApplicationContext();
         if (daoUtils == null) {
             daoUtils = new DaoUtils(applicationContext, DaoUtils.W_TRACKINGDATA);

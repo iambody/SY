@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -163,6 +164,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private Observable<Integer> userLayObservable, bindAdviserObservable;
     private UnreadInfoNumber unreadInfoNumber;
     private boolean isLoading;
+    private HomeEntity.Result homeData;
+
+    private boolean bannerIsLeft;
+    private boolean bannerIsRight;
+    private boolean isRolling;
+
 
     @Override
 
@@ -170,29 +177,29 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         return R.layout.fragment_mainhome;
     }
 
-
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         initshowlay();
         timeCountDown();
-        //缓存
         initCache();
-        //请求数据
         getPresenter().getHomeData();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
-
         TrackingDataManger.gohome(baseActivity);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.Log("saassaa", "resume");
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
+        }
+        try {
+            homeBannerview.startBanner();
+        } catch (Exception e) {
+
         }
     }
 
@@ -202,11 +209,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onHiddenChanged(isVisibleToUser);
         if (isVisibleToUser) {
             isVisible = true;
-            LogUtils.Log("sssaa", "首页不可见");
             homeBannerview.endBanner();
         } else {
             isVisible = false;
-            LogUtils.Log("sssaa", "首页可见");
+            LogUtils.Log("onHiddenChanged", "首页可见");
             homeBannerview.startBanner();
         }
     }
@@ -222,33 +228,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    /**
-     * 开始倒计时十秒
-     */
-    private void timeCountDown() {
-        RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
-            @Override
-            public void call() {
-
-            }
-        }).subscribe(new Subscriber<Integer>() {
-            @Override
-            public void onCompleted() {
-                hindCard();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Integer integer) {
-
-
-            }
-        });
-    }
 
     /**
      * 判断缓存
@@ -338,7 +317,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_adviser_phone)
     public void onMainHomeAdviserPhoneClicked() {
-        //判断是否有拨打电话权限
         if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
             PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
             return;
@@ -354,22 +332,54 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        if (AppManager.isVisitor(baseActivity)) {//游客模式
+        if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
             UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {//非游客模式
+        } else {
             UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
         }
         DataStatistApiParam.homeClickNew();
         TrackingDataManger.homeNew(baseActivity);
-    }
 
+    }
 
     /**
      * 配置view各种资源
      */
     private void initConfig() {
+        homeBannerview.setChangeViewCallback(new BannerView.ChangeViewCallback() {
+            @Override
+            public void changeView(boolean left, boolean right) {
+                bannerIsLeft = left;
+                bannerIsRight = right;
+                isRolling = true;
+                if (bannerIsLeft) {
+                    Log.i("setChangeViewCallback", "左边");
+                }
+                if (bannerIsRight) {
+                    Log.i("setChangeViewCallback", "右边");
+                }
+            }
+
+            @Override
+            public void getCurrentPageIndex(int index) {
+                if (null == homeData) return;
+                try {
+                    if (bannerIsLeft && isRolling) {
+                        Log.i("setChangeViewCallback", " 边" + index);
+                        TrackingDataManger.homeBannerleft(baseActivity, homeData.banner.get(index).title);
+                    }
+                    if (bannerIsRight && isRolling) {
+                        Log.i("setChangeViewCallback", " 边" + index);
+                        TrackingDataManger.homeBannerRight(baseActivity, homeData.banner.get(index).title);
+                    }
+                } catch (Exception e) {
+                } finally {
+                    isRolling = false;
+                }
+            }
+        });
         RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
         homeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
@@ -631,6 +641,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
 
     private void initResultData(HomeEntity.Result data) {
+        homeData = data;
         //横向轮播
         initHorizontalScroll(data.module);
         //banner
@@ -659,7 +670,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void getCacheResult(HomeEntity.Result cachesData) {
         if (null == cachesData) return;
-        /**处理缓存数据*/
         //横向轮播
         initHorizontalScroll(cachesData.module);
         //banner
@@ -852,7 +862,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     TrackingDataManger.homeTask(baseActivity);
             }
             DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
-
+            TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
         }
     }
 
@@ -860,6 +870,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onPause() {
         super.onPause();
+        homeBannerview.endBanner();
         LogUtils.Log("sssaa", "首页不可见");
     }
 
@@ -886,6 +897,34 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         TrackingDataManger.homePersonClose(baseActivity);
     }
 
+    /**
+     * 开始倒计时十秒
+     */
+    private void timeCountDown() {
+        RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
+            @Override
+            public void call() {
+
+            }
+        }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                hindCard();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+
+            }
+        });
+    }
+
     private int downXPostion;
     private int lastXPostion;
 
@@ -894,16 +933,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         public boolean onTouch(View v, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction())
                 downXPostion = (int) event.getX();
-            if(MotionEvent.ACTION_MOVE == event.getAction()) {
+            if (MotionEvent.ACTION_MOVE == event.getAction()) {
                 lastXPostion = (int) event.getX() - downXPostion;
                 downXPostion = (int) event.getX();
             }
             if (MotionEvent.ACTION_UP == event.getAction()) {
                 if (lastXPostion > 0) {
                     //向左滑动
+                    TrackingDataManger.homeOperateLeft(baseActivity);
                 } else {
                     //向右滑动
-
+                    TrackingDataManger.homeOperateRight(baseActivity);
                 }
             }
             return false;
