@@ -86,13 +86,7 @@ public class DownloadUtils {
         }
 
         if (formUpload(UPLOAD_URL, textMap, fileMap)) {
-//            if (NetConfig.START_APP.equals("https://app")) {
-                return UPLOAD_URL + remotePath;
-//            } else {
-//                String mainUrl =  NetConfig.SERVER_ADD.replace("https://", "");
-//                return NetConfig.UPLOAD_FILE + "-/" + mainUrl + "/" + remotePath;
-//            }
-
+            return UPLOAD_URL + remotePath;
         }
         return null;
     }
