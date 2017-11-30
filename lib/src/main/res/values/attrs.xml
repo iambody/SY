@@ -68,4 +68,8 @@
             <enum name="FILL" value="1"></enum>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="stewardview">
+        <attr name="viewcolor" format="color"></attr>
+    </declare-styleable>
 </resources>
