@@ -169,6 +169,16 @@ public class ApiClient {
     }
 
     /**
+     * 测试环境埋点统计
+     */
+    public static Observable<String> testPushDataStatistics(String json){
+        Map<String, String> map = new HashMap<>();
+        map.put("contents", json);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.T_SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+
+    }
+
+    /**
      * 获取ip
      *
      * @return

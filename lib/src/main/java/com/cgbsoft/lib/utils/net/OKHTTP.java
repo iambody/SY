@@ -249,11 +249,15 @@ public class OKHTTP {
             }
 
             if (responseBody.contentLength() != 0) {
-                BaseResult result = new Gson().fromJson(buffer.clone().readString(charset), BaseResult.class);
-                if (result != null && !TextUtils.isEmpty(result.message)) {
-                    msg = result.message;
+                try {
+                    BaseResult result = new Gson().fromJson(buffer.clone().readString(charset), BaseResult.class);
+                    if (result != null && !TextUtils.isEmpty(result.message)) {
+                        msg = result.message;
+                    }
+                    throw new ApiException(String.valueOf(response.code()), msg);
+                } catch (Exception e) {
+                  e.printStackTrace();
                 }
-                throw new ApiException(String.valueOf(response.code()), msg);
             }
         }
         throw new ApiException(String.valueOf(response.code()), response.message());

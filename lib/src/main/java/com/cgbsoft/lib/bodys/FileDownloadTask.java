@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -62,6 +63,7 @@ public class FileDownloadTask extends AsyncTask<Void, Long, Boolean> {
     protected void onPreExecute() {
         super.onPreExecute();
         previousTime = System.currentTimeMillis();
+        okHttpClient = okHttpClient.newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).build();
         if (callback != null) {
             callback.onStart();
         }

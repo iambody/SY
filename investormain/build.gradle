@@ -98,14 +98,14 @@ android {
     }
     productFlavors{
         guanwang{}
-        huawei{}
-        qihu360{}
-        tengxun{}
-        xiaomi{}
-        baidu{}
-        yingyonghui{}
-        wandoujia{}
-        mumayi{}
+//        huawei{}
+//        qihu360{}
+//        tengxun{}
+//        xiaomi{}
+//        baidu{}
+//        yingyonghui{}
+//        wandoujia{}
+//        mumayi{}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
@@ -210,7 +210,7 @@ dependencies {
         compile files('libs/gradle-1.24.0.jar')
     compile project(':ocrlib')
 
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
 //    //1. 云刷脸SDK
 //    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
 //    //2. 云OCR SDK

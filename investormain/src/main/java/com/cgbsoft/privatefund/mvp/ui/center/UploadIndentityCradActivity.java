@@ -53,6 +53,7 @@ import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -873,12 +874,18 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 if (null != credentialModel.getImageUrl()) {
                     String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
                     firstPhotoPath = firstUrl;
-                    Imageload.display(this, firstUrl, uploadFirst);
+                    Picasso.with(this).load(firstUrl)
+                            .fit()
+                            .into(uploadFirst);
+//                    Imageload.display(this, firstUrl, uploadFirst);
                     if (credentialModel.getImageUrl().size() == 2) {
                         String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
                         if (!TextUtils.isEmpty(secondUrl)) {
                             uploadSecond.setVisibility(View.VISIBLE);
-                            Imageload.display(this, secondUrl, uploadSecond);
+                            Picasso.with(this).load(secondUrl)
+                                    .fit()
+                                    .into(uploadSecond);
+//                            Imageload.display(this, secondUrl, uploadSecond);
                             secondPhotoPath = secondUrl;
                         }
                         if ("70".equals(stateCode)) {

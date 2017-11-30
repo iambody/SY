@@ -1,17 +1,17 @@
 package app.privatefund.investor.health.mvp.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -63,6 +63,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     private HealthIntroduceFlagRecyclerAdapter healthIntroduceFlagRecyclerAdapter;
     private GestureDetector gestureDetector;
     private List<View> oldList;
+    private ZipResourceDownload zipResourceDownload;
 
     @Override
     protected int layoutID() {
@@ -71,6 +72,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
+        zipResourceDownload = new ZipResourceDownload(getActivity());
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -98,6 +100,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
                 }
             }
         });
+
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 
@@ -171,6 +174,22 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 //        return allchildren;
 //    }
 
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.initZipResource();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.closeDilaog();
+        }
+    }
 
     @Override
     protected HealthIntroducePresenter createPresenter() {

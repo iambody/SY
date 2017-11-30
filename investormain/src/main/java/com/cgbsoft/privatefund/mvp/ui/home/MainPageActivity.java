@@ -34,6 +34,7 @@ import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.StatusBarUtil;
+import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -55,7 +56,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.PageJumpMananger;
-import com.cgbsoft.privatefund.utils.ZipResourceDownload;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
@@ -149,6 +149,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         super.onCreate(savedInstanceState);
     }
+
+
 
     @OnClick(R.id.iv_guide)
     public void guideClick() {
@@ -885,6 +887,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
+        zipResourceDownload.closeDilaog();
         if (isOnlyClose) {
             return;
         }

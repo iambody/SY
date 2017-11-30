@@ -26,6 +26,5 @@
     <string name="getvidoingloading">获取视频中...</string>
     <string name="zhujiangren">主讲人</string>
     <string name="no_initvideo">暂无视频,敬请期待</string>
-
-
+    <string name="url_intercept">当前网络环境存在安全隐患，请稍后再试，或切换4G网络环境观看</string>
 </resources>
