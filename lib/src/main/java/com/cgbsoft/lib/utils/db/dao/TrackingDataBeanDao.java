@@ -15,7 +15,7 @@ import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 /** 
  * DAO for table "TRACKING_DATA_BEAN".
 */
-public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
+public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, Long> {
 
     public static final String TABLENAME = "TRACKING_DATA_BEAN";
 
@@ -24,7 +24,7 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, String.class, "id", true, "ID");
+        public final static Property _id = new Property(0, Long.class, "_id", true, "_id");
         public final static Property E = new Property(1, String.class, "e", false, "E");
         public final static Property T = new Property(2, Long.class, "t", false, "T");
         public final static Property D = new Property(3, String.class, "d", false, "D");
@@ -43,7 +43,7 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TRACKING_DATA_BEAN\" (" + //
-                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: _id
                 "\"E\" TEXT," + // 1: e
                 "\"T\" INTEGER," + // 2: t
                 "\"D\" TEXT);"); // 3: d
@@ -59,9 +59,9 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
     protected final void bindValues(DatabaseStatement stmt, TrackingDataBean entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
-        if (id != null) {
-            stmt.bindString(1, id);
+        Long _id = entity.get_id();
+        if (_id != null) {
+            stmt.bindLong(1, _id);
         }
  
         String e = entity.getE();
@@ -84,9 +84,9 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
     protected final void bindValues(SQLiteStatement stmt, TrackingDataBean entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
-        if (id != null) {
-            stmt.bindString(1, id);
+        Long _id = entity.get_id();
+        if (_id != null) {
+            stmt.bindLong(1, _id);
         }
  
         String e = entity.getE();
@@ -106,14 +106,14 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
     }
 
     @Override
-    public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public TrackingDataBean readEntity(Cursor cursor, int offset) {
         TrackingDataBean entity = new TrackingDataBean( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // _id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // e
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // t
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // d
@@ -123,21 +123,22 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
      
     @Override
     public void readEntity(Cursor cursor, TrackingDataBean entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.set_id(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setE(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setT(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
         entity.setD(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override
-    protected final String updateKeyAfterInsert(TrackingDataBean entity, long rowId) {
-        return entity.getId();
+    protected final Long updateKeyAfterInsert(TrackingDataBean entity, long rowId) {
+        entity.set_id(rowId);
+        return rowId;
     }
     
     @Override
-    public String getKey(TrackingDataBean entity) {
+    public Long getKey(TrackingDataBean entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.get_id();
         } else {
             return null;
         }
@@ -145,7 +146,7 @@ public class TrackingDataBeanDao extends AbstractDao<TrackingDataBean, String> {
 
     @Override
     public boolean hasKey(TrackingDataBean entity) {
-        return entity.getId() != null;
+        return entity.get_id() != null;
     }
 
     @Override
