@@ -3,7 +3,9 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
@@ -14,9 +16,9 @@ public class NetConfig {
     public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
-        public static String START_APP = "https://app";
+        public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);
 //    public static String START_APP = "https://t3-app";//sim
-//        public static String START_APP = "https://sim-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+//        public static String START_APP = "https://sim-app";//;//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
