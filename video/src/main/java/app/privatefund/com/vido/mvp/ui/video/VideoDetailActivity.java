@@ -421,14 +421,21 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             ThreadUtils.runOnMainThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (vrf_avd != null && vrf_avd.getCurrentStatus() == 5 && isSetDataSource) {
+                    System.out.println("-----start stute=" + vrf_avd.getCurrentStatus());
+                    if (vrf_avd != null) {
                         vrf_avd.pause();
+                        System.out.println("-----start push");
                     }
+                    pw_mvv_wait.setVisibility(View.GONE);
+                    iv_mvv_cover.setVisibility(View.GONE);
                     ll_mvv_nowifi.setVisibility(View.VISIBLE);
                     tv_mvv_no_wifi.setText(R.string.url_intercept);
-                    tv_mvv_rich_go.setText(R.string.avd_ref_str);
+                    tv_mvv_rich_go.setText("");
                 }
             });
+            if (videoInfoModel != null) {
+                DataStatistApiParam.urlAddressIntercept(videoInfoModel.categoryName, videoInfoModel.videoName);
+            }
         } else if (refreshPage){
             ThreadUtils.runOnMainThread(() -> {
                 playChangeNetwork();
@@ -564,7 +571,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @Override
     public void getLocalVideoInfoSucc(VideoInfoModel model) {
-
 
         videoInfoModel = model;
         playerCurrentTime = videoInfoModel.currentTime;
@@ -806,6 +812,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (!isVideoDownload())
             if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI && isCheckNet) {
                 ll_mvv_nowifi.setVisibility(View.VISIBLE);
+                pw_mvv_wait.setVisibility(View.GONE);
                 tv_mvv_no_wifi.setText(R.string.avd_no_wifi_str);
                 tv_mvv_rich_go.setText(R.string.avd_rich_go_str);
                 return;
@@ -920,13 +927,15 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private boolean urlValdateResult() {
         if (TextUtils.equals(videoValidateResult, "0")) {
-//            urlIntercept.setVisibility(View.VISIBLE);
-            tv_mvv_no_wifi.setVisibility(View.VISIBLE);
-            tv_mvv_no_wifi.setText(R.string.url_intercept);
-            tv_mvv_rich_go.setText(R.string.avd_ref_str);
-            if (videoInfoModel != null) {
-                DataStatistApiParam.urlAddressIntercept(videoInfoModel.categoryName, videoInfoModel.videoName);
+            if (vrf_avd != null) {
+                vrf_avd.pause();
+                System.out.println("-----start push");
             }
+            pw_mvv_wait.setVisibility(View.GONE);
+            iv_mvv_cover.setVisibility(View.GONE);
+            ll_mvv_nowifi.setVisibility(View.VISIBLE);
+            tv_mvv_no_wifi.setText(R.string.url_intercept);
+            tv_mvv_rich_go.setText("");
             return false;
         }
         return true;
