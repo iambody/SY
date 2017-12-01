@@ -874,18 +874,12 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 if (null != credentialModel.getImageUrl()) {
                     String firstUrl = credentialModel.getImageUrl().get(0).getUrl();
                     firstPhotoPath = firstUrl;
-                    Picasso.with(this).load(firstUrl)
-                            .fit()
-                            .into(uploadFirst);
-//                    Imageload.display(this, firstUrl, uploadFirst);
+                    Imageload.display(this, firstUrl, uploadFirst);
                     if (credentialModel.getImageUrl().size() == 2) {
                         String secondUrl = credentialModel.getImageUrl().get(1).getUrl();
                         if (!TextUtils.isEmpty(secondUrl)) {
                             uploadSecond.setVisibility(View.VISIBLE);
-                            Picasso.with(this).load(secondUrl)
-                                    .fit()
-                                    .into(uploadSecond);
-//                            Imageload.display(this, secondUrl, uploadSecond);
+                            Imageload.display(this, secondUrl, uploadSecond);
                             secondPhotoPath = secondUrl;
                         }
                         if ("70".equals(stateCode)) {

@@ -47,11 +47,10 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         context = getApplicationContext();
         //设置glide使用okhttp
-        Glide.get(this).register(GlideUrl.class, InputStream.class,
-                new OkHttpUrlLoader.Factory(OKHTTP.getInstance().getOkClient()));
+//        Glide.get(this).register(GlideUrl.class, InputStream.class,
+//                new OkHttpUrlLoader.Factory(OKHTTP.getInstance().getOkClient()));
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Utils.getDatabaseName(this));
         Database database = helper.getWritableDb();
