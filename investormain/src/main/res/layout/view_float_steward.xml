@@ -18,10 +18,11 @@
             android:layout_height="match_parent"
             android:background="@color/dialog_transparent22" />
 
-        <com.cgbsoft.privatefund.widget.SemicircleView
+       <!-- <com.cgbsoft.privatefund.widget.SemicircleView
             android:layout_width="@dimen/ui_80_dip"
             android:layout_height="@dimen/ui_80_dip"
-             />
+            /> -->
+
     </LinearLayout>
 
     <com.cgbsoft.lib.widget.RoundImageView
