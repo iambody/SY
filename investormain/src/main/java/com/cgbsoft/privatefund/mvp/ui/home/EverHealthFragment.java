@@ -18,6 +18,8 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -169,6 +171,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                 intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
                 getActivity().startActivity(intent);
+                TrackingHealthDataStatistics.homeClickAdviser(getContext());
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
                 DataStatistApiParam.operateMessageCenterClick();
@@ -180,7 +183,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     return;
                 }
                 NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
-
+                TrackingHealthDataStatistics.homeClickNews(getContext());
 //                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
         }
@@ -199,6 +202,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
         super.clickTabButton(tabName);
         this.currentFragment=fragment;
         DataStatistApiParam.everHealthClick(tabName);
+        TrackingHealthDataStatistics.homeClickTagFlag(getContext(), tabName);
     }
 
     @Override
@@ -210,6 +214,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     protected void viewBeShow() {
         super.viewBeShow();
         LogUtils.Log("aaa","viewBeShow===");
+        TrackingHealthDataStatistics.goHealthHomePage(getContext());
     }
 
     @Override

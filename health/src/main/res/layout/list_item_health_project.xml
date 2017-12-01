@@ -132,11 +132,16 @@
             android:textSize="@dimen/dimens_sp_16"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/customComment_more"
+            android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:text="@string/more"
+            android:layout_marginRight="10dp"
             android:textColor="@color/color_595959"
             android:textSize="@dimen/dimens_sp_14" />
 
@@ -144,6 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/health_project_item_arrow"/>
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
