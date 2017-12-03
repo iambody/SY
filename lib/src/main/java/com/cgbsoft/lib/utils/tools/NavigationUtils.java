@@ -302,6 +302,7 @@ public class NavigationUtils {
                 break;
             case WebViewConstant.Navigation.TASK_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.INVTERSTOR_MAIN_TASK);
+                TrackingDataManger.homeTask(context);
                 break;
             case WebViewConstant.Navigation.YD_ENJOY_PAGE:
                 jumpNativeMain(context, map);

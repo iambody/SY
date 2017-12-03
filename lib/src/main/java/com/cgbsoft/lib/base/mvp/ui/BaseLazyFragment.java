@@ -135,7 +135,6 @@ public abstract class BaseLazyFragment<P extends BasePresenterImpl> extends Frag
         }
     }
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

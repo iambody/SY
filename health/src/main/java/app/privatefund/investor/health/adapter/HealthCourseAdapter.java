@@ -14,6 +14,7 @@ import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,8 @@ public class HealthCourseAdapter extends RecyclerView.Adapter implements View.On
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_readnum, healthCourseListModel.getReadCount().concat("阅读"));
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_title, healthCourseListModel.getTitle());
         BStrUtils.SetTxt(lsViewHolder.Item_fragment_videoschool_time, healthCourseListModel.getReleaseDate());
+        lsViewHolder.Item_fragment_videoschool_image_bg.setOnClickListener(v -> TrackingHealthDataStatistics.clickHealthCoureseItemImage(ApContext, healthCourseListModel.getTitle()));
+        lsViewHolder.Item_fragment_videoschool_title.setOnClickListener(v -> TrackingHealthDataStatistics.clickHealthCoureseItemTitle(ApContext, healthCourseListModel.getTitle()));
     }
 
     @Override

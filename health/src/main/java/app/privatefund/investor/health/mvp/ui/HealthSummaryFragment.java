@@ -27,6 +27,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
@@ -120,6 +121,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
                     .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()).concat("&goCustomFeedBack=0"));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
+            TrackingHealthDataStatistics.gotoProjectDetailPage(getContext());
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
@@ -160,7 +162,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     }
 
     @Override
-    protected void onUserVisible() {}
+    protected void onUserVisible() {
+        TrackingHealthDataStatistics.gotoProjectTagPage(getContext());
+    }
 
     @Override
     protected void onUserInvisible() {}
@@ -239,6 +243,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             isLoadMore = true;
             getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+            TrackingHealthDataStatistics.projectUpload(getContext());
         } else {
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
@@ -251,6 +256,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         isLoadMore = false;
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
         DataStatistApiParam.operatePrivateBankDiscoverUpRefrushClick();
+        TrackingHealthDataStatistics.projectDownRefresh(getContext());
     }
 
     @Override

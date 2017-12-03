@@ -32,6 +32,7 @@ import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
@@ -120,7 +121,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void before() {
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
@@ -148,7 +148,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         return false;
     }
 
-    @Override
     protected void data() {
         mWebview.setDownloadListener((s, s1, s2, s3, l) -> {
             Uri uri = Uri.parse(url);
@@ -251,6 +250,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void pageShare() {
         String javascript = "javascript:shareClick()";
         mWebview.loadUrl(javascript);
+        if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
+            TrackingHealthDataStatistics.projectDetailRightShare(this);
+        }
     }
 
     /**
@@ -276,7 +278,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener((View v) -> {
+            finish();
+            if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
+                TrackingHealthDataStatistics.projectDetailLeftBack(this);
+            } else  { // 免费咨询页面返回
+                // TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            }
+        });
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
@@ -637,7 +646,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl("javascript:titltRightClick()");
             } else {
                 pageShare();
-
             }
         }
 

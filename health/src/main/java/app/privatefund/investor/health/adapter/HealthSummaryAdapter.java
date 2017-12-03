@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.RoundImageView;
 
@@ -32,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * @author chenlong
  */
-public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClickListener {
 
     private List<HealthProjectListEntity.HealthProjectItemEntity> listModelListdata = new ArrayList<>();
     private Context ApContext;
@@ -88,13 +90,20 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         lsViewHolder.effectPositionLayout.setVisibility(TextUtils.isEmpty(healthListModel.getEffectPosition()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitSymptomLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitSymptom()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitCrowdLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitCrowd()) ? View.GONE : View.VISIBLE);
-        lsViewHolder.customCommentll.setOnClickListener(v -> {
+        lsViewHolder.projectImage.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemImage(ApContext, healthListModel.getTitle()));
+        lsViewHolder.projectTitle.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemText(ApContext, healthListModel.getTitle()));
+        lsViewHolder.projectSubTitle.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemText(ApContext, healthListModel.getTitle()));
+        lsViewHolder.customCommenMore.setOnClickListener(v -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
             hashMap.put(WebViewConstant.push_message_title, healthListModel.getTitle());
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthListModel.getUrl()).concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
                     .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()).concat("&goCustomFeedBack=1"));
             NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            TrackingHealthDataStatistics.projectListItemEvaluateMore(ApContext, healthListModel.getTitle());
+        });
+        lsViewHolder.customCommentll.setOnClickListener(v -> {
+            TrackingHealthDataStatistics.projectListItemEvaluate(ApContext, healthListModel.getTitle());
         });
     }
 
@@ -130,6 +139,9 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
         @BindView(R2.id.custom_comment_ll)
         public LinearLayout customCommentll;
+
+        @BindView(R2.id.customComment_more)
+        public LinearLayout customCommenMore;
 
         @BindView(R2.id.custom_image_id)
         public RoundImageView customImage;

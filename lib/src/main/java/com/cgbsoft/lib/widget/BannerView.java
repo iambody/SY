@@ -82,6 +82,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         targetVp.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         targetVp.setOnTouchListener(this);
         targetVp.setOnPageChangeListener(this);
+//        targetVp.setOnPageChangeListener(new pageChangeListener());
         addView(targetVp);
     }
 
@@ -144,6 +145,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     }
 
+
     private void bannerPointLight(int currentPoint) {
         for (int i = 0; i < indicationList.size(); i++) {
             if (currentPoint == i) {
@@ -166,18 +168,20 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        myPageScrolled(position, positionOffset, positionOffsetPixels);
     }
 
     @Override
     public void onPageSelected(int position) {
         selectedBanner = position;
         bannerPointLight(position % indicationList.size());
+
+        myPageSelected(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        myPageScrollStateChanged(state);
     }
 
     @Override
@@ -229,7 +233,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
                 } else if (0 == (targetVp.getCurrentItem() + 1) % views.size()) {
                     targetVp.setCurrentItem(selectedBanner + 1);
                 } else {
-                    targetVp.setCurrentItem(selectedBanner + (listView.size()-(targetVp.getCurrentItem() + 1) % views.size())+1);
+                    targetVp.setCurrentItem(selectedBanner + (listView.size() - (targetVp.getCurrentItem() + 1) % views.size()) + 1);
                 }
 
 
@@ -257,4 +261,137 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
             return (arg0 == arg1);
         }
     }
+
+
+    private boolean left = false;
+    private boolean right = false;
+    private boolean isScrolling = false;
+    private int lastValue = -1;
+    private ChangeViewCallback changeViewCallback;
+
+
+    private void myPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (isScrolling) {
+            if (lastValue > positionOffsetPixels) {
+                // 递减，向右侧滑动
+                right = true;
+                left = false;
+            } else if (lastValue < positionOffsetPixels) {
+                // 递减，向右侧滑动
+                right = false;
+                left = true;
+            } else if (lastValue == positionOffsetPixels) {
+                right = left = false;
+            }
+        }
+
+        lastValue = positionOffsetPixels;
+    }
+
+    private void myPageScrollStateChanged(int state) {
+        if (state == 1) {
+            isScrolling = true;
+        } else {
+            isScrolling = false;
+        }
+
+
+        if (state == 2) {
+
+            //notify ....
+            if (changeViewCallback != null) {
+                changeViewCallback.changeView(left, right);
+            }
+            right = left = false;
+        }
+    }
+
+    private void myPageSelected(int position) {
+        if (changeViewCallback != null) {
+            changeViewCallback.getCurrentPageIndex( position % bannerList.size());
+        }
+    }
+
+    public void setChangeViewCallback(ChangeViewCallback callback) {
+        changeViewCallback = callback;
+    }
+
+    public interface ChangeViewCallback {
+        public void changeView(boolean left, boolean right);
+
+        public void getCurrentPageIndex(int index);
+    }
+
+    class pageChangeListener implements ViewPager.OnPageChangeListener {
+        /***
+
+         *  onPageScrolled(int arg0,float arg1,int arg2)，
+
+         *  当页面在滑动的时候会调用此方法，
+
+         *  在滑动被停止之前，此方法回一直得到
+
+         调用。其中三个参数的含义分别为：
+
+         arg0 :当前页面，及你点击滑动的页面
+
+         arg1:当前页面偏移的百分比
+
+         arg2:当前页面偏移的像素位置
+
+         */
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (isScrolling) {
+                if (lastValue > positionOffsetPixels) {
+                    // 递减，向右侧滑动
+                    right = true;
+                    left = false;
+                } else if (lastValue < positionOffsetPixels) {
+                    // 递减，向右侧滑动
+                    right = false;
+                    left = true;
+                } else if (lastValue == positionOffsetPixels) {
+                    right = left = false;
+                }
+            }
+
+            lastValue = positionOffsetPixels;
+        }
+
+        /**
+         * onPageSelected(int arg0)： 此方法是页面跳转完后得到调用，
+         * arg0是你当前选中的页面的Position（位置编号）。
+         */
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        /**
+         * ，此方法是在状态改变的时候调用，其中arg0这个参数
+         * 有三种状态（0，1，2）。arg0==1的时辰默示正在滑动，
+         * arg0==2的时辰默示滑动完毕了，arg0==0的时辰默示什么都没做。
+         */
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (state == 1) {
+                isScrolling = true;
+            } else {
+                isScrolling = false;
+            }
+
+
+            if (state == 2) {
+
+                //notify ....
+                if (changeViewCallback != null) {
+                    changeViewCallback.changeView(left, right);
+                }
+                right = left = false;
+            }
+        }
+    }
+
+
 }
