@@ -31,16 +31,19 @@ import butterknife.ButterKnife;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/9-10:55
  */
-public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnClickListener{
+public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnClickListener {
     public final int HOTPRODUCT = 1;//热门的标签
     public final int NORMALPRODUCT = 2;//正常的标签
     public final int OVERPRODUCT = 3;//已结束的标签
+    public final int CHECKOLD = 4;
+    private int footCout;
     // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private LayoutInflater layoutInflater;
     private Context acontext;
     private List<ProductlsBean> beanList;
     private OnRecyclerItemClickListener mOnItemClickListener = null;
+
     public ProductlsAdapter(Context acontext, List<ProductlsBean> beanList) {
         this.acontext = acontext;
         this.beanList = beanList;
@@ -52,34 +55,40 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         this.notifyDataSetChanged();
 
     }
+
     public void AddfreshAp(List<ProductlsBean> beanList) {
-        int count=beanList.size();
+        int count = beanList.size();
         this.beanList.addAll(beanList);
-        this.notifyItemRangeChanged(count-1,beanList.size());
+        this.notifyItemRangeChanged(count - 1, beanList.size());
     }
-    public List<ProductlsBean>getBeanList(){
+
+    public List<ProductlsBean> getBeanList() {
         return beanList;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
             case HOTPRODUCT://热门产品
-                View hotView=layoutInflater.inflate(R.layout.product_item_productls_hot, null);
+                View hotView = layoutInflater.inflate(R.layout.product_item_productls_hot,null);
                 viewHolder = new HotProductHolder(hotView);
                 hotView.setOnClickListener(this);
                 break;
             case NORMALPRODUCT://正常标签
-                View normalView=layoutInflater.inflate(R.layout.product_item_productls, null);
+                View normalView = layoutInflater.inflate(R.layout.product_item_productls, null);
                 viewHolder = new NormalProductHolder(normalView);
                 normalView.setOnClickListener(this);
                 break;
             case OVERPRODUCT://已清算
-                View overView=layoutInflater.inflate(R.layout.product_item_productls_over, null);
+                View overView = layoutInflater.inflate(R.layout.product_item_productls_over, null);
                 viewHolder = new OverProductHolder(overView);
                 overView.setOnClickListener(this);
                 break;
-
+            case CHECKOLD:
+                View checkOld = layoutInflater.inflate(R.layout.product_item_check_old, parent, false);
+                viewHolder = new CheckOldHolder(checkOld);
+                checkOld.setOnClickListener(this);
         }
         return viewHolder;
     }
@@ -393,7 +402,11 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                     BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverLeijijinzhiText, "业绩基准");
                 }
                 break;
-
+            case CHECKOLD:
+                CheckOldHolder checkOldHolder = (CheckOldHolder) holder;
+                checkOldHolder.onLineProductCount.setText("共" + (beanList.size() - 1) + "支开放募集产品");
+                checkOldHolder.itemView.setTag(position);
+                break;
         }
     }
 
@@ -403,9 +416,36 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         return beanList.size();
     }
 
+
+    public int getFootCout() {
+        footCout = 0;
+        for (int i = 0; i < beanList.size(); i++) {
+            if (getItemViewType(i) == CHECKOLD) {
+                footCout++;
+            }
+        }
+        return footCout;
+    }
+
+    public void destoryFootView() {
+        setFootCout(0);
+        if (getItemViewType(beanList.size() - 1) == CHECKOLD) {
+            beanList.remove(beanList.size() - 1);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setFootCout(int footCout) {
+        this.footCout = footCout;
+    }
+
+
     @Override
     public int getItemViewType(int position) {
         if (null == beanList) return HOTPRODUCT;
+
+        if (beanList.get(position).productName.equals(String.format("%d", CHECKOLD)))
+            return CHECKOLD;
 
         if (beanList.get(position).isHotProduct.equals("1")) return HOTPRODUCT;
 
@@ -418,7 +458,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取position
-            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     }
 
@@ -538,9 +578,20 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         }
     }
 
-    public   interface OnRecyclerItemClickListener {
-        void onItemClick(View view , int position);
+    static class CheckOldHolder extends RecyclerView.ViewHolder {
+        @BindView(R2.id.online_product_count)
+        TextView onLineProductCount;
+
+        public CheckOldHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
+
+    public interface OnRecyclerItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
     public void setOnItemClickListener(OnRecyclerItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }

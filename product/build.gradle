@@ -34,13 +34,14 @@ dependencies {
     testCompile "junit:junit:${testC}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile "com.jakewharton:butterknife:${butterknife_need_version}"
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:support-vector-drawable:24.2.1'
 
     //fragmen返回键
     //    compile 'com.github.ikidou:FragmentBackHandler:2.1'
     compile project(':lib')
     compile project(':libzxing')
-    compile 'com.zhy:flowlayout-lib:1.0.3'
 
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:support-vector-drawable:24.2.1'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.android.support:support-v4:24.2.1'
 }

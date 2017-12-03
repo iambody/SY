@@ -101,6 +101,59 @@ public class ProductPresenter extends BasePresenterImpl<ProductContract.view> im
             }
         }));
     }
+    @Override
+    public void getProductDataOffset(final LoadingDialog loadingDialog, final int offset, final String series, final String orderBy, final List<FilterItem> datas) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("offset", "" + offset);
+            jsonObject.put("limit", Constant.LOAD_PRODUCT_lIMIT + "");
+            jsonObject.put("userId", AppManager.getUserId(getContext().getApplicationContext()));
+//            if (!"0".equals(series))
+            if (AppManager.isInvestor(getContext())){
+                jsonObject.put("category","c");
+            }else {
+                jsonObject.put("category","b");
+            }
+            jsonObject.put("series", BStrUtils.StrToJsonArray(series));
+            jsonObject.put("orderBy", BStrUtils.StrToJsonArray(orderBy));
+            //单选的
+            if (null != datas) {
+                insetJsonByLsFilter(jsonObject, datas);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("param", jsonObject.toString());
+        if (null != loadingDialog) loadingDialog.show();
+        addSubscription(ApiClient.getProductlsDate(map1).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+
+                if (null != loadingDialog) loadingDialog.dismiss();
+                if (!BStrUtils.isEmpty(s)) {
+                    if (0 == offset && (BStrUtils.isEmpty(series) || "0".equals(series)) && BStrUtils.isEmpty(orderBy) && isFristRequest) {//缓存第一页
+                        CacheInvestor.saveProductls(getContext().getApplicationContext(), getV2String(s));
+                    }
+                    getView().getDataSucc(ProductContract.LOAD_PRODUCT_LISTDATA, getV2String(s));
+                } else {
+                    getView().getDataFail(ProductContract.LOAD_PRODUCT_LISTDATA, getContext().getString(R.string.resultempty));
+                }
+
+                isFristRequest = false;
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                if (null != loadingDialog) loadingDialog.dismiss();
+                if (error.toString().contains("UnknownHostException")){
+                    getView().getDataFail(ProductContract.NET_ERROR, error.getMessage());
+                }
+
+                isFristRequest = false;
+            }
+        }));
+    }
 
     //如果筛选条件有的话需要添加条件处理
     private void insetJsonByLsFilter(JSONObject jsonObject, List<FilterItem> datas) {
