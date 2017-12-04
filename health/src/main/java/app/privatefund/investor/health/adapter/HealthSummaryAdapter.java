@@ -66,6 +66,11 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClic
         View view = layoutInflater.inflate(R.layout.list_item_health_project, parent, false);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
+        lsViewHolder.projectImage.setOnClickListener(this);
+        lsViewHolder.projectTitle.setOnClickListener(this);
+        lsViewHolder.projectSubTitle.setOnClickListener(this);
+        lsViewHolder.customCommenMore.setOnClickListener(this);
+        lsViewHolder.customCommentll.setOnClickListener(this);
         return lsViewHolder;
     }
 
@@ -73,6 +78,11 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClic
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         LsViewHolder lsViewHolder = (LsViewHolder) holder;
         lsViewHolder.itemView.setTag(position);
+        lsViewHolder.projectImage.setTag(R.id.bind_summary_image, position);
+        lsViewHolder.projectTitle.setTag(R.id.bind_summary_title, position);
+        lsViewHolder.projectSubTitle.setTag(R.id.bind_summary_subtitle, position);
+        lsViewHolder.customCommenMore.setTag(R.id.bind_summary_more, position);
+        lsViewHolder.customCommentll.setTag(R.id.bind_summary_more_ll, position);
         HealthProjectListEntity.HealthProjectItemEntity healthListModel = listModelListdata.get(position);
         Imageload.display(ApContext, healthListModel.getImageUrl(), 0, 0, 1, lsViewHolder.projectImage, null, null);
         BStrUtils.SetTxt1(lsViewHolder.projectTitle, healthListModel.getTitle());
@@ -90,21 +100,6 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClic
         lsViewHolder.effectPositionLayout.setVisibility(TextUtils.isEmpty(healthListModel.getEffectPosition()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitSymptomLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitSymptom()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitCrowdLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitCrowd()) ? View.GONE : View.VISIBLE);
-        lsViewHolder.projectImage.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemImage(ApContext, healthListModel.getTitle()));
-        lsViewHolder.projectTitle.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemText(ApContext, healthListModel.getTitle()));
-        lsViewHolder.projectSubTitle.setOnClickListener(v -> TrackingHealthDataStatistics.projectListItemText(ApContext, healthListModel.getTitle()));
-        lsViewHolder.customCommenMore.setOnClickListener(v -> {
-            HashMap<String ,Object> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-            hashMap.put(WebViewConstant.push_message_title, healthListModel.getTitle());
-            hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthListModel.getUrl()).concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
-                    .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()).concat("&goCustomFeedBack=1"));
-            NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-            TrackingHealthDataStatistics.projectListItemEvaluateMore(ApContext, healthListModel.getTitle());
-        });
-        lsViewHolder.customCommentll.setOnClickListener(v -> {
-            TrackingHealthDataStatistics.projectListItemEvaluate(ApContext, healthListModel.getTitle());
-        });
     }
 
     @Override
@@ -114,7 +109,40 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClic
 
     @Override
     public void onClick(View v) {
-        listModelListItemClickListener.onItemClick((int) v.getTag(), listModelListdata.get((int) v.getTag()));
+        int index;
+        HealthProjectListEntity.HealthProjectItemEntity healthProjectItemEntity;
+        if (v.getId() == R.id.item_project_image_id) {
+            index = (int)v.getTag(R.id.bind_summary_image);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemImage(ApContext, healthProjectItemEntity.getTitle());
+        } else if (v.getId() == R.id.health_title_id) {
+            index = (int)v.getTag(R.id.bind_summary_title);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemText(ApContext, healthProjectItemEntity.getTitle());
+        } else if (v.getId() == R.id.health_subTitle_id) {
+            index = (int)v.getTag(R.id.bind_summary_subtitle);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemText(ApContext, healthProjectItemEntity.getSubtitle());
+        } else if (v.getId() == R.id.customComment_more) {
+            index = (int)v.getTag(R.id.bind_summary_more);
+            healthProjectItemEntity = listModelListdata.get(index);
+            HashMap<String ,Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+            hashMap.put(WebViewConstant.push_message_title, healthProjectItemEntity.getTitle());
+            hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthProjectItemEntity.getUrl()).concat("?healthId=").concat(healthProjectItemEntity.getId()).concat("&healthImg=")
+                    .concat(healthProjectItemEntity.getImageUrl()).concat("&healthTitle=").concat(healthProjectItemEntity.getTitle()).concat("&goCustomFeedBack=1"));
+            NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            TrackingHealthDataStatistics.projectListItemEvaluateMore(ApContext, healthProjectItemEntity.getTitle());
+            return;
+        } else if (v.getId() == R.id.custom_comment_ll) {
+            index = (int)v.getTag(R.id.bind_summary_more_ll);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemEvaluate(ApContext, healthProjectItemEntity.getTitle());
+        } else {
+            index = (int)v.getTag();
+            healthProjectItemEntity = listModelListdata.get(index);
+        }
+        listModelListItemClickListener.onItemClick(index, healthProjectItemEntity);
     }
 
     static class LsViewHolder extends RecyclerView.ViewHolder {
