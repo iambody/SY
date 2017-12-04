@@ -39,7 +39,10 @@ public class TrackingDataUtils {
     private static DaoUtils daoUtils;
 
     /**
-     *
+     * 存储埋点数据
+     * @param context
+     * @param event 事件ID　
+     * @param param 参数，多个参数以 | 分割
      */
     public static void save(Context context, String event, String param) {
         Context applicationContext = context.getApplicationContext();
@@ -83,12 +86,9 @@ public class TrackingDataUtils {
             js.put("area", OtherDataProvider.getCity(context.getApplicationContext()));
 //            js.put("mid", getUniqueCode());//机器码
             js.put("mid", DeviceUtils.getPhoneId(context));
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         for (int i = 0; i < trackingDataBeens.size(); i++) {
             JSONObject track = new JSONObject();

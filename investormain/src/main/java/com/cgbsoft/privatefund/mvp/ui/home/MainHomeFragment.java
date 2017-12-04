@@ -542,7 +542,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         main_home_live_lay.setVisibility(View.GONE);
                         break;
                 }
-
             }
 
             @Override

@@ -27,6 +27,11 @@ public class ProductDetailPresenter extends BasePresenterImpl<ProductContract.vi
     }
 
     @Override
+    public void getProductDataOffset(LoadingDialog loadingDialog, int offset, String series, String orderBy, List<FilterItem> datas) {
+
+    }
+
+    @Override
     public void getProductFilterData() {
 
     }
