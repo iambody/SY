@@ -2,35 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/ui_80_dip"
     android:layout_marginRight="@dimen/ui_80_dip">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/rectangle_out_lay"
+        android:layout_width="120dp"
         android:layout_height="80dp"
-        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true">
+        android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/rectangle_in_lay"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="@color/dialog_transparent22" />
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/dialog_transparent1" />
 
-       <!-- <com.cgbsoft.privatefund.widget.SemicircleView
+        <com.cgbsoft.privatefund.widget.SemicircleView
+            android:id="@+id/semicircleview"
             android:layout_width="@dimen/ui_80_dip"
             android:layout_height="@dimen/ui_80_dip"
-            /> -->
+            app:viewcolor="@color/red_new" />
 
     </LinearLayout>
 
     <com.cgbsoft.lib.widget.RoundImageView
-        android:id="@+id/main_home_vister_adviser_inf_iv"
-        android:layout_width="@dimen/ui_60_dip"
-        android:layout_height="@dimen/ui_60_dip"
-        android:layout_alignParentLeft="true"
+        android:id="@+id/steward_round_iv"
+        android:layout_width="@dimen/ui_70_dip"
+        android:layout_height="@dimen/ui_70_dip"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/ui_5_dip"
         android:clickable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/home_touxiang_default"

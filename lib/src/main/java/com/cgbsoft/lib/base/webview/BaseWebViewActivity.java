@@ -29,7 +29,6 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
@@ -290,6 +289,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         changeTitileStyle();
         initShakeInSetPage();
         mWebview.loadUrl(url);
+
+
     }
 
     private void changeTitileStyle() {
@@ -398,6 +399,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (url.contains("rankList_share")) {
             mWebview.loadUrl("javascript:delectChart()");
         }
+        mWebview.loadUrl("javascript:WebView.back()");
         if ("风险评测".equals(title)) {
             backEvent();
             return;
@@ -431,6 +433,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onPause() {
         super.onPause();
+        mWebview.loadUrl("javascript:WebView.willDisappear()");
         MobclickAgent.onPause(this);
         if (!TextUtils.isEmpty(url) && url.endsWith("mine_active_list.html")) {
             MobclickAgent.onPageEnd(Constant.SXY_HDZX);
@@ -459,6 +462,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (CwebNetConfig.investeCarlendar.equals(url)) {
             MobclickAgent.onPageEnd(Constant.SXY_TZRL);
         }
+
+        mWebview.loadUrl("javascript:WebView.didDisappear()");
         try {
             mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
         } catch (IllegalAccessException e) {
@@ -504,12 +509,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        mWebview.loadUrl(url);
+        mWebview.loadUrl("javascript:WebView.willAppear()");
+
         if (url.contains("life/order_detail.html")) {
             return;
         }
-        LogUtils.Log("JavaScriptObjectToc", "ss");
+
         mWebview.loadUrl("javascript:refresh()");
+        mWebview.loadUrl("javascript:WebView.didAppear()");
     }
 
     private void initShakeInSetPage() {

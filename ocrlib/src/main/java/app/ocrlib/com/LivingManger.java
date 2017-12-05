@@ -59,7 +59,6 @@ public class LivingManger {
     private static boolean isShowFail = true;
     //主题颜色
     private static String color;
-    //    private static ProgressDialog progressDlg;
     private static LoadingDialog mLoadingDialog;
     private static SharedPreferences sp;
     private static LivingSign livingSign;
@@ -135,7 +134,6 @@ public class LivingManger {
                 IdentifyCardValidate vali = new IdentifyCardValidate();
                 String msg = vali.validate_effective(Cardid);
                 if (msg.equals(Cardid)) {
-//                    progressDlg.show();
                     mLoadingDialog.show();
                     getSign();
                 } else {
@@ -188,7 +186,6 @@ public class LivingManger {
                         Toast.makeText(livingContext, "用户姓名不能为空", Toast.LENGTH_SHORT).show();
                         return;
                     }
-//                    openCloudFaceService(FaceVerifyStatus.Mode.MIDDLE, livingSign.getSign(), livingSign.getAppId(), livingSign.getNonce(), livingSign.getUserId(), livingSign.getLicence(), livingSign.getOrderNum());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -197,7 +194,6 @@ public class LivingManger {
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("ss", error.getMessage());
-//                progressDlg.dismiss();
                 mLoadingDialog.dismiss();
                 PromptManager.ShowCustomToast(livingContext, "获取sign失败");
             }
@@ -341,21 +337,7 @@ public class LivingManger {
      */
     private void initProgress() {
         mLoadingDialog = LoadingDialog.getLoadingDialog(livingContext, "进入识别系统中...", false, false);
-//        if (progressDlg != null) {
-//            progressDlg.dismiss();
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//            progressDlg = new ProgressDialog(livingContext);
-//        } else {
-//            progressDlg = new ProgressDialog(livingContext);
-//            progressDlg.setInverseBackgroundForced(true);
-//        }
-//        progressDlg.setMessage("加载中...");
-//        progressDlg.setIndeterminate(true);
-//        progressDlg.setCanceledOnTouchOutside(false);
-//        progressDlg.setCancelable(true);
-//        progressDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progressDlg.setCancelable(false);
+
     }
 
     public static void destory() {
@@ -403,7 +385,6 @@ public class LivingManger {
             @Override
             protected void onEvent(String data) {
                 Log.i("活体living", " 活体接口返回成功" + data);
-//                if (null != livingResult) livingResult.livingSucceed(data);
                 try {
                     JSONObject obj = new JSONObject(data);
                     String result = obj.getString("result");
@@ -412,7 +393,6 @@ public class LivingManger {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                PromptManager.ShowCustomToast(livingContext, "返回成功了");
             }
 
             @Override

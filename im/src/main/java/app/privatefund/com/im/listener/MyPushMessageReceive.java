@@ -13,11 +13,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
-import com.cgbsoft.lib.utils.tools.Utils;
 import com.chenenyu.router.Router;
 
 import app.privatefund.com.im.R;
@@ -53,7 +51,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
         }
 
             Uri uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName()).buildUpon().appendPath("conversationList").build();
-            Intent intent = Router.build(Uri.parse(RouteConfig.GOTO_FIRST_ACTIVITY)).getIntent(context);
+            Intent intent = Router.build(Uri.parse(RouteConfig.GOTO_WELCOME_ACTIVITY)).getIntent(context);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushNotificationMessage);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
             Notification notification = null;
@@ -107,7 +105,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
         if (!TextUtils.isEmpty(pushNotificationMessage.getSenderId()) && RongCouldUtil.getInstance().customConversationAll(pushNotificationMessage.getSenderId())) {
 //             PageJumpMananger.jumpPageFromToMainActivity(context, pushNotificationMessage);
             System.out.println("------onnotifacationmessageclicked");
-            Intent notificationIntent = Router.build(Uri.parse(RouteConfig.GOTO_FIRST_ACTIVITY)).getIntent(context);
+            Intent notificationIntent = Router.build(Uri.parse(RouteConfig.GOTO_WELCOME_ACTIVITY)).getIntent(context);
             notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             notificationIntent.setAction(Intent.ACTION_MAIN);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

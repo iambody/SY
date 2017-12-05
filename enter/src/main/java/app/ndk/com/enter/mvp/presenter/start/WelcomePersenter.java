@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppInfStore;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.AppResourcesEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
@@ -14,9 +13,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
-import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.google.gson.Gson;
 import com.lzy.okserver.download.DownloadManager;
@@ -26,13 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * 欢迎页功能实现，数据调用
@@ -135,20 +129,20 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
      */
     @Override
     public void createFinishObservable() {
-        welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
-        welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
-                .filter(b -> b).subscribe(new RxSubscriber<Boolean>() {
-            @Override
-            protected void onEvent(Boolean aBoolean) {
-                RxBus.get().unregister(WELCOME_FINISH_OBSERVABLE, welcomeFinishObservable);
-                getView().finishThis();
-            }
-
-            @Override
-            protected void onRxError(Throwable e) {
-
-            }
-        });
+//        welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
+//        welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
+//                .filter(b -> b).subscribe(new RxSubscriber<Boolean>() {
+//            @Override
+//            protected void onEvent(Boolean aBoolean) {
+//                RxBus.get().unregister(WELCOME_FINISH_OBSERVABLE, welcomeFinishObservable);
+//                getView().finishThis();
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable e) {
+//
+//            }
+//        });
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,14 +10,16 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.cgbsoft.privatefund.R;
+
 
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/11/29-16:42
  */
-public class SemicircleView extends View {
-    private int circleColor = Color.parseColor("#4f000000");
+public class SemicircleView extends View implements View.OnClickListener{
+    private int circleColor = Color.parseColor("#80000000");
     private Paint circlePaint;
 
     public SemicircleView(Context context) {
@@ -31,35 +34,27 @@ public class SemicircleView extends View {
 
     public SemicircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.stewardview, 0, 0);
-//        circleColor = typedArray.getColor(R.styleable.stewardview_viewcolor, circleColor);
-//        typedArray.recycle();
-//        initview();
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.stewardview, 0, 0);
+        circleColor = typedArray.getColor(R.styleable.stewardview_viewcolor, circleColor);
+        typedArray.recycle();
+        initview();
     }
 
     private void initview() {
         circlePaint = new Paint();
-        circlePaint.setStyle(Paint.Style.STROKE);
+        circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(circleColor);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        initview();
-/**
- * 这是一个居中的圆
- */
-//        float x = (getWidth() - getHeight() / 2) / 2;
-//        float y = getHeight() / 4;
         RectF oval = new RectF();                     //RectF对象
-        oval.left = 0;                              //左边
+        oval.left = -(getWidth()/2);                              //左边
         oval.top = 0;                                   //上边
-        oval.right = getHeight();                             //右边
+        oval.right = getWidth()/2;                             //右边
         oval.bottom = getHeight();
-
-
-        canvas.drawArc(oval, 0, 90, false, circlePaint);//画圆弧，这个时候，绘制没有经过圆心
+        canvas.drawArc(oval, 270, 180, true, circlePaint);//画圆弧，这个时候，绘制没有经过圆心
 
 
     }
@@ -67,7 +62,7 @@ public class SemicircleView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
 
     /**
@@ -110,5 +105,10 @@ public class SemicircleView extends View {
             }
         }
         return result;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

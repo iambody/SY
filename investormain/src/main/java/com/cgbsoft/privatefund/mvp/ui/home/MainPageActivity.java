@@ -151,7 +151,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
 
-
     @OnClick(R.id.iv_guide)
     public void guideClick() {
         guideindex++;
@@ -286,6 +285,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
         jumpPushMessage();
+
+//        initLogo();
+        zipResourceDownload.initZipResource();
+    }
+
+    private void initLogo() {
         //初始化log
         packageIconUtils = new PackageIconUtils(baseContext, baseContext.getPackageManager(), "com.cgbsoft.privatefund.MainActivity0", "com.cgbsoft.privatefund.MainActivity1");
 
@@ -317,7 +322,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             }
         }
-        zipResourceDownload.initZipResource();
     }
 
     private void jumpPushMessage() {

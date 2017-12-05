@@ -62,15 +62,15 @@ import rx.schedulers.Schedulers;
  * 日期 2017/10/24-16:28
  */
 public class FacePictureActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+    public static final String PAGE_TAG = "pagtag";
+    public static String TAG_NEED_PERSON = "needPersonCompare";
     private Camera camera;
     private SurfaceView surfaceview;
     private SurfaceHolder surfaceholder;
     //是否需要进行person对比
     private boolean isNeedPersonCompare = false;
     //需要进行person比较的key
-    public static String TAG_NEED_PERSON = "needPersonCompare";
     private boolean isCanclick = true;
-    public static final String PAGE_TAG = "pagtag";
     public static String currentPageTag;
     private ImageView facepiceture_detection_iv;
     private ImageView facepiceture_eye_detection_iv;
@@ -157,10 +157,8 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
 
                         Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
-                        //**********************
                         //因为图片会放生旋转，因此要对图片进行旋转到和手机在一个方向上
                         rotateMyBitmap(bmp);
-                        //**********************************
 
                         stream.close();
                     }
@@ -270,7 +268,7 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             Display display = wm.getDefaultDisplay();//获得窗口里面的屏幕
             // 选择合适的预览尺寸
             List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
-            Camera.Size preSize = getCloselyPreSize(mScreenWidth, mScreenHeight, sizeList,true);
+            Camera.Size preSize = getCloselyPreSize(mScreenWidth, mScreenHeight, sizeList, true);
             if (null != preSize) {
                 parameters.setPreviewSize(preSize.width, preSize.height); //获得摄像区域的大小
             }
