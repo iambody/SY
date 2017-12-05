@@ -49,6 +49,8 @@ public interface Constant {
 
     int RECEIVER_SEND_CODE = 99;
     int RECEIVER_SEND_CODE_NEW_INFO = 100;
+    int RECEIVER_SEND_CODE_MEMBER_UPDATE = 5;
+    int RECEIVER_SEND_CODE_MEMBER_DEGRADE= 6;
 
     String RONG_SERVICE_RECEIVER = "rong_service_receiver";
 
