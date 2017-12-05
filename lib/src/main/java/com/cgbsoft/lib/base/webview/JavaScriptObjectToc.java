@@ -139,6 +139,11 @@ public class JavaScriptObjectToc {
 
     }
 
+    @JavascriptInterface
+    public void openCertifiacateClamps(String datas){
+        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+    }
+
     //生成海报的监听
     @JavascriptInterface
     public void shareCustomizedImage(String datas) {

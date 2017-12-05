@@ -42,6 +42,7 @@ public class NetConfig {
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
+    public final static String TRACKING_V2 = "ubc/v2";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -300,6 +301,11 @@ public class NetConfig {
     // 腾讯视频内容校验文件
     public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
+    static class TRACKDATA {
+
+        final static String TRACKING = TRACKING_V2 + "track/app";
+
+    }
     //视频相关模块
     static class VIDEO {
         private final static String video = "/information/video";
