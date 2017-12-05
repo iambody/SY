@@ -127,8 +127,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private boolean hasLive = false;
     private int code;
     private InvestorAppli initApplication;
-    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
-    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
+//    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
+//    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
     PackageIconUtils packageIconUtils;
