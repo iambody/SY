@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
+import com.chenenyu.router.annotation.Route;
 
-
+@Route(RouteConfig.CrenditralGuideActivity)
 public class CrenditralGuideActivity extends BaseMvcActivity {
 
 

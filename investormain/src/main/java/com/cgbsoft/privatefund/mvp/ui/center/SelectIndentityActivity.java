@@ -13,16 +13,18 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.model.IndentityEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.IndentityAdapter;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.SelectIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SelectIndentityPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.CrenditralGuideActivity;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ import rx.Observable;
 /**
  * Created by fei on 2017/8/11.
  */
+@Route(RouteConfig.SelectIndentityActivity)
 public class SelectIndentityActivity extends BaseActivity<SelectIndentityPresenterImpl> implements SelectIndentityContract.SelectIndentityView{
 
     @BindView(R.id.iv_back)

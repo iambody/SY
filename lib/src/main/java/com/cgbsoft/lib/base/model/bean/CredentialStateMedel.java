@@ -1,4 +1,4 @@
-package com.cgbsoft.privatefund.model;
+package com.cgbsoft.lib.base.model.bean;
 
 import java.io.Serializable;
 

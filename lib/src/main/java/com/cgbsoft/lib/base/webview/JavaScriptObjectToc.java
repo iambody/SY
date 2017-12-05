@@ -2,6 +2,8 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -9,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -140,8 +143,52 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCertifiacateClamps(String datas){
-        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+    public void openCredentialsFolder(String param){
+        try {
+            JSONObject ja = new JSONObject(param);
+            JSONObject data = ja.getJSONObject("data");
+            String callback = ja.getString("callback");
+            this.webView.loadUrl("javascript:" + callback + "()");
+            CredentialStateMedel credentialStateMedel = new Gson().fromJson(data.toString(), CredentialStateMedel.class);
+            if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+                if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                    if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("credentialStateMedel", credentialStateMedel);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+//                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
+//                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                        startActivity(intent);
+                    } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("credentialStateMedel", credentialStateMedel);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+
+//                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+//                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                        startActivity(intent);
+                    } else {  //已通过 核身成功
+
+//                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                        startActivity(intent);
+                    }
+                } else {//  非大陆去证件列表
+                    Bundle bundle = new Bundle();
+                    bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+//                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                    startActivity(intent);
+                }
+            } else {//无身份
+                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+//                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+//                startActivity(intent);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //生成海报的监听

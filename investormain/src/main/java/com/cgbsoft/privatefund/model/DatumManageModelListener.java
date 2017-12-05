@@ -1,5 +1,7 @@
 package com.cgbsoft.privatefund.model;
 
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
+
 /**
  * Created by feigecal on 2017/7/12 0012.
  */

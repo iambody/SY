@@ -551,9 +551,11 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     ProductlsBean productlsBean = new ProductlsBean();
                     productlsBean.productName = String.format("%d", productlsAdapter.CHECKOLD);
                     productlsBeen.add(productlsBean);
-                    swipe_load_more_footer.setVisibility(View.GONE);
+//                    swipe_load_more_footer.setVisibility(View.GONE);
+                    swipeToLoadLayout.setLoadMoreEnabled(false);
                 }else {
-                    swipe_load_more_footer.setVisibility(View.VISIBLE);
+                    swipeToLoadLayout.setLoadMoreEnabled(true);
+//                    swipe_load_more_footer.setVisibility(View.VISIBLE);
                 }
                 fragmentProductrecyclerView.setBackground(getResources().getDrawable(R.drawable.shape_null));
 

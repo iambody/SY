@@ -108,4 +108,10 @@ public class RouteConfig {
     public static final String GOTO_LOGIN ="enter_loginactivity";
     public static final String GOTO_PDF_ACTIVITY = "gotosharepdf";
     public static final String SPLASH_MOVIE = "splash_movie";
+
+    public static final String SelectIndentityActivity = "SelectIndentityActivity";
+    public static final String CardCollectActivity = "CardCollectActivity";
+    public static final String UploadIndentityCradActivity = "UploadIndentityCradActivity";
+    public static final String CrenditralGuideActivity = "CrenditralGuideActivity";
+
 }

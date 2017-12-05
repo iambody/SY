@@ -1,12 +1,10 @@
 package com.cgbsoft.privatefund.mvp.contract.center;
 
-import com.cgbsoft.lib.base.model.CardListEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.privatefund.model.CredentialModel;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
