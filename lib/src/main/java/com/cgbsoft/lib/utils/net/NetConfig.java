@@ -12,8 +12,8 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 public class NetConfig {
     public static boolean isLocal = true;
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
-    //    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
+//    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+        public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
     //        private static String START_APP = "https://app";

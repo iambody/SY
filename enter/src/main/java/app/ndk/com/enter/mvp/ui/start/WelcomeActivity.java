@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
@@ -54,15 +56,17 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE, PERMISSION_WRITE_STORAGE, INSTALL_SHORTCUT};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
-    private WelcomeRunnable mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
+    private WelcomeRunnable mBtnRunnable,mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
     private final int defaultTime = 5000;
+    private final int visableBtnTime = 2000;
     private final int waitTime = 5000;
     private final int noNetTime = 3000;
     private final int outOfTime = 2000;
 
+    private final int BUTTON_WAIT = 0;
     private final int DEFAULT_WAIT = 1;
     private final int WAIT = 2;
     private final int NO_NET = 3;
@@ -119,7 +123,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         if (getPresenter() == null) {
             setPresenter();
         }
-        welecomePage();
+//        welecomePage();
         getPresenter().requestResourceInfo();
         getPresenter().toInitInfo();
         //解压一些资源
@@ -139,7 +143,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             protected void onRxError(Throwable error) {
             }
         });
-//        welecomePage();
+        welecomePage();
     }
 
     @Override
@@ -159,6 +163,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
                 @Override
                 public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                     if (weakHandler != null) {
+                        weakHandler.postDelayed(mBtnRunnable, visableBtnTime);
                         weakHandler.removeCallbacks(mWaitRunnable);
                         weakHandler.postDelayed(mDefaultRunnable, defaultTime);
                     } else {
@@ -202,7 +207,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     private void welecomePage() {
-
+        mBtnRunnable = new WelcomeRunnable(BUTTON_WAIT);
         mDefaultRunnable = new WelcomeRunnable(DEFAULT_WAIT);
         mWaitRunnable = new WelcomeRunnable(WAIT);
         mNoNetRunnable = new WelcomeRunnable(NO_NET);
@@ -212,7 +217,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_bottom = (ImageView) findViewById(R.id.iv_wel_bottom);
         enactSize(iv_wel_bottom);
 
-        btn_wel_cancle.setOnClickListener(v -> nextPage());
+        btn_wel_cancle.setOnClickListener(v -> aaa());
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);
@@ -222,6 +227,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
     }
 
+    public void aaa(){
+        PromptManager.ShowCustomToast(this,"asajaskjasjkaskj");
+        nextPage();
+    }
     private void enactSize(ImageView imagview) {
         int screenHeight = Utils.getScreenHeight(baseContext);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight / 5);
@@ -291,6 +300,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
                 return;
             }
             switch (which) {
+                case BUTTON_WAIT:
+                    btn_wel_cancle.setVisibility(View.VISIBLE);
+                    break;
                 case DEFAULT_WAIT:
                 case WAIT:
                 case NO_NET:
