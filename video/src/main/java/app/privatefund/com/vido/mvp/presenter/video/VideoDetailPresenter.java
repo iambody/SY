@@ -303,7 +303,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
     @Override
     public void addressValidateResult(boolean refreshPage) {
-        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build();
+        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
         okHttpClient.newCall(request).enqueue(new Callback(){
             @Override

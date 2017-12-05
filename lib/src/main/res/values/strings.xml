@@ -100,4 +100,9 @@
     <string name="zhuliqiye">我们正在助力的核心企业</string>
     <string name="yiqizhuli">一起来为我助力的企业助力吧</string>
     <string name="gettravel">赢取价值2万元的私人订制旅游</string>
+
+    <string name="open_member">您将解锁以下新的权益</string>
+    <string name="now_look_new_member">立即查看新的权益</string>
+    <string name="know_more">了解更多</string>
+    <string name="get_caifu">您可以通过以下方式提升财富值，获得更多权益及服务：</string>
 </resources>

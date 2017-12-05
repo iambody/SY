@@ -108,6 +108,20 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                             bundle2.putSerializable("smMessage", smMessage);
                             sendMessage.setData(bundle2);
                             ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
+                        case "5": // 会员升级
+                            sendMessage.what = Constant.RECEIVER_SEND_CODE_MEMBER_UPDATE;
+                            smMessage.setSenderId(message.getSenderUserId());
+                            bundle2.putSerializable("smMessage", smMessage);
+                            sendMessage.setData(bundle2);
+                            ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
+                            break;
+                        case "6": // 会员降级
+                            sendMessage.what = Constant.RECEIVER_SEND_CODE_MEMBER_DEGRADE;
+                            smMessage.setSenderId(message.getSenderUserId());
+                            bundle2.putSerializable("smMessage", smMessage);
+                            sendMessage.setData(bundle2);
+                            ReceiveInfoManager.getInstance().getHandler().sendMessage(sendMessage);
+                            break;
                         default:
                             break;
                     }

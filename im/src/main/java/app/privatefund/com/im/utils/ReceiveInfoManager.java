@@ -2,6 +2,7 @@ package app.privatefund.com.im.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,11 +11,17 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.bean.MemberDegrade;
+import com.cgbsoft.lib.base.model.bean.MemeberInfo;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BackgroundManager;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.widget.MemberDegradeDialog;
+import com.cgbsoft.lib.widget.MemberUpdateDialog;
 import com.cgbsoft.lib.widget.PushDialog;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -161,8 +168,6 @@ public class ReceiveInfoManager {
                                         onClickConfirm(smMessage.getJumpUrl(), smMessage.getButtonTitle(), smMessage.getShareType());
                                     }
                                 };
-
-
                             }
                             if (!infoDialog.isShowing() && !currentActivity.isFinishing()) {
                                 infoDialog.show();
@@ -180,6 +185,48 @@ public class ReceiveInfoManager {
                             }.getType());
                             PushPreference.savePushInfo(InvestorAppli.getContext(), values);
                         }
+                        break;
+                    case Constant.RECEIVER_SEND_CODE_MEMBER_UPDATE:
+                        final SMMessage myMessage = (SMMessage) bundle.getSerializable("smMessage");
+                        Activity currentAct = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+                        MemberUpdateDialog memberUpdateDialog = new MemberUpdateDialog(currentAct) {
+                            @Override
+                            public void buttonClick() {
+                                String url = CwebNetConfig.memeberArea;
+                                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
+                                intent.putExtra(WebViewConstant.push_message_url, url);
+                                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
+                                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+                                currentAct.startActivity(intent);
+                                dismiss();
+                            }
+                        };
+                        memberUpdateDialog.show();
+                        String vuls = myMessage.getDialogSummary();
+                        System.out.println("=--------valis=="+ vuls);
+                        MemeberInfo memeberInfo = new Gson().fromJson(vuls, new TypeToken<MemeberInfo>() {}.getType());
+                        memberUpdateDialog.updateDialogUi(memeberInfo);
+                        break;
+                    case Constant.RECEIVER_SEND_CODE_MEMBER_DEGRADE:
+                        final SMMessage youMessage1 = (SMMessage) bundle.getSerializable("smMessage");
+                        Activity currentAct1 = ((BaseApplication) BaseApplication.getContext()).getBackgroundManager().getCurrentActivity();
+                        MemberDegradeDialog memberDegardeDialog = new MemberDegradeDialog(currentAct1) {
+                            @Override
+                            public void buttonClick() {
+                                String url = CwebNetConfig.memeberArea;
+                                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
+                                intent.putExtra(WebViewConstant.push_message_url, url);
+                                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
+                                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+                                currentAct1.startActivity(intent);
+                                dismiss();
+                            }
+                        };
+                        memberDegardeDialog.show();
+                        String vuls1 = youMessage1.getDialogSummary();
+                        System.out.println("=--------valis=="+ vuls1);
+                        MemberDegrade memberDegrade = new Gson().fromJson(vuls1, new TypeToken<MemberDegrade>() {}.getType());
+                        memberDegardeDialog.updateDialogUi(memberDegrade);
                         break;
                     default:
                         break;
