@@ -80,7 +80,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
      **/
     public void openVisitor() {
         if (isVisitor) {
-//            openVisitorAnmatorSet
+//            ObjectAnimator objectAnimator=ObjectAnimator.ofFloat(rectangle_out_lay,"scaleX",1f,3f)
         } else {
         }
     }
