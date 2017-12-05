@@ -3,4 +3,11 @@
     <item type="id" name="restart_preview"/>
     <item type="id" name="decode_succeeded"/>
     <item type="id" name="bind_first_data"/>
+    <item type="id" name="bind_course_image"/>
+    <item type="id" name="bind_course_title"/>
+    <item type="id" name="bind_summary_image"/>
+    <item type="id" name="bind_summary_title"/>
+    <item type="id" name="bind_summary_subtitle"/>
+    <item type="id" name="bind_summary_more"/>
+    <item type="id" name="bind_summary_more_ll"/>
 </resources>
