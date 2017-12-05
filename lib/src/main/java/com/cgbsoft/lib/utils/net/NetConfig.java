@@ -3,20 +3,22 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
 public class NetConfig {
     public static boolean isLocal = true;
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-    //    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
-    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
+    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+    //    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
-//    public static String START_APP = "https://app";
-        public static String START_APP = "https://t3-app";//sim
-//        public static String START_APP = "https://sim-app";//BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    //        private static String START_APP = "https://app";
+//    public static String START_APP = "https://t3-app";//sim
+    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -40,7 +42,6 @@ public class NetConfig {
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
-    public final static String TRACKING_V2 = "ubc/v2";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -81,28 +82,39 @@ public class NetConfig {
     final static String USERAGENT_URL = API_URL + "/useragree/sixiangyun";
 
     final static String DOWNLOAD_BASEURL = "https://upload.simuyun.com/android/";
+
     //
     final static String ACTION_POINT = PROMOTION_URL + "/common/availableOp";
+
     //全局导航栏
     final static String NAVIGATION = API_URL_V3 + "/navigation";
+
     // 全站三级导航
     final static String NAVIGATION_THREE = API_URL_V2 + "/navigation/third";
+
     //红包雨
     final static String RED_PACKET = API_URL + "/redpacket";
 
     static class API {
+
         //客户风险评测提交接口
         final static String RISK_EVALUTION = API_URL + "/riskEvaluation";
+
         // 获取群组列表
         final static String CHATE_GROUP_LIST = API_URL + "/chat/groupList";
+
         // 用户手机号码
         final static String GROUP_MEMBER_PHONE = API_URL + "/chat/memberPhoneNumber";
+
         // 群成员
         final static String GROUP_MEMBERS = API_URL + "/chat/groupMembers";
+
         // 群信息
         final static String GROUP_INFO = API_URL + "/chat/groupInformation";
+
         //群成員列表 新接口
         final static String GROUP_MEMBER_BY_DATE = API_URL + "/chat/groupMembersByDate";
+
         // 获取热门搜索列表
         final static String HOT_SEARCH_PRODUCT = API_URL + "/products/hotNames";
     }
@@ -110,7 +122,7 @@ public class NetConfig {
     static class Auth {
         //获取容云token
         final static String GET_RONG_TOKEN = AUTH_URL_V2 + "/rc/gettoken";
-        //获取融云用户信息
+        // 获取融云用户信息
         final static String RONGYUN_USERINFO = AUTH_URL_V2 + "/rc/userinfo";
         //获取平台客服聊天
         final static String PLATFORM_CUSTOMER = AUTH_URL_V2 + "/rc/greetingmessage";
@@ -162,6 +174,8 @@ public class NetConfig {
 //        static String GET_VIDEO_INFO = API_URL_V2 + information + "/video/2c";
         //点赞
         final static String TO_LIKE_VIDEO = API_URL + information + "/video/likes/5.0";
+
+
         //私享云新增的获取视频列表的V2接口
         final static String GET_VIDEO_LIST = API_URL + information + "/videos";
         //私享云新增的财富=》学院模块
@@ -283,13 +297,8 @@ public class NetConfig {
 
     // 获取资源文件的相关信息
     public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
-
-
-    static class TRACKDATA {
-
-        final static String TRACKING = TRACKING_V2 + "track/app";
-
-    }
+    // 腾讯视频内容校验文件
+    public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
     //视频相关模块
     static class VIDEO {
@@ -326,12 +335,16 @@ public class NetConfig {
         private final static String sxy = "/enjoycloud";
         //首页
         final static String GETHOME = API_URL + sxy + "/apphome";
+
         //通过手机硬件地址兑换相应的userid和tOKEN
         final static String VISITOR_GET_USERID = API_URL + "/visitorAuth";
+
         //获取全站导航栏信息
         final static String GET_NAVIFAITION = API_URL + "navigation";
+
         //游客登录
         final static String VISITORLOGIN = AUTH_URL + "/visitorLogin";
+
         //签到
         final static String SIGNIN = API_URL + sxy + "/signin";
     }
@@ -356,8 +369,10 @@ public class NetConfig {
         final static String HEALTH_PROJECT_LIST = API_URL + "/health/healthprojectlist";
 
         final static String HEALTH_COURSE_GET_URL = API_URL + "/health/healthCourseList";
+
         // 健康免费资讯预约
         final static String HEALTH_FREE_BESPEAK_URL = API_URL + "/health/consult";
+
         // 健康短信验证
         final static String HEALTH_INFO_VALIDATE_URL = API_URL + "/health/consult/captcha";
 
@@ -366,6 +381,7 @@ public class NetConfig {
     static class Discovery {
         // 资讯首页数据
         final static String DISCOVERY_FIRST_PAGE = API_URL + "/information/home";
+
         // 资讯列表页面
         final static String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
     }

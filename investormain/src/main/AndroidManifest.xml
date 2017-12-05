@@ -99,10 +99,23 @@
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+
+    <!-- 添加应用自身的灯塔appkey，如0I000LT6GW1YGCP7-->
+    <!--<meta-data-->
+    <!--android:name="APPKEY_DENGTA"-->
+    <!--android:value="XXXXXXXXXXXXXXXX" />-->
+    <!-- DNS接收网络切换广播 -->
+    <receiver
+        android:name="com.tencent.msdk.dns.HttpDnsCache$ConnectivityChangeReceiver"
+        android:label="NetworkConnection">
+        <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        </intent-filter>
+    </receiver>
+
     <!-- 百度地图** -->
     <supports-screens
         android:anyDensity="true"
@@ -190,29 +203,30 @@
         -->
         <!-- 欢迎页 -->
         <activity
-            android:name="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity"
+            android:name="app.ndk.com.enter.mvp.ui.start.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen">
+            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen"
+            tools:replace="android:theme">
+            <!--  要是需要loge切换的话需要把下边的filter屏蔽掉 然后把下边的两个组件打开-->
 
-            <!--
-              <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                  <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>
-            -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <!-- name：组件名字 -->
         <!-- enabled：该组件是否启动 -->
         <!-- icon：组件图标 -->
         <!-- label：组件标签说明 -->
         <!-- targetActivity：组件的类 -->
-        <activity-alias
+        <!--<activity-alias
             android:name=".MainActivity0"
             android:enabled="true"
             android:icon="@drawable/sxy_logo"
             android:label="@string/app_name_customer"
-            android:targetActivity="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity">
+            android:targetActivity="app.ndk.com.enter.mvp.ui.start.testaaa">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -224,13 +238,13 @@
             android:enabled="false"
             android:icon="@drawable/autumnlog"
             android:label="@string/app_name_customer"
-            android:targetActivity="app.ndk.com.enter.mvp.ui.Load.LoadCustomerActivity">
+            android:targetActivity="app.ndk.com.enter.mvp.ui.start.testaaa">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity-alias>
+        </activity-alias>-->
         <!-- 主页 -->
         <activity
             android:name=".mvp.ui.home.MainPageActivity"

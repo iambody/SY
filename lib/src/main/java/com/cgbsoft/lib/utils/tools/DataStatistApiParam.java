@@ -1808,6 +1808,19 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
+    /**
+     *  网络劫持
+     * @param
+     */
+    public static void urlAddressIntercept(String videoCategory, String videoName){
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "5000");
+        data3.put("act", "50000");
+        data3.put("arg1", "videoCategory");
+        data3.put("arg2", "videoName");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
+    }
+
 
 
 

@@ -1,24 +1,20 @@
 package app.privatefund.investor.health.mvp.ui;
 
-import android.os.Build;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
-import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
@@ -60,7 +56,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     private static final int HAS_DATA_NO = 1;
     private static final int HAS_DATA_ERROR = 2;
     private static final int DISTANCE_MAR_LENGT = 40;
-    private static int TOUCHSLOP = 0;
 
     private String category;
     private LoadingDialog mLoadingDialog;
@@ -68,6 +63,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
     private HealthIntroduceFlagRecyclerAdapter healthIntroduceFlagRecyclerAdapter;
     private GestureDetector gestureDetector;
     private List<View> oldList;
+    private ZipResourceDownload zipResourceDownload;
 
     @Override
     protected int layoutID() {
@@ -76,7 +72,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
     @Override
     protected void init(View view, Bundle savedInstanceState) {
-        TOUCHSLOP = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+        zipResourceDownload = new ZipResourceDownload(getActivity());
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseActivity, "", false, false);
         linearLayoutManager = new LinearLayoutManager(baseActivity);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -88,24 +84,6 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         healthIntroduceFlagRecyclerAdapter.setCategoryItemClickListener((view1, posBean) -> {
             category = posBean.getCode();
             getPresenter().initNavigationContent(baseWebview, posBean);
-            TrackingHealthDataStatistics.introduceClickFlag(getContext(), posBean.getTitle());
-        });
-        recyclerView.setHorizontalScrollBarEnabled(true);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dx > TOUCHSLOP && dx > 0) { // 向右滑动
-                    TrackingHealthDataStatistics.introduceRightScroll(getContext());
-                } else if (dx < 0 && Math.abs(dx) > TOUCHSLOP){ // 向左滑动
-                    TrackingHealthDataStatistics.introduceLeftScroll(getContext());
-                }
-            }
         });
         baseWebview.setOnScrollChangedCallback(new MyBaseWebview.OnScrollChangedCallback() {
             @Override
@@ -122,6 +100,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
                 }
             }
         });
+
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
     }
 
@@ -195,6 +174,22 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 //        return allchildren;
 //    }
 
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.initZipResource();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (zipResourceDownload != null) {
+            zipResourceDownload.closeDilaog();
+        }
+    }
 
     @Override
     protected HealthIntroducePresenter createPresenter() {

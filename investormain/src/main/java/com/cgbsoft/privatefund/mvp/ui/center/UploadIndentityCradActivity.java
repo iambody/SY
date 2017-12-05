@@ -53,6 +53,7 @@ import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;

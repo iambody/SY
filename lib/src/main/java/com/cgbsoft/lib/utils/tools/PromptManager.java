@@ -38,4 +38,5 @@ public class PromptManager {
         CustomToast.show();
 
     }
+
 }

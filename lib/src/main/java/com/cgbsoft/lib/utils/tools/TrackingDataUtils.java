@@ -9,8 +9,7 @@ import android.telephony.TelephonyManager;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
-import com.cgbsoft.lib.base.model.CommonEntity;
-import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
+import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
@@ -23,7 +22,9 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import rx.Subscription;
@@ -39,29 +40,10 @@ public class TrackingDataUtils {
     private static DaoUtils daoUtils;
 
     /**
-     * 存储埋点数据
      * @param context
-     * @param event 事件ID　
-     * @param param 参数，多个参数以 | 分割
+     * @param param
      */
-    public static void save(Context context, String event, String param) {
-        Context applicationContext = context.getApplicationContext();
-        if (daoUtils == null) {
-            daoUtils = new DaoUtils(applicationContext, DaoUtils.W_TRACKINGDATA);
-        }
-        //先查询已经存入的个数，如果已经存入20个直接拼上当前这个埋点，发送给服务器，清除数据
-        int size = daoUtils.getTrackingDataListSize();
-        if (size < 20) {
-            daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
-        } else {
-            List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingData();
-            trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis(), param));
-            post(applicationContext, trackingDataBeens);
-            daoUtils.deleteTrackData();
-        }
-    }
-
-    private static void post(Context context, List<TrackingDataBean> trackingDataBeens) {
+    public static void save(Context context, final HashMap<String, String> param) {
         final JSONArray jsonArray = new JSONArray();
         final JSONObject js = new JSONObject();
         LocationBean locationBean = AppManager.getLocation(context);
@@ -86,38 +68,51 @@ public class TrackingDataUtils {
             js.put("area", OtherDataProvider.getCity(context.getApplicationContext()));
 //            js.put("mid", getUniqueCode());//机器码
             js.put("mid", DeviceUtils.getPhoneId(context));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < trackingDataBeens.size(); i++) {
-            JSONObject track = new JSONObject();
+        Iterator iter = param.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = (String) iter.next();
+            String value = param.get(key);
             try {
-                track.put("e",trackingDataBeens.get(i).getE());
-                track.put("t",trackingDataBeens.get(i).getT());
-                track.put("d",trackingDataBeens.get(i).getD());
+                js.put(key, value);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            jsonArray.put(track);
         }
 
-        try {
-            js.put("data",jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (daoUtils == null) {
+            daoUtils = new DaoUtils(context, DaoUtils.W_DATASTISTICS);
         }
-        subscription = ApiClient.pushTrackingData(js).subscribe(new RxSubscriber<CommonEntity.Result>() {
-            @Override
-            protected void onEvent(CommonEntity.Result result) {
-                subscription.unsubscribe();
+        //先查询已经存入的个数，如果已经存入4个直接拼上当前这个埋点，发送给服务器，清除数据
+        List<DataStatisticsBean> datastisticList = daoUtils.getDatastisticList();
+        if (datastisticList.size() == 4) {
+            jsonArray.put(js);
+            for (DataStatisticsBean dataStatisticsBean : datastisticList) {
+                jsonArray.put(dataStatisticsBean.getJsonObject());
             }
 
-            @Override
-            protected void onRxError(Throwable error) {
-                subscription.unsubscribe();
-            }
-        });
+            subscription = ApiClient.pushDataStatistics(jsonArray.toString()).subscribe(new RxSubscriber<String>() {
+                @Override
+                protected void onEvent(String string) {
+                    subscription.unsubscribe();
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+                    subscription.unsubscribe();
+                }
+            });
+            daoUtils.deleteDataStatitic();
+        } else {
+            DataStatisticsBean dataStatisticsBean = new DataStatisticsBean(System.currentTimeMillis(), MessageFormat.format("{0}", System.currentTimeMillis()), js.toString());
+            daoUtils.saveDataStatistic(dataStatisticsBean);
+        }
+
     }
 
 

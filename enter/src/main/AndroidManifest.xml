@@ -159,8 +159,8 @@
             <meta-data
                 android:name="isadviser"
                 android:value="0"></meta-data>
-        </activity>
-        <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
+        </activity><!--
+        <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>-->
         <activity
             android:name=".mvp.ui.start.WelcomeActivity"
             android:screenOrientation="portrait"

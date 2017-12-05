@@ -5,10 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -61,12 +59,12 @@ public class SplashMovieActivity extends Activity implements SurfaceHolder.Callb
 
 
     private void bindViews() {
-        int resID = R.raw.movie_toc;
+//        int resID = R.raw.movie_toc;
         
         surface_movie = (SurfaceView) findViewById(R.id.splish_movie);
         start_app = (Button) findViewById(R.id.start_app);
 
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
+//        mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
         SurfaceHolder surfaceHolder = surface_movie.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);

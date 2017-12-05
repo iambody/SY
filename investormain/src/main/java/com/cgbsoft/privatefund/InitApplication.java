@@ -3,7 +3,6 @@ package com.cgbsoft.privatefund;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
-import android.webkit.PermissionRequest;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
@@ -14,7 +13,8 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
-import com.crashlytics.android.core.CrashlyticsCore;
+import com.crashlytics.android.Crashlytics;
+import com.tencent.msdk.dns.MSDKDnsResolver;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -31,14 +31,13 @@ import app.privatefund.com.im.listener.NewMessageItemProvider;
 import app.privatefund.com.im.listener.PdfMessageItemProvider;
 import app.privatefund.com.im.listener.ProductInputModule;
 import app.privatefund.com.im.listener.ProductMessageItemProvider;
+import io.fabric.sdk.android.Fabric;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
 import qcloud.liveold.mvp.utils.SxbLogImpl;
 import rx.Observable;
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * desc
@@ -51,19 +50,13 @@ public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Set up Crashlytics, disabled for debug builds
-//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build();
-        // Initialize Fabric with the debug-disabled crashlytics.
-//        Fabric.with(this, crashlyticsKit);
         Fabric.with(this, new Crashlytics());
-
         //初始化直播
         initLive();
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.setDebugMode(true);
         Thread.setDefaultUncaughtExceptionHandler(new SimuyunUncaughtExceptionHandler(this));
+        MSDKDnsResolver.getInstance().init(getApplicationContext());
 
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
@@ -72,7 +65,6 @@ public class InitApplication extends InvestorAppli {
         // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
         if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
             Log.i("InitApplication", "----initRongConnect");
-
             /**
              * IMKit SDK调用第一步 初始化
              */

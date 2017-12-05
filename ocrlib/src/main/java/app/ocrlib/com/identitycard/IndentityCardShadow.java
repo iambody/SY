@@ -41,6 +41,7 @@ public class IndentityCardShadow extends View {
         canvas.drawColor(0x99000000);
         canvas.save();
         canvas.restore();
+
     }
 
     @Override

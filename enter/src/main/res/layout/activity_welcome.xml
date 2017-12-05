@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_wel_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/iv_wel_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_bottom_welcomenew" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_bottom_welcomenew"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_wel_cancle"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_gravity="top|right"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_wel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/iv_wel_bottom"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="@dimen/dimens_sp_10"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/shape_welecom_bt"
+        android:clickable="true"
+        android:paddingBottom="@dimen/ui_2_dip"
+        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingRight="@dimen/ui_10_dip"
+        android:paddingTop="@dimen/ui_2_dip"
         android:text="@string/wel_cancelbtn_str"
-        android:textColor="#333333"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 </RelativeLayout>

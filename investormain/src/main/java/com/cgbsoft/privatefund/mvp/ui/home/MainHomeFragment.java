@@ -342,7 +342,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         DataStatistApiParam.homeClickNew();
         TrackingDataManger.homeNew(baseActivity);
 
-    }
+  }
 
     /**
      * 配置view各种资源
