@@ -25,7 +25,6 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
 
     public MinePresenter(@NonNull Context context, @NonNull MineContract.View view) {
         super(context, view);
-
     }
 
     @Override
