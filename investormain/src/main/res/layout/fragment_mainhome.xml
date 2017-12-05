@@ -393,7 +393,7 @@
         <!-- 游客模式下的右侧点击去理财师认证的按钮***************** -->
     </RelativeLayout>
     <!-- 游客模式下的布局文件******************** -->
-  <!--   <com.cgbsoft.privatefund.widget.FloatStewardView
+    <!--<com.cgbsoft.privatefund.widget.FloatStewardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_400_dip"/>-->
