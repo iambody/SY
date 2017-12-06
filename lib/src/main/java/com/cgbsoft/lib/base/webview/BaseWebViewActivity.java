@@ -278,6 +278,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener((View v) -> {
+            mWebview.loadUrl("javascript:WebView.back(0)");
             finish();
             if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
                 TrackingHealthDataStatistics.projectDetailLeftBack(this);
@@ -408,7 +409,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (url.contains("rankList_share")) {
             mWebview.loadUrl("javascript:delectChart()");
         }
-        mWebview.loadUrl("javascript:WebView.back()");
+        mWebview.loadUrl("javascript:WebView.back(1)");
         if ("风险评测".equals(title)) {
             backEvent();
             return;
@@ -581,6 +582,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void onDestroy() {
+//
         mWebview.clearAnimation();
         mWebview.removeAllViews();
         mWebview.destroy();

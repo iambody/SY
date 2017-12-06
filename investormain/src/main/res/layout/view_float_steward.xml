@@ -1,33 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rectangle_parent_lay"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/ui_80_dip"
-    android:layout_marginRight="@dimen/ui_80_dip">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/ui_40_dip">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/rectangle_out_lay"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal">
+        android:layout_centerVertical="true">
 
         <LinearLayout
             android:id="@+id/rectangle_in_lay"
-            android:layout_width="0dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="@color/dialog_transparent1" />
+            android:layout_alignParentLeft="true"
+            android:background="@color/dialog_transparent1"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/rectangle_in_text_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="80dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="私享云链接人与财富"
+                    android:textColor="@color/app_golden"
+                    android:textSize="@dimen/ui_16_dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:text="请点击选择您的私人银行家"
+                    android:textColor="@color/app_golden"
+                    android:textSize="@dimen/ui_12_dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rectangle_in_user_text_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="80dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/rectangle_in_user_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal|center"
+                    android:layout_weight="2"
+                    android:textColor="@color/app_golden"
+                    android:textSize="@dimen/ui_13_dip"
+                    android:visibility="gone"
+                    android:text="尊敬的王永奎我是您的私人银行家,很高兴为您服务"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/steward_phone_bt"
+                        style="@style/home_banker_bt_style1"
+                        android:layout_marginLeft="@dimen/ui_2_dip"
+                        android:layout_marginRight="@dimen/ui_2_dip"
+                        android:text="@string/phone"
+                        android:textSize="@dimen/ui_12_dip" />
+
+                    <TextView
+                        android:id="@+id/steward_note_bt"
+                        style="@style/home_banker_bt_style1"
+                        android:layout_marginLeft="@dimen/ui_2_dip"
+                        android:layout_marginRight="@dimen/ui_2_dip"
+                        android:text="@string/mms"
+                        android:textSize="@dimen/ui_12_dip" />
+
+                    <TextView
+                        android:id="@+id/steward_im_bt"
+                        style="@style/home_banker_bt_style1"
+                        android:layout_marginLeft="@dimen/ui_2_dip"
+                        android:layout_marginRight="@dimen/ui_2_dip"
+                        android:text="@string/conversation"
+                        android:textSize="@dimen/ui_12_dip" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <com.cgbsoft.privatefund.widget.SemicircleView
             android:id="@+id/semicircleview"
             android:layout_width="@dimen/ui_80_dip"
             android:layout_height="@dimen/ui_80_dip"
-            app:viewcolor="@color/red_new" />
+            android:layout_toRightOf="@+id/rectangle_in_lay" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.cgbsoft.lib.widget.RoundImageView
         android:id="@+id/steward_round_iv"
@@ -42,5 +126,36 @@
         app:border_outside_color="@color/homeblack"
         app:border_thickness="2dp" />
 
+    <LinearLayout
+        android:id="@+id/cardnumber_lay"
+        android:layout_width="@dimen/ui_70_dip"
+        android:layout_height="30dp"
+        android:layout_below="@+id/steward_round_iv"
+        android:layout_marginLeft="@dimen/ui_5_dip"
+        android:layout_marginTop="-8dp"
+        android:background="@drawable/main_home_card_bg"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="服 务 码"
+            android:textColor="@color/app_golden"
+            android:textSize="@dimen/dimens_sp_7" />
+
+        <TextView
+            android:id="@+id/cardnumber_txt"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8289"
+            android:textColor="@color/app_golden"
+            android:textSize="@dimen/dimens_sp_12" />
+    </LinearLayout>
 
 </RelativeLayout>
