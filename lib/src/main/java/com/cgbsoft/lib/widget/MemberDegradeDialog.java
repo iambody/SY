@@ -66,23 +66,6 @@ public abstract class MemberDegradeDialog extends BaseDialog {
         }
     }
 
-    private void createContentView(List<MemeberInfo.MemeberItemProject> list, LinearLayout contentLayout) {
-        if (!CollectionUtils.isEmpty(list)) {
-            for (MemeberInfo.MemeberItemProject memeberItemProject: list) {
-                View itemView = layoutInflater.inflate(R.layout.memeber_project_item_flag, null);
-                TextView nameText = (TextView) itemView.findViewById(R.id.project_name);
-                TextView stepText = (TextView) itemView.findViewById(R.id.project_step);
-                nameText.setText(memeberItemProject.getProjectName());
-                if (TextUtils.isEmpty(memeberItemProject.getFrequencyInfo())) {
-                    stepText.setVisibility(View.GONE);
-                } else {
-                    stepText.setText(memeberItemProject.getFrequencyInfo());
-                }
-                contentLayout.addView(itemView);
-            }
-        }
-    }
-
     public void init() {
         memberDesc = (TextView)findViewById(R.id.memberDesc);
         memberContent = (LinearLayout) findViewById(R.id.show_content_ll );
