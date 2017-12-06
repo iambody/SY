@@ -26,7 +26,6 @@ import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
@@ -218,7 +217,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_bottom = (ImageView) findViewById(R.id.iv_wel_bottom);
         enactSize(iv_wel_bottom);
 
-        btn_wel_cancle.setOnClickListener(v -> aaa());
+        btn_wel_cancle.setOnClickListener(v -> nextPage());
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);
@@ -228,10 +227,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
     }
 
-    public void aaa(){
-        PromptManager.ShowCustomToast(this,"asajaskjasjkaskj");
-        nextPage();
-    }
+
     private void enactSize(ImageView imagview) {
         int screenHeight = Utils.getScreenHeight(baseContext);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight / 5);

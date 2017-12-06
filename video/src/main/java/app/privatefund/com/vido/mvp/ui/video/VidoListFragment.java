@@ -11,13 +11,13 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -122,7 +122,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
                 VideoNavigationUtils.stareVideoDetail(fBaseActivity, videoListModel.videoId, videoListModel.coverImageUrl);
 
             }
-
+            TrackingDataManger.videoSchoolItem(fBaseActivity,videoListModel.videoName);
         });
         swipeTarget.setAdapter(videoListAdapter);
 
@@ -208,6 +208,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         isLoadMore = true;
         CurrentPostion = CurrentPostion + 1;
         getPresenter().getVideoList(CatoryValue, CurrentPostion);
+        TrackingDataManger.videoSchoolMore(fBaseActivity);
     }
 
     @Override
@@ -215,6 +216,7 @@ public class VidoListFragment extends BaseLazyFragment<VideoListPresenter> imple
         isLoadMore = false;
         CurrentPostion = 0;
         getPresenter().getVideoList(CatoryValue, CurrentPostion);
+        TrackingDataManger.videoSchoolRefreash(fBaseActivity);
     }
 
     @OnClick(R2.id.fragment_videoschool_noresult)

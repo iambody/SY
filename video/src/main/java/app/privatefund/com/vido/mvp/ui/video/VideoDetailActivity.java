@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.VideoInfoEntity;
@@ -47,6 +46,7 @@ import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
@@ -304,6 +304,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         FloatVideoService.stopService();
         UserAction.initUserAction(this. getApplicationContext());
+        TrackingDataManger.videoDetailEnter(this);
     }
 
     public int getsize() {
@@ -412,6 +413,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         finish();
         DataStatistApiParam.onStatisToCVideoDetailZoomClick(videoInfoModel.videoName);
+        TrackingDataManger.videoDetailOnlyListener(baseContext);
     }
 
     @Override
@@ -457,6 +459,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1021, 10103, new String[]{"下载", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         if (!isCancache) return;
         openCacheView();
+        TrackingDataManger.videoDetailRecommend(baseContext);
     }
 
     @OnClick(R2.id.iv_avd_close)
@@ -1121,6 +1124,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         }
         if (null != videoInfoModel)
             DataStatistApiParam.onStatisToCVideoDetailClose(videoInfoModel.videoName, allPlayTime);
+
+        TrackingDataManger.videoDetailTopBack(baseContext);
         super.onDestroy();
     }
 
@@ -1214,16 +1219,18 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @OnClick(R2.id.video_videplay_edit_comment_lay)
     public void oncommontClicked() {
+
         CommentDialog commentDialog = new CommentDialog(baseContext) {
             @Override
             public void left() {
                 this.dismiss();
+                TrackingDataManger.videoDetailRecommendCancle(baseContext);
             }
 
             @Override
             public void right(String extra) {
                 this.dismiss();
-
+                TrackingDataManger.videoDetailRecommendSend(baseContext);
                 getPresenter().addCommont(extra, videoAllInf.videoId);
             }
         };
@@ -1238,6 +1245,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 commentDialog.showKeyboard();
             }
         }, 200);
+
+        TrackingDataManger.videoDetailRecommend(baseContext);
     }
 
 
@@ -1260,6 +1269,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         commonShareDialog.show();
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName, videoInfoModel.categoryName);
+        TrackingDataManger.videoDetailRightShare(baseContext,videoInfoModel.videoName);
     }
     class AnimListener implements Animation.AnimationListener {
         int which;

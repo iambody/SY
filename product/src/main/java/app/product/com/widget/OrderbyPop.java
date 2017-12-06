@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public class OrderbyPop extends PopupWindow {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RxBus.get().post(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMENT,prductoderby.get(position));//register(ProductPresenter.PRODUCT_ORDERBY_TO_FRAGMEN
                 OrderbyPop.this.dismiss();
+                TrackingDataUtils.save(dcContext,"1010010052",prductoderby.get(position).getName());
             }
         });
     }

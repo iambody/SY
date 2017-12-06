@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -18,6 +17,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
@@ -97,7 +97,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
         initCache();
         getPresenter().getVideoSchoolAllInf();
-
+        TrackingDataManger.videoSchoolIn(baseActivity);
 
     }
 
@@ -201,12 +201,12 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
                 @Override
                 public void onLeave(int i, int i1, float v, boolean b) {
-
+                    TrackingDataManger.videoSchoolLeftScroll(baseActivity);
                 }
 
                 @Override
                 public void onEnter(int i, int i1, float v, boolean b) {
-
+                    TrackingDataManger.videoSchoolRightScroll(baseActivity);
                 }
             });
             commonPagerTitleView.setOnClickListener(v -> videoVideolistPager.setCurrentItem(i));
