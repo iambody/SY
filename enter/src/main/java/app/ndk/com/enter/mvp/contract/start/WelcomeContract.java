@@ -23,6 +23,8 @@ public interface WelcomeContract {
         void getNavigation();
 
         void requestResourceInfo();
+
+        void initTrackingConfig();
     }
 
     interface View extends BaseView {
