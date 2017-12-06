@@ -35,9 +35,11 @@ import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CameraUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DownloadUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.AlterDialog;
@@ -284,7 +286,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (livingLoadingState){
+        if (livingLoadingState) {
             showLoadDialog();
         }
     }
@@ -675,7 +677,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     private void init(CredentialModel credentialModel) {
         identityCard = new IdentityCard();
         String stateCode = credentialModel.getStateCode();
-        if (credentialStateMedel.getCredentialCode().startsWith("20")){
+        if (credentialStateMedel.getCredentialCode().startsWith("20")) {
             miniNameText.setText("证件名称");
             tvReplenishName.setText("证件名称");
         }
@@ -800,10 +802,10 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 recognitionNumText.setText(credentialModel.getNumber());
                 recognitionNameText.setText(credentialModel.getCustomerName());
                 recognitionResultText.setText(credentialModel.getStateName());
-                if ((!credentialModel.getCode().startsWith("1001"))&&credentialModel.getCode().startsWith("10")) {
-                    if ( "1".equals(credentialStateMedel.getCustomerImageState())) {
+                if ((!credentialModel.getCode().startsWith("1001")) && credentialModel.getCode().startsWith("10")) {
+                    if ("1".equals(credentialStateMedel.getCustomerImageState())) {
                         submit.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         submit.setVisibility(View.VISIBLE);
                         submit.setText("下一步");
                     }
@@ -899,7 +901,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             identityCard.setIdCardName(credentialModel.getCustomerName());
         }
         String imageState = SPreference.getString(this, "imageState");
-        if ((!TextUtils.isEmpty(imageState))&&imageState.equals("1")&&(!credentialModel.getCode().startsWith("1001"))&&(credentialModel.getCode().startsWith("10"))){
+        if ((!TextUtils.isEmpty(imageState)) && imageState.equals("1") && (!credentialModel.getCode().startsWith("1001")) && (credentialModel.getCode().startsWith("10"))) {
             submit.setVisibility(View.GONE);
         }
 
@@ -1198,6 +1200,14 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
      * 相机拍摄图片
      */
     private void takePhotoByCamera(String photoName, int requesqtCode) {
+        //添加二次权限判断*****
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!CameraUtils.getCameraPermission(this)) {
+                PromptManager.ShowCustomToast(baseContext, "请设置相机权限");
+                return;
+            }
+        }
+        //添加二次权限判断*****
         String action = MediaStore.ACTION_IMAGE_CAPTURE;
         if (!isIntentAvailable(this, action)) {
             Toast.makeText(getApplicationContext(), "您的手机不支持相机拍摄", Toast.LENGTH_SHORT).show();
@@ -1309,8 +1319,8 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         if (null != registerBackCallBack) {
             RxBus.get().unregister(RxConstant.COMPLIANCE_CARD_BACK, registerBackCallBack);
         }
-        if (null != faceBackCallBack){
-            RxBus.get().unregister(RxConstant.COMPIANCE_FACE_BACK,faceBackCallBack);
+        if (null != faceBackCallBack) {
+            RxBus.get().unregister(RxConstant.COMPIANCE_FACE_BACK, faceBackCallBack);
         }
 
     }

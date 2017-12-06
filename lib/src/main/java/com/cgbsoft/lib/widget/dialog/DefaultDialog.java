@@ -45,8 +45,24 @@ public abstract class DefaultDialog extends BaseDialog {
         this.content = content;
         this.left = left;
         this.right = right;
+        isOnly=false;
     }
-
+    boolean isOnly;
+    /**
+     * 默认对话框
+     *
+     * @param context
+     * @param content 对话框内容
+     * @param left    左按钮显示内容
+     * @param right   右按钮显示内容
+     */
+    public DefaultDialog(Context context, String content, String left, String right,boolean onlyOne) {
+        this(context, R.style.dialog_comment_style);
+        this.content = content;
+        this.left = left;
+        this.right = right;
+        isOnly=true;
+    }
     public DefaultDialog(Context context, String title, String content, String left, String right) {
         this(context, R.style.dialog_comment_style);
         this.title = title;
@@ -70,6 +86,7 @@ public abstract class DefaultDialog extends BaseDialog {
         bindViews();
         init();
         initConfig();
+        if(isOnly)setSingleBtn();
     }
     private void initConfig() {
         //配置信息
